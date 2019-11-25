@@ -1,23 +1,38 @@
-<div (keyup)="onKeyInput($event)">
+<div (keyup)="onKeyInput($event)" class="vo-theme">
   <h1 class="page-subtitle">{{'VO_DETAIL.MEMBERS.TITLE' | translate}}</h1>
-  <button mat-flat-button color="accent" class="mr-2" (click)="onAddMember()">
-    {{'VO_DETAIL.MEMBERS.ADD_MEMBER' | translate}}
-  </button>
-  <button mat-flat-button color="warn" class="mr-2" [disabled]="selection.isEmpty()" (click)="onRemoveMembers()">
-    {{'VO_DETAIL.MEMBERS.REMOVE_MEMBERS' | translate}}
-  </button>
-  <button mat-stroked-button class="mr-2 mb-2" (click)="onListAll()">
-    {{'VO_DETAIL.MEMBERS.LIST_ALL' | translate}}
-  </button>
+  <div class="align-elements">
+    <button mat-flat-button color="accent" class="mr-2" (click)="onAddMember()">
+      {{'VO_DETAIL.MEMBERS.ADD_MEMBER' | translate}}
+    </button>
+    <button mat-flat-button color="warn" class="mr-2" [disabled]="selection.isEmpty()" (click)="onRemoveMembers()">
+      {{'VO_DETAIL.MEMBERS.REMOVE_MEMBERS' | translate}}
+    </button>
+    <button mat-stroked-button [disabled]="selectedStatuses.length === 0" class="mr-2" (click)="onListAll()">
+      {{'VO_DETAIL.MEMBERS.LIST_MEMBERS' | translate}}
+    </button>
 
-  <mat-form-field class="mr-2 search-field no-border-mat-input">
-    <label>
-      <input matInput autocomplete="false" placeholder="{{'VO_DETAIL.MEMBERS.SEARCH_DESCRIPTION' | translate}}" [(ngModel)]="searchString">
-    </label>
-  </mat-form-field>
-  <button mat-flat-button color="primary" class="mr-2" [disabled]="searchString.length === 0" (click)="onSearchByString()">
-    <mat-icon>search</mat-icon>
-  </button>
+    <mat-form-field class="mr-2 fix-select">
+      <mat-label>{{'VO_DETAIL.MEMBERS.STATUS' | translate}}</mat-label>
+      <mat-select [(value)]="selectedStatuses" [formControl]="statuses"
+                  multiple>
+        <mat-select-trigger>
+          {{displaySelectedStatuses()}}
+        </mat-select-trigger>
+        <mat-option class="vo-theme" *ngFor="let status of statusList" [value]="status">{{status}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mr-2 search-field no-border-mat-input">
+      <label>
+        <input matInput autocomplete="false" placeholder="{{'VO_DETAIL.MEMBERS.SEARCH_DESCRIPTION' | translate}}"
+               [(ngModel)]="searchString">
+      </label>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="mr-2" [disabled]="searchString.length === 0 || selectedStatuses.length === 0"
+            (click)="onSearchByString()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
   <mat-spinner *ngIf="loading" class="ml-auto mr-auto">
   </mat-spinner>
   <app-alert [color]="'info'" *ngIf="!firstSearchDone">
