@@ -161,7 +161,8 @@
       "SEARCH_DESCRIPTION": "Search by name, login or email",
       "LIST_ALL": "List all members",
       "SEARCH_ALERT": "You can search member by name, login and email. Also, you can list all valid members.",
-      "NO_MEMBERS_ALERT": "No members found."
+      "NO_MEMBERS_ALERT": "No members found.",
+      "STATUS": "Status"
     },
     "OVERVIEW": {
       "INVITE_MEMBER": "Invite member",

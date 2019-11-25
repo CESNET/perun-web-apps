@@ -18,23 +18,23 @@ export class MembersService {
     return this.apiService.get(`json/membersManager/getMemberById?id=${memberId}`, new HttpParams(), showNotificationOnError);
   }
 
-  findCompleteRichMembers(voId: number, searchString: string, attrsNames: string[], showNotificationOnError = true):
+  findCompleteRichMembers(voId: number, searchString: string, attrsNames: string[],allowedStatuses:string [], showNotificationOnError = true):
     Observable<RichMember[]> {
     return this.apiService.post('json/membersManager/findCompleteRichMembers',
       {
         'vo': voId,
         'searchString': searchString,
         'attrsNames': attrsNames,
-        'allowedStatuses': ['VALID', 'INVALID', 'EXPIRED', 'DISABLED', 'SUSPENDED']
+        'allowedStatuses': allowedStatuses
       }, showNotificationOnError);
   }
 
-  getCompleteRichMembers(voId: number, attrsNames: string[], showNotificationOnError = true): Observable<RichMember[]> {
+  getCompleteRichMembers(voId: number, attrsNames: string[], allowedStatuses: string[], showNotificationOnError = true): Observable<RichMember[]> {
     return this.apiService.post(`json/membersManager/getCompleteRichMembers`,
       {
         'vo': voId,
         'attrsNames': attrsNames,
-        'allowedStatuses': ['VALID', 'INVALID', 'SUSPENDED']
+        'allowedStatuses': allowedStatuses
       }, showNotificationOnError);
   }
 
