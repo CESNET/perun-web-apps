@@ -7,8 +7,8 @@
     <button mat-flat-button color="warn" class="mr-2" [disabled]="selection.isEmpty()" (click)="onRemoveMembers()">
       {{'VO_DETAIL.MEMBERS.REMOVE_MEMBERS' | translate}}
     </button>
-    <button mat-stroked-button [disabled]="selectedStatuses.length === 0" class="mr-2" (click)="onListAll()">
-      {{'VO_DETAIL.MEMBERS.LIST_MEMBERS' | translate}}
+    <button mat-stroked-button class="mr-2" (click)="onListAll()">
+      {{'VO_DETAIL.MEMBERS.LIST_ALL' | translate}}
     </button>
 
     <mat-form-field class="mr-2 fix-select">
