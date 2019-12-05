@@ -1,6 +1,21 @@
 <div class="accordion entity-menu-accordion" id="sideMenuAccordion">
   <app-side-menu-root-item
     [sideNav]="sideNav"
+    [showOpen]="userItemOpened"
+    [item]="userItem">
+  </app-side-menu-root-item>
+  <div
+    *ngFor="let item of userItems; let i = index"
+    @rollInOut
+    class="overflow-hidden">
+    <app-side-menu-item
+      [sideNav]="sideNav"
+      [item]="item"
+      [index]="i">
+    </app-side-menu-item>
+  </div>
+  <app-side-menu-root-item
+    [sideNav]="sideNav"
     *ngIf="authResolver.isVoAdmin() || authResolver.isVoObserver()"
     [item]="accessItem">
   </app-side-menu-root-item>

@@ -457,6 +457,33 @@
           }
         }
       }
+    },
+    "perun-openapi": {
+      "projectType": "library",
+      "root": "libs/perun/openapi",
+      "sourceRoot": "libs/perun/openapi/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/openapi/tsconfig.lib.json",
+              "libs/perun/openapi/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/perun/openapi/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/openapi/jest.config.js",
+            "tsConfig": "libs/perun/openapi/tsconfig.spec.json",
+            "setupFile": "libs/perun/openapi/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {

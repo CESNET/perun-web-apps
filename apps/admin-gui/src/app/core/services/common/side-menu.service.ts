@@ -11,6 +11,7 @@ export class SideMenuService {
   @Output() accessItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter();
   @Output() facilityItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter();
   @Output() adminItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter();
+  @Output() userItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter();
   @Output() resetChange: EventEmitter<void> = new EventEmitter();
 
   setAccessMenuItems(items: SideMenuItem[]): void {
@@ -23,6 +24,10 @@ export class SideMenuService {
 
   setAdminItems(items: SideMenuItem[]): void {
     this.adminItemsChange.emit(items);
+  }
+
+  setUserItems(items: SideMenuItem[]): void {
+    this.userItemsChange.emit(items);
   }
 
   reset(): void {

@@ -43,6 +43,9 @@
     },
     "admin-gui": {
       "tags": []
+    },
+    "perun-openapi": {
+      "tags": []
     }
   }
 }

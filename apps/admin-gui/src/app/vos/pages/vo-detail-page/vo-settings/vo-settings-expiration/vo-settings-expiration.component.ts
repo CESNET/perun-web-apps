@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { AttributesService } from '@perun-web-apps/perun/services';
 import { Attribute } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
 
 @Component({
   selector: 'app-vo-settings-expiration',
@@ -23,7 +24,8 @@ export class VoSettingsExpirationComponent implements OnInit {
     private attributesService: AttributesService,
     private route: ActivatedRoute,
     private translate: TranslateService,
-    private notificator: NotificatorService
+    private notificator: NotificatorService,
+    private apiRequest: ApiRequestConfigurationService
   ) {
     this.translate.get('VO_DETAIL.SETTINGS.EXPIRATION.SUCCESS_MESSAGE').subscribe(value => this.successMessage = value);
     this.translate.get('VO_DETAIL.SETTINGS.EXPIRATION.ERROR_MESSAGE').subscribe(value => this.errorMessage = value);
@@ -51,6 +53,9 @@ export class VoSettingsExpirationComponent implements OnInit {
   }
 
   saveExpirationAttribute(attribute: Attribute) {
+    // FIXME this might not work in case of some race condition (other request finishes sooner)
+    this.apiRequest.dontHandleErrorForNext();
+
     this.attributesService.setAttribute(this.voId, 'vo', attribute, false).subscribe(() => {
         this.loadSettings();
         this.notificator.showSuccess(this.successMessage);

@@ -60,6 +60,7 @@ import {
 import {
   GroupSettingsNotificationsComponent
 } from './pages/group-detail-page/group-settings/group-settings-notifications/group-settings-notifications.component';
+import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 
 const routes: Routes = [
   {
@@ -159,6 +160,11 @@ const routes: Routes = [
             path: 'notifications',
             component: VoSettingsNotificationsComponent,
             data: {animation: 'SettingsApplicationFormNotificationsPage'}
+          },
+          {
+            path: 'extsources',
+            component: VoSettingsExtsourcesComponent,
+            data: {animation: 'VoSettingsExtSourcesPage'}
           }
         ]
       }

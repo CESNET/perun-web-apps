@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {SideMenuItem} from '../side-menu.component';
-import {openClose} from '../../animations/Animations';
+import { openClose, rollInOut } from '../../animations/Animations';
 import {MatSidenav} from '@angular/material/sidenav';
 
 @Component({
@@ -9,7 +9,8 @@ import {MatSidenav} from '@angular/material/sidenav';
   templateUrl: './side-menu-root-item.component.html',
   styleUrls: ['./side-menu-root-item.component.scss'],
   animations: [
-    openClose
+    openClose,
+    rollInOut
   ]
 })
 export class SideMenuRootItemComponent implements OnInit, OnChanges {

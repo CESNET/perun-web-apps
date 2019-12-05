@@ -18,7 +18,7 @@ export class SideMenuItemService {
 
   getFacilitiesManagementItem(): SideMenuItem {
     return {
-      label: 'Facilities management',
+      label: 'MAIN_MENU.FACILITIES',
       colorClass: 'base-item-color-activated',
       icon: 'manage_facility_white.svg',
       baseLink: ['/facilities'],
@@ -30,7 +30,7 @@ export class SideMenuItemService {
 
   getAccessManagementItem(): SideMenuItem {
     return {
-      label: 'Access management',
+      label: 'MAIN_MENU.ACCESS',
       colorClass: 'base-item-color-activated',
       icon: 'vo-white.svg',
       links: [],
@@ -40,11 +40,60 @@ export class SideMenuItemService {
     };
   }
 
+  getUserItem(user: User): SideMenuItem {
+    return {
+      baseLink: ['/profile'],
+      expandable: false,
+      label: 'MAIN_MENU.PROFILE',
+      colorClass: 'base-item-color-activated',
+      icon: 'user-white.svg',
+      baseColorClass: 'base-item-color',
+      baseColorClassRegex: '^/profile$',
+      activatedClass: 'dark-item-activated',
+      linksClass: 'dark-item-links',
+      links: [
+        {
+          label: 'MENU_ITEMS.USER.OVERVIEW',
+          url: ['/profile'],
+          activatedRegex: '^/profile$'
+        },
+        {
+          label: 'MENU_ITEMS.USER.DETAIL',
+          url: ['/profile/detail'],
+          activatedRegex: `^/profile/detail`
+        },
+        {
+          label: 'MENU_ITEMS.USER.ORGANIZATIONS',
+          url: [`/profile/organizations`],
+          activatedRegex: `^/profile/organizations`
+        },
+        {
+          label: 'MENU_ITEMS.USER.GROUPS',
+          url: [`/profile/groups`],
+          activatedRegex: `^/profile/groups`
+        },
+        {
+          label: 'MENU_ITEMS.USER.SETTINGS',
+          url: [`/profile/settings`],
+          activatedRegex: `^/profile/settings$`,
+          children: [
+            {
+              label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
+              url: [`/profile/settings/attributes`],
+              activatedRegex: `^/profile/settings/attributes`
+            }
+          ],
+          showChildrenRegex: `^/profile/settings`
+        },
+      ],
+    };
+  }
+
   getAdminItem(): SideMenuItem {
     return {
       baseLink: ['/admin'],
       expandable: false,
-      label: 'MENU_ITEMS.ADMIN.TITLE',
+      label: 'MAIN_MENU.ADMIN',
       colorClass: 'base-item-color-activated',
       icon: 'perun_admin-white.svg',
       baseColorClass: 'base-item-color',
@@ -427,6 +476,11 @@ export class SideMenuItemService {
             label: 'MENU_ITEMS.VO.NOTIFICATIONS',
             url: [`/organizations/${vo.id}/settings/notifications`],
             activatedRegex: '/organizations/\\d+/settings/notifications$'
+          },
+          {
+            label: 'MENU_ITEMS.VO.EXTSOURCES',
+            url: [`/organizations/${vo.id}/settings/extsources`],
+            activatedRegex: '/organizations/\\d+/settings/extsources$'
           }
         ],
         showChildrenRegex: '/organizations/\\d+/settings'

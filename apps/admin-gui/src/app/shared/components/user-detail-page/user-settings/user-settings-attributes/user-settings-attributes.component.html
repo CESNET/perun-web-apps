@@ -1,0 +1,26 @@
+<div>
+  <h1 class="page-subtitle">{{'USER_DETAIL.SETTINGS.ATTRIBUTES.TITLE' | translate}}</h1>
+  <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
+  <button mat-flat-button class="mr-2" color="accent" (click)="onCreate()">
+    {{'USER_DETAIL.SETTINGS.ATTRIBUTES.CREATE' | translate}}
+  </button>
+
+  <button mat-flat-button class="mr-2" color="accent" (click)="onSave()" [disabled]="selection.selected.length === 0">
+    {{'USER_DETAIL.SETTINGS.ATTRIBUTES.SAVE' | translate}}
+  </button>
+
+  <button mat-flat-button color="warn" (click)="onDelete()" [disabled]="selection.selected.length === 0">
+    {{'USER_DETAIL.SETTINGS.ATTRIBUTES.DELETE' | translate}}
+  </button>
+  <app-immediate-filter [placeholder]="'SHARED.COMPONENTS.ATTRIBUTES_LIST.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
+
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+
+  <app-attributes-list
+    #list
+    *ngIf="!loading"
+    [filterValue]="filterValue"
+    [attributes]="attributes"
+    [selection]="selection">
+  </app-attributes-list>
+</div>

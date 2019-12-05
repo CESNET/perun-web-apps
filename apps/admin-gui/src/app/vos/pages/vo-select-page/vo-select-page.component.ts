@@ -32,10 +32,13 @@ export class VoSelectPageComponent implements OnInit {
 
   selection: SelectionModel<Vo>;
 
+  displayedColumns: string[];
+
   ngOnInit() {
     this.loading = true;
     this.selection = new SelectionModel<Vo>(false, []);
     this.isVoAdmin = this.authzService.isVoAdmin();
+    this.displayedColumns = this.isVoAdmin ? ['checkbox', 'id', 'recent', 'name'] : ['id', 'recent', 'name'];
     this.sideMenuService.setAccessMenuItems([]);
     this.refreshTable();
   }

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {openClose, tagsOpenClose} from '../../../animations/Animations';
 import { ApplicationMail } from '@perun-web-apps/perun/models';
@@ -28,7 +28,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: ApplicationFormAddEditMailDialogData) { }
 
   applicationMail: ApplicationMail;
-  tagsAvailable = false;
+  showTags = false;
   isTextFocused = true;
   invalidNotification = false;
   language = 'en';
@@ -41,12 +41,11 @@ export class AddEditNotificationDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  create(enInput, enTextarea, csInput, csTextarea) {
+  create() {
     this.notificationExist();
     if (this.invalidNotification) {
       return;
     }
-    this.copyTexts(enInput, enTextarea, csInput, csTextarea);
     if (this.data.groupId) {
       this.registrarService.addApplicationMailForGroup(this.data.groupId, this.applicationMail).subscribe( () => {
         this.dialogRef.close(true);
@@ -58,18 +57,13 @@ export class AddEditNotificationDialogComponent implements OnInit {
     }
   }
 
-  save(enInput, enTextarea, csInput, csTextarea) {
-    this.copyTexts(enInput, enTextarea, csInput, csTextarea);
+  save() {
     this.registrarService.updateApplicationMail(this.applicationMail).subscribe( () => {
       this.dialogRef.close(true);
     });
   }
 
-  changeTagsAvailability() {
-    this.tagsAvailable = !this.tagsAvailable;
-  }
-
-  addTag(input: HTMLInputElement, textarea: HTMLTextAreaElement, tag: string) {
+  addTag(input: HTMLInputElement, textarea: HTMLTextAreaElement, language: string, tag: string) {
     let place: any;
     if (!this.isTextFocused) {
       place = input;
@@ -77,9 +71,18 @@ export class AddEditNotificationDialogComponent implements OnInit {
       place = textarea;
     }
     const position: number = place.selectionStart;
-    place.setRangeText(tag);
+    if (this.isTextFocused) {
+      this.applicationMail.message[language].text =
+        this.applicationMail.message[language].text.substring(0, position) +
+        tag +
+        this.applicationMail.message[language].text.substring(position);
+    } else {
+      this.applicationMail.message[language].subject =
+        this.applicationMail.message[language].subject.substring(0, position)
+        + tag +
+        this.applicationMail.message[language].subject.substring(position);
+    }
     place.focus();
-    place.setSelectionRange(position + tag.length, position + tag.length);
   }
 
   notificationExist() {
@@ -90,12 +93,5 @@ export class AddEditNotificationDialogComponent implements OnInit {
       }
     }
     this.invalidNotification =  false;
-  }
-
-  copyTexts(enInput: any, enTextarea: any, csInput: any, csTextarea: any) {
-    this.applicationMail.message['en'].subject = enInput.value;
-    this.applicationMail.message['en'].text = enTextarea.value;
-    this.applicationMail.message['cs'].subject = csInput.value;
-    this.applicationMail.message['cs'].text = csTextarea.value;
   }
 }

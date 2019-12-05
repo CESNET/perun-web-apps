@@ -1,16 +1,19 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
-import {NotificatorService} from '../../../../core/services/common/notificator.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SelectionModel} from '@angular/cdk/collections';
-import { MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { MemberCandidate } from '@perun-web-apps/perun/models';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificatorService } from '../../../../core/services/common/notificator.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
+import { GroupService, MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
+import { Group, MemberCandidate } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
 
 export interface AddMemberDialogData {
-  voId: number;
+  voId?: number;
+  entityId: number;
+  group?: Group;
   theme: string;
+  type: 'vo' | 'group';
 }
 
 @Component({
@@ -24,6 +27,7 @@ export class AddMemberDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMemberDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddMemberDialogData,
     private memberService: MembersService,
+    private groupService: GroupService,
     private voService: VoService,
     private registrarService: RegistrarService,
     private translate: TranslateService,
@@ -58,23 +62,40 @@ export class AddMemberDialogComponent implements OnInit {
   onAdd(): void {
     this.processing = true;
     // TODO Adds only one member at the time. In the future there would be need to add more
-    this.memberService.addMember(this.data.voId, this.selection.selected[0].richUser.id).subscribe(() => {
-      this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS').subscribe(() => {
-        this.notificator.showSuccess(this.successMessage);
-        this.dialogRef.close();
-        this.processing = false;
-      });
-    });
+    const selectedMemberCandidate = this.selection.selected[0];
+
+    if (this.data.type === 'vo') {
+      if (!!selectedMemberCandidate.richUser) {
+        this.addUserToVo(selectedMemberCandidate);
+      } else {
+        this.addCandidateToVo(selectedMemberCandidate);
+      }
+    } else if (this.data.type === 'group') {
+      if (!!selectedMemberCandidate.member) {
+        this.addMemberToGroup(selectedMemberCandidate);
+      }
+      else if (!!selectedMemberCandidate.richUser) {
+        this.addUserToGroup(selectedMemberCandidate);
+      }
+      else if (!!selectedMemberCandidate.candidate) {
+        this.addCandidateToGroup(selectedMemberCandidate);
+      }
+    }
   }
 
   onInvite(): void {
+
     // TODO Was not tested properly. Need to be tested on devel.
-   this.registrarService.sendInvitationToExistingUser(this.selection.selected[0].richUser.id, this.data.voId).subscribe(() => {
-      this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS_INVITE').subscribe(() => {
-        this.notificator.showSuccess(this.successInviteMessage);
-        this.dialogRef.close();
-     });
-    });
+    if (this.data.type === 'vo') {
+      this.registrarService.sendInvitationToExistingUser(this.selection.selected[0].richUser.id, this.data.entityId).subscribe(() => {
+        this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS_INVITE').subscribe(() => {
+          this.notificator.showSuccess(this.successInviteMessage);
+          this.dialogRef.close();
+        });
+      });
+    } else if (this.data.type === 'group') {
+      //TODO
+    }
   }
 
   onSearchByString() {
@@ -83,7 +104,10 @@ export class AddMemberDialogComponent implements OnInit {
     this.selection.clear();
 
     // TODO properly test it on devel when possible.
-    this.voService.getCompleteCandidates(this.data.voId,
+
+    this.voService.getCompleteCandidates(
+      this.data.entityId,
+      this.data.type,
       [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL], this.searchString).subscribe(
       members => {
         this.members = members;
@@ -98,4 +122,47 @@ export class AddMemberDialogComponent implements OnInit {
     this.theme = this.data.theme;
   }
 
+  private addUserToVo(selectedMemberCandidate: MemberCandidate) {
+    this.memberService.createMember(this.data.entityId, selectedMemberCandidate.richUser.id).subscribe(() => {
+      this.onAddSuccess();
+    }, () => this.onError());
+  }
+
+  private addCandidateToVo(selectedMemberCandidate: MemberCandidate) {
+    this.memberService.createMemberForCandidate(
+      this.data.entityId, selectedMemberCandidate.candidate).subscribe(() => {
+      this.onAddSuccess();
+    }, () => this.onError());
+  }
+
+  private addUserToGroup(selectedMemberCandidate: MemberCandidate) {
+    this.memberService.createMemberWithGroups(
+      this.data.voId, selectedMemberCandidate.richUser.id, [this.data.group]).subscribe(() => {
+      this.onAddSuccess();
+    }, () => this.onError());
+  }
+
+  private addMemberToGroup(selectedMemberCandidate: MemberCandidate) {
+    this.groupService.addMembers(this.data.entityId, [selectedMemberCandidate.member.id]).subscribe(() => {
+      this.onAddSuccess();
+    }, () => this.onError());
+  }
+
+  private addCandidateToGroup(selectedMemberCandidate: MemberCandidate) {
+    this.memberService.createMemberForCandidateWithGroups(
+      this.data.voId, selectedMemberCandidate.candidate, [this.data.group]).subscribe(() => {
+      this.onAddSuccess();
+    }, () => this.onError());
+  }
+
+  private onAddSuccess() {
+    this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS').subscribe(() => {
+      this.notificator.showSuccess(this.successMessage);
+      this.dialogRef.close();
+    });
+  }
+
+  private onError() {
+      this.processing = false;
+  }
 }

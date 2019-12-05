@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { PerunApiService } from './perun-api-service';
-import { Member, RichMember } from '@perun-web-apps/perun/models';
+import { Candidate, Group, Member, RichMember } from '@perun-web-apps/perun/models';
 
 @Injectable({
   providedIn: 'root'
@@ -76,10 +76,60 @@ export class MembersService {
     }, showNotificationOnError);
   }
 
-  addMember(voId: number, userId: number, showNotificationOnError = true): Observable<RichMember> {
+  createMember(voId: number, userId: number, showNotificationOnError = true): Observable<RichMember> {
     return this.apiService.post('json/membersManager/createMember', {
       vo: voId,
       user: userId
+    }, showNotificationOnError);
+  }
+
+  createMemberWithGroups(
+    voId: number,
+    userId: number,
+    groups: Group[],
+    showNotificationOnError = true
+  ): Observable<RichMember> {
+    return this.apiService.post('json/membersManager/createMember', {
+      vo: voId,
+      user: userId,
+      groups: groups
+    }, showNotificationOnError);
+  }
+
+  createMemberForCandidateWithGroups(
+    voId: number,
+    candidate: Candidate,
+    groups: Group[],
+    showNotificationOnError = true
+  ): Observable<RichMember> {
+    return this.apiService.post('json/membersManager/createMember', {
+      vo: voId,
+      candidate: candidate,
+      groups: groups
+    }, showNotificationOnError);
+  }
+
+  createMemberForCandidate(
+    voId: number,
+    candidate: Candidate,
+    showNotificationOnError = true
+  ): Observable<RichMember> {
+    return this.apiService.post('json/membersManager/createMember', {
+      vo: voId,
+      candidate: candidate
+    }, showNotificationOnError);
+  }
+
+  getMemberByUser(voId: number, userId: number, showNotificationOnError = true): Observable<Member> {
+    return this.apiService.post('json/membersManager/getMemberByUser', {
+      'vo': voId,
+      'user': userId
+    }, showNotificationOnError);
+  }
+
+  getRichMember(memberId: number, showNotificationOnError = true): Observable<RichMember> {
+    return this.apiService.post('json/membersManager/getRichMember', {
+      'id': memberId
     }, showNotificationOnError);
   }
 }

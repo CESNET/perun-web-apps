@@ -17,6 +17,7 @@ import {
 } from '../../../../../shared/components/dialogs/update-application-form-dialog/update-application-form-dialog.component';
 import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationForm, ApplicationFormItem } from '@perun-web-apps/perun/models';
+import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
 
 @Component({
   selector: 'app-group-settings-application-form',
@@ -32,6 +33,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
               private dialog: MatDialog,
               private notificator: NotificatorService,
               private translate: TranslateService,
+              private apiRequest: ApiRequestConfigurationService,
               private router: Router) { }
 
   loading = false;
@@ -46,6 +48,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     this.route.parent.parent.params.subscribe(params => {
       this.voId = params['voId'];
       this.groupId = params['groupId'];
+      // FIXME this might not work in case of some race condition (other request finishes sooner)
+      this.apiRequest.dontHandleErrorForNext();
       this.registrarService.getApplicationFormForGroup(this.groupId, false).subscribe( form => {
         this.applicationForm = form;
         this.registrarService.getFormItemsForGroup(this.groupId).subscribe( formItems => {

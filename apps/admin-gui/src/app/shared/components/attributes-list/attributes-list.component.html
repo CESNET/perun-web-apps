@@ -2,8 +2,17 @@
   <div class="card-body">
     <app-table-options [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
 
-    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear
-           class="w-100">
+    <table
+      [hiddenColumns]="[0]"
+      mat-table
+      matTableExporter
+      [dataSource]="dataSource"
+      #exporter="matTableExporter"
+      matSort
+      matSortActive="id"
+      matSortDirection="asc"
+      matSortDisableClear
+      class="w-100">
 
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
@@ -57,7 +66,7 @@
         class="dark-hover-list-item">
       </tr>
     </table>
-    <mat-paginator [length]="this.attributes.length" [pageSize]="10" [pageSizeOptions]="[5,10,25]"></mat-paginator>
+    <mat-paginator [length]="this.attributes.length" [pageSize]="5" [pageSizeOptions]="[5,10,25]"></mat-paginator>
   </div>
 </div>
 

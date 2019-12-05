@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Vo } from '@perun-web-apps/perun/models';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -8,7 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './vo-select-table.component.html',
   styleUrls: ['./vo-select-table.component.scss']
 })
-export class VoSelectTableComponent implements OnChanges, AfterViewInit, OnInit {
+export class VoSelectTableComponent implements OnChanges, AfterViewInit {
 
   constructor() { }
 
@@ -25,7 +25,7 @@ export class VoSelectTableComponent implements OnChanges, AfterViewInit, OnInit 
   selection: SelectionModel<Vo>;
 
   @Input()
-  isVoAdmin: boolean;
+  displayedColumns: string[];
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -36,9 +36,7 @@ export class VoSelectTableComponent implements OnChanges, AfterViewInit, OnInit 
 
   private sort: MatSort;
 
-  displayedColumns: string[];
   dataSource: MatTableDataSource<Vo>;
-
   exporting = false;
 
   ngOnChanges(changes: SimpleChanges) {
@@ -60,9 +58,5 @@ export class VoSelectTableComponent implements OnChanges, AfterViewInit, OnInit 
 
   checkboxLabel(row?: Vo): string {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
-  }
-
-  ngOnInit(): void {
-    this.displayedColumns = this.isVoAdmin ? ['checkbox','id', 'recent', 'name'] : ['id', 'recent', 'name'];
   }
 }

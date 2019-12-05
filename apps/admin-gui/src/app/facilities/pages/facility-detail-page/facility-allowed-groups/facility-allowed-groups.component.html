@@ -13,7 +13,7 @@
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
   <app-groups-list
     *ngIf="!loading && groupsToShow.length !== 0"
-    [hideColumns]="['menu']"
+    [hideColumns]="['menu', 'vo']"
     [groups] = "groupsToShow"
     [disableMembers]="false">
   </app-groups-list>

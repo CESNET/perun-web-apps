@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthResolverService} from '../../../core/services/common/auth-resolver.service';
-import {SideMenuService} from '../../../core/services/common/side-menu.service';
-import {SideMenuItemService} from '../../side-menu/side-menu-item.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthResolverService } from '../../../core/services/common/auth-resolver.service';
+import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { UsersService } from '@perun-web-apps/perun/services';
 import { PerunPrincipal, User } from '@perun-web-apps/perun/models';
+import { StoreService } from '../../../core/services/common/store.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +16,7 @@ export class UserProfileComponent implements OnInit {
     public authResolver: AuthResolverService,
     private usersService: UsersService,
     private sideMenuService: SideMenuService,
-    private sideMenuItemService: SideMenuItemService
+    private store: StoreService
   ) {
   }
 
@@ -26,10 +26,9 @@ export class UserProfileComponent implements OnInit {
   regex = `/profile`;
 
   ngOnInit() {
-    this.principal = this.authResolver.getPerunPrincipal();
+    this.principal = this.store.getPerunPrincipal();
     this.user = this.principal.user;
 
-    const userItem = this.sideMenuItemService.parseUser(this.user, this.path, this.regex);
-    this.sideMenuService.setAdminItems([userItem]);
+    this.sideMenuService.setUserItems([]);
   }
 }

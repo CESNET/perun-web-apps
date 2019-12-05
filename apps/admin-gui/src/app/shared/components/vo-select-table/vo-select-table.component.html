@@ -3,7 +3,7 @@
     <app-table-options [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
     <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortDirection="asc" matSortDisableClear
            class="w-100">
-      <ng-container matColumnDef="checkbox" *ngIf="isVoAdmin">
+      <ng-container matColumnDef="checkbox">
         <th mat-header-cell *matHeaderCellDef>
         </th>
         <td mat-cell *matCellDef="let member" class="static-column-size">

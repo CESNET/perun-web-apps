@@ -1,6 +1,6 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {NotificationData} from '../../../shared/models/NotificationData';
-import {TranslateService} from '@ngx-translate/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { NotificationData } from '../../../shared/models/NotificationData';
+import { TranslateService } from '@ngx-translate/core';
 import { RPCError } from '@perun-web-apps/perun/models';
 
 @Injectable({
@@ -11,18 +11,32 @@ export class NotificatorService {
   constructor(
     private translate: TranslateService
   ) {
-    this.translate.get('NOTIFICATOR.NOTIFICATION.DEFAULT_ACTION').subscribe(value => this.defaultAction = value);
-    this.translate.get('NOTIFICATOR.NOTIFICATION.DEFAULT_RPC_ERROR_MESSAGE').subscribe(value => this.defaultRpcMessage = value);
   }
 
   defaultAction: string;
   defaultRpcMessage: string;
 
-  defaultErrorDelayMs = 10_000;
-  defaultSuccessDelayMs = 6_000;
+  defaultErrorDelayMs = 5_000;
+  defaultSuccessDelayMs = 3_000;
 
   @Output()
   addNotification: EventEmitter<NotificationData> = new EventEmitter<NotificationData>();
+
+  getDefaultActionMessage(): string {
+    if (this.defaultAction === undefined) {
+      return this.defaultAction = this.translate.instant('NOTIFICATOR.NOTIFICATION.DEFAULT_ACTION');
+    } else {
+      return this.defaultAction;
+    }
+  }
+
+  getDefaultRpcMessage(): string {
+    if (this.defaultRpcMessage === undefined) {
+      return this.defaultRpcMessage = this.translate.instant('NOTIFICATOR.NOTIFICATION.DEFAULT_RPC_ERROR_MESSAGE');
+    } else {
+      return this.defaultRpcMessage;
+    }
+  }
 
   /**
    * Shows default RPC error
@@ -30,7 +44,7 @@ export class NotificatorService {
    * @param rpcError - error returned by the backend
    * @param errorMessage - custom message that will be displayed
    */
-  showRPCError(rpcError: RPCError, errorMessage = this.defaultRpcMessage): void {
+  showRPCError(rpcError: RPCError, errorMessage = this.getDefaultRpcMessage()): void {
     this.showError(errorMessage + '\n' + rpcError.name, rpcError, rpcError.message);
   }
 
@@ -49,7 +63,7 @@ export class NotificatorService {
       error: error,
       description: description,
       title: title,
-      actionText: actionText === undefined && description !== undefined ? this.defaultAction : actionText ,
+      actionText: actionText === undefined && description !== undefined ? this.getDefaultActionMessage() : actionText,
       delay: this.defaultErrorDelayMs,
       icon: 'error_outline',
       action: action
@@ -69,7 +83,7 @@ export class NotificatorService {
       type: 'success',
       description: description,
       title: title,
-      actionText: actionText === undefined && description !== undefined ? this.defaultAction : actionText,
+      actionText: actionText === undefined && description !== undefined ? this.getDefaultActionMessage() : actionText,
       delay: this.defaultSuccessDelayMs,
       icon: 'done',
       action: action

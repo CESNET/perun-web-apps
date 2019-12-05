@@ -114,8 +114,8 @@
               <div class="font-weight-bold">
                 {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
               </div>
-              <button mat-stroked-button (click)="changeTagsAvailability()">
-                {{tagsAvailable ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
+              <button mat-stroked-button (click)="this.showTags = !this.showTags;">
+                {{showTags ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
                                   ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SHOW_TAGS' | translate)}}
               </button>
               <mat-form-field class="w-100">
@@ -128,9 +128,9 @@
               </mat-form-field>
             </div>
 
-            <div [@tagsOpenClose]="tagsAvailable ? 'open' : 'closed'">
+            <div [@tagsOpenClose]="showTags ? 'open' : 'closed'">
               <app-tag-bar
-                (addedTag)="addTag(enInput, enTextarea, $event)">
+                (addedTag)="addTag(enInput, enTextarea, 'en', $event)">
               </app-tag-bar>
             </div>
           </div>
@@ -153,8 +153,8 @@
               <div class="font-weight-bold">
                 {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
               </div>
-              <button mat-stroked-button (click)="changeTagsAvailability()">
-                {{tagsAvailable ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
+              <button mat-stroked-button (click)="this.showTags = !this.showTags;">
+                {{showTags ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
                 ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SHOW_TAGS' | translate)}}
               </button>
               <mat-form-field class="w-100">
@@ -167,9 +167,9 @@
               </mat-form-field>
             </div>
 
-            <div [@tagsOpenClose]="tagsAvailable ? 'open' : 'closed'">
+            <div [@tagsOpenClose]="showTags ? 'open' : 'closed'">
               <app-tag-bar
-                (addedTag)="addTag(csInput, csTextarea, $event)">
+                (addedTag)="addTag(csInput, csTextarea, 'cs',$event)">
               </app-tag-bar>
             </div>
           </div>
@@ -191,7 +191,7 @@
       class="ml-2"
       color="accent"
       [disabled]="invalidNotification"
-      (click)="create(enInput, enTextarea, csInput, csTextarea)">
+      (click)="create()">
       {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
     </button>
     <button
@@ -199,7 +199,7 @@
       *ngIf="!data.createMailNotification"
       class="ml-2"
       color="accent"
-      (click)="save(enInput, enTextarea, csInput, csTextarea)">
+      (click)="save()">
       {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
     </button>
   </div>

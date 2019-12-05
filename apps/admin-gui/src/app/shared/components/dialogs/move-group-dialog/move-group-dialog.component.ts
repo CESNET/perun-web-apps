@@ -9,6 +9,7 @@ import {NotificatorService} from '../../../../core/services/common/notificator.s
 import {TranslateService} from '@ngx-translate/core';
 import { GroupService } from '@perun-web-apps/perun/services';
 import { Group } from '@perun-web-apps/perun/models';
+import { ApiRequestConfigurationService } from '../../../../core/services/api/api-request-configuration.service';
 
 export interface MoveGroupDialogData {
   group: GroupFlatNode;
@@ -30,7 +31,8 @@ export class MoveGroupDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MoveGroupDialogData,
     private groupService: GroupService,
     private notificator: NotificatorService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private apiRequest: ApiRequestConfigurationService
   ) {
     this.translate.get('DIALOGS.MOVE_GROUP.SUCCESS').subscribe(value => this.successMessage = value);
     this.translate.get('DIALOGS.MOVE_GROUP.ERROR').subscribe(value => this.errorMessage = value);
@@ -85,6 +87,8 @@ export class MoveGroupDialogComponent implements OnInit {
 
   confirm() {
     this.loading = true;
+    // FIXME this might not work in case of some race condition (other request finishes sooner)
+    this.apiRequest.dontHandleErrorForNext();
     this.groupService.moveGroup(
       this.data.group.id,
       this.otherGroupsCtrl.value ? this.otherGroupsCtrl.value.id : undefined,

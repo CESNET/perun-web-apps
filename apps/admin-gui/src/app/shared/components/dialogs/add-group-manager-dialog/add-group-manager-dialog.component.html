@@ -27,7 +27,7 @@
     <div class="mt-3" *ngIf="groups !== null && !loading">
       <app-groups-list
         [inDialog]="true"
-        [hideColumns]="['menu']"
+        [hideColumns]="['menu', 'vo']"
         [selection]="selection"
         [groups]="groups"
         [disableMembers]="false">

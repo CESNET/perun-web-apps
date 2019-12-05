@@ -67,6 +67,12 @@ export class VoSettingsOverviewComponent implements OnInit {
         url: `/organizations/${this.vo.id}/settings/notifications`,
         label: 'MENU_ITEMS.VO.NOTIFICATIONS',
         style: 'vo-btn'
+      },
+      {
+        icon: 'external_sources-white.svg',
+        url: `/organizations/${this.vo.id}/settings/extsources`,
+        label: 'MENU_ITEMS.VO.EXTSOURCES',
+        style: 'vo-btn'
       }
     ];
   }

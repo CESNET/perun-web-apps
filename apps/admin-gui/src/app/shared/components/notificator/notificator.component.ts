@@ -5,6 +5,7 @@ import {flyInOut} from '../../animations/Animations';
 import { doAfterDelay } from '@perun-web-apps/perun/utils';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from '../../../app.component';
+import { NotificationStorageService } from '../../../core/services/common/notification-storage.service';
 
 @Component({
   selector: 'app-notificator',
@@ -18,6 +19,7 @@ export class NotificatorComponent {
 
   constructor(
     private notificator: NotificatorService,
+    private notificationStorageService: NotificationStorageService
   ) {
     this.notificator.addNotification.subscribe(notificationData => {
       this.processNotification(notificationData);
@@ -30,12 +32,13 @@ export class NotificatorComponent {
   notifications: NotificationData[] = [];
 
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?) {
+  getScreenSize() {
     this.mobileView = window.innerWidth <= AppComponent.minWidth;
   }
 
   private processNotification(data: NotificationData): void {
     this.notifications.push(data);
+    this.notificationStorageService.storeNotification(data);
 
     doAfterDelay(data.delay, () => {
       this.notifications.shift();

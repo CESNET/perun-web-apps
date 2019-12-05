@@ -1,13 +1,18 @@
 {
   "NAV": {
     "LOGOUT": "Log out",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "NOTIFICATIONS_TOOLTIP": "Recent notifications"
   },
   "MAIN_MENU": {
-    "VOS": "Organizations",
-    "FACILITIES": "Facilities",
-    "USERS": "Users",
-    "ADMIN": "Admin"
+    "ACCESS": "Access management",
+    "FACILITIES": "Facilities management",
+    "ADMIN": "Perun admin",
+    "PROFILE": "Profile",
+    "ACCESS_DESC": "Manage organizations, groups and members.",
+    "FACILITIES_DESC": "Manage facilities and resources.",
+    "ADMIN_DESC": "Manage attributes, users and do diagnostics.",
+    "PROFILE_DESC": "View information about you and your organizations and groups."
   },
   "VO_MANAGEMENT": {
     "TITLE": "Select organization",
@@ -176,7 +181,7 @@
         "SUCCESS_MESSAGE": "Settings saved.",
         "ERROR_MESSAGE": "Failed to save settings."
       },
-      "APPLICATION_FORM":{
+      "APPLICATION_FORM": {
         "TITLE": "Application form",
         "DRAG_AND_DROP_INFO": "You can move the table items by dragging them with the handle on the left side.",
         "ADD_BUTTON": "Add",
@@ -444,7 +449,8 @@
       "EXPIRATION": "Membership",
       "MANAGERS": "Managers",
       "APPLICATION_FORM": "Application form",
-      "NOTIFICATIONS": "Notifications"
+      "NOTIFICATIONS": "Notifications",
+      "EXTSOURCES": "External sources"
     },
     "FACILITY": {
       "OVERVIEW": "Overview",
@@ -598,8 +604,12 @@
     "REMOVE_MEMBERS": {
       "TITLE": "Confirm removal",
       "DESCRIPTION": "Following members will be removed from VO and their settings will be lost.\n\nYou can consider changing their status to \"DISABLED\", which will prevent them from accessing VO resources.",
+      "DESCRIPTION_GROUP": "Following members will be removed from group. They will lose access to resources provided by this group.",
       "ASK": "Do you want to proceed?",
-      "SUCCESS": "Selected members were deleted"
+      "SUCCESS": "Selected members were deleted",
+      "SUCCESS_GROUP": "Selected members were removed",
+      "REMOVE": "Delete",
+      "REMOVE_GROUP": "Remove"
     },
     "REMOVE_RESOURCES": {
       "TITLE": "Confirm removal",
@@ -927,6 +937,11 @@
       "CONFIRM": "Delete",
       "WARNING": "This action will also delete all assigned values",
       "SUCCESS": "Selected attributes has been deleted successfully"
+    },
+    "NOTIFICATION_LIST": {
+      "TITLE": "Recent notifications",
+      "CANCEL": "Cancel",
+      "NO_NOTIFICATIONS_ALERT": "There are no recent notifications"
     }
   },
   "MEMBERS_LIST": {
@@ -1027,6 +1042,24 @@
       "USER_ID": "User ID",
       "USER_TYPE": "User type",
       "EDIT_NAME": "Edit name"
+    },
+    "ORGANIZATIONS": {
+      "TITLE": "User organizations",
+      "FILTER": "Filter by name or ID",
+      "IS_ADMIN": "Organizations where you are admin",
+      "IS_MEMBER": "Organizations where you are member"
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add...",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      }
     }
   },
   "SHARED": {
@@ -1048,6 +1081,7 @@
       },
       "GROUPS_LIST": {
         "TABLE_GROUP_ID": "Id",
+        "TABLE_VO_NAME": "Vo",
         "TABLE_GROUP_NAME": "Name",
         "TABLE_SEARCH": "Filter by name, description or ID",
         "TABLE_GROUP_DESCRIPTION": "Description"
@@ -1075,6 +1109,12 @@
         "GROUP": "Group",
         "NO_MANAGERS": "This role has no managers.",
         "NO_GROUP_MANAGERS": "This role has no group managers."
+      },
+      "USER_DETAIL": {
+        "GROUPS": {
+          "MEMBER_GROUPS": "Member groups",
+          "ADMINS_GROUPS": "Groups where user is admin"
+        }
       }
     },
     "FOOTER": {
@@ -1083,8 +1123,8 @@
       "PERUN_WEB": "Perun website",
       "PERUN_TEAM": "Perun team",
       "SUPPORT": "Support",
-      "USER_DOCUMENTATION": "Users Documentation",
-      "ADMINISTRATOR_DOCUMENTATION": "Administrators Documentation",
+      "USER_DOCUMENTATION": "Documentation",
+      "ADMINISTRATOR_DOCUMENTATION": "API Documentation",
       "REPORT_ISSUE": "Report Issue",
       "PRIVACY_POLICY": "Privacy Policy"
     }

@@ -1,17 +1,22 @@
 <div class="buttons-container pl-2 pr-2 pl-xl-5 pr-xl-5">
+  <a class="main-menu-button user-btn" [routerLink]="['profile']">
+    <img src="assets/img/PerunWebImages/user-white.svg">
+    <h1>{{'MAIN_MENU.PROFILE' | translate}}</h1>
+    <p>{{'MAIN_MENU.PROFILE_DESC' | translate}}</p>
+  </a>
   <a *ngIf="authResolver.isVoAdmin() || authResolver.isVoObserver()" class="main-menu-button vo-btn" [routerLink]="['organizations']">
     <img src="assets/img/PerunWebImages/vo-white.svg">
-    <h1>Access management</h1>
-    <p>Manage organizations, groups and members.</p>
+    <h1>{{'MAIN_MENU.ACCESS' | translate}}</h1>
+    <p>{{'MAIN_MENU.ACCESS_DESC' | translate}}</p>
   </a>
   <a class="main-menu-button facility-btn" [routerLink]="['facilities']" *ngIf="authResolver.canManageFacilities()">
     <img src="assets/img/PerunWebImages/manage_facility_white.svg">
-    <h1>Facilities management</h1>
-    <p>Manage facilities and resources.</p>
+    <h1>{{'MAIN_MENU.FACILITIES' | translate}}</h1>
+    <p>{{'MAIN_MENU.FACILITIES_DESC' | translate}}</p>
   </a>
   <a *ngIf="authResolver.isPerunAdmin()" class="main-menu-button admin-btn" [routerLink]="['admin']">
     <img src="assets/img/PerunWebImages/perun_admin-white.svg">
-    <h1>Administration tools</h1>
-    <p>Manage attributes, users and do diagnostics.</p>
+    <h1>{{'MAIN_MENU.ADMIN' | translate}}</h1>
+    <p>{{'MAIN_MENU.ADMIN_DESC' | translate}}</p>
   </a>
 </div>

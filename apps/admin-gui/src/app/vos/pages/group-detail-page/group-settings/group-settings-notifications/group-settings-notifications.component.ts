@@ -18,6 +18,7 @@ import {
 } from '../../../../../shared/components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';
 import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationForm, ApplicationMail } from '@perun-web-apps/perun/models';
+import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
 
 @Component({
   selector: 'app-group-settings-notifications',
@@ -32,6 +33,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
               private registrarService: RegistrarService,
               private translate: TranslateService,
               private dialog: MatDialog,
+              private apiRequest: ApiRequestConfigurationService,
               private notificator: NotificatorService) { }
 
   loading = false;
@@ -48,6 +50,9 @@ export class GroupSettingsNotificationsComponent implements OnInit {
     this.route.parent.parent.params.subscribe(params => {
       this.voId = params['voId'];
       this.groupId = params['groupId'];
+
+      // FIXME this might not work in case of some race condition (other request finishes sooner)
+      this.apiRequest.dontHandleErrorForNext();
       this.registrarService.getApplicationFormForGroup(this.groupId, false).subscribe( form => {
         this.applicationForm = form;
         this.registrarService.getApplicationMailsForGroup(this.groupId).subscribe( mails => {

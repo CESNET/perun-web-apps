@@ -17,6 +17,12 @@ export class AppConfigService {
               private authResolver: AuthResolverService,
               private authzService: AuthzService) {}
 
+  loadConfigs(): Promise<void> {
+    return this.loadAppDefaultConfig()
+      .then(() => this.loadAppInstanceConfig())
+      .then(() => this.loadAdditionalData());
+  }
+
   /**
    * Load default configuration.
    * If instance is not in production mode, the configuration is also
@@ -28,14 +34,7 @@ export class AppConfigService {
       this.http.get('/assets/config/defaultConfig.json', {headers: this.getNoCacheHeaders()})
         .subscribe(config => {
           this.storeService.setDefaultConfig(config);
-          if (!environment.production) {
-            this.storeService.setInstanceConfig(config);
-            this.loadAdditionalData(config).then( () => {
-              resolve();
-            });
-          } else {
-            resolve();
-          }
+          resolve();
         });
 
     });
@@ -51,12 +50,8 @@ export class AppConfigService {
 
       this.http.get('/assets/config/instanceConfig.json', { headers: this.getNoCacheHeaders() })
         .subscribe(config => {
-          if (environment.production) {
-            this.storeService.setInstanceConfig(config);
-            this.loadAdditionalData(config).then( () => {
-              resolve();
-            });
-          }
+          this.storeService.setInstanceConfig(config);
+          resolve();
         }, () => {
           if (environment.production) {
             console.error('Failed to load instance config.');
@@ -66,7 +61,6 @@ export class AppConfigService {
             resolve();
           }
         });
-
     });
   }
 
@@ -83,9 +77,9 @@ export class AppConfigService {
    * authenticated the principal is loaded.
    * @param config of the instance
    */
-  loadAdditionalData(config: any): Promise<any> {
+  loadAdditionalData(): Promise<any> {
     return new Promise((resolve) => {
-      this.authService.loadConfigData(config);
+      this.authService.loadConfigData();
 
       this.authService.authenticate().then(() => {
 
@@ -104,7 +98,8 @@ export class AppConfigService {
     return this.authzService.getPerunPrincipal()
       .toPromise()
       .then(perunPrincipal => {
-      this.authResolver.setPerunPrincipal(perunPrincipal);
+        this.storeService.setPerunPrincipal(perunPrincipal);
+        this.authResolver.init(perunPrincipal);
     });
   }
 

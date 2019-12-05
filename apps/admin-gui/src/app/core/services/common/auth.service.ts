@@ -3,22 +3,8 @@ import {User, UserManager, UserManagerSettings} from 'oidc-client';
 import {from, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { StoreService } from './store.service';
 
-export function getClientSettings(appConfig: any): UserManagerSettings {
-  const instanceConfig = appConfig.oidc_client;
-  return {
-    authority: instanceConfig.oauth_authority,
-    client_id: instanceConfig.oauth_client_id,
-    redirect_uri: instanceConfig.oauth_redirect_uri,
-    post_logout_redirect_uri: instanceConfig.oauth_post_logout_redirect_uri,
-    response_type: 'id_token token',
-    scope: 'openid profile perun_api perun_admin',
-    filterProtocolClaims: true,
-    loadUserInfo: true,
-    automaticSilentRenew: true,
-    silent_redirect_uri: instanceConfig.oauth_silent_redirect_uri
-  };
-}
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +13,8 @@ export class AuthService {
   private router: Router;
 
   constructor(
-    private injector: Injector
+    private injector: Injector,
+    private store: StoreService
   ) {
     setTimeout(() => {
       this.router = this.injector.get(Router);
@@ -47,8 +34,23 @@ export class AuthService {
     return this.manager;
   }
 
-  loadConfigData(config: any) {
-    this.manager = new UserManager(getClientSettings(config));
+  getClientSettings(): UserManagerSettings {
+    return {
+      authority: this.store.get('oidc_client', 'oauth_authority'),
+      client_id: this.store.get('oidc_client', 'oauth_client_id'),
+      redirect_uri: this.store.get('oidc_client', 'oauth_redirect_uri'),
+      post_logout_redirect_uri: this.store.get('oidc_client', 'oauth_post_logout_redirect_uri'),
+      response_type: 'id_token token',
+      scope: 'openid profile perun_api perun_admin',
+      filterProtocolClaims: true,
+      loadUserInfo: true,
+      automaticSilentRenew: true,
+      silent_redirect_uri: this.store.get('oidc_client', 'oauth_silent_redirect_uri')
+    };
+  }
+
+  loadConfigData() {
+    this.manager = new UserManager(this.getClientSettings());
     this.setUser();
     this.manager.events.addUserLoaded(user => {
       this.user = user;
@@ -84,7 +86,7 @@ export class AuthService {
   }
 
   getAuthorizationHeaderValue(): string {
-    return 'Bearer ' + this.user.access_token;
+    return !!this.user ? 'Bearer ' + this.user.access_token : '';
   }
 
   startAuthentication(): Promise<void> {

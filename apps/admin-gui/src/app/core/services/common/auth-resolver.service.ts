@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PerunPrincipal, Role } from '@perun-web-apps/perun/models';
 
 @Injectable({
@@ -21,16 +21,10 @@ export class AuthResolverService {
   private observableVos: number[] = [];
   private hasGroupInTheseVos: number[] = [];
 
-  setPerunPrincipal(principal: PerunPrincipal): void {
+  init(principal: PerunPrincipal): void {
     this.principal = principal;
     this.initData(principal);
   }
-
-  getPerunPrincipal(): PerunPrincipal {
-    return this.principal;
-  }
-
-
   public canManageFacilities(): boolean {
     return this.hasAtLeasOne(Role.PERUNADMIN, Role.FACILITYADMIN);
   }

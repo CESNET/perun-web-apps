@@ -1,0 +1,21 @@
+  <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATION_LIST.TITLE' | translate}}</h1>
+  <div *ngIf="notifications.length !== 0" class="hide-horizontal-scrollbar">
+    <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
+      <div *cdkVirtualFor="let data of notifications" class="item">
+        <app-notification [data]="data" [hideShadow]="true">
+        </app-notification>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+  <app-alert color="warn"
+             *ngIf="notifications.length === 0">{{'DIALOGS.NOTIFICATION_LIST.NO_NOTIFICATIONS_ALERT'|translate}}</app-alert>
+
+  <div mat-dialog-actions>
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.NOTIFICATION_LIST.CANCEL' | translate}}
+    </button>
+  </div>
+

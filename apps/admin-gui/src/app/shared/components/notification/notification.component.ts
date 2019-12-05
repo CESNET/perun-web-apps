@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NotificationData} from '../../models/NotificationData';
 import { MatDialog } from '@angular/material/dialog';
 import {NotificationDialogComponent} from '../notification-dialog/notification-dialog.component';
@@ -16,6 +16,9 @@ export class NotificationComponent {
 
   @Input()
   data: NotificationData;
+
+  @Input()
+  hideShadow: boolean;
 
   doAction(): void {
     if (this.data.action !== undefined) {

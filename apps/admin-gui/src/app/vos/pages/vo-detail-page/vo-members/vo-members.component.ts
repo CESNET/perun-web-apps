@@ -97,7 +97,11 @@ export class VoMembersComponent implements OnInit {
   onAddMember() {
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
       width: '1000px',
-      data: { voId: this.vo.id, theme: 'vo-theme' }
+      data: {
+        entityId: this.vo.id,
+        theme: 'vo-theme',
+        type: 'vo'
+      }
     });
 
     dialogRef.afterClosed().subscribe(() => {

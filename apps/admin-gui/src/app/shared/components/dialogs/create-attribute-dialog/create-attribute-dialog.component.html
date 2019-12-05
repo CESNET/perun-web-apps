@@ -1,22 +1,37 @@
 <div class="{{data.style}}">
-  <h1 class="page-subtitle">{{'DIALOGS.CREATE_ATTRIBUTE.SET_NEW' | translate}}</h1>
-  <app-alert *ngIf="showError" color="error">
-    {{'DIALOGS.CREATE_ATTRIBUTE.ERROR_EMPTY_VALUE' | translate}}
-  </app-alert>
-  <button mat-flat-button class="mr-2" color="accent" (click)="onSave()" [disabled]="selected.selected.length === 0">
-    {{'DIALOGS.CREATE_ATTRIBUTE.SAVE' | translate}}
-  </button>
+  <div mat-dialog-title>
+    <h1 class="page-subtitle">{{'DIALOGS.CREATE_ATTRIBUTE.SET_NEW' | translate}}</h1>
+    <app-immediate-filter class="font-size-1rem" [placeholder]="'SHARED.COMPONENTS.ATTRIBUTES_LIST.FILTER'"
+                          (filter)="applyFilter($event)"></app-immediate-filter>
+    <app-alert class="ml-3 font-size-1rem" *ngIf="showError" color="error">
+      {{'DIALOGS.CREATE_ATTRIBUTE.ERROR_EMPTY_VALUE' | translate}}
+    </app-alert>
+  </div>
+  <div mat-dialog-content>
+    <app-attributes-list
+      *ngIf="attributes !== undefined"
+      #list
+      [filterValue]="filterValue"
+      [attributes]="attributes"
+      [selection]="selected"
+      [inDialog]="true">
+    </app-attributes-list>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.CREATE_ATTRIBUTE.CANCEL' | translate}}
+    </button>
 
-  <button mat-flat-button (click)="onCancel()">
-    {{'DIALOGS.CREATE_ATTRIBUTE.CANCEL' | translate}}
-  </button>
-  <app-immediate-filter [placeholder]="'SHARED.COMPONENTS.ATTRIBUTES_LIST.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
-  <app-attributes-list
-    *ngIf="attributes !== undefined"
-    #list
-    [filterValue]="filterValue"
-    [attributes]="attributes"
-    [selection]="selected"
-    [inDialog]="true">
-  </app-attributes-list>
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="accent"
+      (click)="onSave()"
+      [disabled]="selected.selected.length === 0">
+      {{'DIALOGS.CREATE_ATTRIBUTE.SAVE' | translate}}
+    </button>
+  </div>
 </div>

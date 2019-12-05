@@ -3,10 +3,11 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource} from '@angular/materi
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import {TranslateService} from '@ngx-translate/core';
 import { RichMember } from '@perun-web-apps/perun/models';
-import { MembersService } from '@perun-web-apps/perun/services';
+import { GroupService, MembersService } from '@perun-web-apps/perun/services';
 
 export interface RemoveMembersDialogData {
   members: RichMember[];
+  groupId?: number;
 }
 @Component({
   selector: 'app-remove-members-dialog',
@@ -19,6 +20,7 @@ export class RemoveMembersDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<RemoveMembersDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: RemoveMembersDialogData,
     private membersService: MembersService,
+    private groupService: GroupService,
     private notificator: NotificatorService,
     private translate: TranslateService
   ) { }
@@ -38,14 +40,25 @@ export class RemoveMembersDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.membersService.deleteMembers(this.data.members.map(m => m.id)).subscribe(() => {
-      this.translate.get('DIALOGS.REMOVE_MEMBERS.SUCCESS').subscribe(successMessage => {
-        this.notificator.showSuccess(successMessage);
-        this.dialogRef.close(true);
-        this.loading = false;
-      });
-    }, () => {
-      this.loading = false;
-    });
+    if (!!this.data.groupId) {
+      this.groupService.removeMembers(this.data.groupId, this.data.members.map(m => m.id))
+        .subscribe(() => this.onSuccess(), () => this.onError());
+    } else {
+      this.membersService.deleteMembers(this.data.members.map(m => m.id))
+        .subscribe(() => this.onSuccess(), () => this.onError());
+    }
+  }
+
+  onSuccess() {
+    const message = !!this.data.groupId ?
+      this.translate.instant('DIALOGS.REMOVE_MEMBERS.SUCCESS_GROUP'):
+      this.translate.instant('DIALOGS.REMOVE_MEMBERS.SUCCESS');
+    this.notificator.showSuccess(message);
+    this.dialogRef.close(true);
+    this.loading = false;
+  }
+
+  onError() {
+    this.loading = false;
   }
 }

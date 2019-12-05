@@ -4,6 +4,9 @@ import {SelectionModel} from '@angular/cdk/collections';
 import { GroupService, MembersService } from '@perun-web-apps/perun/services';
 import { Group, RichMember } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { AddMemberDialogComponent } from '../../../../shared/components/dialogs/add-member-dialog/add-member-dialog.component';
+import { MatDialog } from '@angular/material';
+import { RemoveMembersDialogComponent } from '../../../../shared/components/dialogs/remove-members-dialog/remove-members-dialog.component';
 
 @Component({
   selector: 'app-group-members',
@@ -17,10 +20,13 @@ export class GroupMembersComponent implements OnInit {
   // used for router animation
   @HostBinding('class.router-component') true;
 
-  constructor(private membersService: MembersService,
-              private groupService: GroupService,
-              protected route: ActivatedRoute,
-              protected router: Router) { }
+  constructor(
+    private membersService: MembersService,
+    private groupService: GroupService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    private dialog: MatDialog
+  ) { }
 
   group: Group;
 
@@ -66,7 +72,22 @@ export class GroupMembersComponent implements OnInit {
   }
 
   onAddMember() {
+    const dialogRef = this.dialog.open(AddMemberDialogComponent, {
+      width: '1000px',
+      data: {
+        voId: this.group.voId,
+        group: this.group,
+        entityId: this.group.id,
+        theme: 'group-theme',
+        type: 'group',
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.firstSearchDone) {
+        this.refreshTable();
+      }
+    });
   }
 
   onKeyInput(event: KeyboardEvent) {
@@ -76,6 +97,19 @@ export class GroupMembersComponent implements OnInit {
   }
 
   onRemoveMembers() {
+    const dialogRef = this.dialog.open(RemoveMembersDialogComponent, {
+      width: '450px',
+      data: {
+        groupId: this.group.id,
+        members: this.selection.selected
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(wereMembersDeleted => {
+      if (wereMembersDeleted) {
+        this.refreshTable();
+      }
+    });
   }
 
   refreshTable() {

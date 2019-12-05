@@ -7,7 +7,7 @@
 
   <groupId>cz.metacentrum.perun</groupId>
   <artifactId>perun-web-apps</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
 
   <name>Perun web apps</name>
 

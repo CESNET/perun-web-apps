@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "ng-openapi-gen": "ng-openapi-gen",
     "ng": "ng",
     "nx": "nx",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run ng-openapi-gen && npm run ng -- build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -25,7 +26,8 @@
     "update:check": "ng update",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "start-dev-admin-gui": "ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check"
   },
   "private": true,
   "dependencies": {

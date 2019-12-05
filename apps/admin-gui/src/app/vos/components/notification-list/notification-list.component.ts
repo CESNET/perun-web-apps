@@ -139,6 +139,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   updateTable(mails: ApplicationMail[]) {
     this.applicationMails = mails;
     this.dataSource = new MatTableDataSource<ApplicationMail>(this.applicationMails);
+    this.setDataSource();
   }
 
   private setDataSource() {

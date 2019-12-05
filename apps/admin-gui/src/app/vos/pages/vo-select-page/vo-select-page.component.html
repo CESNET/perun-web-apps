@@ -12,7 +12,7 @@
   <app-immediate-filter [placeholder]="'VO_MANAGEMENT.FILTER_PLACEHOLDER'" (filter)="applyFilter($event)" *ngIf="!loading"></app-immediate-filter>
   <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
   <app-vo-select-table *ngIf="!loading"
-    [isVoAdmin]="isVoAdmin"
+    [displayedColumns]="displayedColumns"
     [selection]="selection"
     [filterValue]="filterValue"
     [vos]="vos"

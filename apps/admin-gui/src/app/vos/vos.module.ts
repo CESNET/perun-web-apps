@@ -28,7 +28,6 @@ import {VoSettingsManagersComponent} from './pages/vo-detail-page/vo-settings/vo
 import {ApplicationDetailComponent} from './components/application-detail/application-detail.component';
 import {GroupMembersComponent} from './pages/group-detail-page/group-members/group-members.component';
 import {GroupResourcesComponent} from './pages/group-detail-page/group-resources/group-resources.component';
-import {VoSelectTableComponent} from './components/vo-select-table/vo-select-table.component';
 // tslint:disable-next-line:max-line-length
 import {GroupSettingsComponent} from './pages/group-detail-page/group-settings/group-settings.component';
 import {
@@ -75,12 +74,12 @@ import {
 import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 
 @NgModule({
   imports: [
     CommonModule,
     VosRoutingModule,
-    SharedModule,
     MatTableExporterModule,
     SharedModule,
     UiAlertsModule
@@ -118,7 +117,6 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
     GroupMembersComponent,
     GroupApplicationsComponent,
     GroupResourcesComponent,
-    VoSelectTableComponent,
     GroupSettingsComponent,
     GroupSettingsAttributesComponent,
     GroupSettingsOverviewComponent,
@@ -126,7 +124,6 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
     ApplicationFormListComponent,
     ApplicationFormPreviewComponent,
     GroupSettingsOverviewComponent,
-    VoSelectTableComponent,
     MemberSettingsComponent,
     MemberSettingsAttributesComponent,
     MemberSettingsOverviewComponent,
@@ -142,7 +139,8 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
     ExpirationSettingsComponent,
     GroupSettingsManagersComponent,
     GroupSettingsNotificationsComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    VoSettingsExtsourcesComponent
   ],
   entryComponents: [
   ],

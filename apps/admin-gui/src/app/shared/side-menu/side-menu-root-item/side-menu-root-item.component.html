@@ -25,7 +25,7 @@
            [ngClass]="isActive(currentUrl, link.activatedRegex) && item.activatedClass !== undefined ? item.activatedClass : ''">
           {{link.label | translate}}
         </a>
-        <div *ngIf="isActive(currentUrl, link.showChildrenRegex)">
+        <div @rollInOut *ngIf="isActive(currentUrl, link.showChildrenRegex)">
           <a (click)="navigate(child.url)"
              class="pl-5" *ngFor="let child of link?.children"
              [class.activated]="isActive(currentUrl, child.activatedRegex) && item.activatedClass === undefined"

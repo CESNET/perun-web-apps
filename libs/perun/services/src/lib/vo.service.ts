@@ -26,13 +26,15 @@ export class VoService {
     return this.apiService.get(`json/vosManager/getVoById?id=${id}`, new HttpParams(), showNotificationOnError);
   }
 
-  getCompleteCandidates(voId: number, attrNames: string[], searchString: string,
+  getCompleteCandidates(id: number, entity : 'group' | 'vo', attrNames: string[], searchString: string,
                         showNotificationOnError = true): Observable<MemberCandidate[]> {
-    return this.apiService.post('json/vosManager/getCompleteCandidates', {
-      vo: voId,
+    const payload = {
       attrNames: attrNames,
       searchString: searchString
-    }, showNotificationOnError);
+    };
+    payload[entity] = id;
+
+    return this.apiService.post('json/vosManager/getCompleteCandidates', payload, showNotificationOnError);
   }
 
   removeVo(voId:number, force:boolean, showNotificationOnError = true): Observable<Vo> {

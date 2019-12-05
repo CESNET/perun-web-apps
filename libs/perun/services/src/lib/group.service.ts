@@ -78,4 +78,18 @@ export class GroupService {
   getVoOfGroup(id: number, showNotificationOnError = true): Observable<Vo> {
     return this.apiService.get(`json/groupsManager/getVo?group=${id}`, new HttpParams(), showNotificationOnError);
   }
+
+  addMembers(group: number, members: number[], showNotificationOnError: boolean = true): Observable<void> {
+    return this.apiService.post('json/groupsManager/addMembers', {
+      group: group,
+      members: members
+      }, showNotificationOnError);
+  }
+
+  removeMembers(group: number, members: number[], showNotificationOnError: boolean = true): Observable<any> {
+    return this.apiService.post('json/groupsManager/removeMembers', {
+      group: group,
+      members: members
+    }, showNotificationOnError);
+  }
 }

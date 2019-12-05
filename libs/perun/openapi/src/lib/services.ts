@@ -1,0 +1,14 @@
+export { UtilsService } from './services/utils.service';
+export { AuthzResolverService } from './services/authz-resolver.service';
+export { AttributesManagerService } from './services/attributes-manager.service';
+export { DatabaseManagerService } from './services/database-manager.service';
+export { ExtSourcesManagerService } from './services/ext-sources-manager.service';
+export { UsersManagerService } from './services/users-manager.service';
+export { MembersManagerService } from './services/members-manager.service';
+export { FacilitiesManagerService } from './services/facilities-manager.service';
+export { OwnersManagerService } from './services/owners-manager.service';
+export { GroupsManagerService } from './services/groups-manager.service';
+export { ResourcesManagerService } from './services/resources-manager.service';
+export { VosManagerService } from './services/vos-manager.service';
+export { RegistrarManagerService } from './services/registrar-manager.service';
+export { ServicesManagerService } from './services/services-manager.service';

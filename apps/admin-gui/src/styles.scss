@@ -264,7 +264,7 @@ button:focus {
 
 .router-component {
   padding-bottom: 5rem;
-  width: calc(100vw - (300px + 6rem));
+  min-height: calc(100vh - 314px);
   @media(min-width: 769px) and (max-width: 1199px) {
     width: calc(100vw - 330px);
   }
@@ -886,4 +886,8 @@ button:focus {
   height: 0 !important;
   overflow: hidden !important;
   border: none !important;
+}
+
+.mat-drawer-side {
+  border-right: solid 1px #071e24 !important;
 }

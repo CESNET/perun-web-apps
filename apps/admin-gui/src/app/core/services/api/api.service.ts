@@ -27,7 +27,7 @@ export class ApiService implements PerunApiService {
     if (this.api_url === undefined) {
       this.api_url = this.storeService.get('api_url');
     }
-    return this.api_url;
+    return this.api_url + "/";
   }
 
   private formatErrors(error: any, url: string, payload: any, showError) {

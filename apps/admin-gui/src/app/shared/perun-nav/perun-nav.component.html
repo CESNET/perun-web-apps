@@ -1,6 +1,6 @@
 <div id="nav-menu-icons">
   <button mat-icon-button
-          class="mr-2 text-white mt-auto mb-auto d-block d-md-none"
+          class="mr-2 text-white mt-auto mb-auto"
           (click)="sideNav.toggle()">
     <mat-icon>
       menu
@@ -10,21 +10,28 @@
     <img src="assets/img/PerunWebImages/perun_logo-white.svg" alt="Home">
   </a>
 </div>
+
 <div id="nav-menu-user-info">
-  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <button mat-icon-button (click)="showNotificationHistory()" [matTooltip]="'NAV.NOTIFICATIONS_TOOLTIP'|translate">
+    <mat-icon>
+      {{hasNotifications() ? 'notifications_active' : 'notifications'}}
+    </mat-icon>
+  </button>
+
+  <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>
       person
     </mat-icon>
+    <span class="d-none d-lg-inline">
+    {{principal.user.titleBefore}}
+    {{principal.user.firstName}}
+    {{principal.user.middleName}}
+    {{principal.user.lastName}}
+    {{principal.user.titleAfter}}
+    </span>
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item>{{'NAV.LOGOUT' | translate}}</button>
     <button mat-menu-item [routerLink]="['/profile']">{{'NAV.PROFILE' | translate}}</button>
   </mat-menu>
-<!--  <div>-->
-<!--    {{principal.user.titleBefore}}-->
-<!--    {{principal.user.firstName}}-->
-<!--    {{principal.user.middleName}}-->
-<!--    {{principal.user.lastName}}-->
-<!--    {{principal.user.titleAfter}}-->
-<!--  </div>-->
 </div>
