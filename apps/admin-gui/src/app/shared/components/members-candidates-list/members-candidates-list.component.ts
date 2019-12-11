@@ -1,8 +1,13 @@
 import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import { MemberCandidate } from '@perun-web-apps/perun/models';
-import { parseEmail, parseFullName } from '@perun-web-apps/perun/utils';
+import { Candidate, MemberCandidate, RichUser } from '@perun-web-apps/perun/models';
+import {
+  parseEmail,
+  parseFullName,
+  getCandidateEmail,
+  getExtSourceNameOrOrganizationColumn
+} from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-members-candidates-list',
@@ -29,7 +34,10 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   @Input()
   selection: SelectionModel<MemberCandidate>;
 
-  displayedColumns: string[] = ['checkbox', 'fullName', 'voExtSource', 'email'];
+  @Input()
+  type: string;
+
+  displayedColumns: string[] = ['checkbox', 'status', 'fullName', 'voExtSource', 'email', 'logins', 'alreadyMember', 'local'];
   dataSource: MatTableDataSource<MemberCandidate>;
 
   exporting = false;
@@ -83,4 +91,98 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       row.member === null ? row.richUser.id + 1 : row.member.id + 1}`;
   }
 
+  getEmail(candidate: Candidate): string {
+    return getCandidateEmail(candidate);
+  }
+
+  getOrganization(candidate: Candidate): string {
+    return getExtSourceNameOrOrganizationColumn(candidate);
+  }
+
+  /**
+   * Gets all logins stored in user attributes
+   *
+   * @return users logins
+   */
+  getLogins(memberCandidate: MemberCandidate): string {
+    if (memberCandidate.richUser) {
+      return this.getLoginsForRichUser(memberCandidate.richUser);
+    }
+    else {
+      let logins = this.getLoginsForCandidate(memberCandidate.candidate);
+      if (logins == null || logins == '') {
+        logins = memberCandidate.candidate.userExtSource.login;
+      }
+      return logins;
+    }
+
+
+	}
+
+	getLoginsForRichUser(user: RichUser): string {
+    var logins = "";
+    for(var i in user.userAttributes){
+      var userAttribute = user.userAttributes[i];
+      if(userAttribute.friendlyName.substring(0, 15) == "login-namespace"){
+        // process only logins which are not null
+        if (userAttribute.value != null) {
+          // append comma
+          if(logins.length > 0){
+            logins += ", ";
+          }
+          // parse login namespace
+          var parsedNamespace =  userAttribute.friendlyName.substring(16);
+          logins += parsedNamespace + ": " + userAttribute.value;
+        }
+      }
+    }
+    return logins;
+  }
+
+  getLoginsForCandidate(candidate: Candidate): string {
+    var logins = "";
+    for (var prop in candidate.attributes) {
+      if (candidate.attributes.hasOwnProperty(prop)) {
+        if (prop.indexOf("urn:perun:user:attribute-def:def:login-namespace:") != -1) {
+          if (candidate.attributes[prop] != null) {
+            if(logins.length > 0){
+              logins += ", ";
+            }
+            // parse login namespace
+            var parsedNamespace = prop.substring(49);
+            logins += parsedNamespace + ": " + candidate.attributes[prop];
+          }
+        }
+      }
+    }
+    return logins;
+  }
+
+  getAlreadyMember(memberCandidate: MemberCandidate): string {
+    if (this.type == 'vo') {
+      if (memberCandidate.member != null) return "Member of VO";
+    } else {
+      if (memberCandidate.member != null &&
+        memberCandidate.member.sourceGroupId != 0 &&
+        memberCandidate.member.membershipType == 'DIRECT') return "Member of Group";
+      if (memberCandidate.member != null &&
+        memberCandidate.member.sourceGroupId != 0 &&
+        memberCandidate.member.membershipType == 'INDIRECT') return "Indirect member of Group";
+      if (memberCandidate.member != null) return "Member of VO";
+    }
+    return "";
+  }
+
+  isCheckboxDisabled(memberCandidate: MemberCandidate): boolean {
+    if (this.type == 'vo') {
+      return memberCandidate.member != null;
+    }
+    else {
+        if (memberCandidate.member) {
+          return memberCandidate.member.sourceGroupId != 0 &&
+                  memberCandidate.member.membershipType == 'DIRECT'
+        }
+    }
+    return false;
+  }
 }

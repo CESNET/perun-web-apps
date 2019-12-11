@@ -25,18 +25,33 @@ export class RegistrarService {
     }, showNotificationsOnError);
   }
 
-  sendInvitation(voId: number, name: string, email: string, language: string, showNotificationOnError = true): Observable<void> {
+  sendInvitation(voId: number, email: string, showNotificationOnError = true): Observable<void> {
     return this.apiService.post('json/registrarManager/sendInvitation', {
       'voId': voId,
-      'name': name,
-      'email': email,
-      'language': language}, showNotificationOnError);
+      'email': email
+    }, showNotificationOnError);
+  }
+
+  sendInvitationForGroup(voId: number, groupId: number, email: string, showNotificationOnError = true): Observable<void> {
+    return this.apiService.post('json/registrarManager/sendInvitation', {
+      'voId': voId,
+      'groupId': groupId,
+      'email': email
+    }, showNotificationOnError);
   }
 
   sendInvitationToExistingUser(userId: number, voId: number, showNotificationOnError = true): Observable<void> {
     return this.apiService.post('json/registrarManager/sendInvitation', {
       voId: voId,
       userId: userId
+    }, showNotificationOnError);
+  }
+
+  sendInvitationGroupToExistingUser(userId: number, voId: number, groupId: number, showNotificationOnError = true): Observable<void> {
+    return this.apiService.post('json/registrarManager/sendInvitation', {
+      voId: voId,
+      userId: userId,
+      groupId: groupId
     }, showNotificationOnError);
   }
 

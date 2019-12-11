@@ -962,9 +962,12 @@
     "LOGINS": "Logins"
   },
   "MEMBERS_CANDIDATES_LIST": {
+    "STATUS": "Status",
     "NAME": "Name",
     "ORGANIZATION": "Organization or Ext source",
-    "EMAIL": "Email"
+    "EMAIL": "Email",
+    "LOGINS": "Logins",
+    "ALREADY_MEMBER": "Already member"
   },
   "MANAGERS_LIST": {
     "ID": "User ID",

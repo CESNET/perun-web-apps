@@ -25,21 +25,57 @@
                         (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(memberCandidate) : null"
                         [checked]="selection.isSelected(memberCandidate)"
+                        [disabled]="isCheckboxDisabled(memberCandidate)"
                         [aria-label]="checkboxLabel(memberCandidate)">
           </mat-checkbox>
         </td>
       </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.STATUS' | translate}}</th>
+        <td mat-cell *matCellDef="let memberCandidate">
+          <i *ngIf="memberCandidate.member"
+             class="material-icons {{memberCandidate.member.status | memberStatusIconColor}}"
+             matTooltip="{{memberCandidate.member.status}}"
+             matTooltipPosition="left">
+            {{memberCandidate.member.status | memberStatusIcon}}
+          </i>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.NAME' | translate}}</th>
-        <td mat-cell *matCellDef="let memberCandidate">{{memberCandidate.richUser | userFullName}}</td>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{memberCandidate.richUser ? (memberCandidate.richUser | userFullName) : (memberCandidate.candidate | userFullName)}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="voExtSource">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.ORGANIZATION' | translate}}</th>
-        <td mat-cell *matCellDef="let memberCandidate">{{memberCandidate.richUser | userVo}}</td>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{memberCandidate.richUser ? (memberCandidate.richUser | userVo) : getOrganization(memberCandidate.candidate)}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.EMAIL' | translate}}</th>
-        <td mat-cell *matCellDef="let memberCandidate">{{memberCandidate | memberCandidateEmail}}</td>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{memberCandidate.richUser ? (memberCandidate | memberCandidateEmail) : getEmail(memberCandidate.candidate)}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="logins">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.LOGINS' | translate}}</th>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{getLogins(memberCandidate)}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="alreadyMember">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'MEMBERS_CANDIDATES_LIST.ALREADY_MEMBER' | translate}}</th>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{getAlreadyMember(memberCandidate)}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="local">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let memberCandidate">
+          {{memberCandidate.richUser ? "Local" : "External identity"}}
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr

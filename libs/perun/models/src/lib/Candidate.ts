@@ -10,11 +10,4 @@ export interface Candidate {
   middleName: string;
   titleBefore: string;
   titleAfter: string;
-  fullName: string;
-  displayName: string;
-  email: string;
-  attribute: string;
-  logins: string;
-  objectType: string;
-  status: string;
 }

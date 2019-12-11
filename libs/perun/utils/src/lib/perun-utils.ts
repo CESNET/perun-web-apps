@@ -5,7 +5,7 @@
  */
 import {
   Attribute,
-  AttributeDefinition,
+  AttributeDefinition, Candidate,
   Group,
   Owner,
   RichMember,
@@ -119,7 +119,7 @@ export function parseUrnsToUrlParam(paramName: string, urns: string[]): string {
  *
  * @param user user
  */
-export function parseFullName(user: User): string {
+export function parseFullName(user: User | Candidate): string {
   let fullName = '';
 
   if (user.titleBefore !== null) {
@@ -345,4 +345,109 @@ export function getAttribute(attributes: Attribute[], attrName: string) : Attrib
     }
   }
   return null;
+}
+
+/**
+ * Find candidate email in his attributes
+ * @param candidate
+ * @return candidate email
+ */
+export function getCandidateEmail(candidate: Candidate): string {
+  if (candidate.attributes['urn:perun:member:attribute-def:def:mail'] != null) {
+    return candidate.attributes['urn:perun:member:attribute-def:def:mail'];
+  } else if (candidate.attributes['urn:perun:user:attribute-def:def:preferredMail'] != null) {
+    return candidate.attributes['urn:perun:user:attribute-def:def:preferredMail'];
+  }
+  return "";
+}
+
+export function getExtSourceNameOrOrganizationColumn(candidate: Candidate): string {
+  if (candidate.userExtSource.extSource.type.toLowerCase() == "cz.metacentrum.perun.core.impl.ExtSourceX509".toLowerCase()) {
+    return convertCertCN(candidate.userExtSource.extSource.name);
+  } else if (candidate.userExtSource.extSource.type.toLowerCase() == "cz.metacentrum.perun.core.impl.ExtSourceIdp".toLowerCase()) {
+    return translateIdp(candidate.userExtSource.extSource.name);
+  } else {
+    return candidate.userExtSource.extSource.name;
+  }
+}
+
+/**
+ * If passed string is DN of certificate(recognized by "/CN=") then returns only CN part with unescaped chars.
+ * If passed string is not DN of certificate, original string is returned.
+ *
+ * @param toConvert
+ * @return
+ */
+export function convertCertCN(toConvert: string): string {
+
+  if (toConvert.includes("/CN=")) {
+    const splitted = toConvert.split("/");
+    for (const s in splitted) {
+      if (s.startsWith("CN=")) {
+        return unescapeDN(s.substring(3));
+      }
+    }
+  }
+  return toConvert;
+}
+
+export function unescapeDN(string: string): string {
+
+  return decodeURIComponent(string.replace(/\\x/g, '%'));
+
+}
+
+export function translateIdp(name: string): string {
+
+  const orgs: Map<string, string> = new Map();
+  orgs.set("https://idp.upce.cz/idp/shibboleth", "University in Pardubice");
+  orgs.set("https://idp.slu.cz/idp/shibboleth", "University in Opava");
+  orgs.set("https://login.feld.cvut.cz/idp/shibboleth", "Faculty of Electrical Engineering, Czech Technical University In Prague");
+  orgs.set("https://www.vutbr.cz/SSO/saml2/idp", "Brno University of Technology");
+  orgs.set("https://shibboleth.nkp.cz/idp/shibboleth", "The National Library of the Czech Republic");
+  orgs.set("https://idp2.civ.cvut.cz/idp/shibboleth", "Czech Technical University In Prague");
+  orgs.set("https://shibbo.tul.cz/idp/shibboleth", "Technical University of Liberec");
+  orgs.set("https://idp.mendelu.cz/idp/shibboleth", "Mendel University in Brno");
+  orgs.set("https://cas.cuni.cz/idp/shibboleth", "Charles University in Prague");
+  orgs.set("https://wsso.vscht.cz/idp/shibboleth", "Institute of Chemical Technology Prague");
+  orgs.set("https://idp.vsb.cz/idp/shibboleth", "VSB – Technical University of Ostrava");
+  orgs.set("https://whoami.cesnet.cz/idp/shibboleth", "CESNET");
+  orgs.set("https://helium.jcu.cz/idp/shibboleth", "University of South Bohemia");
+  orgs.set("https://idp.ujep.cz/idp/shibboleth", "Jan Evangelista Purkyne University in Usti nad Labem");
+  orgs.set("https://idp.amu.cz/idp/shibboleth", "Academy of Performing Arts in Prague");
+  orgs.set("https://idp.lib.cas.cz/idp/shibboleth", "Academy of Sciences Library");
+  orgs.set("https://shibboleth.mzk.cz/simplesaml/metadata.xml", "Moravian  Library");
+  orgs.set("https://idp2.ics.muni.cz/idp/shibboleth", "Masaryk University");
+  orgs.set("https://idp.upol.cz/idp/shibboleth", "Palacky University, Olomouc");
+  orgs.set("https://idp.fnplzen.cz/idp/shibboleth", "FN Plzen");
+  orgs.set("https://id.vse.cz/idp/shibboleth", "University of Economics, Prague");
+  orgs.set("https://shib.zcu.cz/idp/shibboleth", "University of West Bohemia");
+  orgs.set("https://idptoo.osu.cz/simplesaml/saml2/idp/metadata.php", "University of Ostrava");
+  orgs.set("https://login.ics.muni.cz/idp/shibboleth", "MetaCentrum");
+  orgs.set("https://idp.hostel.eduid.cz/idp/shibboleth", "eduID.cz Hostel");
+  orgs.set("https://shibboleth.techlib.cz/idp/shibboleth", "National Library of Technology");
+  orgs.set("https://eduid.jamu.cz/idp/shibboleth", "Janacek Academy of Music and Performing Arts in Brno");
+  orgs.set("https://marisa.uochb.cas.cz/simplesaml/saml2/idp/metadata.php", "Institute of Organic Chemistry and Biochemistry AS CR");
+  orgs.set("https://shibboleth.utb.cz/idp/shibboleth", "Tomas Bata University in Zlin");
+  orgs.set("https://engine.elixir-czech.org/authentication/idp/metadata", "Elixir Europe");
+  orgs.set("https://login.elixir-czech.org/idp", "Elixir Czech");
+  orgs.set("https://mojeid.cz/saml/idp.xml", "MojeID");
+  orgs.set("https://www.egi.eu/idp/shibboleth", "EGI SSO");
+
+  orgs.set("@google.extidp.cesnet.cz", "Google");
+  orgs.set("@facebook.extidp.cesnet.cz", "Facebook");
+  orgs.set("@mojeid.extidp.cesnet.cz", "MojeID");
+  orgs.set("@linkedin.extidp.cesnet.cz", "LinkedIn");
+  orgs.set("@twitter.extidp.cesnet.cz", "Twitter");
+  orgs.set("@seznam.extidp.cesnet.cz", "Seznam");
+  orgs.set("@elixir-europe.org", "Elixir Europe");
+  orgs.set("@github.extidp.cesnet.cz", "GitHub");
+  orgs.set("@orcid.extidp.cesnet.cz", "OrcID");
+
+  if (orgs.get(name) != null) {
+    return orgs.get(name);
+  } else {
+    return name;
+  }
+
 }

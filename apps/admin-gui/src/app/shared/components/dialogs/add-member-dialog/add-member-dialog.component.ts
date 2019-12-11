@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { GroupService, MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
 import { Group, MemberCandidate } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { getCandidateEmail } from '@perun-web-apps/perun/utils';
 
 export interface AddMemberDialogData {
   voId?: number;
@@ -86,16 +87,30 @@ export class AddMemberDialogComponent implements OnInit {
   onInvite(): void {
 
     // TODO Was not tested properly. Need to be tested on devel.
-    if (this.data.type === 'vo') {
-      this.registrarService.sendInvitationToExistingUser(this.selection.selected[0].richUser.id, this.data.entityId).subscribe(() => {
-        this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS_INVITE').subscribe(() => {
-          this.notificator.showSuccess(this.successInviteMessage);
-          this.dialogRef.close();
+    if (this.selection.selected[0].richUser) {
+      if (this.data.type === 'vo') {
+        this.registrarService.sendInvitationToExistingUser(this.selection.selected[0].richUser.id, this.data.entityId).subscribe(() => {
+          this.onInviteSuccess();
         });
-      });
-    } else if (this.data.type === 'group') {
-      //TODO
+      } else if (this.data.type === 'group') {
+        this.registrarService.sendInvitationGroupToExistingUser(this.selection.selected[0].richUser.id, this.data.voId ,this.data.group.id).subscribe(() => {
+          this.onInviteSuccess();
+        });
+      }
+    } else {
+      if (this.data.type == 'vo') {
+        this.registrarService.sendInvitation(this.data.voId,
+          getCandidateEmail(this.selection.selected[0].candidate)).subscribe( () => {
+            this.onInviteSuccess();
+        });
+      } else if (this.data.type == 'group') {
+        this.registrarService.sendInvitationForGroup(this.data.voId, this.data.group.id,
+          getCandidateEmail(this.selection.selected[0].candidate)).subscribe( () => {
+            this.onInviteSuccess();
+        })
+      }
     }
+
   }
 
   onSearchByString() {
@@ -164,5 +179,12 @@ export class AddMemberDialogComponent implements OnInit {
 
   private onError() {
       this.processing = false;
+  }
+
+  private onInviteSuccess() {
+    this.translate.get('DIALOGS.ADD_MEMBERS.SUCCESS_INVITE').subscribe(() => {
+      this.notificator.showSuccess(this.successInviteMessage);
+      this.dialogRef.close();
+    });
   }
 }

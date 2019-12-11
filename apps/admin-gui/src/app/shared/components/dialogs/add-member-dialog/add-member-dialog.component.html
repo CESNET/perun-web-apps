@@ -6,6 +6,7 @@
       <mat-form-field class="mr-2 search-field adjust-width">
         <label>
           <input matInput autocomplete="false" placeholder="{{'DIALOGS.ADD_MEMBERS.DESCRIPTION' | translate}}"
+                 (keyup.enter)="onSearchByString()"
                  [(ngModel)]="searchString">
         </label>
       </mat-form-field>
@@ -29,6 +30,7 @@
       <app-members-candidates-list
         [selection]="selection"
         [members]="members"
+        [type]="data.type"
         *ngIf="members.length !== 0">
       </app-members-candidates-list>
     </div>
@@ -39,7 +41,6 @@
     <button
       mat-flat-button
       class="ml-auto"
-      color="warn"
       (click)="onCancel()">
       {{'DIALOGS.ADD_MEMBERS.CANCEL' | translate}}
     </button>
