@@ -132,4 +132,11 @@ export class MembersService {
       'id': memberId
     }, showNotificationOnError);
   }
+
+  setStatus(member: number, status: string, showNotificationOnError = true): Observable<Member> {
+    return this.apiService.post('json/membersManager/setStatus', {
+      'member': member,
+      'status': status
+    }, showNotificationOnError);
+  }
 }

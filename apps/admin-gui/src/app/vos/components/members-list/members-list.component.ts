@@ -1,10 +1,20 @@
-import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import { RichMember } from '@perun-web-apps/perun/models';
 import { parseEmail, parseFullName } from '@perun-web-apps/perun/utils';
+import { ChangeMemberStatusDialogComponent } from '../../../shared/components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
 
 @Component({
   selector: 'app-members-list',
@@ -13,8 +23,7 @@ import { parseEmail, parseFullName } from '@perun-web-apps/perun/utils';
 })
 export class MembersListComponent implements OnChanges, AfterViewInit {
 
-  constructor(
-  ) { }
+  constructor(private dialog: MatDialog) { }
 
   private sort: MatSort;
 
@@ -36,6 +45,9 @@ export class MembersListComponent implements OnChanges, AfterViewInit {
 
   @Input()
   hideColumns: string[] = [];
+
+  @Output()
+  updateTable = new EventEmitter<boolean>();
 
   exporting = false;
 
@@ -89,5 +101,20 @@ export class MembersListComponent implements OnChanges, AfterViewInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  changeStatus(event: any, member: RichMember) {
+    event.stopPropagation();
+    if (member.status === 'INVALID') {
+      const dialogRef = this.dialog.open(ChangeMemberStatusDialogComponent, {
+        width: '500px',
+        data: {member: member}
+      });
+      dialogRef.afterClosed().subscribe( success => {
+        if (success) {
+          this.updateTable.emit(true);
+        }
+      })
+    }
   }
 }

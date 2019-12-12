@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{'DIALOGS.CHANGE_STATUS.TITLE' | translate}}</h1>
+<div mat-dialog-content class="dialog-container">
+  <div class="font-weight-bold pb-1">{{'DIALOGS.CHANGE_STATUS.CURRENT_STATUS' | translate}}: {{data.member.status}}</div>
+  <div class="text-muted pb-3">{{'DIALOGS.CHANGE_STATUS.INVALID_DESCRIPTION' | translate}}</div>
+
+  <div class="font-weight-bold pb-1">{{'DIALOGS.CHANGE_STATUS.NEW_STATUS' | translate}}: VALID</div>
+  <div class="text-muted">{{'DIALOGS.CHANGE_STATUS.CHANGE_VALID' | translate}}</div>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-flat-button
+    required
+    class="ml-auto"
+    (click)="cancel()">
+    {{'DIALOGS.CHANGE_STATUS.CANCEL' | translate}}
+  </button>
+  <button
+    mat-flat-button
+    class="ml-2"
+    color="accent"
+    (click)="submit()">
+    {{'DIALOGS.CHANGE_STATUS.TITLE' | translate}}
+  </button>
+</div>
