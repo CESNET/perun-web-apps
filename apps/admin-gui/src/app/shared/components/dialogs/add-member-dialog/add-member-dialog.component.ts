@@ -98,12 +98,12 @@ export class AddMemberDialogComponent implements OnInit {
         });
       }
     } else {
-      if (this.data.type == 'vo') {
+      if (this.data.type === 'vo') {
         this.registrarService.sendInvitation(this.data.voId,
           getCandidateEmail(this.selection.selected[0].candidate)).subscribe( () => {
             this.onInviteSuccess();
         });
-      } else if (this.data.type == 'group') {
+      } else if (this.data.type === 'group') {
         this.registrarService.sendInvitationForGroup(this.data.voId, this.data.group.id,
           getCandidateEmail(this.selection.selected[0].candidate)).subscribe( () => {
             this.onInviteSuccess();

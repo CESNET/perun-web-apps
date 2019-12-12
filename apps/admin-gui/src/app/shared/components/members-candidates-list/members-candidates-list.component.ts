@@ -110,7 +110,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
     }
     else {
       let logins = this.getLoginsForCandidate(memberCandidate.candidate);
-      if (logins == null || logins == '') {
+      if (logins == null || logins === '') {
         logins = memberCandidate.candidate.userExtSource.login;
       }
       return logins;
@@ -120,18 +120,17 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
 	}
 
 	getLoginsForRichUser(user: RichUser): string {
-    var logins = "";
-    for(var i in user.userAttributes){
-      var userAttribute = user.userAttributes[i];
-      if(userAttribute.friendlyName.substring(0, 15) == "login-namespace"){
+    let logins = '';
+    for (const userAttribute of user.userAttributes) {
+      if (userAttribute.friendlyName.substring(0, 15) === 'login-namespace') {
         // process only logins which are not null
         if (userAttribute.value != null) {
           // append comma
-          if(logins.length > 0){
+          if (logins.length > 0) {
             logins += ", ";
           }
           // parse login namespace
-          var parsedNamespace =  userAttribute.friendlyName.substring(16);
+          const parsedNamespace =  userAttribute.friendlyName.substring(16);
           logins += parsedNamespace + ": " + userAttribute.value;
         }
       }
@@ -140,16 +139,16 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   }
 
   getLoginsForCandidate(candidate: Candidate): string {
-    var logins = "";
-    for (var prop in candidate.attributes) {
+    let logins = '';
+    for (const prop in candidate.attributes) {
       if (candidate.attributes.hasOwnProperty(prop)) {
-        if (prop.indexOf("urn:perun:user:attribute-def:def:login-namespace:") != -1) {
+        if (prop.indexOf('urn:perun:user:attribute-def:def:login-namespace:') !== -1) {
           if (candidate.attributes[prop] != null) {
             if(logins.length > 0){
               logins += ", ";
             }
             // parse login namespace
-            var parsedNamespace = prop.substring(49);
+            const parsedNamespace = prop.substring(49);
             logins += parsedNamespace + ": " + candidate.attributes[prop];
           }
         }
@@ -159,28 +158,28 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   }
 
   getAlreadyMember(memberCandidate: MemberCandidate): string {
-    if (this.type == 'vo') {
-      if (memberCandidate.member != null) return "Member of VO";
+    if (this.type === 'vo') {
+      if (memberCandidate.member != null) return 'Member of VO';
     } else {
       if (memberCandidate.member != null &&
-        memberCandidate.member.sourceGroupId != 0 &&
-        memberCandidate.member.membershipType == 'DIRECT') return "Member of Group";
+        memberCandidate.member.sourceGroupId !== 0 &&
+        memberCandidate.member.membershipType === 'DIRECT') return 'Member of Group';
       if (memberCandidate.member != null &&
-        memberCandidate.member.sourceGroupId != 0 &&
-        memberCandidate.member.membershipType == 'INDIRECT') return "Indirect member of Group";
-      if (memberCandidate.member != null) return "Member of VO";
+        memberCandidate.member.sourceGroupId !== 0 &&
+        memberCandidate.member.membershipType === 'INDIRECT') return 'Indirect member of Group';
+      if (memberCandidate.member != null) return 'Member of VO';
     }
-    return "";
+    return '';
   }
 
   isCheckboxDisabled(memberCandidate: MemberCandidate): boolean {
-    if (this.type == 'vo') {
+    if (this.type === 'vo') {
       return memberCandidate.member != null;
     }
     else {
         if (memberCandidate.member) {
-          return memberCandidate.member.sourceGroupId != 0 &&
-                  memberCandidate.member.membershipType == 'DIRECT'
+          return memberCandidate.member.sourceGroupId !== 0 &&
+                  memberCandidate.member.membershipType === 'DIRECT'
         }
     }
     return false;

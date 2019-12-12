@@ -362,9 +362,9 @@ export function getCandidateEmail(candidate: Candidate): string {
 }
 
 export function getExtSourceNameOrOrganizationColumn(candidate: Candidate): string {
-  if (candidate.userExtSource.extSource.type.toLowerCase() == "cz.metacentrum.perun.core.impl.ExtSourceX509".toLowerCase()) {
+  if (candidate.userExtSource.extSource.type.toLowerCase() === "cz.metacentrum.perun.core.impl.ExtSourceX509".toLowerCase()) {
     return convertCertCN(candidate.userExtSource.extSource.name);
-  } else if (candidate.userExtSource.extSource.type.toLowerCase() == "cz.metacentrum.perun.core.impl.ExtSourceIdp".toLowerCase()) {
+  } else if (candidate.userExtSource.extSource.type.toLowerCase() === "cz.metacentrum.perun.core.impl.ExtSourceIdp".toLowerCase()) {
     return translateIdp(candidate.userExtSource.extSource.name);
   } else {
     return candidate.userExtSource.extSource.name;
