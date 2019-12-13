@@ -74,6 +74,12 @@ export class GroupSettingsOverviewComponent implements OnInit {
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/notifications`,
         label: 'MENU_ITEMS.GROUP.NOTIFICATIONS',
         style: 'group-btn'
+      },
+      {
+        icon: 'group-white.svg',
+        url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/relations`,
+        label: 'MENU_ITEMS.GROUP.RELATIONS',
+        style: 'group-btn'
       }
     ];
   }

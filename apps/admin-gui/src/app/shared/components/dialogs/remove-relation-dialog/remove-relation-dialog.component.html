@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>{{'DIALOGS.REMOVE_RELATION.TITLE' | translate}}</h1>
+<div class="{{theme}}">
+  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
+</div>
+<div *ngIf="!loading">
+  <div mat-dialog-content class="{{theme}}">
+    <p>
+      {{'DIALOGS.REMOVE_RELATION.DESCRIPTION' | translate}}
+    </p>
+    <div class="font-weight-bold">
+      {{'DIALOGS.REMOVE_RELATION.ASK' | translate}}
+    </div>
+    <table mat-table [dataSource]="dataSource" class="w-100">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let relation"> {{relation.name}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-weight-bolder"></tr>
+      <tr mat-row *matRowDef="let relation; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div mat-dialog-actions>
+
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.REMOVE_RELATION.CANCEL' | translate}}
+    </button>
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="warn"
+      (click)="onSubmit()">
+      {{'DIALOGS.REMOVE_RELATION.DELETE' | translate}}
+    </button>
+  </div>
+</div>

@@ -406,6 +406,13 @@
         "DELETE_SUCCESS": "Email notification deleted.",
         "NO_APPLICATION_FORM": "Application form doesn't exist",
         "CREATE_APPLICATION_FORM": "Create application form"
+      },
+      "RELATIONS":{
+        "TITLE": "Relations",
+        "DELETE": "Remove selected",
+        "CREATE": "Add...",
+        "FILTER": "Filter by name, id or description",
+        "REVERSE_UNIONS": "Show reverse unions"
       }
     }
   },
@@ -475,7 +482,8 @@
       "MANAGERS": "Managers",
       "EXPIRATION": "Membership",
       "APPLICATION_FORM": "Application form",
-      "NOTIFICATIONS": "Notifications"
+      "NOTIFICATIONS": "Notifications",
+      "RELATIONS": "Relations"
     },
     "MEMBER": {
       "OVERVIEW": "Overview",
@@ -942,6 +950,20 @@
       "TITLE": "Recent notifications",
       "CANCEL": "Cancel",
       "NO_NOTIFICATIONS_ALERT": "There are no recent notifications"
+    },
+    "CREATE_RELATION": {
+      "TITLE": "Create relation",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "Relation successfully created"
+    },
+    "REMOVE_RELATION": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following relations will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Remove",
+      "SUCCESS": "Selected relations were removed"
     }
   },
   "MEMBERS_LIST": {

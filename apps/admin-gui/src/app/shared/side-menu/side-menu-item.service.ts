@@ -272,6 +272,11 @@ export class SideMenuItemService {
               url: [`/organizations/${group.voId}/groups/${group.id}/settings/notifications`],
               activatedRegex: '/organizations/\\d+/groups/\\d+/settings/notifications$'
             },
+            {
+              label: 'MENU_ITEMS.GROUP.RELATIONS',
+              url: [`/organizations/${group.voId}/groups/${group.id}/settings/relations`],
+              activatedRegex: '/organizations/\\d+/groups/\\d+/settings/relations$'
+            }
           ],
           showChildrenRegex: '/organizations/\\d+/groups/\\d+/settings'
         }

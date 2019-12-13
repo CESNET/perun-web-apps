@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>{{"DIALOGS.CREATE_RELATION.TITLE" | translate}}</h1>
+<div class="{{theme}}">
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+</div>
+<div class="{{theme}}" *ngIf="!loading">
+  <app-immediate-filter [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
+  <div mat-dialog-content class="dialog-container">
+    <app-groups-list
+        [groups]="groups"
+        [selection]="selection"
+        [hideColumns]="hideColumns"
+        [filter]="filterValue"
+        [disableHeadCheckbox]="true"
+        [inDialog]="true"
+    ></app-groups-list>
+
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.CREATE_RELATION.CANCEL' | translate}}
+    </button>
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="accent"
+      (click)="onSubmit()">
+      {{'DIALOGS.CREATE_RELATION.CREATE' | translate}}
+    </button>
+  </div>
+</div>
+

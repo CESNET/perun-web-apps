@@ -92,4 +92,25 @@ export class GroupService {
       members: members
     }, showNotificationOnError);
   }
+
+  createUnion(resultGroup: number, operandGroup: number, showNotificationOnError: boolean = true): Observable<void> {
+    return this.apiService.post('json/groupsManager/createGroupUnion', {
+      resultGroup: resultGroup,
+      operandGroup: operandGroup
+    }, showNotificationOnError);
+  }
+
+  getUnions(group: number, reverse: boolean, showNotificationOnError: boolean = true): Observable<Group[]> {
+    return this.apiService.post('json/groupsManager/getGroupUnions', {
+      group: group,
+      reverseDirection: reverse
+    }, showNotificationOnError);
+  }
+
+  removeUnion(resultGroup: number, operandGroup: number, showNotificationOnError: boolean = true): Observable<any> {
+    return this.apiService.post('json/groupsManager/removeGroupUnion', {
+      resultGroup: resultGroup,
+      operandGroup: operandGroup
+    }, showNotificationOnError);
+  }
 }

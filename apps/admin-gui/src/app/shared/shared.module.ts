@@ -157,6 +157,8 @@ import { RemoveVoDialogComponent } from './components/dialogs/remove-vo-dialog/r
 import { CreateVoDialogComponent } from './components/dialogs/create-vo-dialog/create-vo-dialog.component';
 import { ShowNotificationHistoryDialogComponent } from './components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
 import { VoSelectTableComponent } from './components/vo-select-table/vo-select-table.component';
+import { CreateRelationDialogComponent } from './components/dialogs/create-relation-dialog/create-relation-dialog.component';
+import { RemoveRelationDialogComponent } from './components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
 
 @NgModule({
   imports: [
@@ -337,7 +339,9 @@ import { VoSelectTableComponent } from './components/vo-select-table/vo-select-t
     ReportIssueDialogComponent,
     CreateVoDialogComponent,
     RemoveVoDialogComponent,
-    ShowNotificationHistoryDialogComponent
+    ShowNotificationHistoryDialogComponent,
+    CreateRelationDialogComponent,
+    RemoveRelationDialogComponent
   ],
   declarations: [
     AttributesListComponent,
@@ -446,7 +450,9 @@ import { VoSelectTableComponent } from './components/vo-select-table/vo-select-t
     TableOptionsComponent,
     CreateVoDialogComponent,
     ShowNotificationHistoryDialogComponent,
-    VoSelectTableComponent
+    VoSelectTableComponent,
+    CreateRelationDialogComponent,
+    RemoveRelationDialogComponent
   ],
   providers: [
     AnyToStringPipe,

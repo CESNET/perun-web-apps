@@ -43,6 +43,12 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   @Input()
   pageSize = 10;
 
+  @Input()
+  filter = '';
+
+  @Input()
+  disableHeadCheckbox: boolean;
+
   displayedColumns: string[] = ['select', 'id', 'vo', 'name', 'description', 'menu'];
   dataSource: MatTableDataSource<Group>;
 
@@ -70,6 +76,7 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.dataSource.filter = this.filter;
     }
   }
 

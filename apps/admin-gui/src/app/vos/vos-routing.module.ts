@@ -61,6 +61,7 @@ import {
   GroupSettingsNotificationsComponent
 } from './pages/group-detail-page/group-settings/group-settings-notifications/group-settings-notifications.component';
 import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
+import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 
 const routes: Routes = [
   {
@@ -268,6 +269,11 @@ const routes: Routes = [
             path: 'notifications',
             component: GroupSettingsNotificationsComponent,
             data: {animation: 'GroupSettingsNotificationsPage'}
+          },
+          {
+            path: 'relations',
+            component: GroupSettingsRelationsComponent,
+            data: {animation: 'GroupSettingsRelationsPage'}
           }
         ]
       },
