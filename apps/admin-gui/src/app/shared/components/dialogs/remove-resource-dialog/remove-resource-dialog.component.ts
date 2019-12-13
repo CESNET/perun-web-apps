@@ -6,7 +6,6 @@ import { RichResource } from '@perun-web-apps/perun/models';
 import { ResourcesService } from '@perun-web-apps/perun/services';
 
 export interface RemoveResourceDialogData {
-  facilityId: number;
   resources: RichResource[];
 }
 
@@ -36,15 +35,19 @@ export class RemoveResourceDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO Removes only one resource at the time. In future there would be need to remove more than one resource.
     this.loading = true;
-    this.resourcesService.removeResource(this.data.resources[0].id).subscribe( () => {
+    if (this.data.resources.length === 0) {
       this.translate.get('DIALOGS.REMOVE_RESOURCES.SUCCESS').subscribe(successMessage => {
         this.loading = false;
         this.notificator.showSuccess(successMessage);
         this.dialogRef.close(true);
       });
-    });
+    } else {
+      this.resourcesService.removeResource(this.data.resources[0].id).subscribe( () => {
+        this.data.resources.shift();
+        this.onSubmit();
+      });
+    }
   }
 
 }

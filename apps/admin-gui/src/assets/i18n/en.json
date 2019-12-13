@@ -636,7 +636,7 @@
     },
     "REMOVE_RESOURCES": {
       "TITLE": "Confirm removal",
-      "DESCRIPTION": "Following resources will be removed from facility.",
+      "DESCRIPTION": "Following resources will be removed.",
       "ASK": "Do you want to proceed?",
       "CANCEL": "Cancel",
       "DELETE": "Delete",

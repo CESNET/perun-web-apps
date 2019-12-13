@@ -30,7 +30,7 @@ export class FacilityResourcesComponent implements OnInit {
   @Input()
   facility: Facility;
   resources: RichResource[] = [];
-  selected = new SelectionModel<RichResource>(false, []);
+  selected = new SelectionModel<RichResource>(true, []);
 
   filterValue = '';
 
@@ -51,7 +51,7 @@ export class FacilityResourcesComponent implements OnInit {
   removeResource() {
     const dialogRef = this.dialog.open(RemoveResourceDialogComponent, {
       width: '450px',
-      data: {facilityId: this.facility.id, resources: this.selected.selected}
+      data: {resources: this.selected.selected}
     });
 
     dialogRef.afterClosed().subscribe(result => {
