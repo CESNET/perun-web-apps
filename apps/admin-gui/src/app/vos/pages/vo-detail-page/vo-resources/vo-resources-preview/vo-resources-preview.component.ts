@@ -58,7 +58,7 @@ export class VoResourcesPreviewComponent implements OnInit {
   deleteSelectedResources() {
     const dialogRef = this.dialog.open(RemoveResourceDialogComponent, {
       width: '450px',
-      data: {resources: this.selected.selected}
+      data: {theme: 'vo-theme', resources: this.selected.selected}
     });
 
     dialogRef.afterClosed().subscribe(result => {

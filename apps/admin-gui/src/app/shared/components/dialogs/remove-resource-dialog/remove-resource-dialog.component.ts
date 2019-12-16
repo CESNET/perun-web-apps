@@ -6,6 +6,7 @@ import { RichResource } from '@perun-web-apps/perun/models';
 import { ResourcesService } from '@perun-web-apps/perun/services';
 
 export interface RemoveResourceDialogData {
+  theme: string;
   resources: RichResource[];
 }
 

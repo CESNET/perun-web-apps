@@ -1,6 +1,8 @@
 <h1 mat-dialog-title>{{'DIALOGS.REMOVE_RESOURCES.TITLE' | translate}}</h1>
-<mat-spinner *ngIf="loading" class="ml-auto mr-auto">
-</mat-spinner>
+<div class="{{data.theme}}">
+  <mat-spinner *ngIf="loading" class="ml-auto mr-auto">
+  </mat-spinner>
+</div>
 <div mat-dialog-content *ngIf="!loading">
   <p>
     {{'DIALOGS.REMOVE_RESOURCES.DESCRIPTION' | translate}}

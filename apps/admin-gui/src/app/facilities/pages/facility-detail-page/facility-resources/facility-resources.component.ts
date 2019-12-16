@@ -51,7 +51,7 @@ export class FacilityResourcesComponent implements OnInit {
   removeResource() {
     const dialogRef = this.dialog.open(RemoveResourceDialogComponent, {
       width: '450px',
-      data: {resources: this.selected.selected}
+      data: {theme: 'facility-theme', resources: this.selected.selected}
     });
 
     dialogRef.afterClosed().subscribe(result => {
