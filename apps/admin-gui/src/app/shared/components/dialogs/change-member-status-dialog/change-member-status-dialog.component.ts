@@ -22,6 +22,8 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
               private notificatorService: NotificatorService,
               private translate: TranslateService) { }
 
+  loading = false;
+
   ngOnInit() {
   }
 
@@ -30,6 +32,7 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
   }
 
   submit() {
+    this.loading = true;
     this.memberService.setStatus(this.data.member.id, 'VALID').subscribe( () => {
       this.translate.get('DIALOGS.CHANGE_STATUS.SUCCESS').subscribe( success => {
         this.notificatorService.showSuccess(success);
