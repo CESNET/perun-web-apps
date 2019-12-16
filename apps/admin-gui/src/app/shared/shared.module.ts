@@ -158,6 +158,7 @@ import { CreateVoDialogComponent } from './components/dialogs/create-vo-dialog/c
 import { ShowNotificationHistoryDialogComponent } from './components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
 import { VoSelectTableComponent } from './components/vo-select-table/vo-select-table.component';
 import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
+import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
 
 @NgModule({
   imports: [
@@ -339,7 +340,8 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     CreateVoDialogComponent,
     RemoveVoDialogComponent,
     ShowNotificationHistoryDialogComponent,
-    ChangeMemberStatusDialogComponent
+    ChangeMemberStatusDialogComponent,
+    RemoveGroupFromResourceDialogComponent
   ],
   declarations: [
     AttributesListComponent,
@@ -449,7 +451,8 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     CreateVoDialogComponent,
     ShowNotificationHistoryDialogComponent,
     VoSelectTableComponent,
-    ChangeMemberStatusDialogComponent
+    ChangeMemberStatusDialogComponent,
+    RemoveGroupFromResourceDialogComponent
   ],
   providers: [
     AnyToStringPipe,

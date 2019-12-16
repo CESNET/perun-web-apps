@@ -21,6 +21,7 @@ import {
 import {
   ResourceSettingsAttributesComponent
 } from './pages/resource-detail-page/resource-settings/resource-settings-attributes/resource-settings-attributes.component';
+import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-groups/resource-groups.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,11 @@ const routes: Routes = [
         path: '',
         component: ResourceOverviewComponent,
         data: {animation: 'ResourceOverviewPage'}
+      },
+      {
+        path: 'groups',
+        component: ResourceGroupsComponent,
+        data: {animation: 'ResourceGroupsComponent'}
       },
       {
         path: 'settings',

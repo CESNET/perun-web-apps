@@ -1,0 +1,25 @@
+<h1 class="page-subtitle">{{'RESOURCE_DETAIL.ASSIGNED_GROUPS.TITLE' | translate}}</h1>
+<app-refresh-button (refresh)="loadAllGroups()"></app-refresh-button>
+<button mat-flat-button color="accent" (click)="addGroup()">
+  {{'RESOURCE_DETAIL.ASSIGNED_GROUPS.ADD_GROUP' | translate}}
+</button>
+<button mat-flat-button color="warn" class="ml-2" [disabled]="selected.selected.length === 0" (click)="removeGroups()">
+  {{'RESOURCE_DETAIL.ASSIGNED_GROUPS.REMOVE_GROUP' | translate}}
+</button>
+<app-debounce-filter
+  [placeholder]="'RESOURCE_DETAIL.ASSIGNED_GROUPS.FILTER_GROUPS'"
+  (filter)="applyFilter($event)">
+</app-debounce-filter>
+<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+<div class="mt-3" *ngIf="!loading && assignedGroups.length !== 0">
+  <app-groups-list
+    [groups]="filteredGroups"
+    [selection]="selected"
+    [disableMembers]="false"
+    [inDialog]="false"
+    [hideColumns]="['vo', 'menu']">
+  </app-groups-list>
+</div>
+<app-alert *ngIf="assignedGroups.length === 0 && !loading" color="warn">
+  {{'RESOURCE_DETAIL.ASSIGNED_GROUPS.NO_GROUPS' | translate}}
+</app-alert>

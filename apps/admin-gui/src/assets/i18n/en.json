@@ -96,6 +96,13 @@
   },
   "RESOURCE_DETAIL": {
     "TITLE": "Resource - ",
+    "ASSIGNED_GROUPS": {
+      "TITLE": "Assigned groups",
+      "ADD_GROUP": "Add..",
+      "REMOVE_GROUP": "Remove groups",
+      "FILTER_GROUPS": "Filter groups",
+      "NO_GROUPS": "No groups."
+    },
     "SETTINGS": {
       "ATTRIBUTES": {
         "TITLE": "Attributes",
@@ -461,6 +468,7 @@
     },
     "RESOURCE": {
       "OVERVIEW": "Overview",
+      "ASSIGNED_GROUPS": "Assigned groups",
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes"
     },
@@ -951,6 +959,14 @@
       "CHANGE_VALID": "Changing status to VALID will trigger automatic configuration for provided resources. \nIf successful, member will have access on provided resources. \nIf not, see displayed error message and do manual configuration on 'settings' tab on members detail.",
       "INVALID_DESCRIPTION": "Member have configuration error and DON'T have access on provided resources. You can check what is wrong by changing member's status to VALID. If possible, procedure will configure all necessary settings by itself.",
       "SUCCESS": "Member status was changed"
+    },
+    "REMOVE_GROUP_FROM_RESOURCE": {
+      "TITLE": "Confirm delete action",
+      "DESCRIPTION": "Following groups will be removed from resource.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Selected groups were removed from resource"
     }
   },
   "MEMBERS_LIST": {
