@@ -1,13 +1,8 @@
 import {UserExtSource} from './UserExtSource';
+import { User } from '@perun-web-apps/perun/models';
 
-export interface Candidate {
+export interface Candidate extends User{
   userExtSource: UserExtSource;
   attributes: Map<string, string>;
   additionalUserExtSource: UserExtSource[];
-  id: string;
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  titleBefore: string;
-  titleAfter: string;
 }
