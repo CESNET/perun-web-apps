@@ -4,6 +4,7 @@ import { RichMember } from '@perun-web-apps/perun/models';
 import { MembersService } from '@perun-web-apps/perun/services';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 
 export interface ChangeMemberStatusDialogData {
   member: RichMember;
@@ -20,11 +21,20 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: ChangeMemberStatusDialogData,
               private memberService: MembersService,
               private notificatorService: NotificatorService,
-              private translate: TranslateService) { }
+              private translate: TranslateService,
+              private route: ActivatedRoute) { }
 
   loading = false;
+  theme: string;
 
   ngOnInit() {
+    this.route.params.subscribe(parentParams => {
+      if (parentParams['groupId']) {
+        this.theme = 'group-theme';
+      } else {
+        this.theme = 'vo-theme';
+      }
+    });
   }
 
   cancel() {
