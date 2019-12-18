@@ -89,4 +89,11 @@ export class ResourcesService {
       'resource': resource
     }, showNotificationOnError);
   }
+
+  assignGroupsToResource(groups: number[], resource: number, showNotificationOnError = true) {
+    return this.apiService.post('json/resourcesManager/assignGroupsToResource', {
+      'groups': groups,
+      'resource': resource
+    }, showNotificationOnError);
+  }
 }

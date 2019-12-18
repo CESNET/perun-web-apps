@@ -967,6 +967,14 @@
       "CANCEL": "Cancel",
       "DELETE": "Delete",
       "SUCCESS": "Selected groups were removed from resource"
+    },
+    "ASSIGN_GROUP_TO_RESOURCE": {
+      "TITLE": "Assign group",
+      "FILTER_DESCRIPTION": "Find group",
+      "ADD_BUTTON": "Add",
+      "CANCEL_BUTTON": "Cancel",
+      "SUCCESS_MESSAGE": "Selected groups were assigned to resource",
+      "CONFIGURE_GROUPS": "Configure group(s) before assign"
     }
   },
   "MEMBERS_LIST": {

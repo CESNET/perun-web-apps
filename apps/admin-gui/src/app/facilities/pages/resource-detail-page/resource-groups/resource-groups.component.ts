@@ -5,6 +5,7 @@ import { Group } from '@perun-web-apps/perun/models';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckbox, MatDialog } from '@angular/material';
 import { RemoveGroupFromResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
+import { AssignGroupToResourceDialogComponent } from '../../../../shared/components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
 
 @Component({
   selector: 'app-perun-web-apps-resource-groups',
@@ -45,7 +46,15 @@ export class ResourceGroupsComponent implements OnInit {
   }
 
   addGroup() {
-    console.log('dorobit');
+    const dialogRef = this.dialog.open(AssignGroupToResourceDialogComponent, {
+      width: '800px',
+      data: {theme: 'resource-theme', resourceId: this.resourceId}
+    });
+    dialogRef.afterClosed().subscribe((success) => {
+      if (success) {
+        this.loadAllGroups();
+      }
+    });
   }
 
   removeGroups() {
