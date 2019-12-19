@@ -43,6 +43,7 @@
       [selection]="selection"
       [members]="members"
       [hideColumns]="['groupStatus']"
+      (updateTable)="refreshTable()"
       *ngIf="members.length !== 0">
     </app-members-list>
 

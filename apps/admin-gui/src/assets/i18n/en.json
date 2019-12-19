@@ -964,6 +964,15 @@
       "CANCEL": "Cancel",
       "DELETE": "Remove",
       "SUCCESS": "Selected relations were removed"
+    },
+    "CHANGE_STATUS": {
+      "TITLE": "Change status",
+      "CANCEL": "Cancel",
+      "CURRENT_STATUS": "Current status",
+      "NEW_STATUS": "New status",
+      "CHANGE_VALID": "Changing status to VALID will trigger automatic configuration for provided resources. \nIf successful, member will have access on provided resources. \nIf not, see displayed error message and do manual configuration on 'settings' tab on members detail.",
+      "INVALID_DESCRIPTION": "Member have configuration error and DON'T have access on provided resources. You can check what is wrong by changing member's status to VALID. If possible, procedure will configure all necessary settings by itself.",
+      "SUCCESS": "Member status was changed"
     }
   },
   "MEMBERS_LIST": {

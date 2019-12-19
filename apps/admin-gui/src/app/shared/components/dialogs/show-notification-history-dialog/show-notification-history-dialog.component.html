@@ -1,7 +1,7 @@
   <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATION_LIST.TITLE' | translate}}</h1>
   <div *ngIf="notifications.length !== 0" class="hide-horizontal-scrollbar">
     <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
-      <div *cdkVirtualFor="let data of notifications" class="item">
+      <div *cdkVirtualFor="let data of notifications" class="mb-1">
         <app-notification [data]="data" [hideShadow]="true">
         </app-notification>
       </div>

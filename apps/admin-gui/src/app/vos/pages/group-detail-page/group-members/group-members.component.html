@@ -28,6 +28,7 @@
     <app-members-list
       [selection]="selection"
       [members]="members"
+      (updateTable)="refreshTable()"
       *ngIf="members.length !== 0">
     </app-members-list>
 

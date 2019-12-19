@@ -67,6 +67,13 @@ export class AuthService {
     }
   }
 
+  logout() {
+    this.manager.signoutRedirect()
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   isLoggedInPromise(): Observable<boolean> {
     return from(this.manager.getUser()).pipe(map<User, boolean>((user) => {
       if (user) {

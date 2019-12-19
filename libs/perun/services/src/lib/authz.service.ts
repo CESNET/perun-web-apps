@@ -80,4 +80,8 @@ export class AuthzService {
       complementaryObject: complementaryObject
     }, showNotificationOnError);
   }
+
+  logout(showNotificationOnError = true): Observable<string> {
+    return this.apiService.get('json/utils/logout', new HttpParams(), showNotificationOnError);
+  }
 }
