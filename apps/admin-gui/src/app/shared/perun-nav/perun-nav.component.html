@@ -13,8 +13,8 @@
 
 <div id="nav-menu-user-info">
   <button mat-icon-button (click)="showNotificationHistory()" [matTooltip]="'NAV.NOTIFICATIONS_TOOLTIP'|translate">
-    <mat-icon>
-      {{hasNotifications() ? 'notifications_active' : 'notifications'}}
+    <mat-icon matBadge="{{getNewNotificationsCount() > 5 ? '5+' : getNewNotificationsCount()}}" matBadgeColor="warn" [matBadgeHidden]="getNewNotificationsCount() === 0">
+      {{getNewNotificationsCount() ? 'notifications_active' : 'notifications'}}
     </mat-icon>
   </button>
 

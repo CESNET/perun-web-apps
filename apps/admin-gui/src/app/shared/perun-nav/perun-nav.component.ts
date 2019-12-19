@@ -37,13 +37,14 @@ export class PerunNavComponent implements OnInit {
   }
 
   showNotificationHistory() {
+    this.notificationStorageService.newNotificationsCount = 0;
     this.dialog.open(ShowNotificationHistoryDialogComponent, {
       width: '520px'
     });
 
   }
 
-  hasNotifications(): boolean {
-    return this.notificationStorageService.getNotifications().length !== 0;
+  getNewNotificationsCount(): number {
+    return this.notificationStorageService.newNotificationsCount;
   }
 }

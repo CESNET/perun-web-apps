@@ -8,7 +8,7 @@
     <div class="notification-text">
       {{data.title}}
     </div>
-    <div class="notification-action" (click)="doAction()">
+    <div class="notification-action" (click)="doAction()" [hidden]="alreadyPressed">
       {{data.actionText}}
     </div>
   </div>

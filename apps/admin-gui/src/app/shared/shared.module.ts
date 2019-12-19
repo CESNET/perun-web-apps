@@ -27,7 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCardModule } from '@angular/material/card';
-import {MatChipsModule, MatMenuModule, MatStepperModule} from '@angular/material';
+import { MatBadgeModule, MatChipsModule, MatMenuModule, MatStepperModule } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SideMenuComponent} from './side-menu/side-menu.component';
 import {SideMenuItemComponent} from './side-menu/side-menu-item/side-menu-item.component';
@@ -205,7 +205,8 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     MatMenuModule,
     MatTableExporterModule,
     ScrollingModule,
-    UiAlertsModule
+    UiAlertsModule,
+    MatBadgeModule
   ],
   exports: [
     PerunNavComponent,
