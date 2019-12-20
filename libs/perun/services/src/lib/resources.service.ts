@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { PerunApiService } from './perun-api-service';
-import { Resource, ResourceTag, RichResource, Service } from '@perun-web-apps/perun/models';
+import { Group, Resource, ResourceTag, RichResource, Service } from '@perun-web-apps/perun/models';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +74,26 @@ export class ResourcesService {
   deleteResourceTag(resourceTag: ResourceTag, showNotificationOnError = true) {
     return this.apiService.post('json/resourcesManager/deleteResourceTag', {
       'resourceTag': resourceTag
+    }, showNotificationOnError);
+  }
+
+  getAssignedGroups(resource: number, showNotificationOnError = true): Observable<Group[]> {
+    return this.apiService.post('json/resourcesManager/getAssignedGroups', {
+      'resource': resource
+    }, showNotificationOnError);
+  }
+
+  removeGroupsFromResource(groups: Group[], resource: number, showNotificationOnError = true) {
+    return this.apiService.post('json/resourcesManager/removeGroupsFromResource', {
+      'groups': groups,
+      'resource': resource
+    }, showNotificationOnError);
+  }
+
+  assignGroupsToResource(groups: number[], resource: number, showNotificationOnError = true) {
+    return this.apiService.post('json/resourcesManager/assignGroupsToResource', {
+      'groups': groups,
+      'resource': resource
     }, showNotificationOnError);
   }
 }

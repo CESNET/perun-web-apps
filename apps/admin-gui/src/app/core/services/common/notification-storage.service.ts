@@ -10,7 +10,10 @@ export class NotificationStorageService {
 
   private notificationData : NotificationData[] = [];
 
+  newNotificationsCount = 0;
+
   storeNotification(notification: NotificationData){
+    this.newNotificationsCount++;
     this.notificationData.push(notification);
   }
 

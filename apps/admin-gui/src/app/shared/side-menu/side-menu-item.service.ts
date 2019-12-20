@@ -191,6 +191,11 @@ export class SideMenuItemService {
           activatedRegex: '/facilities/\\d+/resources/\\d+$'
         },
         {
+          label: 'MENU_ITEMS.RESOURCE.ASSIGNED_GROUPS',
+          url: [`/facilities/${resource.facilityId}/resources/${resource.id}/groups`],
+          activatedRegex: '/facilities/\\d+/resources/\\d+/groups$'
+        },
+        {
           label: 'MENU_ITEMS.RESOURCE.SETTINGS',
           url: [`/facilities/${resource.facilityId}/resources/${resource.id}/settings`],
           activatedRegex: '/facilities/\\d+/resources/\\d+/settings$',

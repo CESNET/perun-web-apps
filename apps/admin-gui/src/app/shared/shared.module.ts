@@ -27,7 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCardModule } from '@angular/material/card';
-import {MatChipsModule, MatMenuModule, MatStepperModule} from '@angular/material';
+import { MatBadgeModule, MatChipsModule, MatMenuModule, MatStepperModule } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SideMenuComponent} from './side-menu/side-menu.component';
 import {SideMenuItemComponent} from './side-menu/side-menu-item/side-menu-item.component';
@@ -160,6 +160,8 @@ import { VoSelectTableComponent } from './components/vo-select-table/vo-select-t
 import { CreateRelationDialogComponent } from './components/dialogs/create-relation-dialog/create-relation-dialog.component';
 import { RemoveRelationDialogComponent } from './components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
 import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
+import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
+import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
 
 @NgModule({
   imports: [
@@ -207,7 +209,8 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     MatMenuModule,
     MatTableExporterModule,
     ScrollingModule,
-    UiAlertsModule
+    UiAlertsModule,
+    MatBadgeModule
   ],
   exports: [
     PerunNavComponent,
@@ -343,7 +346,10 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     ShowNotificationHistoryDialogComponent,
     CreateRelationDialogComponent,
     RemoveRelationDialogComponent,
-    ChangeMemberStatusDialogComponent
+    ChangeMemberStatusDialogComponent,
+    ChangeMemberStatusDialogComponent,
+    RemoveGroupFromResourceDialogComponent,
+    AssignGroupToResourceDialogComponent
   ],
   declarations: [
     AttributesListComponent,
@@ -455,7 +461,10 @@ import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-m
     VoSelectTableComponent,
     CreateRelationDialogComponent,
     RemoveRelationDialogComponent,
-    ChangeMemberStatusDialogComponent
+    ChangeMemberStatusDialogComponent,
+    ChangeMemberStatusDialogComponent,
+    RemoveGroupFromResourceDialogComponent,
+    AssignGroupToResourceDialogComponent
   ],
   providers: [
     AnyToStringPipe,

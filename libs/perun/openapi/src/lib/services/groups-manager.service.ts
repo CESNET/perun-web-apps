@@ -86,6 +86,82 @@ export class GroupsManagerService extends BaseService {
   }
 
   /**
+   * Path part for operation getGroupByName
+   */
+  static readonly GetGroupByNamePath = '/json/groupsManager/getGroupByName';
+
+  /**
+   * Returns a group by VO and Group name.
+   * IMPORTANT: need to use full name of group (ex. 'toplevel:a:b', not the shortname which is in this example 'b')
+   * Throws GroupNotExistsException when the group doesn't exist.
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getGroupByName()` instead.
+   *
+   * This method doesn't expect any response body
+   */
+  getGroupByName$Response(params: {
+
+    /**
+     * id of Vo
+     */
+    vo: number;
+
+    /**
+     * full group name
+     */
+    name: string;
+
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, GroupsManagerService.GetGroupByNamePath, 'get');
+    if (params) {
+
+      rb.query('vo', params.vo);
+      rb.query('name', params.name);
+
+    }
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * Returns a group by VO and Group name.
+   * IMPORTANT: need to use full name of group (ex. 'toplevel:a:b', not the shortname which is in this example 'b')
+   * Throws GroupNotExistsException when the group doesn't exist.
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getGroupByName$Response()` instead.
+   *
+   * This method doesn't expect any response body
+   */
+  getGroupByName(params: {
+
+    /**
+     * id of Vo
+     */
+    vo: number;
+
+    /**
+     * full group name
+     */
+    name: string;
+
+  }): Observable<void> {
+
+    return this.getGroupByName$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
    * Path part for operation isGroupMember
    */
   static readonly IsGroupMemberPath = '/json/groupsManager/isGroupMember';

@@ -1,6 +1,6 @@
 {
   "name": "perun-web-apps",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "license": "MIT",
   "scripts": {
     "ng-openapi-gen": "ng-openapi-gen",
@@ -27,7 +27,9 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "start-dev-admin-gui": "ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check"
+    "start-dev-admin-gui": "ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check",
+    "preversion": "npm run lint",
+    "version": "npm run build && git add -A -f dist"
   },
   "private": true,
   "dependencies": {

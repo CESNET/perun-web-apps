@@ -37,6 +37,12 @@ export class ResourceOverviewComponent implements OnInit {
   private initItems() {
     this.navItems = [
       {
+        icon: 'group-white.svg',
+        url: `/facilities/${this.resource.facilityId}/resources/${this.resource.id}/groups`,
+        label: 'MENU_ITEMS.RESOURCE.ASSIGNED_GROUPS',
+        style: 'resource-btn'
+      },
+      {
         icon: 'settings2-white.svg',
         url: `/facilities/${this.resource.facilityId}/resources/${this.resource.id}/settings`,
         label: 'MENU_ITEMS.RESOURCE.SETTINGS',

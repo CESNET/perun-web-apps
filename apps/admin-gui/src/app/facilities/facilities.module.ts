@@ -27,6 +27,7 @@ import {
 } from './pages/resource-detail-page/resource-settings/resource-settings-attributes/resource-settings-attributes.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-groups/resource-groups.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
     FacilitySettingsAttributesComponent,
     ResourceSettingsComponent,
     ResourceSettingsOverviewComponent,
-    ResourceSettingsAttributesComponent
+    ResourceSettingsAttributesComponent,
+    ResourceGroupsComponent
   ],
   imports: [
     CommonModule,

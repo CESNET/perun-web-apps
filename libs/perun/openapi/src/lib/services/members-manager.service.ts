@@ -332,4 +332,72 @@ export class MembersManagerService extends BaseService {
     );
   }
 
+  /**
+   * Path part for operation findMembersInVo
+   */
+  static readonly FindMembersInVoPath = '/json/membersManager/findMembersInVo';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findMembersInVo()` instead.
+   *
+   * This method doesn't expect any response body
+   */
+  findMembersInVo$Response(params: {
+
+    /**
+     * id of Vo
+     */
+    vo: number;
+
+    /**
+     * string to search by
+     */
+    searchString: string;
+
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, MembersManagerService.FindMembersInVoPath, 'get');
+    if (params) {
+
+      rb.query('vo', params.vo);
+      rb.query('searchString', params.searchString);
+
+    }
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `findMembersInVo$Response()` instead.
+   *
+   * This method doesn't expect any response body
+   */
+  findMembersInVo(params: {
+
+    /**
+     * id of Vo
+     */
+    vo: number;
+
+    /**
+     * string to search by
+     */
+    searchString: string;
+
+  }): Observable<void> {
+
+    return this.findMembersInVo$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
 }
