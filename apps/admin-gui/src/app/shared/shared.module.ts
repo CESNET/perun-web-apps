@@ -157,11 +157,14 @@ import { RemoveVoDialogComponent } from './components/dialogs/remove-vo-dialog/r
 import { CreateVoDialogComponent } from './components/dialogs/create-vo-dialog/create-vo-dialog.component';
 import { ShowNotificationHistoryDialogComponent } from './components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
 import { VoSelectTableComponent } from './components/vo-select-table/vo-select-table.component';
+import { ExtSourcesListComponent } from './components/ext-sources-list/ext-sources-list.component';
+import { AddExtSourceDialogComponent } from './components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { CreateRelationDialogComponent } from './components/dialogs/create-relation-dialog/create-relation-dialog.component';
 import { RemoveRelationDialogComponent } from './components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
 import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
 import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
 import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
+import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
 
 @NgModule({
   imports: [
@@ -304,7 +307,9 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
     UserDetailPageComponent,
     PerunFooterComponent,
     TableOptionsComponent,
-    VoSelectTableComponent
+    VoSelectTableComponent,
+    ExtSourcesListComponent,
+    ExtSourceTypePipe
   ],
   entryComponents: [
     CreateGroupDialogComponent,
@@ -464,10 +469,15 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
     ChangeMemberStatusDialogComponent,
     ChangeMemberStatusDialogComponent,
     RemoveGroupFromResourceDialogComponent,
-    AssignGroupToResourceDialogComponent
+    AssignGroupToResourceDialogComponent,
+    VoSelectTableComponent,
+    ExtSourcesListComponent,
+    AddExtSourceDialogComponent,
+    ExtSourceTypePipe
   ],
   providers: [
     AnyToStringPipe,
+    ExtSourceTypePipe
   ]
 })
 export class SharedModule {
