@@ -47,6 +47,8 @@ export class RemoveResourceDialogComponent implements OnInit {
       this.resourcesService.removeResource(this.data.resources[0].id).subscribe( () => {
         this.data.resources.shift();
         this.onSubmit();
+      }, err => {
+        this.dialogRef.close(true);
       });
     }
   }
