@@ -4,9 +4,10 @@ import {SelectionModel} from '@angular/cdk/collections';
 import { Candidate, MemberCandidate, RichUser } from '@perun-web-apps/perun/models';
 import {
   parseEmail,
-  parseFullName,
   getCandidateEmail,
-  getExtSourceNameOrOrganizationColumn
+  getExtSourceNameOrOrganizationColumn,
+  parseUserEmail,
+  parseVo
 } from '@perun-web-apps/perun/utils';
 
 @Component({
@@ -21,7 +22,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
 
   private sort: MatSort;
 
-  @ViewChild(MatSort, {static: true}) set matSort(ms: MatSort) {
+  @ViewChild(MatSort, {static: false}) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSource();
   }
@@ -46,14 +47,36 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
 
-      this.dataSource.sortingDataAccessor = (richMember, property) => {
+      this.dataSource.sortingDataAccessor = (memberCandidate, property) => {
         switch (property) {
+          case 'status':
+            return memberCandidate.member ? memberCandidate.member.status : '';
           case 'fullName':
-            return parseFullName(richMember.richUser);
+            if (memberCandidate.richUser) {
+              return memberCandidate.richUser.firstName.toLowerCase() + ' ' +
+              memberCandidate.richUser.lastName.toLowerCase();
+            } else {
+              return memberCandidate.candidate.firstName.toLowerCase() + ' ' +
+              memberCandidate.candidate.lastName.toLowerCase();
+            }
           case 'email':
-            return parseEmail(richMember.member);
+            if (!!memberCandidate.member && !!memberCandidate.member.memberAttributes) {
+              return parseEmail(memberCandidate.member);
+            } else if (memberCandidate.richUser) {
+              return parseUserEmail(memberCandidate.richUser);
+            } else {
+              return this.getEmail(memberCandidate.candidate);
+            }
+          case 'voExtSource':
+            return memberCandidate.richUser ? parseVo(memberCandidate.richUser) : this.getOrganization(memberCandidate.candidate);
+          case 'logins':
+            return this.getLogins(memberCandidate);
+          case 'alreadyMember':
+            return this.getAlreadyMember(memberCandidate);
+          case 'local':
+            return memberCandidate.richUser ? "Local" : "External identity";
           default:
-            return richMember[property];
+            return memberCandidate[property];
         }
       };
 
@@ -62,7 +85,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.setDataSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -81,14 +104,6 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  checkboxLabel(row?: MemberCandidate): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.member === null ? row.richUser.id + 1 : row.member.id + 1}`;
   }
 
   getEmail(candidate: Candidate): string {
@@ -122,7 +137,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
 	getLoginsForRichUser(user: RichUser): string {
     let logins = '';
     for (const userAttribute of user.userAttributes) {
-      if (userAttribute.friendlyName.substring(0, 15) === 'login-namespace') {
+      if (userAttribute.friendlyName.startsWith('login-namespace')) {
         // process only logins which are not null
         if (userAttribute.value != null) {
           // append comma
@@ -139,6 +154,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   }
 
   getLoginsForCandidate(candidate: Candidate): string {
+    const attributesNamespace = 49;
     let logins = '';
     for (const prop in candidate.attributes) {
       if (candidate.attributes.hasOwnProperty(prop)) {
@@ -148,7 +164,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
               logins += ", ";
             }
             // parse login namespace
-            const parsedNamespace = prop.substring(49);
+            const parsedNamespace = prop.substring(attributesNamespace);
             logins += parsedNamespace + ": " + candidate.attributes[prop];
           }
         }

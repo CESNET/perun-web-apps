@@ -399,55 +399,93 @@ export function unescapeDN(string: string): string {
 
 export function translateIdp(name: string): string {
 
-  const orgs: Map<string, string> = new Map();
-  orgs.set("https://idp.upce.cz/idp/shibboleth", "University in Pardubice");
-  orgs.set("https://idp.slu.cz/idp/shibboleth", "University in Opava");
-  orgs.set("https://login.feld.cvut.cz/idp/shibboleth", "Faculty of Electrical Engineering, Czech Technical University In Prague");
-  orgs.set("https://www.vutbr.cz/SSO/saml2/idp", "Brno University of Technology");
-  orgs.set("https://shibboleth.nkp.cz/idp/shibboleth", "The National Library of the Czech Republic");
-  orgs.set("https://idp2.civ.cvut.cz/idp/shibboleth", "Czech Technical University In Prague");
-  orgs.set("https://shibbo.tul.cz/idp/shibboleth", "Technical University of Liberec");
-  orgs.set("https://idp.mendelu.cz/idp/shibboleth", "Mendel University in Brno");
-  orgs.set("https://cas.cuni.cz/idp/shibboleth", "Charles University in Prague");
-  orgs.set("https://wsso.vscht.cz/idp/shibboleth", "Institute of Chemical Technology Prague");
-  orgs.set("https://idp.vsb.cz/idp/shibboleth", "VSB – Technical University of Ostrava");
-  orgs.set("https://whoami.cesnet.cz/idp/shibboleth", "CESNET");
-  orgs.set("https://helium.jcu.cz/idp/shibboleth", "University of South Bohemia");
-  orgs.set("https://idp.ujep.cz/idp/shibboleth", "Jan Evangelista Purkyne University in Usti nad Labem");
-  orgs.set("https://idp.amu.cz/idp/shibboleth", "Academy of Performing Arts in Prague");
-  orgs.set("https://idp.lib.cas.cz/idp/shibboleth", "Academy of Sciences Library");
-  orgs.set("https://shibboleth.mzk.cz/simplesaml/metadata.xml", "Moravian  Library");
-  orgs.set("https://idp2.ics.muni.cz/idp/shibboleth", "Masaryk University");
-  orgs.set("https://idp.upol.cz/idp/shibboleth", "Palacky University, Olomouc");
-  orgs.set("https://idp.fnplzen.cz/idp/shibboleth", "FN Plzen");
-  orgs.set("https://id.vse.cz/idp/shibboleth", "University of Economics, Prague");
-  orgs.set("https://shib.zcu.cz/idp/shibboleth", "University of West Bohemia");
-  orgs.set("https://idptoo.osu.cz/simplesaml/saml2/idp/metadata.php", "University of Ostrava");
-  orgs.set("https://login.ics.muni.cz/idp/shibboleth", "MetaCentrum");
-  orgs.set("https://idp.hostel.eduid.cz/idp/shibboleth", "eduID.cz Hostel");
-  orgs.set("https://shibboleth.techlib.cz/idp/shibboleth", "National Library of Technology");
-  orgs.set("https://eduid.jamu.cz/idp/shibboleth", "Janacek Academy of Music and Performing Arts in Brno");
-  orgs.set("https://marisa.uochb.cas.cz/simplesaml/saml2/idp/metadata.php", "Institute of Organic Chemistry and Biochemistry AS CR");
-  orgs.set("https://shibboleth.utb.cz/idp/shibboleth", "Tomas Bata University in Zlin");
-  orgs.set("https://engine.elixir-czech.org/authentication/idp/metadata", "Elixir Europe");
-  orgs.set("https://login.elixir-czech.org/idp", "Elixir Czech");
-  orgs.set("https://mojeid.cz/saml/idp.xml", "MojeID");
-  orgs.set("https://www.egi.eu/idp/shibboleth", "EGI SSO");
+  switch (name) {
+    case 'https://idp.upce.cz/idp/shibboleth':
+      return 'University in Pardubice';
+    case 'https://idp.slu.cz/idp/shibboleth':
+      return 'University in Opava';
+    case 'https://login.feld.cvut.cz/idp/shibboleth':
+      return 'Faculty of Electrical Engineering, Czech Technical University In Prague';
+    case 'https://www.vutbr.cz/SSO/saml2/idp':
+      return 'Brno University of Technology';
+    case 'https://shibboleth.nkp.cz/idp/shibboleth':
+      return 'The National Library of the Czech Republic';
+    case 'https://idp2.civ.cvut.cz/idp/shibboleth':
+      return 'Czech Technical University In Prague';
+    case 'https://shibbo.tul.cz/idp/shibboleth':
+      return 'Technical University of Liberec';
+    case 'https://idp.mendelu.cz/idp/shibboleth':
+      return 'Mendel University in Brno';
+    case 'https://cas.cuni.cz/idp/shibboleth':
+      return 'Charles University in Prague';
+    case 'https://wsso.vscht.cz/idp/shibboleth':
+      return 'Institute of Chemical Technology Prague';
+    case 'https://idp.vsb.cz/idp/shibboleth':
+      return 'VSB – Technical University of Ostrava';
+    case 'https://whoami.cesnet.cz/idp/shibboleth':
+      return 'CESNET';
+    case 'https://helium.jcu.cz/idp/shibboleth':
+      return 'University of South Bohemia';
+    case 'https://idp.ujep.cz/idp/shibboleth':
+      return 'Jan Evangelista Purkyne University in Usti nad Labem';
+    case 'https://idp.amu.cz/idp/shibboleth':
+      return 'Academy of Performing Arts in Prague';
+    case 'https://idp.lib.cas.cz/idp/shibboleth':
+      return 'Academy of Sciences Library';
+    case 'https://shibboleth.mzk.cz/simplesaml/metadata.xml':
+      return 'Moravian  Library';
+    case 'https://idp2.ics.muni.cz/idp/shibboleth':
+      return 'Masaryk University';
+    case 'https://idp.upol.cz/idp/shibboleth':
+      return 'Palacky University, Olomouc';
+    case 'https://idp.fnplzen.cz/idp/shibboleth':
+      return 'FN Plzen';
+    case 'https://id.vse.cz/idp/shibboleth':
+      return 'University of Economics, Prague';
+    case 'https://shib.zcu.cz/idp/shibboleth':
+      return 'University of West Bohemia';
+    case 'https://idptoo.osu.cz/simplesaml/saml2/idp/metadata.php':
+      return 'University of Ostrava';
+    case 'https://login.ics.muni.cz/idp/shibboleth':
+      return 'MetaCentrum';
+    case 'https://idp.hostel.eduid.cz/idp/shibboleth':
+      return 'eduID.cz Hostel';
+    case 'https://shibboleth.techlib.cz/idp/shibboleth':
+      return 'National Library of Technology';
+    case 'https://eduid.jamu.cz/idp/shibboleth':
+      return 'Janacek Academy of Music and Performing Arts in Brno';
+    case 'https://marisa.uochb.cas.cz/simplesaml/saml2/idp/metadata.php':
+      return 'Institute of Organic Chemistry and Biochemistry AS CR';
+    case 'https://shibboleth.utb.cz/idp/shibboleth':
+      return 'Tomas Bata University in Zlin';
+    case 'https://engine.elixir-czech.org/authentication/idp/metadata':
+      return 'Elixir Europe';
+    case 'https://login.elixir-czech.org/idp':
+      return 'Elixir Czech';
+    case 'https://mojeid.cz/saml/idp.xml':
+      return 'MojeID';
+    case 'https://www.egi.eu/idp/shibboleth':
+      return 'EGI SSO';
 
-  orgs.set("@google.extidp.cesnet.cz", "Google");
-  orgs.set("@facebook.extidp.cesnet.cz", "Facebook");
-  orgs.set("@mojeid.extidp.cesnet.cz", "MojeID");
-  orgs.set("@linkedin.extidp.cesnet.cz", "LinkedIn");
-  orgs.set("@twitter.extidp.cesnet.cz", "Twitter");
-  orgs.set("@seznam.extidp.cesnet.cz", "Seznam");
-  orgs.set("@elixir-europe.org", "Elixir Europe");
-  orgs.set("@github.extidp.cesnet.cz", "GitHub");
-  orgs.set("@orcid.extidp.cesnet.cz", "OrcID");
+    case '@google.extidp.cesnet.cz':
+      return 'Google';
+    case '@facebook.extidp.cesnet.cz':
+      return 'Facebook';
+    case '@mojeid.extidp.cesnet.cz':
+      return 'MojeID';
+    case '@linkedin.extidp.cesnet.cz':
+      return 'LinkedIn';
+    case '@twitter.extidp.cesnet.cz':
+      return 'Twitter';
+    case '@seznam.extidp.cesnet.cz':
+      return 'Seznam';
+    case '@elixir-europe.org':
+      return 'Elixir Europe';
+    case '@github.extidp.cesnet.cz':
+      return 'GitHub';
+    case '@orcid.extidp.cesnet.cz':
+      return 'OrcID';
 
-  if (orgs.get(name) != null) {
-    return orgs.get(name);
-  } else {
-    return name;
+    default: return name;
   }
-
 }
