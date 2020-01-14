@@ -145,6 +145,29 @@ export function parseFullName(user: User | Candidate): string {
 }
 
 /**
+ * Creates name for given user. Returns users name without his titles.
+ *
+ * @param user user
+ */
+export function parseName(user: User | Candidate): string {
+  let fullName = '';
+  if (user.firstName !== null) {
+    fullName += user.firstName + ' ';
+  }
+  if (user.middleName !== null) {
+    fullName += user.middleName + ' ';
+  }
+  if (user.lastName !== null) {
+    fullName += user.lastName + ' ';
+  }
+  if (fullName.endsWith(' ')) {
+    fullName = fullName.substring(0, fullName.length - 1);
+  }
+
+  return fullName;
+}
+
+/**
  * Returns attribute with specific urn from given rich user.
  * If the given user doesn't have attribute with given urn, null is returned.
  *

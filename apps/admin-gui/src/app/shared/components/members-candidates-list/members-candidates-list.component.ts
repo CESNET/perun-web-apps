@@ -7,7 +7,7 @@ import {
   getCandidateEmail,
   getExtSourceNameOrOrganizationColumn,
   parseUserEmail,
-  parseVo
+  parseVo, parseName
 } from '@perun-web-apps/perun/utils';
 
 @Component({
@@ -52,13 +52,13 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
           case 'status':
             return memberCandidate.member ? memberCandidate.member.status : '';
           case 'fullName':
+            let name;
             if (memberCandidate.richUser) {
-              return memberCandidate.richUser.firstName.toLowerCase() + ' ' +
-              memberCandidate.richUser.lastName.toLowerCase();
+              name = parseName(memberCandidate.richUser);
             } else {
-              return memberCandidate.candidate.firstName.toLowerCase() + ' ' +
-              memberCandidate.candidate.lastName.toLowerCase();
+              name = parseName(memberCandidate.candidate);
             }
+            return name.toLowerCase();
           case 'email':
             if (!!memberCandidate.member && !!memberCandidate.member.memberAttributes) {
               return parseEmail(memberCandidate.member);
@@ -130,8 +130,6 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       }
       return logins;
     }
-
-
 	}
 
 	getLoginsForRichUser(user: RichUser): string {
