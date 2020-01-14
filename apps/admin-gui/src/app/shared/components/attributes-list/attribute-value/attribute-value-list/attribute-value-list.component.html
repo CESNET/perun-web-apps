@@ -1,6 +1,14 @@
 <div>
-  <mat-chip-list #chipList>
-    <mat-chip class="chip-word-break" *ngFor="let chip of attribute.value" [selectable]="selectable"
+  <mat-chip-list #chipList
+                 class="mat-chip-list-stacked"
+                 cdkDropList
+                 cdkDropListOrientation="vertical"
+                 (cdkDropListDropped)="drop($event); _sendEventToParent()">
+    <mat-chip class="chip-word-break"
+              *ngFor="let chip of attribute.value"
+              [selectable]="selectable"
+              cdkDrag
+              [cdkDragData]="chip"
               [removable]="removable" (removed)="remove(chip); _sendEventToParent()">
       {{chip}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
