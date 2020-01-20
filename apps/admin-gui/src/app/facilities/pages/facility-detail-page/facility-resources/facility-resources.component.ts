@@ -7,6 +7,7 @@ import {
   RemoveResourceDialogComponent} from '../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
 import { FacilityService, ResourcesService } from '@perun-web-apps/perun/services';
 import { Facility, RichResource } from '@perun-web-apps/perun/models';
+import { CreateResourceDialogComponent } from '../../../../shared/components/dialogs/create-resource-dialog/create-resource-dialog.component';
 
 @Component({
   selector: 'app-facility-resources',
@@ -72,5 +73,18 @@ export class FacilityResourcesComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.filterValue = filterValue;
+  }
+
+  createResource() {
+    const dialogRef = this.dialog.open(CreateResourceDialogComponent, {
+      width: '600px',
+      data: {facilityId: this.facility.id, theme: 'facility-theme'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.refreshTable();
+      }
+    });
   }
 }

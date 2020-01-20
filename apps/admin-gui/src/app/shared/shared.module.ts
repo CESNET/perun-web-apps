@@ -162,6 +162,7 @@ import { RemoveRelationDialogComponent } from './components/dialogs/remove-relat
 import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
 import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
 import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
+import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
 
 @NgModule({
   imports: [
@@ -304,7 +305,8 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
     UserDetailPageComponent,
     PerunFooterComponent,
     TableOptionsComponent,
-    VoSelectTableComponent
+    VoSelectTableComponent,
+    CreateResourceDialogComponent
   ],
   entryComponents: [
     CreateGroupDialogComponent,
@@ -349,7 +351,8 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
     ChangeMemberStatusDialogComponent,
     ChangeMemberStatusDialogComponent,
     RemoveGroupFromResourceDialogComponent,
-    AssignGroupToResourceDialogComponent
+    AssignGroupToResourceDialogComponent,
+    CreateResourceDialogComponent
   ],
   declarations: [
     AttributesListComponent,
@@ -464,7 +467,8 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
     ChangeMemberStatusDialogComponent,
     ChangeMemberStatusDialogComponent,
     RemoveGroupFromResourceDialogComponent,
-    AssignGroupToResourceDialogComponent
+    AssignGroupToResourceDialogComponent,
+    CreateResourceDialogComponent
   ],
   providers: [
     AnyToStringPipe,

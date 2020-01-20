@@ -1,0 +1,41 @@
+<div class="{{theme}}" *ngIf="!loading">
+  <div mat-dialog-content class="dialog-container">
+
+    <mat-form-field class="long-input">
+      <input type="text" placeholder="{{'DIALOGS.CREATE_RESOURCE.SELECT_VO' | translate}}" aria-label="Number" matInput
+             required
+             [formControl]="organizationCtrl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let vo of filteredVos | async" [value]="vo.name"
+                    (click)="selectedVo = vo">
+          {{vo.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required placeholder="{{'DIALOGS.CREATE_RESOURCE.NAME' | translate}}" [formControl]="nameCtrl"
+             [(ngModel)]="resourceName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required placeholder="{{'DIALOGS.CREATE_RESOURCE.DESCRIPTION' | translate}}"
+             [formControl]="descriptionCtrl"
+             [(ngModel)]="description">
+    </mat-form-field>
+  </div>
+
+
+  <div mat-dialog-actions>
+    <button mat-stroked-button class="ml-auto"
+            (click)="onCancel()">{{'DIALOGS.CREATE_RESOURCE.CANCEL' | translate}}</button>
+    <button mat-flat-button class="ml-2"
+            [disabled]="!validateInput(resourceName) || !validateInput(description) || selectedVo === null"
+            color="accent" (click)="onSubmit()">{{'DIALOGS.CREATE_RESOURCE.CREATE' | translate}}</button>
+  </div>
+</div>
+<div class="{{theme}}">
+  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
+</div>
+
+

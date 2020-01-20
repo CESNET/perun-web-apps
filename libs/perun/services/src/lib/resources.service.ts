@@ -96,4 +96,13 @@ export class ResourcesService {
       'resource': resource
     }, showNotificationOnError);
   }
+
+  createResource(name: string, description: string, voId:number, facilityId: number, showNotificationOnError = true): Observable<Resource> {
+    return this.apiService.post('json/resourcesManager/createResource', {
+      name: name,
+      description: description,
+      vo: voId,
+      facility: facilityId
+    }, showNotificationOnError);
+  }
 }

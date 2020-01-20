@@ -72,6 +72,7 @@
     "RESOURCES": {
       "TITLE": "Resources",
       "DELETE": "Remove selected",
+      "CREATE": "New...",
       "NO_RESOURCES_ALERT": "No resources found."
     },
     "ALLOWED_GROUPS": {
@@ -997,6 +998,14 @@
       "CANCEL_BUTTON": "Cancel",
       "SUCCESS_MESSAGE": "Selected groups were assigned to resource",
       "CONFIGURE_GROUPS": "Configure group(s) before assign"
+    },
+    "CREATE_RESOURCE": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "SELECT_VO": "Select organization",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "Resource successfully created"
     }
   },
   "MEMBERS_LIST": {

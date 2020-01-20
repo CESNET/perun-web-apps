@@ -1,7 +1,10 @@
 <div>
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.RESOURCES.TITLE' | translate}}</h1>
   <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
-  <button mat-flat-button color="warn" [disabled]="selected.selected.length === 0"  (click)="removeResource()">
+  <button mat-flat-button color="accent" (click)="createResource()">
+    {{'FACILITY_DETAIL.RESOURCES.CREATE' | translate}}
+  </button>
+  <button mat-flat-button color="warn" class="ml-2" [disabled]="selected.selected.length === 0"  (click)="removeResource()">
     {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
   </button>
   <app-immediate-filter
