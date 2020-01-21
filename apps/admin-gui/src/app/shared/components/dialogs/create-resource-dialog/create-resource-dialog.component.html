@@ -15,13 +15,11 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput required placeholder="{{'DIALOGS.CREATE_RESOURCE.NAME' | translate}}" [formControl]="nameCtrl"
-             [(ngModel)]="resourceName">
+      <input matInput required placeholder="{{'DIALOGS.CREATE_RESOURCE.NAME' | translate}}" [formControl]="nameCtrl">
     </mat-form-field>
     <mat-form-field>
       <input matInput required placeholder="{{'DIALOGS.CREATE_RESOURCE.DESCRIPTION' | translate}}"
-             [formControl]="descriptionCtrl"
-             [(ngModel)]="description">
+             [formControl]="descriptionCtrl">
     </mat-form-field>
   </div>
 
@@ -30,7 +28,7 @@
     <button mat-stroked-button class="ml-auto"
             (click)="onCancel()">{{'DIALOGS.CREATE_RESOURCE.CANCEL' | translate}}</button>
     <button mat-flat-button class="ml-2"
-            [disabled]="!validateInput(resourceName) || !validateInput(description) || selectedVo === null"
+            [disabled]="nameCtrl.invalid || descriptionCtrl.invalid || selectedVo === null"
             color="accent" (click)="onSubmit()">{{'DIALOGS.CREATE_RESOURCE.CREATE' | translate}}</button>
   </div>
 </div>

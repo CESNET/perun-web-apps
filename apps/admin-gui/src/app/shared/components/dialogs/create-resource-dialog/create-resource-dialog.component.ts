@@ -36,8 +36,6 @@ export class CreateResourceDialogComponent implements OnInit {
   vos: Vo[] = [];
   filteredVos: Observable<Vo[]>;
 
-  resourceName = '';
-  description = '';
   theme: string;
   loading: boolean;
   selectedVo: Vo = null;
@@ -54,8 +52,8 @@ export class CreateResourceDialogComponent implements OnInit {
       );
     });
 
-    this.nameCtrl = new FormControl([Validators.required, Validators.pattern('.*[\\S]+.*')]);
-    this.descriptionCtrl = new FormControl([Validators.required, Validators.pattern('.*[\\S]+.*')]);
+    this.nameCtrl = new FormControl(null, [Validators.required, Validators.pattern('.*[\\S]+.*')]);
+    this.descriptionCtrl = new FormControl(null, [Validators.required, Validators.pattern('.*[\\S]+.*')]);
   }
 
   _filter(value: string): Vo[] {
@@ -63,13 +61,9 @@ export class CreateResourceDialogComponent implements OnInit {
     return this.vos.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  validateInput(value: string): boolean {
-    return value.match('.*[\\S]+.*') !== null;
-  }
-
   onSubmit() {
     this.loading = true;
-    this.resourcesService.createResource(this.resourceName, this.description, this.selectedVo.id, this.data.facilityId).subscribe(() => {
+    this.resourcesService.createResource(this.nameCtrl.value, this.descriptionCtrl.value, this.selectedVo.id, this.data.facilityId).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);
