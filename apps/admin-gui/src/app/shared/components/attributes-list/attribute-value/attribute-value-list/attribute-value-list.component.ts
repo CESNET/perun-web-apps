@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { Attribute } from '@perun-web-apps/perun/models';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-attribute-value-list',
@@ -53,5 +54,9 @@ export class AttributeValueListComponent implements OnInit {
     if (index >= 0) {
       this.attribute.value.splice(index, 1);
     }
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.attribute.value, event.previousIndex, event.currentIndex);
   }
 }

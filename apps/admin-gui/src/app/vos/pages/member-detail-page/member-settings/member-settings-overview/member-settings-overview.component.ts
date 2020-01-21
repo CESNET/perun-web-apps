@@ -46,7 +46,7 @@ export class MemberSettingsOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `/organizations/${this.vo.id}/members/${this.member.id}/settings/attributes`,
         label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
         style: 'member-btn'

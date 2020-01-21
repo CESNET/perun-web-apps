@@ -54,13 +54,13 @@ export class MemberOverviewComponent implements OnInit {
   private initNavItems() {
     this.navItems = [
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.member.voId}/members/${this.member.id}/groups`,
         label: 'MENU_ITEMS.MEMBER.GROUPS',
         style: 'member-btn'
       },
       {
-        icon: 'settings2-white.svg',
+        cssIcon: 'perun-settings2',
         url: `/organizations/${this.member.voId}/members/${this.member.id}/settings`,
         label: 'MENU_ITEMS.MEMBER.SETTINGS',
         style: 'member-btn'

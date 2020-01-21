@@ -3,6 +3,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {SideMenuItem} from '../side-menu.component';
 import { openClose, rollInOut } from '../../animations/Animations';
 import {MatSidenav} from '@angular/material/sidenav';
+import { StoreService } from '../../../core/services/common/store.service';
 
 @Component({
   selector: 'app-side-menu-root-item',
@@ -18,7 +19,8 @@ export class SideMenuRootItemComponent implements OnInit, OnChanges {
   private currentUrl: string;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private store: StoreService,
   ) {
     this.currentUrl = router.url;
 
@@ -41,6 +43,9 @@ export class SideMenuRootItemComponent implements OnInit, OnChanges {
   @ViewChild('collapse', { static: false }) collapseDiv: ElementRef;
 
   expanded = false;
+  linkBgColor = this.store.get('theme', 'sidemenu_item_links_bg_color');
+  linkTextColor = this.store.get('theme', 'sidemenu_item_links_text_color');
+  iconColor = this.store.get('theme', 'sidemenu_item_icon_color');
 
   @Input()
   sideNav: MatSidenav;

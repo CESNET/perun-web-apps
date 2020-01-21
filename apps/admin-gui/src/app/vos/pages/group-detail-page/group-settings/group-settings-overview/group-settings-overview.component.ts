@@ -46,37 +46,37 @@ export class GroupSettingsOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/attributes`,
         label: 'MENU_ITEMS.GROUP.ATTRIBUTES',
         style: 'group-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/expiration`,
         label: 'MENU_ITEMS.GROUP.EXPIRATION',
         style: 'group-btn'
       },
       {
-        icon: 'manager-white.svg',
+        cssIcon: 'perun-manager',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/managers`,
         label: 'MENU_ITEMS.GROUP.MANAGERS',
         style: 'group-btn'
       },
       {
-        icon: 'application_form-white.svg',
+        cssIcon: 'perun-application-form',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/applicationForm`,
         label: 'MENU_ITEMS.GROUP.APPLICATION_FORM',
         style: 'group-btn'
       },
       {
-        icon: 'notification-white.svg',
+        cssIcon: 'perun-notification',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/notifications`,
         label: 'MENU_ITEMS.GROUP.NOTIFICATIONS',
         style: 'group-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/relations`,
         label: 'MENU_ITEMS.GROUP.RELATIONS',
         style: 'group-btn'

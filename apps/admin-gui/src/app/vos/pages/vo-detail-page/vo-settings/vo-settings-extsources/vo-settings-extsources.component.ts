@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { VoService } from '@perun-web-apps/perun/services';
+import { ActivatedRoute } from '@angular/router';
+import { ExtSource } from '@perun-web-apps/perun/models';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material';
+import { AddExtSourceDialogComponent } from '../../../../../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
+import { NotificatorService } from '../../../../../core/services/common/notificator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vo-settings-extsources',
@@ -7,9 +15,63 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VoSettingsExtsourcesComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private voService: VoService,
+              private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private notificator: NotificatorService,
+              private translate: TranslateService) {
+    this.translate.get('VO_DETAIL.SETTINGS.EXT_SOURCES.SUCCESS_REMOVED').subscribe(result => this.successMessage = result);
   }
 
+  voId: number;
+  extSources: ExtSource[] = [];
+  selection = new SelectionModel<ExtSource>(true, []);
+  loading: boolean;
+  filterValue = '';
+  successMessage: string;
+
+  ngOnInit() {
+    this.route.parent.parent.params.subscribe(parentParams => {
+      this.voId = parentParams['voId'];
+      this.refreshTable();
+    });
+  }
+
+  refreshTable() {
+    this.loading = true;
+    this.voService.getVoExtSources(this.voId).subscribe(sources => {
+      this.extSources = sources;
+      this.selection.clear();
+      this.loading = false;
+    });
+  }
+
+  applyFilter(filterValue: string) {
+    this.filterValue = filterValue;
+  }
+
+  onAdd() {
+    const dialogRef = this.dialog.open(AddExtSourceDialogComponent, {
+      width: '1000px',
+      data: {
+        voId: this.voId,
+        voExtSources: this.extSources,
+        theme: 'vo-theme'
+      }
+    });
+    dialogRef.afterClosed().subscribe(added => {
+      if (added) {
+        this.refreshTable();
+      }
+    });
+  }
+
+  onRemove() {
+    for (const extSource of this.selection.selected) {
+      this.voService.removeExtSources(this.voId, extSource.id).subscribe(_ => {
+        this.notificator.showSuccess(this.successMessage + extSource.name);
+        this.refreshTable();
+      });
+    }
+  }
 }

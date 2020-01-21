@@ -289,6 +289,13 @@
         "NO_EMAILS": "No mail notifications found for this VO.",
         "EDIT_SUCCESS": "Email notification was successfully edited",
         "ADD_SUCCESS": "Email notification was successfully added"
+      },
+      "EXT_SOURCES": {
+        "TITLE": "External sources",
+        "ADD": "Add...",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by ID, name or type",
+        "SUCCESS_REMOVED": "External source successfully removed: "
       }
     },
     "APPLICATION": {
@@ -630,7 +637,7 @@
     },
     "REMOVE_RESOURCES": {
       "TITLE": "Confirm removal",
-      "DESCRIPTION": "Following resources will be removed from facility.",
+      "DESCRIPTION": "Following resources will be removed.",
       "ASK": "Do you want to proceed?",
       "CANCEL": "Cancel",
       "DELETE": "Delete",
@@ -1006,6 +1013,13 @@
       "CANCEL": "Cancel",
       "CREATE": "Create",
       "SUCCESS": "Resource successfully created"
+    },
+    "ADD_EXT_SOURCES": {
+      "TITLE": "Add external sources",
+      "FILTER": "Filter by ID, name or type",
+      "CANCEL": "Cancel",
+      "ADD": "Add",
+      "SUCCESS_ADDED": "External source successfully added: "
     }
   },
   "MEMBERS_LIST": {
@@ -1017,9 +1031,12 @@
     "LOGINS": "Logins"
   },
   "MEMBERS_CANDIDATES_LIST": {
+    "STATUS": "Status",
     "NAME": "Name",
     "ORGANIZATION": "Organization or Ext source",
-    "EMAIL": "Email"
+    "EMAIL": "Email",
+    "LOGINS": "Logins",
+    "ALREADY_MEMBER": "Already member"
   },
   "MANAGERS_LIST": {
     "ID": "User ID",
@@ -1179,6 +1196,13 @@
           "MEMBER_GROUPS": "Member groups",
           "ADMINS_GROUPS": "Groups where user is admin"
         }
+      },
+      "EXT_SOURCES_LIST": {
+        "ID": "ID",
+        "NAME":"Name",
+        "TYPE": "Type",
+        "NO_EXT_SOURCES": "No external sources",
+        "NO_FILTER_RESULTS": "There are no external sources matching your query"
       }
     },
     "FOOTER": {

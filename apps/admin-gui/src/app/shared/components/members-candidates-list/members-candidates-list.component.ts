@@ -1,8 +1,14 @@
 import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import { MemberCandidate } from '@perun-web-apps/perun/models';
-import { parseEmail, parseFullName } from '@perun-web-apps/perun/utils';
+import { Candidate, MemberCandidate, RichUser } from '@perun-web-apps/perun/models';
+import {
+  parseEmail,
+  getCandidateEmail,
+  getExtSourceNameOrOrganizationColumn,
+  parseUserEmail,
+  parseVo, parseName
+} from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-members-candidates-list',
@@ -16,7 +22,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
 
   private sort: MatSort;
 
-  @ViewChild(MatSort, {static: true}) set matSort(ms: MatSort) {
+  @ViewChild(MatSort, {static: false}) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSource();
   }
@@ -29,7 +35,10 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   @Input()
   selection: SelectionModel<MemberCandidate>;
 
-  displayedColumns: string[] = ['checkbox', 'fullName', 'voExtSource', 'email'];
+  @Input()
+  type: string;
+
+  displayedColumns: string[] = ['checkbox', 'status', 'fullName', 'voExtSource', 'email', 'logins', 'alreadyMember', 'local'];
   dataSource: MatTableDataSource<MemberCandidate>;
 
   exporting = false;
@@ -38,14 +47,36 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
 
-      this.dataSource.sortingDataAccessor = (richMember, property) => {
+      this.dataSource.sortingDataAccessor = (memberCandidate, property) => {
         switch (property) {
+          case 'status':
+            return memberCandidate.member ? memberCandidate.member.status : '';
           case 'fullName':
-            return parseFullName(richMember.richUser);
+            let name;
+            if (memberCandidate.richUser) {
+              name = parseName(memberCandidate.richUser);
+            } else {
+              name = parseName(memberCandidate.candidate);
+            }
+            return name.toLowerCase();
           case 'email':
-            return parseEmail(richMember.member);
+            if (!!memberCandidate.member && !!memberCandidate.member.memberAttributes) {
+              return parseEmail(memberCandidate.member);
+            } else if (memberCandidate.richUser) {
+              return parseUserEmail(memberCandidate.richUser);
+            } else {
+              return this.getEmail(memberCandidate.candidate);
+            }
+          case 'voExtSource':
+            return memberCandidate.richUser ? parseVo(memberCandidate.richUser) : this.getOrganization(memberCandidate.candidate);
+          case 'logins':
+            return this.getLogins(memberCandidate);
+          case 'alreadyMember':
+            return this.getAlreadyMember(memberCandidate);
+          case 'local':
+            return memberCandidate.richUser ? "Local" : "External identity";
           default:
-            return richMember[property];
+            return memberCandidate[property];
         }
       };
 
@@ -54,7 +85,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.setDataSource();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -75,12 +106,96 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  checkboxLabel(row?: MemberCandidate): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.member === null ? row.richUser.id + 1 : row.member.id + 1}`;
+  getEmail(candidate: Candidate): string {
+    return getCandidateEmail(candidate);
   }
 
+  getOrganization(candidate: Candidate): string {
+    return getExtSourceNameOrOrganizationColumn(candidate);
+  }
+
+  /**
+   * Gets all logins stored in user attributes
+   *
+   * @return users logins
+   */
+  getLogins(memberCandidate: MemberCandidate): string {
+    if (memberCandidate.richUser) {
+      return this.getLoginsForRichUser(memberCandidate.richUser);
+    }
+    else {
+      let logins = this.getLoginsForCandidate(memberCandidate.candidate);
+      if (logins == null || logins === '') {
+        logins = memberCandidate.candidate.userExtSource.login;
+      }
+      return logins;
+    }
+	}
+
+	getLoginsForRichUser(user: RichUser): string {
+    let logins = '';
+    for (const userAttribute of user.userAttributes) {
+      if (userAttribute.friendlyName.startsWith('login-namespace')) {
+        // process only logins which are not null
+        if (userAttribute.value != null) {
+          // append comma
+          if (logins.length > 0) {
+            logins += ", ";
+          }
+          // parse login namespace
+          const parsedNamespace =  userAttribute.friendlyName.substring(16);
+          logins += parsedNamespace + ": " + userAttribute.value;
+        }
+      }
+    }
+    return logins;
+  }
+
+  getLoginsForCandidate(candidate: Candidate): string {
+    const attributesNamespace = 49;
+    let logins = '';
+    for (const prop in candidate.attributes) {
+      if (candidate.attributes.hasOwnProperty(prop)) {
+        if (prop.indexOf('urn:perun:user:attribute-def:def:login-namespace:') !== -1) {
+          if (candidate.attributes[prop] != null) {
+            if(logins.length > 0){
+              logins += ", ";
+            }
+            // parse login namespace
+            const parsedNamespace = prop.substring(attributesNamespace);
+            logins += parsedNamespace + ": " + candidate.attributes[prop];
+          }
+        }
+      }
+    }
+    return logins;
+  }
+
+  getAlreadyMember(memberCandidate: MemberCandidate): string {
+    if (this.type === 'vo') {
+      if (memberCandidate.member != null) return 'Member of VO';
+    } else {
+      if (memberCandidate.member != null &&
+        memberCandidate.member.sourceGroupId !== 0 &&
+        memberCandidate.member.membershipType === 'DIRECT') return 'Member of Group';
+      if (memberCandidate.member != null &&
+        memberCandidate.member.sourceGroupId !== 0 &&
+        memberCandidate.member.membershipType === 'INDIRECT') return 'Indirect member of Group';
+      if (memberCandidate.member != null) return 'Member of VO';
+    }
+    return '';
+  }
+
+  isCheckboxDisabled(memberCandidate: MemberCandidate): boolean {
+    if (this.type === 'vo') {
+      return memberCandidate.member != null;
+    }
+    else {
+        if (memberCandidate.member) {
+          return memberCandidate.member.sourceGroupId !== 0 &&
+                  memberCandidate.member.membershipType === 'DIRECT'
+        }
+    }
+    return false;
+  }
 }

@@ -1,25 +1,33 @@
-<div id="nav-menu-icons">
+<div id="nav-menu-icons" [ngStyle]="{'color': navTextColor}">
   <button mat-icon-button
-          class="mr-2 text-white mt-auto mb-auto"
+          class="mr-2 mt-auto mb-auto"
           (click)="sideNav.toggle()">
-    <mat-icon>
+    <mat-icon [ngStyle]="{'color': iconColor}">
       menu
     </mat-icon>
   </button>
-  <a class="nav-menu-icon" [routerLink]="['/']">
-    <img src="assets/img/PerunWebImages/perun_logo-white.svg" alt="Home">
+  <a [routerLink]="['/']"
+     [ngStyle]="{'padding': logoPadding}">
+    <div [innerHTML]="logo"
+         #logoContainer
+         class="logo-container"
+         [ngStyle]="{'height': '56px'}">
+    </div>
   </a>
 </div>
 
-<div id="nav-menu-user-info">
+<div id="nav-menu-user-info" [ngStyle]="{'color': navTextColor}">
   <button mat-icon-button (click)="showNotificationHistory()" [matTooltip]="'NAV.NOTIFICATIONS_TOOLTIP'|translate">
-    <mat-icon matBadge="{{getNewNotificationsCount() > 5 ? '5+' : getNewNotificationsCount()}}" matBadgeColor="warn" [matBadgeHidden]="getNewNotificationsCount() === 0">
+    <mat-icon [ngStyle]="{'color': iconColor}"
+              matBadge="{{getNewNotificationsCount() > 5 ? '5+' : getNewNotificationsCount()}}"
+              matBadgeColor="warn"
+              [matBadgeHidden]="getNewNotificationsCount() === 0">
       {{getNewNotificationsCount() ? 'notifications_active' : 'notifications'}}
     </mat-icon>
   </button>
 
   <button mat-button [matMenuTriggerFor]="menu">
-    <mat-icon>
+    <mat-icon [ngStyle]="{'color': iconColor}">
       person
     </mat-icon>
     <span class="d-none d-lg-inline">

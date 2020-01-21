@@ -39,19 +39,19 @@ export class VoResourcesOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'resource-white.svg',
+        cssIcon: 'perun-resource',
         url: `/organizations/${this.vo.id}/resources/preview`,
         label: 'MENU_ITEMS.VO.RESOURCE_PREVIEW',
         style: 'vo-btn'
       },
       {
-        icon: 'resource_tags-white.svg',
+        cssIcon: 'perun-resource-tags',
         url: `/organizations/${this.vo.id}/resources/tags`,
         label: 'MENU_ITEMS.VO.RESOURCE_TAGS',
         style: 'vo-btn'
       },
       {
-        icon: 'resources_state-white.svg',
+        cssIcon: 'perun-resources-state',
         url: `/organizations/${this.vo.id}/resources/states`,
         label: 'MENU_ITEMS.VO.RESOURCE_STATES',
         style: 'vo-btn'

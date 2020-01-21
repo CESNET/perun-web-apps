@@ -38,3 +38,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# The instance specific configuration should not be part of the repository
+apps/admin-gui/src/assets/config/instanceConfig.json

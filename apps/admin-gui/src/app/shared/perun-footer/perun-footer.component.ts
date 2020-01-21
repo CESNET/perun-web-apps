@@ -10,8 +10,11 @@ import { StoreService } from '../../core/services/common/store.service';
 })
 export class PerunFooterComponent implements OnInit {
 
-  constructor(private storeService: StoreService,
-              private dialog: MatDialog) { }
+  constructor(
+    private storeService: StoreService,
+    private dialog: MatDialog,
+    private store: StoreService
+  ) { }
 
   perunwebpage = '';
   perunTeamWebpage = '';
@@ -21,10 +24,15 @@ export class PerunFooterComponent implements OnInit {
   supportMail = '';
   version = '';
   copyright: [] = [];
+  backgroundColor = this.store.get('theme', 'footer_bg_color');
+  footerCopyrightTextColor = this.store.get('theme', 'footer_copyright_text_color');
+  linksTextColor = this.store.get('theme', 'footer_links_text_color');
+  footerHeadersTextColor = this.store.get('theme', 'footer_headers_text_color');
 
   currentYear = (new Date()).getFullYear();
 
   ngOnInit() {
+    console.log(this.backgroundColor);
     this.perunwebpage = this.storeService.get('footer_perun_web_web');
     this.perunTeamWebpage = this.storeService.get('footer_perun_team_web');
     this.privacyPolicy = this.storeService.get('footer_privacy_policy_web');

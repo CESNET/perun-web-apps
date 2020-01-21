@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { PerunApiService } from './perun-api-service';
-import { MemberCandidate, Vo } from '@perun-web-apps/perun/models';
+import { ExtSource, MemberCandidate, Vo } from '@perun-web-apps/perun/models';
 
 @Injectable({
   providedIn: 'root'
@@ -50,4 +50,31 @@ export class VoService {
       shortName: shortName
     }, showNotificationOnError);
   }
+
+  getVoExtSources(voId: number, showNotificationOnError = true): Observable<ExtSource[]> {
+    return this.apiService.get(`json/extSourcesManager/getVoExtSources?vo=${voId}`, new HttpParams(), showNotificationOnError);
+  }
+
+  getExtSources(showNotificationOnError = true): Observable<ExtSource[]> {
+    return this.apiService.get('json/extSourcesManager/getExtSources', new HttpParams(), showNotificationOnError);
+  }
+
+  addExtSources(voId: number, extSourceId: number, showNotificationOnError = true): Observable<void> {
+    const payload = {
+      vo: voId,
+      source: extSourceId
+    };
+
+    return this.apiService.post('json/extSourcesManager/addExtSource', payload, showNotificationOnError);
+  }
+
+  removeExtSources(voId: number, extSourceId: number, showNotificationOnError = true): Observable<void> {
+    const payload = {
+      vo: voId,
+      source: extSourceId
+    };
+
+    return this.apiService.post('json/extSourcesManager/removeExtSource', payload, showNotificationOnError);
+  }
+
 }

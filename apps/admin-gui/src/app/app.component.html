@@ -3,7 +3,7 @@
 </div>
 <app-perun-nav-menu
   id="nav-menu"
-  [ngStyle]="{'top': getNavMenuTop()}"
+  [ngStyle]="{'top': getNavMenuTop(), 'background': navBackgroundColor}"
   class="mat-elevation-z3"
   [sideNav]="sidenav"
   [principal]="principal">
@@ -14,6 +14,7 @@
   [ngStyle]="{'margin-top': getSideNavMarginTop(),'min-height': getSideNavMinHeight()}"
 >
   <mat-sidenav #sidenav
+               [ngStyle]="{'border-color': sideBarBorderColor}"
                [mode]="sidebarMode"
                [opened]="true"
                [fixedInViewport]="true"
@@ -24,7 +25,8 @@
 
   <mat-sidenav-content id="content-inner"
     [ngStyle]="{
-       'min-height' : getContentInnerMinHeight()
+       'min-height' : getContentInnerMinHeight(),
+       'background-color': contentBackgroundColor
     }">
     <div id="content-wrap">
       <router-outlet></router-outlet>

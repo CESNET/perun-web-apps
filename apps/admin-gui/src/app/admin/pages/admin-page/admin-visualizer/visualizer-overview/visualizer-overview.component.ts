@@ -14,13 +14,13 @@ export class VisualizerOverviewComponent {
 
   items: MenuItem[] = [
     {
-      icon: 'module_dependencies.svg',
+      cssIcon: 'perun-module-dependencies',
       url: `attrDependencies`,
       label: 'MENU_ITEMS.VISUALIZER.ATTR_DEPENDENCIES',
       style: 'admin-btn'
     },
     {
-      icon: 'user_destination_relationship.svg',
+      cssIcon: 'perun-user-destination-relationship',
       url: `userDestinationRelationship`,
       label: 'MENU_ITEMS.VISUALIZER.USER_DESTINATION',
       style: 'admin-btn'

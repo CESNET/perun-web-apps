@@ -52,31 +52,31 @@ export class GroupOverviewComponent implements OnInit {
   private initNavItems() {
     this.navItems = [
       {
-        icon: 'user-white.svg',
+        cssIcon: 'perun-user',
         url: `/organizations/${this.group.voId}/groups/${this.groupId}/members`,
         label: 'MENU_ITEMS.GROUP.MEMBERS',
         style: 'group-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.group.voId}/groups/${this.groupId}/subgroups`,
         label: 'MENU_ITEMS.GROUP.SUBGROUPS',
         style: 'group-btn'
       },
       {
-        icon: 'manage_facility_white.svg',
+        cssIcon: 'perun-manage-facility',
         url: `/organizations/${this.group.voId}/groups/${this.groupId}/resources`,
         label: 'MENU_ITEMS.GROUP.RESOURCES',
         style: 'group-btn'
       },
       {
-        icon: 'applications-white.svg',
+        cssIcon: 'perun-applications',
         url: `/organizations/${this.group.voId}/groups/${this.groupId}/applications`,
         label: 'MENU_ITEMS.GROUP.APPLICATIONS',
         style: 'group-btn'
       },
       {
-        icon: 'settings2-white.svg',
+        cssIcon: 'perun-settings2',
         url: `/organizations/${this.group.voId}/groups/${this.groupId}/settings`,
         label: 'MENU_ITEMS.GROUP.SETTINGS',
         style: 'group-btn'

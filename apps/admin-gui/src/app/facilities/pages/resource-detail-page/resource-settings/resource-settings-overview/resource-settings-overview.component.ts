@@ -36,7 +36,7 @@ export class ResourceSettingsOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `/facilities/${this.resource.facilityId}/resources/${this.resource.id}/settings/attributes`,
         label: 'MENU_ITEMS.RESOURCE.ATTRIBUTES',
         style: 'resource-btn'

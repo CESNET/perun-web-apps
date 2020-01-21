@@ -2,6 +2,29 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+
+@function mat-color($palette, $hue: default, $opacity: null) {
+  @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
+    @return mat-color($palette, default, $hue);
+  }
+
+  $color: map-get($palette, $hue);
+
+  @if (type-of($color) != color) {
+    @if ($opacity == null){
+      @return $color;
+    }
+
+    // Here is the change from the original function:
+    // If the $color resolved to something different from a color, we assume it is a CSS variable
+    // in the form of rgba(var(--rgba-css-var),a) and replace the 'a' value.
+    @return #{str-slice($color, 0, str-index($color, ',')) + $opacity + ')'};
+  }
+
+  @return rgba($color, if($opacity == null, opacity($color), $opacity));
+}
+
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -26,66 +49,391 @@ $perun-theme: mat-light-theme($perun-primary, $perun-accent, $perun-warn);
 // that you are using.
 @include angular-material-theme($perun-theme);
 
+:root {
+  //--vo-color: #ff0000;
+  //--vo-theme-primary-50: 0,158,224;
+  //--vo-theme-primary-100: 0,158,224;
+  //--vo-theme-primary-200: 0,158,224;
+  //--vo-theme-primary-300: 0,158,224;
+  //--vo-theme-primary-400: 0,158,224;
+  //--vo-theme-primary-500: 0,158,224;
+  //--vo-theme-primary-600: 0,158,224;
+  //--vo-theme-primary-700: 0,158,224;
+  //--vo-theme-primary-800: 0,158,224;
+  //--vo-theme-primary-900: 0,158,224;
+  //--vo-theme-primary-A100: 0,158,224;
+  //--vo-theme-primary-A200: 0,158,224;
+  //--vo-theme-primary-A400: 0,158,224;
+  //--vo-theme-primary-A700: 0,158,224;
+  //--vo-theme-primary-contrast-50: 0,158,224;
+  //--vo-theme-primary-contrast-100: 0,158,224;
+  //--vo-theme-primary-contrast-200: 0,158,224;
+  //--vo-theme-primary-contrast-300: 0,158,224;
+  //--vo-theme-primary-contrast-400: 0,158,224;
+  //--vo-theme-primary-contrast-500: 0,158,224;
+  //--vo-theme-primary-contrast-600: 0,158,224;
+  //--vo-theme-primary-contrast-700: 0,158,224;
+  //--vo-theme-primary-contrast-800: 0,158,224;
+  //--vo-theme-primary-contrast-900: 0,158,224;
+  //--vo-theme-primary-contrast-A100: 0,158,224;
+  //--vo-theme-primary-contrast-A200: 0,158,224;
+  //--vo-theme-primary-contrast-A400: 0,158,224;
+  //--vo-theme-primary-contrast-A700: 0,158,224;
+}
+
+@function mixw($variable, $opacity) {
+  @return unquote('linear-gradient(to top, rgba(255, 255, 255,'+ $opacity +'),rgba(255, 255, 255,' + $opacity + ')) ' + $variable);
+}
+
+@function mixb($variable, $opacity) {
+  @return unquote('linear-gradient(to top, rgba(0, 0, 0,'+ $opacity +'),rgba(0, 0, 0,' + $opacity + '))' + $variable);
+}
 // Perun entities colors
-$vo-color: #283593;
-$facility-color: #d84315;
-$resource-color: #6a1b9a;
-$group-color: #33691e;
-$member-color: #ad1457;
-$admin-color: #c62828;
-$user-color: #00796b;
+//$vo-color: #283593;
+//var(--facility-color): #d84315;
+//$resource-color: #6a1b9a;
+//$group-color: #33691e;
+//var(--member-color): #ad1457;
+//var(--admin-color): #c62828;
+//var(--user-color): #00796b;
 
 .vo-theme {
-  $vo-primary: mat-palette($mat-indigo, 800);
+  $vo-dynamic-colors:(
+    50 : rgba(var(--vo-theme-primary-50), 1),
+    100 : rgba(var(--vo-theme-primary-100), 1),
+    200 : rgba(var(--vo-theme-primary-200), 1),
+    300 : rgba(var(--vo-theme-primary-300), 1),
+    400 : rgba(var(--vo-theme-primary-400), 1),
+    500 : rgba(var(--vo-theme-primary-500), 1),
+    600 : rgba(var(--vo-theme-primary-600), 1),
+    700 : rgba(var(--vo-theme-primary-700), 1),
+    800 : rgba(var(--vo-theme-primary-800), 1),
+    900 : rgba(var(--vo-theme-primary-900), 1),
+    A100 : rgba(var(--vo-theme-primary-A100), 1),
+    A200 : rgba(var(--vo-theme-primary-A200), 1),
+    A400 : rgba(var(--vo-theme-primary-A400), 1),
+    A700 : rgba(var(--vo-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--vo-theme-primary-contrast-50), 1),
+      100: rgba(var(--vo-theme-primary-contrast-100), 1),
+      200: rgba(var(--vo-theme-primary-contrast-200), 1),
+      300: rgba(var(--vo-theme-primary-contrast-300), 1),
+      400: rgba(var(--vo-theme-primary-contrast-400), 1),
+      500: rgba(var(--vo-theme-primary-contrast-500), 1),
+      600: rgba(var(--vo-theme-primary-contrast-600), 1),
+      700: rgba(var(--vo-theme-primary-contrast-700), 1),
+      800: rgba(var(--vo-theme-primary-contrast-800), 1),
+      900: rgba(var(--vo-theme-primary-contrast-900), 1),
+      A100: rgba(var(--vo-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--vo-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--vo-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--vo-theme-primary-contrast-A700), 1),
+    )
+  );
+
+  $vo-primary: mat-palette($vo-dynamic-colors, 500);
   $vo-accent: mat-palette($mat-green, 600);
+
   $vo-theme: mat-light-theme($vo-primary, $vo-accent);
 
   @include angular-material-theme($vo-theme);
 }
+
+//.facility-theme {
+//  $vo-primary: mat-palette($mat-deep-orange, 800);
+//  $vo-accent: mat-palette($mat-green, 600);
+//  $vo-theme: mat-light-theme($vo-primary, $vo-accent);
+//
+//  @include angular-material-theme($vo-theme);
+//}
 
 .facility-theme {
-  $vo-primary: mat-palette($mat-deep-orange, 800);
-  $vo-accent: mat-palette($mat-green, 600);
-  $vo-theme: mat-light-theme($vo-primary, $vo-accent);
+  $facility-dynamic-colors:(
+    50 : rgba(var(--facility-theme-primary-50), 1),
+    100 : rgba(var(--facility-theme-primary-100), 1),
+    200 : rgba(var(--facility-theme-primary-200), 1),
+    300 : rgba(var(--facility-theme-primary-300), 1),
+    400 : rgba(var(--facility-theme-primary-400), 1),
+    500 : rgba(var(--facility-theme-primary-500), 1),
+    600 : rgba(var(--facility-theme-primary-600), 1),
+    700 : rgba(var(--facility-theme-primary-700), 1),
+    800 : rgba(var(--facility-theme-primary-800), 1),
+    900 : rgba(var(--facility-theme-primary-900), 1),
+    A100 : rgba(var(--facility-theme-primary-A100), 1),
+    A200 : rgba(var(--facility-theme-primary-A200), 1),
+    A400 : rgba(var(--facility-theme-primary-A400), 1),
+    A700 : rgba(var(--facility-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--facility-theme-primary-contrast-50), 1),
+      100: rgba(var(--facility-theme-primary-contrast-100), 1),
+      200: rgba(var(--facility-theme-primary-contrast-200), 1),
+      300: rgba(var(--facility-theme-primary-contrast-300), 1),
+      400: rgba(var(--facility-theme-primary-contrast-400), 1),
+      500: rgba(var(--facility-theme-primary-contrast-500), 1),
+      600: rgba(var(--facility-theme-primary-contrast-600), 1),
+      700: rgba(var(--facility-theme-primary-contrast-700), 1),
+      800: rgba(var(--facility-theme-primary-contrast-800), 1),
+      900: rgba(var(--facility-theme-primary-contrast-900), 1),
+      A100: rgba(var(--facility-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--facility-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--facility-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--facility-theme-primary-contrast-A700), 1),
+    )
+  );
 
-  @include angular-material-theme($vo-theme);
+  $facility-primary: mat-palette($facility-dynamic-colors, 500);
+  $facility-accent: mat-palette($mat-green, 600);
+
+  $facility-theme: mat-light-theme($facility-primary, $facility-accent);
+
+  @include angular-material-theme($facility-theme);
 }
+
+//.resource-theme {
+//  $vo-primary: mat-palette($mat-purple, 800);
+//  $vo-accent: mat-palette($mat-green, 600);
+//  $vo-theme: mat-light-theme($vo-primary, $vo-accent);
+//
+//  @include angular-material-theme($vo-theme);
+//}
 
 .resource-theme {
-  $vo-primary: mat-palette($mat-purple, 800);
-  $vo-accent: mat-palette($mat-green, 600);
-  $vo-theme: mat-light-theme($vo-primary, $vo-accent);
+  $resource-dynamic-colors:(
+    50 : rgba(var(--resource-theme-primary-50), 1),
+    100 : rgba(var(--resource-theme-primary-100), 1),
+    200 : rgba(var(--resource-theme-primary-200), 1),
+    300 : rgba(var(--resource-theme-primary-300), 1),
+    400 : rgba(var(--resource-theme-primary-400), 1),
+    500 : rgba(var(--resource-theme-primary-500), 1),
+    600 : rgba(var(--resource-theme-primary-600), 1),
+    700 : rgba(var(--resource-theme-primary-700), 1),
+    800 : rgba(var(--resource-theme-primary-800), 1),
+    900 : rgba(var(--resource-theme-primary-900), 1),
+    A100 : rgba(var(--resource-theme-primary-A100), 1),
+    A200 : rgba(var(--resource-theme-primary-A200), 1),
+    A400 : rgba(var(--resource-theme-primary-A400), 1),
+    A700 : rgba(var(--resource-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--resource-theme-primary-contrast-50), 1),
+      100: rgba(var(--resource-theme-primary-contrast-100), 1),
+      200: rgba(var(--resource-theme-primary-contrast-200), 1),
+      300: rgba(var(--resource-theme-primary-contrast-300), 1),
+      400: rgba(var(--resource-theme-primary-contrast-400), 1),
+      500: rgba(var(--resource-theme-primary-contrast-500), 1),
+      600: rgba(var(--resource-theme-primary-contrast-600), 1),
+      700: rgba(var(--resource-theme-primary-contrast-700), 1),
+      800: rgba(var(--resource-theme-primary-contrast-800), 1),
+      900: rgba(var(--resource-theme-primary-contrast-900), 1),
+      A100: rgba(var(--resource-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--resource-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--resource-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--resource-theme-primary-contrast-A700), 1),
+    )
+  );
 
-  @include angular-material-theme($vo-theme);
+  $resource-primary: mat-palette($resource-dynamic-colors, 500);
+  $resource-accent: mat-palette($mat-green, 600);
+
+  $resource-theme: mat-light-theme($resource-primary, $resource-accent);
+
+  @include angular-material-theme($resource-theme);
 }
 
+//.group-theme {
+//  $group-primary: mat-palette($mat-light-green, 900);
+//  $group-accent: mat-palette($mat-green, 600);
+//  $group-theme: mat-light-theme($group-primary, $group-accent);
+//
+//  @include angular-material-theme($group-theme);
+//}
+
 .group-theme {
-  $group-primary: mat-palette($mat-light-green, 900);
+  $group-dynamic-colors:(
+    50 : rgba(var(--group-theme-primary-50), 1),
+    100 : rgba(var(--group-theme-primary-100), 1),
+    200 : rgba(var(--group-theme-primary-200), 1),
+    300 : rgba(var(--group-theme-primary-300), 1),
+    400 : rgba(var(--group-theme-primary-400), 1),
+    500 : rgba(var(--group-theme-primary-500), 1),
+    600 : rgba(var(--group-theme-primary-600), 1),
+    700 : rgba(var(--group-theme-primary-700), 1),
+    800 : rgba(var(--group-theme-primary-800), 1),
+    900 : rgba(var(--group-theme-primary-900), 1),
+    A100 : rgba(var(--group-theme-primary-A100), 1),
+    A200 : rgba(var(--group-theme-primary-A200), 1),
+    A400 : rgba(var(--group-theme-primary-A400), 1),
+    A700 : rgba(var(--group-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--group-theme-primary-contrast-50), 1),
+      100: rgba(var(--group-theme-primary-contrast-100), 1),
+      200: rgba(var(--group-theme-primary-contrast-200), 1),
+      300: rgba(var(--group-theme-primary-contrast-300), 1),
+      400: rgba(var(--group-theme-primary-contrast-400), 1),
+      500: rgba(var(--group-theme-primary-contrast-500), 1),
+      600: rgba(var(--group-theme-primary-contrast-600), 1),
+      700: rgba(var(--group-theme-primary-contrast-700), 1),
+      800: rgba(var(--group-theme-primary-contrast-800), 1),
+      900: rgba(var(--group-theme-primary-contrast-900), 1),
+      A100: rgba(var(--group-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--group-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--group-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--group-theme-primary-contrast-A700), 1),
+    )
+  );
+
+  $group-primary: mat-palette($group-dynamic-colors, 500);
   $group-accent: mat-palette($mat-green, 600);
+
   $group-theme: mat-light-theme($group-primary, $group-accent);
 
   @include angular-material-theme($group-theme);
 }
 
+//.member-theme {
+//  $member-primary: mat-palette($mat-pink, 800);
+//  $member-accent: mat-palette($mat-green, 600);
+//  $member-theme: mat-light-theme($member-primary, $member-accent);
+//
+//  @include angular-material-theme($member-theme);
+//}
+
 .member-theme {
-  $member-primary: mat-palette($mat-pink, 800);
+  $member-dynamic-colors:(
+    50 : rgba(var(--member-theme-primary-50), 1),
+    100 : rgba(var(--member-theme-primary-100), 1),
+    200 : rgba(var(--member-theme-primary-200), 1),
+    300 : rgba(var(--member-theme-primary-300), 1),
+    400 : rgba(var(--member-theme-primary-400), 1),
+    500 : rgba(var(--member-theme-primary-500), 1),
+    600 : rgba(var(--member-theme-primary-600), 1),
+    700 : rgba(var(--member-theme-primary-700), 1),
+    800 : rgba(var(--member-theme-primary-800), 1),
+    900 : rgba(var(--member-theme-primary-900), 1),
+    A100 : rgba(var(--member-theme-primary-A100), 1),
+    A200 : rgba(var(--member-theme-primary-A200), 1),
+    A400 : rgba(var(--member-theme-primary-A400), 1),
+    A700 : rgba(var(--member-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--member-theme-primary-contrast-50), 1),
+      100: rgba(var(--member-theme-primary-contrast-100), 1),
+      200: rgba(var(--member-theme-primary-contrast-200), 1),
+      300: rgba(var(--member-theme-primary-contrast-300), 1),
+      400: rgba(var(--member-theme-primary-contrast-400), 1),
+      500: rgba(var(--member-theme-primary-contrast-500), 1),
+      600: rgba(var(--member-theme-primary-contrast-600), 1),
+      700: rgba(var(--member-theme-primary-contrast-700), 1),
+      800: rgba(var(--member-theme-primary-contrast-800), 1),
+      900: rgba(var(--member-theme-primary-contrast-900), 1),
+      A100: rgba(var(--member-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--member-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--member-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--member-theme-primary-contrast-A700), 1),
+    )
+  );
+
+  $member-primary: mat-palette($member-dynamic-colors, 500);
   $member-accent: mat-palette($mat-green, 600);
+
   $member-theme: mat-light-theme($member-primary, $member-accent);
 
   @include angular-material-theme($member-theme);
 }
 
+//.admin-theme {
+//  $admin-primary: mat-palette($mat-red, 800);
+//  $admin-accent: mat-palette($mat-green, 600);
+//  $admin-theme: mat-light-theme($admin-primary, $admin-accent);
+//
+//  @include angular-material-theme($admin-theme);
+//}
+
 .admin-theme {
-  $admin-primary: mat-palette($mat-red, 800);
+  $admin-dynamic-colors:(
+    50 : rgba(var(--admin-theme-primary-50), 1),
+    100 : rgba(var(--admin-theme-primary-100), 1),
+    200 : rgba(var(--admin-theme-primary-200), 1),
+    300 : rgba(var(--admin-theme-primary-300), 1),
+    400 : rgba(var(--admin-theme-primary-400), 1),
+    500 : rgba(var(--admin-theme-primary-500), 1),
+    600 : rgba(var(--admin-theme-primary-600), 1),
+    700 : rgba(var(--admin-theme-primary-700), 1),
+    800 : rgba(var(--admin-theme-primary-800), 1),
+    900 : rgba(var(--admin-theme-primary-900), 1),
+    A100 : rgba(var(--admin-theme-primary-A100), 1),
+    A200 : rgba(var(--admin-theme-primary-A200), 1),
+    A400 : rgba(var(--admin-theme-primary-A400), 1),
+    A700 : rgba(var(--admin-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--admin-theme-primary-contrast-50), 1),
+      100: rgba(var(--admin-theme-primary-contrast-100), 1),
+      200: rgba(var(--admin-theme-primary-contrast-200), 1),
+      300: rgba(var(--admin-theme-primary-contrast-300), 1),
+      400: rgba(var(--admin-theme-primary-contrast-400), 1),
+      500: rgba(var(--admin-theme-primary-contrast-500), 1),
+      600: rgba(var(--admin-theme-primary-contrast-600), 1),
+      700: rgba(var(--admin-theme-primary-contrast-700), 1),
+      800: rgba(var(--admin-theme-primary-contrast-800), 1),
+      900: rgba(var(--admin-theme-primary-contrast-900), 1),
+      A100: rgba(var(--admin-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--admin-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--admin-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--admin-theme-primary-contrast-A700), 1),
+    )
+  );
+
+  $admin-primary: mat-palette($admin-dynamic-colors, 500);
   $admin-accent: mat-palette($mat-green, 600);
+
   $admin-theme: mat-light-theme($admin-primary, $admin-accent);
 
   @include angular-material-theme($admin-theme);
 }
 
+//.user-theme {
+//  $user-primary: mat-palette($mat-teal, 700);
+//  $user-accent: mat-palette($mat-green, 600);
+//  $user-theme: mat-light-theme($user-primary, $user-accent);
+//
+//  @include angular-material-theme($user-theme);
+//}
+
 .user-theme {
-  $user-primary: mat-palette($mat-teal, 700);
+  $user-dynamic-colors:(
+    50 : rgba(var(--user-theme-primary-50), 1),
+    100 : rgba(var(--user-theme-primary-100), 1),
+    200 : rgba(var(--user-theme-primary-200), 1),
+    300 : rgba(var(--user-theme-primary-300), 1),
+    400 : rgba(var(--user-theme-primary-400), 1),
+    500 : rgba(var(--user-theme-primary-500), 1),
+    600 : rgba(var(--user-theme-primary-600), 1),
+    700 : rgba(var(--user-theme-primary-700), 1),
+    800 : rgba(var(--user-theme-primary-800), 1),
+    900 : rgba(var(--user-theme-primary-900), 1),
+    A100 : rgba(var(--user-theme-primary-A100), 1),
+    A200 : rgba(var(--user-theme-primary-A200), 1),
+    A400 : rgba(var(--user-theme-primary-A400), 1),
+    A700 : rgba(var(--user-theme-primary-A700), 1),
+    contrast: (
+      50: rgba(var(--user-theme-primary-contrast-50), 1),
+      100: rgba(var(--user-theme-primary-contrast-100), 1),
+      200: rgba(var(--user-theme-primary-contrast-200), 1),
+      300: rgba(var(--user-theme-primary-contrast-300), 1),
+      400: rgba(var(--user-theme-primary-contrast-400), 1),
+      500: rgba(var(--user-theme-primary-contrast-500), 1),
+      600: rgba(var(--user-theme-primary-contrast-600), 1),
+      700: rgba(var(--user-theme-primary-contrast-700), 1),
+      800: rgba(var(--user-theme-primary-contrast-800), 1),
+      900: rgba(var(--user-theme-primary-contrast-900), 1),
+      A100: rgba(var(--user-theme-primary-contrast-A100), 1),
+      A200: rgba(var(--user-theme-primary-contrast-A200), 1),
+      A400: rgba(var(--user-theme-primary-contrast-A400), 1),
+      A700: rgba(var(--user-theme-primary-contrast-A700), 1),
+    )
+  );
+
+  $user-primary: mat-palette($user-dynamic-colors, 500);
   $user-accent: mat-palette($mat-green, 600);
+
   $user-theme: mat-light-theme($user-primary, $user-accent);
 
   @include angular-material-theme($user-theme);
@@ -104,37 +452,37 @@ button:focus {
 }
 
 .vo-item {
-  background-color: $vo-color;
+  background-color: var(--vo-color);
 }
 
 .facility-item {
-  background-color: $facility-color;
+  background-color: var(--facility-color);
 }
 
 .resource-item {
-  background-color: $resource-color;
+  background-color: var(--resource-color);
 }
 
 .group-item {
-  background-color: $group-color;
+  background-color: var(--group-color);
 }
 
 .member-item {
-  background-color: $member-color;
+  background-color: var(--member-color);
 }
 
 .dark-item-activated {
-  border-left: 5px solid #ffffff;
-  font-weight: 500;
-  background-color: rgba(255, 255, 255, 0.10) !important;
-
+  //border-left: 5px solid #ffffff;
+  font-weight: 600;
+  //background-color: rgba(255, 255, 255, 0.08) !important;
+  text-decoration: underline !important;
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
+    //background-color: rgba(255, 255, 255, 0.15) !important;
   }
 }
 .vo-item-activated {
-  border-right: 5px solid $vo-color;
-  color: $vo-color !important;
+  border-right: 5px solid var(--vo-color);
+  color: var(--vo-color) !important;
   font-weight: 500;
   background-color: rgba(63, 76, 255, 0.10) !important;
 
@@ -144,8 +492,8 @@ button:focus {
 }
 
 .admin-item-activated {
-  border-right: 5px solid $admin-color;
-  color: $admin-color !important;
+  border-right: 5px solid var(--admin-color);
+  color: var(--admin-color) !important;
   font-weight: 500;
   background-color: rgba(255, 50, 50, 0.10);
 
@@ -154,8 +502,8 @@ button:focus {
   }
 }
 .facility-item-activated {
-  border-right: 5px solid $facility-color;
-  color: $facility-color !important;
+  border-right: 5px solid var(--facility-color);
+  color: var(--facility-color) !important;
   font-weight: 500;
   background-color: rgba(255, 80, 23, 0.1);
 
@@ -165,8 +513,8 @@ button:focus {
   //background-color: #eaeaea !important;
 }
 .resource-item-activated {
-  border-right: 5px solid $resource-color;
-  color: $resource-color !important;
+  border-right: 5px solid var(--resource-color);
+  color: var(--resource-color) !important;
   font-weight: 500;
   background-color: rgba(176, 44, 255, 0.10);
 
@@ -176,8 +524,8 @@ button:focus {
   //background-color: #eaeaea !important;
 }
 .group-item-activated {
-  border-right: 5px solid $group-color;
-  color: $group-color !important;
+  border-right: 5px solid var(--group-color);
+  color: var(--group-color) !important;
   font-weight: 500;
   background-color: rgba(123, 255, 71, 0.10);
 
@@ -186,8 +534,8 @@ button:focus {
   }
 }
 .member-item-activated {
-  border-right: 5px solid $member-color;
-  color: $member-color !important;
+  border-right: 5px solid var(--member-color);
+  color: var(--member-color) !important;
   font-weight: 500;
   background-color: rgba(255, 28, 133, 0.10);
 
@@ -198,8 +546,8 @@ button:focus {
 }
 
 .user-item-activated {
-  border-right: 5px solid $user-color;
-  color: $user-color !important;
+  border-right: 5px solid var(--member-color);
+  color: var(--member-color) !important;
   font-weight: 500;
   background-color: rgba(0, 121, 107, 0.10);
 
@@ -209,57 +557,57 @@ button:focus {
 }
 
 .dark-item-links a:hover {
-  background-color: rgba(255, 255, 255, 0.15) !important;
+  //background-color: rgba(255, 255, 255, 0.15) !important;
 }
 .vo-item-links a:hover {
-  color: $vo-color !important;
+  color: var(--vo-color) !important;
   background-color: rgba(63, 76, 255, 0.15) !important;
 }
 
 .group-item-links a:hover {
-  color: $group-color !important;
+  color: var(--group-color) !important;
   background-color: rgba(123, 255, 71, 0.15) !important;
 }
 
 .admin-item-links a:hover {
-  color: $admin-color !important;
+  color: var(--admin-color) !important;
   background-color: rgba(255, 50, 50, 0.15) !important;
 }
 
 .facility-item-links a:hover {
-  color: $facility-color !important;
+  color: var(--facility-color) !important;
   background-color: rgba(255, 82, 28, 0.15) !important;
 }
 
 .resource-item-links a:hover {
-  color: $resource-color !important;
+  color: var(--resource-color) !important;
   background-color: rgba(176, 44, 255, 0.15) !important;
 }
 
 .member-item-links a:hover {
-  color: $member-color !important;
+  color: var(--member-color) !important;
   background-color: rgba(255, 28, 133, 0.15) !important;
 }
 
 .user-item-links a:hover {
-  color: $user-color !important;
+  color: var(--user-color) !important;
   background-color: rgba(0, 121, 107, 0.15) !important;
 }
 
 .vo-text {
-  color: $vo-color !important;
+  color: var(--vo-color) !important;
 }
 .facility-text {
-  color: $facility-color !important;
+  color: var(--facility-color) !important;
 }
 .resource-text {
-  color: $resource-color !important;
+  color: var(--resource-color) !important;
 }
 .group-text {
-  color: $group-color !important;
+  color: var(--group-color) !important;
 }
 .member-text {
-  color: $member-color !important;
+  color: var(--member-color) !important;
 }
 
 .router-component {
@@ -305,6 +653,8 @@ button:focus {
   z-index: 999;
   display: flex;
   justify-content: space-between;
+  height: 64px;
+  max-height: 64px;
   //display: table;
 }
 
@@ -501,7 +851,7 @@ button:focus {
 
 .dark-hover-list-item {
   &:hover {
-    background-color: rgba(0, 0, 0, .05);
+    //background-color: rgba(0, 0, 0, .05);
   }
 }
 
@@ -577,27 +927,27 @@ button:focus {
 
 // Color styles for entities
 .vo-bg-color {
-  background-color: $vo-color;
+  background-color: var(--vo-color);
 }
 
 .facility-bg-color {
-  background-color: $facility-color;
+  background-color: var(--facility-color);
 }
 
 .group-bg-color {
-  background-color: $group-color;
+  background-color: var(--group-color);
 }
 
 .member-bg-color {
-  background-color: $member-color;
+  background-color: var(--member-color);
 }
 
 .admin-bg-color {
-  background-color: $admin-color;
+  background-color: var(--admin-color);
 }
 
 .user-bg-color {
-  background-color: $user-color;
+  background-color: var(--user-color);
   .cdk-text-field-autofilled {
     background-color: black !important;
   }
@@ -646,109 +996,72 @@ button:focus {
 }
 
 .vo-btn {
-  background-color: $vo-color;
-  color: #ffffff;
+  background: var(--vo-color);
+  color: rgba(var(--vo-theme-primary-contrast-500), 1);
   border-radius: 0;
 
-
   &:hover {
-    background-color: lighten($vo-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($vo-color, 5%);
+    color: rgba(var(--vo-theme-primary-contrast-500), 1);
   }
 }
 
 .facility-btn {
-  background-color: $facility-color;
-  color: #ffffff;
+  background-color: var(--facility-color);
+  color: rgba(var(--facility-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($facility-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($facility-color, 5%);
+    color: rgba(var(--facility-theme-primary-contrast-500), 1);
   }
 }
 
 .resource-btn {
-  background-color: $resource-color;
-  color: #ffffff;
+  background-color: var(--resource-color);
+  color: rgba(var(--resource-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($resource-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($resource-color, 5%);
+    color: rgba(var(--resource-theme-primary-contrast-500), 1);
   }
 }
 
 .group-btn {
-  background-color: $group-color;
-  color: #ffffff;
+  background: var(--group-color);
+  color: rgba(var(--group-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($group-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($group-color, 5%);
+    color: rgba(var(--group-theme-primary-contrast-500), 1);
   }
 }
 
 .member-btn {
-  background-color: $member-color;
-  color: #ffffff;
+  background-color: var(--member-color);
+  color: rgba(var(--member-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($member-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($member-color, 5%);
+    color: rgba(var(--member-theme-primary-contrast-500), 1);
   }
 }
 
 .admin-btn {
-  background-color: $admin-color;
-  color: #ffffff;
+  background-color: var(--admin-color);
+  color: rgba(var(--admin-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($admin-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($admin-color, 5%);
-  }
-
-  &:hover {
-    color: #ffffff;
+    color: rgba(var(--admin-theme-primary-contrast-500), 1);
   }
 }
 
 .user-btn {
-  background-color: $user-color;
-  color: #ffffff;
+  background-color: var(--user-color);
+  color: rgba(var(--user-theme-primary-contrast-500), 1);
   border-radius: 0;
 
   &:hover {
-    background-color: lighten($user-color, 5%);
-  }
-
-  &:active {
-    background-color: darken($user-color, 5%);
-  }
-
-  &:hover {
-    color: #ffffff;
+    color: rgba(var(--user-theme-primary-contrast-500), 1);
   }
 }
 
@@ -762,56 +1075,57 @@ button:focus {
 }
 
 .vo-link {
-  color: $vo-color;
+  color: var(--vo-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($vo-color, 10%);
+    //color: lighten(var(--vo-color), 10%);
+    color: mixw(var(--vo-color), .1);
   }
 }
 
 .facility-link {
-  color: $facility-color;
+  color: var(--facility-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($facility-color, 10%);
+    color: mixw(var(--facility-color), .1);
   }
 }
 
 .resource-link {
-  color: $resource-color;
+  color: var(--resource-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($resource-color, 10%);
+    color: mixw(var(--resource-color), .1);
   }
 }
 
 .member-link {
-  color: $member-color;
+  color: var(--member-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($member-color, 10%);
+    color: mixw(var(--member-color), .1);
   }
 }
 
 .group-link {
-  color: $group-color;
+  color: var(--group-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($group-color, 10%);
+    color: mixw(var(--group-color), .1);
   }
 }
 
 .user-link {
-  color: $user-color;
+  color: var(--user-color);
   text-decoration: underline;
 
   &:hover {
-    color: lighten($user-color, 10%);
+    color: mixw(var(--user-color), .1);
   }
 }
 // HACKS
@@ -861,11 +1175,11 @@ button:focus {
 
 //specific style for dialog without any border
 .noBorderDialog .mat-dialog-container {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .mat-drawer-inner-container {
-  background-color: mat-color($mat-blue-grey, 900);
+  //background-color: mat-color($mat-blue-grey, 900);
 }
 
 .filter-field {
@@ -888,6 +1202,15 @@ button:focus {
   border: none !important;
 }
 
-.mat-drawer-side {
-  border-right: solid 1px #071e24 !important;
+// this allows custom colors for perun icons used in material icons
+.perun-icon {
+  path {
+    fill: currentColor;
+  }
+  rect {
+    fill: currentColor;
+  }
+  polygon {
+    fill: currentColor;
+  }
 }

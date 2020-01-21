@@ -1,32 +1,35 @@
 <div class="entity-menu-item">
-  <div class="entity-menu-item-header {{getBgClass()}}" (click)="toggle()">
+  <div class="entity-menu-item-header"
+       matRipple
+       [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
+       [ngStyle]="{'background': item.backgroundColorCss}"
+       (click)="toggle()">
     <div class="entity-menu-item-link {{item.labelClass}}">
-      <a class="entity-menu-item-label">
+      <a class="entity-menu-item-label" [ngStyle]="{'color': item.textColorCss}">
         <div>
-          <img
-            src="assets/img/PerunWebImages/{{item.icon}}"
-            class="entity-menu-item-icon"
-            alt="{{item.label}}">
+          <mat-icon [ngStyle]="{'color': 'currentColor'}" [svgIcon]="item.icon" class="perun-icon"></mat-icon>
         </div>
         <div class="ml-3">{{item.label | translate}}</div>
-      </a>
-      <a class="p-1" *ngIf="item.links.length > 0 && (item.expandable === undefined || item.expandable)">
-        <mat-icon *ngIf="expanded">expand_less</mat-icon>
-        <mat-icon *ngIf="!expanded">expand_more</mat-icon>
       </a>
     </div>
   </div>
 
   <div [@openClose]="expanded ? 'open' : 'closed'">
-    <div class="side-entity-menu {{item.linksClass}}">
+    <div class="side-entity-menu {{item.linksClass}}" [ngStyle]="{'background': linkBgColor}">
       <div *ngFor="let link of item.links">
         <a (click)="navigate(link.url)"
+           matRipple
+           [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
+           [ngStyle]="{'color': linkTextColor, 'border-color': linkTextColor}"
            [class.activated]="isActive(currentUrl, link.activatedRegex) && item.activatedClass === undefined"
            [ngClass]="isActive(currentUrl, link.activatedRegex) && item.activatedClass !== undefined ? item.activatedClass : ''">
           {{link.label | translate}}
         </a>
         <div @rollInOut *ngIf="isActive(currentUrl, link.showChildrenRegex)">
           <a (click)="navigate(child.url)"
+             matRipple
+             [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
+             [ngStyle]="{'color': linkTextColor, 'border-color': linkTextColor}"
              class="pl-5" *ngFor="let child of link?.children"
              [class.activated]="isActive(currentUrl, child.activatedRegex) && item.activatedClass === undefined"
              [ngClass]="isActive(currentUrl, child.activatedRegex) && item.activatedClass !== undefined ? item.activatedClass : ''">

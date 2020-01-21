@@ -36,7 +36,7 @@ export class FacilitySettingsOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `/facilities/${this.facility.id}/settings/attributes`,
         label: 'MENU_ITEMS.FACILITY.ATTRIBUTES',
         style: 'facility-btn'

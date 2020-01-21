@@ -8,14 +8,24 @@
     grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
   }
 }
+
+.item-pic {
+  color: currentColor;
+  transform: scale(4);
+  height: 96px;
+  margin-bottom: 22px;
+}
+
+.item-itself-container {
+  margin: 8px;
+}
+
 .item-itself {
   text-align: center;
   min-height: 200px;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  margin: 8px;
-  color: #ffffff;
   align-items: center;
   font-size: 1.25rem;
 

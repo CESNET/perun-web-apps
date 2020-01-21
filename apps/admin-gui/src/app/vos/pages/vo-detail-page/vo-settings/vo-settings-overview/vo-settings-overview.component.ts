@@ -39,37 +39,37 @@ export class VoSettingsOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `/organizations/${this.vo.id}/settings/attributes`,
         label: 'MENU_ITEMS.VO.ATTRIBUTES',
         style: 'vo-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.vo.id}/settings/expiration`,
         label: 'MENU_ITEMS.VO.EXPIRATION',
         style: 'vo-btn'
       },
       {
-        icon: 'manager-white.svg',
+        cssIcon: 'perun-manager',
         url: `/organizations/${this.vo.id}/settings/managers`,
         label: 'MENU_ITEMS.VO.MANAGERS',
         style: 'vo-btn'
       },
       {
-        icon: 'application_form-white.svg',
+        cssIcon: 'perun-application-form',
         url: `/organizations/${this.vo.id}/settings/applicationForm`,
         label: 'MENU_ITEMS.VO.APPLICATION_FORM',
         style: 'vo-btn'
       },
       {
-        icon: 'notification-white.svg',
+        cssIcon: 'perun-notification',
         url: `/organizations/${this.vo.id}/settings/notifications`,
         label: 'MENU_ITEMS.VO.NOTIFICATIONS',
         style: 'vo-btn'
       },
       {
-        icon: 'external_sources-white.svg',
+        cssIcon: 'perun-external-sources',
         url: `/organizations/${this.vo.id}/settings/extsources`,
         label: 'MENU_ITEMS.VO.EXTSOURCES',
         style: 'vo-btn'

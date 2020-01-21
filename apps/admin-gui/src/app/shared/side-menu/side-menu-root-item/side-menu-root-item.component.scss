@@ -3,10 +3,9 @@
 }
 
 .side-entity-menu {
-  background-color: #39444a;
 }
 .side-entity-menu a {
-  padding: 8px 8px 8px 32px;
+  padding: 5px 8px 5px 32px;
   text-decoration: none;
   font-size: 1rem;
   color: #ffffff;
@@ -19,9 +18,9 @@
   border-right: 5px solid #313131;
 }
 
-.side-entity-menu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
+//.side-entity-menu a:hover {
+//  background-color: rgba(255, 255, 255, 0.1);
+//}
 
 .entity-menu-item-header {
   transition: .5s;

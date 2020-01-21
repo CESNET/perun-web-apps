@@ -40,8 +40,10 @@ export class SideMenuComponent implements OnInit {
   mobileView = true;
   adminItemOpened = false;
   userItemOpened = false;
+  backgroundColor = this.store.get('theme', 'sidemenu_bg_color');
 
   ngOnInit(): void {
+
     this.mobileView = window.innerWidth <= AppComponent.minWidth;
     if (this.mobileView) {
       this.sideNav.close();
@@ -173,6 +175,8 @@ export interface SideMenuItem {
   baseColorClass?: string;
   baseColorClassRegex?: string;
   linksClass?: string;
+  backgroundColorCss?: string;
+  textColorCss?: string;
 }
 
 export interface EntityMenuLink {

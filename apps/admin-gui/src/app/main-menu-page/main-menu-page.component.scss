@@ -7,8 +7,14 @@
   grid-row-gap: 24px;
 }
 
+.item-pic {
+  color: currentColor;
+  transform: scale(5);
+  height: 120px;
+  margin-bottom: 22px;
+}
+
 .main-menu-button {
-  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;

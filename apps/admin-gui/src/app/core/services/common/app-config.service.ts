@@ -6,6 +6,23 @@ import { StoreService } from './store.service';
 import { AuthResolverService } from './auth-resolver.service';
 import { AuthzService } from '@perun-web-apps/perun/services';
 
+declare const tinycolor: any;
+
+export interface Color {
+  name: string;
+  hex: string;
+  darkContrast: boolean;
+  red: number;
+  green: number;
+  blue: number;
+}
+
+export interface EntityColorConfig {
+  entity: string;
+  configValue: string;
+  cssVariable: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,10 +34,76 @@ export class AppConfigService {
               private authResolver: AuthResolverService,
               private authzService: AuthzService) {}
 
+  entityColorConfigs: EntityColorConfig[] = [
+    {
+      entity: 'vo',
+      configValue: 'vo_color',
+      cssVariable: '--vo-color'
+    },
+    {
+      entity: 'group',
+      configValue: 'group_color',
+      cssVariable: '--group-color'
+    },
+    {
+      entity: 'user',
+      configValue: 'user_color',
+      cssVariable: '--user-color'
+    },
+    {
+      entity: 'member',
+      configValue: 'member_color',
+      cssVariable: '--member-color'
+    },
+    {
+      entity: 'facility',
+      configValue: 'facility_color',
+      cssVariable: '--facility-color'
+    },
+    {
+      entity: 'resource',
+      configValue: 'resource_color',
+      cssVariable: '--resource-color'
+    },
+    {
+      entity: 'admin',
+      configValue: 'admin_color',
+      cssVariable: '--admin-color'
+    }
+  ];
+
   loadConfigs(): Promise<void> {
     return this.loadAppDefaultConfig()
       .then(() => this.loadAppInstanceConfig())
+      .then(() => this.initializeColors())
       .then(() => this.loadAdditionalData());
+  }
+
+  initializeColors() : Promise<void> {
+    return new Promise<void>((resolve => {
+      this.entityColorConfigs.forEach(ecc => {
+        const color = this.storeService.get('theme', ecc.configValue);
+        // set CSS variable for given entity
+        document.documentElement.style.setProperty(ecc.cssVariable, color);
+        // update theme for given entity
+        this.setEntityTheme(ecc.entity, color);
+      });
+
+      resolve();
+    }));
+  }
+
+  setEntityTheme(entity: string, color: string): void {
+    const primaryColorPalette = computeColors(color);
+
+    for (const paletteColor of primaryColorPalette) {
+      const key1 = `--${entity}-theme-primary-${paletteColor.name}`;
+      const value1 = `${paletteColor.red},${paletteColor.green},${paletteColor.blue}`;
+      const key2 = `--${entity}-theme-primary-contrast-${paletteColor.name}`;
+      const value2 = paletteColor.darkContrast ? '30,30,30' : '255,255,255';
+      document.documentElement.style.setProperty(key1, value1);
+      document.documentElement.style.setProperty(key2, value2);
+    }
   }
 
   /**
@@ -102,6 +185,36 @@ export class AppConfigService {
         this.authResolver.init(perunPrincipal);
     });
   }
+}
 
+function computeColors(hex: string): Color[] {
+  return [
+    getColorObject(tinycolor(hex).lighten(52), '50'),
+    getColorObject(tinycolor(hex).lighten(37), '100'),
+    getColorObject(tinycolor(hex).lighten(26), '200'),
+    getColorObject(tinycolor(hex).lighten(12), '300'),
+    getColorObject(tinycolor(hex).lighten(6), '400'),
+    getColorObject(tinycolor(hex), '500'),
+    getColorObject(tinycolor(hex).darken(6), '600'),
+    getColorObject(tinycolor(hex).darken(12), '700'),
+    getColorObject(tinycolor(hex).darken(18), '800'),
+    getColorObject(tinycolor(hex).darken(24), '900'),
+    getColorObject(tinycolor(hex).lighten(50).saturate(30), 'A100'),
+    getColorObject(tinycolor(hex).lighten(30).saturate(30), 'A200'),
+    getColorObject(tinycolor(hex).lighten(10).saturate(15), 'A400'),
+    getColorObject(tinycolor(hex).lighten(5).saturate(5), 'A700')
+  ];
+}
 
+function getColorObject(value, name): Color {
+  const c = tinycolor(value);
+  const rgb = c.toRgb();
+  return {
+    name: name,
+    hex: c.toHexString(),
+    darkContrast: c.isLight(),
+    red: rgb.r,
+    green: rgb.g,
+    blue: rgb.b
+  };
 }

@@ -365,7 +365,9 @@
               "apps/admin-gui/src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/tinycolor2/dist/tinycolor-min.js"
+            ]
           },
           "configurations": {
             "production": {

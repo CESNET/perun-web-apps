@@ -5,7 +5,7 @@
  */
 import {
   Attribute,
-  AttributeDefinition,
+  AttributeDefinition, Candidate,
   Group,
   Owner,
   RichMember,
@@ -119,7 +119,7 @@ export function parseUrnsToUrlParam(paramName: string, urns: string[]): string {
  *
  * @param user user
  */
-export function parseFullName(user: User): string {
+export function parseFullName(user: User | Candidate): string {
   let fullName = '';
 
   if (user.titleBefore !== null) {
@@ -136,6 +136,29 @@ export function parseFullName(user: User): string {
   }
   if (user.titleAfter !== null) {
     fullName += user.titleAfter + ' ';
+  }
+  if (fullName.endsWith(' ')) {
+    fullName = fullName.substring(0, fullName.length - 1);
+  }
+
+  return fullName;
+}
+
+/**
+ * Creates name for given user. Returns users name without his titles.
+ *
+ * @param user user
+ */
+export function parseName(user: User | Candidate): string {
+  let fullName = '';
+  if (user.firstName !== null) {
+    fullName += user.firstName + ' ';
+  }
+  if (user.middleName !== null) {
+    fullName += user.middleName + ' ';
+  }
+  if (user.lastName !== null) {
+    fullName += user.lastName + ' ';
   }
   if (fullName.endsWith(' ')) {
     fullName = fullName.substring(0, fullName.length - 1);
@@ -345,4 +368,147 @@ export function getAttribute(attributes: Attribute[], attrName: string) : Attrib
     }
   }
   return null;
+}
+
+/**
+ * Find candidate email in his attributes
+ * @param candidate
+ * @return candidate email
+ */
+export function getCandidateEmail(candidate: Candidate): string {
+  if (candidate.attributes['urn:perun:member:attribute-def:def:mail'] != null) {
+    return candidate.attributes['urn:perun:member:attribute-def:def:mail'];
+  } else if (candidate.attributes['urn:perun:user:attribute-def:def:preferredMail'] != null) {
+    return candidate.attributes['urn:perun:user:attribute-def:def:preferredMail'];
+  }
+  return "";
+}
+
+export function getExtSourceNameOrOrganizationColumn(candidate: Candidate): string {
+  if (candidate.userExtSource.extSource.type.toLowerCase() === "cz.metacentrum.perun.core.impl.ExtSourceX509".toLowerCase()) {
+    return convertCertCN(candidate.userExtSource.extSource.name);
+  } else if (candidate.userExtSource.extSource.type.toLowerCase() === "cz.metacentrum.perun.core.impl.ExtSourceIdp".toLowerCase()) {
+    return translateIdp(candidate.userExtSource.extSource.name);
+  } else {
+    return candidate.userExtSource.extSource.name;
+  }
+}
+
+/**
+ * If passed string is DN of certificate(recognized by "/CN=") then returns only CN part with unescaped chars.
+ * If passed string is not DN of certificate, original string is returned.
+ *
+ * @param toConvert
+ * @return
+ */
+export function convertCertCN(toConvert: string): string {
+
+  if (toConvert.includes("/CN=")) {
+    const splitted = toConvert.split("/");
+    for (const s in splitted) {
+      if (s.startsWith("CN=")) {
+        return unescapeDN(s.substring(3));
+      }
+    }
+  }
+  return toConvert;
+}
+
+export function unescapeDN(string: string): string {
+
+  return decodeURIComponent(string.replace(/\\x/g, '%'));
+
+}
+
+export function translateIdp(name: string): string {
+
+  switch (name) {
+    case 'https://idp.upce.cz/idp/shibboleth':
+      return 'University in Pardubice';
+    case 'https://idp.slu.cz/idp/shibboleth':
+      return 'University in Opava';
+    case 'https://login.feld.cvut.cz/idp/shibboleth':
+      return 'Faculty of Electrical Engineering, Czech Technical University In Prague';
+    case 'https://www.vutbr.cz/SSO/saml2/idp':
+      return 'Brno University of Technology';
+    case 'https://shibboleth.nkp.cz/idp/shibboleth':
+      return 'The National Library of the Czech Republic';
+    case 'https://idp2.civ.cvut.cz/idp/shibboleth':
+      return 'Czech Technical University In Prague';
+    case 'https://shibbo.tul.cz/idp/shibboleth':
+      return 'Technical University of Liberec';
+    case 'https://idp.mendelu.cz/idp/shibboleth':
+      return 'Mendel University in Brno';
+    case 'https://cas.cuni.cz/idp/shibboleth':
+      return 'Charles University in Prague';
+    case 'https://wsso.vscht.cz/idp/shibboleth':
+      return 'Institute of Chemical Technology Prague';
+    case 'https://idp.vsb.cz/idp/shibboleth':
+      return 'VSB – Technical University of Ostrava';
+    case 'https://whoami.cesnet.cz/idp/shibboleth':
+      return 'CESNET';
+    case 'https://helium.jcu.cz/idp/shibboleth':
+      return 'University of South Bohemia';
+    case 'https://idp.ujep.cz/idp/shibboleth':
+      return 'Jan Evangelista Purkyne University in Usti nad Labem';
+    case 'https://idp.amu.cz/idp/shibboleth':
+      return 'Academy of Performing Arts in Prague';
+    case 'https://idp.lib.cas.cz/idp/shibboleth':
+      return 'Academy of Sciences Library';
+    case 'https://shibboleth.mzk.cz/simplesaml/metadata.xml':
+      return 'Moravian  Library';
+    case 'https://idp2.ics.muni.cz/idp/shibboleth':
+      return 'Masaryk University';
+    case 'https://idp.upol.cz/idp/shibboleth':
+      return 'Palacky University, Olomouc';
+    case 'https://idp.fnplzen.cz/idp/shibboleth':
+      return 'FN Plzen';
+    case 'https://id.vse.cz/idp/shibboleth':
+      return 'University of Economics, Prague';
+    case 'https://shib.zcu.cz/idp/shibboleth':
+      return 'University of West Bohemia';
+    case 'https://idptoo.osu.cz/simplesaml/saml2/idp/metadata.php':
+      return 'University of Ostrava';
+    case 'https://login.ics.muni.cz/idp/shibboleth':
+      return 'MetaCentrum';
+    case 'https://idp.hostel.eduid.cz/idp/shibboleth':
+      return 'eduID.cz Hostel';
+    case 'https://shibboleth.techlib.cz/idp/shibboleth':
+      return 'National Library of Technology';
+    case 'https://eduid.jamu.cz/idp/shibboleth':
+      return 'Janacek Academy of Music and Performing Arts in Brno';
+    case 'https://marisa.uochb.cas.cz/simplesaml/saml2/idp/metadata.php':
+      return 'Institute of Organic Chemistry and Biochemistry AS CR';
+    case 'https://shibboleth.utb.cz/idp/shibboleth':
+      return 'Tomas Bata University in Zlin';
+    case 'https://engine.elixir-czech.org/authentication/idp/metadata':
+      return 'Elixir Europe';
+    case 'https://login.elixir-czech.org/idp':
+      return 'Elixir Czech';
+    case 'https://mojeid.cz/saml/idp.xml':
+      return 'MojeID';
+    case 'https://www.egi.eu/idp/shibboleth':
+      return 'EGI SSO';
+
+    case '@google.extidp.cesnet.cz':
+      return 'Google';
+    case '@facebook.extidp.cesnet.cz':
+      return 'Facebook';
+    case '@mojeid.extidp.cesnet.cz':
+      return 'MojeID';
+    case '@linkedin.extidp.cesnet.cz':
+      return 'LinkedIn';
+    case '@twitter.extidp.cesnet.cz':
+      return 'Twitter';
+    case '@seznam.extidp.cesnet.cz':
+      return 'Seznam';
+    case '@elixir-europe.org':
+      return 'Elixir Europe';
+    case '@github.extidp.cesnet.cz':
+      return 'GitHub';
+    case '@orcid.extidp.cesnet.cz':
+      return 'OrcID';
+
+    default: return name;
+  }
 }

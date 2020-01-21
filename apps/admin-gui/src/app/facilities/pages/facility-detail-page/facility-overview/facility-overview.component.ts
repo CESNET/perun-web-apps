@@ -36,19 +36,19 @@ export class FacilityOverviewComponent implements OnInit {
   private initItems() {
     this.navItems = [
       {
-        icon: 'manage_facility_white.svg',
+        cssIcon: 'perun-manage-facility',
         url: `/facilities/${this.facility.id}/resources`,
         label: 'MENU_ITEMS.FACILITY.RESOURCES',
         style: 'facility-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/facilities/${this.facility.id}/allowed-groups`,
         label: 'MENU_ITEMS.FACILITY.ALLOWED_GROUPS',
         style: 'facility-btn'
       },
       {
-        icon: 'settings2-white.svg',
+        cssIcon: 'perun-settings2',
         url: `/facilities/${this.facility.id}/settings`,
         label: 'MENU_ITEMS.FACILITY.SETTINGS',
         style: 'facility-btn'

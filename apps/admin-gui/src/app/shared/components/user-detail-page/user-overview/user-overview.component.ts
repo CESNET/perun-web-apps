@@ -24,25 +24,25 @@ export class UserOverviewComponent implements OnInit {
   private initNavItems() {
     this.navItems = [
       {
-        icon: 'user-white.svg',
+        cssIcon: 'perun-user',
         url: `detail`,
         label: 'MENU_ITEMS.USER.DETAIL',
         style: 'user-btn'
       },
       {
-        icon: 'vo-white.svg',
+        cssIcon: 'perun-vo',
         url: `organizations`,
         label: 'MENU_ITEMS.USER.ORGANIZATIONS',
         style: 'user-btn'
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `groups`,
         label: 'MENU_ITEMS.USER.GROUPS',
         style: 'user-btn'
       },
       {
-        icon: 'settings2-white.svg',
+        cssIcon: 'perun-settings2',
         url: `settings`,
         label: 'MENU_ITEMS.USER.SETTINGS',
         style: 'user-btn'

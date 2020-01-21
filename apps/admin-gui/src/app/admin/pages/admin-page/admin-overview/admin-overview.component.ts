@@ -14,19 +14,19 @@ export class AdminOverviewComponent implements OnInit {
 
   navItems: MenuItem[] = [
     {
-      icon: 'attributes-white.svg',
+      cssIcon: 'perun-attributes',
       url: '/admin/attributes',
       label: 'MENU_ITEMS.ADMIN.ATTRIBUTES',
-      style: 'admin-btn'
+      style: 'admin-btn',
     },
     {
-      icon: 'user-white.svg',
+      cssIcon: 'perun-user',
       url: '/admin/users',
       label: 'MENU_ITEMS.ADMIN.USERS',
       style: 'admin-btn'
     },
     {
-      icon: 'preview-white.svg',
+      cssIcon: 'perun-preview',
       url: '/admin/visualizer',
       label: 'MENU_ITEMS.ADMIN.VISUALIZER',
       style: 'admin-btn'

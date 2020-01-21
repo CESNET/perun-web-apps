@@ -23,7 +23,7 @@ export class UserSettingsOverviewComponent implements OnInit {
   private initNavItems() {
     this.navItems = [
       {
-        icon: 'attributes-white.svg',
+        cssIcon: 'perun-attributes',
         url: `attributes`,
         label: 'MENU_ITEMS.USER.ATTRIBUTES',
         style: 'user-btn'

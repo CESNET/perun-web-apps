@@ -15,7 +15,7 @@ import { Vo } from '@perun-web-apps/perun/models';
 })
 export class VoOverviewComponent implements OnInit {
 
-  @HostBinding('class.router-component') true;
+  // @HostBinding('class.router-component') true;
 
   constructor(
     private sideMenuService: SideMenuService,
@@ -49,7 +49,7 @@ export class VoOverviewComponent implements OnInit {
     // Members
     if (this.authResolver.isThisVoAdminOrObserver(this.vo.id)) {
       this.navItems.push({
-        icon: 'user-white.svg',
+        cssIcon: 'perun-user',
         url: `/organizations/${this.vo.id}/members`,
         label: 'MENU_ITEMS.VO.MEMBERS',
         style: 'vo-btn'
@@ -60,7 +60,7 @@ export class VoOverviewComponent implements OnInit {
     if (this.authResolver.isThisVoAdminOrObserver(this.vo.id)
       || this.authResolver.isGroupAdminInThisVo(this.vo.id)) {
       this.navItems.push({
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         url: `/organizations/${this.vo.id}/groups`,
         label: 'MENU_ITEMS.VO.GROUPS',
         style: 'vo-btn'
@@ -70,7 +70,7 @@ export class VoOverviewComponent implements OnInit {
     // Resource management
     if (this.authResolver.isThisVoAdminOrObserver(this.vo.id)) {
       this.navItems.push({
-        icon: 'manage_facility_white.svg',
+        cssIcon: 'perun-manage-facility',
         url: `/organizations/${this.vo.id}/resources`,
         label: 'MENU_ITEMS.VO.RESOURCES',
         style: 'vo-btn'
@@ -80,7 +80,7 @@ export class VoOverviewComponent implements OnInit {
     // Applications
     if (this.authResolver.isThisVoAdminOrObserver(this.vo.id)) {
       this.navItems.push({
-        icon: 'applications-white.svg',
+        cssIcon: 'perun-applications',
         url: `/organizations/${this.vo.id}/applications`,
         label: 'MENU_ITEMS.VO.APPLICATIONS',
         style: 'vo-btn'
@@ -90,7 +90,7 @@ export class VoOverviewComponent implements OnInit {
     // Settings
     if (this.authResolver.isThisVoAdminOrObserver(this.vo.id)) {
       this.navItems.push({
-        icon: 'settings2-white.svg',
+        cssIcon: 'perun-settings2',
         url: `/organizations/${this.vo.id}/settings`,
         label: 'MENU_ITEMS.VO.SETTINGS',
         style: 'vo-btn'
@@ -101,7 +101,7 @@ export class VoOverviewComponent implements OnInit {
   private initItems() {
     this.items = [
       {
-        icon: 'invite_member-white.svg',
+        cssIcon: 'perun-invite-member',
         label: 'VO_DETAIL.OVERVIEW.INVITE_MEMBER',
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/invite-member`,
@@ -113,7 +113,7 @@ export class VoOverviewComponent implements OnInit {
         }
       },
       {
-        icon: 'service_identity-white.svg',
+        cssIcon: 'perun-service-identity',
         label: 'VO_DETAIL.OVERVIEW.CREATE_SERVICE_MEMBER',
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/create-service-member`,
@@ -122,7 +122,7 @@ export class VoOverviewComponent implements OnInit {
         }
       },
       {
-        icon: 'manager-white.svg',
+        cssIcon: 'perun-manager',
         label: 'VO_DETAIL.OVERVIEW.ADD_MANAGER',
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/add-manager`,
@@ -131,7 +131,7 @@ export class VoOverviewComponent implements OnInit {
         }
       },
       {
-        icon: 'group-white.svg',
+        cssIcon: 'perun-group',
         label: 'VO_DETAIL.OVERVIEW.CREATE_GROUP',
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/create-group`,
@@ -140,7 +140,7 @@ export class VoOverviewComponent implements OnInit {
         }
       },
       {
-        icon: 'create1-white.svg',
+        cssIcon: 'perun-create1',
         label: 'VO_DETAIL.OVERVIEW.ADD_MEMBER',
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/invite-member`,

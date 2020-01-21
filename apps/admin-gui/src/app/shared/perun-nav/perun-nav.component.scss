@@ -1,7 +1,6 @@
 #nav-menu-user-info {
   display: flex;
   flex-direction: row;
-  color: #ffffff;
   align-items: center;
   padding-right: 16px;
 }
@@ -13,10 +12,12 @@
   width: 270px;
 }
 
+.logo-container ::slotted(svg) {
+  height: 56px;
+}
 #nav-link-items {
   display: flex;
   flex-direction: row;
-  color: #ffffff;
   align-items: center;
   & a {
     padding: 0 1rem;
@@ -24,13 +25,5 @@
     text-align: center;
     height: 64px;
     display: block;
-  }
-}
-
-.nav-menu-icon {
-  padding: 16px 8px;
-
-  img {
-    height: 32px;
   }
 }

@@ -1,0 +1,35 @@
+<div class="{{theme}}">
+  <div mat-dialog-title>
+    <h1 class="page-subtitle">{{'DIALOGS.ADD_EXT_SOURCES.TITLE' | translate}}</h1>
+    <app-immediate-filter class="font-size-1rem" [placeholder]="'DIALOGS.ADD_EXT_SOURCES.FILTER'"
+                          (filter)="applyFilter($event)"></app-immediate-filter>
+  </div>
+  <div mat-dialog-content *ngIf="!processing">
+    <app-ext-sources-list
+      *ngIf="!loading"
+      [extSources]="extSources"
+      [filterValue]="filterValue"
+      [selection]="selection">
+    </app-ext-sources-list>
+  </div>
+
+  <mat-spinner class="mr-auto ml-auto" *ngIf="processing"></mat-spinner>
+
+  <div mat-dialog-actions *ngIf="!processing">
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.ADD_EXT_SOURCES.CANCEL' | translate}}
+    </button>
+
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="accent"
+      (click)="onAdd()"
+      [disabled]="selection.selected.length === 0">
+      {{'DIALOGS.ADD_EXT_SOURCES.ADD' | translate}}
+    </button>
+  </div>
+</div>

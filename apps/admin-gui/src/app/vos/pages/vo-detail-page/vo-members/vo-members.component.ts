@@ -99,6 +99,7 @@ export class VoMembersComponent implements OnInit {
       width: '1000px',
       data: {
         entityId: this.vo.id,
+        voId: this.vo.id,
         theme: 'vo-theme',
         type: 'vo'
       }

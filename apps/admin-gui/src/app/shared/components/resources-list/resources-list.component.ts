@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { RichResource } from '@perun-web-apps/perun/models';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-resources-list',
@@ -30,7 +31,7 @@ export class ResourcesListComponent implements AfterViewInit, OnChanges {
   exporting = false;
 
   @Input()
-  selection;
+  selection = new SelectionModel<RichResource>(true, []);
 
   @Input()
   filterValue: string;
