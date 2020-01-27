@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { VoService } from '@perun-web-apps/perun/services';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FormControl, Validators } from '@angular/forms';
 
 export interface CreateVoDialogData {
   theme: string;
@@ -25,15 +26,17 @@ export class CreateVoDialogComponent implements OnInit {
     translate.get('DIALOGS.CREATE_VO.SUCCESS').subscribe(value => this.successMessage = value);
   }
 
-  fullName = '';
-  shortName = '';
   successMessage: string;
-
   loading: boolean;
   theme: string;
 
+  shortNameCtrl: FormControl;
+  fullNameCtrl: FormControl;
+
   ngOnInit() {
     this.theme = this.data.theme;
+    this.shortNameCtrl = new FormControl(null, [Validators.required, Validators.pattern('^[\\w.-]+$'), Validators.maxLength(33)]);
+    this.fullNameCtrl = new FormControl(null, [Validators.required, Validators.pattern('.*[\\S]+.*'), Validators.maxLength(129)]);
   }
 
   onCancel() {
@@ -42,20 +45,10 @@ export class CreateVoDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.voService.createVo(this.fullName, this.shortName).subscribe(() => {
+    this.voService.createVo(this.fullNameCtrl.value, this.shortNameCtrl.value).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);
     }, () => this.loading = false);
-  }
-
-  isValidFullName(): boolean{
-    return 0 < this.fullName.length && this.fullName.length < 129
-  }
-
-  isValidShortName(): boolean {
-    const regex = '^[\\w._-]*$';
-    return this.shortName.length > 0 && this.shortName.length < 33
-        && this.shortName.match(regex) && this.shortName.match(regex)[0].length === this.shortName.length;
   }
 }

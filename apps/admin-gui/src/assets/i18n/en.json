@@ -582,9 +582,8 @@
       "CREATE": "Create",
       "SUCCESS": "New organization was successfully created",
       "TOOLTIP": "Short name and full name have to be filled and valid",
-      "FILL_VALUE": "Please fill this value.",
-      "FILL_FULL_NAME": "Maximal length of full name is 128 characters",
-      "FILL_SHORT_NAME": "Maximal length short name is 32 characters, allowed characters are a-z, A-Z, 0-9, ., _, -"
+      "FILL_FULL_NAME": "Length of full name has to be between 1 to 128 characters",
+      "FILL_SHORT_NAME": "Length of short name has to be between 1 to 32 characters, allowed characters are a-z, A-Z, 0-9, ., _, -"
     },
     "REMOVE_VO": {
       "TITLE": "Remove organization",
