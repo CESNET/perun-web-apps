@@ -30,6 +30,8 @@ export class CreateAttributeDefinitionDialogComponent implements OnInit {
   valueTypes: string[] = ['String', 'Integer', 'Boolean', 'Array', 'LinkedHashMap', 'LargeString', 'LargeArrayList'];
   valueType = '';
 
+  entity: string;
+
   readSelf = false;
   readSelfPublic = false;
   readSelfVo = false;
@@ -60,7 +62,7 @@ export class CreateAttributeDefinitionDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.attDef.namespace = 'urn:perun:' + this.attDef.entity + ':attribute-def:' + this.definitionType;
+    this.attDef.namespace = 'urn:perun:' + this.entity + ':attribute-def:' + this.definitionType;
     this.readValueType();
     this.attributesManager.createAttributeDefinition({attribute: this.attDef}).subscribe(attDef => {
       this.attDef = attDef;
@@ -190,11 +192,11 @@ export class CreateAttributeDefinitionDialogComponent implements OnInit {
 
   disableConfirmButton(): boolean {
     return (this.attDef.friendlyName === '' || this.attDef.displayName === '' || this.attDef.description === '' ||
-      this.attDef.entity === '' || this.definitionType === '' || this.valueType === '');
+      this.entity === '' || this.definitionType === '' || this.valueType === '');
   }
 
   disableUniqueToggle(): boolean {
-    if (this.definitionType === 'virt' || this.attDef.entity === 'entityless') {
+    if (this.definitionType === 'virt' || this.entity === 'entityless') {
       this.attDef.unique = false;
       return true;
     } else {

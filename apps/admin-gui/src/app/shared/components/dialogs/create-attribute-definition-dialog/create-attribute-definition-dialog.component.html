@@ -30,7 +30,7 @@
   <br>
   <mat-form-field class="form-field-width">
     <mat-placeholder>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ENTITY' | translate}}</mat-placeholder>
-    <mat-select [(ngModel)]="attDef.entity" required>
+    <mat-select [(ngModel)]="entity" required>
       <mat-option *ngFor="let entity of entities" [value]="entity">{{entity}}</mat-option>
     </mat-select>
     <mat-error
