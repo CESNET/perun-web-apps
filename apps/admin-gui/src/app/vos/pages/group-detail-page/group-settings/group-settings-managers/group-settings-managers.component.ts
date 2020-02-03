@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { GroupService } from '@perun-web-apps/perun/services';
-import { Group, Role } from '@perun-web-apps/perun/models';
+import { Role } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-settings-managers',
@@ -13,7 +13,7 @@ export class GroupSettingsManagersComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private route: ActivatedRoute
   ) { }
 

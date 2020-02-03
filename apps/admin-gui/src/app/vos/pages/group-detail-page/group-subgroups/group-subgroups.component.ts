@@ -8,6 +8,7 @@ import {MatCheckbox} from '@angular/material';
 import {applyFilter} from '@perun-web-apps/perun/utils';
 import { GroupService } from '@perun-web-apps/perun/services';
 import { Group } from '@perun-web-apps/perun/models';
+import { GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-subgroups',
@@ -24,6 +25,7 @@ export class GroupSubgroupsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private groupService: GroupService,
+    private groupServiceNew: GroupsManagerService,
     private route: ActivatedRoute
   ) {
   }
@@ -70,7 +72,8 @@ export class GroupSubgroupsComponent implements OnInit {
 
     this.route.parent.params.subscribe(parentParams => {
       const groupId = parentParams['groupId'];
-      this.groupService.getGroupById(groupId).subscribe(group => {
+      this.groupServiceNew.getGroupById(groupId).subscribe(group => {
+        // @ts-ignore
         this.group = group;
 
         this.refreshTable();

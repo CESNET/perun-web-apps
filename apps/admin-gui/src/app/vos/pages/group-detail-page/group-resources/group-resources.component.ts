@@ -1,8 +1,9 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
-import { GroupService, ResourcesService } from '@perun-web-apps/perun/services';
-import { Group, RichResource } from '@perun-web-apps/perun/models';
+import { ResourcesService } from '@perun-web-apps/perun/services';
+import { RichResource } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-resources',
@@ -17,7 +18,7 @@ export class GroupResourcesComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private resourcesService: ResourcesService,
-              private groupService: GroupService,
+              private groupService: GroupsManagerService,
               private route: ActivatedRoute) {
   }
 

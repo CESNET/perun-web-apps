@@ -4,13 +4,14 @@ import * as shape from 'd3-shape';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {
-  FacilityService, GroupService,
+  FacilityService,
   MembersService,
   ResourcesService,
   ServiceService,
   UsersService, VoService
 } from '@perun-web-apps/perun/services';
-import { Facility, Group, Member, Resource, RichDestination, Service, User } from '@perun-web-apps/perun/models';
+import { Facility, Member, Resource, RichDestination, Service, User } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-user-destination-graph',
@@ -27,7 +28,7 @@ export class UserDestinationGraphComponent implements OnInit {
               private memberService: MembersService,
               private serviceService: ServiceService,
               private resourceService: ResourcesService,
-              private groupService: GroupService,
+              private groupService: GroupsManagerService,
               private voService: VoService,
               private translate: TranslateService) { }
 
@@ -129,7 +130,7 @@ export class UserDestinationGraphComponent implements OnInit {
     for (const facility of this.facilities) {
       this.serviceService.getAllRichDestinations(facility.id).subscribe(destinations => {
         this.connectToService(facility, destinations);
-        this.delay(2000).then(any => {
+        this.delay(2000).then(() => {
           this.zoomToFit$.next(true);
           this.loading = false;
         });
@@ -341,7 +342,7 @@ export class UserDestinationGraphComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     if (window.innerWidth < 600) {
       this.innerWidth = window.innerWidth;
     } else {

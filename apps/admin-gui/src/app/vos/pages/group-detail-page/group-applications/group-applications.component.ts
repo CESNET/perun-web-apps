@@ -1,7 +1,8 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { GroupService, RegistrarService } from '@perun-web-apps/perun/services';
-import { Application, Group } from '@perun-web-apps/perun/models';
+import { RegistrarService } from '@perun-web-apps/perun/services';
+import { Application } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-applications',
@@ -15,7 +16,7 @@ export class GroupApplicationsComponent implements OnInit {
   // used for router animation
   @HostBinding('class.router-component') true;
 
-  constructor(private groupService: GroupService,
+  constructor(private groupService: GroupsManagerService,
               private registarService: RegistrarService,
               protected route: ActivatedRoute) { }
 

@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {MenuItem} from '../../../../shared/models/MenuItem';
 import {ActivatedRoute} from '@angular/router';
-import { GroupService } from '@perun-web-apps/perun/services';
-import { Group } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-overview',
@@ -16,7 +15,7 @@ export class GroupOverviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private groupService: GroupService
+    private groupService: GroupsManagerService
   ) { }
 
   navItems: MenuItem[] = [];

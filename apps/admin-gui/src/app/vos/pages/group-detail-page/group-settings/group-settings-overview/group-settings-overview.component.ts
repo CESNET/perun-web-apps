@@ -2,8 +2,9 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {SideMenuService} from '../../../../../core/services/common/side-menu.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MenuItem} from '../../../../../shared/models/MenuItem';
-import { GroupService, VoService } from '@perun-web-apps/perun/services';
-import { Group, Vo } from '@perun-web-apps/perun/models';
+import { VoService } from '@perun-web-apps/perun/services';
+import { Vo } from '@perun-web-apps/perun/models';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-settings-overview',
@@ -17,7 +18,7 @@ export class GroupSettingsOverviewComponent implements OnInit {
   constructor(
     private sideMenuService: SideMenuService,
     private voService: VoService,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     protected route: ActivatedRoute,
     protected router: Router
   ) {
