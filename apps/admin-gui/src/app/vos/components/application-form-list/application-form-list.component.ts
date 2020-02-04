@@ -78,7 +78,7 @@ export class ApplicationFormListComponent implements OnChanges {
     dialog.afterClosed().subscribe(deleteItem => {
       if (deleteItem) {
         applicationFormItem.forDelete = true;
-        if (applicationFormItem.id == 0) {
+        if (applicationFormItem.id === 0) {
           this.applicationFormItems.splice(this.applicationFormItems.indexOf(applicationFormItem), 1);
         }
         this.updateDataSource();
@@ -89,7 +89,7 @@ export class ApplicationFormListComponent implements OnChanges {
   drop(event: CdkDragDrop<ApplicationFormItem[]>) {
     this.dragDisabled = true;
 
-    const prevIndex = this.applicationFormItems.findIndex((d) => d.shortname == event.item.data.shortname);
+    const prevIndex = this.applicationFormItems.findIndex((d) => d.shortname === event.item.data.shortname);
     moveItemInArray(this.applicationFormItems, prevIndex, event.currentIndex);
     this.itemsChanged.push(this.applicationFormItems[event.currentIndex].id);
     this.updateDataSource();

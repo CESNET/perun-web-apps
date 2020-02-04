@@ -71,7 +71,7 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
   submit() {
     this.updateOptions();
     for (let i = 0; i < this.data.applicationFormItems.length; i++) {
-      if (this.data.applicationFormItems[i].id == this.applicationFormItem.id) {
+      if (this.data.applicationFormItems[i].id === this.applicationFormItem.id) {
         this.data.applicationFormItems[i] = this.applicationFormItem;
         break;
       }

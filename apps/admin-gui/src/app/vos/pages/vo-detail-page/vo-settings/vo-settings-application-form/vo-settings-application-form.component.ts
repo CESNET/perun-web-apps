@@ -26,9 +26,9 @@ import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 })
 export class VoSettingsApplicationFormComponent implements OnInit {
 
-  @HostBinding('class.router-component') true;
-
   static id = 'VoSettingsApplicationFormComponent';
+
+  @HostBinding('class.router-component') true;
 
   constructor(private registrarService: RegistrarService,
               protected route: ActivatedRoute,
@@ -130,7 +130,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
 
   save() {
     let i = 0;
-    for (let item of this.applicationFormItems) {
+    for (const item of this.applicationFormItems) {
       item.ordnum = i;
       if (!item.forDelete) {
         i++
