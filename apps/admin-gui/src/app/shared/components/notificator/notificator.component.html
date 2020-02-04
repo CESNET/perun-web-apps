@@ -1,7 +1,7 @@
 <div id="notificator"
   [ngStyle]="{'top': getNotificatorTop()}">
-  <div *ngFor="let data of notifications" @flyInOut>
-    <app-notification  [data]="data" [newNotification]="true">
+  <div *ngFor="let data of notifications; let i = index" @flyInOut>
+    <app-notification (closeNotification)="removeNotification(i)" [data]="data" [newNotification]="true">
     </app-notification>
   </div>
 </div>

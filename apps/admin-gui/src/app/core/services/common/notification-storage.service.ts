@@ -20,4 +20,8 @@ export class NotificationStorageService {
   getNotifications(){
     return this.notificationData;
   }
+
+  clearNotifications(){
+    this.notificationData = [];
+  }
 }

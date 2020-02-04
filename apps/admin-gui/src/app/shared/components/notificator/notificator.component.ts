@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import {NotificationData} from '../../models/NotificationData';
 import {NotificatorService} from '../../../core/services/common/notificator.service';
 import {flyInOut} from '../../animations/Animations';
-import { doAfterDelay } from '@perun-web-apps/perun/utils';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from '../../../app.component';
 import { NotificationStorageService } from '../../../core/services/common/notification-storage.service';
@@ -39,10 +38,6 @@ export class NotificatorComponent {
   private processNotification(data: NotificationData): void {
     this.notifications.push(data);
     this.notificationStorageService.storeNotification(data);
-
-    doAfterDelay(data.delay, () => {
-      this.notifications.shift();
-    });
   }
 
   getNotificatorTop() {
@@ -50,5 +45,9 @@ export class NotificatorComponent {
       return 'initial';
     }
     return environment.production ? '112px' : '64px';
+  }
+
+  removeNotification(index: number){
+    this.notifications.splice(index, 1);
   }
 }

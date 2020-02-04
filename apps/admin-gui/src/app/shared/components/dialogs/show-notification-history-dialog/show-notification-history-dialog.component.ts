@@ -27,4 +27,9 @@ export class ShowNotificationHistoryDialogComponent implements OnInit {
   onCancel() {
     this.dialogRef.close();
   }
+
+  onClear() {
+    this.notificationStorageService.clearNotifications();
+    this.notifications = [];
+  }
 }

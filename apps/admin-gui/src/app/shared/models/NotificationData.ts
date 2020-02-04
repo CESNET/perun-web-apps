@@ -9,4 +9,5 @@ export interface NotificationData {
   delay: number;
   icon: string;
   action: () => void;
+  timeStamp: string;
 }

@@ -2,7 +2,7 @@
   <div *ngIf="notifications.length !== 0" class="hide-horizontal-scrollbar">
     <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
       <div *cdkVirtualFor="let data of notifications" class="mb-1">
-        <app-notification [data]="data" [hideShadow]="true">
+        <app-notification [data]="data" [inDialog]="true">
         </app-notification>
       </div>
     </cdk-virtual-scroll-viewport>
@@ -14,6 +14,12 @@
     <button
       mat-stroked-button
       class="ml-auto"
+      (click)="onClear()">
+      {{'DIALOGS.NOTIFICATION_LIST.CLEAR' | translate}}
+    </button>
+    <button
+      mat-stroked-button
+      class="ml-2"
       (click)="onCancel()">
       {{'DIALOGS.NOTIFICATION_LIST.CANCEL' | translate}}
     </button>

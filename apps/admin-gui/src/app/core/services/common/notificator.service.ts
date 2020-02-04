@@ -66,7 +66,8 @@ export class NotificatorService {
       actionText: actionText === undefined && description !== undefined ? this.getDefaultActionMessage() : actionText,
       delay: this.defaultErrorDelayMs,
       icon: 'error_outline',
-      action: action
+      action: action,
+      timeStamp: `${new Date().getHours()}:${new Date().getMinutes()}`
     });
   }
 
@@ -86,7 +87,8 @@ export class NotificatorService {
       actionText: actionText === undefined && description !== undefined ? this.getDefaultActionMessage() : actionText,
       delay: this.defaultSuccessDelayMs,
       icon: 'done',
-      action: action
+      action: action,
+      timeStamp: `${new Date().getHours()}:${new Date().getMinutes()}`
     });
   }
 }

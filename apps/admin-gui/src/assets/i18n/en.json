@@ -964,7 +964,8 @@
     "NOTIFICATION_LIST": {
       "TITLE": "Recent notifications",
       "CANCEL": "Cancel",
-      "NO_NOTIFICATIONS_ALERT": "There are no recent notifications"
+      "NO_NOTIFICATIONS_ALERT": "There are no recent notifications",
+      "CLEAR": "Clear notifications"
     },
     "CREATE_RELATION": {
       "TITLE": "Create relation",
