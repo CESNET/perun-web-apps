@@ -32,7 +32,8 @@
     "help": "nx help",
     "start-dev-admin-gui": "ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check",
     "preversion": "npm run lint",
-    "version": "npm run build && git add -A -f dist"
+    "version": "npm run build && git add -A -f dist",
+    "start-user-profile": "ng serve user-profile"
   },
   "private": true,
   "dependencies": {
