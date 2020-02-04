@@ -42,7 +42,7 @@
   </div>
   <div class="card mb-4 p-5">
     <div *ngFor="let applicationFormItem of applicationFormItems">
-      <div *ngIf="isChoosenType(applicationFormItem)" class="mb-2">
+      <div *ngIf="isValid(applicationFormItem)" class="mb-2">
 
         <div class="d-flex" *ngIf="applicationFormItem.type === 'TEXTFIELD' ||
                                    applicationFormItem.type === 'VALIDATED_EMAIL' ||

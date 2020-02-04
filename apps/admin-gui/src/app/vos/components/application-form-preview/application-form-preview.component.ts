@@ -1,6 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 
 @Component({
@@ -12,8 +11,7 @@ export class ApplicationFormPreviewComponent implements OnInit {
 
   @HostBinding('class.router-component') true;
 
-  constructor(protected route: ActivatedRoute,
-              private registrarService: RegistrarService) { }
+  constructor(protected route: ActivatedRoute) { }
 
   loading = true;
   applicationFormItems: ApplicationFormItem[] = [];
@@ -22,20 +20,9 @@ export class ApplicationFormPreviewComponent implements OnInit {
   mapForCombobox: Map<number, string> = new Map();
 
   ngOnInit() {
-    this.route.parent.parent.params.subscribe(params => {
-      const voId = params['voId'];
-      const groupId = params['groupId'];
-      if (groupId) {
-        this.registrarService.getFormItemsForGroup(groupId).subscribe( formItems => {
-          this.applicationFormItems = formItems;
-          this.loading = false;
-        });
-      } else {
-        this.registrarService.getFormItemsForVo(voId).subscribe( formItems => {
-          this.applicationFormItems = formItems;
-          this.loading = false;
-        });
-      }
+    this.route.queryParamMap.subscribe( params => {
+      this.applicationFormItems = JSON.parse(params.get('applicationFormItems'));
+      this.loading = false;
     });
   }
 
@@ -69,7 +56,10 @@ export class ApplicationFormPreviewComponent implements OnInit {
     return [];
   }
 
-  isChoosenType(applicationFormItem: ApplicationFormItem) {
+  isValid(applicationFormItem: ApplicationFormItem) {
+    if (applicationFormItem.forDelete) {
+      return false;
+    }
     for (const type of applicationFormItem.applicationTypes) {
       if (type === 'INITIAL' && this.initialPage) {
         return true;

@@ -149,10 +149,14 @@
           <button
             matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.EDIT' | translate}}"
             mat-icon-button
+            *ngIf="!applicationFormItem.forDelete"
             class="hideable-button"
             (click)="edit(applicationFormItem)">
             <mat-icon>edit</mat-icon>
           </button>
+          <div *ngIf="applicationFormItem.forDelete" class="font-weight-bold">
+            {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MARK_DELETE' | translate}}
+          </div>
         </td>
       </ng-container>
       <ng-container matColumnDef="delete">
@@ -162,8 +166,16 @@
             matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.DELETE' | translate}}"
             mat-icon-button
             color="warn"
+            *ngIf="!applicationFormItem.forDelete"
             (click)="delete(applicationFormItem)">
             <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.REVERT_DELETE' | translate}}"
+            *ngIf="applicationFormItem.forDelete"
+            (click)="restore(applicationFormItem)">
+            <mat-icon>settings_backup_restore</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -171,8 +183,12 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
-
         *matRowDef="let applicationFormItem; columns: displayedColumns;"
+        [class.make-red]="applicationFormItem.forDelete"
+        [class.make-green]="applicationFormItem.id == 0"
+        [class.make-yellow]="itemsChanged.indexOf(applicationFormItem.id) != -1
+                          && !applicationFormItem.forDelete
+                          && applicationFormItem.id != 0"
         cdkDrag
         [cdkDragData]="applicationFormItem">
       </tr>

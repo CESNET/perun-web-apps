@@ -3,11 +3,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 
 export interface AddApplicationFormItemDialogComponentData {
-  voId: number;
-  groupId: number;
   applicationFormItems: ApplicationFormItem[];
 }
 
@@ -21,8 +18,7 @@ export class AddApplicationFormItemDialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<AddApplicationFormItemDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: AddApplicationFormItemDialogComponentData,
               private translateService: TranslateService,
-              private notificationService: NotificatorService,
-              private registrarService: RegistrarService) { }
+              private notificationService: NotificatorService) { }
 
   shortName = '';
   items: string[] = [];
@@ -53,15 +49,7 @@ export class AddApplicationFormItemDialogComponent implements OnInit {
       });
     } else {
       const item = this.createApplicationItem();
-      if (this.data.groupId) {      // if dialog is for group
-        this.registrarService.updateFormItemsForGroup(this.data.groupId, this.data.applicationFormItems).subscribe( () => {
-          this.dialogRef.close(item);
-        });
-      } else {
-        this.registrarService.updateFormItemsForVo(this.data.voId, this.data.applicationFormItems).subscribe( () => {
-          this.dialogRef.close(item);
-        });
-      }
+      this.dialogRef.close([this.data.applicationFormItems, item]);
     }
   }
 
@@ -69,24 +57,11 @@ export class AddApplicationFormItemDialogComponent implements OnInit {
     const newApplicationItem = new ApplicationFormItem();
     newApplicationItem.shortname = this.shortName;
     newApplicationItem.type = this.selectedWidget;
-    if (this.selectedItem === this.items[0]) {
-      this.data.applicationFormItems.splice(0, 0, newApplicationItem);
-      this.increaseOrdnums(1);
-      return newApplicationItem;
-    }
-    for (let i = 0; i < this.data.applicationFormItems.length; i++) {
-      if (this.selectedItem === this.data.applicationFormItems[i].shortname) {
-        newApplicationItem.ordnum = i + 1;
-        this.data.applicationFormItems.splice(i + 1, 0, newApplicationItem);
-        this.increaseOrdnums(i + 2);
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.selectedItem === this.items[i]) {
+        this.data.applicationFormItems.splice(i, 0, newApplicationItem);
         return newApplicationItem;
       }
-    }
-  }
-
-  increaseOrdnums(index: number) {
-    for (let i = index; i < this.data.applicationFormItems.length; i++) {
-      this.data.applicationFormItems[i].ordnum++;
     }
   }
 }

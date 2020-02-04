@@ -35,12 +35,24 @@
   <mat-divider class="mb-2 mt-2"></mat-divider>
 
   <div class="w-100 d-flex">
+    <app-refresh-button (refresh)="this.updateFormItems()"></app-refresh-button>
+
     <button
       mat-flat-button
       color="accent"
       class="mr-2"
       (click)="add()">
       {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
+    </button>
+
+    <button
+      mat-flat-button
+      color="accent"
+      class="mr-2"
+      [disabled]="!itemsChanged"
+      (click)="save()">
+      <i class="material-icons">save</i>
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
     </button>
 
     <button

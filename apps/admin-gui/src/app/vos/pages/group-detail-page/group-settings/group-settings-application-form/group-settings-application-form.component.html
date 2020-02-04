@@ -35,6 +35,9 @@
   <mat-divider class="mb-2 mt-2"></mat-divider>
 
   <div class="w-100 d-flex">
+
+    <app-refresh-button (refresh)="this.updateFormItems()"></app-refresh-button>
+
     <button
       mat-flat-button
       color="accent"
@@ -44,8 +47,18 @@
     </button>
 
     <button
+      mat-flat-button
+      color="accent"
+      class="mr-2"
+      [disabled]="!itemsChanged"
+      (click)="save()">
+      <i class="material-icons">save</i>
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+    </button>
+
+    <button
       mat-stroked-button
-      class="mr-auto"
+      class="mr-2"
       (click)="copy()">
       <i class="material-icons">file_copy</i>
       {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.COPY_GROUP_BUTTON' | translate}}
@@ -53,7 +66,6 @@
 
     <button
       mat-stroked-button
-      class="ml-auto"
       (click)="preview()">
       <i class="material-icons">search</i>
       {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}

@@ -70,21 +70,13 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
 
   submit() {
     this.updateOptions();
-    for (const item of this.data.applicationFormItems) {
-      if (item.id === this.applicationFormItem.id) {
-        this.data.applicationFormItems[item.ordnum] = this.applicationFormItem;
+    for (let i = 0; i < this.data.applicationFormItems.length; i++) {
+      if (this.data.applicationFormItems[i].id == this.applicationFormItem.id) {
+        this.data.applicationFormItems[i] = this.applicationFormItem;
         break;
       }
     }
-    if (this.data.group) {      // if the dialog is for group
-      this.registrarService.updateFormItemsForGroup(this.data.group.id, this.data.applicationFormItems).subscribe( () => {
-        this.dialogRef.close(true);
-      });
-    } else {
-      this.registrarService.updateFormItemsForVo(this.data.voId, this.data.applicationFormItems).subscribe(() => {
-        this.dialogRef.close(true);
-      });
-    }
+    this.dialogRef.close(this.data.applicationFormItems);
   }
 
   onChangingType(type: string) {

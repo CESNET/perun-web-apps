@@ -17,6 +17,8 @@ import {
 } from '../../../vos/pages/vo-detail-page/vo-resources/vo-resources-preview/vo-resources-preview.component';
 import {VoResourcesStatesComponent} from '../../../vos/pages/vo-detail-page/vo-resources/vo-resources-states/vo-resources-states.component';
 import { AdminUsersComponent } from '../../../admin/pages/admin-page/admin-users/admin-users.component';
+import { VoSettingsApplicationFormComponent } from '../../../vos/pages/vo-detail-page/vo-settings/vo-settings-application-form/vo-settings-application-form.component';
+import { GroupSettingsApplicationFormComponent } from '../../../vos/pages/group-detail-page/group-settings/group-settings-application-form/group-settings-application-form.component';
 
 export class CachedRoute {
   routeHandle: DetachedRouteHandle;
@@ -36,7 +38,8 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
         VoGroupsComponent.id,
         VoApplicationsComponent.id,
         VoResourcesPreviewComponent.id,
-        VoResourcesStatesComponent.id
+        VoResourcesStatesComponent.id,
+        VoSettingsApplicationFormComponent.id
       ]
     },
     {
@@ -45,7 +48,8 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
         GroupMembersComponent.id,
         GroupSubgroupsComponent.id,
         GroupResourcesComponent.id,
-        GroupApplicationsComponent.id
+        GroupApplicationsComponent.id,
+        GroupSettingsApplicationFormComponent.id
       ]
     },
     {

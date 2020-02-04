@@ -5,7 +5,8 @@ export class Language {
   locale: string;
   options: string;
 
-  constructor() {
+  constructor(locale: string) {
+    this.locale = locale;
     this.errorMessage = '';
     this.help = '';
     this.label = '';
@@ -17,7 +18,7 @@ export class ApplicationFormItem {
   beanName: string;
   federationAttribute: string;
   forDelete: boolean;
-  i18n: Map<string, Language>;
+  i18n: { [s: string]: Language; };
   id: number;
   ordnum: number;
   perunDestinationAttribute: string;
@@ -30,9 +31,9 @@ export class ApplicationFormItem {
   constructor() {
     this.applicationTypes = ['INITIAL', 'EXTENSION'];
     this.federationAttribute = '';
-    this.i18n = new Map<string, Language>();
-    this.i18n.set('cs', new Language());
-    this.i18n.set('en', new Language());
+    this.i18n = {};
+    this.i18n['cs'] = new Language('cs');
+    this.i18n['en'] = new Language('en');
     this.id = 0;
     this.ordnum = 0;
     this.perunDestinationAttribute = null;
