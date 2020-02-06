@@ -56,6 +56,12 @@
     },
     "config": {
       "tags": []
+    },
+    "user-profile": {
+      "tags": []
+    },
+    "user-profile-e2e": {
+      "tags": []
     }
   }
 }

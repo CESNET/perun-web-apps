@@ -7,14 +7,16 @@ import { ApiService } from '../../../admin-gui/src/app/core/services/api/api.ser
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MatIconModule } from '@angular/material';
-import { CustomIconService } from '../../../admin-gui/src/app/core/services/api/custom-icon.service';
+import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule } from '@angular/material';
+// import { CustomIconService } from '../../../admin-gui/src/app/core/services/api/custom-icon.service';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { IdentitiesPageComponent } from './pages/identities-page/identities-page.component';
 import { GroupsPageComponent } from './pages/groups-page/groups-page.component';
 import { VosPageComponent } from './pages/vos-page/vos-page.component';
 import { ServicesPageComponent } from './pages/services-page/services-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -32,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -41,7 +44,11 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     AppRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    RouterModule,
+    MatButtonModule
   ],
   providers: [
     {
