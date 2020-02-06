@@ -18,7 +18,7 @@
         <mat-spinner *ngIf="loading" matSuffix [diameter]="20" [strokeWidth]="2"></mat-spinner>
         <mat-hint align="start">{{'ADMIN.VISUALIZER.USER_DESTINATION.USER_HINT' | translate}}</mat-hint>
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let user of users | async" [value]="user.id + ' ' + user.firstName + ' ' + user.lastName">
+          <mat-option *ngFor="let user of users | async" [value]="user.firstName + ' ' + user.lastName">
             <span class="text-muted">#{{user.id}}</span> {{ user.firstName }} {{ user.lastName }}
           </mat-option>
         </mat-autocomplete>
