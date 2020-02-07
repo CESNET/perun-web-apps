@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthzService, MembersService, UsersService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService, MembersManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { PerunPrincipal, Vo } from '@perun-web-apps/perun/models';
 
 @Component({
@@ -10,24 +10,30 @@ import { PerunPrincipal, Vo } from '@perun-web-apps/perun/models';
 })
 export class GroupsPageComponent implements OnInit {
 
+  // constructor() {
+  // }
   loading = false;
   principal: PerunPrincipal;
   vos: Vo[] = [];
   membersGroups: Group[] = [];
   adminsGroups: Group[] = [];
 
-  constructor(private usersService: UsersService,
-              private memberService: MembersService,
+  constructor(private usersService: UsersManagerService,
+              private memberService: MembersManagerService,
               private groupService: GroupsManagerService,
-              private authzService:AuthzService) { }
+              // private authzService:AuthzService
+  ) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.authzService.getPerunPrincipal().subscribe(principal =>{
-      this.principal = principal;
-      console.log(principal);
-      // this.refreshTable();
-    });
+    // this.loading = true;
+    // this.authzService.getPerunPrincipal().subscribe(principal =>{
+    //   this.principal = principal;
+    //   console.log(principal);
+    //   // this.refreshTable();
+    // });
+    this.usersService.getUserById(73916).subscribe(user =>{
+      console.log(user);
+    })
   }
 
   // refreshTable() {
