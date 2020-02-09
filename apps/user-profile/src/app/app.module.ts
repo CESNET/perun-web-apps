@@ -27,6 +27,7 @@ import { SettingsAlternativePasswordsComponent } from './pages/settings-page/set
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsMailingListsComponent } from './pages/settings-page/settings-mailing-lists/settings-mailing-lists.component';
 import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -55,7 +56,8 @@ export function apiConfigFactory(): Configuration {
     SettingsDataQuotasComponent,
     SettingsAlternativePasswordsComponent,
     SettingsSambaPasswordComponent,
-    SettingsMailingListsComponent
+    SettingsMailingListsComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

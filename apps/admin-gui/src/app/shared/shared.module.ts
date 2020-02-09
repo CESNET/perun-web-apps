@@ -295,7 +295,8 @@ import { PerunSharedComponentsModule } from '../../../../../libs/perun/component
     PerunFooterComponent,
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
-    ExtSourceTypePipe
+    ExtSourceTypePipe,
+    SideMenuRootItemComponent
   ],
   entryComponents: [
     CreateGroupDialogComponent,

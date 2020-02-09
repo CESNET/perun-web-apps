@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthzService, MembersService, UsersService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, MembersManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { PerunPrincipal, Vo } from '@perun-web-apps/perun/models';
+import {
+  Group,
+  GroupsManagerService,
+  MembersManagerService,
+  PerunPrincipal,
+  UsersManagerService, Vo
+} from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'perun-web-apps-groups-page',

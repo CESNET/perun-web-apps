@@ -113,7 +113,7 @@ export class CustomIconService {
     },
     // TESTING PURPOSES
     {
-      url: 'assets/img/external_settings1-blue.svg',
+      url: 'assets/img/settings1-blue.svg',
       name: 'settings-blue'
     },
   ];

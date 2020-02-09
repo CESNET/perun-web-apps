@@ -17,7 +17,7 @@ import { SettingsSSHKeysComponent } from './pages/settings-page/settings-ssh-key
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'profile',
     component: ProfilePageComponent
   },
   {
