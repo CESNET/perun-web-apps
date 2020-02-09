@@ -1,20 +1,12 @@
 <mat-sidenav-container autosize>
-  <mat-sidenav mode="side" #sidenav style="background-color: #62727b" opened>
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="'/'"> Profile </a>
-      <a mat-list-item [routerLink]="'/identities'"> Identities </a>
-      <a mat-list-item [routerLink]="'/services'"> Services </a>
-      <a mat-list-item [routerLink]="'/groups'"> Groups </a>
-      <a mat-list-item [routerLink]="'/organizations'"> Organizations </a>
-      <a mat-list-item [routerLink]="'/settings'"> Settings </a>
-<!--      <a mat-list-item (click)="sidenav.toggle()" href="">Close</a>-->
-    </mat-nav-list>
+  <mat-sidenav mode="side" style="background-color: #62727b; height: fit-content" opened>
+    <perun-web-apps-side-menu></perun-web-apps-side-menu>
   </mat-sidenav>
   <mat-sidenav-content >
-    <div style="height: 30vh;" class="ml-3">
+    <div style="height: 100vh" class="ml-3">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<button mat-button (click)="sidenav.toggle()">Toggle drawer</button>
+<!--<button mat-button (click)="sidenav.toggle()">Toggle drawer</button>-->

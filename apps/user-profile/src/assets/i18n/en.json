@@ -1,14 +1,20 @@
 {
   "MENU_ITEMS": {
-    "SETTINGS": {
-      "ALTERNATIVE_PASSWORDS": "Alternative passwords",
-      "DATA_QUOTAS": "Data quotas",
-      "MAILING_LISTS": "Mailing lists",
-      "PREFERRED_SHELLS": "Preferred shells",
-      "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group",
-      "SAMBA_PASSWORD": "Samba password",
-      "SSH_KEYS": "SSH keys"
-    }
+    "PROFILE": "Profile",
+    "IDENTITIES": "Identities",
+    "SERVICES": "Services",
+    "GROUPS": "Groups",
+    "VOS": "Organizations",
+    "SETTINGS": "Settings"
+  },
+  "SETTINGS": {
+    "ALTERNATIVE_PASSWORDS": "Alternative passwords",
+    "DATA_QUOTAS": "Data quotas",
+    "MAILING_LISTS": "Mailing lists",
+    "PREFERRED_SHELLS": "Preferred shells",
+    "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group",
+    "SAMBA_PASSWORD": "Samba password",
+    "SSH_KEYS": "SSH keys"
   },
   "GROUPS": {
     "TITLE": "Groups"

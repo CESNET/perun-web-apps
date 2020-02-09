@@ -309,7 +309,8 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     VoSelectTableComponent,
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
-    ExtSourceTypePipe
+    ExtSourceTypePipe,
+    SideMenuRootItemComponent
   ],
   entryComponents: [
     CreateGroupDialogComponent,
