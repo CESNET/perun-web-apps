@@ -282,9 +282,11 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
     to.i18n['cs'].errorMessage = from.i18n['cs'].errorMessage;
     to.i18n['cs'].help = from.i18n['cs'].help;
     to.i18n['cs'].label = from.i18n['cs'].label;
+    to.i18n['cs'].options = from.i18n['cs'].options;
     to.i18n['en'].errorMessage = from.i18n['en'].errorMessage;
     to.i18n['en'].help = from.i18n['en'].help;
     to.i18n['en'].label = from.i18n['en'].label;
+    to.i18n['en'].options = from.i18n['en'].options;
     to.id = from.id;
     to.ordnum = from.ordnum;
     to.perunDestinationAttribute = from.perunDestinationAttribute;

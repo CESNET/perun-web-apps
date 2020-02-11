@@ -10,6 +10,7 @@ export class Language {
     this.errorMessage = '';
     this.help = '';
     this.label = '';
+    this.options = '';
   }
 }
 
