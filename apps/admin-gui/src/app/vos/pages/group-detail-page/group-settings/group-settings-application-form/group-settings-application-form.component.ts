@@ -80,20 +80,15 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
       // success is field contains of two items: first is applicationFormItems with new item in it,
       // second item is new Application Form Item
       if (success) {
-        const editDialog = this.dialog.open(EditApplicationFormItemDialogComponent, {
+        this.applicationFormItems = Object.assign([], success[0]);
+        this.dialog.open(EditApplicationFormItemDialogComponent, {
           width: '600px',
           height: '600px',
           data: {voId: this.voId,
             groupId: this.groupId,
-            applicationFormItem: success[1],
-            applicationFormItems: success[0]}
+            applicationFormItem: success[1]}
         });
-        this.changeItems(success[0]);
-        editDialog.afterClosed().subscribe((applicationFormItems) => {
-          if (applicationFormItems) {
-            this.applicationFormItems = applicationFormItems;
-          }
-        });
+        this.itemsChanged = true;
       }
     });
   }
@@ -139,8 +134,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     });
   }
 
-  changeItems(applicationFormItemsChange: ApplicationFormItem[]) {
-    this.applicationFormItems = applicationFormItemsChange;
+  changeItems() {
     this.itemsChanged = true;
   }
 

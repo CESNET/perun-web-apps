@@ -23,8 +23,7 @@ export class ApplicationFormListComponent implements OnChanges {
   constructor(private registrarService: RegistrarService,
               private dialog: MatDialog,
               private notificator: NotificatorService,
-              private translate: TranslateService,
-              private changeDetectorRef: ChangeDetectorRef) { }
+              private translate: TranslateService) { }
 
   @Input()
   loading: boolean;
@@ -49,7 +48,6 @@ export class ApplicationFormListComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.dataSource = this.applicationFormItems;
-    this.changeDetectorRef.detectChanges();       // fix - when data in table changes, error appears
 
   }
 
@@ -59,14 +57,12 @@ export class ApplicationFormListComponent implements OnChanges {
       height: '600px',
       data: {voId: this.applicationForm.vo.id,
         group: this.applicationForm.group,
-        applicationFormItem: applicationFormItem,
-        applicationFormItems: this.applicationFormItems}
+        applicationFormItem: applicationFormItem}
     });
-    editDialog.afterClosed().subscribe((applicationFormItems) => {
-      if (applicationFormItems) {
-        this.applicationFormItems = applicationFormItems;
+    editDialog.afterClosed().subscribe((success) => {
+      if (success) {
         this.itemsChanged.push(applicationFormItem.id);
-        this.updateDataSource();
+        this.applicationFormItemsChange.emit();
       }
     });
   }
@@ -80,19 +76,20 @@ export class ApplicationFormListComponent implements OnChanges {
         applicationFormItem.forDelete = true;
         if (applicationFormItem.id === 0) {
           this.applicationFormItems.splice(this.applicationFormItems.indexOf(applicationFormItem), 1);
+          this.table.renderRows();
         }
-        this.updateDataSource();
+        this.applicationFormItemsChange.emit();
       }
     });
   }
 
   drop(event: CdkDragDrop<ApplicationFormItem[]>) {
     this.dragDisabled = true;
-
-    const prevIndex = this.applicationFormItems.findIndex((d) => d.shortname === event.item.data.shortname);
+    const prevIndex = this.applicationFormItems.indexOf(event.item.data);
     moveItemInArray(this.applicationFormItems, prevIndex, event.currentIndex);
     this.itemsChanged.push(this.applicationFormItems[event.currentIndex].id);
-    this.updateDataSource();
+    this.applicationFormItemsChange.emit();
+    this.table.renderRows();
   }
 
   getLocalizedOptions(applicationFormItem: ApplicationFormItem): string[] {
@@ -109,13 +106,6 @@ export class ApplicationFormListComponent implements OnChanges {
     return [];
   }
 
-  updateDataSource() {
-    this.dataSource = this.applicationFormItems;
-    this.applicationFormItemsChange.emit(this.applicationFormItems);
-    this.changeDetectorRef.detectChanges();       // fix - when data in table changes, error appears
-    this.table.renderRows();
-  }
-
   getLocalizedLabel(applicationFormItem: ApplicationFormItem): string {
     if (applicationFormItem.i18n[this.translate.getDefaultLang()]) {
       return applicationFormItem.i18n[this.translate.getDefaultLang()].label;
@@ -125,6 +115,5 @@ export class ApplicationFormListComponent implements OnChanges {
 
   restore(applicationFormItem: ApplicationFormItem) {
     applicationFormItem.forDelete = false;
-    this.updateDataSource();
   }
 }
