@@ -2,12 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
-import { ApiService } from '../../../admin-gui/src/app/core/services/api/api.service';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+// tslint:disable-next-line:nx-enforce-module-boundaries
 import { CustomIconService } from '../../../admin-gui/src/app/core/services/api/custom-icon.service';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { IdentitiesPageComponent } from './pages/identities-page/identities-page.component';
@@ -26,8 +25,13 @@ import { SettingsDataQuotasComponent } from './pages/settings-page/settings-data
 import { SettingsAlternativePasswordsComponent } from './pages/settings-page/settings-alternative-passwords/settings-alternative-passwords.component';
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsMailingListsComponent } from './pages/settings-page/settings-mailing-lists/settings-mailing-lists.component';
+// tslint:disable-next-line:nx-enforce-module-boundaries
 import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -57,7 +61,10 @@ export function apiConfigFactory(): Configuration {
     SettingsAlternativePasswordsComponent,
     SettingsSambaPasswordComponent,
     SettingsMailingListsComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,9 @@ export function apiConfigFactory(): Configuration {
     MatListModule,
     RouterModule,
     MatButtonModule,
-    SharedModule
+    SharedModule,
+    FlexLayoutModule,
+    MatToolbarModule
   ],
   providers: [
     CustomIconService,

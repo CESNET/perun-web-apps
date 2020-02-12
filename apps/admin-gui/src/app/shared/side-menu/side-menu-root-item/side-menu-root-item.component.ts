@@ -43,10 +43,9 @@ export class SideMenuRootItemComponent implements OnInit, OnChanges {
   @ViewChild('collapse') collapseDiv: ElementRef;
 
   expanded = false;
-  //TODO Placeholders over here
-  linkBgColor = 'red';
-  linkTextColor = 'orange';
-  iconColor = 'blue';
+  linkBgColor = this.store.get('theme', 'sidemenu_item_links_bg_color');
+  linkTextColor = this.store.get('theme', 'sidemenu_item_links_text_color');
+  iconColor = this.store.get('theme', 'sidemenu_item_icon_color');
 
   @Input()
   sideNav: MatSidenav;

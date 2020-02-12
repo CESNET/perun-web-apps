@@ -1,7 +1,12 @@
-.entity-menu-accordion{
-  background-color: #f4f4f4;
+.nav-caption{
+  display: inline-block;
+  padding-left: 6px;
 }
 
-#sideMenuAccordion {
-  width: 300px;
+mat-list-item:hover{
+  background-color: #c4ffcb;
+}
+
+mat-list-item:focus{
+  background-color: #f8f8f8;
 }
