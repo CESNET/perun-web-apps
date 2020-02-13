@@ -8,7 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CreateAttributeDialogComponent } from '../../../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 import { filterCoreAttributes } from '@perun-web-apps/perun/utils';
 import { DeleteAttributeDialogComponent } from '../../../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
-import { StoreService } from '../../../../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ReportIssueDialogComponent } from '../components/report-issue-dialog/report-issue-dialog.component';
-import { StoreService } from '../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-perun-footer',

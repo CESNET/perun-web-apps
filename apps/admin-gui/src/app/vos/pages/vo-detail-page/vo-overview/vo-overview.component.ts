@@ -1,10 +1,10 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuItem} from '../../../../shared/models/MenuItem';
 import {InviteMemberDialogComponent} from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SideMenuService} from '../../../../core/services/common/side-menu.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthResolverService} from '../../../../core/services/common/auth-resolver.service';
+import {AuthResolverService} from '@perun-web-apps/perun/services';
 import { VoService } from '@perun-web-apps/perun/services';
 import { Vo } from '@perun-web-apps/perun/openapi';
 

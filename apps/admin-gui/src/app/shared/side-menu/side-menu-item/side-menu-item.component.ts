@@ -3,7 +3,7 @@ import {SideMenuItem} from '../side-menu.component';
 import {NavigationEnd, Router} from '@angular/router';
 import {openClose, rollInOut} from '../../animations/Animations';
 import {MatSidenav} from '@angular/material/sidenav';
-import { StoreService } from '../../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-side-menu-item',

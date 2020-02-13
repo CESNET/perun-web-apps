@@ -1,6 +1,6 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CustomIconService} from '../../../../../core/services/api/custom-icon.service';
+import {CustomIconService} from '@perun-web-apps/perun/services';
 import { PropagationStatsReaderService } from '@perun-web-apps/perun/services';
 import { ResourceState } from '@perun-web-apps/perun/models';
 

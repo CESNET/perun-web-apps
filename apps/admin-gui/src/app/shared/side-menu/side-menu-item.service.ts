@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { EntityMenuLink, SideMenuItem } from './side-menu.component';
-import { AuthResolverService } from '../../core/services/common/auth-resolver.service';
+import { AuthResolverService } from '@perun-web-apps/perun/services';
 import { Facility, Group, Resource, RichMember, User, Vo } from '@perun-web-apps/perun/openapi';
 import { parseFullName } from '@perun-web-apps/perun/utils';
-import { StoreService } from '../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Injectable({
   providedIn: 'root'

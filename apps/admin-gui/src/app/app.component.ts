@@ -1,11 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { AuthResolverService } from './core/services/common/auth-resolver.service';
-import { AuthService } from './core/services/common/auth.service';
 import { CacheHelperService } from './core/services/common/cache-helper.service';
-import { AuthzService } from '@perun-web-apps/perun/services';
+import { AuthzService, AuthResolverService, AuthService, StoreService } from '@perun-web-apps/perun/services';
 import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { environment } from '../environments/environment';
-import { StoreService } from './core/services/common/store.service';
 
 @Component({
   selector: 'app-root',

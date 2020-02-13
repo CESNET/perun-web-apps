@@ -13,15 +13,14 @@ import {CoreModule} from './core/core.module';
 import {RouteReuseStrategy} from '@angular/router';
 import {CacheRouteReuseStrategy} from './core/services/common/cache-route-reuse-strategy';
 import {MatIconModule} from '@angular/material';
-import {CustomIconService} from './core/services/api/custom-icon.service';
+import {CustomIconService} from '@perun-web-apps/perun/services';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { ApiService } from './core/services/api/api.service';
-import { AppConfigService } from './core/services/common/app-config.service';
+import { AdminGuiConfigService } from './core/services/common/admin-gui-config.service';
 // @ts-ignore
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
 // @ts-ignore
-import { ApiConfiguration } from '@perun-web-apps/perun/openapi';
-import { StoreService } from './core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 import { ApiInterceptor } from './core/services/api/ApiInterceptor';
 
 
@@ -49,7 +48,7 @@ export function apiConfigFactory(store: StoreService): Configuration {
   return new Configuration(params);
 }
 
-const loadConfigs = (appConfig: AppConfigService) => {
+const loadConfigs = (appConfig: AdminGuiConfigService) => {
   return () => {
     return appConfig.loadConfigs();
   };
@@ -78,12 +77,12 @@ const loadConfigs = (appConfig: AppConfigService) => {
     ApiModule
   ],
   providers: [
-    AppConfigService,
+    AdminGuiConfigService,
     {
       provide: APP_INITIALIZER,
       useFactory: loadConfigs,
       multi: true,
-      deps: [AppConfigService]
+      deps: [AdminGuiConfigService]
     },
     // {
     //   provide: ApiConfiguration,

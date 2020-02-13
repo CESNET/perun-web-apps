@@ -3,7 +3,7 @@ import {SideMenuService} from '../../../core/services/common/side-menu.service';
 import { VoService } from '@perun-web-apps/perun/services';
 import { Vo } from '@perun-web-apps/perun/openapi';
 import { getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
-import { AuthResolverService } from '../../../core/services/common/auth-resolver.service';
+import { AuthResolverService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material';
 import { RemoveVoDialogComponent } from '../../../shared/components/dialogs/remove-vo-dialog/remove-vo-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';

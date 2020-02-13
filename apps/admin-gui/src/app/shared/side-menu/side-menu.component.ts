@@ -1,11 +1,11 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {SideMenuService} from '../../core/services/common/side-menu.service';
 import {AppComponent} from '../../app.component';
 import {SideMenuItemService} from './side-menu-item.service';
-import {AuthResolverService} from '../../core/services/common/auth-resolver.service';
+import {AuthResolverService} from '@perun-web-apps/perun/services';
 import {rollInOut} from '../animations/Animations';
-import { StoreService } from '../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-side-menu',

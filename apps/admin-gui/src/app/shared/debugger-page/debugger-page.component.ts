@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthResolverService} from '../../core/services/common/auth-resolver.service';
+import {AuthResolverService} from '@perun-web-apps/perun/services';
 import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
-import { StoreService } from '../../core/services/common/store.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-debugger-page',

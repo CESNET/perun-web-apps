@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+// tslint:disable-next-line:nx-enforce-module-boundaries
+import { environment } from '../../../../../apps/admin-gui/src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { environment } from '../../../../environments/environment';
 import { StoreService } from './store.service';
 import { AuthResolverService } from './auth-resolver.service';
-import { AuthzService } from '@perun-web-apps/perun/services';
+import { AuthzService } from './authz.service';
 
 declare const tinycolor: any;
 
@@ -37,81 +38,17 @@ export class AppConfigService {
               private authService: AuthService,
               private storeService: StoreService,
               private authResolver: AuthResolverService,
-              private authzService: AuthzService) {}
-
-  entityColorConfigs: EntityColorConfig[] = [
-    {
-      entity: 'vo',
-      configValue: 'vo_color',
-      cssVariable: '--vo-color'
-    },
-    {
-      entity: 'group',
-      configValue: 'group_color',
-      cssVariable: '--group-color'
-    },
-    {
-      entity: 'user',
-      configValue: 'user_color',
-      cssVariable: '--user-color'
-    },
-    {
-      entity: 'member',
-      configValue: 'member_color',
-      cssVariable: '--member-color'
-    },
-    {
-      entity: 'facility',
-      configValue: 'facility_color',
-      cssVariable: '--facility-color'
-    },
-    {
-      entity: 'resource',
-      configValue: 'resource_color',
-      cssVariable: '--resource-color'
-    },
-    {
-      entity: 'admin',
-      configValue: 'admin_color',
-      cssVariable: '--admin-color'
-    }
-  ];
-
-  colorConfigs: ColorConfig[] = [
-    {
-      configValue: 'sidemenu_hover_color',
-      cssVariable: '--side-root-item-hover'
-    },
-    {
-      configValue: 'sidemenu_root_active_color',
-      cssVariable: '--side-root-item-active'
-    },
-    {
-      configValue: 'sidemenu-link-active',
-      cssVariable: '--side-link-active'
-    },
-    {
-      configValue: 'sidemenu-link-hover',
-      cssVariable: '--side-link-hover'
-    }
-  ];
-
-  loadConfigs(): Promise<void> {
-    return this.loadAppDefaultConfig()
-      .then(() => this.loadAppInstanceConfig())
-      .then(() => this.initializeColors())
-      .then(() => this.authenticateUser())
-      .then(() => this.loadPrincipal());
+              private authzService: AuthzService) {
   }
 
-  initializeColors() : Promise<void> {
+  initializeColors(entityColorConfigs: EntityColorConfig[], colorConfigs: ColorConfig[]): Promise<void> {
     return new Promise<void>((resolve => {
-      this.colorConfigs.forEach(cc => {
+      colorConfigs.forEach(cc => {
         const color = this.storeService.get('theme', cc.configValue);
         document.documentElement.style.setProperty(cc.cssVariable, color);
       });
 
-      this.entityColorConfigs.forEach(ecc => {
+      entityColorConfigs.forEach(ecc => {
         const color = this.storeService.get('theme', ecc.configValue);
         // set CSS variable for given entity
         document.documentElement.style.setProperty(ecc.cssVariable, color);
@@ -141,10 +78,10 @@ export class AppConfigService {
    * If instance is not in production mode, the configuration is also
    * taken as instance configuration and load additional data.
    */
-  loadAppDefaultConfig() : Promise<void> {
+  loadAppDefaultConfig(): Promise<void> {
     return new Promise((resolve) => {
 
-      this.http.get('/assets/config/defaultConfig.json', {headers: this.getNoCacheHeaders()})
+      this.http.get('/assets/config/defaultConfig.json', { headers: this.getNoCacheHeaders() })
         .subscribe(config => {
           this.storeService.setDefaultConfig(config);
           resolve();
@@ -158,7 +95,7 @@ export class AppConfigService {
    * If instance is in production mode, configuration mode is assigned to
    * instance config and load additional data.
    */
-  loadAppInstanceConfig() : Promise<void>  {
+  loadAppInstanceConfig(): Promise<void> {
     return new Promise((resolve, reject) => {
 
       this.http.get('/assets/config/instanceConfig.json', { headers: this.getNoCacheHeaders() })
@@ -177,9 +114,9 @@ export class AppConfigService {
     });
   }
 
-  getNoCacheHeaders() : HttpHeaders {
+  getNoCacheHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       'Pragma': 'no-cache',
       'Expires': '0'
     });
@@ -212,7 +149,7 @@ export class AppConfigService {
       .then(perunPrincipal => {
         this.storeService.setPerunPrincipal(perunPrincipal);
         this.authResolver.init(perunPrincipal);
-    });
+      });
   }
 }
 

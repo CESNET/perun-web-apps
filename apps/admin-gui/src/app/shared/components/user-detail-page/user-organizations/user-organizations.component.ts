@@ -1,8 +1,8 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UsersService } from '@perun-web-apps/perun/services';
 import { PerunPrincipal, Vo } from '@perun-web-apps/perun/openapi';
-import { AuthResolverService } from '../../../../core/services/common/auth-resolver.service';
-import { StoreService } from '../../../../core/services/common/store.service';
+import { AuthResolverService } from '@perun-web-apps/perun/services';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-user-organizations',
