@@ -24,7 +24,8 @@
       "@perun-web-apps/perun/utils": ["libs/perun/utils/src/index.ts"],
       "@perun-web-apps/perun/urns": ["libs/perun/urns/src/index.ts"],
       "@perun-web-apps/ui/alerts": ["libs/ui/alerts/src/index.ts"],
-      "@perun-web-apps/perun/openapi": ["libs/perun/openapi/src/index.ts"]
+      "@perun-web-apps/perun/openapi": ["libs/perun/openapi/src/index.ts"],
+      "@perun-web-apps/config": ["libs/config/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

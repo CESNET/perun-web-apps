@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  AppConfigService,
-  ColorConfig,
-  EntityColorConfig
+  InitAuthService,
 } from '@perun-web-apps/perun/services';
+import { AppConfigService, ColorConfig, EntityColorConfig } from '@perun-web-apps/config';
 
 
 @Injectable({
@@ -11,7 +10,10 @@ import {
 })
 export class AdminGuiConfigService {
 
-  constructor(private appConfigService:AppConfigService) {}
+  constructor(
+    private initAuthService: InitAuthService,
+    private appConfigService: AppConfigService
+  ) {}
 
   entityColorConfigs: EntityColorConfig[] = [
     {
@@ -74,7 +76,7 @@ export class AdminGuiConfigService {
     return this.appConfigService.loadAppDefaultConfig()
       .then(() => this.appConfigService.loadAppInstanceConfig())
       .then(() => this.appConfigService.initializeColors(this.entityColorConfigs, this.colorConfigs))
-      .then(() => this.appConfigService.authenticateUser())
-      .then(() => this.appConfigService.loadPrincipal());
+      .then(() => this.initAuthService.authenticateUser())
+      .then(() => this.initAuthService.loadPrincipal());
   }
 }

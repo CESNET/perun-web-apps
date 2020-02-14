@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:nx-enforce-module-boundaries
-import { environment } from '../../../../../apps/admin-gui/src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
-import { StoreService } from './store.service';
-import { AuthResolverService } from './auth-resolver.service';
-import { AuthzService } from './authz.service';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 declare const tinycolor: any;
 
@@ -34,12 +30,10 @@ export interface ColorConfig {
 })
 export class AppConfigService {
 
-  constructor(private http: HttpClient,
-              private authService: AuthService,
-              private storeService: StoreService,
-              private authResolver: AuthResolverService,
-              private authzService: AuthzService) {
-  }
+  constructor(
+    private http: HttpClient,
+    private storeService: StoreService
+  ) { }
 
   initializeColors(entityColorConfigs: EntityColorConfig[], colorConfigs: ColorConfig[]): Promise<void> {
     return new Promise<void>((resolve => {
@@ -103,13 +97,8 @@ export class AppConfigService {
           this.storeService.setInstanceConfig(config);
           resolve();
         }, () => {
-          if (environment.production) {
-            console.error('Failed to load instance config.');
-            reject();
-          } else {
-            console.log('instance config not detected');
-            resolve();
-          }
+          console.log('instance config not detected');
+          resolve();
         });
     });
   }
@@ -120,36 +109,6 @@ export class AppConfigService {
       'Pragma': 'no-cache',
       'Expires': '0'
     });
-  }
-
-  /**
-   * Load additional data. First it init authService with necessarily data, then
-   * start authentication.
-   */
-  authenticateUser(): Promise<any> {
-    return new Promise((resolve) => {
-      this.authService.loadConfigData();
-
-      if (this.storeService.get('skip_oidc')) {
-        resolve();
-      } else {
-        this.authService.authenticate().then(() => {
-          resolve();
-        });
-      }
-    });
-  }
-
-  /**
-   * Load principal
-   */
-  loadPrincipal(): Promise<any> {
-    return this.authzService.getPerunPrincipal()
-      .toPromise()
-      .then(perunPrincipal => {
-        this.storeService.setPerunPrincipal(perunPrincipal);
-        this.authResolver.init(perunPrincipal);
-      });
   }
 }
 

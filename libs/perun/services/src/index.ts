@@ -14,8 +14,6 @@ export { ExtSourceService } from './lib/ext-source.service';
 export { AuthResolverService } from './lib/auth-resolver.service';
 export { AuthService } from './lib/auth.service';
 export { StoreService } from './lib/store.service';
-export { AppConfigService } from './lib/app-config.service';
-export { ColorConfig } from './lib/app-config.service';
-export { EntityColorConfig } from './lib/app-config.service';
+export { InitAuthService } from './lib/init-auth.service';
 export { CustomIconService } from './lib/custom-icon.service';
 

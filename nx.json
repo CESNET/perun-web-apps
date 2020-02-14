@@ -46,6 +46,16 @@
     },
     "perun-openapi": {
       "tags": []
+    },
+    "statistics": {
+      "tags": []
+    },
+    "statistics-e2e": {
+      "tags": [],
+      "implicitDependencies": ["statistics"]
+    },
+    "config": {
+      "tags": []
     }
   }
 }
