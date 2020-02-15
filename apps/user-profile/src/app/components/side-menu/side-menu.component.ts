@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SideMenuItemService } from '../../services/side-menu-item.service';
+import { SideMenuItem, SideMenuItemService } from '../../services/side-menu-item.service';
 
 @Component({
   selector: 'perun-web-apps-side-menu',
@@ -12,15 +12,15 @@ export class SideMenuComponent implements OnInit {
     private sideMenuItemService: SideMenuItemService
   ) { }
 
-  profileItem = this.sideMenuItemService.getProfileItem();
-  identitiesItem = this.sideMenuItemService.getIdentitiesItem();
-  servicesItem = this.sideMenuItemService.getServicesItem();
-  groupsItem = this.sideMenuItemService.getGroupsItem();
-  vosItem = this.sideMenuItemService.getVosItem();
-  settingsItem = this.sideMenuItemService.getSettingsItem();
+  items: SideMenuItem[] = [];
 
   ngOnInit() {
-
+    this.items.push(this.sideMenuItemService.getProfileItem());
+    this.items.push(this.sideMenuItemService.getIdentitiesItem());
+    this.items.push(this.sideMenuItemService.getServicesItem());
+    this.items.push(this.sideMenuItemService.getGroupsItem());
+    this.items.push(this.sideMenuItemService.getVosItem());
+    this.items.push(this.sideMenuItemService.getSettingsItem());
   }
 
 }
