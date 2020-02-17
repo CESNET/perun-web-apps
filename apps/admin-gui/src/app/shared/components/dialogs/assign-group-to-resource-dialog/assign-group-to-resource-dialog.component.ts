@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, Resource } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService, Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 
 export interface AssignGroupToResourceDialogData {
@@ -22,7 +21,7 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: AssignGroupToResourceDialogData,
               private notificator: NotificatorService,
               private translate: TranslateService,
-              private resourceService: ResourcesService,
+              private resourceManager: ResourcesManagerService,
               private groupService: GroupsManagerService) { }
 
   loading = false;
@@ -37,9 +36,9 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.theme = this.data.theme;
-    this.resourceService.getResourceById(this.data.resourceId).subscribe( resource => {
+    this.resourceManager.getResourceById(this.data.resourceId).subscribe( resource => {
       this.resource = resource;
-      this.resourceService.getAssignedGroups(this.resource.id).subscribe( assignedGroups => {
+      this.resourceManager.getAssignedGroups(this.resource.id).subscribe( assignedGroups => {
         this.groupService.getAllGroups(this.resource.voId).subscribe( allGroups => {
           this.unAssignedGroups = allGroups;
           for (const assignedGroup of assignedGroups) {
@@ -69,7 +68,7 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
       for (const group of this.selection.selected) {
         addedGroups.push(group.id);
       }
-      this.resourceService.assignGroupsToResource(addedGroups, this.resource.id).subscribe( () => {
+    this.resourceManager.assignGroupsToResource(addedGroups, this.resource.id).subscribe( () => {
         this.translate.get('DIALOGS.ASSIGN_GROUP_TO_RESOURCE.SUCCESS_MESSAGE').subscribe( message => {
           this.notificator.showSuccess(message);
           this.dialogRef.close(true);

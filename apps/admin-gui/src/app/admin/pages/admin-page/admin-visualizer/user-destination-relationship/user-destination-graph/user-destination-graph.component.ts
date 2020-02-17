@@ -6,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   FacilityService,
   MembersService,
-  ResourcesService,
   ServiceService,
   UsersService,
   VoService
@@ -16,7 +15,7 @@ import {
   Group,
   GroupsManagerService,
   Member,
-  Resource,
+  Resource, ResourcesManagerService,
   RichDestination,
   Service,
   User
@@ -36,7 +35,7 @@ export class UserDestinationGraphComponent implements OnInit {
               private facilityService: FacilityService,
               private memberService: MembersService,
               private serviceService: ServiceService,
-              private resourceService: ResourcesService,
+              private resourceManager: ResourcesManagerService,
               private groupService: GroupsManagerService,
               private voService: VoService,
               private translate: TranslateService) { }
@@ -174,10 +173,10 @@ export class UserDestinationGraphComponent implements OnInit {
   }
 
   connectToResource(facility: Facility, group: Group, connectedResources: Resource[]) {
-    this.resourceService.getAssignedResources(group.id).subscribe(assignedResources => {
+    this.resourceManager.getAssignedResourcesWithGroup(group.id).subscribe(assignedResources => {
       const resources: Resource[] = this.findConnectedResources(assignedResources, connectedResources);
       for (const resource of resources) {
-        this.resourceService.getAssignedServices(resource.id).subscribe(assignedServices => {
+        this.resourceManager.getAssignedServicesToResource(resource.id).subscribe(assignedServices => {
           if (this.haveService(assignedServices)) {
             this.isConnected = true;
             this.addNodesToGraph(group.voId, group, resource, facility);                        // add nodes and links

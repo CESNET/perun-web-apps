@@ -10,8 +10,7 @@ import {
 } from '../../../../../shared/components/dialogs/delete-resource-tag-dialog/delete-resource-tag-dialog.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../../core/services/common/notificator.service';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { ResourceTag } from '@perun-web-apps/perun/openapi';
+import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-vo-resources-tags',
@@ -22,7 +21,7 @@ export class VoResourcesTagsComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private route: ActivatedRoute,
-              private resourceService: ResourcesService,
+              private resourceManager: ResourcesManagerService,
               private dialog: MatDialog,
               private notificator: NotificatorService,
               private translator: TranslateService) { }
@@ -76,7 +75,7 @@ export class VoResourcesTagsComponent implements OnInit {
   updateData() {
     this.loading = true;
     this.selection.clear();
-    this.resourceService.getAllResourcesTagsForVo(this.voId).subscribe(tags => {
+    this.resourceManager.getAllResourcesTagsForVo(this.voId).subscribe(tags => {
       this.resourceTag = tags;
       this.loading = false;
     });

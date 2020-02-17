@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem} from '../../../../shared/models/MenuItem';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { Resource } from '@perun-web-apps/perun/openapi';
+import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-resource-overview',
@@ -15,7 +14,7 @@ export class ResourceOverviewComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private resourcesService: ResourcesService,
+    private resourcesManager: ResourcesManagerService,
     private route: ActivatedRoute,
   ) { }
 
@@ -26,7 +25,7 @@ export class ResourceOverviewComponent implements OnInit {
     this.route.params.subscribe(params => {
       const resourceId = params['resourceId'];
 
-      this.resourcesService.getResourceById(resourceId).subscribe(resource => {
+      this.resourcesManager.getResourceById(resourceId).subscribe(resource => {
         this.resource = resource;
 
         this.initItems();

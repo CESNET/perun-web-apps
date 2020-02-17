@@ -1,8 +1,8 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
-import { ResourcesService, VoService } from '@perun-web-apps/perun/services';
-import { RichResource, Vo } from '@perun-web-apps/perun/openapi';
+import { VoService } from '@perun-web-apps/perun/services';
+import { ResourcesManagerService, RichResource, Vo } from '@perun-web-apps/perun/openapi';
 import { RemoveResourceDialogComponent } from '../../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
 import { MatDialog } from '@angular/material';
 
@@ -17,7 +17,7 @@ export class VoResourcesPreviewComponent implements OnInit {
 
   @HostBinding('class.router-component') true;
 
-  constructor(private resourcesService: ResourcesService,
+  constructor(private resourcesManager: ResourcesManagerService,
               private voService: VoService,
               private route: ActivatedRoute,
               private dialog: MatDialog) {
@@ -44,7 +44,7 @@ export class VoResourcesPreviewComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.resourcesService.getResourcesByVo(this.vo.id).subscribe(resources => {
+    this.resourcesManager.getRichResources(this.vo.id).subscribe(resources => {
       this.resources = resources;
       this.selected.clear();
       this.loading = false;

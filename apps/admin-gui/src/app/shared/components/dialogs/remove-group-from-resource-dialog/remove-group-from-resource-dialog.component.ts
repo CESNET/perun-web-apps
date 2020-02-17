@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material';
-import { Group } from '@perun-web-apps/perun/openapi';
-import { ResourcesService } from '@perun-web-apps/perun/services';
+import { Group, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -21,7 +20,7 @@ export class RemoveGroupFromResourceDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: RemoveGroupFromResourceDialogData,
               private notificator: NotificatorService,
               private translate: TranslateService,
-              private resourceService: ResourcesService) { }
+              private resourceManager: ResourcesManagerService) { }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<Group>;
@@ -39,7 +38,7 @@ export class RemoveGroupFromResourceDialogComponent implements OnInit {
     for (const group of this.data.groups) {
       groupsId.push(group.id);
     }
-    this.resourceService.removeGroupsFromResource(groupsId, this.data.resourceId).subscribe( () => {
+    this.resourceManager.removeGroupsFromResource(groupsId, this.data.resourceId).subscribe( () => {
       this.translate.get('DIALOGS.REMOVE_GROUP_FROM_RESOURCE.SUCCESS').subscribe(successMessage => {
         this.notificator.showSuccess(successMessage);
         this.dialogRef.close(true);

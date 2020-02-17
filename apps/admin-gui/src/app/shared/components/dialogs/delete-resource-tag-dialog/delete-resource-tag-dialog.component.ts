@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource} from '@angular/material';
-import { ResourceTag } from '@perun-web-apps/perun/openapi';
-import { ResourcesService } from '@perun-web-apps/perun/services';
+import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 
 export interface DeleteResourceTagDialogDialogData {
   voId: number;
@@ -17,7 +16,7 @@ export class DeleteResourceTagDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<DeleteResourceTagDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: DeleteResourceTagDialogDialogData,
-              private resourceService: ResourcesService) { }
+              private resourceManager: ResourcesManagerService) { }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<ResourceTag>;
@@ -32,7 +31,7 @@ export class DeleteResourceTagDialogComponent implements OnInit {
 
   onSubmit() {
     for (const resourceTag of this.data.tagsForDelete) {
-      this.resourceService.deleteResourceTag(resourceTag).subscribe( () => {
+      this.resourceManager.deleteResourceTag({resourceTag: resourceTag}).subscribe( () => {
         this.dialogRef.close(true);
       }, error => this.dialogRef.close(true));
     }

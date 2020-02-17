@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import { ResourcesService } from '@perun-web-apps/perun/services';
+import { ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface CreateResourceTagDialogDialogData {
   voId: number;
@@ -15,7 +15,7 @@ export class CreateResourceTagDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<CreateResourceTagDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: CreateResourceTagDialogDialogData,
-              private resourceService: ResourcesService) { }
+              private resourceManager: ResourcesManagerService) { }
 
   name = '';
 
@@ -28,7 +28,7 @@ export class CreateResourceTagDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.name !== '') {
-      this.resourceService.createResourceTag(this.name, this.data.voId).subscribe( () => {
+      this.resourceManager.createResourceTagWithTagName({tagName: this.name, vo: this.data.voId}).subscribe( () => {
         this.dialogRef.close(true);
       });
     }

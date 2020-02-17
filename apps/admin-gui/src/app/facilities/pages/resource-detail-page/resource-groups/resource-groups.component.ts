@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { Group } from '@perun-web-apps/perun/openapi';
+import { Group, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckbox, MatDialog } from '@angular/material';
 import { RemoveGroupFromResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
@@ -15,7 +14,7 @@ import { AssignGroupToResourceDialogComponent } from '../../../../shared/compone
 export class ResourceGroupsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private resourcesService: ResourcesService,
+              private resourcesManager: ResourcesManagerService,
               private dialog: MatDialog) { }
 
   resourceId: number;
@@ -37,7 +36,7 @@ export class ResourceGroupsComponent implements OnInit {
 
   loadAllGroups() {
     this.loading = true;
-    this.resourcesService.getAssignedGroups(this.resourceId).subscribe( assignedGroups => {
+    this.resourcesManager.getAssignedGroups(this.resourceId).subscribe( assignedGroups => {
       this.assignedGroups = assignedGroups;
       this.filteredGroups = assignedGroups;
       this.selected.clear();

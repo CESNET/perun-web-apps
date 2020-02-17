@@ -5,8 +5,8 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material';
 import {
   RemoveResourceDialogComponent} from '../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
-import { FacilityService, ResourcesService } from '@perun-web-apps/perun/services';
-import { Facility, RichResource } from '@perun-web-apps/perun/openapi';
+import { FacilityService } from '@perun-web-apps/perun/services';
+import { FacilitiesManagerService, Facility, RichResource } from '@perun-web-apps/perun/openapi';
 import { CreateResourceDialogComponent } from '../../../../shared/components/dialogs/create-resource-dialog/create-resource-dialog.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class FacilityResourcesComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private dialog: MatDialog,
-              private resourcesService: ResourcesService,
+              private facilitiesManager: FacilitiesManagerService,
               private sideMenuService: SideMenuService,
               private facilityService: FacilityService,
               private route: ActivatedRoute) {
@@ -64,7 +64,7 @@ export class FacilityResourcesComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.resourcesService.getAllResources(this.facility.id).subscribe(resources => {
+    this.facilitiesManager.getAssignedRichResourcesForFacility(this.facility.id).subscribe(resources => {
       this.resources = resources;
       this.selected.clear();
       this.loading = false;

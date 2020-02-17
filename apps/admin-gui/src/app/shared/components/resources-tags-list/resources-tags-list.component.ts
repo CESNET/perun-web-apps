@@ -3,8 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {NotificatorService} from '../../../core/services/common/notificator.service';
 import {TranslateService} from '@ngx-translate/core';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { ResourceTag } from '@perun-web-apps/perun/openapi';
+import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-resources-tags-list',
@@ -13,7 +12,7 @@ import { ResourceTag } from '@perun-web-apps/perun/openapi';
 })
 export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
 
-  constructor( private resourceService: ResourcesService,
+  constructor( private resourceManager: ResourcesManagerService,
                private notificator: NotificatorService,
                private translator: TranslateService) { }
 
@@ -78,7 +77,7 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
   }
 
   save(tag: ResourceTag) {
-    this.resourceService.updateResourceTag(tag).subscribe( () => {
+    this.resourceManager.updateResourceTag({resourceTag: tag}).subscribe( () => {
       this.translator.get('SHARED.COMPONENTS.RESOURCES_TAGS_LIST.EDIT_SUCCESS').subscribe( text => {
         this.notificator.showSuccess(text);
       });

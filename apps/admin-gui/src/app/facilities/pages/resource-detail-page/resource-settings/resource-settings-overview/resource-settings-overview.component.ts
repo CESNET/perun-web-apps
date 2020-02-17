@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem} from '../../../../../shared/models/MenuItem';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { Resource } from '@perun-web-apps/perun/openapi';
+import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-resource-settings-overview',
@@ -15,7 +14,7 @@ export class ResourceSettingsOverviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private resourceService: ResourcesService
+    private resourceManager: ResourcesManagerService
   ) { }
 
   items: MenuItem[] = [];
@@ -25,7 +24,7 @@ export class ResourceSettingsOverviewComponent implements OnInit {
     this.route.parent.parent.params.subscribe(parentParams => {
       const resourceId = parentParams['resourceId'];
 
-      this.resourceService.getResourceById(resourceId).subscribe(resource => {
+      this.resourceManager.getResourceById(resourceId).subscribe(resource => {
         this.resource = resource;
 
         this.initItems();

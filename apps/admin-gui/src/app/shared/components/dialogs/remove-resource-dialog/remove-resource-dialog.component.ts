@@ -2,8 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource} from '@angular/material';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import {TranslateService} from '@ngx-translate/core';
-import { RichResource } from '@perun-web-apps/perun/openapi';
-import { ResourcesService } from '@perun-web-apps/perun/services';
+import { ResourcesManagerService, RichResource } from '@perun-web-apps/perun/openapi';
 
 export interface RemoveResourceDialogData {
   theme: string;
@@ -21,7 +20,7 @@ export class RemoveResourceDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: RemoveResourceDialogData,
               private notificator: NotificatorService,
               private translate: TranslateService,
-              private resourcesService: ResourcesService) { }
+              private resourcesManager: ResourcesManagerService) { }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<RichResource>;
@@ -44,7 +43,7 @@ export class RemoveResourceDialogComponent implements OnInit {
         this.dialogRef.close(true);
       });
     } else {
-      this.resourcesService.removeResource(this.data.resources[0].id).subscribe( () => {
+      this.resourcesManager.deleteResource(this.data.resources[0].id).subscribe( () => {
         this.data.resources.shift();
         this.onSubmit();
       }, err => {

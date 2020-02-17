@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ResourcesService, VoService } from '@perun-web-apps/perun/services';
-import { Vo } from '@perun-web-apps/perun/openapi';
+import { VoService } from '@perun-web-apps/perun/services';
+import { ResourcesManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ export class CreateResourceDialogComponent implements OnInit {
               private notificator: NotificatorService,
               private voService: VoService,
               private translate: TranslateService,
-              private resourcesService: ResourcesService
+              private resourcesManager: ResourcesManagerService
   ) {
     translate.get('DIALOGS.CREATE_RESOURCE.SUCCESS').subscribe(value => this.successMessage = value);
   }
@@ -63,7 +63,7 @@ export class CreateResourceDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.resourcesService.createResource(this.nameCtrl.value, this.descriptionCtrl.value, this.selectedVo.id, this.data.facilityId).subscribe(() => {
+    this.resourcesManager.createResource(this.selectedVo.id, this.data.facilityId, this.nameCtrl.value, this.descriptionCtrl.value).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);

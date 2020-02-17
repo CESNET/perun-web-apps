@@ -1,8 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ResourcesService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, RichResource } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService, ResourcesManagerService, RichResource } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-resources',
@@ -16,7 +15,7 @@ export class GroupResourcesComponent implements OnInit {
   // used for router animation
   @HostBinding('class.router-component') true;
 
-  constructor(private resourcesService: ResourcesService,
+  constructor(private resourcesManager: ResourcesManagerService,
               private groupService: GroupsManagerService,
               private route: ActivatedRoute) {
   }
@@ -42,7 +41,7 @@ export class GroupResourcesComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.resourcesService.getResourcesByGroup(this.group.id).subscribe(resources => {
+    this.resourcesManager.getAssignedRichResourcesWithGroup(this.group.id).subscribe(resources => {
       this.resources = resources;
       this.loading = false;
     });
