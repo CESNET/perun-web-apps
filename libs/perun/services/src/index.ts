@@ -1,6 +1,5 @@
 export { AuthzService } from './lib/authz.service';
 export { FacilityService } from './lib/facility.service';
-export { GroupService } from './lib/group.service';
 export { MembersService } from './lib/members.service';
 export { PerunApiService } from './lib/perun-api-service';
 export { PropagationStatsReaderService } from './lib/propagation-stats-reader.service';

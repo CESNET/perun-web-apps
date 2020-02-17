@@ -6,7 +6,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteGroupDialogComponent } from '../../../../shared/components/dialogs/delete-group-dialog/delete-group-dialog.component';
 import { MatCheckbox } from '@angular/material';
 import { applyFilter } from '@perun-web-apps/perun/utils';
-import { GroupService } from '@perun-web-apps/perun/services';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -23,8 +22,7 @@ export class GroupSubgroupsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private groupService: GroupService,
-    private groupServiceNew: GroupsManagerService,
+    private groupService: GroupsManagerService,
     private route: ActivatedRoute
   ) {
   }
@@ -71,7 +69,7 @@ export class GroupSubgroupsComponent implements OnInit {
 
     this.route.parent.params.subscribe(parentParams => {
       const groupId = parentParams['groupId'];
-      this.groupServiceNew.getGroupById(groupId).subscribe(group => {
+      this.groupService.getGroupById(groupId).subscribe(group => {
         // @ts-ignore
         this.group = group;
 
@@ -95,7 +93,7 @@ export class GroupSubgroupsComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.groupService.getAllRichSubGroupsWithAttributesByNames(this.group.id).subscribe(groups => {
+    this.groupService.getAllRichSubGroupsWithGroupAttributesByNames(this.group.id, ['null'] ).subscribe(groups => {
       this.groups = groups;
       this.filteredTreeGroups = this.groups;
       this.filteredGroups = this.groups;

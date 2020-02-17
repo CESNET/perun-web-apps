@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { GroupService, ResourcesService } from '@perun-web-apps/perun/services';
-import { Group, Resource } from '@perun-web-apps/perun/openapi';
+import { ResourcesService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService, Resource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 
 export interface AssignGroupToResourceDialogData {
@@ -23,7 +23,7 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
               private notificator: NotificatorService,
               private translate: TranslateService,
               private resourceService: ResourcesService,
-              private groupService: GroupService) { }
+              private groupService: GroupsManagerService) { }
 
   loading = false;
   theme: string;

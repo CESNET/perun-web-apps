@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GroupService, MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { Group } from '@perun-web-apps/perun/openapi';
+import { MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { MemberCandidate } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { getCandidateEmail } from '@perun-web-apps/perun/utils';
@@ -29,7 +29,7 @@ export class AddMemberDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMemberDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddMemberDialogData,
     private memberService: MembersService,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private voService: VoService,
     private registrarService: RegistrarService,
     private translate: TranslateService,

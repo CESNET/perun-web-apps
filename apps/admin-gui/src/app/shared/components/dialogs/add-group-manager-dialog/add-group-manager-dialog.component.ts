@@ -7,9 +7,9 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
-import { Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
+import { Facility, Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
-import { AuthzService, GroupService, VoService } from '@perun-web-apps/perun/services';
+import { AuthzService, VoService } from '@perun-web-apps/perun/services';
 
 export interface AddGroupManagerDialogData {
   complementaryObject: Vo | Group | Facility;
@@ -30,7 +30,7 @@ export class AddGroupManagerDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: AddGroupManagerDialogData,
     private voService: VoService,
     private authzService: AuthzService,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private translate: TranslateService,
     private notificator: NotificatorService,
     protected route: ActivatedRoute,

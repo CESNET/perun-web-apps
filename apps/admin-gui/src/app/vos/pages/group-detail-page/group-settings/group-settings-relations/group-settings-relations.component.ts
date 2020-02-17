@@ -1,9 +1,8 @@
 import { Component, HostBinding, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GroupService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Group } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { CreateRelationDialogComponent } from '../../../../../shared/components/dialogs/create-relation-dialog/create-relation-dialog.component';
 import { RemoveRelationDialogComponent } from '../../../../../shared/components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
 
@@ -17,7 +16,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private dialog: MatDialog
   ) { }
 
@@ -78,7 +77,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.groupService.getUnions(this.groupId, this.reverse).subscribe(groups => {
+    this.groupService.getGroupUnions(this.groupId, this.reverse).subscribe(groups => {
       this.groups = groups;
       this.selection.clear();
       this.loading = false;

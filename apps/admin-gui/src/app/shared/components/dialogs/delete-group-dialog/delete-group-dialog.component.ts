@@ -3,8 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
-import { Group } from '@perun-web-apps/perun/openapi';
-import { GroupService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface DeleteGroupDialogData {
   voId: number;
@@ -22,7 +21,7 @@ export class DeleteGroupDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: DeleteGroupDialogData,
               private notificator: NotificatorService,
               private translate: TranslateService,
-              private groupService: GroupService) { }
+              private groupService: GroupsManagerService) { }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<Group>;
@@ -36,7 +35,7 @@ export class DeleteGroupDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.groupService.deleteGroups(this.data.groups).subscribe( () => {
+    this.groupService.deleteGroups(this.data.groups.map(elem => elem.id), true).subscribe( () => {
       this.translate.get('DIALOGS.DELETE_GROUP.SUCCESS').subscribe(successMessage => {
         this.notificator.showSuccess(successMessage);
         this.dialogRef.close(true);

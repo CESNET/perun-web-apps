@@ -9,8 +9,8 @@ import { GroupFlatNode } from '../../../components/groups-tree/groups-tree.compo
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
 import { MatCheckbox } from '@angular/material';
 import { applyFilter } from '@perun-web-apps/perun/utils';
-import { GroupService, VoService } from '@perun-web-apps/perun/services';
-import { Group, Vo } from '@perun-web-apps/perun/openapi';
+import { VoService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-vo-groups',
@@ -25,7 +25,7 @@ export class VoGroupsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private sideMenuService: SideMenuService,
     private voService: VoService,
     private route: ActivatedRoute,

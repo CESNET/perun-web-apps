@@ -2,8 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
-import { Group } from '@perun-web-apps/perun/openapi';
-import { GroupService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface CreateGroupDialogData {
   parentGroup: Group;
@@ -20,7 +19,7 @@ export class CreateGroupDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<CreateGroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: CreateGroupDialogData,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private translate: TranslateService,
     private notificator: NotificatorService,
   ) {
@@ -52,12 +51,12 @@ export class CreateGroupDialogComponent {
 
   onSubmit(): void {
     if (this.isNotSubGroup) {
-      this.groupService.createGroup(this.data.voId, this.name, this.description).subscribe(group => {
+      this.groupService.createGroupWithVoNameDescription(this.data.voId, this.name, this.description).subscribe(() => {
         this.notificator.showSuccess(this.successMessage);
         this.dialogRef.close(true);
       });
     } else {
-      this.groupService.createSubGroup(this.data.parentGroup.id, this.name, this.description).subscribe(group => {
+      this.groupService.createGroupWithParentGroupNameDescription(this.data.parentGroup.id, this.name, this.description).subscribe(() => {
         this.notificator.showSuccess(this.successSubGroupMessage);
         this.dialogRef.close(true);
       });

@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Group } from '@perun-web-apps/perun/openapi';
-import { GroupService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,7 +21,7 @@ export interface CreateRelationDialogData {
 export class CreateRelationDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<CreateRelationDialogComponent>,
-              private groupService: GroupService,
+              private groupService: GroupsManagerService,
               private notificator: NotificatorService,
               private translate: TranslateService,
               @Inject(MAT_DIALOG_DATA) public data: CreateRelationDialogData
@@ -40,7 +39,7 @@ export class CreateRelationDialogComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.groupService.getUnions(this.data.groupId, !this.data.reverse).subscribe( unionGroups => {
+    this.groupService.getGroupUnions(this.data.groupId, !this.data.reverse).subscribe( unionGroups => {
       unionGroups = unionGroups.concat(this.data.groups);
       this.groupService.getAllGroups(this.data.voId).subscribe(allGroups => {
         const groupIds = unionGroups.map(elem => elem.id);
@@ -57,7 +56,7 @@ export class CreateRelationDialogComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
-    this.groupService.createUnion(this.data.groupId, this.selection.selected[0].id).subscribe(() =>{
+    this.groupService.createGroupUnion(this.data.groupId, this.selection.selected[0].id).subscribe(() =>{
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);

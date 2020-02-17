@@ -7,8 +7,7 @@ import {openClose} from '../../../animations/Animations';
 import {GroupFlatNode} from '../../../../vos/components/groups-tree/groups-tree.component';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import {TranslateService} from '@ngx-translate/core';
-import { GroupService } from '@perun-web-apps/perun/services';
-import { Group } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '../../../../core/services/api/api-request-configuration.service';
 
 export interface MoveGroupDialogData {
@@ -29,7 +28,7 @@ export class MoveGroupDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MoveGroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MoveGroupDialogData,
-    private groupService: GroupService,
+    private groupService: GroupsManagerService,
     private notificator: NotificatorService,
     private translate: TranslateService,
     private apiRequest: ApiRequestConfigurationService
@@ -89,10 +88,10 @@ export class MoveGroupDialogComponent implements OnInit {
     this.loading = true;
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
-    this.groupService.moveGroup(
+    this.groupService.moveGroupWithDestinationGroupMovingGroup(
       this.data.group.id,
-      this.otherGroupsCtrl.value ? this.otherGroupsCtrl.value.id : undefined,
-      false).subscribe(() => {
+      this.otherGroupsCtrl.value ? this.otherGroupsCtrl.value.id : undefined
+      ).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.dialogRef.close(true);
     }, (error => {
