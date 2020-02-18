@@ -22,7 +22,6 @@ export * from './inputCopyResource';
 export * from './inputCreateAttributeDefinition';
 export * from './inputCreateOwner';
 export * from './inputCreateResourceTagWithResourceTag';
-export * from './inputCreateResourceTagWithTagName';
 export * from './inputDeleteResourceTag';
 export * from './inputEntitylessAttribute';
 export * from './inputGetAllResourcesByResourceTag';

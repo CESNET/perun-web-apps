@@ -23,7 +23,6 @@ import { Group } from '../model/group';
 import { InputAssignResourceTagToResource } from '../model/inputAssignResourceTagToResource';
 import { InputCopyResource } from '../model/inputCopyResource';
 import { InputCreateResourceTagWithResourceTag } from '../model/inputCreateResourceTagWithResourceTag';
-import { InputCreateResourceTagWithTagName } from '../model/inputCreateResourceTagWithTagName';
 import { InputDeleteResourceTag } from '../model/inputDeleteResourceTag';
 import { InputGetAllResourcesByResourceTag } from '../model/inputGetAllResourcesByResourceTag';
 import { InputRemoveResourceTagFromResource } from '../model/inputRemoveResourceTagFromResource';
@@ -126,7 +125,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addAdmin/r-g`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addAdmin/r-g`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -191,7 +191,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addAdmin/r-u`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addAdmin/r-u`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -256,7 +257,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addResourceSelfServiceGroup`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addResourceSelfServiceGroup`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -321,7 +323,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addResourceSelfServiceUser`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/addResourceSelfServiceUser`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -931,16 +934,28 @@ export class ResourcesManagerService {
 
     /**
      * Create new resource tag defined by tag name in VO
-     * @param inputCreateResourceTagWithTagName 
+     * @param tagName tagName
+     * @param vo id of Vo
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createResourceTagWithTagName(inputCreateResourceTagWithTagName: InputCreateResourceTagWithTagName, observe?: 'body', reportProgress?: boolean): Observable<ResourceTag>;
-    public createResourceTagWithTagName(inputCreateResourceTagWithTagName: InputCreateResourceTagWithTagName, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResourceTag>>;
-    public createResourceTagWithTagName(inputCreateResourceTagWithTagName: InputCreateResourceTagWithTagName, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResourceTag>>;
-    public createResourceTagWithTagName(inputCreateResourceTagWithTagName: InputCreateResourceTagWithTagName, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (inputCreateResourceTagWithTagName === null || inputCreateResourceTagWithTagName === undefined) {
-            throw new Error('Required parameter inputCreateResourceTagWithTagName was null or undefined when calling createResourceTagWithTagName.');
+    public createResourceTagWithTagName(tagName: string, vo: number, observe?: 'body', reportProgress?: boolean): Observable<ResourceTag>;
+    public createResourceTagWithTagName(tagName: string, vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResourceTag>>;
+    public createResourceTagWithTagName(tagName: string, vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResourceTag>>;
+    public createResourceTagWithTagName(tagName: string, vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (tagName === null || tagName === undefined) {
+            throw new Error('Required parameter tagName was null or undefined when calling createResourceTagWithTagName.');
+        }
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling createResourceTagWithTagName.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (tagName !== undefined && tagName !== null) {
+            queryParameters = queryParameters.set('tagName', <any>tagName);
+        }
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
         }
 
         let headers = this.defaultHeaders;
@@ -971,18 +986,10 @@ export class ResourcesManagerService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<ResourceTag>(`${this.configuration.basePath}/json/resourcesManager/createResourceTag/tagName`,
-            inputCreateResourceTagWithTagName,
+        return this.httpClient.post<ResourceTag>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/createResourceTag/tagName`,
+            null,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1038,7 +1045,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/deleteAllResources`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/deleteAllResources`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1096,7 +1104,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/deleteAllResourcesTagsForVo`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/deleteAllResourcesTagsForVo`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1275,7 +1284,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Group>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAdminGroups`,
+        return this.httpClient.get<Array<Group>>(`${this.configuration.basePath}/json/resourcesManager/getAdminGroups`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1341,7 +1350,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAdmins`,
+        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/json/resourcesManager/getAdmins`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1635,7 +1644,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Member>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAllowedMembers`,
+        return this.httpClient.get<Array<Member>>(`${this.configuration.basePath}/json/resourcesManager/getAllowedMembers`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1693,7 +1702,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAllowedResources`,
+        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/json/resourcesManager/getAllowedResources`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1751,7 +1760,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAllowedUsers`,
+        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/json/resourcesManager/getAllowedUsers`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1871,7 +1880,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Member>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedMembers`,
+        return this.httpClient.get<Array<Member>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedMembers`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1929,7 +1938,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedResources/g`,
+        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedResources/g`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1987,7 +1996,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedResources/m`,
+        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedResources/m`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2045,7 +2054,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<RichMember>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedRichMembers`,
+        return this.httpClient.get<Array<RichMember>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedRichMembers`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2103,7 +2112,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedRichResources/g`,
+        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedRichResources/g`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2161,7 +2170,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedRichResources/m`,
+        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedRichResources/m`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2226,7 +2235,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getAssignedRichResources/s-m`,
+        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/json/resourcesManager/getAssignedRichResources/s-m`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2302,15 +2311,15 @@ export class ResourcesManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBanBy(member: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
-    public getBanBy(member: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
-    public getBanBy(member: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
-    public getBanBy(member: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBan(member: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
+    public getBan(member: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
+    public getBan(member: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
+    public getBan(member: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (member === null || member === undefined) {
-            throw new Error('Required parameter member was null or undefined when calling getBanBy.');
+            throw new Error('Required parameter member was null or undefined when calling getBan.');
         }
         if (resource === null || resource === undefined) {
-            throw new Error('Required parameter resource was null or undefined when calling getBanBy.');
+            throw new Error('Required parameter resource was null or undefined when calling getBan.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -2349,7 +2358,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getBanBy`,
+        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBan`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2407,7 +2416,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getBanById`,
+        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBanById`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2465,7 +2474,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<BanOnResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getBansForMember`,
+        return this.httpClient.get<Array<BanOnResource>>(`${this.configuration.basePath}/json/resourcesManager/getBansForMember`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2523,7 +2532,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<BanOnResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getBansForResource`,
+        return this.httpClient.get<Array<BanOnResource>>(`${this.configuration.basePath}/json/resourcesManager/getBansForResource`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2581,7 +2590,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Facility>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getFacility`,
+        return this.httpClient.get<Facility>(`${this.configuration.basePath}/json/resourcesManager/getFacility`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2769,7 +2778,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getResources`,
+        return this.httpClient.get<Array<Resource>>(`${this.configuration.basePath}/json/resourcesManager/getResources`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -2818,7 +2827,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<number>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getResourcesCount/all`,
+        return this.httpClient.get<number>(`${this.configuration.basePath}/json/resourcesManager/getResourcesCount/all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -2875,7 +2884,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<number>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getResourcesCount/vo`,
+        return this.httpClient.get<number>(`${this.configuration.basePath}/json/resourcesManager/getResourcesCount/vo`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3281,7 +3290,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getRichResources`,
+        return this.httpClient.get<Array<RichResource>>(`${this.configuration.basePath}/json/resourcesManager/getRichResources`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3339,7 +3348,7 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<Vo>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/getVo`,
+        return this.httpClient.get<Vo>(`${this.configuration.basePath}/json/resourcesManager/getVo`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3456,7 +3465,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/id`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/id`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3521,7 +3531,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/member-resource-id`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/member-resource-id`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3586,7 +3597,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeAdmin/r-g`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeAdmin/r-g`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3853,7 +3865,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeResourceSelfServiceGroup`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeResourceSelfServiceGroup`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3918,7 +3931,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeResourceSelfServiceUser`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeResourceSelfServiceUser`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -4177,7 +4191,8 @@ export class ResourcesManagerService {
         }
 
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeAdmin/r-u`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeAdmin/r-u`,
+            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

@@ -28,7 +28,7 @@ export class CreateResourceTagDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.name !== '') {
-      this.resourceManager.createResourceTagWithTagName({tagName: this.name, vo: this.data.voId}).subscribe( () => {
+      this.resourceManager.createResourceTagWithTagName(this.name, this.data.voId).subscribe( () => {
         this.dialogRef.close(true);
       });
     }
