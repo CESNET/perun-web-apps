@@ -5,7 +5,6 @@ import {SelectionModel} from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import {
   RemoveResourceDialogComponent} from '../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
-import { FacilityService } from '@perun-web-apps/perun/services';
 import { FacilitiesManagerService, Facility, RichResource } from '@perun-web-apps/perun/openapi';
 import { CreateResourceDialogComponent } from '../../../../shared/components/dialogs/create-resource-dialog/create-resource-dialog.component';
 
@@ -24,7 +23,7 @@ export class FacilityResourcesComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private facilitiesManager: FacilitiesManagerService,
               private sideMenuService: SideMenuService,
-              private facilityService: FacilityService,
+              private facilityManager: FacilitiesManagerService,
               private route: ActivatedRoute) {
   }
 
@@ -41,7 +40,7 @@ export class FacilityResourcesComponent implements OnInit {
     this.route.parent.params.subscribe(parentParams => {
       const facilityId = parentParams['facilityId'];
 
-      this.facilityService.getFacilityById(facilityId).subscribe(facility => {
+      this.facilityManager.getFacilityById(facilityId).subscribe(facility => {
         this.facility = facility;
 
         this.refreshTable();

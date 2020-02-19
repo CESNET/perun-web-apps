@@ -1,4 +1,3 @@
-export { FacilityService } from './lib/facility.service';
 export { MembersService } from './lib/members.service';
 export { PerunApiService } from './lib/perun-api-service';
 export { PropagationStatsReaderService } from './lib/propagation-stats-reader.service';

@@ -1719,12 +1719,12 @@ export class ResourcesManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllowedUsers(resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public getAllowedUsers(resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public getAllowedUsers(resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
-    public getAllowedUsers(resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllowedUsersOfResource(resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
+    public getAllowedUsersOfResource(resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
+    public getAllowedUsersOfResource(resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public getAllowedUsersOfResource(resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (resource === null || resource === undefined) {
-            throw new Error('Required parameter resource was null or undefined when calling getAllowedUsers.');
+            throw new Error('Required parameter resource was null or undefined when calling getAllowedUsersOfResource.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -2305,129 +2305,6 @@ export class ResourcesManagerService {
     }
 
     /**
-     * Get ban by memberId and resource id.
-     * @param member id of Member
-     * @param resource id of Resource
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getBan(member: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
-    public getBan(member: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
-    public getBan(member: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
-    public getBan(member: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (member === null || member === undefined) {
-            throw new Error('Required parameter member was null or undefined when calling getBan.');
-        }
-        if (resource === null || resource === undefined) {
-            throw new Error('Required parameter resource was null or undefined when calling getBan.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (member !== undefined && member !== null) {
-            queryParameters = queryParameters.set('member', <any>member);
-        }
-        if (resource !== undefined && resource !== null) {
-            queryParameters = queryParameters.set('resource', <any>resource);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBan`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get Ban for member on resource by it\&#39;s id.
-     * @param banId BanOnResource id
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getBanById(banId: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
-    public getBanById(banId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
-    public getBanById(banId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
-    public getBanById(banId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (banId === null || banId === undefined) {
-            throw new Error('Required parameter banId was null or undefined when calling getBanById.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (banId !== undefined && banId !== null) {
-            queryParameters = queryParameters.set('banId', <any>banId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBanById`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Get all bans for member on any resource.
      * @param member id of Member
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2591,6 +2468,129 @@ export class ResourcesManagerService {
 
 
         return this.httpClient.get<Facility>(`${this.configuration.basePath}/json/resourcesManager/getFacility`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get ban by memberId and resource id.
+     * @param member id of Member
+     * @param resource id of Resource
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getResourceBan(member: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
+    public getResourceBan(member: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
+    public getResourceBan(member: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
+    public getResourceBan(member: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getResourceBan.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getResourceBan.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBan`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get Ban for member on resource by it\&#39;s id.
+     * @param banId BanOnResource id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getResourceBanById(banId: number, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
+    public getResourceBanById(banId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
+    public getResourceBanById(banId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
+    public getResourceBanById(banId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (banId === null || banId === undefined) {
+            throw new Error('Required parameter banId was null or undefined when calling getResourceBanById.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (banId !== undefined && banId !== null) {
+            queryParameters = queryParameters.set('banId', <any>banId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/getBanById`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -3419,65 +3419,6 @@ export class ResourcesManagerService {
     }
 
     /**
-     * Remove specific ban by it\&#39;s id.
-     * @param banId BanOnResource id
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public removeBanById(banId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeBanById(banId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeBanById(banId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeBanById(banId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (banId === null || banId === undefined) {
-            throw new Error('Required parameter banId was null or undefined when calling removeBanById.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (banId !== undefined && banId !== null) {
-            queryParameters = queryParameters.set('banId', <any>banId);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/id`,
-            null,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Remove specific ban by memberId and resourceId.
      * @param member id of Member
      * @param resource id of Resource
@@ -3800,6 +3741,65 @@ export class ResourcesManagerService {
 
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeGroupsFromResource`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Remove specific ban by it\&#39;s id.
+     * @param banId BanOnResource id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public removeResourceBanById(banId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeResourceBanById(banId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeResourceBanById(banId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeResourceBanById(banId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (banId === null || banId === undefined) {
+            throw new Error('Required parameter banId was null or undefined when calling removeResourceBanById.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (banId !== undefined && banId !== null) {
+            queryParameters = queryParameters.set('banId', <any>banId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/resourcesManager/removeBan/id`,
             null,
             {
                 params: queryParameters,
@@ -4209,12 +4209,12 @@ export class ResourcesManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public setBan(inputSetBan: InputSetBan, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
-    public setBan(inputSetBan: InputSetBan, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
-    public setBan(inputSetBan: InputSetBan, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
-    public setBan(inputSetBan: InputSetBan, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public setResourceBan(inputSetBan: InputSetBan, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
+    public setResourceBan(inputSetBan: InputSetBan, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
+    public setResourceBan(inputSetBan: InputSetBan, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
+    public setResourceBan(inputSetBan: InputSetBan, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (inputSetBan === null || inputSetBan === undefined) {
-            throw new Error('Required parameter inputSetBan was null or undefined when calling setBan.');
+            throw new Error('Required parameter inputSetBan was null or undefined when calling setResourceBan.');
         }
 
         let headers = this.defaultHeaders;
@@ -4256,68 +4256,6 @@ export class ResourcesManagerService {
 
         return this.httpClient.post<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/setBan`,
             inputSetBan,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Update existing ban (description, validation timestamp)
-     * @param inputUpdateBan 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateBan(inputUpdateBan: InputUpdateBan, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
-    public updateBan(inputUpdateBan: InputUpdateBan, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
-    public updateBan(inputUpdateBan: InputUpdateBan, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
-    public updateBan(inputUpdateBan: InputUpdateBan, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (inputUpdateBan === null || inputUpdateBan === undefined) {
-            throw new Error('Required parameter inputUpdateBan was null or undefined when calling updateBan.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/updateBan`,
-            inputUpdateBan,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -4380,6 +4318,68 @@ export class ResourcesManagerService {
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/json/resourcesManager/updateResource`,
             inputUpdateResource,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update existing ban (description, validation timestamp)
+     * @param inputUpdateBan 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateResourceBan(inputUpdateBan: InputUpdateBan, observe?: 'body', reportProgress?: boolean): Observable<BanOnResource>;
+    public updateResourceBan(inputUpdateBan: InputUpdateBan, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BanOnResource>>;
+    public updateResourceBan(inputUpdateBan: InputUpdateBan, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BanOnResource>>;
+    public updateResourceBan(inputUpdateBan: InputUpdateBan, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputUpdateBan === null || inputUpdateBan === undefined) {
+            throw new Error('Required parameter inputUpdateBan was null or undefined when calling updateResourceBan.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<BanOnResource>(`${this.configuration.basePath}/json/resourcesManager/updateBan`,
+            inputUpdateBan,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

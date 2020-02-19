@@ -3,8 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {fadeIn} from '../../../shared/animations/Animations';
 import {SideMenuService} from '../../../core/services/common/side-menu.service';
 import {SideMenuItemService} from '../../../shared/side-menu/side-menu-item.service';
-import { FacilityService } from '@perun-web-apps/perun/services';
-import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
+import { FacilitiesManagerService, Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-resource-detail-page',
@@ -18,7 +17,7 @@ export class ResourceDetailPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private facilityService: FacilityService,
+    private facilityManager: FacilitiesManagerService,
     private resourcesManager: ResourcesManagerService,
     private sideMenuService: SideMenuService,
     private sideMenuItemService: SideMenuItemService
@@ -33,7 +32,7 @@ export class ResourceDetailPageComponent implements OnInit {
       this.resourcesManager.getResourceById(resourceId).subscribe(resource => {
         this.resource = resource;
 
-        this.facilityService.getFacilityById(resource.facilityId).subscribe(facility => {
+        this.facilityManager.getFacilityById(resource.facilityId).subscribe(facility => {
           const facilityItem = this.sideMenuItemService.parseFacility(facility);
           const resourceItem = this.sideMenuItemService.parseResource(resource);
 

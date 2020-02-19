@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FacilityService, VoService } from '@perun-web-apps/perun/services';
-import { Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
+import { VoService } from '@perun-web-apps/perun/services';
+import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-facility-allowed-groups',
@@ -16,7 +16,7 @@ export class FacilityAllowedGroupsComponent implements OnInit {
 
   constructor(
     private voService: VoService,
-    private facilityService: FacilityService,
+    private facilityManager: FacilitiesManagerService,
     private route: ActivatedRoute
   ) { }
 
@@ -38,7 +38,7 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     this.route.parent.params.subscribe(parentParams => {
       this.facilityId = parentParams['facilityId'];
 
-      this.facilityService.getAllowedVos(this.facilityId).subscribe(vos => {
+      this.facilityManager.getAllowedVos(this.facilityId).subscribe(vos => {
           this.vos = vos;
 
           this.refreshTable();
@@ -59,7 +59,7 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     this.loading = true;
     this.groups = [];
     this.vos.forEach(vo => {
-      this.facilityService.getAllowedGroups(this.facilityId, vo.id).subscribe(group => {
+      this.facilityManager.getAllowedGroups(this.facilityId, vo.id).subscribe(group => {
         this.groups =  this.groups.concat(group);
 
         this.groupsToShow = this.groups;

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SideMenuService} from '../../../core/services/common/side-menu.service';
-import { FacilityService } from '@perun-web-apps/perun/services';
-import { RichFacility } from '@perun-web-apps/perun/openapi';
+import { FacilitiesManagerService, RichFacility } from '@perun-web-apps/perun/openapi';
 import { getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
 
 @Component({
@@ -12,7 +11,7 @@ import { getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun
 export class FacilitySelectPageComponent implements OnInit {
 
   constructor(
-    private facilityService: FacilityService,
+    private facilityManager: FacilitiesManagerService,
     private sideMenuService: SideMenuService
   ) { }
 
@@ -29,7 +28,7 @@ export class FacilitySelectPageComponent implements OnInit {
 
   refreshTable() {
     this.loading = true;
-    this.facilityService.getRichFacilities().subscribe(facilities => {
+    this.facilityManager.getRichFacilities().subscribe(facilities => {
       this.facilities = getRecentlyVisited('facilities', facilities);
       this.recentIds = getRecentlyVisitedIds('facilities');
       this.loading = false;

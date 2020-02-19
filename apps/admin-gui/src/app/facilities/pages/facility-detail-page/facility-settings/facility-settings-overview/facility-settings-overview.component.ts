@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {MenuItem} from '../../../../../shared/models/MenuItem';
 import {ActivatedRoute} from '@angular/router';
-import { FacilityService } from '@perun-web-apps/perun/services';
-import { Facility } from '@perun-web-apps/perun/openapi';
+import { FacilitiesManagerService, Facility } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-facility-settings-overview',
@@ -15,7 +14,7 @@ export class FacilitySettingsOverviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private facilityService: FacilityService
+    private facilityManager: FacilitiesManagerService
   ) { }
 
   items: MenuItem[] = [];
@@ -25,7 +24,7 @@ export class FacilitySettingsOverviewComponent implements OnInit {
     this.route.parent.parent.params.subscribe(parentParams => {
       const facilityId = parentParams['facilityId'];
 
-      this.facilityService.getFacilityById(facilityId).subscribe(facility => {
+      this.facilityManager.getFacilityById(facilityId).subscribe(facility => {
         this.facility = facility;
 
         this.initItems();
