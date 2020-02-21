@@ -1,13 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 // tslint:disable-next-line:nx-enforce-module-boundaries
-import { CustomIconService } from '../../../admin-gui/src/app/core/services/api/custom-icon.service';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { IdentitiesPageComponent } from './pages/identities-page/identities-page.component';
 import { GroupsPageComponent } from './pages/groups-page/groups-page.component';
@@ -25,24 +23,36 @@ import { SettingsDataQuotasComponent } from './pages/settings-page/settings-data
 import { SettingsAlternativePasswordsComponent } from './pages/settings-page/settings-alternative-passwords/settings-alternative-passwords.component';
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsMailingListsComponent } from './pages/settings-page/settings-mailing-lists/settings-mailing-lists.component';
-// tslint:disable-next-line:nx-enforce-module-boundaries
 import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CustomIconService, StoreService } from '@perun-web-apps/perun/services';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { UserProfileConfigService } from './services/user-profile-config.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function apiConfigFactory(): Configuration {
+export function apiConfigFactory(store: StoreService): Configuration {
   const params: ConfigurationParameters = {
-    basePath: 'http://localhost/krb/rpc'
+    basePath: store.get('api_url')
   };
   return new Configuration(params);
 }
+
+const loadConfigs = (appConfig: UserProfileConfigService) => {
+  return () => {
+    return appConfig.loadConfigs();
+  };
+};
 
 @NgModule({
   declarations: [
@@ -90,8 +100,15 @@ export function apiConfigFactory(): Configuration {
   providers: [
     CustomIconService,
     {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfigs,
+      multi: true,
+      deps: [UserProfileConfigService]
+    },
+    {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps:[StoreService]
     },
   ],
   bootstrap: [AppComponent]
