@@ -33,7 +33,7 @@
     "start-dev-admin-gui": "ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check",
     "preversion": "npm run lint",
     "version": "npm run build && git add -A -f dist",
-    "start-user-profile": "ng serve user-profile"
+    "start-user-profile": "ng serve user-profile --public-host=http://localhost:4200 --disable-host-check"
   },
   "private": true,
   "dependencies": {
@@ -52,9 +52,9 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@nrwl/angular": "8.11.1",
     "@openapitools/openapi-generator-cli": "^1.0.8-4.2.2",
-    "@swimlane/ngx-charts": "^12.0.1",
+    "@swimlane/ngx-charts": "^12.1.0",
     "@swimlane/ngx-graph": "^6.2.0",
-    "apollo": "^2.22.0",
+    "apollo": "^2.22.1",
     "apollo-angular": "^1.8.0",
     "apollo-angular-link-http": "^1.9.0",
     "apollo-cache-inmemory": "^1.6.5",
@@ -72,7 +72,7 @@
     "rxjs": "~6.5.4",
     "save": "^2.4.0",
     "tinycolor2": "^1.4.1",
-    "tslib": "^1.10.0",
+    "tslib": "^1.11.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -86,7 +86,7 @@
     "@types/jest": "24.9.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
-    "cypress": "^3.8.2",
+    "cypress": "^3.8.3",
     "dotenv": "8.2.0",
     "jest": "24.9.0",
     "jest-preset-angular": "^8.0.0",
@@ -94,7 +94,7 @@
     "ts-jest": "24.3.0",
     "ts-node": "~8.6.2",
     "tslint": "~5.20.1",
-    "typescript": "^3.7.5",
+    "typescript": "^3.8.2",
     "webpack-bundle-analyzer": "^3.6.0"
   }
 }
