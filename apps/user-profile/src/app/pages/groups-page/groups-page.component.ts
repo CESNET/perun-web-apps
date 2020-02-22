@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthzService, MembersService, UsersService } from '@perun-web-apps/perun/services';
 import {
+  AuthzResolverService,
   Group,
   GroupsManagerService,
   MembersManagerService,
@@ -26,19 +27,16 @@ export class GroupsPageComponent implements OnInit {
   constructor(private usersService: UsersManagerService,
               private memberService: MembersManagerService,
               private groupService: GroupsManagerService,
-              // private authzService:AuthzService
+              private authzService:AuthzResolverService
   ) { }
 
   ngOnInit() {
-    // this.loading = true;
-    // this.authzService.getPerunPrincipal().subscribe(principal =>{
-    //   this.principal = principal;
-    //   console.log(principal);
-    //   // this.refreshTable();
-    // });
-    this.usersService.getUserById(73916).subscribe(user =>{
-      console.log(user);
-    })
+    this.loading = true;
+    this.authzService.getPerunPrincipal().subscribe(principal =>{
+      this.principal = principal;
+      console.log(principal);
+      // this.refreshTable();
+    });
   }
 
   // refreshTable() {

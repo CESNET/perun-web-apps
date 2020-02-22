@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { StoreService } from '@perun-web-apps/perun/services';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'perun-web-apps-header',
@@ -7,12 +9,20 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor( private storeService: StoreService,
+               private sanitizer: DomSanitizer) { }
 
   @Output()
   sidenavToggle = new EventEmitter();
 
+  bgColor = this.storeService.get('theme', 'header_bg_color');
+  textColor = this.storeService.get('theme', 'header_text_color');
+  iconColor = this.storeService.get('theme', 'header_icon_color');
+
+  logo: any;
+
   ngOnInit() {
+    this.logo = this.sanitizer.bypassSecurityTrustHtml(this.storeService.get('logo'));
   }
 
   onToggleSidenav = () => {

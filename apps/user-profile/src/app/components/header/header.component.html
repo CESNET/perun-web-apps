@@ -1,10 +1,12 @@
-<mat-toolbar>
-  <div>
-    <button mat-icon-button (click)="onToggleSidenav()" style="background-color: #1a87ff">
+<div [ngStyle]="{'color': textColor}" >
+  <mat-toolbar [ngStyle]="{'background': bgColor}">
+
+    <button mat-icon-button (click)="onToggleSidenav()" [ngStyle]="{'color': iconColor}">
       <mat-icon>menu</mat-icon>
     </button>
-  </div>
-  <div>
-    <a routerLink="/profile">PLACEHOLDER FOR ICON</a>
-  </div>
-</mat-toolbar>
+
+    <a fxLayoutAlign="center none" routerLink="/profile" [innerHTML]="logo"></a>
+
+  </mat-toolbar>
+</div>
+
