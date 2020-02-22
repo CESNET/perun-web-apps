@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'perun-web-apps-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'user-profile-page';
+
+  constructor(private store:StoreService) {
+  }
+
+  sideMenuBgColor = this.store.get('theme', 'sidemenu_bg_color');
+  contentBackgroundColor = this.store.get('theme', 'content_bg_color');
 }

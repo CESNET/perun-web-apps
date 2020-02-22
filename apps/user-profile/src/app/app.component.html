@@ -4,12 +4,11 @@
 
   <!--SIDE MENU-->
   <mat-sidenav-container>
-    <mat-sidenav mode="side" #sidenav style="width: 200px; height: fit-content" opened>
+    <mat-sidenav mode="side" #sidenav [ngStyle]="{'background': sideMenuBgColor}" style="width: 200px; height: fit-content" opened>
       <perun-web-apps-side-menu style="overflow: hidden"></perun-web-apps-side-menu>
     </mat-sidenav>
-
-    <mat-sidenav-content >
-      <div style="height: 70vh" class="ml-3">
+    <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}">
+      <div style="overflow: hidden; height: 70vh" class="ml-3">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

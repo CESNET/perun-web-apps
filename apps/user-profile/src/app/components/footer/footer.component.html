@@ -1,29 +1,17 @@
-<footer style="background-color: #288619">
+<footer [ngStyle]="{'background': bgColor}">
   <div fxLayout="row" fxLayoutAlign="space-evenly none">
-    <div fxLayout="column">
-      <p>
-        text
-      </p>
-      <p>
-        another text
-      </p>
-      <p>
-        still text
-      </p>
-    </div>
-    <div fxLayout="column">
-      <p>
-        text over here
-      </p>
-      <p>
-        another text over there
-      </p>
-      <p>
-        still text somewhere
-      </p>
+    <div fxLayout="column" *ngFor="let item of items">
+      <h3 [ngStyle]="{'color': headersTextColor}">
+        {{item.title}}
+      </h3>
+      <div *ngIf="item.elements">
+        <div *ngFor="let elem of item.elements">
+          <a target="_blank" [href]="elem.link" [ngStyle]="{'color': linksTextColor}">{{elem.label}}</a>
+        </div>
+      </div>
     </div>
   </div>
-  <div>
-
+  <div fxLayoutAlign="center">
+    <a [ngStyle]="{'color': linksTextColor}">{{copyright}}</a>
   </div>
 </footer>

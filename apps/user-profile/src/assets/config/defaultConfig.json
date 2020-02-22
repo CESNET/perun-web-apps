@@ -14,8 +14,12 @@
         "title": "first col",
         "elements": [
           {
-            "first": "1",
-            "second": "2"
+            "link": "aaaa",
+            "label": "11111111111"
+          },
+          {
+            "link": "bbbb",
+            "label": "222222222222222222"
           }
         ]
       },
@@ -23,9 +27,8 @@
         "title": "second col",
         "elements": [
           {
-            "third": "3",
-            "fourth": "4",
-            "fifth": "5"
+            "link": "ccccc",
+            "label": "3333333333333"
           }
         ]
       },
@@ -33,8 +36,20 @@
         "title": "third col",
         "elements": [
           {
-            "sixth": "6",
-            "seventh": "7"
+            "link": "dddddd",
+            "label": "44444444444"
+          },
+          {
+            "link": "eeeeee",
+            "label": "555555555555"
+          },
+          {
+            "link": "fffffff",
+            "label": "66666666666666"
+          },
+          {
+            "link": "gg",
+            "label": "777777777777777"
           }
         ]
       }
@@ -50,6 +65,7 @@
     "footer_headers_text_color": "#ffffff",
     "footer_links_text_color": "#e0e0e0",
     "footer_copyright_text_color": "#9e9e9e",
+    "sidemenu_text_color": "#ffffff",
     "sidemenu_bg_color": "#263238",
     "sidemenu_border_color": "#071e24",
     "sidemenu_item_icon_color": "#ffffff",
