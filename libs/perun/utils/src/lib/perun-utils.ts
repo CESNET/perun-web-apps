@@ -8,10 +8,10 @@ import {
   Owner,
   RichMember,
   RichUser,
-  User
+  User,
+  Candidate
 } from '@perun-web-apps/perun/openapi';
 import { Attribute, AttributeDefinition } from '@perun-web-apps/perun/openapi';
-import { Candidate } from '@perun-web-apps/perun/models';
 
 
 export function parseStatusIcon(richMember: RichMember): string {

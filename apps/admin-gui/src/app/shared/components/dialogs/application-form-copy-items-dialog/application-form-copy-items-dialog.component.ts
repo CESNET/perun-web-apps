@@ -4,8 +4,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import { RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, RegistrarManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { RegistrarService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService, RegistrarManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface ApplicationFormCopyItemsDialogData {
   voId: number;
@@ -20,7 +20,7 @@ export interface ApplicationFormCopyItemsDialogData {
 export class ApplicationFormCopyItemsDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<ApplicationFormCopyItemsDialogComponent>,
-              private voService: VoService,
+              private voService: VosManagerService,
               private groupService: GroupsManagerService,
               private translateService: TranslateService,
               private registrarService: RegistrarService,

@@ -6,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   MembersService,
   ServiceService,
-  VoService
 } from '@perun-web-apps/perun/services';
 import {
   FacilitiesManagerService,
@@ -17,7 +16,8 @@ import {
   Resource, ResourcesManagerService,
   RichDestination,
   Service,
-  User, UsersManagerService
+  UsersManagerService,
+  User, VosManagerService
 } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -36,7 +36,7 @@ export class UserDestinationGraphComponent implements OnInit {
               private serviceService: ServiceService,
               private resourceManager: ResourcesManagerService,
               private groupService: GroupsManagerService,
-              private voService: VoService,
+              private voService: VosManagerService,
               private translate: TranslateService) { }
 
   user: User;

@@ -5,8 +5,8 @@ import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/fo
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {openClose} from '../../../animations/Animations';
-import { RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { RegistrarService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface NotificationsCopyMailsDialogData {
   voId: number;
@@ -24,7 +24,7 @@ export interface NotificationsCopyMailsDialogData {
 export class NotificationsCopyMailsDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<NotificationsCopyMailsDialogComponent>,
-              private voService: VoService,
+              private voService: VosManagerService,
               private groupService: GroupsManagerService,
               private translateService: TranslateService,
               private registrarService: RegistrarService,

@@ -4,9 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MembersService, RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
-import { MemberCandidate } from '@perun-web-apps/perun/models';
+import { MembersService, RegistrarService } from '@perun-web-apps/perun/services';
+import { Group, GroupsManagerService, RegistrarManagerService, VosManagerService, MemberCandidate } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { getCandidateEmail } from '@perun-web-apps/perun/utils';
 
@@ -30,7 +29,7 @@ export class AddMemberDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: AddMemberDialogData,
     private memberService: MembersService,
     private groupService: GroupsManagerService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private registrarService: RegistrarService,
     private registrarManager: RegistrarManagerService,
     private translate: TranslateService,
@@ -125,18 +124,23 @@ export class AddMemberDialogComponent implements OnInit {
     this.selection.clear();
 
     // TODO properly test it on devel when possible.
-
-    this.voService.getCompleteCandidates(
-      this.data.entityId,
-      this.data.type,
-      [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL], this.searchString).subscribe(
-      members => {
+    if (this.data.type == 'vo') {
+      this.voService.getCompleteCandidatesForVo(this.data.entityId,
+        [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL],
+        this.searchString).subscribe( members => {
+          this.members = members;
+          this.loading = false;
+          this.firstSearchDone = true;
+      }, () => this.loading = false)
+    } else {
+      this.voService.getCompleteCandidatesForGroup(this.data.entityId,
+        [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL],
+        this.searchString).subscribe( members => {
         this.members = members;
         this.loading = false;
         this.firstSearchDone = true;
-      },
-      () => this.loading = false
-    );
+      }, () => this.loading = false)
+    }
   }
 
   ngOnInit(): void {

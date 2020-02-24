@@ -3,8 +3,7 @@ import { SideMenuService } from '../../../core/services/common/side-menu.service
 import { ActivatedRoute, Router } from '@angular/router';
 import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.service';
 import { fadeIn } from '../../../shared/animations/Animations';
-import { VoService } from '@perun-web-apps/perun/services';
-import { Vo } from '@perun-web-apps/perun/openapi';
+import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { addRecentlyVisited } from '@perun-web-apps/perun/utils';
 
 @Component({
@@ -19,7 +18,7 @@ export class VoDetailPageComponent implements OnInit {
 
   constructor(
     private sideMenuService: SideMenuService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private route: ActivatedRoute,
     private router: Router,
     private sideMenuItemService: SideMenuItemService,

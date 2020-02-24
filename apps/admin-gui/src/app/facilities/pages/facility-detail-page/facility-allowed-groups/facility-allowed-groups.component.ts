@@ -1,6 +1,5 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { VoService } from '@perun-web-apps/perun/services';
 import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -15,7 +14,6 @@ export class FacilityAllowedGroupsComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private voService: VoService,
     private facilityManager: FacilitiesManagerService,
     private route: ActivatedRoute
   ) { }

@@ -7,9 +7,8 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
-import { AuthzResolverService, Facility, Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { AuthzResolverService, Facility, Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
-import { VoService } from '@perun-web-apps/perun/services';
 
 export interface AddGroupManagerDialogData {
   complementaryObject: Vo | Group | Facility;
@@ -28,8 +27,8 @@ export class AddGroupManagerDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AddGroupManagerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddGroupManagerDialogData,
-    private voService: VoService,
     private authzService: AuthzResolverService,
+    private voService: VosManagerService,
     private groupService: GroupsManagerService,
     private translate: TranslateService,
     private notificator: NotificatorService,
@@ -80,7 +79,7 @@ export class AddGroupManagerDialogComponent implements OnInit {
     this.availableRoles = this.data.availableRoles;
     this.selectedRole = this.data.selectedRole;
     this.theme = this.data.theme;
-    this.voService.getVos().subscribe(vos => {
+    this.voService.getMyVos().subscribe(vos => {
       this.filteredOptions = this.myControl.valueChanges
         .pipe(
           startWith(''),

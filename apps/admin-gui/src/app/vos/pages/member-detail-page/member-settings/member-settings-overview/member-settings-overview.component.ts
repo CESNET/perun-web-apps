@@ -2,8 +2,8 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {SideMenuService} from '../../../../../core/services/common/side-menu.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MenuItem} from '../../../../../shared/models/MenuItem';
-import { MembersService, VoService } from '@perun-web-apps/perun/services';
-import { Member, Vo } from '@perun-web-apps/perun/openapi';
+import { MembersService } from '@perun-web-apps/perun/services';
+import { Member, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-member-settings-overview',
@@ -16,7 +16,7 @@ export class MemberSettingsOverviewComponent implements OnInit {
 
   constructor(
     private sideMenuService: SideMenuService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private memberService: MembersService,
     protected route: ActivatedRoute,
     protected router: Router

@@ -2,9 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { VoService } from '@perun-web-apps/perun/services';
-import { ResourcesManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ResourcesManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,7 +22,7 @@ export class CreateResourceDialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<CreateResourceDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: CreateResourceDialogData,
               private notificator: NotificatorService,
-              private voService: VoService,
+              private voService: VosManagerService,
               private translate: TranslateService,
               private resourcesManager: ResourcesManagerService
   ) {

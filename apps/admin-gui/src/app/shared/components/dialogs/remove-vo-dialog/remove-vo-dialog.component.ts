@@ -2,9 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { VoService } from '@perun-web-apps/perun/services';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
-import { Vo } from '@perun-web-apps/perun/openapi';
+import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface RemoveVoDialogData {
   vos: Vo[]
@@ -22,7 +21,7 @@ export class RemoveVoDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<RemoveVoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: RemoveVoDialogData,
     private notificator: NotificatorService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private translate: TranslateService
   ) {
     translate.get('DIALOGS.REMOVE_VO.SUCCESS').subscribe(value => this.successMessage = value);
@@ -48,7 +47,7 @@ export class RemoveVoDialogComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     //TODO Works for one Vo at the time, in future there may be need to remove  more Vos at once
-    this.voService.removeVo(this.data.vos[0].id, this.force).subscribe(() => {
+    this.voService.deleteVoForce(this.data.vos[0].id, this.force).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);

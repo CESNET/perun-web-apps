@@ -17,8 +17,13 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
+import { Candidate } from '../model/candidate';
 import { Group } from '../model/group';
+import { InputCreateVoWithVo } from '../model/inputCreateVoWithVo';
+import { InputUpdateVo } from '../model/inputUpdateVo';
+import { MemberCandidate } from '../model/memberCandidate';
 import { PerunException } from '../model/perunException';
+import { RichUser } from '../model/richUser';
 import { User } from '../model/user';
 import { Vo } from '../model/vo';
 import { VoAdminRoles } from '../model/voAdminRoles';
@@ -52,6 +57,138 @@ export class VosManagerService {
     }
 
 
+
+    /**
+     * Add group as a sponsor of guest members of VO. All members of group will become sponsors.
+     * @param vo id of Vo
+     * @param authorizedGroup Group id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling addSponsorRoleToGroup.');
+        }
+        if (authorizedGroup === null || authorizedGroup === undefined) {
+            throw new Error('Required parameter authorizedGroup was null or undefined when calling addSponsorRoleToGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (authorizedGroup !== undefined && authorizedGroup !== null) {
+            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addSponsorRole/group`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Add user as a sponsor for guest members of VO.
+     * @param vo id of Vo
+     * @param user id of User
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addSponsorRoleToUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling addSponsorRoleToUser.');
+        }
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling addSponsorRoleToUser.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addSponsorRole/user`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Adds a group as a Vo admin.
@@ -186,6 +323,461 @@ export class VosManagerService {
     }
 
     /**
+     * Creates new VO. Caller is automatically set as VO manager.
+     * @param name name - length can be no more than 128 characters
+     * @param shortName shortName - can contain only a-z, A-Z, 0-9, \&#39;.\&#39;, \&#39;-\&#39;, \&#39;_\&#39; and cannot be longer than 32 characters
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createVoWithName(name: string, shortName: string, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
+    public createVoWithName(name: string, shortName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
+    public createVoWithName(name: string, shortName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
+    public createVoWithName(name: string, shortName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (name === null || name === undefined) {
+            throw new Error('Required parameter name was null or undefined when calling createVoWithName.');
+        }
+        if (shortName === null || shortName === undefined) {
+            throw new Error('Required parameter shortName was null or undefined when calling createVoWithName.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (name !== undefined && name !== null) {
+            queryParameters = queryParameters.set('name', <any>name);
+        }
+        if (shortName !== undefined && shortName !== null) {
+            queryParameters = queryParameters.set('shortName', <any>shortName);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<Vo>(`${this.configuration.basePath}/urlinjsonout/vosManager/createVo/withName`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Creates new VO. Caller is automatically set as VO manager. Vo Object must contain: name - lenght can be no more than 128 characters shortName - can contain only a-z, A-Z, 0-9, \&#39;.\&#39;, \&#39;-\&#39;, \&#39;_\&#39; and cannot be longer than 32 characters. Other parameters are ignored. @exampleParam vo { \&quot;name\&quot; : \&quot;My testing VO\&quot; , \&quot;shortName\&quot; : \&quot;test_vo\&quot; } 
+     * @param inputCreateVoWithVo 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputCreateVoWithVo === null || inputCreateVoWithVo === undefined) {
+            throw new Error('Required parameter inputCreateVoWithVo was null or undefined when calling createVoWithVo.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<Vo>(`${this.configuration.basePath}/json/vosManager/createVo/withVo`,
+            inputCreateVoWithVo,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes a VO. If VO contain members, group or resources, it\&#39;s not deleted and exception is thrown.
+     * @param vo id of Vo
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteVo(vo: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteVo(vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteVo(vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteVo(vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling deleteVo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo/pure`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes a VO. If &lt;code&gt;force &#x3D;&#x3D; true&lt;/code&gt; then VO is deleted including members, groups and resources. Otherwise only empty VO is deleted or exception is thrown.
+     * @param vo id of Vo
+     * @param force Force must be true
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteVoForce(vo: number, force: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteVoForce(vo: number, force: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteVoForce(vo: number, force: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteVoForce(vo: number, force: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling deleteVoForce.');
+        }
+        if (force === null || force === undefined) {
+            throw new Error('Required parameter force was null or undefined when calling deleteVoForce.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (force !== undefined && force !== null) {
+            queryParameters = queryParameters.set('force', <any>force);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo/withAll`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find candidates for VO. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
+     * @param id numeric id
+     * @param searchString Text to search by
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findCandidates(id: number, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
+    public findCandidates(id: number, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling findCandidates.');
+        }
+        if (searchString === null || searchString === undefined) {
+            throw new Error('Required parameter searchString was null or undefined when calling findCandidates.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+        if (searchString !== undefined && searchString !== null) {
+            queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find candidates for Group. Candidates can be used to create new VO and Group members. Candidates are searched in Groups external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
+     * @param group group id
+     * @param searchString Text to search by
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling findCandidatesForGroup.');
+        }
+        if (searchString === null || searchString === undefined) {
+            throw new Error('Required parameter searchString was null or undefined when calling findCandidatesForGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (searchString !== undefined && searchString !== null) {
+            queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates/forGroup`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find candidates for VO with specified maximum number of results. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
+     * @param id numeric id
+     * @param searchString Text to search by
+     * @param maxNumOfResults Number of maximum results
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
+    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling findCandidatesWithMaximumNumberResults.');
+        }
+        if (searchString === null || searchString === undefined) {
+            throw new Error('Required parameter searchString was null or undefined when calling findCandidatesWithMaximumNumberResults.');
+        }
+        if (maxNumOfResults === null || maxNumOfResults === undefined) {
+            throw new Error('Required parameter maxNumOfResults was null or undefined when calling findCandidatesWithMaximumNumberResults.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+        if (searchString !== undefined && searchString !== null) {
+            queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+        if (maxNumOfResults !== undefined && maxNumOfResults !== null) {
+            queryParameters = queryParameters.set('maxNumOfResults', <any>maxNumOfResults);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates/withMaxNumberResults`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Return list of all VOs in Perun.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -234,6 +826,154 @@ export class VosManagerService {
     }
 
     /**
+     * Find MemberCandidates for GROUP. MemberCandidates can be used to create new members. They are made of Candidate, RichUser and Member objects. Candidates are searched in VO\&#39;s or GROUP\&#39;s (depends on privileges) external sources (if available). RichUsers are searched in given VO and are associated with appropriate candidate and member. RichUsers for appropriate Candidate are also searched in the whole Perun. 
+     * @param group group id
+     * @param attrNames list with names of attributes that should be find
+     * @param searchString Text to search by
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<MemberCandidate>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getCompleteCandidatesForGroup.');
+        }
+        if (attrNames === null || attrNames === undefined) {
+            throw new Error('Required parameter attrNames was null or undefined when calling getCompleteCandidatesForGroup.');
+        }
+        if (searchString === null || searchString === undefined) {
+            throw new Error('Required parameter searchString was null or undefined when calling getCompleteCandidatesForGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (attrNames) {
+            attrNames.forEach((element) => {
+                queryParameters = queryParameters.append('attrNames', <any>element);
+            })
+        }
+        if (searchString !== undefined && searchString !== null) {
+            queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<MemberCandidate>>(`${this.configuration.basePath}/json/vosManager/getCompleteCandidates/forGroup`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find MemberCandidates for VO. MemberCandidates can be used to create new members. They are made of Candidate, RichUser and Member objects. Candidates are searched in VO\&#39;s external sources (if available). RichUsers are searched in given VO and are associated with appropriate candidate and member. RichUsers for MemberCandidates may also be searched in the whole Perun. 
+     * @param vo vo id
+     * @param attrNames list with names of attributes that should be find
+     * @param searchString Text to search by
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<MemberCandidate>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling getCompleteCandidatesForVo.');
+        }
+        if (attrNames === null || attrNames === undefined) {
+            throw new Error('Required parameter attrNames was null or undefined when calling getCompleteCandidatesForVo.');
+        }
+        if (searchString === null || searchString === undefined) {
+            throw new Error('Required parameter searchString was null or undefined when calling getCompleteCandidatesForVo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (attrNames) {
+            attrNames.forEach((element) => {
+                queryParameters = queryParameters.append('attrNames', <any>element);
+            })
+        }
+        if (searchString !== undefined && searchString !== null) {
+            queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<MemberCandidate>>(`${this.configuration.basePath}/json/vosManager/getCompleteCandidates/forVo`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Return list of all VOs the caller is associated with.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -273,6 +1013,94 @@ export class VosManagerService {
 
         return this.httpClient.get<Array<Vo>>(`${this.configuration.basePath}/json/vosManager/getVos`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get list of all richUser administrators for the vo and supported role with specific attributes. Supported roles: VOOBSERVER, TOPGROUPCREATOR, VOADMIN If \&quot;onlyDirectAdmins\&quot; is &#x3D;&#x3D; true, return only direct admins of the vo for supported role with specific attributes. If \&quot;allUserAttributes\&quot; is &#x3D;&#x3D; true, do not specify attributes through list and return them all in objects richUser. Ignoring list of specific attributes. 
+     * @param vo id of Vo
+     * @param role role name
+     * @param specificAttributes list of specified attributes which are needed in object richUser
+     * @param allUserAttributes if &#x3D;&#x3D; true, get all possible user attributes and ignore list of specificAttributes (if false, get only specific attributes)
+     * @param onlyDirectAdmins if &#x3D;&#x3D; true, get only direct vo administrators (if false, get both direct and indirect)
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<RichUser>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<RichUser>>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<RichUser>>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling getRichAdminsForVo.');
+        }
+        if (role === null || role === undefined) {
+            throw new Error('Required parameter role was null or undefined when calling getRichAdminsForVo.');
+        }
+        if (specificAttributes === null || specificAttributes === undefined) {
+            throw new Error('Required parameter specificAttributes was null or undefined when calling getRichAdminsForVo.');
+        }
+        if (allUserAttributes === null || allUserAttributes === undefined) {
+            throw new Error('Required parameter allUserAttributes was null or undefined when calling getRichAdminsForVo.');
+        }
+        if (onlyDirectAdmins === null || onlyDirectAdmins === undefined) {
+            throw new Error('Required parameter onlyDirectAdmins was null or undefined when calling getRichAdminsForVo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (role !== undefined && role !== null) {
+            queryParameters = queryParameters.set('role', <any>role);
+        }
+        if (specificAttributes) {
+            specificAttributes.forEach((element) => {
+                queryParameters = queryParameters.append('specificAttributes', <any>element);
+            })
+        }
+        if (allUserAttributes !== undefined && allUserAttributes !== null) {
+            queryParameters = queryParameters.set('allUserAttributes', <any>allUserAttributes);
+        }
+        if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
+            queryParameters = queryParameters.set('onlyDirectAdmins', <any>onlyDirectAdmins);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<RichUser>>(`${this.configuration.basePath}/json/vosManager/getRichAdmins`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -532,6 +1360,186 @@ export class VosManagerService {
     }
 
     /**
+     * Gets count of all vos.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getVosCount(observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public getVosCount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public getVosCount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public getVosCount(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<number>(`${this.configuration.basePath}/json/vosManager/getVosCount`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Removes group as a sponsor. All group members will cease to be sponsors, and their sponsored members will be set as expired if the group member was their last sponsor.
+     * @param vo id of Vo
+     * @param authorizedGroup Group id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling removeSponsorRoleFromGroup.');
+        }
+        if (authorizedGroup === null || authorizedGroup === undefined) {
+            throw new Error('Required parameter authorizedGroup was null or undefined when calling removeSponsorRoleFromGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (authorizedGroup !== undefined && authorizedGroup !== null) {
+            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeSponsorRole/group`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Removes user as a sponsor. His or her sponsored members will be set as expired if the user was their last sponsor.
+     * @param vo id of Vo
+     * @param user id of User
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling removeSponsorRoleFromUser.');
+        }
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling removeSponsorRoleFromUser.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeSponsorRole/user`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Removes a group as a Vo admin.
      * @param vo id of Vo
      * @param authorizedGroup Group id
@@ -655,6 +1663,68 @@ export class VosManagerService {
             null,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Updates a VO. Only name parameter is updated. VO to updated is determined by id parameter of passed VO object.
+     * @param inputUpdateVo 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputUpdateVo === null || inputUpdateVo === undefined) {
+            throw new Error('Required parameter inputUpdateVo was null or undefined when calling updateVo.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<Vo>(`${this.configuration.basePath}/json/vosManager/updateVo`,
+            inputUpdateVo,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
