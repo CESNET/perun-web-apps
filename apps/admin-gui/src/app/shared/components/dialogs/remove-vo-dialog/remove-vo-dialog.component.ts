@@ -47,7 +47,7 @@ export class RemoveVoDialogComponent implements OnInit {
   onSubmit() {
     this.loading = true;
     //TODO Works for one Vo at the time, in future there may be need to remove  more Vos at once
-    this.voService.deleteVoForce(this.data.vos[0].id, this.force).subscribe(() => {
+    this.voService.deleteVo(this.data.vos[0].id, this.force).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);

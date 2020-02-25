@@ -124,7 +124,7 @@ export class AddMemberDialogComponent implements OnInit {
     this.selection.clear();
 
     // TODO properly test it on devel when possible.
-    if (this.data.type == 'vo') {
+    if (this.data.type === 'vo') {
       this.voService.getCompleteCandidatesForVo(this.data.entityId,
         [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL],
         this.searchString).subscribe( members => {

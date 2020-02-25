@@ -451,80 +451,18 @@ export class VosManagerService {
     }
 
     /**
-     * Deletes a VO. If VO contain members, group or resources, it\&#39;s not deleted and exception is thrown.
-     * @param vo id of Vo
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteVo(vo: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteVo(vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteVo(vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteVo(vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling deleteVo.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo/pure`,
-            null,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Deletes a VO. If &lt;code&gt;force &#x3D;&#x3D; true&lt;/code&gt; then VO is deleted including members, groups and resources. Otherwise only empty VO is deleted or exception is thrown.
+     * Deletes a VO. If force &#x3D;&#x3D; true then VO is deleted including members, groups and resources. If force &#x3D;&#x3D; false or null only empty VO is deleted or exception is thrown.
      * @param vo id of Vo
      * @param force Force must be true
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteVoForce(vo: number, force: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteVoForce(vo: number, force: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteVoForce(vo: number, force: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteVoForce(vo: number, force: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteVo(vo: number, force?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteVo(vo: number, force?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteVo(vo: number, force?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteVo(vo: number, force?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling deleteVoForce.');
-        }
-        if (force === null || force === undefined) {
-            throw new Error('Required parameter force was null or undefined when calling deleteVoForce.');
+            throw new Error('Required parameter vo was null or undefined when calling deleteVo.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -563,7 +501,7 @@ export class VosManagerService {
         }
 
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo/withAll`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo`,
             null,
             {
                 params: queryParameters,
@@ -576,16 +514,17 @@ export class VosManagerService {
     }
 
     /**
-     * Find candidates for VO. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
+     * Find candidates for VO. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. You can also specify maximum number of results. 
      * @param id numeric id
      * @param searchString Text to search by
+     * @param maxNumOfResults Number of maximum results
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findCandidates(id: number, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
-    public findCandidates(id: number, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
-    public findCandidates(id: number, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
-    public findCandidates(id: number, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findCandidates.');
         }
@@ -599,6 +538,9 @@ export class VosManagerService {
         }
         if (searchString !== undefined && searchString !== null) {
             queryParameters = queryParameters.set('searchString', <any>searchString);
+        }
+        if (maxNumOfResults !== undefined && maxNumOfResults !== null) {
+            queryParameters = queryParameters.set('maxNumOfResults', <any>maxNumOfResults);
         }
 
         let headers = this.defaultHeaders;
@@ -642,7 +584,7 @@ export class VosManagerService {
 
     /**
      * Find candidates for Group. Candidates can be used to create new VO and Group members. Candidates are searched in Groups external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
-     * @param group group id
+     * @param group id of Group
      * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -706,78 +648,6 @@ export class VosManagerService {
     }
 
     /**
-     * Find candidates for VO with specified maximum number of results. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString. 
-     * @param id numeric id
-     * @param searchString Text to search by
-     * @param maxNumOfResults Number of maximum results
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
-    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
-    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
-    public findCandidatesWithMaximumNumberResults(id: number, searchString: string, maxNumOfResults: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling findCandidatesWithMaximumNumberResults.');
-        }
-        if (searchString === null || searchString === undefined) {
-            throw new Error('Required parameter searchString was null or undefined when calling findCandidatesWithMaximumNumberResults.');
-        }
-        if (maxNumOfResults === null || maxNumOfResults === undefined) {
-            throw new Error('Required parameter maxNumOfResults was null or undefined when calling findCandidatesWithMaximumNumberResults.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
-        }
-        if (searchString !== undefined && searchString !== null) {
-            queryParameters = queryParameters.set('searchString', <any>searchString);
-        }
-        if (maxNumOfResults !== undefined && maxNumOfResults !== null) {
-            queryParameters = queryParameters.set('maxNumOfResults', <any>maxNumOfResults);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // authentication (BasicAuth) required
-        if (this.configuration.username || this.configuration.password) {
-            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
-        }
-        // authentication (BearerAuth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates/withMaxNumberResults`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Return list of all VOs in Perun.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -827,8 +697,8 @@ export class VosManagerService {
 
     /**
      * Find MemberCandidates for GROUP. MemberCandidates can be used to create new members. They are made of Candidate, RichUser and Member objects. Candidates are searched in VO\&#39;s or GROUP\&#39;s (depends on privileges) external sources (if available). RichUsers are searched in given VO and are associated with appropriate candidate and member. RichUsers for appropriate Candidate are also searched in the whole Perun. 
-     * @param group group id
-     * @param attrNames list with names of attributes that should be find
+     * @param group id of Group
+     * @param attrNames list of attribute names List&lt;String&gt;
      * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -853,7 +723,7 @@ export class VosManagerService {
         }
         if (attrNames) {
             attrNames.forEach((element) => {
-                queryParameters = queryParameters.append('attrNames', <any>element);
+                queryParameters = queryParameters.append('attrNames[]', <any>element);
             })
         }
         if (searchString !== undefined && searchString !== null) {
@@ -901,8 +771,8 @@ export class VosManagerService {
 
     /**
      * Find MemberCandidates for VO. MemberCandidates can be used to create new members. They are made of Candidate, RichUser and Member objects. Candidates are searched in VO\&#39;s external sources (if available). RichUsers are searched in given VO and are associated with appropriate candidate and member. RichUsers for MemberCandidates may also be searched in the whole Perun. 
-     * @param vo vo id
-     * @param attrNames list with names of attributes that should be find
+     * @param vo id of Vo
+     * @param attrNames list of attribute names List&lt;String&gt;
      * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -927,7 +797,7 @@ export class VosManagerService {
         }
         if (attrNames) {
             attrNames.forEach((element) => {
-                queryParameters = queryParameters.append('attrNames', <any>element);
+                queryParameters = queryParameters.append('attrNames[]', <any>element);
             })
         }
         if (searchString !== undefined && searchString !== null) {
