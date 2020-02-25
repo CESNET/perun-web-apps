@@ -1151,23 +1151,17 @@ export class FacilitiesManagerService {
     /**
      * Return all users which can use this facility
      * @param facility id of Facility
-     * @param vo id of Vo
-     * @param service id of Service
+     * @param vo VO id, if provided, filter out users who aren\&#39;t in specific VO
+     * @param service Service id, if provided, filter out users who aren\&#39;t allowed to use the service on the facility
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllowedUsersOfFacility(facility: number, vo: number, service: number, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public getAllowedUsersOfFacility(facility: number, vo: number, service: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public getAllowedUsersOfFacility(facility: number, vo: number, service: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
-    public getAllowedUsersOfFacility(facility: number, vo: number, service: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllowedUsersOfFacility(facility: number, vo?: number, service?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
+    public getAllowedUsersOfFacility(facility: number, vo?: number, service?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
+    public getAllowedUsersOfFacility(facility: number, vo?: number, service?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public getAllowedUsersOfFacility(facility: number, vo?: number, service?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (facility === null || facility === undefined) {
             throw new Error('Required parameter facility was null or undefined when calling getAllowedUsersOfFacility.');
-        }
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling getAllowedUsersOfFacility.');
-        }
-        if (service === null || service === undefined) {
-            throw new Error('Required parameter service was null or undefined when calling getAllowedUsersOfFacility.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -1209,7 +1203,7 @@ export class FacilitiesManagerService {
         }
 
 
-        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/json/facilitiesManager/getAllowedUsers`,
+        return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/json/facilitiesManager/getAllowedUsers/v-f-s`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

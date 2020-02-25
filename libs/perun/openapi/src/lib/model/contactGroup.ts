@@ -11,7 +11,7 @@
  */
 import { Group } from './group';
 import { Owner } from './owner';
-import { User } from './user';
+import { RichUser } from './richUser';
 import { Facility } from './facility';
 
 
@@ -20,6 +20,6 @@ export interface ContactGroup {
     facility?: Facility;
     groups?: Array<Group>;
     owners?: Array<Owner>;
-    users?: Array<User>;
+    users?: Array<RichUser>;
 }
 
