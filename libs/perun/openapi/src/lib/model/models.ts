@@ -74,6 +74,7 @@ export * from './richGroup';
 export * from './richMember';
 export * from './richResource';
 export * from './richUser';
+export * from './richUserExtSource';
 export * from './service';
 export * from './setRoleWithGroupComplementaryObject';
 export * from './setRoleWithUserComplementaryObject';

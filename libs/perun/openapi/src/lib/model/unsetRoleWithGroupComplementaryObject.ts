@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PerunBean } from './perunBean';
 
 
 /**
@@ -20,9 +21,6 @@ export interface UnsetRoleWithGroupComplementaryObject {
      * List of authorizedGroups ids
      */
     authorizedGroups: Array<number>;
-    /**
-     * Object (e.g.: vo | group | facility ) to associate role and user with.
-     */
-    complementaryObject: object;
+    complementaryObject: PerunBean;
 }
 

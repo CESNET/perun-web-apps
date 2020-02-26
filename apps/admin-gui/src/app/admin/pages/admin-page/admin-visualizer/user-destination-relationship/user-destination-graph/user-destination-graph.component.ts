@@ -7,7 +7,6 @@ import {
   FacilityService,
   MembersService,
   ServiceService,
-  UsersService,
   VoService
 } from '@perun-web-apps/perun/services';
 import {
@@ -18,7 +17,7 @@ import {
   Resource, ResourcesManagerService,
   RichDestination,
   Service,
-  User
+  User, UsersManagerService
 } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -31,7 +30,7 @@ export class UserDestinationGraphComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private route: ActivatedRoute,
-              private userService: UsersService,
+              private userService: UsersManagerService,
               private facilityService: FacilityService,
               private memberService: MembersService,
               private serviceService: ServiceService,

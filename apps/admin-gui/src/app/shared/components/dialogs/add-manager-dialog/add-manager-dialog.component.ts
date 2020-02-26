@@ -4,9 +4,15 @@ import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AuthzResolverService, Facility, Group, RichUser, Vo } from '@perun-web-apps/perun/openapi';
+import {
+  AuthzResolverService,
+  Facility,
+  Group,
+  RichUser,
+  UsersManagerService,
+  Vo
+} from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
-import { UsersService } from '@perun-web-apps/perun/services';
 
 export interface AddManagerDialogData {
   complementaryObject: Vo | Group | Facility;
@@ -26,7 +32,7 @@ export class AddManagerDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<AddManagerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddManagerDialogData,
     private authzService: AuthzResolverService,
-    private usersService: UsersService,
+    private usersService: UsersManagerService,
     private translate: TranslateService,
     private notificator: NotificatorService,
     protected route: ActivatedRoute,

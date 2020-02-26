@@ -1,6 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { UsersService } from '@perun-web-apps/perun/services';
-import { PerunPrincipal, Vo } from '@perun-web-apps/perun/openapi';
+import { PerunPrincipal, UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { AuthResolverService } from '@perun-web-apps/perun/services';
 import { StoreService } from '@perun-web-apps/perun/services';
 
@@ -14,7 +13,7 @@ export class UserOrganizationsComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private usersService: UsersService,
+    private usersService: UsersManagerService,
     private authResolver: AuthResolverService,
     private store: StoreService
   ) {
