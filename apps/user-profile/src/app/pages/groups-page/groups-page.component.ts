@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthzService, MembersService, UsersService } from '@perun-web-apps/perun/services';
 import {
   AuthzResolverService,
   Group,

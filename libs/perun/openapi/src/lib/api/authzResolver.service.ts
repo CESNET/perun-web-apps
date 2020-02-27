@@ -51,7 +51,6 @@ export class AuthzResolverService {
             this.configuration.basePath = basePath;
         }
         this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
-        console.log('Constructor')
     }
 
 
@@ -256,9 +255,6 @@ export class AuthzResolverService {
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
-
-      console.log('CCCCC');
-      console.log(this.configuration.basePath);
 
 
         return this.httpClient.get<PerunPrincipal>(`${this.configuration.basePath}/json/authzResolver/getPerunPrincipal`,
