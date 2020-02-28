@@ -1,21 +1,22 @@
-<perun-web-apps-layout>
+<!--<perun-web-apps-layout>-->
   <!--HEADER-->
   <perun-web-apps-header (sidenavToggle)="sidenav.toggle()"></perun-web-apps-header>
 
   <!--SIDE MENU-->
   <mat-sidenav-container>
-    <mat-sidenav mode="side" #sidenav [ngStyle]="{'background': sideMenuBgColor}" style="width: 200px; height: fit-content" opened>
+    <mat-sidenav mode="side" #sidenav [ngStyle]="{'background': sideMenuBgColor}" style="width: 200px; height: auto" opened>
       <perun-web-apps-side-menu style="overflow: hidden"></perun-web-apps-side-menu>
     </mat-sidenav>
-    <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}">
-      <div style="overflow: hidden; height: 70vh" class="ml-3">
+    <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
+      <div style="height: 75vh" id="content-wrap">
         <router-outlet></router-outlet>
       </div>
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 
   <!--FOOTER-->
-  <perun-web-apps-footer></perun-web-apps-footer>
+<perun-web-apps-footer></perun-web-apps-footer>
 
-</perun-web-apps-layout>
+<!--</perun-web-apps-layout>-->
 

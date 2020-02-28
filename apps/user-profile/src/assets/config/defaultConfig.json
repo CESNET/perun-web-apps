@@ -8,53 +8,49 @@
     "oauth_post_logout_redirect_uri": "",
     "oauth_redirect_uri": "http://gui-dev.org/api-callback"
   },
+  "custom_menu_labels": {
+    "CUSTOM_IDENTITIES_LABEL_cs": "just idea placeholder",
+    "CUSTOM_IDENTITIES_LABEL_en": "same here"
+  },
   "footer": {
     "columns": [
       {
-        "title": "first col",
+        "title": "ABOUT",
         "elements": [
           {
-            "link": "aaaa",
-            "label": "11111111111"
+            "link": "https://perun-aai.org/",
+            "label": "Perun web"
           },
           {
-            "link": "bbbb",
-            "label": "222222222222222222"
+            "link": "https://perun-aai.org/team",
+            "label": "Perun team"
+          },
+          {
+            "link": "https://pernhub.org/",
+            "label": "Privacy policy"
           }
         ]
       },
       {
-        "title": "second col",
+        "title": "HELP",
         "elements": [
           {
-            "link": "ccccc",
-            "label": "3333333333333"
+            "link": "https://perun-aai.org/documentation/users-documentation",
+            "label": "Documentation"
           }
         ]
       },
       {
-        "title": "third col",
+        "title": "SUPPORT",
         "elements": [
           {
-            "link": "dddddd",
-            "label": "44444444444"
-          },
-          {
-            "link": "eeeeee",
-            "label": "555555555555"
-          },
-          {
-            "link": "fffffff",
-            "label": "66666666666666"
-          },
-          {
-            "link": "gg",
-            "label": "777777777777777"
+            "link": "",
+            "label": "perun@cesnet.cz"
           }
         ]
       }
     ],
-    "copyright": "Copyright text placeholder"
+    "copyright": "© 2020 Copyright: CESNET, CERIT-SC, Version 0.0.0"
   },
   "theme": {
     "content_bg_color": "",

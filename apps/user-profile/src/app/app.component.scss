@@ -1,0 +1,12 @@
+#content-wrap {
+  padding-left: 10px;
+  padding-top: 10px;
+  @media (max-width: 768px) {
+    padding-bottom: 500px;
+  }
+}
+
+#content-inner {
+  margin: 10px;
+  position: relative;
+}

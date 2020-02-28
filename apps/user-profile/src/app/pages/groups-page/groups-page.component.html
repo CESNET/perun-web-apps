@@ -2,28 +2,28 @@
 
 <h1 class="page-subtitle pt-2">{{'SHARED.COMPONENTS.USER_DETAIL.GROUPS.MEMBER_GROUPS' | translate}}</h1>
 
-<!--<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>-->
-<!--<div *ngIf="!loading">-->
-<!--  <app-groups-list-->
-<!--    [groups]="membersGroups"-->
-<!--    [hideColumns]="['select', 'menu']"-->
-<!--    [inDialog]="false"-->
-<!--    [disableMembers]="false"-->
-<!--    [pageSize]="5"-->
-<!--  ></app-groups-list>-->
-<!--</div>-->
+<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+<div *ngIf="!loading">
+  <app-groups-list
+    [groups]="membersGroups"
+    [hideColumns]="['select', 'menu']"
+    [inDialog]="false"
+    [disableMembers]="false"
+    [pageSize]="5"
+  ></app-groups-list>
+</div>
 
-<!--<div *ngIf="adminsGroups.length != 0">-->
-<!--  <h1 class="page-subtitle pt-5">{{'SHARED.COMPONENTS.USER_DETAIL.GROUPS.ADMINS_GROUPS' | translate}}</h1>-->
+<div *ngIf="adminsGroups.length != 0">
+  <h1 class="page-subtitle pt-5">{{'SHARED.COMPONENTS.USER_DETAIL.GROUPS.ADMINS_GROUPS' | translate}}</h1>
 
-<!--  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>-->
-<!--  <div *ngIf="!loading">-->
-<!--    <app-groups-list-->
-<!--      [groups]="adminsGroups"-->
-<!--      [hideColumns]="['select', 'menu']"-->
-<!--      [inDialog]="false"-->
-<!--      [disableMembers]="false"-->
-<!--      [pageSize]="5"-->
-<!--    ></app-groups-list>-->
-<!--  </div>-->
-<!--</div>-->
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading">
+    <app-groups-list
+      [groups]="adminsGroups"
+      [hideColumns]="['select', 'menu']"
+      [inDialog]="false"
+      [disableMembers]="false"
+      [pageSize]="5"
+    ></app-groups-list>
+  </div>
+</div>

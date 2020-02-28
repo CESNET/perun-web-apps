@@ -34,27 +34,27 @@ export class GroupsPageComponent implements OnInit {
     this.authzService.getPerunPrincipal().subscribe(principal =>{
       this.principal = principal;
       console.log(principal);
-      // this.refreshTable();
+      this.refreshTable();
     });
   }
 
-  // refreshTable() {
-  //   this.loading = true;
-  //   this.membersGroups = [];
-  //   this.usersService.getVosWhereUserIsMember(this.principal.userId).subscribe(vos => {
-  //     this.vos = vos;
-  //     for(const vo of this.vos) {
-  //       this.memberService.getMemberByUser(vo.id, this.principal.userId).subscribe( member => {
-  //         this.groupService.getMemberGroups(member.id).subscribe( groups => {
-  //           this.membersGroups = this.membersGroups.concat(groups);
-  //         });
-  //       });
-  //     }
-  //     this.loading = false;
-  //   });
-  //   this.usersService.getGroupsWhereUserIsAdmin(this.principal.userId).subscribe( groups => {
-  //     this.adminsGroups = groups;
-  //   });
-  // }
+  refreshTable() {
+    this.loading = true;
+    this.membersGroups = [];
+    this.usersService.getVosWhereUserIsMember(this.principal.userId).subscribe(vos => {
+      this.vos = vos;
+      for(const vo of this.vos) {
+        this.memberService.getMemberByUser(vo.id, this.principal.userId).subscribe( member => {
+          this.groupService.getMemberGroups(member.id).subscribe( groups => {
+            this.membersGroups = this.membersGroups.concat(groups);
+          });
+        });
+      }
+      this.loading = false;
+    });
+    this.usersService.getGroupsWhereUserIsAdmin(this.principal.userId).subscribe( groups => {
+      this.adminsGroups = groups;
+    });
+  }
 
 }

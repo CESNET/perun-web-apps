@@ -672,7 +672,10 @@
               "apps/user-profile/src/favicon.ico",
               "apps/user-profile/src/assets"
             ],
-            "styles": ["apps/user-profile/src/styles.scss"],
+            "styles": [
+              "apps/user-profile/src/styles.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
+            ],
             "scripts": ["./node_modules/tinycolor2/dist/tinycolor-min.js"]
           },
           "configurations": {

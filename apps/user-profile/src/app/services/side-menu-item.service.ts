@@ -11,7 +11,8 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.PROFILE',
       icon: 'account_box',
-      link: '/profile'
+      link: '/profile',
+      // activated_regex
     };
   }
 
