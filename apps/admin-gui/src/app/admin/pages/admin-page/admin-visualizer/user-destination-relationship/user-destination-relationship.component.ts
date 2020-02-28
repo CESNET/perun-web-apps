@@ -6,8 +6,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { NotificatorService } from '../../../../../core/services/common/notificator.service';
-import { FacilitiesManagerService, User } from '@perun-web-apps/perun/openapi';
-import { ServiceService, UsersService } from '@perun-web-apps/perun/services';
+import { User, UsersManagerService, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
+import { ServiceService} from '@perun-web-apps/perun/services';
+
 
 @Component({
   selector: 'app-user-destination-relationship',
@@ -27,7 +28,7 @@ export class UserDestinationRelationshipComponent implements OnInit {
   destination = '';
   selectedUser: User;
 
-  constructor(private usersService: UsersService,
+  constructor(private usersService: UsersManagerService,
               private translate: TranslateService,
               private facilityManager: FacilitiesManagerService,
               private serviceService: ServiceService,

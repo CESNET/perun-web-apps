@@ -9,18 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PerunBean } from './perunBean';
+import { Attribute } from './attribute';
+import { UserExtSource } from './userExtSource';
 
 
-/**
- * input to setRoleWithUserComplementaryObject
- */
-export interface SetRoleWithUserComplementaryObject { 
-    role: string;
-    /**
-     * List of user ids
-     */
-    users: Array<number>;
-    complementaryObject: PerunBean;
+export interface RichUserExtSource { 
+    userExtSource: UserExtSource;
+    attributes: Array<Attribute>;
 }
 

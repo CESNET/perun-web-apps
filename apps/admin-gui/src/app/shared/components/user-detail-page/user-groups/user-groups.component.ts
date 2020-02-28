@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { MembersService, UsersService } from '@perun-web-apps/perun/services';
+import { MembersService} from '@perun-web-apps/perun/services';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, PerunPrincipal, Vo } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService, PerunPrincipal, UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-user-groups',
@@ -18,7 +18,7 @@ export class UserGroupsComponent implements OnInit {
   membersGroups: Group[] = [];
   adminsGroups: Group[] = [];
 
-  constructor(private usersService: UsersService,
+  constructor(private usersService: UsersManagerService,
               private memberService: MembersService,
               private groupService: GroupsManagerService,
               private store: StoreService) { }

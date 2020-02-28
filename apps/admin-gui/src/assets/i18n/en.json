@@ -16,8 +16,8 @@
   },
   "VO_MANAGEMENT": {
     "TITLE": "Select organization",
-    "CREATE_VO": "New...",
-    "REMOVE_VO": "Remove...",
+    "CREATE_VO": "New",
+    "REMOVE_VO": "Remove",
     "FILTER_PLACEHOLDER": "Filter by name",
     "TABLE": {
       "ID": "Id",
@@ -72,7 +72,7 @@
     "RESOURCES": {
       "TITLE": "Resources",
       "DELETE": "Remove selected",
-      "CREATE": "New...",
+      "CREATE": "New",
       "NO_RESOURCES_ALERT": "No resources found."
     },
     "ALLOWED_GROUPS": {
@@ -88,7 +88,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -110,7 +110,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -158,8 +158,8 @@
     },
     "GROUPS": {
       "TITLE": "Groups",
-      "CREATE_GROUP": "Create...",
-      "DELETE_GROUP": "Delete...",
+      "CREATE_GROUP": "Create",
+      "DELETE_GROUP": "Delete",
       "TITLE_SUBGROUPS": "Subgroups",
       "LIST_VIEW": "List view",
       "MENU_MOVE": "Move group",
@@ -169,8 +169,8 @@
     },
     "MEMBERS": {
       "TITLE": "Members",
-      "ADD_MEMBER": "Add...",
-      "REMOVE_MEMBERS": "Remove...",
+      "ADD_MEMBER": "Add",
+      "REMOVE_MEMBERS": "Remove",
       "SEARCH_DESCRIPTION": "Search by name, login or email",
       "LIST_MEMBERS": "List members",
       "SEARCH_ALERT": "You can search member by name, login and email. Also, you can list all valid members.",
@@ -264,7 +264,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -295,7 +295,7 @@
       },
       "EXT_SOURCES": {
         "TITLE": "External sources",
-        "ADD": "Add...",
+        "ADD": "Add",
         "REMOVE": "Remove",
         "FILTER": "Filter by ID, name or type",
         "SUCCESS_REMOVED": "External source successfully removed: "
@@ -361,8 +361,8 @@
     "SUBGROUP_INFO": "This group is a subgroup of ",
     "MEMBERS": {
       "TITLE": "Members",
-      "ADD_MEMBER": "Add...",
-      "REMOVE_MEMBERS": "Remove...",
+      "ADD_MEMBER": "Add",
+      "REMOVE_MEMBERS": "Remove",
       "SEARCH_DESCRIPTION": "Search by name, login or email",
       "LIST_ALL": "List all members",
       "SEARCH_ALERT": "You can search member by name, login and email. Also, you can list all valid members.",
@@ -379,7 +379,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -390,7 +390,7 @@
       },
       "MANAGERS": {
         "TITLE": "Managers",
-        "ADD": "Add...",
+        "ADD": "Add",
         "REMOVE": "Remove",
         "SELECT_MODE": "Select mode",
         "SELECT_ROLE": "Select role",
@@ -428,7 +428,7 @@
       "RELATIONS":{
         "TITLE": "Relations",
         "DELETE": "Remove selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "FILTER": "Filter by name, id or description",
         "REVERSE_UNIONS": "Show reverse unions"
       }
@@ -452,7 +452,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -1091,7 +1091,7 @@
       "TABLE_ATTR_DEF": "Def",
       "TABLE_ATTR_TYPE": "Type",
       "TABLE_ATTR_UNIQUE": "Unique",
-      "CREATE": "New attribute definition...",
+      "CREATE": "New attribute definition",
       "DELETE": "Delete",
       "SEARCH": "Filter by ID, name, entity, definition, or type",
       "NO_ATTRIBUTES": "There are no attributes available."
@@ -1167,7 +1167,7 @@
         "DELETE": "Remove selected",
         "FILTER": "Filter by id, name, value or description",
         "SAVE": "Save selected",
-        "CREATE": "Add...",
+        "CREATE": "Add",
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
@@ -1213,7 +1213,7 @@
       },
       "MANAGERS_PAGE": {
         "TITLE": "Managers",
-        "ADD": "Add...",
+        "ADD": "Add",
         "REMOVE": "Remove",
         "SELECT_MODE": "Select mode",
         "SELECT_ROLE": "Select role",

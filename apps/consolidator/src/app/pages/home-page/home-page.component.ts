@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddIdentityDialogComponent } from '../../components/add-identity-dialog/add-identity-dialog.component';
-import { RegistrarService, UsersService } from '@perun-web-apps/perun/services';
+import { RegistrarService} from '@perun-web-apps/perun/services';
 import { Identity } from '../../models/Identity';
-import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
+import { AuthzResolverService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'perun-web-apps-home-page',
@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private usersService: UsersService,
+    private usersService: UsersManagerService,
     private authzService: AuthzResolverService,
     private registrarService: RegistrarService
   ) { }
@@ -30,7 +30,7 @@ export class HomePageComponent implements OnInit {
     this.registrarService.getConsolidatorToken().subscribe(token => console.log(token));
 
     this.authzService.getPerunPrincipal().subscribe(principal => {
-      this.usersService.getRichUserExtSourcesWithAllAttributes(principal.userId).subscribe(userExtSources => {
+      this.usersService.getRichUserExtSources(principal.userId).subscribe(userExtSources => {
         this.knownIdentities = userExtSources.map(rues => ({
           login: rues.userExtSource.login,
           rues: rues
