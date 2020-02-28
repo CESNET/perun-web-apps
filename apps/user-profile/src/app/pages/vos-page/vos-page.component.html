@@ -1,1 +1,21 @@
-<p>vos-page works!</p>
+<h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.TITLE' | translate}}</h1>
+<!--<app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>-->
+<app-immediate-filter [placeholder]="'USER_DETAIL.ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
+                      *ngIf="!loading"></app-immediate-filter>
+<mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
+
+<div *ngIf="!loading && vosWhereIsMember.length !== 0">
+  <h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
+  <app-vo-select-table [filterValue]="filterValue"
+                       [vos]="vosWhereIsMember"
+                       [displayedColumns]="displayedColumns">
+  </app-vo-select-table>
+</div>
+
+<div *ngIf="!loading && vosWhereIsAdmin.length !== 0" class="mt-5">
+  <h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
+  <app-vo-select-table [filterValue]="filterValue"
+                       [vos]="vosWhereIsAdmin"
+                       [displayedColumns]="displayedColumns">
+  </app-vo-select-table>
+</div>

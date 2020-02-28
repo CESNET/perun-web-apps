@@ -28,4 +28,7 @@ export class SideMenuComponent implements OnInit {
     this.items.push(this.sideMenuItemService.getSettingsItem());
   }
 
+  shouldBeActivated() {
+
+  }
 }
