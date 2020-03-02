@@ -6,9 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { NotificatorService } from '../../../../../core/services/common/notificator.service';
-import { User, UsersManagerService, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
-import { ServiceService} from '@perun-web-apps/perun/services';
-
+import { User, UsersManagerService, FacilitiesManagerService, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-user-destination-relationship',
@@ -31,7 +29,7 @@ export class UserDestinationRelationshipComponent implements OnInit {
   constructor(private usersService: UsersManagerService,
               private translate: TranslateService,
               private facilityManager: FacilitiesManagerService,
-              private serviceService: ServiceService,
+              private serviceService: ServicesManagerService,
               private router: Router,
               private notificator: NotificatorService) { }
 
@@ -96,7 +94,7 @@ export class UserDestinationRelationshipComponent implements OnInit {
       stepper.selected.completed = true;
       stepper.next();
       for (const facility of facilities) {
-        this.serviceService.getAllRichDestinations(facility.id).subscribe( destination => {
+        this.serviceService.getAllRichDestinationsForFacility(facility.id).subscribe( destination => {
           for (const potentialDestination of destination) {
             if (potentialDestination.destination === this.destination) {
               if (this.availableServices.indexOf(potentialDestination.service.name) === -1) {

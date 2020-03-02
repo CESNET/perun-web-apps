@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionType, Service } from '@perun-web-apps/perun/openapi';
-import { ServiceService } from '@perun-web-apps/perun/services';
+import { ActionType, Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { slideInOutLeft, slideInOutRight, switchAnimation } from '../../../animations/Animations';
 import { AttributeDefinition, AttributeRights, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
@@ -26,7 +25,7 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
               private notificator: NotificatorService,
               private translate: TranslateService,
               private attributesManager: AttributesManagerService,
-              private serviceService: ServiceService) {
+              private serviceService: ServicesManagerService) {
   }
 
   showKeys = false;
