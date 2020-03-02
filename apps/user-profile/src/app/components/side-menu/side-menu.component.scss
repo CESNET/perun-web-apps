@@ -3,6 +3,10 @@
   padding-left: 6px;
 }
 
+mat-list-item:hover{
+  background: var(--side-hover) !important;
+}
+
 .activated {
-  background: var(--);
+  background: var(--side-active) !important;
 }

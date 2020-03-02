@@ -14,6 +14,7 @@ import { SettingsPreferredShellsComponent } from './pages/settings-page/settings
 import { SettingsPreferredUnixGroupNamesComponent } from './pages/settings-page/settings-preferred-unix-group-names/settings-preferred-unix-group-names.component';
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsSSHKeysComponent } from './pages/settings-page/settings-ssh-keys/settings-ssh-keys.component';
+import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'organizations',
     component: VosPageComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyPageComponent
   },
   {
     path: 'settings',

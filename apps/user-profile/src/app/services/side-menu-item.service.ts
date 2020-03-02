@@ -12,7 +12,7 @@ export class SideMenuItemService {
       label: 'MENU_ITEMS.PROFILE',
       icon: 'account_box',
       link: '/profile',
-      // activated_regex
+      activatedRegex: '^/profile$'
     };
   }
 
@@ -20,7 +20,8 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.IDENTITIES',
       icon: 'remove_red_eye',
-      link: '/identities'
+      link: '/identities',
+      activatedRegex: '^/identities$'
     };
   }
 
@@ -28,7 +29,8 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.SERVICES',
       icon: 'build',
-      link: '/services'
+      link: '/services',
+      activatedRegex: '^/services$'
     };
   }
 
@@ -36,7 +38,8 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.GROUPS',
       icon: 'group',
-      link: '/groups'
+      link: '/groups',
+      activatedRegex: '^/groups$'
 
     };
   }
@@ -45,8 +48,18 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.VOS',
       icon: 'account_balance',
-      link: '/organizations'
+      link: '/organizations',
+      activatedRegex: '^/organizations$'
 
+    };
+  }
+
+  getPrivacyItem(): SideMenuItem {
+    return {
+      label: 'MENU_ITEMS.PRIVACY',
+      icon: 'vpn_key',
+      link: '/privacy',
+      activatedRegex: '^/privacy$'
     };
   }
 
@@ -54,7 +67,8 @@ export class SideMenuItemService {
     return {
       label: 'MENU_ITEMS.SETTINGS',
       icon: 'settings',
-      link: '/settings'
+      link: '/settings',
+      activatedRegex: '^/settings'
     };
   }
 }
@@ -63,4 +77,5 @@ export interface SideMenuItem {
   label: string;
   icon: string;
   link: string;
+  activatedRegex: string;
 }
