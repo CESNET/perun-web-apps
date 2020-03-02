@@ -23,6 +23,7 @@ import { SettingsDataQuotasComponent } from './pages/settings-page/settings-data
 import { SettingsAlternativePasswordsComponent } from './pages/settings-page/settings-alternative-passwords/settings-alternative-passwords.component';
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsMailingListsComponent } from './pages/settings-page/settings-mailing-lists/settings-mailing-lists.component';
+// tslint:disable-next-line:nx-enforce-module-boundaries
 import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -36,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UserProfileConfigService } from './services/user-profile-config.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -74,7 +76,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     SideMenuComponent,
     LayoutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PrivacyPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SideMenuItem, SideMenuItemService } from '../../services/side-menu-item.service';
 import { StoreService } from '@perun-web-apps/perun/services';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'perun-web-apps-side-menu',
@@ -9,10 +10,21 @@ import { StoreService } from '@perun-web-apps/perun/services';
 })
 export class SideMenuComponent implements OnInit {
 
+  private currentUrl: string;
+
   constructor(
     private sideMenuItemService: SideMenuItemService,
-    private storeService: StoreService
-  ) { }
+    private storeService: StoreService,
+    private router: Router
+  ) {
+    this.currentUrl = router.url;
+
+    router.events.subscribe((_: NavigationEnd) => {
+      if (_ instanceof NavigationEnd) {
+        this.currentUrl = _.url;
+      }
+    });
+  }
 
   items: SideMenuItem[] = [];
 
@@ -25,10 +37,13 @@ export class SideMenuComponent implements OnInit {
     this.items.push(this.sideMenuItemService.getServicesItem());
     this.items.push(this.sideMenuItemService.getGroupsItem());
     this.items.push(this.sideMenuItemService.getVosItem());
+    this.items.push(this.sideMenuItemService.getPrivacyItem());
     this.items.push(this.sideMenuItemService.getSettingsItem());
   }
 
-  shouldBeActivated() {
+  isActive(regexValue: string) {
+    const regexp = new RegExp(regexValue);
 
+    return regexp.test(this.currentUrl);
   }
 }

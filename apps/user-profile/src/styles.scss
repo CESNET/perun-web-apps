@@ -48,14 +48,6 @@ $perun-theme: mat-light-theme($perun-primary, $perun-accent, $perun-warn);
 // that you are using.
 @include angular-material-theme($perun-theme);
 
-//.user-theme {
-//  $user-primary: mat-palette($mat-teal, 700);
-//  $user-accent: mat-palette($mat-green, 600);
-//  $user-theme: mat-light-theme($user-primary, $user-accent);
-//
-//  @include angular-material-theme($user-theme);
-//}
-
 .user-theme {
   $user-dynamic-colors:(
     50 : rgba(var(--user-theme-primary-50), 1),
@@ -97,27 +89,3 @@ $perun-theme: mat-light-theme($perun-primary, $perun-accent, $perun-warn);
 
   @include angular-material-theme($user-theme);
 }
-
-//.user-item-activated {
-//  border-right: 5px solid var(--member-color);
-//  color: var(--member-color) !important;
-//  font-weight: 500;
-//  background-color: rgba(0, 121, 107, 0.10);
-//
-//  &:hover {
-//    background-color: rgba(0, 121, 107, 0.15) !important;
-//  }
-//}
-
-//.user-item-links a:hover {
-//  color: var(--user-color) !important;
-//  background-color: rgba(0, 121, 107, 0.15) !important;
-//}
-//
-//.user-bg-color {
-//  background-color: var(--user-color);
-//  .cdk-text-field-autofilled {
-//    background-color: black !important;
-//  }
-//}
-//
