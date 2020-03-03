@@ -90,27 +90,25 @@ export class AddMemberDialogComponent implements OnInit {
     // TODO Was not tested properly. Need to be tested on devel.
     if (this.selection.selected[0].richUser) {
       if (this.data.type === 'vo') {
-        this.registrarManager.sendInvitationToExistingUser(
-          this.selection.selected[0].richUser.id, this.data.entityId).subscribe(() => {
+        this.registrarManager.sendInvitationToExistingUser(this.selection.selected[0].richUser.id, this.data.entityId).subscribe(() => {
           this.onInviteSuccess();
         });
       } else if (this.data.type === 'group') {
-        this.registrarManager.sendInvitationGroupToExistingUser(
-          this.selection.selected[0].richUser.id, this.data.voId, this.data.group.id).subscribe(() => {
+        this.registrarManager.sendInvitationGroupToExistingUser(this.selection.selected[0].richUser.id, this.data.voId, this.data.group.id).subscribe(() => {
           this.onInviteSuccess();
         });
       }
     } else {
       if (this.data.type === 'vo') {
-        this.registrarManager.sendInvitation(this.data.voId,
+        this.registrarManager.sendInvitation(
           // TODO allow to choose language
-          getCandidateEmail(this.selection.selected[0].candidate), 'en').subscribe(() => {
+          getCandidateEmail(this.selection.selected[0].candidate), 'en', this.data.voId).subscribe(() => {
             this.onInviteSuccess();
         });
       } else if (this.data.type === 'group') {
           // TODO allow to choose language
-        this.registrarManager.sendInvitationForGroup(this.data.voId, this.data.group.id,
-          getCandidateEmail(this.selection.selected[0].candidate), 'en').subscribe( () => {
+        this.registrarManager.sendInvitationForGroup(getCandidateEmail(this.selection.selected[0].candidate), 'en',
+          this.data.voId, this.data.group.id).subscribe( () => {
             this.onInviteSuccess();
         });
       }

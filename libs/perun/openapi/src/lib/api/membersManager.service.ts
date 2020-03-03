@@ -55,7 +55,7 @@ export class MembersManagerService {
     /**
      * Searches for members in a VO.
      * @param vo id of Vo
-     * @param searchString string to search by
+     * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

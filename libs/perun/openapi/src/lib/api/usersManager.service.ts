@@ -57,7 +57,7 @@ export class UsersManagerService {
 
     /**
      * Returns list of RichUsers with attributes who matches the searchString, searching name, email, logins.
-     * @param searchString string to search by
+     * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -115,7 +115,7 @@ export class UsersManagerService {
 
     /**
      * Returns list of Users with attributes who matches the searchString, searching name, email, logins.
-     * @param searchString string to search by
+     * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

@@ -16,7 +16,7 @@
   <mat-sidenav #sidenav
                [ngStyle]="{'border-color': sideBarBorderColor}"
                [mode]="sidebarMode"
-               [opened]="true"
+               [opened]="!isMobile()"
                [fixedInViewport]="true"
                [fixedTopGap]="getTopGap()">
 

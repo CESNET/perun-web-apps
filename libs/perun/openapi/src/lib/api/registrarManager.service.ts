@@ -61,21 +61,21 @@ export class RegistrarManagerService {
     /**
      * Manually approves an application.
      * Expected to be called as a result of direct VO administrator action in the web UI. 
-     * @param applicationId id of application
+     * @param appId id of application
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public approveApplication(applicationId: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
-    public approveApplication(applicationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
-    public approveApplication(applicationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
-    public approveApplication(applicationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling approveApplication.');
+    public approveApplication(appId: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
+    public approveApplication(appId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
+    public approveApplication(appId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
+    public approveApplication(appId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (appId === null || appId === undefined) {
+            throw new Error('Required parameter appId was null or undefined when calling approveApplication.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (appId !== undefined && appId !== null) {
+            queryParameters = queryParameters.set('appId', <any>appId);
         }
 
         let headers = this.defaultHeaders;
@@ -536,21 +536,21 @@ export class RegistrarManagerService {
 
     /**
      * Deletes an application.
-     * @param applicationId id of application
+     * @param appId id of application
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteApplication(applicationId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteApplication(applicationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteApplication(applicationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteApplication(applicationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling deleteApplication.');
+    public deleteApplication(appId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteApplication(appId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteApplication(appId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteApplication(appId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (appId === null || appId === undefined) {
+            throw new Error('Required parameter appId was null or undefined when calling deleteApplication.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (appId !== undefined && appId !== null) {
+            queryParameters = queryParameters.set('appId', <any>appId);
         }
 
         let headers = this.defaultHeaders;
@@ -595,21 +595,21 @@ export class RegistrarManagerService {
 
     /**
      * Returns application object by its id.
-     * @param applicationId id of application
+     * @param id numeric id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getApplicationById(applicationId: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
-    public getApplicationById(applicationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
-    public getApplicationById(applicationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
-    public getApplicationById(applicationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling getApplicationById.');
+    public getApplicationById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
+    public getApplicationById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
+    public getApplicationById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
+    public getApplicationById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getApplicationById.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
         }
 
         let headers = this.defaultHeaders;
@@ -653,21 +653,21 @@ export class RegistrarManagerService {
 
     /**
      * Returns data submitted by user in given application (by id).
-     * @param applicationId id of application
+     * @param id numeric id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getApplicationDataById(applicationId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ApplicationFormItemData>>;
-    public getApplicationDataById(applicationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ApplicationFormItemData>>>;
-    public getApplicationDataById(applicationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ApplicationFormItemData>>>;
-    public getApplicationDataById(applicationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling getApplicationDataById.');
+    public getApplicationDataById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ApplicationFormItemData>>;
+    public getApplicationDataById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ApplicationFormItemData>>>;
+    public getApplicationDataById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ApplicationFormItemData>>>;
+    public getApplicationDataById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getApplicationDataById.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
         }
 
         let headers = this.defaultHeaders;
@@ -1247,22 +1247,22 @@ export class RegistrarManagerService {
     /**
      * Manually rejects an application.
      * Expected to be called as a result of direct VO administrator action in the web UI. 
-     * @param applicationId id of application
+     * @param appId id of application
      * @param reason description of reason
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public rejectApplication(applicationId: number, reason?: string, observe?: 'body', reportProgress?: boolean): Observable<Application>;
-    public rejectApplication(applicationId: number, reason?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
-    public rejectApplication(applicationId: number, reason?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
-    public rejectApplication(applicationId: number, reason?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling rejectApplication.');
+    public rejectApplication(appId: number, reason?: string, observe?: 'body', reportProgress?: boolean): Observable<Application>;
+    public rejectApplication(appId: number, reason?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
+    public rejectApplication(appId: number, reason?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
+    public rejectApplication(appId: number, reason?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (appId === null || appId === undefined) {
+            throw new Error('Required parameter appId was null or undefined when calling rejectApplication.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (appId !== undefined && appId !== null) {
+            queryParameters = queryParameters.set('appId', <any>appId);
         }
         if (reason !== undefined && reason !== null) {
             queryParameters = queryParameters.set('reason', <any>reason);
@@ -1310,20 +1310,17 @@ export class RegistrarManagerService {
 
     /**
      * Sends invitation email to user which is not member of VO
-     * @param vo id of Vo
      * @param email email address to send invitation to
      * @param language preferred language to use
+     * @param voId id of VO to send invitation into
      * @param name name of person used in invitation email (optional)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendInvitation(vo: number, email: string, language: string, name?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public sendInvitation(vo: number, email: string, language: string, name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public sendInvitation(vo: number, email: string, language: string, name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public sendInvitation(vo: number, email: string, language: string, name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling sendInvitation.');
-        }
+    public sendInvitation(email: string, language: string, voId?: number, name?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendInvitation(email: string, language: string, voId?: number, name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendInvitation(email: string, language: string, voId?: number, name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendInvitation(email: string, language: string, voId?: number, name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (email === null || email === undefined) {
             throw new Error('Required parameter email was null or undefined when calling sendInvitation.');
         }
@@ -1332,8 +1329,8 @@ export class RegistrarManagerService {
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+        if (voId !== undefined && voId !== null) {
+            queryParameters = queryParameters.set('voId', <any>voId);
         }
         if (name !== undefined && name !== null) {
             queryParameters = queryParameters.set('name', <any>name);
@@ -1388,24 +1385,18 @@ export class RegistrarManagerService {
     /**
      * Sends invitation email to user which is not member of VO and Group
      * Invitation link targets VO application form fist, after submission, Group application form is displayed. 
-     * @param vo id of Vo
-     * @param group id of Group
      * @param email email address to send invitation to
      * @param language preferred language to use
+     * @param voId id of VO to send invitation into
+     * @param groupId id of Group to send invitation into
      * @param name name of person used in invitation email (optional)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendInvitationForGroup(vo: number, group: number, email: string, language: string, name?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public sendInvitationForGroup(vo: number, group: number, email: string, language: string, name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public sendInvitationForGroup(vo: number, group: number, email: string, language: string, name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public sendInvitationForGroup(vo: number, group: number, email: string, language: string, name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling sendInvitationForGroup.');
-        }
-        if (group === null || group === undefined) {
-            throw new Error('Required parameter group was null or undefined when calling sendInvitationForGroup.');
-        }
+    public sendInvitationForGroup(email: string, language: string, voId?: number, groupId?: number, name?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendInvitationForGroup(email: string, language: string, voId?: number, groupId?: number, name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendInvitationForGroup(email: string, language: string, voId?: number, groupId?: number, name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendInvitationForGroup(email: string, language: string, voId?: number, groupId?: number, name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (email === null || email === undefined) {
             throw new Error('Required parameter email was null or undefined when calling sendInvitationForGroup.');
         }
@@ -1414,11 +1405,11 @@ export class RegistrarManagerService {
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+        if (voId !== undefined && voId !== null) {
+            queryParameters = queryParameters.set('voId', <any>voId);
         }
-        if (group !== undefined && group !== null) {
-            queryParameters = queryParameters.set('group', <any>group);
+        if (groupId !== undefined && groupId !== null) {
+            queryParameters = queryParameters.set('groupId', <any>groupId);
         }
         if (name !== undefined && name !== null) {
             queryParameters = queryParameters.set('name', <any>name);
@@ -1472,35 +1463,26 @@ export class RegistrarManagerService {
 
     /**
      * Sends invitation email to user which is not member of Group
-     * @param user id of User
-     * @param vo id of Vo
-     * @param group id of Group
+     * @param userId id of user to send invitation to
+     * @param voId id of VO to send invitation into
+     * @param groupId id of Group to send invitation into
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendInvitationGroupToExistingUser(user: number, vo: number, group: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public sendInvitationGroupToExistingUser(user: number, vo: number, group: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public sendInvitationGroupToExistingUser(user: number, vo: number, group: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public sendInvitationGroupToExistingUser(user: number, vo: number, group: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (user === null || user === undefined) {
-            throw new Error('Required parameter user was null or undefined when calling sendInvitationGroupToExistingUser.');
-        }
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling sendInvitationGroupToExistingUser.');
-        }
-        if (group === null || group === undefined) {
-            throw new Error('Required parameter group was null or undefined when calling sendInvitationGroupToExistingUser.');
-        }
+    public sendInvitationGroupToExistingUser(userId?: number, voId?: number, groupId?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendInvitationGroupToExistingUser(userId?: number, voId?: number, groupId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendInvitationGroupToExistingUser(userId?: number, voId?: number, groupId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendInvitationGroupToExistingUser(userId?: number, voId?: number, groupId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('userId', <any>userId);
         }
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+        if (voId !== undefined && voId !== null) {
+            queryParameters = queryParameters.set('voId', <any>voId);
         }
-        if (group !== undefined && group !== null) {
-            queryParameters = queryParameters.set('group', <any>group);
+        if (groupId !== undefined && groupId !== null) {
+            queryParameters = queryParameters.set('groupId', <any>groupId);
         }
 
         let headers = this.defaultHeaders;
@@ -1545,28 +1527,22 @@ export class RegistrarManagerService {
 
     /**
      * Sends invitation email to user which is not member of VO
-     * @param user id of User
-     * @param vo id of Vo
+     * @param userId id of user to send invitation to
+     * @param voId id of VO to send invitation into
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendInvitationToExistingUser(user: number, vo: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public sendInvitationToExistingUser(user: number, vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public sendInvitationToExistingUser(user: number, vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public sendInvitationToExistingUser(user: number, vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (user === null || user === undefined) {
-            throw new Error('Required parameter user was null or undefined when calling sendInvitationToExistingUser.');
-        }
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling sendInvitationToExistingUser.');
-        }
+    public sendInvitationToExistingUser(userId?: number, voId?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendInvitationToExistingUser(userId?: number, voId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendInvitationToExistingUser(userId?: number, voId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendInvitationToExistingUser(userId?: number, voId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('userId', <any>userId);
         }
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+        if (voId !== undefined && voId !== null) {
+            queryParameters = queryParameters.set('voId', <any>voId);
         }
 
         let headers = this.defaultHeaders;
@@ -1860,21 +1836,21 @@ export class RegistrarManagerService {
 
     /**
      * Forcefully marks application as verified (only when application was in NEW state).
-     * @param applicationId id of application
+     * @param appId id of application
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public verifyApplication(applicationId: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
-    public verifyApplication(applicationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
-    public verifyApplication(applicationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
-    public verifyApplication(applicationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (applicationId === null || applicationId === undefined) {
-            throw new Error('Required parameter applicationId was null or undefined when calling verifyApplication.');
+    public verifyApplication(appId: number, observe?: 'body', reportProgress?: boolean): Observable<Application>;
+    public verifyApplication(appId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Application>>;
+    public verifyApplication(appId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Application>>;
+    public verifyApplication(appId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (appId === null || appId === undefined) {
+            throw new Error('Required parameter appId was null or undefined when calling verifyApplication.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (applicationId !== undefined && applicationId !== null) {
-            queryParameters = queryParameters.set('applicationId', <any>applicationId);
+        if (appId !== undefined && appId !== null) {
+            queryParameters = queryParameters.set('appId', <any>appId);
         }
 
         let headers = this.defaultHeaders;
