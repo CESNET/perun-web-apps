@@ -31,6 +31,10 @@ export class UserProfileConfigService {
     {
       configValue: 'sidemenu_active_color',
       cssVariable: '--side-active'
+    },
+    {
+      configValue: 'sidemenu_active_text_color',
+      cssVariable: '--side-text-active'
     }
   ];
 

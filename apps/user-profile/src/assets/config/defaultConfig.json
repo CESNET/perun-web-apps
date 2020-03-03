@@ -65,8 +65,9 @@
     "sidemenu_bg_color": "#263238",
     "sidemenu_border_color": "#071e24",
     "sidemenu_item_icon_color": "#ffffff",
-    "sidemenu_hover_color": "#005048",
-    "sidemenu_active_color": "#00796b",
+    "sidemenu_hover_color": "#00796b",
+    "sidemenu_active_color": "#005048",
+    "sidemenu_active_text_color": "#ffffff",
     "user_color": "#00796b"
   }
 }

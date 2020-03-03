@@ -1,6 +1,6 @@
-<footer [ngStyle]="{'background': bgColor}" style="padding-top: 10px">
+<footer [ngStyle]="{'background': bgColor}" style="padding-top: 15px; padding-bottom: 15px">
   <div fxLayout="row" fxLayoutAlign="space-evenly none">
-    <div fxLayout="column" fxLayoutAlign="none center" *ngFor="let item of items">
+    <div *ngFor="let item of items" fxLayout="column" fxLayoutAlign="none left">
       <h3 [ngStyle]="{'color': headersTextColor}">
         {{item.title}}
       </h3>
