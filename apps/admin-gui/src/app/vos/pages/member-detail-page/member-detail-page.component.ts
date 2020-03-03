@@ -4,8 +4,8 @@ import {SideMenuItemService} from '../../../shared/side-menu/side-menu-item.serv
 import {SideMenuService} from '../../../core/services/common/side-menu.service';
 import {TranslateService} from '@ngx-translate/core';
 import {fadeIn} from '../../../shared/animations/Animations';
-import { MembersService, VoService } from '@perun-web-apps/perun/services';
-import { RichMember, Vo } from '@perun-web-apps/perun/openapi';
+import { MembersService } from '@perun-web-apps/perun/services';
+import { RichMember, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-member-detail-page',
@@ -22,7 +22,7 @@ export class MemberDetailPageComponent implements OnInit {
     private translate: TranslateService,
     private sideMenuService: SideMenuService,
     private membersService: MembersService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private route: ActivatedRoute,
   ) { }
 

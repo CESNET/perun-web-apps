@@ -3,8 +3,7 @@ import { SideMenuService } from '../../../core/services/common/side-menu.service
 import { ActivatedRoute } from '@angular/router';
 import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.service';
 import { fadeIn } from '../../../shared/animations/Animations';
-import { VoService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-group-detail-page',
@@ -18,7 +17,7 @@ export class GroupDetailPageComponent implements OnInit {
 
   constructor(
     private sideMenuService: SideMenuService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private route: ActivatedRoute,
     private sideMenuItemService: SideMenuItemService,
     private groupService: GroupsManagerService

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SideMenuService} from '../../../core/services/common/side-menu.service';
-import { VoService } from '@perun-web-apps/perun/services';
-import { Vo } from '@perun-web-apps/perun/openapi';
+import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
 import { AuthResolverService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +17,7 @@ export class VoSelectPageComponent implements OnInit {
 
   constructor(
     private sideMenuService: SideMenuService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private authzService: AuthResolverService,
     private dialog: MatDialog
   ) { }
@@ -46,7 +45,7 @@ export class VoSelectPageComponent implements OnInit {
   refreshTable() {
     this.loading = true;
     this.selection.clear();
-    this.voService.getVos().subscribe(vos => {
+    this.voService.getMyVos().subscribe(vos => {
       this.vos = getRecentlyVisited('vos', vos);
       this.recentIds = getRecentlyVisitedIds('vos');
       this.loading = false;

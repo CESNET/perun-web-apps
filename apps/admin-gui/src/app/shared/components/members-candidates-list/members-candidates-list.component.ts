@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import { RichUser } from '@perun-web-apps/perun/openapi';
+import { RichUser, Candidate, MemberCandidate } from '@perun-web-apps/perun/openapi';
 import {
   parseEmail,
   getCandidateEmail,
@@ -11,7 +11,6 @@ import {
   parseUserEmail,
   parseVo, parseName
 } from '@perun-web-apps/perun/utils';
-import { Candidate, MemberCandidate } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-members-candidates-list',
@@ -63,9 +62,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
             }
             return name.toLowerCase();
           case 'email':
-            if (!!memberCandidate.member && !!memberCandidate.member.memberAttributes) {
-              return parseEmail(memberCandidate.member);
-            } else if (memberCandidate.richUser) {
+            if (memberCandidate.richUser || memberCandidate.member) {
               return parseUserEmail(memberCandidate.richUser);
             } else {
               return this.getEmail(memberCandidate.candidate);

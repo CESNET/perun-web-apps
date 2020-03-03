@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { RegistrarService, VoService } from '@perun-web-apps/perun/services';
-import { Application, RegistrarManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { RegistrarService } from '@perun-web-apps/perun/services';
+import { Application, RegistrarManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-vo-applications',
@@ -14,7 +14,7 @@ export class VoApplicationsComponent implements OnInit {
 
   @HostBinding('class.router-component') true;
 
-  constructor(private voService: VoService,
+  constructor(private voService: VosManagerService,
               private registrarService: RegistrarService,
               private registrarManager: RegistrarManagerService,
               protected route: ActivatedRoute) { }

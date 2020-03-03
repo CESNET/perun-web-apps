@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { VoService } from '@perun-web-apps/perun/services';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl, Validators } from '@angular/forms';
+import { VosManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface CreateVoDialogData {
   theme: string;
@@ -20,7 +20,7 @@ export class CreateVoDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<CreateVoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: CreateVoDialogData,
     private notificator: NotificatorService,
-    private voService: VoService,
+    private voService: VosManagerService,
     private translate: TranslateService,
   ) {
     translate.get('DIALOGS.CREATE_VO.SUCCESS').subscribe(value => this.successMessage = value);
@@ -45,7 +45,7 @@ export class CreateVoDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.voService.createVo(this.fullNameCtrl.value, this.shortNameCtrl.value).subscribe(() => {
+    this.voService.createVoWithName(this.fullNameCtrl.value, this.shortNameCtrl.value).subscribe(() => {
       this.notificator.showSuccess(this.successMessage);
       this.loading = false;
       this.dialogRef.close(true);

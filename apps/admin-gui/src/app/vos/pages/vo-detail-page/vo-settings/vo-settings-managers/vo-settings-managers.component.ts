@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { VoService } from '@perun-web-apps/perun/services';
-import { Vo } from '@perun-web-apps/perun/openapi';
+import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
 
 @Component({
@@ -16,7 +15,7 @@ export class VoSettingsManagersComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private voService: VoService,
+    private voService: VosManagerService,
     private route: ActivatedRoute
   ) { }
 
