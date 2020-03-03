@@ -74,10 +74,10 @@ export class ServicesManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType: DestinationPropagationType, observe?: 'body', reportProgress?: boolean): Observable<Destination>;
-    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType: DestinationPropagationType, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Destination>>;
-    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType: DestinationPropagationType, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Destination>>;
-    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType: DestinationPropagationType, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType?: DestinationPropagationType, observe?: 'body', reportProgress?: boolean): Observable<Destination>;
+    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType?: DestinationPropagationType, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Destination>>;
+    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType?: DestinationPropagationType, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Destination>>;
+    public addDestination(service: number, facility: number, destination: string, type: DestinationType, propagationType?: DestinationPropagationType, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (service === null || service === undefined) {
             throw new Error('Required parameter service was null or undefined when calling addDestination.');
         }
@@ -89,9 +89,6 @@ export class ServicesManagerService {
         }
         if (type === null || type === undefined) {
             throw new Error('Required parameter type was null or undefined when calling addDestination.');
-        }
-        if (propagationType === null || propagationType === undefined) {
-            throw new Error('Required parameter propagationType was null or undefined when calling addDestination.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -546,7 +543,7 @@ export class ServicesManagerService {
     /**
      * Batch version of addRequiredAttribute.
      * @param service id of Service
-     * @param attributes Attribute IDs
+     * @param attributes list of attribute ids List&lt;Integer&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -567,7 +564,7 @@ export class ServicesManagerService {
         }
         if (attributes) {
             attributes.forEach((element) => {
-                queryParameters = queryParameters.append('attributes', <any>element);
+                queryParameters = queryParameters.append('attributes[]', <any>element);
             })
         }
 
@@ -3445,7 +3442,7 @@ export class ServicesManagerService {
     /**
      * Remove required attributes from service.
      * @param service id of Service
-     * @param attributes Attribute IDs
+     * @param attributes list of attribute ids List&lt;Integer&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -3466,7 +3463,7 @@ export class ServicesManagerService {
         }
         if (attributes) {
             attributes.forEach((element) => {
-                queryParameters = queryParameters.append('attributes', <any>element);
+                queryParameters = queryParameters.append('attributes[]', <any>element);
             })
         }
 
