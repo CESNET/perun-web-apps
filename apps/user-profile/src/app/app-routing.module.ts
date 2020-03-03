@@ -15,67 +15,95 @@ import { SettingsPreferredUnixGroupNamesComponent } from './pages/settings-page/
 import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-samba-password/settings-samba-password.component';
 import { SettingsSSHKeysComponent } from './pages/settings-page/settings-ssh-keys/settings-ssh-keys.component';
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo:'profile',
+    pathMatch:'full'
+  },
+  {
     path: 'profile',
-    component: ProfilePageComponent
-  },
-  {
-    path: 'identities',
-    component: IdentitiesPageComponent
-  },
-  {
-    path: 'groups',
-    component: GroupsPageComponent
-  },
-  {
-    path: 'services',
-    component: ServicesPageComponent
-  },
-  {
-    path: 'organizations',
-    component: VosPageComponent
-  },
-  {
-    path: 'privacy',
-    component: PrivacyPageComponent
-  },
-  {
-    path: 'settings',
-    component: SettingsPageComponent,
+    component: HomePageComponent,
+    data: { breadcrumb: 'Profile'},
     children: [
       {
         path: '',
-        component: SettingsOverviewComponent
+        component: ProfilePageComponent,
+        data: { breadcrumb: 'Profile'},
       },
       {
-        path: 'altPasswords',
-        component: SettingsAlternativePasswordsComponent
+        path: 'identities',
+        component: IdentitiesPageComponent,
+        data: { breadcrumb: 'Identities'}
       },
       {
-        path: 'dataQuotas',
-        component: SettingsDataQuotasComponent
+        path: 'groups',
+        component: GroupsPageComponent,
+        data: { breadcrumb: 'Groups'}
       },
       {
-        path: 'mailingLists',
-        component: SettingsMailingListsComponent
+        path: 'services',
+        component: ServicesPageComponent,
+        data: { breadcrumb: 'Services'}
       },
       {
-        path: 'prefShells',
-        component: SettingsPreferredShellsComponent
+        path: 'organizations',
+        component: VosPageComponent,
+        data: { breadcrumb: 'Organizations'}
       },
       {
-        path: 'prefGroupNames',
-        component: SettingsPreferredUnixGroupNamesComponent
+        path: 'privacy',
+        component: PrivacyPageComponent,
+        data: { breadcrumb: 'Privacy'}
       },
       {
-        path: 'sambaPassword',
-        component: SettingsSambaPasswordComponent
-      },
-      {
-        path: 'sshKeys',
-        component: SettingsSSHKeysComponent
+        path: 'settings',
+        component: SettingsPageComponent,
+        data: { breadcrumb: 'Settings'},
+        children: [
+          {
+            path: '',
+            component: SettingsOverviewComponent,
+            data: { breadcrumb: 'Settings'}
+          },
+          {
+            path: 'altPasswords',
+            component: SettingsAlternativePasswordsComponent,
+            data: { breadcrumb: 'Alternative passwords'}
+          },
+          {
+            path: 'dataQuotas',
+            component: SettingsDataQuotasComponent,
+            data: { breadcrumb: 'Data quotas'}
+          },
+          {
+            path: 'mailingLists',
+            component: SettingsMailingListsComponent,
+            data: { breadcrumb: 'Mailing lists'}
+          },
+          {
+            path: 'prefShells',
+            component: SettingsPreferredShellsComponent,
+            data: { breadcrumb: 'Preferred shells'}
+          },
+          {
+            path: 'prefGroupNames',
+            component: SettingsPreferredUnixGroupNamesComponent,
+            data: { breadcrumb: 'Preferred group names'}
+          },
+          {
+            path: 'sambaPassword',
+            component: SettingsSambaPasswordComponent,
+            data: { breadcrumb: 'Samba password'}
+          },
+          {
+            path: 'sshKeys',
+            component: SettingsSSHKeysComponent,
+            data: { breadcrumb: 'SSH keys'}
+          }
+        ]
       }
     ]
   },
