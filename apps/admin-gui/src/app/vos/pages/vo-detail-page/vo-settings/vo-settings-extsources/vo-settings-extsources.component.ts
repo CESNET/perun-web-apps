@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExtSourceService } from '@perun-web-apps/perun/services';
 import { ActivatedRoute } from '@angular/router';
-import { ExtSource } from '@perun-web-apps/perun/openapi';
+import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExtSourceDialogComponent } from '../../../../../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
@@ -15,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class VoSettingsExtsourcesComponent implements OnInit {
 
-  constructor(private extSourceService: ExtSourceService,
+  constructor(private extSourceService: ExtSourcesManagerService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
               private notificator: NotificatorService,
@@ -68,7 +67,7 @@ export class VoSettingsExtsourcesComponent implements OnInit {
 
   onRemove() {
     for (const extSource of this.selection.selected) {
-      this.extSourceService.removeExtSources(this.voId, extSource.id).subscribe(_ => {
+      this.extSourceService.removeExtSourceWithVoSource(this.voId, extSource.id).subscribe(_ => {
         this.notificator.showSuccess(this.successMessage + extSource.name);
         this.refreshTable();
       });

@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ExtSource } from '@perun-web-apps/perun/openapi';
+import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ExtSourceService } from '@perun-web-apps/perun/services';
 
 export interface AddExtSourceDialogData {
   voId: number
@@ -21,7 +20,7 @@ export class AddExtSourceDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddExtSourceDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: AddExtSourceDialogData,
-              private extSourceService: ExtSourceService,
+              private extSourceService: ExtSourcesManagerService,
               private notificator: NotificatorService,
               private translate: TranslateService) {
     this.translate.get('DIALOGS.ADD_EXT_SOURCES.SUCCESS_ADDED').subscribe(result => this.successMessage = result);
@@ -48,7 +47,7 @@ export class AddExtSourceDialogComponent implements OnInit {
 
   onAdd() {
     for (const source of this.selection.selected) {
-      this.extSourceService.addExtSources(this.data.voId, source.id).subscribe(_ => {
+      this.extSourceService.addExtSourceWithVoSource(this.data.voId, source.id).subscribe(_ => {
         this.notificator.showSuccess(this.successMessage + source.name);
         this.dialogRef.close(true);
       });

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ExtSourceService } from '@perun-web-apps/perun/services';
 import { NotificatorService } from '../../../../core/services/common/notificator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ExtSource } from '@perun-web-apps/perun/openapi';
+import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-admin-ext-sources',
@@ -11,7 +10,7 @@ import { ExtSource } from '@perun-web-apps/perun/openapi';
 })
 export class AdminExtSourcesComponent implements OnInit {
 
-  constructor(private extSourceService: ExtSourceService,
+  constructor(private extSourceService: ExtSourcesManagerService,
               private notificator: NotificatorService,
               private translate: TranslateService
   ) {
@@ -35,7 +34,7 @@ export class AdminExtSourcesComponent implements OnInit {
   }
 
   onLoad() {
-    this.extSourceService.loadExtSources().subscribe(() => {
+    this.extSourceService.loadExtSourcesDefinitions().subscribe(() => {
       this.notificator.showSuccess(this.loadSuccess);
       this.refreshTable();
     });
