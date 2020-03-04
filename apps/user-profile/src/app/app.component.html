@@ -12,8 +12,8 @@
     <div id="content-wrap" style="height: 75vh">
       <breadcrumb #parent>
         <span *ngFor="let route of parent.breadcrumbs" class="custom-breadcrumb">
-          <a *ngIf="!route.terminal" [routerLink]="[route.url]" href="" mat-button>{{ route.displayName }}</a>
-          <a *ngIf="route.terminal" mat-button>{{ route.displayName }}</a>
+          <a *ngIf="!route.terminal" [routerLink]="[route.url]" href="" mat-button>{{ route.displayName | translate}}</a>
+          <a *ngIf="route.terminal" mat-button>{{ route.displayName | translate}}</a>
         </span>
       </breadcrumb>
       <router-outlet></router-outlet>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perun-web-apps-profile-page',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePageComponent implements OnInit {
 
-  constructor() { }
+  currentLang = 'en';
+
+  constructor(
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit() {
   }
 
+  changeLanguage() {
+    this.currentLang = this.currentLang === 'en' ? 'cz' : 'en';
+    this.translateService.use(this.currentLang);
+  }
 }
