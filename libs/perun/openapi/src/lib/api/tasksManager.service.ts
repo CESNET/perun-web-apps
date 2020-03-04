@@ -218,21 +218,21 @@ export class TasksManagerService {
 
     /**
      * Return propagation status of all resources related to VO.
-     * @param vo id of Vo
+     * @param voId VO id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllResourcesState(vo: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ResourceState>>;
-    public getAllResourcesState(vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ResourceState>>>;
-    public getAllResourcesState(vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ResourceState>>>;
-    public getAllResourcesState(vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (vo === null || vo === undefined) {
-            throw new Error('Required parameter vo was null or undefined when calling getAllResourcesState.');
+    public getAllResourcesState(voId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ResourceState>>;
+    public getAllResourcesState(voId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ResourceState>>>;
+    public getAllResourcesState(voId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ResourceState>>>;
+    public getAllResourcesState(voId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (voId === null || voId === undefined) {
+            throw new Error('Required parameter voId was null or undefined when calling getAllResourcesState.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+        if (voId !== undefined && voId !== null) {
+            queryParameters = queryParameters.set('voId', <any>voId);
         }
 
         let headers = this.defaultHeaders;
@@ -694,7 +694,7 @@ export class TasksManagerService {
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (destinations) {
             destinations.forEach((element) => {
-                queryParameters = queryParameters.append('destinations', <any>element);
+                queryParameters = queryParameters.append('destinations[]', <any>element);
             })
         }
 
