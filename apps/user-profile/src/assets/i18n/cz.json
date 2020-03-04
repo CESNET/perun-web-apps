@@ -1,0 +1,23 @@
+{
+  "MENU_ITEMS": {
+    "PROFILE": "Profil",
+    "IDENTITIES": "Identity",
+    "SERVICES": "Sluzby",
+    "GROUPS": "Skupiny",
+    "VOS": "Organizacie",
+    "PRIVACY": "Sukromie",
+    "SETTINGS": "Nastavenia"
+  },
+  "SETTINGS": {
+    "ALTERNATIVE_PASSWORDS": "Alternativne hesla",
+    "DATA_QUOTAS": "Datove kvoty",
+    "MAILING_LISTS": "Mailing listy",
+    "PREFERRED_SHELLS": "Preferovane shelly",
+    "PREFERRED_UNIX_GROUP_NAMES": "Preferovane unixove skupiny",
+    "SAMBA_PASSWORD": "Samba heslo",
+    "SSH_KEYS": "SSH kluce"
+  },
+  "GROUPS": {
+    "TITLE": "Skupiny"
+  }
+}

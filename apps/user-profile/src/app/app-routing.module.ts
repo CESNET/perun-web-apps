@@ -26,82 +26,82 @@ const routes: Routes = [
   {
     path: 'profile',
     component: HomePageComponent,
-    data: { breadcrumb: 'Profile'},
+    data: { breadcrumb: 'MENU_ITEMS.PROFILE'},
     children: [
       {
         path: '',
         component: ProfilePageComponent,
-        data: { breadcrumb: 'Profile'},
+        data: { breadcrumb: 'MENU_ITEMS.PROFILE'},
       },
       {
         path: 'identities',
         component: IdentitiesPageComponent,
-        data: { breadcrumb: 'Identities'}
+        data: { breadcrumb: 'MENU_ITEMS.IDENTITIES'}
       },
       {
         path: 'groups',
         component: GroupsPageComponent,
-        data: { breadcrumb: 'Groups'}
+        data: { breadcrumb: 'MENU_ITEMS.GROUPS'}
       },
       {
         path: 'services',
         component: ServicesPageComponent,
-        data: { breadcrumb: 'Services'}
+        data: { breadcrumb: 'MENU_ITEMS.SERVICES'}
       },
       {
         path: 'organizations',
         component: VosPageComponent,
-        data: { breadcrumb: 'Organizations'}
+        data: { breadcrumb: 'MENU_ITEMS.VOS'}
       },
       {
         path: 'privacy',
         component: PrivacyPageComponent,
-        data: { breadcrumb: 'Privacy'}
+        data: { breadcrumb: 'MENU_ITEMS.PRIVACY'}
       },
       {
         path: 'settings',
         component: SettingsPageComponent,
-        data: { breadcrumb: 'Settings'},
+        data: { breadcrumb: 'MENU_ITEMS.SETTINGS'},
         children: [
           {
             path: '',
             component: SettingsOverviewComponent,
-            data: { breadcrumb: 'Settings'}
+            data: { breadcrumb: 'MENU_ITEMS.SETTINGS'}
           },
           {
             path: 'altPasswords',
             component: SettingsAlternativePasswordsComponent,
-            data: { breadcrumb: 'Alternative passwords'}
+            data: { breadcrumb: 'SETTINGS.ALTERNATIVE_PASSWORDS'}
           },
           {
             path: 'dataQuotas',
             component: SettingsDataQuotasComponent,
-            data: { breadcrumb: 'Data quotas'}
+            data: { breadcrumb: 'SETTINGS.DATA_QUOTAS'}
           },
           {
             path: 'mailingLists',
             component: SettingsMailingListsComponent,
-            data: { breadcrumb: 'Mailing lists'}
+            data: { breadcrumb: 'SETTINGS.MAILING_LISTS'}
           },
           {
             path: 'prefShells',
             component: SettingsPreferredShellsComponent,
-            data: { breadcrumb: 'Preferred shells'}
+            data: { breadcrumb: 'SETTINGS.PREFERRED_SHELLS'}
           },
           {
             path: 'prefGroupNames',
             component: SettingsPreferredUnixGroupNamesComponent,
-            data: { breadcrumb: 'Preferred group names'}
+            data: { breadcrumb: 'SETTINGS.PREFERRED_UNIX_GROUP_NAMES'}
           },
           {
             path: 'sambaPassword',
             component: SettingsSambaPasswordComponent,
-            data: { breadcrumb: 'Samba password'}
+            data: { breadcrumb: 'SETTINGS.SAMBA_PASSWORD'}
           },
           {
             path: 'sshKeys',
             component: SettingsSSHKeysComponent,
-            data: { breadcrumb: 'SSH keys'}
+            data: { breadcrumb: 'SETTINGS.SSH_KEYS'}
           }
         ]
       }
