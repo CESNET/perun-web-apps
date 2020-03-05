@@ -1,12 +1,12 @@
-<div [ngStyle]="{'color': textColor}" >
-  <mat-toolbar [ngStyle]="{'background': bgColor}">
+<mat-toolbar [ngStyle]="{'background': bgColor}">
 
-    <button mat-icon-button (click)="onToggleSidenav()" [ngStyle]="{'color': iconColor}">
-      <mat-icon>menu</mat-icon>
-    </button>
+  <button (click)="onToggleSidenav()" [ngStyle]="{'color': iconColor}" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <a fxLayoutAlign="center none" routerLink="/profile" [innerHTML]="logo"></a>
+  <a [innerHTML]="logo" routerLink="/profile"></a>
 
-  </mat-toolbar>
-</div>
+  <p [ngStyle]="{'color': textColor}" class="ml-3 mt-auto mb-auto">{{label}}</p>
+</mat-toolbar>
+
 

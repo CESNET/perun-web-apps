@@ -2,11 +2,12 @@
   <div fxLayout="row" fxLayoutAlign="space-evenly none">
     <div *ngFor="let item of items" fxLayout="column" fxLayoutAlign="none left">
       <h3 [ngStyle]="{'color': headersTextColor}">
-        {{item.title}}
+        {{getLanguage() === 'en' ? item.title_en : item.title_cz}}
       </h3>
       <div *ngIf="item.elements">
         <div *ngFor="let elem of item.elements">
-          <a target="_blank" [href]="elem.link" [ngStyle]="{'color': linksTextColor}">{{elem.label}}</a>
+          <a *ngIf="elem.link" [href]="elem.link" [ngStyle]="{'color': linksTextColor}" target="_blank">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</a>
+          <p *ngIf="!elem.link" [ngStyle]="{'color': linksTextColor}">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</p>
         </div>
       </div>
     </div>

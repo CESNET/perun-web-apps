@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ElementItem {
   link: string;
-  label: string;
+  label_en: string;
+  label_cz: string;
 }
 
 export interface FooterItem {
-  title: string;
+  title_en: string;
+  title_cz: string;
   elements: ElementItem[]
 }
 
@@ -18,7 +21,8 @@ export interface FooterItem {
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private storeService:StoreService) { }
+  constructor(private storeService:StoreService,
+              private translateService: TranslateService) { }
 
   items: FooterItem[];
   copyright: string;
@@ -28,10 +32,13 @@ export class FooterComponent implements OnInit {
   iconColor = this.storeService.get('theme', 'footer_icon_color');
   bgColor = this.storeService.get('theme', 'footer_bg_color');
 
-
   ngOnInit() {
     this.items = this.storeService.get('footer', 'columns');
     this.copyright = this.storeService.get('footer', 'copyright');
+  }
+
+  getLanguage(){
+    return this.translateService.currentLang;
   }
 
 }

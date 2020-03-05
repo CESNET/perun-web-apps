@@ -68,6 +68,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "mat-table-exporter": "^9.0.0",
+    "moment-timezone": "^0.5.28",
     "ng2-charts": "^2.3.0",
     "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",

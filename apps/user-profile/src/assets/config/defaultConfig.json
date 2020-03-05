@@ -12,40 +12,49 @@
     "CUSTOM_IDENTITIES_LABEL_cs": "just idea placeholder",
     "CUSTOM_IDENTITIES_LABEL_en": "same here"
   },
+  "header_label": "Generic user profile",
   "footer": {
     "columns": [
       {
-        "title": "ABOUT",
+        "title_en": "ABOUT",
+        "title_cz": "O NAS",
         "elements": [
           {
             "link": "https://perun-aai.org/",
-            "label": "Perun web"
+            "label_en": "Perun web",
+            "label_cz": "Perun web"
           },
           {
             "link": "https://perun-aai.org/team",
-            "label": "Perun team"
+            "label_en": "Perun team",
+            "label_cz": "Perun team"
           },
           {
             "link": "https://pernhub.org/",
-            "label": "Privacy policy"
+            "label_en": "Privacy policy",
+            "label_cz": "Ochrana osobnych udajov"
           }
         ]
       },
       {
-        "title": "HELP",
+        "title_en": "HELP",
+        "title_cz": "POMOC",
         "elements": [
           {
             "link": "https://perun-aai.org/documentation/users-documentation",
-            "label": "Documentation"
+            "label_en": "Documentation",
+            "label_cz": "Dokumentacia"
           }
         ]
       },
       {
-        "title": "SUPPORT",
+        "title_en": "SUPPORT",
+        "title_cz": "PODPORA",
         "elements": [
           {
             "link": "",
-            "label": "perun@cesnet.cz"
+            "label_en": "perun@cesnet.cz",
+            "label_cz": "perun@cesnet.cz"
           }
         ]
       }
