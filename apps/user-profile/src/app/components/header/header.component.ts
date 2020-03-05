@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   textColor = this.storeService.get('theme', 'header_text_color');
   iconColor = this.storeService.get('theme', 'header_icon_color');
 
+  label = this.storeService.get('header_label');
   logo: any;
 
   ngOnInit() {

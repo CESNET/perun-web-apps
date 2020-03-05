@@ -1,1 +1,10 @@
 <button (click)="changeLanguage()" mat-button>CHANGE LANGUAGE</button>
+
+<mat-form-field>
+  <mat-label>Time zones</mat-label>
+  <mat-select [(value)]="selectedTimeZone">
+    <mat-option (click)="getTimeZone(tz)" *ngFor="let tz of timeZones">
+      {{tz}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
