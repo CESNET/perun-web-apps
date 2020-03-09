@@ -10,7 +10,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {
   EditApplicationFormItemDialogComponent
 } from '../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationForm } from '@perun-web-apps/perun/openapi';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 
@@ -21,8 +20,7 @@ import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 })
 export class ApplicationFormListComponent implements OnChanges {
 
-  constructor(private registrarService: RegistrarService,
-              private dialog: MatDialog,
+  constructor(private dialog: MatDialog,
               private notificator: NotificatorService,
               private translate: TranslateService) { }
 

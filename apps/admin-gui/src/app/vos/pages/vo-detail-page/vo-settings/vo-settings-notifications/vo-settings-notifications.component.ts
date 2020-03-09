@@ -16,9 +16,8 @@ import {
 import {
   NotificationsCopyMailsDialogComponent
 } from '../../../../../shared/components/dialogs/notifications-copy-mails-dialog/notifications-copy-mails-dialog.component';
-import { RegistrarService } from '@perun-web-apps/perun/services';
-import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
-import { ApplicationMail } from '@perun-web-apps/perun/models';
+import { ApplicationForm, ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { createNewApplicationMail } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-settings-notifications',
@@ -31,8 +30,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private registrarManager: RegistrarManagerService,
-    private registrarService: RegistrarService,
+    private registrarService: RegistrarManagerService,
     private translate: TranslateService,
     private dialog: MatDialog,
     private notificator: NotificatorService) {
@@ -48,7 +46,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
     this.loading = true;
     this.route.parent.parent.params.subscribe(params => {
       this.voId = params['voId'];
-      this.registrarManager.getVoApplicationForm(this.voId).subscribe( form => {
+      this.registrarService.getVoApplicationForm(this.voId).subscribe( form => {
         this.applicationForm = form;
         this.registrarService.getApplicationMailsForVo(this.voId).subscribe( mails => {
           this.applicationMails = mails;
@@ -59,7 +57,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
   }
 
   add() {
-    const applicationMail: ApplicationMail = new ApplicationMail();
+    const applicationMail: ApplicationMail = createNewApplicationMail();
     applicationMail.formId = this.applicationForm.id;
     const dialog = this.dialog.open(AddEditNotificationDialogComponent, {
       width: '1400px',

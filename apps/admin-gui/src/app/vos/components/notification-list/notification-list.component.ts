@@ -9,9 +9,7 @@ import {
 } from '../../../shared/components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../core/services/common/notificator.service';
-import { RegistrarService } from '@perun-web-apps/perun/services';
-import { ApplicationMail } from '@perun-web-apps/perun/models';
-import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-notification-list',
@@ -21,8 +19,7 @@ import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 export class NotificationListComponent implements OnChanges, AfterViewInit {
 
   constructor(
-    private registrarService: RegistrarService,
-    private registrarManager: RegistrarManagerService,
+    private registrarService: RegistrarManagerService,
     private translate: TranslateService,
     private notificator: NotificatorService,
     private dialog: MatDialog) {
@@ -86,11 +83,11 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
 
   changeSending(applicationMail: ApplicationMail) {
     if (applicationMail.send) {
-      this.registrarService.setSendingEnabled(0, [applicationMail]).subscribe( () => {
+      this.registrarService.setSendingEnabled( { mails: [applicationMail], enabled: false }).subscribe( () => {
         applicationMail.send = false;
       });
     } else {
-      this.registrarService.setSendingEnabled(1, [applicationMail]).subscribe( () => {
+      this.registrarService.setSendingEnabled({ mails: [applicationMail], enabled: true}).subscribe( () => {
         applicationMail.send = true;
       });
     }
@@ -116,6 +113,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
 
   getMailType(applicationMail: ApplicationMail): string {
     let value = '';
+    // @ts-ignore
     if (applicationMail.mailType === undefined || applicationMail.mailType === null || applicationMail.mailType === '') {
       value = '';
     } else {

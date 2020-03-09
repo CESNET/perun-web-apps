@@ -1,6 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { Application, Group, GroupsManagerService, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -16,7 +15,6 @@ export class GroupApplicationsComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private groupService: GroupsManagerService,
-              private registarService: RegistrarService,
               private registrarManager: RegistrarManagerService,
               protected route: ActivatedRoute) { }
 

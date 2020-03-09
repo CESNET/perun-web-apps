@@ -104,7 +104,6 @@ import {
 import { RefreshButtonComponent } from './components/refresh-button/refresh-button.component';
 import { AddMemberDialogComponent } from './components/dialogs/add-member-dialog/add-member-dialog.component';
 import {MembersCandidatesListComponent} from './components/members-candidates-list/members-candidates-list.component';
-import {MemberCandidateEmailPipe} from './pipes/member-candidate-email.pipe';
 import {UserVoPipe} from './pipes/vo-or-ext-source.pipe';
 import { CreateResourceTagDialogComponent } from './components/dialogs/create-resource-tag-dialog/create-resource-tag-dialog.component';
 import { DeleteResourceTagDialogComponent } from './components/dialogs/delete-resource-tag-dialog/delete-resource-tag-dialog.component';
@@ -282,7 +281,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     AnyToStringPipe,
     AddMemberDialogComponent,
     MembersCandidatesListComponent,
-    MemberCandidateEmailPipe,
     UserVoPipe,
     AttributesListComponent,
     MatChipsModule,
@@ -413,7 +411,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     DeleteAttributeDialogComponent,
     AddMemberDialogComponent,
     MembersCandidatesListComponent,
-    MemberCandidateEmailPipe,
     UserVoPipe,
     CreateAttributeDialogComponent,
     AttributeValueComponent,

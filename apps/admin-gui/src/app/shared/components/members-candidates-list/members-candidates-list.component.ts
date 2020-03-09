@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import { RichUser, Candidate, MemberCandidate } from '@perun-web-apps/perun/openapi';
+import { RichUser, Candidate, MemberCandidate, Attribute } from '@perun-web-apps/perun/openapi';
 import {
   parseEmail,
   getCandidateEmail,
@@ -65,7 +65,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
             if (memberCandidate.richUser || memberCandidate.member) {
               return parseUserEmail(memberCandidate.richUser);
             } else {
-              return this.getEmail(memberCandidate.candidate);
+              return this.getEmail(memberCandidate);
             }
           case 'voExtSource':
             return memberCandidate.richUser ? parseVo(memberCandidate.richUser) : this.getOrganization(memberCandidate.candidate);
@@ -106,8 +106,23 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  getEmail(candidate: Candidate): string {
-    return getCandidateEmail(candidate);
+  getEmail(memberCandidate: MemberCandidate): string {
+    let email: Attribute;
+    if (memberCandidate.richUser) {
+      for (const attribute of memberCandidate.richUser.userAttributes) {
+        if(attribute.namespace + ":" + attribute.friendlyName === 'urn:perun:user:attribute-def:def:preferredMail'){
+          email = attribute;
+          break;
+        }
+      }
+      if (email != null && email.value != null && !('null' === email.value.toString().toLowerCase())) {
+        return email.value.toString().replace(",", " ");
+      }
+      return '';
+    } else {
+      return getCandidateEmail(memberCandidate.candidate);
+    }
+
   }
 
   getOrganization(candidate: Candidate): string {

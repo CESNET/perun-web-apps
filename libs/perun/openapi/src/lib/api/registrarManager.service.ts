@@ -21,7 +21,12 @@ import { Application } from '../model/application';
 import { ApplicationForm } from '../model/applicationForm';
 import { ApplicationFormItem } from '../model/applicationFormItem';
 import { ApplicationFormItemData } from '../model/applicationFormItemData';
+import { ApplicationMail } from '../model/applicationMail';
+import { InputAddApplicationMailForGroup } from '../model/inputAddApplicationMailForGroup';
+import { InputAddApplicationMailForVo } from '../model/inputAddApplicationMailForVo';
 import { InputSendMessage } from '../model/inputSendMessage';
+import { InputSetSendingEnabled } from '../model/inputSetSendingEnabled';
+import { InputUpdateApplicationMail } from '../model/inputUpdateApplicationMail';
 import { InputUpdateForm } from '../model/inputUpdateForm';
 import { InputUpdateFormItemsForGroup } from '../model/inputUpdateFormItemsForGroup';
 import { InputUpdateFormItemsForVo } from '../model/inputUpdateFormItemsForVo';
@@ -57,6 +62,130 @@ export class RegistrarManagerService {
     }
 
 
+
+    /**
+     * Add new mail notification.
+     * @param inputAddApplicationMailForGroup 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'body', reportProgress?: boolean): Observable<ApplicationMail>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationMail>>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationMail>>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputAddApplicationMailForGroup === null || inputAddApplicationMailForGroup === undefined) {
+            throw new Error('Required parameter inputAddApplicationMailForGroup was null or undefined when calling addApplicationMailForGroup.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<ApplicationMail>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/g`,
+            inputAddApplicationMailForGroup,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Add new mail notification.
+     * @param inputAddApplicationMailForVo 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'body', reportProgress?: boolean): Observable<ApplicationMail>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationMail>>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationMail>>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputAddApplicationMailForVo === null || inputAddApplicationMailForVo === undefined) {
+            throw new Error('Required parameter inputAddApplicationMailForVo was null or undefined when calling addApplicationMailForVo.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<ApplicationMail>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/v`,
+            inputAddApplicationMailForVo,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Manually approves an application.
@@ -417,6 +546,246 @@ export class RegistrarManagerService {
     }
 
     /**
+     * Copy all e-mail notifications from selected Group into another.
+     * @param fromGroup source group
+     * @param toGroup destination group
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public copyMailsFromGroupToGroup(fromGroup?: number, toGroup?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public copyMailsFromGroupToGroup(fromGroup?: number, toGroup?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public copyMailsFromGroupToGroup(fromGroup?: number, toGroup?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public copyMailsFromGroupToGroup(fromGroup?: number, toGroup?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (fromGroup !== undefined && fromGroup !== null) {
+            queryParameters = queryParameters.set('fromGroup', <any>fromGroup);
+        }
+        if (toGroup !== undefined && toGroup !== null) {
+            queryParameters = queryParameters.set('toGroup', <any>toGroup);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/copyMails/groupToGroup`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Copy all e-mail notifications from selected Group into VO.
+     * @param fromGroup source group
+     * @param toVo destination VO
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public copyMailsFromGroupToVo(fromGroup?: number, toVo?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public copyMailsFromGroupToVo(fromGroup?: number, toVo?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public copyMailsFromGroupToVo(fromGroup?: number, toVo?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public copyMailsFromGroupToVo(fromGroup?: number, toVo?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (fromGroup !== undefined && fromGroup !== null) {
+            queryParameters = queryParameters.set('fromGroup', <any>fromGroup);
+        }
+        if (toVo !== undefined && toVo !== null) {
+            queryParameters = queryParameters.set('toVo', <any>toVo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/copyMails/groupToVo`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Copy all e-mail notifications from selected VO into Group.
+     * @param fromVo source VO
+     * @param toGroup destination group
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public copyMailsFromVoToGroup(fromVo?: number, toGroup?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public copyMailsFromVoToGroup(fromVo?: number, toGroup?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public copyMailsFromVoToGroup(fromVo?: number, toGroup?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public copyMailsFromVoToGroup(fromVo?: number, toGroup?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (fromVo !== undefined && fromVo !== null) {
+            queryParameters = queryParameters.set('fromVo', <any>fromVo);
+        }
+        if (toGroup !== undefined && toGroup !== null) {
+            queryParameters = queryParameters.set('toGroup', <any>toGroup);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/copyMails/voToGroup`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Copy all e-mail notifications from selected VO into another.
+     * @param fromVo source VO
+     * @param toVo destination VO
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public copyMailsFromVoToVo(fromVo?: number, toVo?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public copyMailsFromVoToVo(fromVo?: number, toVo?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public copyMailsFromVoToVo(fromVo?: number, toVo?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public copyMailsFromVoToVo(fromVo?: number, toVo?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (fromVo !== undefined && fromVo !== null) {
+            queryParameters = queryParameters.set('fromVo', <any>fromVo);
+        }
+        if (toVo !== undefined && toVo !== null) {
+            queryParameters = queryParameters.set('toVo', <any>toVo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/copyMails/voToVo`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Create application form for a group.
      * @param group id of Group
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -536,19 +905,85 @@ export class RegistrarManagerService {
 
     /**
      * Deletes an application.
+     * @param appId id of application
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteApplication(appId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteApplication(appId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteApplication(appId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteApplication(appId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (appId === null || appId === undefined) {
+            throw new Error('Required parameter appId was null or undefined when calling deleteApplication.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (appId !== undefined && appId !== null) {
+            queryParameters = queryParameters.set('appId', <any>appId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/deleteApplication`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes an e-mail notification from DB based on id property.
+     * @param group id of Group
      * @param id numeric id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteApplication(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteApplication(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteApplication(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteApplication(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteApplicationMailForGroup(group: number, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteApplicationMailForGroup(group: number, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteApplicationMailForGroup(group: number, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteApplicationMailForGroup(group: number, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling deleteApplicationMailForGroup.');
+        }
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteApplication.');
+            throw new Error('Required parameter id was null or undefined when calling deleteApplicationMailForGroup.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
         if (id !== undefined && id !== null) {
             queryParameters = queryParameters.set('id', <any>id);
         }
@@ -581,7 +1016,73 @@ export class RegistrarManagerService {
         }
 
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/deleteApplication`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/deleteApplicationMail/g`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes an e-mail notification from DB based on id property.
+     * @param vo id of Vo
+     * @param id numeric id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteApplicationMailForVo(vo: number, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteApplicationMailForVo(vo: number, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteApplicationMailForVo(vo: number, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteApplicationMailForVo(vo: number, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling deleteApplicationMailForVo.');
+        }
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteApplicationMailForVo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/registrarManager/deleteApplicationMail/v`,
             null,
             {
                 params: queryParameters,
@@ -699,6 +1200,122 @@ export class RegistrarManagerService {
 
 
         return this.httpClient.get<Array<ApplicationFormItemData>>(`${this.configuration.basePath}/json/registrarManager/getApplicationDataById`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns all mail notifications related to specific app form.
+     * @param group id of Group
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getApplicationMailsForGroup(group: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ApplicationMail>>;
+    public getApplicationMailsForGroup(group: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ApplicationMail>>>;
+    public getApplicationMailsForGroup(group: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ApplicationMail>>>;
+    public getApplicationMailsForGroup(group: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getApplicationMailsForGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<ApplicationMail>>(`${this.configuration.basePath}/json/registrarManager/getApplicationMails/g`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns all mail notifications related to specific app form.
+     * @param vo id of Vo
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getApplicationMailsForVo(vo: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ApplicationMail>>;
+    public getApplicationMailsForVo(vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ApplicationMail>>>;
+    public getApplicationMailsForVo(vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ApplicationMail>>>;
+    public getApplicationMailsForVo(vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling getApplicationMailsForVo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<ApplicationMail>>(`${this.configuration.basePath}/json/registrarManager/getApplicationMails/v`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1639,6 +2256,130 @@ export class RegistrarManagerService {
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/json/registrarManager/sendMessage`,
             inputSendMessage,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Enable or disable sending for list of mail definitions.
+     * @param inputSetSendingEnabled 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public setSendingEnabled(inputSetSendingEnabled: InputSetSendingEnabled, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public setSendingEnabled(inputSetSendingEnabled: InputSetSendingEnabled, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public setSendingEnabled(inputSetSendingEnabled: InputSetSendingEnabled, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public setSendingEnabled(inputSetSendingEnabled: InputSetSendingEnabled, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputSetSendingEnabled === null || inputSetSendingEnabled === undefined) {
+            throw new Error('Required parameter inputSetSendingEnabled was null or undefined when calling setSendingEnabled.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/json/registrarManager/setSendingEnabled`,
+            inputSetSendingEnabled,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Updates an e-mail notification.
+     * @param inputUpdateApplicationMail 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateApplicationMail(inputUpdateApplicationMail: InputUpdateApplicationMail, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateApplicationMail(inputUpdateApplicationMail: InputUpdateApplicationMail, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateApplicationMail(inputUpdateApplicationMail: InputUpdateApplicationMail, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateApplicationMail(inputUpdateApplicationMail: InputUpdateApplicationMail, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputUpdateApplicationMail === null || inputUpdateApplicationMail === undefined) {
+            throw new Error('Required parameter inputUpdateApplicationMail was null or undefined when calling updateApplicationMail.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/json/registrarManager/updateApplicationMail`,
+            inputUpdateApplicationMail,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

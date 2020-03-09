@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationReSendNotificationDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-dialog/application-re-send-notification-dialog.component';
 import { ApplicationRejectDialogComponent } from '../../../shared/components/dialogs/application-reject-dialog/application-reject-dialog.component';
 import { NotificatorService } from '../../../core/services/common/notificator.service';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 import { Application, ApplicationFormItemData, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
@@ -21,7 +20,6 @@ export class ApplicationDetailComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private registrarService: RegistrarService,
     private registrarManager: RegistrarManagerService,
     private dialog: MatDialog,
     private translate: TranslateService,

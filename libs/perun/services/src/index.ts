@@ -1,6 +1,5 @@
 export { MembersService } from './lib/members.service';
 export { PerunApiService } from './lib/perun-api-service';
-export { RegistrarService } from './lib/registrar.service';
 export { RtMessagesService } from './lib/rt-messages.service';
 export { ServiceService } from './lib/service.service';
 export { ExtSourceService } from './lib/ext-source.service';

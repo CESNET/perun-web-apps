@@ -5,8 +5,13 @@ import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/fo
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {openClose} from '../../../animations/Animations';
-import { RegistrarService } from '@perun-web-apps/perun/services';
-import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
+import {
+  Group,
+  GroupsManagerService,
+  RegistrarManagerService,
+  Vo,
+  VosManagerService
+} from '@perun-web-apps/perun/openapi';
 
 export interface NotificationsCopyMailsDialogData {
   voId: number;
@@ -27,7 +32,7 @@ export class NotificationsCopyMailsDialogComponent implements OnInit {
               private voService: VosManagerService,
               private groupService: GroupsManagerService,
               private translateService: TranslateService,
-              private registrarService: RegistrarService,
+              private registrarService: RegistrarManagerService,
               @Inject(MAT_DIALOG_DATA) public data: NotificationsCopyMailsDialogData) { }
 
   vos: Vo[] = [];
