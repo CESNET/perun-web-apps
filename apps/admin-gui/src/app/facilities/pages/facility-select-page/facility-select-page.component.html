@@ -1,10 +1,10 @@
 <div class="container-fluid pl-xl-5 pr-xl-5 facility-theme">
-  <app-back-button>
-  </app-back-button>
+  <perun-web-apps-back-button>
+  </perun-web-apps-back-button>
 
   <h1 class="page-title">{{'FACILITY_MANAGEMENT.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>
-  <app-immediate-filter [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'" (filter)="applyFilter($event)" *ngIf="!loading"></app-immediate-filter>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></perun-web-apps-refresh-button>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" *ngIf="!loading" [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'"></perun-web-apps-immediate-filter>
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
   <app-facility-select-table
     *ngIf="!loading"

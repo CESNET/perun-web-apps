@@ -1,10 +1,10 @@
 <div>
   <h1 class="page-subtitle">{{'VO_DETAIL.RESOURCES.LIST.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <button mat-flat-button color="warn" [disabled]="selected.selected.length === 0" (click)="deleteSelectedResources()">
     {{'VO_DETAIL.RESOURCES.LIST.DELETE' | translate}}
   </button>
-  <app-immediate-filter [placeholder]="'SHARED.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'" (filter)="applyFilter($event)"></app-immediate-filter>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'SHARED.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"></perun-web-apps-immediate-filter>
 
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
   <app-resources-list

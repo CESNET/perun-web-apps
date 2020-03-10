@@ -1,6 +1,6 @@
 <div class="card mt-3" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0 || resources.length === 0">
   <div class="card-body">
-    <app-table-options class="ml-auto" [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter" class="ml-auto"></perun-web-apps-table-options>
    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear
            class="w-100">
 

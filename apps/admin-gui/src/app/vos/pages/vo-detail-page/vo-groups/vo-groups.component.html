@@ -1,6 +1,6 @@
 <div>
   <h1 class="page-subtitle">{{'VO_DETAIL.GROUPS.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="loadAllGroups()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="loadAllGroups()"></perun-web-apps-refresh-button>
   <button mat-flat-button color="accent" (click)="onCreateGroup()">
     {{'VO_DETAIL.GROUPS.CREATE_GROUP' | translate}}
   </button>
@@ -23,14 +23,14 @@
       [expandAll]="filtering"
       [selection]="selected">
     </app-groups-tree>
-    <app-groups-list
+    <perun-web-apps-groups-list
       (moveGroup)="onMoveGroup($event)"
       [groups]="filteredGroups"
       [selection]="selected"
       [disableMembers]="true"
       [hideColumns]="['vo']"
       *ngIf="showGroupList">
-    </app-groups-list>
+    </perun-web-apps-groups-list>
   </div>
 
   <app-alert *ngIf="groups.length === 0 && !loading" color="warn">

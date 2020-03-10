@@ -1,5 +1,5 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.RESOURCES.TAGS.TITLE' | translate}}</h1>
-<app-refresh-button (refresh)="updateData()"></app-refresh-button>
+<perun-web-apps-refresh-button (refresh)="updateData()"></perun-web-apps-refresh-button>
 <button
   mat-flat-button
   class="mr-2"
@@ -15,7 +15,7 @@
   (click)="deleteTag()">
   {{'VO_DETAIL.RESOURCES.TAGS.DELETE_BUTTON' | translate}}
 </button>
-<app-immediate-filter [placeholder]="'SHARED.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'" (filter)="applyFilter($event)"></app-immediate-filter>
+<perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'SHARED.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"></perun-web-apps-immediate-filter>
 
 <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
 

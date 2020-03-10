@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatTableExporterDirective} from 'mat-table-exporter';
 
 @Component({
-  selector: 'app-table-options',
+  selector: 'perun-web-apps-table-options',
   templateUrl: './table-options.component.html',
   styleUrls: ['./table-options.component.scss']
 })

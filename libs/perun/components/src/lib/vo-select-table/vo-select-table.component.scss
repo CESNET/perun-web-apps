@@ -1,0 +1,13 @@
+.card {
+  border-radius: 0 !important;
+}
+
+.static-column-size {
+  width: 80px;
+}
+
+.dark-hover-list-item {
+  &:hover {
+    //background-color: rgba(0, 0, 0, .05);
+  }
+}

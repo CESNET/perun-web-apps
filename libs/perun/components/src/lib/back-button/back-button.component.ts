@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
-  selector: 'app-back-button',
+  selector: 'perun-web-apps-back-button',
   templateUrl: './back-button.component.html',
   styleUrls: ['./back-button.component.scss']
 })

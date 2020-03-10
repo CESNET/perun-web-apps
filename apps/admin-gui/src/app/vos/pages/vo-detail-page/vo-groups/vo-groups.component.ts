@@ -5,11 +5,11 @@ import { SideMenuService } from '../../../../core/services/common/side-menu.serv
 import { ActivatedRoute } from '@angular/router';
 import { DeleteGroupDialogComponent } from '../../../../shared/components/dialogs/delete-group-dialog/delete-group-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GroupFlatNode } from '../../../components/groups-tree/groups-tree.component';
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { applyFilter } from '@perun-web-apps/perun/utils';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
+import { GroupFlatNode } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-vo-groups',

@@ -28,6 +28,7 @@ import {
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-groups/resource-groups.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-g
     FacilitiesRoutingModule,
     MatTableExporterModule,
     SharedModule,
-    UiAlertsModule
+    UiAlertsModule,
+    PerunSharedComponentsModule
   ]
 })
 export class FacilitiesModule { }

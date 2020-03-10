@@ -1,6 +1,6 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.APPLICATION.TITLE' | translate}}</h1>
 <div class="align-inline">
-<app-refresh-button (refresh)="select()"></app-refresh-button>
+<perun-web-apps-refresh-button (refresh)="select()"></perun-web-apps-refresh-button>
 <mat-form-field class="w-25 mr-2">
   <mat-label>{{'VO_DETAIL.APPLICATION.TABLE_STATE' | translate}}</mat-label>
   <mat-select (selectionChange)="select()" [(value)]="state" disableOptionCentering>
@@ -12,7 +12,7 @@
     <mat-option value="rejected">{{'VO_DETAIL.APPLICATION.SELECTION_REJECTED' | translate}}</mat-option>
   </mat-select>
 </mat-form-field>
-<app-immediate-filter [placeholder]="'VO_DETAIL.APPLICATION.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
+<perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'VO_DETAIL.APPLICATION.FILTER'"></perun-web-apps-immediate-filter>
 </div>
 <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 <app-applications-list

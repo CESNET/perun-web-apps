@@ -26,11 +26,6 @@
     "CREATE_VO": "New",
     "REMOVE_VO": "Remove",
     "FILTER_PLACEHOLDER": "Filter by name",
-    "TABLE": {
-      "ID": "Id",
-      "NAME": "Name",
-      "RECENT": "Recently viewed"
-    },
     "SETTINGS": {
       "EXPIRATION": {
         "TITLE": "Membership expiration",
@@ -169,10 +164,7 @@
       "DELETE_GROUP": "Delete",
       "TITLE_SUBGROUPS": "Subgroups",
       "LIST_VIEW": "List view",
-      "MENU_MOVE": "Move group",
-      "FILTER": "Filter",
-      "MENU_RENAME": "Update name/description",
-      "NO_GROUPS": "No groups found."
+      "FILTER": "Filter"
     },
     "MEMBERS": {
       "TITLE": "Members",
@@ -1186,7 +1178,6 @@
       "RESOURCES_TAGS_LIST": {
         "EDIT_SUCCESS": "Resource tag was successfully edited."
       },
-      "NO_FILTER_RESULTS_ALERT": "No results match given search criteria.",
       "RESOURCES_LIST": {
         "TITLE": "Resources",
         "DELETE": "Remove selected",
@@ -1197,13 +1188,6 @@
         "TABLE_SEARCH": "Filter by name, description or ID",
         "TABLE_RESOURCE_DESCRIPTION": "Description",
         "NO_RESOURCES_WARNING": "No resources assigned."
-      },
-      "GROUPS_LIST": {
-        "TABLE_GROUP_ID": "Id",
-        "TABLE_VO_NAME": "Vo",
-        "TABLE_GROUP_NAME": "Name",
-        "TABLE_SEARCH": "Filter by name, description or ID",
-        "TABLE_GROUP_DESCRIPTION": "Description"
       },
       "ATTRIBUTES_LIST": {
         "FILTER": "Filter by id, name, value or description",
@@ -1282,5 +1266,34 @@
     "SELF": "Self",
     "FACILITYADMIN": "Facility admin",
     "GROUPADMIN": "Group admin"
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "COMPONENTS": {
+        "GROUPS_LIST": {
+          "TABLE_GROUP_ID": "Id",
+          "TABLE_VO_NAME": "Vo",
+          "TABLE_GROUP_NAME": "Name",
+          "TABLE_SEARCH": "Filter by name, description or ID",
+          "TABLE_GROUP_DESCRIPTION": "Description"
+        },
+        "GROUP_MENU": {
+          "MOVE": "Move group",
+          "RENAME": "Update name/description"
+        },
+        "VO_SELECT_TABLE": {
+          "ID": "Id",
+          "NAME": "Name",
+          "RECENT": "Recently viewed"
+        }
+      },
+      "REFRESH_BUTTON": "Refresh"
+    },
+    "UI": {
+      "ALERTS": {
+        "NO_GROUPS": "No groups found.",
+        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria."
+      }
+    }
   }
 }

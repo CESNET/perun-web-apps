@@ -1,21 +1,21 @@
 <div class="container-fluid pl-xl-5 pr-xl-5 vo-theme">
-  <app-back-button>
-  </app-back-button>
+  <perun-web-apps-back-button>
+  </perun-web-apps-back-button>
   <h1 class="page-title">{{'VO_MANAGEMENT.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></perun-web-apps-refresh-button>
   <button mat-flat-button color="accent" class="ml-2 mr-2" (click)="onCreateVo()" *ngIf="!loading && isVoAdmin">
     {{'VO_MANAGEMENT.CREATE_VO' | translate}}
   </button>
   <button mat-flat-button color="warn" class="ml-2 mr-2" (click)="onRemoveVo()" *ngIf="!loading && isVoAdmin" [disabled]="selection.selected.length === 0">
     {{'VO_MANAGEMENT.REMOVE_VO' | translate}}
   </button>
-  <app-immediate-filter [placeholder]="'VO_MANAGEMENT.FILTER_PLACEHOLDER'" (filter)="applyFilter($event)" *ngIf="!loading"></app-immediate-filter>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" *ngIf="!loading" [placeholder]="'VO_MANAGEMENT.FILTER_PLACEHOLDER'"></perun-web-apps-immediate-filter>
   <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <app-vo-select-table *ngIf="!loading"
-    [displayedColumns]="displayedColumns"
-    [selection]="selection"
-    [filterValue]="filterValue"
-    [vos]="vos"
-    [recentIds]="recentIds">
-  </app-vo-select-table>
+  <perun-web-apps-vo-select-table *ngIf="!loading"
+                                  [displayedColumns]="displayedColumns"
+                                  [filterValue]="filterValue"
+                                  [recentIds]="recentIds"
+                                  [selection]="selection"
+                                  [vos]="vos">
+  </perun-web-apps-vo-select-table>
 </div>

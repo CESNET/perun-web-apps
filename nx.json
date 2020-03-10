@@ -59,6 +59,9 @@
     },
     "general": {
       "tags": []
+    },
+    "perun-components": {
+      "tags": []
     }
   }
 }

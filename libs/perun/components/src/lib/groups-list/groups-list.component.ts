@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Group } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'app-groups-list',
+  selector: 'perun-web-apps-groups-list',
   templateUrl: './groups-list.component.html',
   styleUrls: ['./groups-list.component.scss']
 })

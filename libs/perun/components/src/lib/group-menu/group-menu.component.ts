@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {GroupFlatNode} from '../../../vos/components/groups-tree/groups-tree.component';
+import { GroupFlatNode } from '@perun-web-apps/perun/models';
 
 @Component({
-  selector: 'app-group-menu',
+  selector: 'perun-web-apps-group-menu',
   templateUrl: './group-menu.component.html',
   styleUrls: ['./group-menu.component.scss']
 })

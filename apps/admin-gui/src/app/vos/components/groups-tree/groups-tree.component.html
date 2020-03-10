@@ -18,11 +18,11 @@
           #{{group.id}}
         </div>
       </div>
-      <app-group-menu
+      <perun-web-apps-group-menu
         [disabled]="group.fullName === 'members'"
         (moveGroup)="onMoveGroup(group)"
         [group]="group">
-      </app-group-menu>
+      </perun-web-apps-group-menu>
     </mat-tree-node>
 
     <mat-tree-node
@@ -48,11 +48,11 @@
           #{{group.id}}
         </div>
       </div>
-      <app-group-menu
+      <perun-web-apps-group-menu
         [disabled]="group.fullName === 'members'"
         (moveGroup)="onMoveGroup(group)"
         [group]="group">
-      </app-group-menu>
+      </perun-web-apps-group-menu>
     </mat-tree-node>
   </mat-tree>
 </div>

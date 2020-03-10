@@ -1,8 +1,8 @@
 <div class="{{theme}}">
   <div mat-dialog-title>
     <h1 class="page-subtitle">{{'DIALOGS.ADD_EXT_SOURCES.TITLE' | translate}}</h1>
-    <app-immediate-filter class="font-size-1rem" [placeholder]="'DIALOGS.ADD_EXT_SOURCES.FILTER'"
-                          (filter)="applyFilter($event)"></app-immediate-filter>
+    <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'DIALOGS.ADD_EXT_SOURCES.FILTER'"
+                                     class="font-size-1rem"></perun-web-apps-immediate-filter>
   </div>
   <div mat-dialog-content *ngIf="!processing">
     <app-ext-sources-list

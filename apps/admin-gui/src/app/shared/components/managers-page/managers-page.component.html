@@ -2,7 +2,7 @@
   <h1 class="page-subtitle">
     {{'SHARED.COMPONENTS.MANAGERS_PAGE.TITLE' | translate}}
   </h1>
-  <app-refresh-button (refresh)="changeUser()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="changeUser()"></perun-web-apps-refresh-button>
   <button mat-flat-button color="accent" class="mr-2" (click)="selected === 'user' ? addManager() : addGroup()">
     {{'SHARED.COMPONENTS.MANAGERS_PAGE.ADD' | translate}}
   </button>
@@ -38,13 +38,13 @@
     </app-users-list>
 
     <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-    <app-groups-list
+    <perun-web-apps-groups-list
       *ngIf="groups && selected === 'group' && !loading"
       [hideColumns]="['menu', 'vo']"
       [groups]="groups"
       [selection]="selectionGroups"
       [disableMembers]="false">
-    </app-groups-list>
+    </perun-web-apps-groups-list>
   </div>
 
 </div>

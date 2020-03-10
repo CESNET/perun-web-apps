@@ -1,6 +1,6 @@
 <div>
   <h1 class="page-subtitle">{{'GROUP_DETAIL.SUBGROUPS.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <button mat-flat-button color="accent" (click)="onCreateGroup()">
     {{'GROUP_DETAIL.SUBGROUPS.CREATE_GROUP' | translate}}
   </button>
@@ -22,12 +22,12 @@
       [expandAll]="filtering"
       [selection]="selected">
     </app-groups-tree>
-    <app-groups-list
+    <perun-web-apps-groups-list
       [groups]="filteredGroups"
       [selection]="selected"
       [disableMembers]="true"
       [hideColumns]="['vo']"
       *ngIf="showGroupList">
-    </app-groups-list>
+    </perun-web-apps-groups-list>
   </div>
 </div>

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'app-immediate-filter',
+  selector: 'perun-web-apps-immediate-filter',
   templateUrl: './immediate-filter.component.html',
   styleUrls: ['./immediate-filter.component.scss']
 })

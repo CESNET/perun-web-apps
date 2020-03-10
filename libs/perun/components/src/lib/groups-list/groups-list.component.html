@@ -1,6 +1,6 @@
 <div class="card mt-2" [class.hide-table]="exporting" [hidden]="groups.length === 0 || dataSource.filteredData.length === 0">
   <div class="card-body">
-    <app-table-options [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
 
     <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear
            class="w-100">
@@ -26,34 +26,34 @@
       </ng-container>
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.GROUPS_LIST.TABLE_GROUP_ID' | translate}}</th>
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_GROUP_ID' | translate}}</th>
         <td mat-cell class="static-column-size" *matCellDef="let group">{{group.id}}</td>
       </ng-container>
       <ng-container matColumnDef="vo">
         <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.GROUPS_LIST.TABLE_VO_NAME' | translate}}</th>
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_VO_NAME' | translate}}</th>
         <td mat-cell class="static-column-size" *matCellDef="let group">{{group.voId}}</td>
       </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.GROUPS_LIST.TABLE_GROUP_NAME' | translate}}</th>
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_GROUP_NAME' | translate}}</th>
         <td mat-cell *matCellDef="let group"
             [routerLink]="inDialog ? null : ['/organizations', group.voId, 'groups', group.id]">{{group.name}}</td>
       </ng-container>
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.GROUPS_LIST.TABLE_GROUP_DESCRIPTION' | translate}}</th>
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_GROUP_DESCRIPTION' | translate}}</th>
         <td mat-cell *matCellDef="let group"
             [routerLink]="inDialog ? null : ['/organizations', group.voId, 'groups', group.id]">{{group.description}}</td>
       </ng-container>
       <ng-container matColumnDef="menu">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let group">
-          <app-group-menu
+          <perun-web-apps-group-menu
             [disabled]="group.name === 'members'"
             (moveGroup)="onMoveGroup(group)"
             [group]="group">
-          </app-group-menu>
+          </perun-web-apps-group-menu>
         </td>
       </ng-container>
 
@@ -72,9 +72,9 @@
 <mat-spinner *ngIf="exporting" class="ml-auto mr-auto"></mat-spinner>
 
 <app-alert *ngIf="groups.length === 0" color="warn">
-  {{'VO_DETAIL.GROUPS.NO_GROUPS' | translate}}
+  {{'SHARED_LIB.UI.ALERTS.NO_GROUPS' | translate}}
 </app-alert>
 
 <app-alert *ngIf="dataSource.filteredData.length === 0 && groups.length !== 0" color="warn">
-  {{'SHARED.COMPONENTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </app-alert>

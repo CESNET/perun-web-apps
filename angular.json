@@ -678,6 +678,37 @@
           "styleext": "scss"
         }
       }
+    },
+    "perun-components": {
+      "projectType": "library",
+      "root": "libs/perun/components",
+      "sourceRoot": "libs/perun/components/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/components/tsconfig.lib.json",
+              "libs/perun/components/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/perun/components/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/components/jest.config.js",
+            "tsConfig": "libs/perun/components/tsconfig.spec.json",
+            "setupFile": "libs/perun/components/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

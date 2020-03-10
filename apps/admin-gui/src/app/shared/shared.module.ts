@@ -40,7 +40,6 @@ import {CreateGroupDialogComponent} from './components/dialogs/create-group-dial
 import {InviteMemberDialogComponent} from './components/dialogs/invite-member-dialog/invite-member-dialog.component';
 import {UserFullNamePipe} from './pipes/user-full-name.pipe';
 import {DeleteGroupDialogComponent} from './components/dialogs/delete-group-dialog/delete-group-dialog.component';
-import {BackButtonComponent} from './components/back-button/back-button.component';
 import {SettingsToggleItemComponent} from './components/settings-toggle-item/settings-toggle-item.component';
 import { ResourceTagsToStringPipe } from './pipes/resource-tags-to-string.pipe';
 import { ApplicationStatePipe } from './pipes/application-state.pipe';
@@ -65,7 +64,6 @@ import { DebuggerPageComponent } from './debugger-page/debugger-page.component';
 import { TechnicalOwnersPipe } from './pipes/technical-owners.pipe';
 import { RemoveResourceDialogComponent } from './components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
 import {ResourcesListComponent} from './components/resources-list/resources-list.component';
-import {GroupsListComponent} from './components/groups-list/groups-list.component';
 import { AddManagerDialogComponent } from './components/dialogs/add-manager-dialog/add-manager-dialog.component';
 import { RemoveManagerDialogComponent } from './components/dialogs/remove-manager-dialog/remove-manager-dialog.component';
 import {AddGroupManagerDialogComponent } from './components/dialogs/add-group-manager-dialog/add-group-manager-dialog.component';
@@ -101,7 +99,6 @@ import {AttributeValueMapComponent} from './components/attributes-list/attribute
 import {
   AttributeValueStringComponent
 } from './components/attributes-list/attribute-value/attribute-value-string/attribute-value-string.component';
-import { RefreshButtonComponent } from './components/refresh-button/refresh-button.component';
 import { AddMemberDialogComponent } from './components/dialogs/add-member-dialog/add-member-dialog.component';
 import {MembersCandidatesListComponent} from './components/members-candidates-list/members-candidates-list.component';
 import {MemberCandidateEmailPipe} from './pipes/member-candidate-email.pipe';
@@ -109,7 +106,6 @@ import {UserVoPipe} from './pipes/vo-or-ext-source.pipe';
 import { CreateResourceTagDialogComponent } from './components/dialogs/create-resource-tag-dialog/create-resource-tag-dialog.component';
 import { DeleteResourceTagDialogComponent } from './components/dialogs/delete-resource-tag-dialog/delete-resource-tag-dialog.component';
 import { MoveGroupDialogComponent } from './components/dialogs/move-group-dialog/move-group-dialog.component';
-import {GroupMenuComponent} from './components/group-menu/group-menu.component';
 import { ManagersPageComponent } from './components/managers-page/managers-page.component';
 import {
   DeleteNotificationDialogComponent
@@ -126,7 +122,6 @@ import { TagBarComponent } from './components/dialogs/add-edit-notification-dial
 import {
   NotificationsCopyMailsDialogComponent
 } from './components/dialogs/notifications-copy-mails-dialog/notifications-copy-mails-dialog.component';
-import { ImmediateFilterComponent } from './components/immediate-filter/immediate-filter.component';
 import {DisplayedRolePipe} from './pipes/displayed-role.pipe';
 import { AnimatedRouterOutletComponent } from './components/animated-router-outlet/animated-router-outlet.component';
 import { UserEmailPipe } from './pipes/user-email.pipe';
@@ -150,7 +145,6 @@ import { CreateAttributeDefinitionDialogComponent } from './components/dialogs/c
 import { PerunFooterComponent } from './perun-footer/perun-footer.component';
 import { BugReportDialogComponent } from './components/bug-report-dialog/bug-report-dialog.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
-import { TableOptionsComponent } from './components/table-options/table-options.component';
 import {MatTableExporterModule} from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { EditAttributeDefinitionDialogComponent } from './components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
@@ -160,7 +154,6 @@ import { ReportIssueDialogComponent } from './components/report-issue-dialog/rep
 import { RemoveVoDialogComponent } from './components/dialogs/remove-vo-dialog/remove-vo-dialog.component';
 import { CreateVoDialogComponent } from './components/dialogs/create-vo-dialog/create-vo-dialog.component';
 import { ShowNotificationHistoryDialogComponent } from './components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
-import { VoSelectTableComponent } from './components/vo-select-table/vo-select-table.component';
 import { ExtSourcesListComponent } from './components/ext-sources-list/ext-sources-list.component';
 import { AddExtSourceDialogComponent } from './components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { CreateRelationDialogComponent } from './components/dialogs/create-relation-dialog/create-relation-dialog.component';
@@ -170,6 +163,8 @@ import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/rem
 import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
 import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
 import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
+// tslint:disable-next-line:nx-enforce-module-boundaries
+import { PerunSharedComponentsModule } from '../../../../../libs/perun/components/src/lib/perun-components.module';
 
 @NgModule({
   imports: [
@@ -214,7 +209,8 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     MatTableExporterModule,
     ScrollingModule,
     UiAlertsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    PerunSharedComponentsModule
   ],
   exports: [
     PerunNavComponent,
@@ -242,7 +238,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
-    BackButtonComponent,
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -265,17 +260,14 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     MemberLoginsPipe,
     TechnicalOwnersPipe,
     ResourcesListComponent,
-    GroupsListComponent,
     ApplicationFormItemTypePipe,
     DragDropModule,
     ApplicationFormWidgetDescriptionPipe,
-    GroupsListComponent,
     RemoveManagerDialogComponent,
     AddManagerDialogComponent,
     AddGroupManagerDialogComponent,
     RemoveGroupManagerDialogComponent,
     ApplicationFormWidgetDescriptionPipe,
-    GroupsListComponent,
     ResourcesListComponent,
     TechnicalOwnersPipe,
     UsersListComponent,
@@ -286,15 +278,11 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     UserVoPipe,
     AttributesListComponent,
     MatChipsModule,
-    RefreshButtonComponent,
     MatChipsModule,
     MatExpansionModule,
     MatMenuModule,
-    GroupMenuComponent,
     ScrollingModule,
-    ImmediateFilterComponent,
     ManagersPageComponent,
-    GroupMenuComponent,
     ScrollingModule,
     DisplayedRolePipe,
     ScrollingModule,
@@ -305,8 +293,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     UserDetailComponent,
     UserDetailPageComponent,
     PerunFooterComponent,
-    TableOptionsComponent,
-    VoSelectTableComponent,
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
     ExtSourceTypePipe
@@ -366,7 +352,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     CreateGroupDialogComponent,
     InviteMemberDialogComponent,
     UserFullNamePipe,
-    BackButtonComponent,
     DeleteGroupDialogComponent,
     SettingsToggleItemComponent,
     ResourceTagsToStringPipe,
@@ -390,13 +375,11 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     TechnicalOwnersPipe,
     RemoveResourceDialogComponent,
     ResourcesListComponent,
-    GroupsListComponent,
     AddManagerDialogComponent,
     RemoveManagerDialogComponent,
     AddManagerDialogComponent,
     AddGroupManagerDialogComponent,
     RemoveGroupManagerDialogComponent,
-    GroupsListComponent,
     ApplicationFormItemTypePipe,
     UpdateApplicationFormDialogComponent,
     DeleteApplicationFormItemDialogComponent,
@@ -404,7 +387,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     AddApplicationFormItemDialogComponent,
     EditApplicationFormItemDialogComponent,
     ApplicationFormWidgetDescriptionPipe,
-    GroupsListComponent,
     ResourcesListComponent,
     TechnicalOwnersPipe,
     SideMenuRootItemComponent,
@@ -421,19 +403,15 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     AttributeValueListComponent,
     AttributeValueMapComponent,
     AttributeValueStringComponent,
-    RefreshButtonComponent,
     CreateResourceTagDialogComponent,
     DeleteResourceTagDialogComponent,
     MoveGroupDialogComponent,
-    GroupMenuComponent,
     DeleteNotificationDialogComponent,
     EditEmailFooterDialogComponent,
     AddEditNotificationDialogComponent,
     TagSectionComponent,
     TagBarComponent,
     NotificationsCopyMailsDialogComponent,
-    ImmediateFilterComponent,
-    GroupMenuComponent,
     ManagersPageComponent,
     DisplayedRolePipe,
     NotificationsCopyMailsDialogComponent,
@@ -465,10 +443,8 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     AutoFocusDirective,
     ReportIssueDialogComponent,
     RemoveVoDialogComponent,
-    TableOptionsComponent,
     CreateVoDialogComponent,
     ShowNotificationHistoryDialogComponent,
-    VoSelectTableComponent,
     CreateRelationDialogComponent,
     RemoveRelationDialogComponent,
     ChangeMemberStatusDialogComponent,
@@ -476,7 +452,6 @@ import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
     RemoveGroupFromResourceDialogComponent,
     AssignGroupToResourceDialogComponent,
     CreateResourceDialogComponent,
-    VoSelectTableComponent,
     ExtSourcesListComponent,
     AddExtSourceDialogComponent,
     ExtSourceTypePipe

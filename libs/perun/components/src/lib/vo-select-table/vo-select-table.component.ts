@@ -6,7 +6,7 @@ import { Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-vo-select-table',
+  selector: 'perun-web-apps-vo-select-table',
   templateUrl: './vo-select-table.component.html',
   styleUrls: ['./vo-select-table.component.scss']
 })
