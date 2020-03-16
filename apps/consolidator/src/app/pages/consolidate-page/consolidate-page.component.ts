@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NewTokensServiceService } from '../../services/new-tokens-service.service';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { Router } from '@angular/router';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
@@ -14,7 +13,6 @@ export class ConsolidatePageComponent implements OnInit {
 
   constructor(
     private newTokens: NewTokensServiceService,
-    private registrar: RegistrarService,
     private registrarManager: RegistrarManagerService,
     private router: Router
   ) { }

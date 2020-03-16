@@ -69,9 +69,9 @@ export class RegistrarManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'body', reportProgress?: boolean): Observable<ApplicationMail>;
-    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationMail>>;
-    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationMail>>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
     public addApplicationMailForGroup(inputAddApplicationMailForGroup: InputAddApplicationMailForGroup, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (inputAddApplicationMailForGroup === null || inputAddApplicationMailForGroup === undefined) {
             throw new Error('Required parameter inputAddApplicationMailForGroup was null or undefined when calling addApplicationMailForGroup.');
@@ -114,7 +114,7 @@ export class RegistrarManagerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<ApplicationMail>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/g`,
+        return this.httpClient.post<number>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/g`,
             inputAddApplicationMailForGroup,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -131,9 +131,9 @@ export class RegistrarManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'body', reportProgress?: boolean): Observable<ApplicationMail>;
-    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApplicationMail>>;
-    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApplicationMail>>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
     public addApplicationMailForVo(inputAddApplicationMailForVo: InputAddApplicationMailForVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (inputAddApplicationMailForVo === null || inputAddApplicationMailForVo === undefined) {
             throw new Error('Required parameter inputAddApplicationMailForVo was null or undefined when calling addApplicationMailForVo.');
@@ -176,7 +176,7 @@ export class RegistrarManagerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<ApplicationMail>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/v`,
+        return this.httpClient.post<number>(`${this.configuration.basePath}/json/registrarManager/addApplicationMail/v`,
             inputAddApplicationMailForVo,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -905,21 +905,21 @@ export class RegistrarManagerService {
 
     /**
      * Deletes an application.
-     * @param appId id of application
+     * @param id numeric id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteApplication(appId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteApplication(appId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteApplication(appId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteApplication(appId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (appId === null || appId === undefined) {
-            throw new Error('Required parameter appId was null or undefined when calling deleteApplication.');
+    public deleteApplication(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteApplication(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteApplication(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteApplication(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteApplication.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
-        if (appId !== undefined && appId !== null) {
-            queryParameters = queryParameters.set('appId', <any>appId);
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
         }
 
         let headers = this.defaultHeaders;
