@@ -1,21 +1,21 @@
-<h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.TITLE' | translate}}</h1>
+<h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | translate}}</h1>
 <!--<app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>-->
-<app-immediate-filter [placeholder]="'USER_DETAIL.ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
-                      *ngIf="!loading"></app-immediate-filter>
+<perun-web-apps-immediate-filter [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
+                      *ngIf="!loading"></perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
 <div *ngIf="!loading && vosWhereIsMember.length !== 0">
-  <h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
-  <app-vo-select-table [filterValue]="filterValue"
+  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
+  <perun-web-apps-vo-select-table [filterValue]="filterValue"
                        [vos]="vosWhereIsMember"
                        [displayedColumns]="displayedColumns">
-  </app-vo-select-table>
+  </perun-web-apps-vo-select-table>
 </div>
 
 <div *ngIf="!loading && vosWhereIsAdmin.length !== 0" class="mt-5">
-  <h1 class="page-subtitle">{{'USER_DETAIL.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
-  <app-vo-select-table [filterValue]="filterValue"
+  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
+  <perun-web-apps-vo-select-table [filterValue]="filterValue"
                        [vos]="vosWhereIsAdmin"
                        [displayedColumns]="displayedColumns">
-  </app-vo-select-table>
+  </perun-web-apps-vo-select-table>
 </div>

@@ -19,5 +19,44 @@
   },
   "GROUPS": {
     "TITLE": "Groups"
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "COMPONENTS": {
+        "GROUPS_LIST": {
+          "TABLE_GROUP_ID": "Id",
+          "TABLE_VO_NAME": "Vo",
+          "TABLE_GROUP_NAME": "Name",
+          "TABLE_SEARCH": "Filter by name, description or ID",
+          "TABLE_GROUP_DESCRIPTION": "Description"
+        },
+        "GROUP_MENU": {
+          "MOVE": "Move group",
+          "RENAME": "Update name/description"
+        },
+        "VO_SELECT_TABLE": {
+          "ID": "Id",
+          "NAME": "Name",
+          "RECENT": "Recently viewed"
+        }
+      },
+      "ORGANIZATIONS": {
+        "TITLE": "User organizations",
+        "FILTER": "Filter by name or ID",
+        "IS_ADMIN": "Organizations where you are admin",
+        "IS_MEMBER": "Organizations where you are member"
+      },
+      "GROUPS": {
+        "MEMBER_GROUPS": "Groups where you are member",
+        "ADMINS_GROUPS": "Groups where you are admin"
+      },
+      "REFRESH_BUTTON": "Refresh"
+    },
+    "UI": {
+      "ALERTS": {
+        "NO_GROUPS": "No groups found.",
+        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria."
+      }
+    }
   }
 }

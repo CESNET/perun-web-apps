@@ -40,6 +40,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 import { BreadcrumbModule } from 'angular-crumbs';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -102,7 +103,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     SharedModule,
     FlexLayoutModule,
     MatToolbarModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    PerunSharedComponentsModule
   ],
   providers: [
     CustomIconService,
