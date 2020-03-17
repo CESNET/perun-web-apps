@@ -57,7 +57,7 @@ export class AuthService {
     });
   }
 
-  authenticate(): Promise<any> {
+  authenticate(): Promise<boolean> {
     const currentPathname = window.location.pathname;
 
     if (currentPathname === '/api-callback') {
@@ -131,11 +131,12 @@ export class AuthService {
     return this.isLoggedInPromise()
       .toPromise()
       .then(isLoggedIn => {
-      if (!isLoggedIn) {
-        sessionStorage.setItem('auth:redirect', path);
-        this.startAuthentication().then(r => console.log('R:' + r));
-      }
-    });
+        if (!isLoggedIn) {
+          sessionStorage.setItem('auth:redirect', path);
+          this.startAuthentication().then(r => console.log('R:' + r));
+        }
+        return isLoggedIn;
+      });
   }
 
   /**
@@ -145,7 +146,7 @@ export class AuthService {
    * he wanted to visit.
    *
    */
-  private handleAuthCallback(): Promise<any> {
+  private handleAuthCallback(): Promise<boolean> {
     return this.completeAuthentication().then(() => {
       const redirectUrl = sessionStorage.getItem('auth:redirect');
       if (redirectUrl) {
@@ -154,6 +155,7 @@ export class AuthService {
       } else {
         this.router.navigate(['/']);
       }
+      return true;
     });
   }
 }

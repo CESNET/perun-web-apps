@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface DialogData {

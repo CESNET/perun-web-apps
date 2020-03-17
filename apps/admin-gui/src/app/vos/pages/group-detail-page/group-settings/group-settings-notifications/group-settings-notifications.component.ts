@@ -16,10 +16,9 @@ import {
 import {
   EditEmailFooterDialogComponent
 } from '../../../../../shared/components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';
-import { RegistrarService } from '@perun-web-apps/perun/services';
-import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { ApplicationForm, ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
-import { ApplicationMail } from '@perun-web-apps/perun/models';
+import { createNewApplicationMail } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-group-settings-notifications',
@@ -32,8 +31,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private registrarService: RegistrarService,
-    private registrarManager: RegistrarManagerService,
+    private registrarService: RegistrarManagerService,
     private translate: TranslateService,
     private dialog: MatDialog,
     private apiRequest: ApiRequestConfigurationService,
@@ -57,7 +55,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
 
       // FIXME this might not work in case of some race condition (other request finishes sooner)
       this.apiRequest.dontHandleErrorForNext();
-      this.registrarManager.getGroupApplicationForm(this.groupId).subscribe( form => {
+      this.registrarService.getGroupApplicationForm(this.groupId).subscribe( form => {
         this.applicationForm = form;
         this.registrarService.getApplicationMailsForGroup(this.groupId).subscribe( mails => {
           this.applicationMails = mails;
@@ -75,7 +73,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   }
 
   add() {
-    const applicationMail: ApplicationMail = new ApplicationMail();
+    const applicationMail: ApplicationMail = createNewApplicationMail();
     applicationMail.formId = this.applicationForm.id;
     const dialog = this.dialog.open(AddEditNotificationDialogComponent, {
       width: '1400px',
@@ -146,7 +144,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   }
 
   createEmptyApplicationForm() {
-    this.registrarManager.createApplicationFormInGroup(this.groupId).subscribe( () => {
+    this.registrarService.createApplicationFormInGroup(this.groupId).subscribe( () => {
       this.noApplicationForm = false;
       this.ngOnInit();
     });

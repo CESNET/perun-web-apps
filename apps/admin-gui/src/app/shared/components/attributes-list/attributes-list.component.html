@@ -1,6 +1,6 @@
 <div class="card mt-3" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0">
   <div class="card-body">
-    <app-table-options [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
 
     <table
       [hiddenColumns]="[0]"

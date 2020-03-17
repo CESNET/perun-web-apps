@@ -15,7 +15,6 @@ import {
 import {
   EditApplicationFormItemDialogComponent
 } from '../../../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 
@@ -31,7 +30,6 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private registrarService: RegistrarService,
     private registrarManager: RegistrarManagerService,
     protected route: ActivatedRoute,
     private dialog: MatDialog,

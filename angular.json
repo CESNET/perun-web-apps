@@ -647,6 +647,68 @@
           "styleext": "scss"
         }
       }
+    },
+    "general": {
+      "projectType": "library",
+      "root": "libs/general",
+      "sourceRoot": "libs/general/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/general/tsconfig.lib.json",
+              "libs/general/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/general/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/general/jest.config.js",
+            "tsConfig": "libs/general/tsconfig.spec.json",
+            "setupFile": "libs/general/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "perun-components": {
+      "projectType": "library",
+      "root": "libs/perun/components",
+      "sourceRoot": "libs/perun/components/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/components/tsconfig.lib.json",
+              "libs/perun/components/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/perun/components/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/components/jest.config.js",
+            "tsConfig": "libs/perun/components/tsconfig.spec.json",
+            "setupFile": "libs/perun/components/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

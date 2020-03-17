@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {openClose, tagsOpenClose} from '../../../animations/Animations';
-import { ApplicationMail } from '@perun-web-apps/perun/models';
-import { RegistrarService } from '@perun-web-apps/perun/services';
+import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface ApplicationFormAddEditMailDialogData {
   voId: number;
@@ -24,7 +23,7 @@ export interface ApplicationFormAddEditMailDialogData {
 export class AddEditNotificationDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddEditNotificationDialogComponent>,
-              private registrarService: RegistrarService,
+              private registrarService: RegistrarManagerService,
               @Inject(MAT_DIALOG_DATA) public data: ApplicationFormAddEditMailDialogData) { }
 
   applicationMail: ApplicationMail;
@@ -47,18 +46,18 @@ export class AddEditNotificationDialogComponent implements OnInit {
       return;
     }
     if (this.data.groupId) {
-      this.registrarService.addApplicationMailForGroup(this.data.groupId, this.applicationMail).subscribe( () => {
+      this.registrarService.addApplicationMailForGroup({ group: this.data.groupId, mail: this.applicationMail }).subscribe( () => {
         this.dialogRef.close(true);
       });
     } else {
-      this.registrarService.addApplicationMailForVo(this.data.voId, this.applicationMail).subscribe( () => {
+      this.registrarService.addApplicationMailForVo({ vo: this.data.voId, mail: this.applicationMail }).subscribe( () => {
         this.dialogRef.close(true);
       });
     }
   }
 
   save() {
-    this.registrarService.updateApplicationMail(this.applicationMail).subscribe( () => {
+    this.registrarService.updateApplicationMail({ mail: this.applicationMail }).subscribe( () => {
       this.dialogRef.close(true);
     });
   }

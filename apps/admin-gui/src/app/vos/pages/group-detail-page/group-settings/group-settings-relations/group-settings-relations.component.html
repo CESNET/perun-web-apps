@@ -1,21 +1,21 @@
 <div>
   <h1 class="page-subtitle">{{'GROUP_DETAIL.SETTINGS.RELATIONS.TITLE' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <button mat-flat-button class="mr-2" color="accent" (click)="onCreate()">
     {{'GROUP_DETAIL.SETTINGS.RELATIONS.CREATE' | translate}}
   </button>
   <button mat-flat-button color="warn" (click)="onDelete()" [disabled]="selection.selected.length === 0">
     {{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE' | translate}}
   </button>
-  <app-immediate-filter [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'"></perun-web-apps-immediate-filter>
   <mat-checkbox (change)="showReverseUnions()">{{'GROUP_DETAIL.SETTINGS.RELATIONS.REVERSE_UNIONS' | translate}}</mat-checkbox>
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 
-  <app-groups-list
+  <perun-web-apps-groups-list
       *ngIf="!loading"
       [groups]="groups"
       [selection]="selection"
       [filter]="filterValue"
       [disableHeadCheckbox]="true"
-  ></app-groups-list>
+  ></perun-web-apps-groups-list>
 </div>

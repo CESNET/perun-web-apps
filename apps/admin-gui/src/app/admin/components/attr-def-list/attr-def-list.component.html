@@ -1,6 +1,6 @@
 <div class="card mt-2" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0 || definitions.length === 0">
   <div class="card-body">
-    <app-table-options [exporter]="exporter" (start)="exporting = true" (end)="exporting = false"></app-table-options>
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
     <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear class="w-100">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>

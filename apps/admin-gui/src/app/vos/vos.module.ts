@@ -77,6 +77,7 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 import { AddExtSourceDialogComponent } from '../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { AddExtSourceDialogComponent } from '../shared/components/dialogs/add-ex
     VosRoutingModule,
     MatTableExporterModule,
     SharedModule,
-    UiAlertsModule
+    UiAlertsModule,
+    PerunSharedComponentsModule
   ],
   exports: [
     AttributesListComponent,

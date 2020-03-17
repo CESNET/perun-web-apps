@@ -1,8 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CustomIconService} from '@perun-web-apps/perun/services';
-import { PropagationStatsReaderService } from '@perun-web-apps/perun/services';
-import { ResourceState } from '@perun-web-apps/perun/models';
+import { ResourceState, TasksManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-vo-resources-states',
@@ -16,7 +15,7 @@ export class VoResourcesStatesComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(private route: ActivatedRoute,
-              private propagationStatsReader: PropagationStatsReaderService,
+              private taskService: TasksManagerService,
               private customIconService: CustomIconService) { }
 
   loading = false;
@@ -39,7 +38,7 @@ export class VoResourcesStatesComponent implements OnInit {
   refreshTable() {
     console.log(this.selectedIndex);
     this.loading = true;
-    this.propagationStatsReader.getAllResourcesState(this.voId).subscribe( resourceStates => {
+    this.taskService.getAllResourcesState(this.voId).subscribe( resourceStates => {
       this.resourceStates = resourceStates;
       this.okPropagation = [];
       this.errorPropagation = [];

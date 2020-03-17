@@ -56,6 +56,12 @@
     },
     "config": {
       "tags": []
+    },
+    "general": {
+      "tags": []
+    },
+    "perun-components": {
+      "tags": []
     }
   }
 }

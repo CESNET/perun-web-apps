@@ -1,6 +1,6 @@
 <div>
   <h1 class="page-subtitle">{{'MENU_ITEMS.FACILITY.ALLOWED_GROUPS' | translate}}</h1>
-  <app-refresh-button (refresh)="refreshTable()"></app-refresh-button>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <mat-form-field>
     <mat-label>{{'FACILITY_DETAIL.ALLOWED_GROUPS.SHOW_VOS_GROUPS' | translate}}</mat-label>
     <mat-select  [(value)]="selected" (selectionChange)="showGroup()">
@@ -11,12 +11,12 @@
     </mat-select>
   </mat-form-field>
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-  <app-groups-list
+  <perun-web-apps-groups-list
     *ngIf="!loading && groupsToShow.length !== 0"
     [hideColumns]="['menu', 'vo']"
     [groups] = "groupsToShow"
     [disableMembers]="false">
-  </app-groups-list>
+  </perun-web-apps-groups-list>
 
   <app-alert *ngIf="groupsToShow.length === 0 && !loading" color="warn">
     {{'FACILITY_DETAIL.ALLOWED_GROUPS.NO_GROUPS_ALERT' | translate}}

@@ -14,6 +14,7 @@ import { OwnersManagerService } from './api/ownersManager.service';
 import { RegistrarManagerService } from './api/registrarManager.service';
 import { ResourcesManagerService } from './api/resourcesManager.service';
 import { ServicesManagerService } from './api/servicesManager.service';
+import { TasksManagerService } from './api/tasksManager.service';
 import { UsersManagerService } from './api/usersManager.service';
 import { UtilsService } from './api/utils.service';
 import { VosManagerService } from './api/vosManager.service';
@@ -34,6 +35,7 @@ import { VosManagerService } from './api/vosManager.service';
     RegistrarManagerService,
     ResourcesManagerService,
     ServicesManagerService,
+    TasksManagerService,
     UsersManagerService,
     UtilsService,
     VosManagerService ]

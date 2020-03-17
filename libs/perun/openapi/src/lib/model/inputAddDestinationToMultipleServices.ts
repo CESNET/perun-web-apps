@@ -22,6 +22,6 @@ export interface InputAddDestinationToMultipleServices {
     facility: number;
     destination: string;
     type: DestinationType;
-    propagationType: DestinationPropagationType;
+    propagationType?: DestinationPropagationType;
 }
 

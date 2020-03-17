@@ -1,0 +1,57 @@
+<div class="card mt-3" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0">
+  <div class="card-body">
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
+    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortDirection="asc" matSortDisableClear
+           class="w-100">
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+        <td mat-cell *matCellDef="let member" class="static-column-size">
+          <mat-checkbox color="primary"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(member) : null"
+                        [checked]="selection.isSelected(member)"
+                        [aria-label]="checkboxLabel(member)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.ID' | translate}}</th>
+        <td mat-cell class="static-column-size" *matCellDef="let vo">{{vo.id}}</td>
+      </ng-container>
+      <ng-container matColumnDef="recent">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+        <td mat-cell *matCellDef="let vo">
+          <mat-icon
+            class="align-bottom"
+            *ngIf="recentIds.indexOf(vo.id) > -1"
+            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.RECENT' | translate}}">
+            visibility
+          </mat-icon>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.NAME' | translate}}</th>
+        <td mat-cell *matCellDef="let vo">{{vo.name}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let vo; columns: displayedColumns;"
+        [routerLink]="['/organizations', vo.id]"
+        class="dark-hover-list-item">
+      </tr>
+    </table>
+    <mat-paginator [length]="this.vos.length" [pageSize]="10" [pageSizeOptions]="[5,10,25]"></mat-paginator>
+  </div>
+</div>
+
+<mat-spinner *ngIf="exporting" class="ml-auto mr-auto"></mat-spinner>
+
+<app-alert *ngIf="dataSource.filteredData.length === 0" color="warn">
+  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+</app-alert>
+

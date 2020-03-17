@@ -3,16 +3,16 @@
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 </div>
 <div class="{{theme}}" *ngIf="!loading">
-  <app-immediate-filter [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'" (filter)="applyFilter($event)"></app-immediate-filter>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'"></perun-web-apps-immediate-filter>
   <div mat-dialog-content class="dialog-container">
-    <app-groups-list
+    <perun-web-apps-groups-list
         [groups]="groups"
         [selection]="selection"
         [hideColumns]="hideColumns"
         [filter]="filterValue"
         [disableHeadCheckbox]="true"
         [inDialog]="true"
-    ></app-groups-list>
+    ></perun-web-apps-groups-list>
 
   </div>
   <div mat-dialog-actions>

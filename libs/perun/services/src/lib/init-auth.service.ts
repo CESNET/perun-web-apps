@@ -22,18 +22,14 @@ export class InitAuthService {
    * Load additional data. First it init authService with necessarily data, then
    * start authentication.
    */
-  authenticateUser(): Promise<any> {
-    return new Promise((resolve) => {
-      this.authService.loadConfigData();
+  authenticateUser(): Promise<boolean> {
+    this.authService.loadConfigData();
 
-      if (this.storeService.get('skip_oidc')) {
-        resolve();
-      } else {
-        this.authService.authenticate().then(() => {
-          resolve();
-        });
-      }
-    });
+    if (this.storeService.get('skip_oidc')) {
+      return new Promise<boolean>(resolve => resolve(true));
+    } else {
+      return this.authService.authenticate();
+    }
   }
 
   /**

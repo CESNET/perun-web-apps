@@ -9,7 +9,7 @@ import {
   RichMember,
   RichUser,
   User,
-  Candidate
+  Candidate, ApplicationMail
 } from '@perun-web-apps/perun/openapi';
 import { Attribute, AttributeDefinition } from '@perun-web-apps/perun/openapi';
 
@@ -513,4 +513,13 @@ export function translateIdp(name: string): string {
 
     default: return name;
   }
+}
+
+export function createNewApplicationMail(): ApplicationMail {
+  return { appType: 'INITIAL',
+          formId: 0,
+          mailType: 'APP_CREATED_USER',
+          send: true,
+          message: { ['en']: {locale: 'en', subject: '', text: ''},
+            ['cs']: {locale: 'cs', subject: '', text: ''}} };
 }

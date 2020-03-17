@@ -4,17 +4,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {SelectionModel} from '@angular/cdk/collections';
 import { Group } from '@perun-web-apps/perun/openapi';
-import { TreeGroup } from '@perun-web-apps/perun/models';
-
-
-export interface GroupFlatNode {
-  expandable: boolean;
-  parentGroupId: number;
-  name: string;
-  level: number;
-  id: number;
-  voId: number;
-}
+import { GroupFlatNode, TreeGroup } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-groups-tree',

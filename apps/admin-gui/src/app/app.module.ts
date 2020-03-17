@@ -22,6 +22,7 @@ import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-ap
 // @ts-ignore
 import { StoreService } from '@perun-web-apps/perun/services';
 import { ApiInterceptor } from './core/services/api/ApiInterceptor';
+import { GeneralModule } from '@perun-web-apps/general';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -67,6 +68,7 @@ const loadConfigs = (appConfig: AdminGuiConfigService) => {
     CoreModule,
     AppRoutingModule,
     MatIconModule,
+    GeneralModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

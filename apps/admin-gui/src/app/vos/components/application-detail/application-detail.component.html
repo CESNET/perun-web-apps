@@ -1,6 +1,6 @@
 <h2 class="page-subtitle">
   {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TITLE' | translate}}
-  <span class="text-muted">
+  <span class="text-muted" *ngIf="!!application">
     #{{application.id}}
   </span>
 </h2>

@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import { Group } from '@perun-web-apps/perun/openapi';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface EditApplicationFormItemDialogComponentData {
@@ -31,7 +30,6 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<EditApplicationFormItemDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: EditApplicationFormItemDialogComponentData,
-              private registrarService: RegistrarService,
               private attributesManager: AttributesManagerService,
               private translateService: TranslateService) { }
 

@@ -4,6 +4,9 @@ import {
 } from '@perun-web-apps/perun/services';
 import { AppConfigService, ColorConfig, EntityColorConfig } from '@perun-web-apps/config';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { ServerDownDialogComponent } from '@perun-web-apps/general';
 
 
 @Injectable({
@@ -15,7 +18,9 @@ export class AdminGuiConfigService {
     private initAuthService: InitAuthService,
     private appConfigService: AppConfigService,
     private store: StoreService,
-    private authzSevice: AuthzResolverService
+    private authzSevice: AuthzResolverService,
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {}
 
   entityColorConfigs: EntityColorConfig[] = [
@@ -81,7 +86,14 @@ export class AdminGuiConfigService {
       .then(() => this.setApiUrl())
       .then(() => this.appConfigService.initializeColors(this.entityColorConfigs, this.colorConfigs))
       .then(() => this.initAuthService.authenticateUser())
-      .then(() => this.initAuthService.loadPrincipal());
+      .then(isAuthenticated => {
+        // if the user is not authenticated, do not try to load principal
+        console.log(isAuthenticated);
+        if (isAuthenticated !== true) {
+          return new Promise<void>(resolve => resolve());
+        }
+        return this.initAuthService.loadPrincipal();
+      }).catch(err => this.handlePrincipalErr(err));
   }
 
   /**
@@ -92,5 +104,19 @@ export class AdminGuiConfigService {
       this.authzSevice.configuration.basePath = this.store.get('api_url');
       resolve();
     });
+  }
+
+  private handlePrincipalErr(err: any) {
+    console.log("sdfsdf");
+    this.translate.get('GENERAL.PRINCIPAL.ERROR.TITLE').subscribe(sdf => console.log(sdf));
+    this.dialog.open(ServerDownDialogComponent, {
+      data: {
+        title: this.translate.instant('GENERAL.PRINCIPAL_ERROR.TITLE'),
+        message: this.translate.instant('GENERAL.PRINCIPAL_ERROR.MESSAGE'),
+        action: this.translate.instant('GENERAL.PRINCIPAL_ERROR.ACTION'),
+      },
+      disableClose: true
+    });
+    throw err;
   }
 }

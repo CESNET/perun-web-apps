@@ -10,14 +10,14 @@
     {{'DIALOGS.ASSIGN_GROUP_TO_RESOURCE.CONFIGURE_GROUPS' | translate}}
   </mat-checkbox>
   <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
-  <app-groups-list
+  <perun-web-apps-groups-list
     *ngIf="!loading"
     [groups]="filteredGroups"
     [selection]="selection"
     [hideColumns]="['vo', 'menu']"
     [inDialog]="true"
     [disableMembers]="false">
-  </app-groups-list>
+  </perun-web-apps-groups-list>
   <div mat-dialog-actions>
     <button
       mat-stroked-button

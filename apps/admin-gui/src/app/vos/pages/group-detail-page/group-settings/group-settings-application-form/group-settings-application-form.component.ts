@@ -15,7 +15,6 @@ import {
 import {
   UpdateApplicationFormDialogComponent
 } from '../../../../../shared/components/dialogs/update-application-form-dialog/update-application-form-dialog.component';
-import { RegistrarService } from '@perun-web-apps/perun/services';
 import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
@@ -32,7 +31,6 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   constructor(
-    private registrarService: RegistrarService,
     private registrarManager: RegistrarManagerService,
     protected route: ActivatedRoute,
     private dialog: MatDialog,

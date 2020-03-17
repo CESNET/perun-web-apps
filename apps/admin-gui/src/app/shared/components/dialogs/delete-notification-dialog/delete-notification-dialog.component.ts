@@ -3,8 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import {NotificatorService} from '../../../../core/services/common/notificator.service';
 import {TranslateService} from '@ngx-translate/core';
-import { ApplicationMail } from '@perun-web-apps/perun/models';
-import { RegistrarService } from '@perun-web-apps/perun/services';
+import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface DeleteApplicationFormMailDialogData {
   voId: number;
@@ -23,7 +22,7 @@ export class DeleteNotificationDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: DeleteApplicationFormMailDialogData,
               private notificator: NotificatorService,
               private translate: TranslateService,
-              private registrarService: RegistrarService) { }
+              private registrarService: RegistrarManagerService) { }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<ApplicationMail>;
@@ -54,6 +53,7 @@ export class DeleteNotificationDialogComponent implements OnInit {
 
   getMailType(applicationMail: ApplicationMail): string {
     let value = '';
+    // @ts-ignore
     if (applicationMail.mailType === undefined || applicationMail.mailType === null || applicationMail.mailType === '') {
       value = '';
     } else {

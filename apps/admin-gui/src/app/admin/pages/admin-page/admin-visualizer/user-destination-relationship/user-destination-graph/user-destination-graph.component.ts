@@ -4,8 +4,7 @@ import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  MembersService,
-  ServiceService,
+  MembersService
 } from '@perun-web-apps/perun/services';
 import {
   FacilitiesManagerService,
@@ -17,7 +16,9 @@ import {
   RichDestination,
   Service,
   UsersManagerService,
-  User, VosManagerService
+  VosManagerService,
+  ServicesManagerService,
+  User
 } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -33,7 +34,7 @@ export class UserDestinationGraphComponent implements OnInit {
               private facilityManager: FacilitiesManagerService,
               private userService: UsersManagerService,
               private memberService: MembersService,
-              private serviceService: ServiceService,
+              private serviceService: ServicesManagerService,
               private resourceManager: ResourcesManagerService,
               private groupService: GroupsManagerService,
               private voService: VosManagerService,
@@ -135,7 +136,7 @@ export class UserDestinationGraphComponent implements OnInit {
     }
 
     for (const facility of this.facilities) {
-      this.serviceService.getAllRichDestinations(facility.id).subscribe(destinations => {
+      this.serviceService.getAllRichDestinationsForFacility(facility.id).subscribe(destinations => {
         this.connectToService(facility, destinations);
         this.delay(2000).then(() => {
           this.zoomToFit$.next(true);

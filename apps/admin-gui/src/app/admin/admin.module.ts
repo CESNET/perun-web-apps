@@ -30,6 +30,7 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { AdminExtSourcesComponent } from './pages/admin-page/admin-ext-sources/admin-ext-sources.component';
 import { EditAttributeDefinitionDialogComponent } from '../shared/components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
 import { EntitylessAttributeKeysListComponent } from '../shared/components/entityless-attribute-keys-list/entityless-attribute-keys-list.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { EntitylessAttributeKeysListComponent } from '../shared/components/entit
     AdminRoutingModule,
     SharedModule,
     MatTableExporterModule,
-    UiAlertsModule
+    UiAlertsModule,
+    PerunSharedComponentsModule
   ],
   entryComponents: [
     CreateAttributeDefinitionDialogComponent,
