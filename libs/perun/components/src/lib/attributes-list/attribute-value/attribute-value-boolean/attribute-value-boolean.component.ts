@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'app-attribute-value-string',
-  templateUrl: './attribute-value-string.component.html',
-  styleUrls: ['./attribute-value-string.component.scss']
+  selector: 'perun-web-apps-attribute-value-boolean',
+  templateUrl: './attribute-value-boolean.component.html',
+  styleUrls: ['./attribute-value-boolean.component.scss']
 })
-export class AttributeValueStringComponent implements OnInit {
+export class AttributeValueBooleanComponent implements OnInit {
 
   constructor() {
   }
@@ -16,10 +16,7 @@ export class AttributeValueStringComponent implements OnInit {
 
   @Output() sendEventToParent = new EventEmitter();
 
-  value: string;
-
   ngOnInit() {
-    this.value = <string><unknown>this.attribute.value;
   }
 
   _sendEventToParent() {

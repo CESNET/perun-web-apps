@@ -89,7 +89,7 @@ export class AttributesManagerService {
 
     /**
      * Creates AttributeDefinition.
-     * @param inputCreateAttributeDefinition
+     * @param inputCreateAttributeDefinition 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -319,7 +319,7 @@ export class AttributesManagerService {
 
     /**
      * Returns an Attribute by its name or id.
-     * This method cannot be fully described correctly in OpenID, because it cannot describe allowed combinations of parameters. One of attributeName, attributeId is required. The other parameters specify ids that can be combined in the following ways:  (facility), (user), (user,facility), (vo), (member), (group), (resource),  (member,group), (member,resource), (group,resource),(userExtSource), (host), (key) Use the specialized methods getFacilityAttributeByName(), getMemberResourceAttributeById() etc.
+     * This method cannot be fully described correctly in OpenID, because it cannot describe allowed combinations of parameters. One of attributeName, attributeId is required. The other parameters specify ids that can be combined in the following ways:  (facility), (user), (user,facility), (vo), (member), (group), (resource),  (member,group), (member,resource), (group,resource),(userExtSource), (host), (key) Use the specialized methods getFacilityAttributeByName(), getMemberResourceAttributeById() etc. 
      * @param attributeName full name of attribute (namespace + \&#39;:\&#39; + friendlyName)
      * @param attributeId id of attribute
      * @param facility id of Facility
@@ -578,7 +578,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted.
+     * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted. 
      * @param format Currently supported formats are DOT and TGF.
      * @param attrName Attribute name which dependencies will be found.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -643,7 +643,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted.
+     * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted. 
      * @param format Currently supported formats are DOT and TGF.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -908,7 +908,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all entityless attributes with subject equaled String key.
+     * Get all entityless attributes with subject equaled String key. 
      * @param key key for entityless attributes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1615,7 +1615,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the group.
+     * Get all non-empty attributes associated with the group. 
      * @param group id of Group
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1673,7 +1673,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the group which have name in list attrNames (empty too). Virtual attribute too.
+     * Get all attributes associated with the group which have name in list attrNames (empty too). Virtual attribute too. 
      * @param group id of Group
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2018,7 +2018,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the host.
+     * Get all non-empty attributes associated with the host. 
      * @param host id of Host
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -2076,7 +2076,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the member and if workWithUserAttributes is true, get all non-empty attributes associated with user, who is this member.
+     * Get all non-empty attributes associated with the member and if workWithUserAttributes is true, get all non-empty attributes associated with user, who is this member. 
      * @param member id of Member
      * @param workWithUserAttributes flag to work with user attributes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2141,7 +2141,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the member which have name in list attrNames (empty too). Virtual attributes too. If workWithUserAttribute is true, return also all user attributes in list of attrNames (with virtual attributes too).
+     * Get all attributes associated with the member which have name in list attrNames (empty too). Virtual attributes too. If workWithUserAttribute is true, return also all user attributes in list of attrNames (with virtual attributes too). 
      * @param member id of Member
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param workWithUserAttributes flag to work with user attributes
@@ -2347,7 +2347,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the member.
+     * Get all non-empty attributes associated with the member. 
      * @param member id of Member
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -2405,7 +2405,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the member which have name in list attrNames (empty too). Virtual attribute too.
+     * Get all attributes associated with the member which have name in list attrNames (empty too). Virtual attribute too. 
      * @param member id of Member
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2472,7 +2472,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the member in the group which have name in list attrNames (empty too). If workWithUserAttribute is true, return also all user attributes in list of attrNames (with virtual attributes too).
+     * Get all attributes associated with the member in the group which have name in list attrNames (empty too). If workWithUserAttribute is true, return also all user attributes in list of attrNames (with virtual attributes too). 
      * @param member id of Member
      * @param group id of Group
      * @param attrNames list of attribute names List&lt;String&gt;
@@ -2699,7 +2699,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the member in the group.
+     * Get all non-empty attributes associated with the member in the group. 
      * @param member id of Member
      * @param group id of Group
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2764,7 +2764,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes (empty and virtual too)associated with the member in the group which have name in list attrNames.
+     * Get all attributes (empty and virtual too)associated with the member in the group which have name in list attrNames. 
      * @param member id of Member
      * @param group id of Group
      * @param attrNames list of attribute names List&lt;String&gt;
@@ -2838,7 +2838,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Gets all non-empty attributes associated with the member on the resource and if workWithUserAttributes is true, gets also all non-empty user, user-facility and member attributes.
+     * Gets all non-empty attributes associated with the member on the resource and if workWithUserAttributes is true, gets also all non-empty user, user-facility and member attributes. 
      * @param member id of Member
      * @param resource id of Resource
      * @param workWithUserAttributes flag to work with user attributes
@@ -2910,7 +2910,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Gets selected non-empty attributes associated with the member and the resource. It returns member and member-resource attributes and also user and user-facility attributes if workWithUserAttributes is true. Attributes are selected by list of attr_names. Empty list means all attributes.
+     * Gets selected non-empty attributes associated with the member and the resource. It returns member and member-resource attributes and also user and user-facility attributes if workWithUserAttributes is true. Attributes are selected by list of attr_names. Empty list means all attributes. 
      * @param member id of Member
      * @param resource id of Resource
      * @param attrNames list of attribute names List&lt;String&gt;
@@ -3202,6 +3202,1146 @@ export class AttributesManagerService {
     }
 
     /**
+     * TODO
+     * @param facility id of Facility
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesFacility(facility: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesFacility(facility: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesFacility(facility: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesFacility(facility: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (facility === null || facility === undefined) {
+            throw new Error('Required parameter facility was null or undefined when calling getRequiredAttributesFacility.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (facility !== undefined && facility !== null) {
+            queryParameters = queryParameters.set('facility', <any>facility);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/f`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param facility id of Facility
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesFacilityService(service: number, facility: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesFacilityService(service: number, facility: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesFacilityService(service: number, facility: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesFacilityService(service: number, facility: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesFacilityService.');
+        }
+        if (facility === null || facility === undefined) {
+            throw new Error('Required parameter facility was null or undefined when calling getRequiredAttributesFacilityService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (facility !== undefined && facility !== null) {
+            queryParameters = queryParameters.set('facility', <any>facility);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-f`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param services list of Service ids List&lt;Integer&gt;
+     * @param facility id of Facility
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesFacilityServices(services: Array<number>, facility: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesFacilityServices(services: Array<number>, facility: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesFacilityServices(services: Array<number>, facility: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesFacilityServices(services: Array<number>, facility: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (services === null || services === undefined) {
+            throw new Error('Required parameter services was null or undefined when calling getRequiredAttributesFacilityServices.');
+        }
+        if (facility === null || facility === undefined) {
+            throw new Error('Required parameter facility was null or undefined when calling getRequiredAttributesFacilityServices.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (services) {
+            services.forEach((element) => {
+                queryParameters = queryParameters.append('services[]', <any>element);
+            })
+        }
+        if (facility !== undefined && facility !== null) {
+            queryParameters = queryParameters.set('facility', <any>facility);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/ss-f`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param resource id of Resource
+     * @param group id of Group
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesGroupResourceService(service: number, resource: number, group: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesGroupResourceService(service: number, resource: number, group: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesGroupResourceService(service: number, resource: number, group: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesGroupResourceService(service: number, resource: number, group: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesGroupResourceService.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesGroupResourceService.');
+        }
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getRequiredAttributesGroupResourceService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-r-g`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param host id of Host
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesHostService(service: number, host: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesHostService(service: number, host: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesHostService(service: number, host: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesHostService(service: number, host: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesHostService.');
+        }
+        if (host === null || host === undefined) {
+            throw new Error('Required parameter host was null or undefined when calling getRequiredAttributesHostService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (host !== undefined && host !== null) {
+            queryParameters = queryParameters.set('host', <any>host);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-h`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param member id of Member
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMember(member: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMember(member: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMember(member: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMember(member: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMember.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/m`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param member id of Member
+     * @param group id of Group
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMemberGroup(member: number, group: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMemberGroup(member: number, group: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroup(member: number, group: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroup(member: number, group: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMemberGroup.');
+        }
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getRequiredAttributesMemberGroup.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/m-g`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param resource id of Resource
+     * @param group id of Group
+     * @param member id of Member
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMemberGroupResourceService(service: number, resource: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMemberGroupResourceService(service: number, resource: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroupResourceService(service: number, resource: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroupResourceService(service: number, resource: number, group: number, member: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesMemberGroupResourceService.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesMemberGroupResourceService.');
+        }
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getRequiredAttributesMemberGroupResourceService.');
+        }
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMemberGroupResourceService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-r-g-m`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param group id of Group
+     * @param member id of Member
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMemberGroupService(service: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMemberGroupService(service: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroupService(service: number, group: number, member: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMemberGroupService(service: number, group: number, member: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesMemberGroupService.');
+        }
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getRequiredAttributesMemberGroupService.');
+        }
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMemberGroupService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-g-m`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param member id of Member
+     * @param resource id of Resource
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMemberResource(member: number, resource: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMemberResource(member: number, resource: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMemberResource(member: number, resource: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMemberResource(member: number, resource: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMemberResource.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesMemberResource.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/m-r`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param resource id of Resource
+     * @param member id of Member
+     * @param workWithUserAttributes flag to work with user attributes
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesMemberResourceService(service: number, resource: number, member: number, workWithUserAttributes?: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesMemberResourceService(service: number, resource: number, member: number, workWithUserAttributes?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesMemberResourceService(service: number, resource: number, member: number, workWithUserAttributes?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesMemberResourceService(service: number, resource: number, member: number, workWithUserAttributes?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesMemberResourceService.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesMemberResourceService.');
+        }
+        if (member === null || member === undefined) {
+            throw new Error('Required parameter member was null or undefined when calling getRequiredAttributesMemberResourceService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+        if (member !== undefined && member !== null) {
+            queryParameters = queryParameters.set('member', <any>member);
+        }
+        if (workWithUserAttributes !== undefined && workWithUserAttributes !== null) {
+            queryParameters = queryParameters.set('workWithUserAttributes', <any>workWithUserAttributes);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-r-m`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param resource id of Resource
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesResource(resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesResource(resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesResource(resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesResource(resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesResource.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/r`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param resource id of Resource
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesResourceService(service: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesResourceService(service: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesResourceService(service: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesResourceService(service: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesResourceService.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesResourceService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-r`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param services list of Service ids List&lt;Integer&gt;
+     * @param resource id of Resource
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesResourceServices(services: Array<number>, resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesResourceServices(services: Array<number>, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesResourceServices(services: Array<number>, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesResourceServices(services: Array<number>, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (services === null || services === undefined) {
+            throw new Error('Required parameter services was null or undefined when calling getRequiredAttributesResourceServices.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getRequiredAttributesResourceServices.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (services) {
+            services.forEach((element) => {
+                queryParameters = queryParameters.append('services[]', <any>element);
+            })
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/ss-r`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param user id of User
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesUser(user: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesUser(user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesUser(user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesUser(user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling getRequiredAttributesUser.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/u`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param user id of User
+     * @param facility id of Facility
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesUserFacility(user: number, facility: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesUserFacility(user: number, facility: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesUserFacility(user: number, facility: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesUserFacility(user: number, facility: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling getRequiredAttributesUserFacility.');
+        }
+        if (facility === null || facility === undefined) {
+            throw new Error('Required parameter facility was null or undefined when calling getRequiredAttributesUserFacility.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (facility !== undefined && facility !== null) {
+            queryParameters = queryParameters.set('facility', <any>facility);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/u-f`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * TODO
+     * @param service id of Service
+     * @param vo id of Vo
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequiredAttributesVoService(service: number, vo: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getRequiredAttributesVoService(service: number, vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getRequiredAttributesVoService(service: number, vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getRequiredAttributesVoService(service: number, vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (service === null || service === undefined) {
+            throw new Error('Required parameter service was null or undefined when calling getRequiredAttributesVoService.');
+        }
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling getRequiredAttributesVoService.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (service !== undefined && service !== null) {
+            queryParameters = queryParameters.set('service', <any>service);
+        }
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getRequiredAttributes/s-v`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Returns a resource Attribute by its id.
      * This is an overloaded method getAttribute, specialized for resource and attribute id.
      * @param resource id of Resource
@@ -3392,7 +4532,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the resource which have name in list attrNames (empty too). Virtual attributes too.
+     * Get all attributes associated with the resource which have name in list attrNames (empty too). Virtual attributes too. 
      * @param resource id of Resource
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -3459,7 +4599,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the group and resource. Virtual attributes too. If workWithGroupAttributes is true, return also all group attributes.
+     * Get all non-empty attributes associated with the group and resource. Virtual attributes too. If workWithGroupAttributes is true, return also all group attributes. 
      * @param resource id of Resource
      * @param group id of Group
      * @param workWithGroupAttributes flag to work with group attributes
@@ -3531,7 +4671,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the group and the resource which have their name in list attrNames (empty too). Virtual attributes too. If workWithGroupAttributes is true, return also all group attributes in list of attrNames (with virtual attributes too).
+     * Get all attributes associated with the group and the resource which have their name in list attrNames (empty too). Virtual attributes too. If workWithGroupAttributes is true, return also all group attributes in list of attrNames (with virtual attributes too). 
      * @param resource id of Resource
      * @param group id of Group
      * @param attrNames list of attribute names List&lt;String&gt;
@@ -3677,7 +4817,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes by the list of attrNames if they are in one of these namespaces: - member - group - member-group - resource - member-resource - group-resource - user (get from member object) - facility (get from resource object) - user-facility Returns all attributes even if they are empty or virtual.
+     * Get all attributes by the list of attrNames if they are in one of these namespaces: - member - group - member-group - resource - member-resource - group-resource - user (get from member object) - facility (get from resource object) - user-facility Returns all attributes even if they are empty or virtual. 
      * @param resource id of Resource
      * @param group id of Group
      * @param member id of Member
@@ -3890,7 +5030,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the user.
+     * Get all non-empty attributes associated with the user. 
      * @param user id of User
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -3948,7 +5088,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the user which have name in list attrNames (empty too).
+     * Get all attributes associated with the user which have name in list attrNames (empty too). 
      * @param user id of User
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4147,7 +5287,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all non-empty attributes associated with the UserExtSource.
+     * Get all non-empty attributes associated with the UserExtSource. 
      * @param userExtSource id of UserExtSource
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -4205,7 +5345,7 @@ export class AttributesManagerService {
     }
 
     /**
-     * Get all attributes associated with the userExtSource which have name in list attrNames (empty too).
+     * Get all attributes associated with the userExtSource which have name in list attrNames (empty too). 
      * @param userExtSource id of UserExtSource
      * @param attrNames list of attribute names List&lt;String&gt;
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -6830,7 +7970,7 @@ export class AttributesManagerService {
 
     /**
      * Sets all AttributeRights in the list given as a parameter. Allowed Roles to set rights for are: VOADMIN, GROUPADMIN, FACILITYADMIN, SELF.
-     * @param inputAttributeRights
+     * @param inputAttributeRights 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -6892,7 +8032,7 @@ export class AttributesManagerService {
 
     /**
      * Sets entityless Attribute.
-     * @param inputEntitylessAttribute
+     * @param inputEntitylessAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -6954,7 +8094,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Facility.
-     * @param inputSetFacilityAttribute
+     * @param inputSetFacilityAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7015,8 +8155,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the facility. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetFacilityAttributes
+     * Store the attributes associated with the facility. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetFacilityAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7077,8 +8217,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the member, user, member-group, member-resource and user-facility attributes. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). Group and group-resource attributes are not supported in this context.
-     * @param inputSetFacilityResourceGroupUserMemberAttributes
+     * Store the member, user, member-group, member-resource and user-facility attributes. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). Group and group-resource attributes are not supported in this context. 
+     * @param inputSetFacilityResourceGroupUserMemberAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7139,8 +8279,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the member, user, member-resource and user-facility attributes. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetFacilityResourceUserMemberAttributes
+     * Store the member, user, member-resource and user-facility attributes. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetFacilityResourceUserMemberAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7201,8 +8341,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the facility and user combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetFacilityUserAttributes
+     * Store the attributes associated with the facility and user combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetFacilityUserAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7264,7 +8404,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Group.
-     * @param inputSetGroupAttribute
+     * @param inputSetGroupAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7325,8 +8465,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the group. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetGroupAttributes
+     * Store the attributes associated with the group. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetGroupAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7388,7 +8528,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Group and Resource.
-     * @param inputSetGroupResourceAttribute
+     * @param inputSetGroupResourceAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7450,7 +8590,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Host.
-     * @param inputSetHostAttribute
+     * @param inputSetHostAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7511,8 +8651,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the host. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetHostAttributes
+     * Store the attributes associated with the host. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetHostAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7574,7 +8714,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Member.
-     * @param inputSetMemberAttribute
+     * @param inputSetMemberAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7635,8 +8775,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the member. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetMemberAttributes
+     * Store the attributes associated with the member. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetMemberAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7698,7 +8838,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Member and Group.
-     * @param inputSetMemberGroupAttribute
+     * @param inputSetMemberGroupAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7759,8 +8899,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the member and group combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetMemberGroupAttributes
+     * Store the attributes associated with the member and group combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetMemberGroupAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7821,8 +8961,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the member and group combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). If workWithUserAttributes is true, the method stores also the attributes associated with user and member.
-     * @param inputSetMemberGroupWithUserAttributes
+     * Store the attributes associated with the member and group combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). If workWithUserAttributes is true, the method stores also the attributes associated with user and member. 
+     * @param inputSetMemberGroupWithUserAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7883,8 +9023,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the resource and member combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). If workWithUserAttributes is true, the method stores also the attributes associated with user, user-facility and member.
-     * @param inputSetMemberResourceAndUserAttributes
+     * Store the attributes associated with the resource and member combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). If workWithUserAttributes is true, the method stores also the attributes associated with user, user-facility and member. 
+     * @param inputSetMemberResourceAndUserAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -7946,7 +9086,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Member and Resource.
-     * @param inputSetMemberResourceAttribute
+     * @param inputSetMemberResourceAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8007,8 +9147,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the resource and member combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetMemberResourceAttributes
+     * Store the attributes associated with the resource and member combination. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetMemberResourceAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8069,8 +9209,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with member and user (which we get from this member) if workWithUserAttributes is true.
-     * @param inputSetMemberWithUserAttributes
+     * Store the attributes associated with member and user (which we get from this member) if workWithUserAttributes is true. 
+     * @param inputSetMemberWithUserAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8132,7 +9272,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Resource.
-     * @param inputSetResourceAttribute
+     * @param inputSetResourceAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8193,8 +9333,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the resource.
-     * @param inputSetResourceAttributes
+     * Store the attributes associated with the resource. 
+     * @param inputSetResourceAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8255,8 +9395,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the group on resource.
-     * @param inputSetResourceGroupAttributes
+     * Store the attributes associated with the group on resource. 
+     * @param inputSetResourceGroupAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8317,8 +9457,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with group and resource, if workWithUserAttributes is true then also from group itself. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetResourceGroupWithGroupAttributes
+     * Store the attributes associated with group and resource, if workWithUserAttributes is true then also from group itself. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetResourceGroupWithGroupAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8380,7 +9520,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for User.
-     * @param inputSetUserAttribute
+     * @param inputSetUserAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8441,8 +9581,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the user. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetUserAttributes
+     * Store the attributes associated with the user. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetUserAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8504,7 +9644,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for UserExtSource.
-     * @param inputSetUserExtSourceAttribute
+     * @param inputSetUserExtSourceAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8565,8 +9705,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the UserExtSource. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetUserExtSourceAttributes
+     * Store the attributes associated with the UserExtSource. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetUserExtSourceAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8628,7 +9768,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for User and Facility.
-     * @param inputSetUserFacilityAttribute
+     * @param inputSetUserFacilityAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8690,7 +9830,7 @@ export class AttributesManagerService {
 
     /**
      * Sets Attribute for Vo.
-     * @param inputSetVoAttribute
+     * @param inputSetVoAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8751,8 +9891,8 @@ export class AttributesManagerService {
     }
 
     /**
-     * Store the attributes associated with the vo. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification).
-     * @param inputSetVoAttributes
+     * Store the attributes associated with the vo. If an attribute is core attribute then the attribute isn\&#39;t stored (It\&#39;s skipped without any notification). 
+     * @param inputSetVoAttributes 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -8814,7 +9954,7 @@ export class AttributesManagerService {
 
     /**
      * Updates AttributeDefinition in Perun based on provided object. Update is done on AttributeDefinition selected by its &lt;code&gt;id&lt;/code&gt;.
-     * @param inputAttributeDefinition
+     * @param inputAttributeDefinition 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

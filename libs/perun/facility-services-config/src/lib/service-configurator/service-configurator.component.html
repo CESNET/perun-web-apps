@@ -1,0 +1,17 @@
+<!--The min-height is a hack to prevent page scrolling on tab switching-->
+<div style="min-height: 500px">
+  <mat-tab-group [dynamicHeight]="true" [(selectedIndex)]="showTab">
+    <mat-tab [label]="facility.name">
+      <perun-web-apps-attributes-list *ngIf="!!facilityAttributes" [attributes]="facilityAttributes">
+      </perun-web-apps-attributes-list>
+    </mat-tab>
+    <mat-tab [label]="resource.name" *ngIf="!!resource">
+      <perun-web-apps-attributes-list *ngIf="!!resourceAttributes" [attributes]="resourceAttributes">
+      </perun-web-apps-attributes-list>
+    </mat-tab>
+    <mat-tab [label]="group.name" *ngIf="!!group">
+      <perun-web-apps-attributes-list *ngIf="!!groupAttributes" [attributes]="groupAttributes">
+      </perun-web-apps-attributes-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

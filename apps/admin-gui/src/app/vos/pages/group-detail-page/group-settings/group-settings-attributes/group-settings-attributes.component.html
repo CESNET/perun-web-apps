@@ -16,11 +16,11 @@
 
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 
-  <app-attributes-list
+  <perun-web-apps-attributes-list
     #list
     *ngIf="!loading"
     [filterValue]="filterValue"
     [attributes]="attributes"
     [selection]="selection">
-  </app-attributes-list>
+  </perun-web-apps-attributes-list>
 </div>

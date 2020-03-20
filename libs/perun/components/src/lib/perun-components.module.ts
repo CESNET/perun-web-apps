@@ -14,7 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { VoSelectTableComponent } from './vo-select-table/vo-select-table.component';
 import { GroupsListComponent } from './groups-list/groups-list.component';
@@ -23,12 +23,23 @@ import { GroupMenuComponent } from './group-menu/group-menu.component';
 import { TableOptionsComponent } from './table-options/table-options.component';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { ImmediateFilterComponent } from './immediate-filter/immediate-filter.component';
+import { AttributeValueStringComponent } from './attributes-list/attribute-value/attribute-value-string/attribute-value-string.component';
+import { AttributeValueMapComponent } from './attributes-list/attribute-value/attribute-value-map/attribute-value-map.component';
+import { AttributeValueListComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list.component';
+import { AttributeValueBooleanComponent } from './attributes-list/attribute-value/attribute-value-boolean/attribute-value-boolean.component';
+import { AttributeValueComponent } from './attributes-list/attribute-value/attribute-value.component';
+import { AttributesListComponent } from './attributes-list/attributes-list.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
     MatCheckboxModule,
     MatTableModule,
+    FormsModule,
+    MatChipsModule,
+    DragDropModule,
     MatTableExporterModule,
     TranslateModule,
     RouterModule,
@@ -51,7 +62,13 @@ import { ImmediateFilterComponent } from './immediate-filter/immediate-filter.co
     GroupMenuComponent,
     RefreshButtonComponent,
     BackButtonComponent,
-    ImmediateFilterComponent
+    ImmediateFilterComponent,
+    AttributesListComponent,
+    AttributeValueComponent,
+    AttributeValueBooleanComponent,
+    AttributeValueListComponent,
+    AttributeValueMapComponent,
+    AttributeValueStringComponent
   ],
   exports: [
     VoSelectTableComponent,
@@ -60,7 +77,13 @@ import { ImmediateFilterComponent } from './immediate-filter/immediate-filter.co
     GroupMenuComponent,
     RefreshButtonComponent,
     BackButtonComponent,
-    ImmediateFilterComponent
+    ImmediateFilterComponent,
+    AttributesListComponent,
+    AttributeValueComponent,
+    AttributeValueBooleanComponent,
+    AttributeValueListComponent,
+    AttributeValueMapComponent,
+    AttributeValueStringComponent
   ]
 })
 export class PerunSharedComponentsModule {

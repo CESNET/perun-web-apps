@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NotificatorService } from '../../../../../core/services/common/notificator.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { AttributesListComponent } from '../../../attributes-list/attributes-list.component';
+import { AttributesListComponent } from '@perun-web-apps/perun/components';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CreateAttributeDialogComponent } from '../../../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 import { filterCoreAttributes } from '@perun-web-apps/perun/utils';

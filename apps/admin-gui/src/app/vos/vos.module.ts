@@ -49,7 +49,7 @@ import {
 import {
   MemberSettingsOverviewComponent
 } from './pages/member-detail-page/member-settings/member-settings-overview/member-settings-overview.component';
-import {AttributesListComponent} from '../shared/components/attributes-list/attributes-list.component';
+import {AttributesListComponent} from '@perun-web-apps/perun/components';
 import {VoResourcesPreviewComponent} from './pages/vo-detail-page/vo-resources/vo-resources-preview/vo-resources-preview.component';
 import {VoResourcesTagsComponent} from './pages/vo-detail-page/vo-resources/vo-resources-tags/vo-resources-tags.component';
 import {VoResourcesStatesComponent} from './pages/vo-detail-page/vo-resources/vo-resources-states/vo-resources-states.component';
@@ -146,9 +146,6 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     NotificationListComponent,
     VoSettingsExtsourcesComponent,
     GroupSettingsRelationsComponent
-  ],
-  entryComponents: [
-    AddExtSourceDialogComponent
   ],
 })
 export class VosModule {

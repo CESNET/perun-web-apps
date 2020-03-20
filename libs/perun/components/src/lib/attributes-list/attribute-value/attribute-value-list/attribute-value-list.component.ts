@@ -5,7 +5,7 @@ import { Attribute } from '@perun-web-apps/perun/openapi';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-attribute-value-list',
+  selector: 'perun-web-apps-attribute-value-list',
   templateUrl: './attribute-value-list.component.html',
   styleUrls: ['./attribute-value-list.component.scss']
 })

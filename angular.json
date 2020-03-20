@@ -709,6 +709,40 @@
           "styleext": "scss"
         }
       }
+    },
+    "perun-facility-services-config": {
+      "projectType": "library",
+      "root": "libs/perun/facility-services-config",
+      "sourceRoot": "libs/perun/facility-services-config/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/facility-services-config/tsconfig.lib.json",
+              "libs/perun/facility-services-config/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/perun/facility-services-config/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/facility-services-config/jest.config.js",
+            "tsConfig": "libs/perun/facility-services-config/tsconfig.spec.json",
+            "setupFile": "libs/perun/facility-services-config/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

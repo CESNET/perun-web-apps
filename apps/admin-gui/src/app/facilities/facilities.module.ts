@@ -29,6 +29,8 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-groups/resource-groups.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
+import { PerunFacilityServicesConfigModule } from '@perun-web-apps/perun/facility-services-config';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     ResourceSettingsComponent,
     ResourceSettingsOverviewComponent,
     ResourceSettingsAttributesComponent,
-    ResourceGroupsComponent
+    ResourceGroupsComponent,
+    FacilityServiceConfigComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +57,8 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     MatTableExporterModule,
     SharedModule,
     UiAlertsModule,
-    PerunSharedComponentsModule
+    PerunSharedComponentsModule,
+    PerunFacilityServicesConfigModule
   ]
 })
 export class FacilitiesModule { }

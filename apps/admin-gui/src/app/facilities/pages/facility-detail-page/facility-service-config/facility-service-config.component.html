@@ -1,0 +1,72 @@
+<div>
+  <h1 class="page-subtitle">{{'FACILITY_DETAIL.SERVICE_CONFIG.TITLE' | translate}}</h1>
+  <div class="col-12 col-lg-6 mb-2" *ngIf="!!facility">
+    <mat-form-field class="w-100">
+      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.SERVICE_SELECT' | translate}}</mat-label>
+      <mat-select [(value)]="selectedService">
+        <mat-option [value]="'NOT_SELECTED'">
+<!--          TODO - translation -->
+          NOT SELECTED
+        </mat-option>
+        <mat-option [value]="'ALL'">
+<!--          TODO - translation -->
+          ALL
+        </mat-option>
+        <mat-option *ngFor="let s of services" [value]="s">
+          {{s.name}}
+        </mat-option>
+        <mat-option *ngIf="!!services && services.length === 0">
+          {{'FACILITY_DETAIL.SERVICE_CONFIG.SERVICE_SELECT_NO_SERVICE' | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+<!--    <mat-form-field>-->
+    <mat-checkbox (change)="onOfferAllServices($event)">
+      {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL_SERVICES' | translate}}
+    </mat-checkbox>
+<!--    </mat-form-field>-->
+    <mat-form-field class="w-100">
+      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.RES_SELECT' | translate}}</mat-label>
+      <mat-select [(value)]="selectedResource" (selectionChange)="onSelectedResource()">
+        <mat-option>{{'FACILITY_DETAIL.SERVICE_CONFIG.UNSELECTED' | translate}}</mat-option>
+        <mat-option *ngFor="let res of resources" [value]="res">
+          {{res.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.GROUP_SELECT' | translate}}</mat-label>
+      <mat-select [(value)]="selectedGroup" [disabled]="selectedResource === undefined">
+        <mat-option *ngFor="let g of groups" [value]="g">
+          {{g.name}}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="selectedResource === undefined">
+          {{'FACILITY_DETAIL.SERVICE_CONFIG.GROUP_SELECT_DEFAULT' | translate}}
+      </mat-hint>
+    </mat-form-field>
+<!--    <mat-form-field class="w-100">-->
+<!--      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT' | translate}}</mat-label>-->
+<!--      <mat-select [(value)]="voId" [disabled]="selectedResource === undefined">-->
+<!--        <mat-option [value]="-1" *ngIf="!!vos">-->
+<!--          {{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT_DEFAULT' | translate}}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field class="w-100">-->
+<!--      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.MEMBER_SELECT' | translate}}</mat-label>-->
+<!--      <mat-select [(value)]="memberId" [disabled]="selectedGroup === undefined">-->
+<!--        <mat-option [value]="-1">-->
+<!--          {{'FACILITY_DETAIL.SERVICE_CONFIG.MEMBER_SELECT_DEFAULT' | translate}}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+  </div>
+  <perun-web-apps-service-configurator
+    *ngIf="!!facility"
+    [facility]="facility"
+    [resource]="selectedResource"
+    [group]="selectedGroup"
+    [service]="selectedService">
+  </perun-web-apps-service-configurator>
+</div>

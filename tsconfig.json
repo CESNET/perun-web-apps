@@ -27,7 +27,12 @@
       "@perun-web-apps/perun/openapi": ["libs/perun/openapi/src/index.ts"],
       "@perun-web-apps/config": ["libs/config/src/index.ts"],
       "@perun-web-apps/general": ["libs/general/src/index.ts"],
-      "@perun-web-apps/perun/components": ["libs/perun/components/src/index.ts"]
+      "@perun-web-apps/perun/components": [
+        "libs/perun/components/src/index.ts"
+      ],
+      "@perun-web-apps/perun/facility-services-config": [
+        "libs/perun/facility-services-config/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

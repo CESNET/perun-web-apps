@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { ExtSource } from '../model/extSource';
+import { ExtSourceObject } from '../model/extSourceObject';
 import { PerunException } from '../model/perunException';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -184,13 +185,17 @@ export class ExtSourcesManagerService {
 
     /**
      * Creates an external source. ExtSource object must contain: name, type. Other parameters are ignored.
+     * @param extSourceObject 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createExtSourceFromExtSourceObject(observe?: 'body', reportProgress?: boolean): Observable<ExtSource>;
-    public createExtSourceFromExtSourceObject(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExtSource>>;
-    public createExtSourceFromExtSourceObject(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExtSource>>;
-    public createExtSourceFromExtSourceObject(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createExtSourceFromExtSourceObject(extSourceObject: ExtSourceObject, observe?: 'body', reportProgress?: boolean): Observable<ExtSource>;
+    public createExtSourceFromExtSourceObject(extSourceObject: ExtSourceObject, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExtSource>>;
+    public createExtSourceFromExtSourceObject(extSourceObject: ExtSourceObject, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExtSource>>;
+    public createExtSourceFromExtSourceObject(extSourceObject: ExtSourceObject, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (extSourceObject === null || extSourceObject === undefined) {
+            throw new Error('Required parameter extSourceObject was null or undefined when calling createExtSourceFromExtSourceObject.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -220,8 +225,17 @@ export class ExtSourcesManagerService {
         }
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
         return this.httpClient.post<ExtSource>(`${this.configuration.basePath}/json/extSourcesManager/createExtSource/es`,
-            null,
+            extSourceObject,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -234,20 +248,27 @@ export class ExtSourcesManagerService {
     /**
      * Creates an external source.
      * @param name name of entity
+     * @param type type of ExtSource
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createExtSourceWithNameType(name: string, observe?: 'body', reportProgress?: boolean): Observable<ExtSource>;
-    public createExtSourceWithNameType(name: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExtSource>>;
-    public createExtSourceWithNameType(name: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExtSource>>;
-    public createExtSourceWithNameType(name: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createExtSourceWithNameType(name: string, type: string, observe?: 'body', reportProgress?: boolean): Observable<ExtSource>;
+    public createExtSourceWithNameType(name: string, type: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ExtSource>>;
+    public createExtSourceWithNameType(name: string, type: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ExtSource>>;
+    public createExtSourceWithNameType(name: string, type: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (name === null || name === undefined) {
             throw new Error('Required parameter name was null or undefined when calling createExtSourceWithNameType.');
+        }
+        if (type === null || type === undefined) {
+            throw new Error('Required parameter type was null or undefined when calling createExtSourceWithNameType.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (name !== undefined && name !== null) {
             queryParameters = queryParameters.set('name', <any>name);
+        }
+        if (type !== undefined && type !== null) {
+            queryParameters = queryParameters.set('type', <any>type);
         }
 
         let headers = this.defaultHeaders;
@@ -278,7 +299,7 @@ export class ExtSourcesManagerService {
         }
 
 
-        return this.httpClient.post<ExtSource>(`${this.configuration.basePath}/json/extSourcesManager/createExtSource/n-t`,
+        return this.httpClient.post<ExtSource>(`${this.configuration.basePath}/urlinjsonout/extSourcesManager/createExtSource/n-t`,
             null,
             {
                 params: queryParameters,
@@ -337,7 +358,7 @@ export class ExtSourcesManagerService {
         }
 
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/json/extSourcesManager/deleteExtSource`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/extSourcesManager/deleteExtSource`,
             null,
             {
                 params: queryParameters,

@@ -57,11 +57,5 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     UiAlertsModule,
     PerunSharedComponentsModule
   ],
-  entryComponents: [
-    CreateAttributeDefinitionDialogComponent,
-    DeleteAttributeDefinitionDialogComponent,
-    EditAttributeDefinitionDialogComponent,
-    EntitylessAttributeKeysListComponent
-  ]
 })
 export class AdminModule { }

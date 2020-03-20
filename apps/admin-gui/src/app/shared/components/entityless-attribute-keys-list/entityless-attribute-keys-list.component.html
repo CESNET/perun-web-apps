@@ -77,10 +77,10 @@
             {{'SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.VALUE' | translate}}
           </th>
           <td mat-cell *matCellDef="let record">
-            <app-attribute-value
+            <perun-web-apps-attribute-value
               [attribute]="record[1]"
               (sendEventToParent2)="onValueChange(record)">
-            </app-attribute-value>
+            </perun-web-apps-attribute-value>
           </td>
         </ng-container>
 

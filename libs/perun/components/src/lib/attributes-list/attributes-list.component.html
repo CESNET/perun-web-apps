@@ -46,11 +46,11 @@
         <th mat-header-cell *matHeaderCellDef
             mat-sort-header>{{'SHARED.COMPONENTS.ATTRIBUTES_LIST.VALUE' | translate}}</th>
         <td mat-cell *matCellDef="let attribute">
-          <app-attribute-value
+          <perun-web-apps-attribute-value
             [attribute]="attribute"
             (sendEventToParent2)="onValueChange(attribute)"
           >
-          </app-attribute-value>
+          </perun-web-apps-attribute-value>
         </td>
       </ng-container>
       <ng-container matColumnDef="description">

@@ -3,7 +3,7 @@ import {AttributeValueMapComponent} from './attribute-value-map/attribute-value-
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'app-attribute-value',
+  selector: 'perun-web-apps-attribute-value',
   templateUrl: './attribute-value.component.html',
   styleUrls: ['./attribute-value.component.scss']
 })

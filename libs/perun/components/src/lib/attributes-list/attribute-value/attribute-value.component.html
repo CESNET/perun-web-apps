@@ -1,24 +1,24 @@
 <div>
-  <app-attribute-value-boolean
+  <perun-web-apps-attribute-value-boolean
     [attribute]="attribute"
     (sendEventToParent)="_sendEventToParent2()"
     *ngIf="attribute.type === 'java.lang.Boolean'">
-  </app-attribute-value-boolean>
-  <app-attribute-value-list
+  </perun-web-apps-attribute-value-boolean>
+  <perun-web-apps-attribute-value-list
     [attribute]="attribute"
     (sendEventToParent)="_sendEventToParent2()"
     *ngIf="attribute.type === 'java.util.ArrayList'">
-  </app-attribute-value-list>
+  </perun-web-apps-attribute-value-list>
   <div (click)="_sendEventToParent2()">
-    <app-attribute-value-map
+    <perun-web-apps-attribute-value-map
       #map
       [attribute]="attribute"
       *ngIf="attribute.type === 'java.util.LinkedHashMap'">
-    </app-attribute-value-map>
+    </perun-web-apps-attribute-value-map>
   </div>
-  <app-attribute-value-string
+  <perun-web-apps-attribute-value-string
     [attribute]="attribute"
     (sendEventToParent)="_sendEventToParent2()"
     *ngIf="attribute.type === 'java.lang.String' || attribute.type === 'java.lang.LargeString' || attribute.type === 'java.lang.Integer'">
-  </app-attribute-value-string>
+  </perun-web-apps-attribute-value-string>
 </div>

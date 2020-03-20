@@ -77,6 +77,21 @@
       "CREATE": "New",
       "NO_RESOURCES_ALERT": "No resources found."
     },
+    "SERVICE_CONFIG": {
+      "UNSELECTED": "-- Unselect --",
+      "TITLE": "Service configuration",
+      "SERVICE_SELECT": "Service",
+      "SERVICE_SELECT_NO_SERVICE": "-- No services are assigned. --",
+      "FAC_SELECT": "Facility",
+      "RES_SELECT": "Resource",
+      "GROUP_SELECT": "Group",
+      "VO_SELECT": "Vo",
+      "MEMBER_SELECT": "Member",
+      "GROUP_SELECT_DEFAULT": " -- Select resource first -- ",
+      "VO_SELECT_DEFAULT": " -- Select resource first -- ",
+      "MEMBER_SELECT_DEFAULT": " -- Select member first -- ",
+      "ALL_SERVICES": "Select from all services"
+    },
     "ALLOWED_GROUPS": {
       "SHOW_VOS_GROUPS": "Select organization",
       "TABLE_GROUP_ID": "Id",
@@ -481,7 +496,8 @@
       "RESOURCES": "Resources",
       "ALLOWED_GROUPS": "Allowed groups",
       "SETTINGS": "Settings",
-      "ATTRIBUTES": "Attributes"
+      "ATTRIBUTES": "Attributes",
+      "SERVICE_CONFIG": "Services configuration"
     },
     "RESOURCE": {
       "OVERVIEW": "Overview",

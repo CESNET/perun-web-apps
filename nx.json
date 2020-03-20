@@ -62,6 +62,9 @@
     },
     "perun-components": {
       "tags": []
+    },
+    "perun-facility-services-config": {
+      "tags": []
     }
   }
 }

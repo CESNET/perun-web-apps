@@ -1,11 +1,9 @@
 <div>
-  <label for="input"></label>
   <input
     matInput
     [(ngModel)]="attribute.value"
     name="inputField"
     type="text"
-    id="input"
     placeholder="New value"
     (keydown)="_sendEventToParent()"/>
 </div>

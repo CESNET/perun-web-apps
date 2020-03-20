@@ -55,9 +55,6 @@ export function createTranslateLoader(http: HttpClient) {
       useValue: window['_app_base'] || '/krb/nic'
     }
   ],
-  entryComponents: [
-    AddIdentityDialogComponent
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

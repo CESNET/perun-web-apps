@@ -86,19 +86,7 @@ import {
   EditApplicationFormItemDialogComponent
 } from './components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationFormWidgetDescriptionPipe } from './pipes/application-form-widget-description.pipe';
-import {AttributesListComponent} from './components/attributes-list/attributes-list.component';
 import {CreateAttributeDialogComponent} from './components/dialogs/create-attribute-dialog/create-attribute-dialog.component';
-import {AttributeValueComponent} from './components/attributes-list/attribute-value/attribute-value.component';
-import {
-  AttributeValueBooleanComponent
-} from './components/attributes-list/attribute-value/attribute-value-boolean/attribute-value-boolean.component';
-import {
-  AttributeValueListComponent
-} from './components/attributes-list/attribute-value/attribute-value-list/attribute-value-list.component';
-import {AttributeValueMapComponent} from './components/attributes-list/attribute-value/attribute-value-map/attribute-value-map.component';
-import {
-  AttributeValueStringComponent
-} from './components/attributes-list/attribute-value/attribute-value-string/attribute-value-string.component';
 import { AddMemberDialogComponent } from './components/dialogs/add-member-dialog/add-member-dialog.component';
 import {MembersCandidatesListComponent} from './components/members-candidates-list/members-candidates-list.component';
 import {UserVoPipe} from './pipes/vo-or-ext-source.pipe';
@@ -163,7 +151,7 @@ import { AssignGroupToResourceDialogComponent } from './components/dialogs/assig
 import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
 import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
 // tslint:disable-next-line:nx-enforce-module-boundaries
-import { PerunSharedComponentsModule } from '../../../../../libs/perun/components/src/lib/perun-components.module';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 
 @NgModule({
   imports: [
@@ -274,7 +262,6 @@ import { PerunSharedComponentsModule } from '../../../../../libs/perun/component
     AddMemberDialogComponent,
     MembersCandidatesListComponent,
     UserVoPipe,
-    AttributesListComponent,
     MatChipsModule,
     MatChipsModule,
     MatExpansionModule,
@@ -295,54 +282,7 @@ import { PerunSharedComponentsModule } from '../../../../../libs/perun/component
     ExtSourcesListComponent,
     ExtSourceTypePipe
   ],
-  entryComponents: [
-    CreateGroupDialogComponent,
-    InviteMemberDialogComponent,
-    DeleteGroupDialogComponent,
-    NotificationDialogComponent,
-    ApplicationReSendNotificationDialogComponent,
-    ApplicationRejectDialogComponent,
-    RemoveMembersDialogComponent,
-    RemoveResourceDialogComponent,
-    UpdateApplicationFormDialogComponent,
-    DeleteApplicationFormItemDialogComponent,
-    ApplicationFormCopyItemsDialogComponent,
-    AddApplicationFormItemDialogComponent,
-    EditApplicationFormItemDialogComponent,
-    RemoveResourceDialogComponent,
-    RemoveManagerDialogComponent,
-    AddManagerDialogComponent,
-    AddGroupManagerDialogComponent,
-    RemoveGroupManagerDialogComponent,
-    RemoveResourceDialogComponent,
-    RemoveMembersDialogComponent,
-    ApplicationRejectDialogComponent,
-    DeleteAttributeDialogComponent,
-    AddMemberDialogComponent,
-    MembersCandidatesListComponent,
-    CreateAttributeDialogComponent,
-    CreateResourceTagDialogComponent,
-    DeleteResourceTagDialogComponent,
-    MoveGroupDialogComponent,
-    DeleteNotificationDialogComponent,
-    EditEmailFooterDialogComponent,
-    AddEditNotificationDialogComponent,
-    NotificationsCopyMailsDialogComponent,
-    BugReportDialogComponent,
-    ReportIssueDialogComponent,
-    CreateVoDialogComponent,
-    RemoveVoDialogComponent,
-    ShowNotificationHistoryDialogComponent,
-    CreateRelationDialogComponent,
-    RemoveRelationDialogComponent,
-    ChangeMemberStatusDialogComponent,
-    ChangeMemberStatusDialogComponent,
-    RemoveGroupFromResourceDialogComponent,
-    AssignGroupToResourceDialogComponent,
-    CreateResourceDialogComponent
-  ],
   declarations: [
-    AttributesListComponent,
     PerunNavComponent,
     SideMenuComponent,
     SideMenuItemComponent,
@@ -395,11 +335,6 @@ import { PerunSharedComponentsModule } from '../../../../../libs/perun/component
     MembersCandidatesListComponent,
     UserVoPipe,
     CreateAttributeDialogComponent,
-    AttributeValueComponent,
-    AttributeValueBooleanComponent,
-    AttributeValueListComponent,
-    AttributeValueMapComponent,
-    AttributeValueStringComponent,
     CreateResourceTagDialogComponent,
     DeleteResourceTagDialogComponent,
     MoveGroupDialogComponent,

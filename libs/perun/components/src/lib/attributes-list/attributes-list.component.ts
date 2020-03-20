@@ -7,7 +7,7 @@ import {AttributeValueComponent} from './attribute-value/attribute-value.compone
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'app-attributes-list',
+  selector: 'perun-web-apps-attributes-list',
   templateUrl: './attributes-list.component.html',
   styleUrls: ['./attributes-list.component.scss']
 })

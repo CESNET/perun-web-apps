@@ -8,14 +8,14 @@
     </app-alert>
   </div>
   <div mat-dialog-content>
-    <app-attributes-list
+    <perun-web-apps-attributes-list
       *ngIf="attributes !== undefined"
       #list
       [filterValue]="filterValue"
       [attributes]="attributes"
       [selection]="selected"
       [inDialog]="true">
-    </app-attributes-list>
+    </perun-web-apps-attributes-list>
   </div>
   <div mat-dialog-actions>
     <button

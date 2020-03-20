@@ -192,6 +192,11 @@ export class SideMenuItemService {
           activatedRegex: '/facilities/\\d+/allowed-groups'
         },
         {
+          label: 'MENU_ITEMS.FACILITY.SERVICE_CONFIG',
+          url: [`/facilities/${facility.id}/service-config`],
+          activatedRegex: 'facilities/\\d+/service-config'
+        },
+        {
           label: 'MENU_ITEMS.FACILITY.SETTINGS',
           url: ['/facilities', facility.id, 'settings'],
           activatedRegex: '/facilities/\\d+/settings$',

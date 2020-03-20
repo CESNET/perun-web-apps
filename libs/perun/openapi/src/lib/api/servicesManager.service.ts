@@ -2475,7 +2475,7 @@ export class ServicesManagerService {
 
     /**
      * Returns a service by its name.
-     * @param name name of service
+     * @param name name of entity
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

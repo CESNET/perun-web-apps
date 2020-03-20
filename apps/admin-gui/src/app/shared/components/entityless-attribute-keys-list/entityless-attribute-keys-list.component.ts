@@ -17,7 +17,7 @@ import { NotificatorService } from '../../../core/services/common/notificator.se
 import { TranslateService } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
-import { AttributeValueComponent } from '../attributes-list/attribute-value/attribute-value.component';
+import { AttributeValueComponent } from '@perun-web-apps/perun/components';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface EntitylessAttributeKeysListData {

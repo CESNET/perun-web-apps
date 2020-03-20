@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'app-attribute-value-map',
+  selector: 'perun-web-apps-attribute-value-map',
   templateUrl: './attribute-value-map.component.html',
   styleUrls: ['./attribute-value-map.component.scss']
 })

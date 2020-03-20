@@ -56,6 +56,159 @@ export class UsersManagerService {
 
 
     /**
+     * Creates alternative password in external system.
+     * @param user id of User
+     * @param description 
+     * @param loginNamespace 
+     * @param password 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createAlternativePassword(user: number, description: string, loginNamespace: string, password: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public createAlternativePassword(user: number, description: string, loginNamespace: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public createAlternativePassword(user: number, description: string, loginNamespace: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public createAlternativePassword(user: number, description: string, loginNamespace: string, password: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling createAlternativePassword.');
+        }
+        if (description === null || description === undefined) {
+            throw new Error('Required parameter description was null or undefined when calling createAlternativePassword.');
+        }
+        if (loginNamespace === null || loginNamespace === undefined) {
+            throw new Error('Required parameter loginNamespace was null or undefined when calling createAlternativePassword.');
+        }
+        if (password === null || password === undefined) {
+            throw new Error('Required parameter password was null or undefined when calling createAlternativePassword.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (description !== undefined && description !== null) {
+            queryParameters = queryParameters.set('description', <any>description);
+        }
+        if (loginNamespace !== undefined && loginNamespace !== null) {
+            queryParameters = queryParameters.set('loginNamespace', <any>loginNamespace);
+        }
+        if (password !== undefined && password !== null) {
+            queryParameters = queryParameters.set('password', <any>password);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/usersManager/createAlternativePassword`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Deletes alternative password in external system.
+     * @param user id of User
+     * @param loginNamespace 
+     * @param passwordId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteAlternativePassword(user: number, loginNamespace: string, passwordId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteAlternativePassword(user: number, loginNamespace: string, passwordId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteAlternativePassword(user: number, loginNamespace: string, passwordId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteAlternativePassword(user: number, loginNamespace: string, passwordId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling deleteAlternativePassword.');
+        }
+        if (loginNamespace === null || loginNamespace === undefined) {
+            throw new Error('Required parameter loginNamespace was null or undefined when calling deleteAlternativePassword.');
+        }
+        if (passwordId === null || passwordId === undefined) {
+            throw new Error('Required parameter passwordId was null or undefined when calling deleteAlternativePassword.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (loginNamespace !== undefined && loginNamespace !== null) {
+            queryParameters = queryParameters.set('loginNamespace', <any>loginNamespace);
+        }
+        if (passwordId !== undefined && passwordId !== null) {
+            queryParameters = queryParameters.set('passwordId', <any>passwordId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/usersManager/deleteAlternativePassword`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Returns list of RichUsers with attributes who matches the searchString, searching name, email, logins.
      * @param searchString Text to search by
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

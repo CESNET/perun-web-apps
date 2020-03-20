@@ -267,6 +267,122 @@ export class AuthzResolverService {
     }
 
     /**
+     * Returns list of user\&#39;s role names. Perun system uses role names in the upper case format. However, for now, they are converted to the lower case format because of the compatibility with external systems.
+     * @param user id of User
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserRoleNames(user: number, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public getUserRoleNames(user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public getUserRoleNames(user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public getUserRoleNames(user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling getUserRoleNames.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/json/authzResolver/getUserRoleNames`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns all roles as an AuthzRoles object for a given user.
+     * @param userId id of User
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserRoles(userId: number, observe?: 'body', reportProgress?: boolean): Observable<{ [key: string]: { [key: string]: Array<number>; }; }>;
+    public getUserRoles(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: { [key: string]: Array<number>; }; }>>;
+    public getUserRoles(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: { [key: string]: Array<number>; }; }>>;
+    public getUserRoles(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling getUserRoles.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('userId', <any>userId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<{ [key: string]: { [key: string]: Array<number>; }; }>(`${this.configuration.basePath}/json/authzResolver/getUserRoles`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Set role for authorizedGroup and complementaryObject
      * @param setRoleWithGroupComplementaryObject 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

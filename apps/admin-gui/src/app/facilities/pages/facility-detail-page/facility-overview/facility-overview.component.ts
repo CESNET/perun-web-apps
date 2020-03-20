@@ -51,6 +51,12 @@ export class FacilityOverviewComponent implements OnInit {
         url: `/facilities/${this.facility.id}/settings`,
         label: 'MENU_ITEMS.FACILITY.SETTINGS',
         style: 'facility-btn'
+      },
+      {
+        cssIcon: 'perun-settings2',
+        url: `/facilities/${this.facility.id}/service-config`,
+        label: 'MENU_ITEMS.FACILITY.SERVICE_CONFIG',
+        style: 'facility-btn'
       }
     ];
   }

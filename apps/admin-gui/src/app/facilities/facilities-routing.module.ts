@@ -22,6 +22,7 @@ import {
   ResourceSettingsAttributesComponent
 } from './pages/resource-detail-page/resource-settings/resource-settings-attributes/resource-settings-attributes.component';
 import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-groups/resource-groups.component';
+import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,11 @@ const routes: Routes = [
         path: 'allowed-groups',
         component: FacilityAllowedGroupsComponent,
         data: {animation: 'FacilityAllowedGroupsPage'}
+      },
+      {
+        path: 'service-config',
+        component: FacilityServiceConfigComponent,
+        data: {animation: 'FacilityServiceConfigPage'}
       },
       {
         path: 'settings',
