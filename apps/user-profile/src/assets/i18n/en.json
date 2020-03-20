@@ -20,6 +20,14 @@
   "GROUPS": {
     "TITLE": "Groups"
   },
+  "PROFILE_PAGE": {
+    "NAME": "Name",
+    "ORGANIZATION": "Organization",
+    "PREFERRED_LANGUAGE": "Preferred language",
+    "EMAIL": "E-mail",
+    "TIMEZONE": "Timezone",
+    "CHANGE_EMAIL": "Change"
+  },
   "SHARED_LIB": {
     "PERUN": {
       "COMPONENTS": {
@@ -38,6 +46,14 @@
           "ID": "Id",
           "NAME": "Name",
           "RECENT": "Recently viewed"
+        },
+        "DIALOGS":{
+          "CHANGE_EMAIL": {
+            "TITLE": "Change email",
+            "INPUT_PLACEHOLDER": "New email",
+            "CANCEL": "Cancel",
+            "CHANGE": "Change"
+          }
         }
       },
       "ORGANIZATIONS": {

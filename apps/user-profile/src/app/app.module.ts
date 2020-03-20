@@ -41,6 +41,7 @@ import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.componen
 import { BreadcrumbModule } from 'angular-crumbs';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { ChangeEmailDialogComponent } from './components/dialogs/change-email-dialog/change-email-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,7 +82,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     HeaderComponent,
     FooterComponent,
     PrivacyPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    ChangeEmailDialogComponent
   ],
   imports: [
     BrowserModule,

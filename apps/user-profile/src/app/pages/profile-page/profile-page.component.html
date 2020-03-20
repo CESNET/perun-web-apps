@@ -1,10 +1,41 @@
-<button (click)="changeLanguage()" mat-button>CHANGE LANGUAGE</button>
+<div fxLayout="column" class="ml-5 mt-3">
+  <div fxLayout="row" class="row-size">
+    <p class="column-size">{{'PROFILE_PAGE.NAME'|translate}}</p>
+    <p>{{fullName}}</p>
+  </div>
+  <div fxLayout="row" class="row-size">
+    <p class="column-size">{{'PROFILE_PAGE.ORGANIZATION'|translate}}</p>
+    <p>{{organization}}</p>
+  </div>
+  <div fxLayout="row" class="row-size">
+    <p class="column-size mt-auto mb-auto pt-0">{{'PROFILE_PAGE.PREFERRED_LANGUAGE'|translate}}</p>
+    <mat-form-field class="mt-auto mb-auto lang-field-width">
+      <mat-select [(value)]="currentLang">
+        <mat-option (click)="changeLanguage(lang)" *ngFor="let lang of languages" [value]="lang">
+          {{lang}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" class="row-size">
+    <p class="column-size">{{'PROFILE_PAGE.EMAIL'|translate}}</p>
+    <p>{{email}}</p>
+    <button mat-stroked-button class="ml-2" (click)="changeEmail()">{{'PROFILE_PAGE.CHANGE_EMAIL'|translate}}</button>
+  </div>
+  <div fxLayout="row" class="row-size">
+    <p class="column-size mt-auto mb-auto">{{'PROFILE_PAGE.TIMEZONE'|translate}}</p>
+    <mat-form-field class="mt-auto mb-auto">
+      <mat-select [(value)]="currentTimezone">
+        <mat-option (click)="changeTimeZone(tz)" *ngFor="let tz of timeZones" [value]="tz">
+          {{tz}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
 
-<mat-form-field>
-  <mat-label>Time zones</mat-label>
-  <mat-select [(value)]="selectedTimeZone">
-    <mat-option (click)="getTimeZone(tz)" *ngFor="let tz of timeZones">
-      {{tz}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+
+
+
+
+
