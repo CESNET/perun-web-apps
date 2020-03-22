@@ -105,6 +105,11 @@ export class SideMenuItemService {
               label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
               url: [`/profile/settings/attributes`],
               activatedRegex: `^/profile/settings/attributes`
+            },
+            {
+              label: 'MENU_ITEMS.USER.ROLES',
+              url: [`/profile/settings/roles`],
+              activatedRegex: `^/profile/settings/roles`
             }
           ],
           showChildrenRegex: `^/profile/settings`
@@ -426,6 +431,11 @@ export class SideMenuItemService {
               label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
               url: [`${path}/settings/attributes`],
               activatedRegex: `${regex}/settings/attributes`
+            },
+            {
+              label: 'MENU_ITEMS.USER.ROLES',
+              url: [`${path}/settings/roles`],
+              activatedRegex: `^${path}/settings/roles`
             }
           ],
           showChildrenRegex: `${regex}/settings`

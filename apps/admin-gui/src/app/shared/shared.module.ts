@@ -150,8 +150,9 @@ import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/rem
 import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
 import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
 import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
-// tslint:disable-next-line:nx-enforce-module-boundaries
+// @ts-ignore
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { UserRolesComponent } from './components/user-detail-page/user-settings/user-roles/user-roles.component';
 
 @NgModule({
   imports: [
@@ -386,7 +387,8 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
     AddExtSourceDialogComponent,
-    ExtSourceTypePipe
+    ExtSourceTypePipe,
+    UserRolesComponent
   ],
   providers: [
     AnyToStringPipe,

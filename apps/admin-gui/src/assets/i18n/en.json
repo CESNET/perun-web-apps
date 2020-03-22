@@ -546,7 +546,8 @@
       "ORGANIZATIONS": "Organizations",
       "DETAIL": "Detail",
       "ATTRIBUTES": "Attributes",
-      "TITLE": "User - "
+      "TITLE": "User - ",
+      "ROLES": "Roles"
     }
   },
   "DIALOGS": {

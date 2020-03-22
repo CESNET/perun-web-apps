@@ -12,6 +12,7 @@ import {
   UserSettingsOverviewComponent
 } from './shared/components/user-detail-page/user-settings/user-settings-overview/user-settings-overview.component';
 import {UserSettingsAttributesComponent} from './shared/components/user-detail-page/user-settings/user-settings-attributes/user-settings-attributes.component';
+import { UserRolesComponent } from './shared/components/user-detail-page/user-settings/user-roles/user-roles.component';
 
 const routes: Routes = [
   {
@@ -35,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./facilities/facilities.module').then(m => m.FacilitiesModule),
   },
   {
-    path: 'profile',
+    path: ':profile',
     component: UserProfileComponent,
     children: [
       {
@@ -71,6 +72,11 @@ const routes: Routes = [
             path: 'attributes',
             component: UserSettingsAttributesComponent,
             data: {animation: 'UserAttributesPage'}
+          },
+          {
+            path: 'roles',
+            component: UserRolesComponent,
+            data: {animation: 'UserRolesPage'}
           }
         ]
       }

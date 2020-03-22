@@ -27,6 +27,12 @@ export class UserSettingsOverviewComponent implements OnInit {
         url: `attributes`,
         label: 'MENU_ITEMS.USER.ATTRIBUTES',
         style: 'user-btn'
+      },
+      {
+        cssIcon: 'perun-group',
+        url: `roles`,
+        label: 'MENU_ITEMS.USER.ROLES',
+        style: 'user-btn'
       }
     ];
   }

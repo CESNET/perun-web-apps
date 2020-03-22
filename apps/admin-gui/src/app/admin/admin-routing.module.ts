@@ -26,6 +26,7 @@ import {
   UserSettingsOverviewComponent
 } from '../shared/components/user-detail-page/user-settings/user-settings-overview/user-settings-overview.component';
 import { AdminExtSourcesComponent } from './pages/admin-page/admin-ext-sources/admin-ext-sources.component';
+import { UserRolesComponent } from '../shared/components/user-detail-page/user-settings/user-roles/user-roles.component';
 
 const routes: Routes = [
   {
@@ -117,7 +118,12 @@ const routes: Routes = [
             path: 'attributes',
             component: UserSettingsAttributesComponent,
             data: {animation: 'UserAttributesPage'}
-          }
+          },
+          {
+            path: 'roles',
+            component: UserRolesComponent,
+            data: {animation: 'UserRolesPage'}
+          },
         ]
       }
     ]
