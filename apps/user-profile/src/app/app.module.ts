@@ -26,7 +26,6 @@ import { SettingsMailingListsComponent } from './pages/settings-page/settings-ma
 // tslint:disable-next-line:nx-enforce-module-boundaries
 import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { LayoutComponent } from './components/layout/layout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomIconService, StoreService } from '@perun-web-apps/perun/services';
@@ -42,6 +41,11 @@ import { BreadcrumbModule } from 'angular-crumbs';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ChangeEmailDialogComponent } from './components/dialogs/change-email-dialog/change-email-dialog.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { SshKeysListComponent } from './components/ssh-keys-list/ssh-keys-list.component';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AddSshDialogComponent } from './components/dialogs/add-ssh-dialog/add-ssh-dialog.component';
+import { RemoveSshDialogComponent } from './components/dialogs/remove-ssh-dialog/remove-ssh-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -78,12 +82,14 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     SettingsSambaPasswordComponent,
     SettingsMailingListsComponent,
     SideMenuComponent,
-    LayoutComponent,
     HeaderComponent,
     FooterComponent,
     PrivacyPageComponent,
     HomePageComponent,
-    ChangeEmailDialogComponent
+    ChangeEmailDialogComponent,
+    SshKeysListComponent,
+    AddSshDialogComponent,
+    RemoveSshDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +112,9 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     FlexLayoutModule,
     MatToolbarModule,
     BreadcrumbModule,
-    PerunSharedComponentsModule
+    PerunSharedComponentsModule,
+    MatTableExporterModule,
+    UiAlertsModule
   ],
   providers: [
     CustomIconService,

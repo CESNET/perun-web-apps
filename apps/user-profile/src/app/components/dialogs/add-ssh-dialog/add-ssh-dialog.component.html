@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{'DIALOGS.ADD_SSH.TITLE'|translate}}</h1>
+<div mat-dialog-content class="dialog-container">
+  <mat-form-field class="input-width">
+    <label class="input-width">
+      <textarea
+        matInput
+        required
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="4"
+        placeholder="{{'DIALOGS.ADD_SSH.INPUT_PLACEHOLDER'|translate}}"
+        [formControl]="sshControl"
+      ></textarea>
+    </label>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-stroked-button
+    class="ml-auto"
+    (click)="onCancel()">
+    {{'DIALOGS.ADD_SSH.CANCEL'|translate}}
+  </button>
+  <button
+    mat-flat-button
+    class="ml-2"
+    color="accent"
+    [disabled]="!sshControl.valid"
+    (click)="onSubmit()">
+    {{'DIALOGS.ADD_SSH.ADD'|translate}}
+  </button>
+</div>

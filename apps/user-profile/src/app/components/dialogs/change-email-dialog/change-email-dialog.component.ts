@@ -39,9 +39,7 @@ export class ChangeEmailDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // @ts-ignore
     this.data.attribute.value = this.emailControl.value;
-    console.log(this.data.attribute);
     this.attributesManagerService.setUserAttribute({ user: this.data.userId, attribute: this.data.attribute }).subscribe(() => {
       // this.notificator.showSuccess("done");
       this.dialogRef.close(true);

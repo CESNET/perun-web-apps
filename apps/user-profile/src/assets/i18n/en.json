@@ -28,6 +28,38 @@
     "TIMEZONE": "Timezone",
     "CHANGE_EMAIL": "Change"
   },
+  "SSH_KEYS": {
+    "SSH_KEYS_TITLE": "SSH keys",
+    "SSH_KEYS_DESCRIPTION": "List of your ssh keys.",
+    "ADMIN_SSH_KEYS_TITLE": "Admin SSH keys",
+    "ADMIN_SSH_KEYS_DESCRIPTION": "List of your ssh keys for root access.",
+    "NEW_KEY": "Add new key",
+    "REMOVE_KEY": "Remove selected key"
+  },
+  "SSH_KEYS_LIST": {
+    "HEADER": "Public part of ssh key"
+  },
+  "DIALOGS":{
+    "CHANGE_EMAIL": {
+      "TITLE": "Change email",
+      "INPUT_PLACEHOLDER": "New email",
+      "CANCEL": "Cancel",
+      "CHANGE": "Change"
+    },
+    "ADD_SSH": {
+      "TITLE": "Add new ssh key",
+      "INPUT_PLACEHOLDER": "Begins with 'ssh-rsa', 'ssh-ed25519', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384' or 'ecdsa-sha2-nistp521'.",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "REMOVE_SSH": {
+      "TITLE": "Remove ssh key",
+      "DESCRIPTION": "Selected ssh key will be removed.",
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    }
+  },
   "SHARED_LIB": {
     "PERUN": {
       "COMPONENTS": {
@@ -46,14 +78,6 @@
           "ID": "Id",
           "NAME": "Name",
           "RECENT": "Recently viewed"
-        },
-        "DIALOGS":{
-          "CHANGE_EMAIL": {
-            "TITLE": "Change email",
-            "INPUT_PLACEHOLDER": "New email",
-            "CANCEL": "Cancel",
-            "CHANGE": "Change"
-          }
         }
       },
       "ORGANIZATIONS": {
@@ -71,7 +95,8 @@
     "UI": {
       "ALERTS": {
         "NO_GROUPS": "No groups found.",
-        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria."
+        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria.",
+        "NO_SSH_KEYS": "No SSH keys found"
       }
     }
   }
