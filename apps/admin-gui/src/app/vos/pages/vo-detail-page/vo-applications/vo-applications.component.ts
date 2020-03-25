@@ -24,6 +24,7 @@ export class VoApplicationsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'createdAt', 'type', 'state', 'user', 'extSourceLoa', 'group', 'modifiedBy'];
   firstSearchDone: boolean;
   filterValue = '';
+  showAllDetails = false;
 
   ngOnInit() {
     this.loading = true;

@@ -78,6 +78,7 @@ import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-setting
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 import { AddExtSourceDialogComponent } from '../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { ApplicationListDetailsComponent } from './components/application-list-details/application-list-details.component';
 
 @NgModule({
   imports: [
@@ -145,7 +146,8 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     GroupSettingsNotificationsComponent,
     NotificationListComponent,
     VoSettingsExtsourcesComponent,
-    GroupSettingsRelationsComponent
+    GroupSettingsRelationsComponent,
+    ApplicationListDetailsComponent
   ],
 })
 export class VosModule {

@@ -24,6 +24,7 @@ export class GroupApplicationsComponent implements OnInit {
   group: Group;
   displayedColumns: string[] = ['id', 'createdAt', 'type', 'state', 'user', 'extSourceLoa', 'modifiedBy'];
   filterValue = '';
+  showAllDetails = false;
 
   ngOnInit() {
     this.loading = true;
