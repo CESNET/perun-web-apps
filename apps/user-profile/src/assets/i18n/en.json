@@ -39,6 +39,10 @@
   "SSH_KEYS_LIST": {
     "HEADER": "Public part of ssh key"
   },
+  "SAMBA_PASSWORD": {
+    "INPUT_PLACEHOLDER": "Enter new password",
+    "SET_PASSWORD": "Set password"
+  },
   "DIALOGS":{
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
@@ -59,6 +63,11 @@
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
     }
+  },
+  "ALERTS": {
+    "NO_SSH_KEYS": "No SSH keys found",
+    "NO_SAMBA": "You don't have password for SAMBA yet.",
+    "SAMBA_EXISTS": "You already have password for SAMBA. You can change it by setting new password."
   },
   "SHARED_LIB": {
     "PERUN": {
@@ -95,8 +104,7 @@
     "UI": {
       "ALERTS": {
         "NO_GROUPS": "No groups found.",
-        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria.",
-        "NO_SSH_KEYS": "No SSH keys found"
+        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria."
       }
     }
   }
