@@ -43,7 +43,12 @@
     "INPUT_PLACEHOLDER": "Enter new password",
     "SET_PASSWORD": "Set password"
   },
-  "DIALOGS":{
+  "PREFERRED_UNIX_GROUP_NAMES": {
+    "TITLE": "Preferred unix group names",
+    "NEW_BUTTON": "New",
+    "REMOVE_BUTTON": "Remove"
+  },
+  "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
       "INPUT_PLACEHOLDER": "New email",
@@ -62,12 +67,25 @@
       "ASK": "Are you sure you want to continue?",
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
+    },
+    "ADD_UNIX_GROUP": {
+      "TITLE": "Add new preferred unix group name",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "REMOVE_UNIX_GROUP": {
+      "TITLE": "Remove preferred unix group name",
+      "DESCRIPTION": "Selected preferred unix group names will be removed.",
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     }
   },
   "ALERTS": {
     "NO_SSH_KEYS": "No SSH keys found",
     "NO_SAMBA": "You don't have password for SAMBA yet.",
-    "SAMBA_EXISTS": "You already have password for SAMBA. You can change it by setting new password."
+    "SAMBA_EXISTS": "You already have password for SAMBA. You can change it by setting new password.",
+    "NO_PREFERRED_UNIX_GROUPS": "No preferred group names for selected namespace found"
   },
   "SHARED_LIB": {
     "PERUN": {
