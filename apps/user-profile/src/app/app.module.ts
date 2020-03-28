@@ -45,9 +45,8 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { SshKeysListComponent } from './components/ssh-keys-list/ssh-keys-list.component';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { AddSshDialogComponent } from './components/dialogs/add-ssh-dialog/add-ssh-dialog.component';
-import { RemoveSshDialogComponent } from './components/dialogs/remove-ssh-dialog/remove-ssh-dialog.component';
 import { AddUnixGroupDialogComponent } from './components/dialogs/add-unix-group-dialog/add-unix-group-dialog.component';
-import { RemoveUnixGroupDialogComponent } from './components/dialogs/remove-unix-group-dialog/remove-unix-group-dialog.component';
+import { RemoveStringValueDialogComponent } from './components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -91,9 +90,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     ChangeEmailDialogComponent,
     SshKeysListComponent,
     AddSshDialogComponent,
-    RemoveSshDialogComponent,
     AddUnixGroupDialogComponent,
-    RemoveUnixGroupDialogComponent
+    RemoveStringValueDialogComponent
   ],
   imports: [
     BrowserModule,

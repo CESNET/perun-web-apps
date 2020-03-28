@@ -1,1 +1,16 @@
-<p>settings-preferred-shells works!</p>
+<app-alert color="warn">
+  {{'ALERTS.NO_SSH_KEYS'|translate}}
+</app-alert>
+<button mat-flat-button color="accent" (click)="addShell()">ADD SHELL</button>
+<button mat-flat-button color="warn" [disabled]="selection.length === 0" (click)="removeShell()">REMOVE SHELL</button>
+
+<!--shell-list component will be here-->
+<mat-selection-list *ngIf="shells.length !== 0">
+  <mat-list-option *ngFor="let shell of shells; let i = index" (click)="changeSelection(i)" checkboxPosition="before">
+
+    <mat-select [(value)]="shells[i]">
+      <mat-option *ngFor="let defShell of defaultShells" (click)="changeValue(defShell, i)" [value]="defShell">{{defShell}}</mat-option>
+    </mat-select>
+
+  </mat-list-option>
+</mat-selection-list>

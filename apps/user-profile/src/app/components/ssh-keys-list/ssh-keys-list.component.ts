@@ -49,30 +49,8 @@ export class SshKeysListComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  // isAllSelected() {
-  //   let numSelected = this.selection.selected.length;
-  //
-  //   if (numSelected > 0) {
-  //     numSelected++;
-  //   }
-  //
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-  //
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => {
-  //       this.selection.select(row);
-  //     });
-  // }
-
   checkboxLabel(row?: string): string {
-    // if (!row) {
-    //   return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    // }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;     //treba change
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
 
   ngAfterViewInit(): void {

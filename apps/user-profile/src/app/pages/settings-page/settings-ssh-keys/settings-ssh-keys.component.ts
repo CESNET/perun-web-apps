@@ -4,7 +4,8 @@ import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/opena
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSshDialogComponent } from '../../../components/dialogs/add-ssh-dialog/add-ssh-dialog.component';
-import { RemoveSshDialogComponent } from '../../../components/dialogs/remove-ssh-dialog/remove-ssh-dialog.component';
+import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perun-web-apps-settings-ssh-keys',
@@ -15,9 +16,13 @@ export class SettingsSSHKeysComponent implements OnInit {
 
   constructor(private store: StoreService,
               private attributesManagerService: AttributesManagerService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private translateService: TranslateService
   ) {
+    translateService.get('SSH_KEYS.REMOVE_DIALOG_DESCRIPTION').subscribe(value => this.removeDialogDescription = value);
+    translateService.get('SSH_KEYS.REMOVE_DIALOG_TITLE').subscribe(value => this.removeDialogTitle = value);
   }
+
 
   adminKeys: string[] = [];
   userKeys: string[] = [];
@@ -31,6 +36,9 @@ export class SettingsSSHKeysComponent implements OnInit {
   userId: number;
   selection = new SelectionModel<string>(false, []);
   selectionAdmin = new SelectionModel<string>(false, []);
+
+  removeDialogTitle: string;
+  removeDialogDescription: string;
 
   ngOnInit() {
     this.userId = this.store.getPerunPrincipal().userId;
@@ -53,12 +61,14 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   removeKey(admin: boolean) {
-    const dialogRef = this.dialog.open(RemoveSshDialogComponent, {
+    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
       width: '600px',
       data: {
-        keys: admin ? this.selectionAdmin.selected : this.selection.selected,
+        values: admin ? this.selectionAdmin.selected : this.selection.selected,
         attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute,
-        userId: this.userId
+        userId: this.userId,
+        title: this.removeDialogTitle,
+        description: this.removeDialogDescription
       }
     });
 

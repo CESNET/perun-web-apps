@@ -34,7 +34,9 @@
     "ADMIN_SSH_KEYS_TITLE": "Admin SSH keys",
     "ADMIN_SSH_KEYS_DESCRIPTION": "List of your ssh keys for root access.",
     "NEW_KEY": "Add new key",
-    "REMOVE_KEY": "Remove selected key"
+    "REMOVE_KEY": "Remove selected key",
+    "REMOVE_DIALOG_TITLE": "Remove ssh key",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed."
   },
   "SSH_KEYS_LIST": {
     "HEADER": "Public part of ssh key"
@@ -46,7 +48,16 @@
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferred unix group names",
     "NEW_BUTTON": "New",
-    "REMOVE_BUTTON": "Remove"
+    "REMOVE_BUTTON": "Remove",
+    "REMOVE_DIALOG_TITLE": "Remove preferred unix group name",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred unix group names will be removed."
+  },
+  "PREFERRED_SHELLS": {
+    "TITLE": "Preferred shells",
+    "NEW_BUTTON": "New",
+    "REMOVE_BUTTON": "Remove",
+    "REMOVE_DIALOG_TITLE": "Remove preferred shells",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed."
   },
   "DIALOGS": {
     "CHANGE_EMAIL": {
@@ -61,21 +72,12 @@
       "CANCEL": "Cancel",
       "ADD": "Add"
     },
-    "REMOVE_SSH": {
-      "TITLE": "Remove ssh key",
-      "DESCRIPTION": "Selected ssh key will be removed.",
-      "ASK": "Are you sure you want to continue?",
-      "CANCEL": "Cancel",
-      "REMOVE": "Remove"
-    },
     "ADD_UNIX_GROUP": {
       "TITLE": "Add new preferred unix group name",
       "CANCEL": "Cancel",
       "ADD": "Add"
     },
-    "REMOVE_UNIX_GROUP": {
-      "TITLE": "Remove preferred unix group name",
-      "DESCRIPTION": "Selected preferred unix group names will be removed.",
+    "REMOVE_STRING_VALUE": {
       "ASK": "Are you sure you want to continue?",
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
