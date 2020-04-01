@@ -8,13 +8,13 @@
     {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
   </button>
   <perun-web-apps-immediate-filter
-    [placeholder]="'SHARED.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"
+    [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"
     (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-  <app-resources-list
+  <perun-web-apps-resources-list
     *ngIf="!loading"
     [filterValue]="filterValue"
     [resources]="resources"
     [selection]="selected">
-  </app-resources-list>
+  </perun-web-apps-resources-list>
 </div>

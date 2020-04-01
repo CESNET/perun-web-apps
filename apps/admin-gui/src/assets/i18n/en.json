@@ -1196,17 +1196,6 @@
       "RESOURCES_TAGS_LIST": {
         "EDIT_SUCCESS": "Resource tag was successfully edited."
       },
-      "RESOURCES_LIST": {
-        "TITLE": "Resources",
-        "DELETE": "Remove selected",
-        "TABLE_RESOURCE_ID": "id",
-        "TABLE_RESOURCE_NAME": "Name",
-        "TABLE_FACILITY_NAME": "Facility name",
-        "TABLE_RESOURCE_TAGS": "Tags",
-        "TABLE_SEARCH": "Filter by name, description or ID",
-        "TABLE_RESOURCE_DESCRIPTION": "Description",
-        "NO_RESOURCES_WARNING": "No resources assigned."
-      },
       "ATTRIBUTES_LIST": {
         "FILTER": "Filter by id, name, value or description",
         "ID": "id",
@@ -1303,6 +1292,17 @@
           "ID": "Id",
           "NAME": "Name",
           "RECENT": "Recently viewed"
+        },
+        "RESOURCES_LIST": {
+          "TITLE": "Resources",
+          "DELETE": "Remove selected",
+          "TABLE_RESOURCE_ID": "id",
+          "TABLE_RESOURCE_NAME": "Name",
+          "TABLE_FACILITY_NAME": "Facility name",
+          "TABLE_RESOURCE_TAGS": "Tags",
+          "TABLE_SEARCH": "Filter by name, description or ID",
+          "TABLE_RESOURCE_DESCRIPTION": "Description",
+          "NO_RESOURCES_WARNING": "No resources assigned."
         }
       },
       "REFRESH_BUTTON": "Refresh"

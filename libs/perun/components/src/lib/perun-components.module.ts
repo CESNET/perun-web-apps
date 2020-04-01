@@ -31,6 +31,8 @@ import { AttributeValueComponent } from './attributes-list/attribute-value/attri
 import { AttributesListComponent } from './attributes-list/attributes-list.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ResourcesListComponent } from './resources-list/resources-list.component';
+import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string.pipe';
 
 @NgModule({
   imports: [
@@ -68,7 +70,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AttributeValueBooleanComponent,
     AttributeValueListComponent,
     AttributeValueMapComponent,
-    AttributeValueStringComponent
+    AttributeValueStringComponent,
+    ResourcesListComponent,
+    ResourceTagsToStringPipe
   ],
   exports: [
     VoSelectTableComponent,
@@ -83,7 +87,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AttributeValueBooleanComponent,
     AttributeValueListComponent,
     AttributeValueMapComponent,
-    AttributeValueStringComponent
+    AttributeValueStringComponent,
+    ResourcesListComponent,
+    ResourceTagsToStringPipe
   ]
 })
 export class PerunSharedComponentsModule {

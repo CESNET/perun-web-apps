@@ -6,7 +6,7 @@ import { RichResource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-resources-list',
+  selector: 'perun-web-apps-resources-list',
   templateUrl: './resources-list.component.html',
   styleUrls: ['./resources-list.component.scss']
 })
