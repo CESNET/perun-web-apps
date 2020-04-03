@@ -6,3 +6,4 @@ export * from './lib/attributes-list/attribute-value/attribute-value-list/attrib
 export * from './lib/attributes-list/attribute-value/attribute-value-map/attribute-value-map.component';
 export * from './lib/attributes-list/attribute-value/attribute-value-string/attribute-value-string.component';
 export * from './lib/resources-list/resources-list.component'
+export * from './lib/menu-buttons-field/menu-buttons-field.component'

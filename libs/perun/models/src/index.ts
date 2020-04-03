@@ -12,5 +12,6 @@ export * from './lib/RPCError';
 export * from './lib/RTMessage';
 export * from './lib/Task';
 export * from './lib/TreeGroup';
-export * from './lib/GroupFlatNode'
+export * from './lib/GroupFlatNode';
+export * from './lib/MenuItem'
 

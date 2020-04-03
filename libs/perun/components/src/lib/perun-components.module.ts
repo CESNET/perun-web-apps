@@ -33,6 +33,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ResourcesListComponent } from './resources-list/resources-list.component';
 import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string.pipe';
+import { MenuButtonsFieldComponent } from './menu-buttons-field/menu-buttons-field.component';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -55,7 +57,8 @@ import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string
     MatTooltipModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatRippleModule
   ],
   declarations: [
     VoSelectTableComponent,
@@ -72,7 +75,8 @@ import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string
     AttributeValueMapComponent,
     AttributeValueStringComponent,
     ResourcesListComponent,
-    ResourceTagsToStringPipe
+    ResourceTagsToStringPipe,
+    MenuButtonsFieldComponent
   ],
   exports: [
     VoSelectTableComponent,
@@ -89,7 +93,8 @@ import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string
     AttributeValueMapComponent,
     AttributeValueStringComponent,
     ResourcesListComponent,
-    ResourceTagsToStringPipe
+    ResourceTagsToStringPipe,
+    MenuButtonsFieldComponent
   ]
 })
 export class PerunSharedComponentsModule {

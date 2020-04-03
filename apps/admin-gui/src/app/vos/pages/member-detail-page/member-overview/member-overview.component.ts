@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
-import {MenuItem} from '../../../../shared/models/MenuItem';
+import {MenuItem} from '../../../../../../../../libs/perun/models/src/lib/MenuItem';
 import { MembersService } from '@perun-web-apps/perun/services';
 import { RichMember } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';

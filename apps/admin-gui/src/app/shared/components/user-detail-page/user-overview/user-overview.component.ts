@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {MenuItem} from '../../../models/MenuItem';
+import {MenuItem} from '../../../../../../../../libs/perun/models/src/lib/MenuItem';
 import { User } from '@perun-web-apps/perun/openapi';
 
 @Component({

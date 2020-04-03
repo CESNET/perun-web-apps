@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {SideMenuService} from '../../../../../core/services/common/side-menu.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MenuItem} from '../../../../../shared/models/MenuItem';
+import {MenuItem} from '../../../../../../../../../libs/perun/models/src/lib/MenuItem';
 import { MembersService } from '@perun-web-apps/perun/services';
 import { Member, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 

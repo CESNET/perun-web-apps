@@ -34,7 +34,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SideMenuComponent} from './side-menu/side-menu.component';
 import {SideMenuItemComponent} from './side-menu/side-menu-item/side-menu-item.component';
-import {MenuButtonsFieldComponent} from './components/menu-buttons-field/menu-buttons-field.component';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CreateGroupDialogComponent} from './components/dialogs/create-group-dialog/create-group-dialog.component';
 import {InviteMemberDialogComponent} from './components/dialogs/invite-member-dialog/invite-member-dialog.component';
@@ -210,7 +209,6 @@ import { UserRolesComponent } from './components/user-detail-page/user-settings/
     SideMenuComponent,
     MatSidenavModule,
     TranslateModule,
-    MenuButtonsFieldComponent,
     MatSortModule,
     MatTableModule,
     MatTabsModule,
@@ -282,7 +280,6 @@ import { UserRolesComponent } from './components/user-detail-page/user-settings/
     PerunNavComponent,
     SideMenuComponent,
     SideMenuItemComponent,
-    MenuButtonsFieldComponent,
     CreateGroupDialogComponent,
     InviteMemberDialogComponent,
     UserFullNamePipe,

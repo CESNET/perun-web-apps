@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItem } from '../../../../shared/models/MenuItem';
+import { MenuItem } from '../../../../../../../../libs/perun/models/src/lib/MenuItem';
 import { FacilitiesManagerService, Facility } from '@perun-web-apps/perun/openapi';
 
 @Component({

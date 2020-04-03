@@ -1,5 +1,5 @@
 import {Component, HostBinding} from '@angular/core';
-import {MenuItem} from '../../../../../shared/models/MenuItem';
+import {MenuItem} from '../../../../../../../../../libs/perun/models/src/lib/MenuItem';
 
 @Component({
   selector: 'app-visualizer-overview',

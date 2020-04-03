@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuItem} from '../../models/MenuItem';
+import {MenuItem} from '../../../../models/src/lib/MenuItem';
 import { MatDialog } from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
 
