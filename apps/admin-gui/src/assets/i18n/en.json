@@ -1184,12 +1184,6 @@
       "USER_TYPE": "User type",
       "EDIT_NAME": "Edit name"
     },
-    "ORGANIZATIONS": {
-      "TITLE": "User organizations",
-      "FILTER": "Filter by name or ID",
-      "IS_ADMIN": "Organizations where you are admin",
-      "IS_MEMBER": "Organizations where you are member"
-    },
     "SETTINGS": {
       "ATTRIBUTES": {
         "TITLE": "Attributes",
@@ -1231,12 +1225,6 @@
         "GROUP": "Group",
         "NO_MANAGERS": "This role has no managers.",
         "NO_GROUP_MANAGERS": "This role has no group managers."
-      },
-      "USER_DETAIL": {
-        "GROUPS": {
-          "MEMBER_GROUPS": "Member groups",
-          "ADMINS_GROUPS": "Groups where user is admin"
-        }
       },
       "EXT_SOURCES_LIST": {
         "ID": "ID",
@@ -1316,6 +1304,16 @@
           "TABLE_RESOURCE_DESCRIPTION": "Description",
           "NO_RESOURCES_WARNING": "No resources assigned."
         }
+      },
+      "ORGANIZATIONS": {
+        "TITLE": "User organizations",
+        "FILTER": "Filter by name or ID",
+        "IS_ADMIN": "Organizations where you are admin",
+        "IS_MEMBER": "Organizations where you are member"
+      },
+      "GROUPS": {
+        "MEMBER_GROUPS": "Member groups",
+        "ADMINS_GROUPS": "Groups where user is admin"
       },
       "REFRESH_BUTTON": "Refresh"
     },

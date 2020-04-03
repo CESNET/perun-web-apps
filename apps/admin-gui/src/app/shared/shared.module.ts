@@ -276,7 +276,8 @@ import { UserRolesComponent } from './components/user-detail-page/user-settings/
     PerunFooterComponent,
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
-    ExtSourceTypePipe
+    ExtSourceTypePipe,
+    SideMenuRootItemComponent
   ],
   declarations: [
     PerunNavComponent,

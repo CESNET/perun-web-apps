@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{'DIALOGS.ADD_UNIX_GROUP.TITLE'|translate}}</h1>
+<div mat-dialog-content class="dialog-container">
+  <mat-form-field>
+    <label>
+      <input
+        matInput
+        required
+        [formControl]="inputControl"
+      >
+    </label>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-stroked-button
+    class="ml-auto"
+    (click)="onCancel()">
+    {{'DIALOGS.ADD_UNIX_GROUP.CANCEL'|translate}}
+  </button>
+  <button
+    mat-flat-button
+    class="ml-2"
+    color="accent"
+    [disabled]="!inputControl.valid"
+    (click)="onSubmit()">
+    {{'DIALOGS.ADD_UNIX_GROUP.ADD'|translate}}
+  </button>
+</div>

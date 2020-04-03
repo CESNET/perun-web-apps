@@ -1,0 +1,40 @@
+<div class="card mt-2" [class.hide-table]="exporting" *ngIf="sshKeys.length > 0">
+  <div class="card-body">
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
+
+    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear
+           class="w-100">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+        <td mat-cell *matCellDef="let row" class="static-column-size">
+          <mat-checkbox color="primary"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+        <ng-container matColumnDef="key">
+          <th mat-header-cell *matHeaderCellDef
+              mat-sort-header class="pl-3">{{'SSH_KEYS_LIST.HEADER'|translate}}</th>
+          <td mat-cell class="truncate pl-3" *matCellDef="let key">{{key}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let key; columns: displayedColumns;"
+          class="dark-hover-list-item">
+        </tr>
+    </table>
+    <mat-paginator [length]="this.sshKeys.length" [pageSize]="this.pageSize" [pageSizeOptions]="[1,3,5]"></mat-paginator>
+  </div>
+</div>
+
+<mat-spinner *ngIf="exporting" class="ml-auto mr-auto"></mat-spinner>
+
+<app-alert *ngIf="sshKeys.length === 0" color="warn">
+  {{'ALERTS.NO_SSH_KEYS'|translate}}
+</app-alert>

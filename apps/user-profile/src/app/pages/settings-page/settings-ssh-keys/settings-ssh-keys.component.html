@@ -1,0 +1,11 @@
+<h3>{{'SSH_KEYS.SSH_KEYS_TITLE'|translate}}</h3>
+<p>{{'SSH_KEYS.SSH_KEYS_DESCRIPTION'|translate}}</p>
+<button mat-flat-button color="accent" (click)="addKey(false)">{{'SSH_KEYS.NEW_KEY'|translate}}</button>
+<button mat-flat-button color="warn" class="ml-2" [disabled]="!userKeys || !selection.selected.length" (click)="removeKey(false)">{{'SSH_KEYS.REMOVE_KEY'|translate}}</button>
+<perun-web-apps-ssh-keys-list [sshKeys]="userKeys" [selection]="selection"></perun-web-apps-ssh-keys-list>
+
+<h3>{{'SSH_KEYS.ADMIN_SSH_KEYS_TITLE'|translate}}</h3>
+<p>{{'SSH_KEYS.ADMIN_SSH_KEYS_DESCRIPTION'|translate}}</p>
+<button mat-flat-button color="accent" (click)="addKey(true)">{{'SSH_KEYS.NEW_KEY'|translate}}</button>
+<button mat-flat-button color="warn" class="ml-2" [disabled]="!adminKeys || !selectionAdmin.selected.length" (click)="removeKey(true)">{{'SSH_KEYS.REMOVE_KEY'|translate}}</button>
+<perun-web-apps-ssh-keys-list [sshKeys]="adminKeys" [selection]="selectionAdmin"></perun-web-apps-ssh-keys-list>

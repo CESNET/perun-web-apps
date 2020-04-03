@@ -1,0 +1,33 @@
+#content-wrap {
+  padding-left: 10px;
+  padding-top: 10px;
+  @media (max-width: 768px) {
+    padding-bottom: 500px;
+  }
+}
+
+#content-inner {
+  margin: 10px;
+  position: relative;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.custom-breadcrumb {
+  display: inline-block;
+}
+
+.custom-breadcrumb:first-child:before {
+  display: none;
+}
+
+.custom-breadcrumb:before {
+  content: '>';
+  vertical-align: center;
+  display: inline-block;
+  margin: 0 10px 10px 8px;
+  -webkit-font-smoothing: antialiased;
+}

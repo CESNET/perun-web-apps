@@ -1,0 +1,14 @@
+<h3>{{'PREFERRED_UNIX_GROUP_NAMES.TITLE' | translate}}</h3>
+<mat-card *ngFor="let namespace of namespaces; let i = index">
+  <h4>{{namespace}}</h4>
+  <button mat-flat-button color="accent" (click)="addGroupName(namespace)">{{'PREFERRED_UNIX_GROUP_NAMES.NEW_BUTTON' | translate}}</button>
+  <button mat-flat-button color="warn" class="ml-2" (click)="removeGroupName(namespace, i)" [disabled]="selectionList[i].length === 0">{{'PREFERRED_UNIX_GROUP_NAMES.REMOVE_BUTTON' | translate}}</button>
+
+  <mat-selection-list *ngIf="hasGroups(namespace)">
+    <mat-list-option *ngFor="let group of groupNames.get(namespace)" (click)="changeSelection(group, i)" checkboxPosition="before">{{group}}</mat-list-option>
+  </mat-selection-list>
+
+  <app-alert *ngIf="!hasGroups(namespace)" color="warn">
+    {{'ALERTS.NO_PREFERRED_UNIX_GROUPS'|translate}}
+  </app-alert>
+</mat-card>

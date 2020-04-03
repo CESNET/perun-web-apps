@@ -1,0 +1,15 @@
+<app-alert color="warn">
+  {{'ALERTS.NO_SSH_KEYS'|translate}}
+</app-alert>
+<button mat-flat-button color="accent" (click)="addShell()">ADD SHELL</button>
+
+<!--shell-list component will be here-->
+<mat-list>
+  <mat-list-item *ngFor="let shell of shells; let i = index">
+    <mat-select [(value)]="shells[i]" class="border mr-2">
+      <mat-option *ngFor="let defShell of defaultShells" (click)="changeValue()" [value]="defShell">{{defShell}}</mat-option>
+    </mat-select>
+
+    <button mat-flat-button color="warn" (click)="removeShell(i)">REMOVE SHELL</button>
+  </mat-list-item>
+</mat-list>
