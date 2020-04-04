@@ -57,7 +57,8 @@
     "NEW_BUTTON": "New",
     "REMOVE_BUTTON": "Remove",
     "REMOVE_DIALOG_TITLE": "Remove preferred shells",
-    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed."
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed.",
+    "DESCRIPTION": "List of preferred shells (ordered from the most preferred to least) is used to determine your shell on provided resources. If none of preferred shells is available on resource (or no preferred shell is set), resource`s default is used."
   },
   "DIALOGS": {
     "CHANGE_EMAIL": {
