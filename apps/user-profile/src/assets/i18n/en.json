@@ -60,6 +60,15 @@
     "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed.",
     "DESCRIPTION": "List of preferred shells (ordered from the most preferred to least) is used to determine your shell on provided resources. If none of preferred shells is available on resource (or no preferred shell is set), resource`s default is used."
   },
+  "ALT_PASSWORDS": {
+    "TITLE_GENERATE": "Generate new alternative password",
+    "EXAMPLE_DESCRIPTIONS": "Examples of password descriptions: “email on mobile phone” or “teleconferences on tablet”.",
+    "TITLE_PASSWORDS": "Your alternative passwords",
+    "INPUT_PLACEHOLDER": "Password description",
+    "REMOVE": "Remove",
+    "GENERATE": "Generate",
+    "HEADER_COLUMN":"Description"
+  },
   "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
@@ -82,13 +91,27 @@
       "ASK": "Are you sure you want to continue?",
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
+    },
+    "REMOVE_ALT_PASSWORD": {
+      "TITLE": "Remove alternative password",
+      "DESCRIPTION": "Alternative password with following description will be removed",
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "SHOW_PASSWORD": {
+      "TITLE": "Your generated alternative password is",
+      "LABEL": "Please copy the password now. It will not be shown again.",
+      "CLOSE": "Close",
+      "COPY": "Copy"
     }
   },
   "ALERTS": {
     "NO_SSH_KEYS": "No SSH keys found",
     "NO_SAMBA": "You don't have password for SAMBA yet.",
     "SAMBA_EXISTS": "You already have password for SAMBA. You can change it by setting new password.",
-    "NO_PREFERRED_UNIX_GROUPS": "No preferred group names for selected namespace found"
+    "NO_PREFERRED_UNIX_GROUPS": "No preferred group names for selected namespace found",
+    "NO_ALT_PASSWORDS": "No alternative passwords found"
   },
   "SHARED_LIB": {
     "PERUN": {

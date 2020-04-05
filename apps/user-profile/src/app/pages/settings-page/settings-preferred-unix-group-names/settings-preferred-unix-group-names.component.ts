@@ -3,7 +3,6 @@ import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUnixGroupDialogComponent } from '../../../components/dialogs/add-unix-group-dialog/add-unix-group-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
 
@@ -28,9 +27,6 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   groupNames: Map<string, string[]> = new Map<string, string[]>();
   groupNameAttributes: Attribute[] = new Array<Attribute>();
 
-  displayedColumns = ['group'];
-  dataSource: MatTableDataSource<string>;
-
   selectionList: string[][];
 
   removeDialogTitle: string;
@@ -38,7 +34,6 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
   ngOnInit() {
     this.namespaces = this.store.get('preferred_unix_group_names');
-    this.dataSource = new MatTableDataSource<string>(this.namespaces);
     this.initSelection();
     this.namespaces.forEach(group => {
       this.getAttribute(group);
