@@ -1,5 +1,5 @@
 import {Component, HostBinding} from '@angular/core';
-import {MenuItem} from '../../../../../../../../../libs/perun/models/src/lib/MenuItem';
+import {MenuItem} from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-visualizer-overview',

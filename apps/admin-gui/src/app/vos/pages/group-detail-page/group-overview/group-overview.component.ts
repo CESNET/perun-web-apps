@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { MenuItem } from '../../../../../../../../libs/perun/models/src/lib/MenuItem';
+import { MenuItem } from '@perun-web-apps/perun/models';
 import { ActivatedRoute } from '@angular/router';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 

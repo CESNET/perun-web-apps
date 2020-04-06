@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuItem} from '../../../../models/src/lib/MenuItem';
+import {MenuItem} from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
 
