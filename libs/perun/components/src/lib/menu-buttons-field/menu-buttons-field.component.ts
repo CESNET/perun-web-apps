@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-menu-buttons-field',
+  selector: 'perun-web-apps-menu-buttons-field',
   templateUrl: './menu-buttons-field.component.html',
   styleUrls: ['./menu-buttons-field.component.scss']
 })
