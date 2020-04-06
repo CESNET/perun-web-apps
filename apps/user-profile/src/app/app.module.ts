@@ -39,7 +39,6 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ChangeEmailDialogComponent } from './components/dialogs/change-email-dialog/change-email-dialog.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
-import { SshKeysListComponent } from './components/ssh-keys-list/ssh-keys-list.component';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { AddSshDialogComponent } from './components/dialogs/add-ssh-dialog/add-ssh-dialog.component';
 import { AddUnixGroupDialogComponent } from './components/dialogs/add-unix-group-dialog/add-unix-group-dialog.component';
@@ -102,7 +101,6 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     PrivacyPageComponent,
     HomePageComponent,
     ChangeEmailDialogComponent,
-    SshKeysListComponent,
     AddSshDialogComponent,
     AddUnixGroupDialogComponent,
     RemoveStringValueDialogComponent,

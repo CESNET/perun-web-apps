@@ -21,6 +21,8 @@ export class SettingsSSHKeysComponent implements OnInit {
   ) {
     translateService.get('SSH_KEYS.REMOVE_DIALOG_DESCRIPTION').subscribe(value => this.removeDialogDescription = value);
     translateService.get('SSH_KEYS.REMOVE_DIALOG_TITLE').subscribe(value => this.removeDialogTitle = value);
+    translateService.get('ALERTS.NO_ALT_PASSWORDS').subscribe(value => this.alertText = value);
+    translateService.get('SSH_KEYS.HEADER_COLUMN').subscribe(value => this.headerColumnText = value);
   }
 
 
@@ -40,9 +42,15 @@ export class SettingsSSHKeysComponent implements OnInit {
   removeDialogTitle: string;
   removeDialogDescription: string;
 
+  alertText: string;
+  headerColumnText: string;
+
+  loading: boolean;
+
   ngOnInit() {
     this.userId = this.store.getPerunPrincipal().userId;
 
+    this.loading= true;
     this.getUserSSH();
     this.getAdminSSH();
   }
@@ -74,6 +82,7 @@ export class SettingsSSHKeysComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(sshAdded => {
       if (sshAdded) {
+        this.loading = true;
         admin ? this.getAdminSSH() : this.getUserSSH();
         admin ? this.selectionAdmin.clear() : this.selection.clear();
       }
@@ -85,6 +94,7 @@ export class SettingsSSHKeysComponent implements OnInit {
       this.userKeyAttribute = sshKeys;
       // @ts-ignore
       this.userKeys = sshKeys.value;
+      this.loading = false;
     });
   }
 
@@ -93,6 +103,7 @@ export class SettingsSSHKeysComponent implements OnInit {
       this.adminKeyAttribute = sshKeys;
       // @ts-ignore
       this.adminKeys = sshKeys.value;
+      this.loading = false;
     });
   }
 }

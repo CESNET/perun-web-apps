@@ -36,10 +36,8 @@
     "NEW_KEY": "Add new key",
     "REMOVE_KEY": "Remove selected key",
     "REMOVE_DIALOG_TITLE": "Remove ssh key",
-    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed."
-  },
-  "SSH_KEYS_LIST": {
-    "HEADER": "Public part of ssh key"
+    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed.",
+    "HEADER_COLUMN": "Public part of ssh key"
   },
   "SAMBA_PASSWORD": {
     "INPUT_PLACEHOLDER": "Enter new password",
@@ -50,7 +48,8 @@
     "NEW_BUTTON": "New",
     "REMOVE_BUTTON": "Remove",
     "REMOVE_DIALOG_TITLE": "Remove preferred unix group name",
-    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred unix group names will be removed."
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred unix group names will be removed.",
+    "HEADER_COLUMN": "Name"
   },
   "PREFERRED_SHELLS": {
     "TITLE": "Preferred shells",
