@@ -3,6 +3,9 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
+import { AttributeValueListEditDialogComponent } from './attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
+import { AttributeValueListDeleteDialogComponent } from './attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 
 @Component({
   selector: 'perun-web-apps-attribute-value-list',
@@ -11,15 +14,16 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class AttributeValueListComponent implements OnInit {
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   @Input()
   attribute: Attribute;
 
-  selectable = true;
+  selectable = false;
   removable = true;
   addOnBlur = true;
+  dragDisabled = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Output() sendEventToParent = new EventEmitter();
@@ -50,17 +54,38 @@ export class AttributeValueListComponent implements OnInit {
   }
 
   remove(chip: string): void {
-    // @ts-ignore
-    const index = this.attribute.value.indexOf(chip);
-
-    if (index >= 0) {
-      // @ts-ignore
-      this.attribute.value.splice(index, 1);
-    }
+    const dialogRef = this.dialog.open(AttributeValueListDeleteDialogComponent, {
+      width: '400px',
+      data: { name: chip }
+    });
+    dialogRef.afterClosed().subscribe( (success) => {
+      if (success) {
+        //@ts-ignore
+        const index = this.attribute.value.indexOf(chip);
+        // @ts-ignore
+        this.attribute.value.splice(index, 1);
+        this.sendEventToParent.emit();
+      }
+    });
   }
 
   drop(event: CdkDragDrop<any[]>) {
+    this.dragDisabled = true;
     // @ts-ignore
     moveItemInArray(this.attribute.value, event.previousIndex, event.currentIndex);
+  }
+
+  edit(chip: string) {
+    // @ts-ignore
+    const index = this.attribute.value.indexOf(chip);
+    const dialogRef = this.dialog.open(AttributeValueListEditDialogComponent, {
+      width: '600px',
+      data: { attribute: this.attribute, index: index }
+    });
+    dialogRef.afterClosed().subscribe( (success) => {
+      if (success) {
+        this.sendEventToParent.emit();
+      }
+    });
   }
 }

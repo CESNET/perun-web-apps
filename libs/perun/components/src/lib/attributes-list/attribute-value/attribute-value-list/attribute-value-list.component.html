@@ -3,6 +3,7 @@
                  class="mat-chip-list-stacked"
                  cdkDropList
                  cdkDropListOrientation="vertical"
+                 [cdkDropListDisabled]="dragDisabled"
                  (cdkDropListDropped)="drop($event); _sendEventToParent()">
     <mat-chip class="chip-word-break"
               *ngFor="let chip of attribute.value"
@@ -10,8 +11,10 @@
               cdkDrag
               [cdkDragData]="chip"
               [removable]="removable" (removed)="remove(chip); _sendEventToParent()">
+      <mat-icon class="handle-icon" (mousedown)="dragDisabled = false;">drag_indicator</mat-icon>
       {{chip}}
-      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      <mat-icon *ngIf="removable" (click)="edit(chip)" class="edit-delete-icon ml-2">edit</mat-icon>
+      <mat-icon *ngIf="removable" (click)="remove(chip)" class="edit-delete-icon">cancel</mat-icon>
     </mat-chip>
     <label>
       <input placeholder="New value"

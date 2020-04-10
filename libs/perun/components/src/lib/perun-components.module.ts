@@ -35,6 +35,8 @@ import { ResourcesListComponent } from './resources-list/resources-list.componen
 import { ResourceTagsToStringPipe } from '../../../pipes/resource-tags-to-string.pipe';
 import { MenuButtonsFieldComponent } from './menu-buttons-field/menu-buttons-field.component';
 import { MatRippleModule } from '@angular/material/core';
+import { AttributeValueListEditDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
+import { AttributeValueListDeleteDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -76,7 +78,9 @@ import { MatRippleModule } from '@angular/material/core';
     AttributeValueStringComponent,
     ResourcesListComponent,
     ResourceTagsToStringPipe,
-    MenuButtonsFieldComponent
+    MenuButtonsFieldComponent,
+    AttributeValueListEditDialogComponent,
+    AttributeValueListDeleteDialogComponent
   ],
   exports: [
     VoSelectTableComponent,
