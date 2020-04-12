@@ -210,6 +210,11 @@ export class SideMenuItemService {
               label: 'MENU_ITEMS.FACILITY.ATTRIBUTES',
               url: ['/facilities', facility.id, 'settings', 'attributes'],
               activatedRegex: '/facilities/\\d+/settings/attributes$'
+            },
+            {
+              label: 'MENU_ITEMS.FACILITY.MANAGERS',
+              url: ['/facilities', facility.id, 'settings', 'managers'],
+              activatedRegex: '/facilities/\\d+/settings/managers$'
             }
           ],
           showChildrenRegex: '/facilities/\\d+/settings'

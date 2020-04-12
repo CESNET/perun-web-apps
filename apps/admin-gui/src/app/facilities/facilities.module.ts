@@ -31,6 +31,7 @@ import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-g
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
 import { PerunFacilityServicesConfigModule } from '@perun-web-apps/perun/facility-services-config';
+import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-managers/facility-settings-managers.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PerunFacilityServicesConfigModule } from '@perun-web-apps/perun/facilit
     ResourceSettingsOverviewComponent,
     ResourceSettingsAttributesComponent,
     ResourceGroupsComponent,
-    FacilityServiceConfigComponent
+    FacilityServiceConfigComponent,
+    FacilitySettingsManagersComponent
   ],
   imports: [
     CommonModule,

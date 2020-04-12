@@ -510,7 +510,8 @@
       "ALLOWED_GROUPS": "Allowed groups",
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes",
-      "SERVICE_CONFIG": "Services configuration"
+      "SERVICE_CONFIG": "Services configuration",
+      "MANAGERS": "Managers"
     },
     "RESOURCE": {
       "OVERVIEW": "Overview",
