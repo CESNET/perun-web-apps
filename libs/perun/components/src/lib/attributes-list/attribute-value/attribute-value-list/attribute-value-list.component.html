@@ -12,7 +12,7 @@
               [cdkDragData]="chip"
               [removable]="removable" (removed)="remove(chip); _sendEventToParent()">
       <mat-icon class="handle-icon" (mousedown)="dragDisabled = false;">drag_indicator</mat-icon>
-      {{chip}}
+      <div class="chip-text">{{chip}}</div>
       <mat-icon *ngIf="removable" (click)="edit(chip)" class="edit-delete-icon ml-2">edit</mat-icon>
       <mat-icon *ngIf="removable" (click)="remove(chip)" class="edit-delete-icon">cancel</mat-icon>
     </mat-chip>

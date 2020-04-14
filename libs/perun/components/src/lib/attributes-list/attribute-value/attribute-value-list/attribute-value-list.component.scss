@@ -1,6 +1,12 @@
 .chip-word-break {
   word-break: break-all;
 }
+.chip-text {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .mat-chip-list .mat-chip {
   width: auto;
