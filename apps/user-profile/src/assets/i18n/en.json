@@ -68,6 +68,13 @@
     "GENERATE": "Generate",
     "HEADER_COLUMN":"Description"
   },
+  "DATA_QUOTAS": {
+    "TITLE": "Data quotas",
+    "QUOTA": "Data quota: ",
+    "CHANGE": "Change",
+    "QUOTA_INFO": "Quotas are using \"soft limit : hard limit\" notation and are bound to specific volume.",
+    "NO_QUOTAS": "No assigned data quotas"
+  },
   "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
@@ -103,6 +110,15 @@
       "LABEL": "Please copy the password now. It will not be shown again.",
       "CLOSE": "Close",
       "COPY": "Copy"
+    },
+    "REQUEST_DATA_QUOTA_CHANGE": {
+      "TITLE": "Data quota change request",
+      "RESOURCE": "Resource:",
+      "CURRENT_QUOTA": "Current quota:",
+      "REQUESTED_QUOTA": "Requested quota:",
+      "REASON": "Reason:",
+      "SEND": "Send",
+      "CANCEL": "Cancel"
     }
   },
   "ALERTS": {

@@ -60,6 +60,8 @@ import { ShowGeneratedPasswordDialogComponent } from './components/dialogs/show-
 import { StringListComponent } from './components/string-list/string-list.component';
 import { RemoveAltPasswordDialogComponent } from './components/dialogs/remove-alt-password-dialog/remove-alt-password-dialog.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { RequestChangeDataQuotaDialogComponent } from './components/dialogs/request-change-data-quota-dialog/request-change-data-quota-dialog.component';
+import { UserFullNamePipe } from '../../../admin-gui/src/app/shared/pipes/user-full-name.pipe';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -106,7 +108,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     RemoveStringValueDialogComponent,
     ShowGeneratedPasswordDialogComponent,
     StringListComponent,
-    RemoveAltPasswordDialogComponent
+    RemoveAltPasswordDialogComponent,
+    RequestChangeDataQuotaDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -159,6 +162,7 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
       useFactory: apiConfigFactory,
       deps:[StoreService]
     },
+    UserFullNamePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -9,6 +9,7 @@ import {
   AuthzResolverService,
   UsersManagerService
 } from '@perun-web-apps/perun/openapi';
+import { UserFullNamePipe } from '../../../../../admin-gui/src/app/shared/pipes/user-full-name.pipe';
 
 @Component({
   selector: 'perun-web-apps-profile-page',
@@ -48,7 +49,8 @@ export class ProfilePageComponent implements OnInit {
 
       this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe(richUser=>{
         // console.log(richUser.userAttributes.map(elem=>elem.friendlyName));
-        this.fullName = `${richUser.titleBefore?richUser.titleBefore:''} ${richUser.firstName} ${richUser.middleName?richUser.middleName+' ':''}${richUser.lastName}${richUser.titleAfter?' '+richUser.titleAfter:''}`;
+        // this.fullName = `${richUser.titleBefore?richUser.titleBefore:''} ${richUser.firstName} ${richUser.middleName?richUser.middleName+' ':''}${richUser.lastName}${richUser.titleAfter?' '+richUser.titleAfter:''}`;
+        this.fullName = new UserFullNamePipe().transform(richUser);
 
         this.organizationAttribute = richUser.userAttributes.find(att => att.friendlyName === 'organization');
         // @ts-ignore

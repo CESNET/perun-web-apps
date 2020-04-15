@@ -1,0 +1,27 @@
+.column-size{
+  width: 10rem !important;
+  font-weight: bold;
+}
+
+.form-width{
+  width: 70%;
+  overflow: hidden;
+}
+
+.label-width{
+  width: 100%;
+}
+
+.select-width{
+  width: 4rem;
+}
+
+/* To remove the default underline */
+.mat-input-underline.mat-form-field-underline {
+  display: none;
+}
+
+/* To remove the underline ripple */
+.mat-input-ripple.mat-form-field-ripple{
+  display: none;
+}

@@ -22,7 +22,7 @@ export class AddUnixGroupDialogComponent implements OnInit {
   inputControl: FormControl;
 
   ngOnInit() {
-    this.inputControl = new FormControl(false, Validators.required);
+    this.inputControl = new FormControl(null, Validators.required);
   }
 
   onCancel(){
