@@ -28,6 +28,7 @@
                         (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(attribute) : null"
                         [checked]="selection.isSelected(attribute)"
+                        [disabled]="attribute | isVirtualAttribute"
                         [aria-label]="checkboxLabel(attribute)">
           </mat-checkbox>
         </td>

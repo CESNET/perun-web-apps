@@ -1,3 +1,3 @@
 <div>
-  <mat-checkbox [(ngModel)]="attribute.value" (change)="_sendEventToParent()"></mat-checkbox>
+  <mat-checkbox [disabled]="attribute | isVirtualAttribute" [(ngModel)]="attribute.value" (change)="_sendEventToParent()"></mat-checkbox>
 </div>

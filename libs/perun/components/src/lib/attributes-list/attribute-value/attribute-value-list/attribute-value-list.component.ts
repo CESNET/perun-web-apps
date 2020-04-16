@@ -6,6 +6,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AttributeValueListEditDialogComponent } from './attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
 import { AttributeValueListDeleteDialogComponent } from './attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
+import { IsVirtualAttributePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
   selector: 'perun-web-apps-attribute-value-list',
@@ -29,6 +30,7 @@ export class AttributeValueListComponent implements OnInit {
   @Output() sendEventToParent = new EventEmitter();
 
   ngOnInit() {
+    this.removable = ! new IsVirtualAttributePipe().transform(this.attribute);
     if (this.attribute.value === undefined) {
       this.attribute.value = [];
     }
