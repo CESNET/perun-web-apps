@@ -20,6 +20,15 @@ export class ApiInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const apiUrl = this.store.get('api_url');
+    // check if the request is trying to access localization file, if so
+    // disable cache
+    if (req.url.indexOf("i18n") !== -1) {
+      req = req.clone({
+        setHeaders: {
+          'Cache-control': 'no-cache, must-revalidate'
+        }
+      })
+    }
     if (apiUrl !== undefined && req.url.toString().indexOf(apiUrl) !== -1 && !this.authService.isLoggedIn()) {
       const err: RPCError = {
         message: "Your authentication has timed out.",
