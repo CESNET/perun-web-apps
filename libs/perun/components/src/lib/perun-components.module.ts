@@ -37,9 +37,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { AttributeValueListEditDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
 import { AttributeValueListDeleteDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
-import { MatDialogModule } from '@angular/material/dialog';
 import { UserDontExistDialogComponent } from './user-dont-exist-dialog/user-dont-exist-dialog.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -102,8 +101,7 @@ import { UserDontExistDialogComponent } from './user-dont-exist-dialog/user-dont
     AttributeValueMapComponent,
     AttributeValueStringComponent,
     ResourcesListComponent,
-    MenuButtonsFieldComponent,
-    UserDontExistDialogComponent
+    MenuButtonsFieldComponent
   ]
 })
 export class PerunSharedComponentsModule {

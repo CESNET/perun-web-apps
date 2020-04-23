@@ -1336,6 +1336,9 @@
           "NAME": "Name",
           "VALUE": "Value",
           "DESCRIPTION": "Description"
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "Requested user (by ID or external identity) doesn't exist."
         }
       },
       "ORGANIZATIONS": {
