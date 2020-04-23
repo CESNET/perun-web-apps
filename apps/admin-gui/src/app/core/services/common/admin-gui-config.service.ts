@@ -6,7 +6,7 @@ import { AppConfigService, ColorConfig, EntityColorConfig } from '@perun-web-app
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { ServerDownDialogComponent } from '@perun-web-apps/general';
+import { UserDontExistDialogComponent } from '../../../../../../../libs/perun/components/src/lib/user-dont-exist-dialog/user-dont-exist-dialog.component';
 
 
 @Injectable({
@@ -107,14 +107,8 @@ export class AdminGuiConfigService {
   }
 
   private handlePrincipalErr(err: any) {
-    console.log("sdfsdf");
-    this.translate.get('GENERAL.PRINCIPAL.ERROR.TITLE').subscribe(sdf => console.log(sdf));
-    this.dialog.open(ServerDownDialogComponent, {
-      data: {
-        title: this.translate.instant('GENERAL.PRINCIPAL_ERROR.TITLE'),
-        message: this.translate.instant('GENERAL.PRINCIPAL_ERROR.MESSAGE'),
-        action: this.translate.instant('GENERAL.PRINCIPAL_ERROR.ACTION'),
-      },
+    this.translate.get('GENERAL.PRINCIPAL_ERROR.TITLE').subscribe(sdf => console.log(sdf));
+    this.dialog.open(UserDontExistDialogComponent, {
       disableClose: true
     });
     throw err;

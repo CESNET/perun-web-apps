@@ -37,6 +37,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { AttributeValueListEditDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
 import { AttributeValueListDeleteDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
+import { UserDontExistDialogComponent } from './user-dont-exist-dialog/user-dont-exist-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -61,7 +63,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     ReactiveFormsModule,
     MatInputModule,
     MatRippleModule,
-    PerunPipesModule
+    PerunPipesModule,
+    MatDialogModule
   ],
   declarations: [
     VoSelectTableComponent,
@@ -80,7 +83,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     ResourcesListComponent,
     MenuButtonsFieldComponent,
     AttributeValueListEditDialogComponent,
-    AttributeValueListDeleteDialogComponent
+    AttributeValueListDeleteDialogComponent,
+    UserDontExistDialogComponent
   ],
   exports: [
     VoSelectTableComponent,

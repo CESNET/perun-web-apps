@@ -1342,6 +1342,9 @@
             "SUBMIT_BUTTON": "Delete",
             "CANCEL_BUTTON": "Cancel"
           }
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "Requested user (by ID or external identity) doesn't exist."
         }
       },
       "REFRESH_BUTTON": "Refresh"
