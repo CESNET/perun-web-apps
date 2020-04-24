@@ -15,6 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {AttributeValueComponent} from './attribute-value/attribute-value.component';
 import { Attribute } from '@perun-web-apps/perun/openapi';
+import { IsVirtualAttributePipe } from '@perun-web-apps/perun/pipes';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 
 @Component({
@@ -65,6 +66,8 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   exporting = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
+  private isVirtualPipe = new IsVirtualAttributePipe();
+
   ngOnChanges(changes: SimpleChanges) {
     this.dataSource = new MatTableDataSource<Attribute>(this.attributes);
     this.setDataSource();
@@ -84,14 +87,16 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource.data.filter(attribute => !this.isVirtualPipe.transform(attribute)).length;
     return numSelected === numRows;
   }
 
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource.data.forEach(row => {
+        if(!this.isVirtualPipe.transform(row)) this.selection.select(row);
+      });
   }
 
   checkboxLabel(row?: Attribute): string {
@@ -110,7 +115,9 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   }
 
   onValueChange(attribute: Attribute) {
-    this.selection.select(attribute);
+    if(!this.isVirtualPipe.transform(attribute)){
+      this.selection.select(attribute);
+    }
   }
 
   pageChanged(event: PageEvent) {
