@@ -62,6 +62,10 @@ import { RemoveAltPasswordDialogComponent } from './components/dialogs/remove-al
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RequestChangeDataQuotaDialogComponent } from './components/dialogs/request-change-data-quota-dialog/request-change-data-quota-dialog.component';
 import { UserFullNamePipe } from '../../../admin-gui/src/app/shared/pipes/user-full-name.pipe';
+import { UserExtSourcesListComponent } from './components/user-ext-sources-list/user-ext-sources-list.component';
+import { ParseLastAccessPipe } from './pipes/parse-last-access.pipe';
+import { GetMailFromAttributesPipe } from './pipes/get-mail-from-attributes.pipe';
+import { RemoveUserExtSourceDialogComponent } from './components/dialogs/remove-user-ext-source-dialog/remove-user-ext-source-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -109,7 +113,11 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     ShowGeneratedPasswordDialogComponent,
     StringListComponent,
     RemoveAltPasswordDialogComponent,
-    RequestChangeDataQuotaDialogComponent
+    RequestChangeDataQuotaDialogComponent,
+    UserExtSourcesListComponent,
+    ParseLastAccessPipe,
+    GetMailFromAttributesPipe,
+    RemoveUserExtSourceDialogComponent
   ],
   imports: [
     BrowserModule,

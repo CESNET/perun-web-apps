@@ -28,6 +28,13 @@
     "TIMEZONE": "Timezone",
     "CHANGE_EMAIL": "Change"
   },
+  "USER_EXT_SOURCES_LIST": {
+    "MAIL": "Email",
+    "EXT_SOURCE_NAME": "Federated identity",
+    "LOGIN": "Login",
+    "LAST_ACCESS": "Last access",
+    "NO_IDENTITIES": "No external identities found"
+  },
   "SSH_KEYS": {
     "SSH_KEYS_TITLE": "SSH keys",
     "SSH_KEYS_DESCRIPTION": "List of your ssh keys.",

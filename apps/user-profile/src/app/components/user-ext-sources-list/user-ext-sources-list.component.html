@@ -1,0 +1,57 @@
+<div class="card mt-2" [class.hide-table]="exporting"
+     [hidden]="userExtSources.length === 0 || dataSource.filteredData.length === 0">
+  <div class="card-body">
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
+
+    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id"
+           matSortDirection="asc" matSortDisableClear
+           class="w-100">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox color="primary"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="mail" >
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'USER_EXT_SOURCES_LIST.MAIL' | translate}}</th>
+        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.attributes | getMailFromAttributes}}</td>
+      </ng-container>
+      <ng-container matColumnDef="extSourceName" >
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'USER_EXT_SOURCES_LIST.EXT_SOURCE_NAME' | translate}}</th>
+        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.extSource.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="login">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'USER_EXT_SOURCES_LIST.LOGIN' | translate}}</th>
+        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.login}}</td>
+      </ng-container>
+      <ng-container matColumnDef="lastAccess" class="pl-3">
+        <th mat-header-cell *matHeaderCellDef
+            mat-sort-header>{{'USER_EXT_SOURCES_LIST.LAST_ACCESS' | translate}}</th>
+        <td mat-cell *matCellDef="let richUserExtSource">{{richUserExtSource.userExtSource.lastAccess | parseLastAccess}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let userExtSource; columns: displayedColumns;"
+        class="dark-hover-list-item">
+      </tr>
+    </table>
+    <mat-paginator [length]="this.userExtSources.length" [pageSize]="pageSize"
+                   [pageSizeOptions]="[5,10,25]"></mat-paginator>
+  </div>
+</div>
+
+<mat-spinner *ngIf="exporting" class="ml-auto mr-auto"></mat-spinner>
+
+<app-alert *ngIf="userExtSources.length === 0" color="warn">
+  {{'USER_EXT_SOURCES_LIST.NO_IDENTITIES' | translate}}
+</app-alert>

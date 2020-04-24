@@ -1,0 +1,10 @@
+.static-column-size{
+  width: 20px !important;
+}
+
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+}
