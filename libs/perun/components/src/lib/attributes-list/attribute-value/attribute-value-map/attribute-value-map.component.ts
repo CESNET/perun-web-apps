@@ -14,6 +14,9 @@ export class AttributeValueMapComponent implements OnInit {
   @Input()
   attribute: Attribute;
 
+  @Input()
+  readonly = false;
+
   keys: string[] = [];
   values: string[] = [];
 
