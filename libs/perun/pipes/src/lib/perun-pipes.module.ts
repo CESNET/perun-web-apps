@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResourceTagsToStringPipe } from './resource-tags-to-string.pipe';
 import { IsVirtualAttributePipe } from './is-virtual-attribute.pipe';
+import { UserFullNamePipe } from './user-full-name.pipe';
 
 @NgModule({
   declarations: [
     ResourceTagsToStringPipe,
-    IsVirtualAttributePipe
+    IsVirtualAttributePipe,
+    UserFullNamePipe
   ],
   exports: [
     ResourceTagsToStringPipe,
-    IsVirtualAttributePipe
+    IsVirtualAttributePipe,
+    UserFullNamePipe
   ],
   imports: [CommonModule],
 })

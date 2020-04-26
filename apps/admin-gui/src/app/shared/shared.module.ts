@@ -37,7 +37,6 @@ import {SideMenuItemComponent} from './side-menu/side-menu-item/side-menu-item.c
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CreateGroupDialogComponent} from './components/dialogs/create-group-dialog/create-group-dialog.component';
 import {InviteMemberDialogComponent} from './components/dialogs/invite-member-dialog/invite-member-dialog.component';
-import {UserFullNamePipe} from './pipes/user-full-name.pipe';
 import {DeleteGroupDialogComponent} from './components/dialogs/delete-group-dialog/delete-group-dialog.component';
 import {SettingsToggleItemComponent} from './components/settings-toggle-item/settings-toggle-item.component';
 import { ApplicationStatePipe } from './pipes/application-state.pipe';
@@ -153,6 +152,7 @@ import { UserRolesComponent } from './components/user-detail-page/user-settings/
 import { EditAttributeDialogComponent } from './components/dialogs/edit-attribute-dialog/edit-attribute-dialog.component';
 import { UserSettingsAppConfigurationComponent } from './components/user-detail-page/user-settings/user-settings-app-configuration/user-settings-app-configuration.component';
 import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
+import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 
 @NgModule({
   imports: [
@@ -199,7 +199,8 @@ import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
     UiAlertsModule,
     MatBadgeModule,
     PerunSharedComponentsModule,
-    ConfigTableConfigModule
+    ConfigTableConfigModule,
+    PerunPipesModule
   ],
   exports: [
     PerunNavComponent,
@@ -222,7 +223,6 @@ import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
     MatDialogModule,
     MatSelectModule,
     MatSnackBarModule,
-    UserFullNamePipe,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
@@ -287,7 +287,6 @@ import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
     SideMenuItemComponent,
     CreateGroupDialogComponent,
     InviteMemberDialogComponent,
-    UserFullNamePipe,
     DeleteGroupDialogComponent,
     SettingsToggleItemComponent,
     ApplicationStatePipe,

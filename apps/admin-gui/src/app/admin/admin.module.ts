@@ -31,6 +31,7 @@ import { AdminExtSourcesComponent } from './pages/admin-page/admin-ext-sources/a
 import { EditAttributeDefinitionDialogComponent } from '../shared/components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
 import { EntitylessAttributeKeysListComponent } from '../shared/components/entityless-attribute-keys-list/entityless-attribute-keys-list.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
     SharedModule,
     MatTableExporterModule,
     UiAlertsModule,
-    PerunSharedComponentsModule
-  ],
+    PerunSharedComponentsModule,
+    PerunPipesModule
+  ]
 })
 export class AdminModule { }

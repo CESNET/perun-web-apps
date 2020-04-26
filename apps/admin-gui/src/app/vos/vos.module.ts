@@ -79,6 +79,7 @@ import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group
 import { AddExtSourceDialogComponent } from '../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ApplicationListDetailsComponent } from './components/application-list-details/application-list-details.component';
+import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { ApplicationListDetailsComponent } from './components/application-list-d
     MatTableExporterModule,
     SharedModule,
     UiAlertsModule,
-    PerunSharedComponentsModule
+    PerunSharedComponentsModule,
+    PerunPipesModule
   ],
   exports: [
     AttributesListComponent,
