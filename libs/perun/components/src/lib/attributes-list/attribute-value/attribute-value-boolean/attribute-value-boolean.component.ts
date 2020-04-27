@@ -14,6 +14,9 @@ export class AttributeValueBooleanComponent implements OnInit {
   @Input()
   attribute: Attribute;
 
+  @Input()
+  readonly = false;
+
   @Output() sendEventToParent = new EventEmitter();
 
   ngOnInit() {

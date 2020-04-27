@@ -29,8 +29,11 @@ export class AttributeValueListComponent implements OnInit {
 
   @Output() sendEventToParent = new EventEmitter();
 
+  @Input()
+  readonly = false;
+
   ngOnInit() {
-    this.removable = ! new IsVirtualAttributePipe().transform(this.attribute);
+    this.removable = ! new IsVirtualAttributePipe().transform(this.attribute) && !this.readonly;
     if (this.attribute.value === undefined) {
       this.attribute.value = [];
     }

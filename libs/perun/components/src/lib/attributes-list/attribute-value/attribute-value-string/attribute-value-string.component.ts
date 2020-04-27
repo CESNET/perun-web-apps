@@ -14,6 +14,9 @@ export class AttributeValueStringComponent implements OnInit {
   @Input()
   attribute: Attribute;
 
+  @Input()
+  readonly = false;
+
   @Output() sendEventToParent = new EventEmitter();
 
   value: string;

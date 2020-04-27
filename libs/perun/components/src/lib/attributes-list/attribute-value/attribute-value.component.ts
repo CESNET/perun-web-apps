@@ -18,6 +18,9 @@ export class AttributeValueComponent implements OnInit {
   @Input()
   attribute: Attribute;
 
+  @Input()
+  readonly = false;
+
   @Output() sendEventToParent2 = new EventEmitter();
 
   ngOnInit(): void {
