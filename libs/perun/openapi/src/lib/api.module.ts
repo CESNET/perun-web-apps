@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AttributesManagerService } from './api/attributesManager.service';
+import { AuditMessagesManagerService } from './api/auditMessagesManager.service';
 import { AuthzResolverService } from './api/authzResolver.service';
 import { DatabaseManagerService } from './api/databaseManager.service';
 import { ExtSourcesManagerService } from './api/extSourcesManager.service';
@@ -11,6 +12,7 @@ import { FacilitiesManagerService } from './api/facilitiesManager.service';
 import { GroupsManagerService } from './api/groupsManager.service';
 import { MembersManagerService } from './api/membersManager.service';
 import { OwnersManagerService } from './api/ownersManager.service';
+import { RTMessagesManagerService } from './api/rTMessagesManager.service';
 import { RegistrarManagerService } from './api/registrarManager.service';
 import { ResourcesManagerService } from './api/resourcesManager.service';
 import { ServicesManagerService } from './api/servicesManager.service';
@@ -25,6 +27,7 @@ import { VosManagerService } from './api/vosManager.service';
   exports:      [],
   providers: [
     AttributesManagerService,
+    AuditMessagesManagerService,
     AuthzResolverService,
     DatabaseManagerService,
     ExtSourcesManagerService,
@@ -32,6 +35,7 @@ import { VosManagerService } from './api/vosManager.service';
     GroupsManagerService,
     MembersManagerService,
     OwnersManagerService,
+    RTMessagesManagerService,
     RegistrarManagerService,
     ResourcesManagerService,
     ServicesManagerService,

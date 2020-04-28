@@ -930,4 +930,74 @@ export class UsersManagerService {
         );
     }
 
+    /**
+     * Remove user\&#39;s external source. Persistent UserExtSources are not removed unless force param is present and set to true.
+     * @param user id of User
+     * @param userExtSource id of UserExtSource
+     * @param force If true, use force deletion.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public removeUserExtSource(user: number, userExtSource: number, force?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public removeUserExtSource(user: number, userExtSource: number, force?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public removeUserExtSource(user: number, userExtSource: number, force?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public removeUserExtSource(user: number, userExtSource: number, force?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling removeUserExtSource.');
+        }
+        if (userExtSource === null || userExtSource === undefined) {
+            throw new Error('Required parameter userExtSource was null or undefined when calling removeUserExtSource.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (userExtSource !== undefined && userExtSource !== null) {
+            queryParameters = queryParameters.set('userExtSource', <any>userExtSource);
+        }
+        if (force !== undefined && force !== null) {
+            queryParameters = queryParameters.set('force', <any>force);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/usersManager/removeUserExtSource`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
 }
