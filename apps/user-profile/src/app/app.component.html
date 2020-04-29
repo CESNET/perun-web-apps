@@ -1,0 +1,26 @@
+<!--HEADER-->
+<perun-web-apps-header (sidenavToggle)="sidenav.toggle()"></perun-web-apps-header>
+
+<!--SIDE MENU-->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [ngStyle]="{'background': sideMenuBgColor}" mode="side" opened
+               style="width: 200px; height: auto">
+    <perun-web-apps-side-menu style="overflow: hidden"></perun-web-apps-side-menu>
+  </mat-sidenav>
+  <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
+    <div id="content-wrap" style="height: 75vh">
+      <breadcrumb #parent>
+        <span *ngFor="let route of parent.breadcrumbs" class="custom-breadcrumb">
+          <a *ngIf="!route.terminal" [routerLink]="[route.url]" href="" mat-button>{{ route.displayName | translate}}</a>
+          <a *ngIf="route.terminal" mat-button>{{ route.displayName | translate}}</a>
+        </span>
+      </breadcrumb>
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!--FOOTER-->
+<perun-web-apps-footer></perun-web-apps-footer>
+

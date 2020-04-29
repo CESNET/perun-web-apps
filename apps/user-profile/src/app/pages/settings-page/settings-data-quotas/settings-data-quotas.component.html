@@ -1,0 +1,27 @@
+<h3>{{'DATA_QUOTAS.TITLE'|translate}}</h3>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMembers(vo)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{vo.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let resource of resources" (opened)="getResAttributes(resource.id)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{resource.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="defaultQuota">
+          <p><strong>{{'DATA_QUOTAS.QUOTA'|translate}}</strong> {{quotasMarkup}}</p>
+          <p style="color: gray">{{'DATA_QUOTAS.QUOTA_INFO'|translate}}</p>
+          <button mat-flat-button color="primary" (click)="requestChangeQuota(vo, resource)">{{'DATA_QUOTAS.CHANGE'|translate}}</button>
+        </div>
+        <p *ngIf="!defaultQuota">{{'DATA_QUOTAS.NO_QUOTAS'|translate}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </mat-expansion-panel>
+</mat-accordion>

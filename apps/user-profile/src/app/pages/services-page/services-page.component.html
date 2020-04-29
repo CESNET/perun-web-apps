@@ -1,0 +1,10 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMemberData(vo)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{vo.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <perun-web-apps-resources-list [resources]="resources" [hideColumns]="hiddenColumns"></perun-web-apps-resources-list>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -68,6 +68,12 @@
     "perun-facility-services-config": {
       "tags": []
     },
+    "user-profile": {
+      "tags": []
+    },
+    "user-profile-e2e": {
+      "tags": []
+    },
     "config-table-config": {
       "tags": []
     },
