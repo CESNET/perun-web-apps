@@ -65,7 +65,7 @@ import { UserExtSourcesListComponent } from './components/user-ext-sources-list/
 import { ParseLastAccessPipe } from './pipes/parse-last-access.pipe';
 import { GetMailFromAttributesPipe } from './pipes/get-mail-from-attributes.pipe';
 import { RemoveUserExtSourceDialogComponent } from './components/dialogs/remove-user-ext-source-dialog/remove-user-ext-source-dialog.component';
-import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { PerunPipesModule, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -155,7 +155,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     MatSortModule,
     MatCardModule,
     SharedModule,
-    ClipboardModule
+    ClipboardModule,
+    PerunPipesModule
   ],
   providers: [
     CustomIconService,
