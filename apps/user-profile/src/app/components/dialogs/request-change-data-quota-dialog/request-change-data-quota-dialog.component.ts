@@ -24,12 +24,12 @@ export class RequestChangeDataQuotaDialogComponent implements OnInit {
   ) {
   }
 
-  resource: string = '';
-  currentQuota: string = '';
+  resource = '';
+  currentQuota = '';
   reasonControl: FormControl;
   newValueControl: FormControl;
   units: string[] = ['MiB', 'GiB', 'TiB'];
-  selectedUnit: string = 'GiB';
+  selectedUnit = 'GiB';
 
   ngOnInit(): void {
     this.resource = this.data.resource.name;
@@ -45,7 +45,6 @@ export class RequestChangeDataQuotaDialogComponent implements OnInit {
   onSubmit() {
     const subject = 'QUOTA: Change request';
     const name = new UserFullNamePipe().transform(this.data.user);
-    // text: "QUOTA CHANGE REQUEST↵ ↵ User: Martin Kostka (user ID: 73916)↵ VO: VO_cuni_lf3 / 3. lékařská fakulta Univerzity Karlovy (vo ID: 2841)↵ Resource: du4:tape_tape:backup:cuni_lf3 (resource ID: 10964)↵ Data quota↵ Requested quota: 5G↵ Reason: a↵ ↵ ↵ -------------------------------------↵ Sent from Perun GUI"
     const text = `QUOTA CHANGE REQUEST↵ ↵ User: ${name} (user ID: ${this.data.user.id})↵ VO: ${this.data.vo.shortName} / ${this.data.vo.name} (vo ID: ${this.data.vo.id})↵ Resource: ${this.data.resource.name} (resource ID: ${this.data.resource.id})↵ Data quota↵ Requested quota: ${this.newValueControl.value}↵ Reason: ${this.reasonControl.value}↵ ↵ ↵ -------------------------------------↵ Sent from Perun GUI`;
 
     this.rtMessagesService.sentMessageToRTWithQueue('', subject, text).subscribe(() =>{

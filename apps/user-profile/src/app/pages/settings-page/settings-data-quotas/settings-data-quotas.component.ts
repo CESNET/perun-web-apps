@@ -31,7 +31,7 @@ export class SettingsDataQuotasComponent implements OnInit {
   resources: RichResource[] = [];
   currentQuota: string;
   defaultQuota: string;
-  quotasMarkup: string = '';
+  quotasMarkup = '';
 
   ngOnInit() {
     this.user = this.store.getPerunPrincipal().user;
@@ -53,14 +53,14 @@ export class SettingsDataQuotasComponent implements OnInit {
     this.attributesManagerService.getResourceAttributes(id).subscribe(atts => {
       let quotaAttribute = atts.find(att => att.friendlyName === 'dataQuotas');
       if (quotaAttribute && quotaAttribute.value) {
-        let keys = Object.keys(quotaAttribute.value);
+        const keys = Object.keys(quotaAttribute.value);
         this.currentQuota = quotaAttribute.value[keys[0]];
       } else {
         this.currentQuota = '';
       }
       quotaAttribute = atts.find(att => att.friendlyName === 'defaultDataQuotas');
       if (quotaAttribute) {
-        let keys = Object.keys(quotaAttribute.value);
+        const keys = Object.keys(quotaAttribute.value);
         this.defaultQuota = quotaAttribute.value[keys[0]];
       } else {
         this.defaultQuota = '';

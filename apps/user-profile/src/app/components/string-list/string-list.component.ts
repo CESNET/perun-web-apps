@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './string-list.component.html',
   styleUrls: ['./string-list.component.scss']
 })
-export class StringListComponent implements OnChanges {
+export class StringListComponent implements OnChanges, AfterViewInit {
 
   constructor() {
   }
@@ -21,10 +21,10 @@ export class StringListComponent implements OnChanges {
   selection = new SelectionModel<string>(false, []);
 
   @Input()
-  alertText: string = '';
+  alertText = '';
 
   @Input()
-  headerColumnText: string = '';
+  headerColumnText = '';
 
   private sort: MatSort;
 

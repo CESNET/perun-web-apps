@@ -25,7 +25,7 @@ export class PrivacyPageComponent implements OnInit {
   userId: number;
   user: RichUser;
   attributes: Attribute[] = [];
-  username: string = '';
+  username = '';
 
   ngOnInit() {
     this.userId = this.storage.getPerunPrincipal().userId;

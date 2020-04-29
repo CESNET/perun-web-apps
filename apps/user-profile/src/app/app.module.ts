@@ -55,7 +55,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
-import { SharedModule } from '../../../admin-gui/src/app/shared/shared.module';
 import { ShowGeneratedPasswordDialogComponent } from './components/dialogs/show-generated-password-dialog/show-generated-password-dialog.component';
 import { StringListComponent } from './components/string-list/string-list.component';
 import { RemoveAltPasswordDialogComponent } from './components/dialogs/remove-alt-password-dialog/remove-alt-password-dialog.component';
@@ -154,7 +153,6 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     MatProgressSpinnerModule,
     MatSortModule,
     MatCardModule,
-    SharedModule,
     ClipboardModule,
     PerunPipesModule
   ],
