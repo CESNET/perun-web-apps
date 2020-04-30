@@ -111,6 +111,11 @@ export class CustomIconService {
       url: 'assets/img/PerunWebImages/external_sources-white.svg',
       name: 'perun-external-sources'
     },
+    // TESTING PURPOSES
+    {
+      url: 'assets/img/settings1-blue.svg',
+      name: 'settings-blue'
+    },
   ];
 
   registerPerunRefreshIcon() {

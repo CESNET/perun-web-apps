@@ -1,0 +1,201 @@
+{
+  "MENU_ITEMS": {
+    "PROFILE": "Profile",
+    "IDENTITIES": "Identities",
+    "SERVICES": "Services",
+    "GROUPS": "Groups",
+    "VOS": "Organizations",
+    "PRIVACY": "Privacy",
+    "SETTINGS": "Settings"
+  },
+  "SETTINGS": {
+    "ALTERNATIVE_PASSWORDS": "Alternative passwords",
+    "DATA_QUOTAS": "Data quotas",
+    "MAILING_LISTS": "Mailing lists",
+    "PREFERRED_SHELLS": "Preferred shells",
+    "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group",
+    "SAMBA_PASSWORD": "Samba password",
+    "SSH_KEYS": "SSH keys"
+  },
+  "GROUPS": {
+    "TITLE": "Groups"
+  },
+  "PROFILE_PAGE": {
+    "NAME": "Name",
+    "ORGANIZATION": "Organization",
+    "PREFERRED_LANGUAGE": "Preferred language",
+    "EMAIL": "E-mail",
+    "TIMEZONE": "Timezone",
+    "CHANGE_EMAIL": "Change"
+  },
+  "USER_EXT_SOURCES_LIST": {
+    "MAIL": "Email",
+    "EXT_SOURCE_NAME": "Federated identity",
+    "LOGIN": "Login",
+    "LAST_ACCESS": "Last access",
+    "NO_IDENTITIES": "No external identities found"
+  },
+  "SSH_KEYS": {
+    "SSH_KEYS_TITLE": "SSH keys",
+    "SSH_KEYS_DESCRIPTION": "List of your ssh keys.",
+    "ADMIN_SSH_KEYS_TITLE": "Admin SSH keys",
+    "ADMIN_SSH_KEYS_DESCRIPTION": "List of your ssh keys for root access.",
+    "NEW_KEY": "Add new key",
+    "REMOVE_KEY": "Remove selected key",
+    "REMOVE_DIALOG_TITLE": "Remove ssh key",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed.",
+    "HEADER_COLUMN": "Public part of ssh key"
+  },
+  "SAMBA_PASSWORD": {
+    "INPUT_PLACEHOLDER": "Enter new password",
+    "SET_PASSWORD": "Set password"
+  },
+  "PREFERRED_UNIX_GROUP_NAMES": {
+    "TITLE": "Preferred unix group names",
+    "NEW_BUTTON": "New",
+    "REMOVE_BUTTON": "Remove",
+    "REMOVE_DIALOG_TITLE": "Remove preferred unix group name",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred unix group names will be removed.",
+    "HEADER_COLUMN": "Name"
+  },
+  "PREFERRED_SHELLS": {
+    "TITLE": "Preferred shells",
+    "NEW_BUTTON": "New",
+    "REMOVE_BUTTON": "Remove",
+    "REMOVE_DIALOG_TITLE": "Remove preferred shells",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed.",
+    "DESCRIPTION": "List of preferred shells (ordered from the most preferred to least) is used to determine your shell on provided resources. If none of preferred shells is available on resource (or no preferred shell is set), resource`s default is used."
+  },
+  "ALT_PASSWORDS": {
+    "TITLE_GENERATE": "Generate new alternative password",
+    "EXAMPLE_DESCRIPTIONS": "Examples of password descriptions: “email on mobile phone” or “teleconferences on tablet”.",
+    "TITLE_PASSWORDS": "Your alternative passwords",
+    "INPUT_PLACEHOLDER": "Password description",
+    "REMOVE": "Remove",
+    "GENERATE": "Generate",
+    "HEADER_COLUMN":"Description"
+  },
+  "DATA_QUOTAS": {
+    "TITLE": "Data quotas",
+    "QUOTA": "Data quota: ",
+    "CHANGE": "Change",
+    "QUOTA_INFO": "Quotas are using \"soft limit : hard limit\" notation and are bound to specific volume.",
+    "NO_QUOTAS": "No assigned data quotas"
+  },
+  "DIALOGS": {
+    "CHANGE_EMAIL": {
+      "TITLE": "Change email",
+      "INPUT_PLACEHOLDER": "New email",
+      "CANCEL": "Cancel",
+      "CHANGE": "Change"
+    },
+    "ADD_SSH": {
+      "TITLE": "Add new ssh key",
+      "INPUT_PLACEHOLDER": "Begins with 'ssh-rsa', 'ssh-ed25519', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384' or 'ecdsa-sha2-nistp521'.",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "ADD_UNIX_GROUP": {
+      "TITLE": "Add new preferred unix group name",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "REMOVE_STRING_VALUE": {
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "REMOVE_ALT_PASSWORD": {
+      "TITLE": "Remove alternative password",
+      "DESCRIPTION": "Alternative password with following description will be removed",
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "SHOW_PASSWORD": {
+      "TITLE": "Your generated alternative password is",
+      "LABEL": "Please copy the password now. It will not be shown again.",
+      "CLOSE": "Close",
+      "COPY": "Copy"
+    },
+    "REQUEST_DATA_QUOTA_CHANGE": {
+      "TITLE": "Data quota change request",
+      "RESOURCE": "Resource:",
+      "CURRENT_QUOTA": "Current quota:",
+      "REQUESTED_QUOTA": "Requested quota:",
+      "REASON": "Reason:",
+      "SEND": "Send",
+      "CANCEL": "Cancel"
+    }
+  },
+  "ALERTS": {
+    "NO_SSH_KEYS": "No SSH keys found",
+    "NO_SAMBA": "You don't have password for SAMBA yet.",
+    "SAMBA_EXISTS": "You already have password for SAMBA. You can change it by setting new password.",
+    "NO_PREFERRED_UNIX_GROUPS": "No preferred group names for selected namespace found",
+    "NO_ALT_PASSWORDS": "No alternative passwords found"
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "COMPONENTS": {
+        "GROUPS_LIST": {
+          "TABLE_GROUP_ID": "Id",
+          "TABLE_VO_NAME": "Vo",
+          "TABLE_GROUP_NAME": "Name",
+          "TABLE_SEARCH": "Filter by name, description or ID",
+          "TABLE_GROUP_DESCRIPTION": "Description"
+        },
+        "GROUP_MENU": {
+          "MOVE": "Move group",
+          "RENAME": "Update name/description"
+        },
+        "VO_SELECT_TABLE": {
+          "ID": "Id",
+          "NAME": "Name",
+          "RECENT": "Recently viewed"
+        },
+        "RESOURCES_LIST": {
+          "TITLE": "Resources",
+          "DELETE": "Remove selected",
+          "TABLE_RESOURCE_ID": "id",
+          "TABLE_RESOURCE_NAME": "Name",
+          "TABLE_FACILITY_NAME": "Facility name",
+          "TABLE_RESOURCE_TAGS": "Tags",
+          "TABLE_SEARCH": "Filter by name, description or ID",
+          "TABLE_RESOURCE_DESCRIPTION": "Description",
+          "NO_RESOURCES_WARNING": "No resources assigned."
+        },
+        "ATTRIBUTE_VALUE_LIST": {
+          "EDIT_DIALOG": {
+            "TITLE": "Edit attribue value",
+            "SUBMIT_BUTTON": "Submit",
+            "CANCEL_BUTTON": "Cancel"
+          },
+          "DELETE_DIALOG": {
+            "TITLE": "Delete attribue value",
+            "DESCRIPTION": "Do you really want to delete this attribute list value from list?",
+            "SUBMIT_BUTTON": "Delete",
+            "CANCEL_BUTTON": "Cancel"
+          }
+        }
+      },
+      "ORGANIZATIONS": {
+        "TITLE": "User organizations",
+        "FILTER": "Filter by name or ID",
+        "IS_ADMIN": "Organizations where you are admin",
+        "IS_MEMBER": "Organizations where you are member"
+      },
+      "GROUPS": {
+        "MEMBER_GROUPS": "Member groups",
+        "ADMINS_GROUPS": "Groups where user is admin"
+      },
+      "REFRESH_BUTTON": "Refresh"
+    },
+    "UI": {
+      "ALERTS": {
+        "NO_GROUPS": "No groups found.",
+        "NO_FILTER_RESULTS_ALERT": "No results match given search criteria."
+      }
+    }
+  }
+}

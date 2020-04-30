@@ -279,7 +279,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     CreateResourceDialogComponent,
     ExtSourcesListComponent,
     ExtSourceTypePipe,
-    ConfigTableConfigModule
+    ConfigTableConfigModule,
+    SideMenuRootItemComponent
   ],
   declarations: [
     PerunNavComponent,

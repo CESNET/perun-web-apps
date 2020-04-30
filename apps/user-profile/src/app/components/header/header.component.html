@@ -1,0 +1,12 @@
+<mat-toolbar [ngStyle]="{'background': bgColor}">
+
+  <button (click)="onToggleSidenav()" [ngStyle]="{'color': iconColor}" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <a [innerHTML]="logo" routerLink="/profile"></a>
+
+  <p [ngStyle]="{'color': textColor}" class="ml-3 mt-auto mb-auto">{{label}}</p>
+</mat-toolbar>
+
+

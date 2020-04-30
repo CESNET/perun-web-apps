@@ -1,0 +1,19 @@
+<mat-accordion>
+  <mat-expansion-panel (opened)="getUserData()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{'USER INFORMATION' | translate}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <perun-web-apps-attributes-list [attributes]="attributes"></perun-web-apps-attributes-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMemberData(vo)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{'DATA FOR ' | translate}}{{vo.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <perun-web-apps-attributes-list [attributes]="attributes"></perun-web-apps-attributes-list>
+  </mat-expansion-panel>
+</mat-accordion>
