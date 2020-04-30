@@ -167,7 +167,7 @@
         },
         "ATTRIBUTE_VALUE_LIST": {
           "EDIT_DIALOG": {
-            "TITLE": "Edit attribue value",
+            "TITLE": "Edit attribute value",
             "SUBMIT_BUTTON": "Submit",
             "CANCEL_BUTTON": "Cancel"
           },
@@ -177,6 +177,12 @@
             "SUBMIT_BUTTON": "Delete",
             "CANCEL_BUTTON": "Cancel"
           }
+        },
+        "ATTRIBUTES_LIST": {
+          "ID": "Id",
+          "NAME": "Name",
+          "VALUE": "Value",
+          "DESCRIPTION": "Description"
         }
       },
       "ORGANIZATIONS": {

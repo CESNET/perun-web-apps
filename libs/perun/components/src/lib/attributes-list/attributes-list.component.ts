@@ -63,6 +63,12 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   @Output()
   page = new EventEmitter<PageEvent>();
 
+  @Input()
+  readonly = false;
+
+  @Input()
+  hiddenColumns: string[] = [];
+
   exporting = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
@@ -78,6 +84,7 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   }
 
   setDataSource() {
+    this.displayedColumns = this.displayedColumns.filter(x => !this.hiddenColumns.includes(x));
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

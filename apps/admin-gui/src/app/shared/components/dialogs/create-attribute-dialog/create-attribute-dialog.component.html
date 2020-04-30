@@ -1,7 +1,7 @@
 <div class="{{data.style}}">
   <div mat-dialog-title>
     <h1 class="page-subtitle">{{'DIALOGS.CREATE_ATTRIBUTE.SET_NEW' | translate}}</h1>
-    <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'SHARED.COMPONENTS.ATTRIBUTES_LIST.FILTER'"
+    <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.FILTER'"
                                      class="font-size-1rem"></perun-web-apps-immediate-filter>
     <app-alert class="ml-3 font-size-1rem" *ngIf="showError" color="error">
       {{'DIALOGS.CREATE_ATTRIBUTE.ERROR_EMPTY_VALUE' | translate}}
