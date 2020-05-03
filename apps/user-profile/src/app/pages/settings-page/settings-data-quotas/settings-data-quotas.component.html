@@ -1,6 +1,6 @@
 <h3>{{'DATA_QUOTAS.TITLE'|translate}}</h3>
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMembers(vo)">
+  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMembersResources(vo)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{vo.name}}
