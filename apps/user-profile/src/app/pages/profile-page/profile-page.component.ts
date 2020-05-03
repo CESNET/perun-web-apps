@@ -63,6 +63,7 @@ export class ProfilePageComponent implements OnInit {
         this.languageAttribute = richUser.userAttributes.find(att => att.friendlyName === 'preferredLanguage');
         // @ts-ignore
         this.currentLang = this.languageAttribute.value;
+        this.translateService.use(this.currentLang);
 
         this.timezoneAttribute = richUser.userAttributes.find(att => att.friendlyName === 'timezone');
         // @ts-ignore

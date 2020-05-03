@@ -9,10 +9,18 @@
     "oauth_redirect_uri": "http://gui-dev.org/api-callback"
   },
   "consolidator_base_url": "https://perun-dev.cesnet.cz/",
-  "custom_menu_labels": {
-    "CUSTOM_IDENTITIES_LABEL_cs": "just idea placeholder",
-    "CUSTOM_IDENTITIES_LABEL_en": "same here"
-  },
+  "custom_labels": [
+    {
+      "label": "PREFERRED_SHELLS.TITLE",
+      "en": "PREF SHELLS",
+      "cz": "pref shely cesky"
+    },
+    {
+      "label": "MENU_ITEMS.PROFILE",
+      "en": "profile?",
+      "cz": "profile po cesky"
+    }
+  ],
   "header_label": "Generic user profile",
   "preferred_unix_group_names": [
     "einfra",

@@ -65,6 +65,7 @@ import { ParseLastAccessPipe } from './pipes/parse-last-access.pipe';
 import { GetMailFromAttributesPipe } from './pipes/get-mail-from-attributes.pipe';
 import { RemoveUserExtSourceDialogComponent } from './components/dialogs/remove-user-ext-source-dialog/remove-user-ext-source-dialog.component';
 import { PerunPipesModule, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { CustomTranslatePipe } from './pipes/custom-translate.pipe';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -116,7 +117,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     UserExtSourcesListComponent,
     ParseLastAccessPipe,
     GetMailFromAttributesPipe,
-    RemoveUserExtSourceDialogComponent
+    RemoveUserExtSourceDialogComponent,
+    CustomTranslatePipe
   ],
   imports: [
     BrowserModule,
