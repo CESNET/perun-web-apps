@@ -28,7 +28,7 @@
       <perun-web-apps-groups-list
         (page)="pageChanged($event)"
         [pageSize]="pageSize"
-        [inDialog]="true"
+        [disableRouting]="true"
         [hideColumns]="['menu', 'vo']"
         [selection]="selection"
         [groups]="groups"

@@ -39,6 +39,8 @@ export class ResourcesListComponent implements AfterViewInit, OnChanges {
   filterValue: string;
   @Input()
   pageSize = 10;
+  @Input()
+  disableRouting = false;
 
   @Output()
   page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();

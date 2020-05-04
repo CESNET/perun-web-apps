@@ -51,8 +51,8 @@
       <tr
         mat-row
         *matRowDef="let resource; columns: displayedColumns;"
-        [routerLink]="['/facilities', resource.facilityId, 'resources', resource.id]"
-        class="dark-hover-list-item">
+        [class.disable-outline]="disableRouting"
+        [routerLink]="disableRouting ? null : ['/facilities', resource.facilityId, 'resources', resource.id]">
       </tr>
     </table>
     <mat-paginator
