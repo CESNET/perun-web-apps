@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { InitAuthService, StoreService } from '@perun-web-apps/perun/services';
 import { AppConfigService, ColorConfig, EntityColorConfig } from '@perun-web-apps/config';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
-import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +12,7 @@ export class UserProfileConfigService {
     private initAuthService: InitAuthService,
     private appConfigService: AppConfigService,
     private store: StoreService,
-    private authzSevice: AuthzResolverService,
-    // private translateService: TranslateService,
-    // private attributesManagerService
+    private authzSevice: AuthzResolverService
   ) {}
 
   entityColorConfigs: EntityColorConfig[] = [
@@ -48,8 +45,6 @@ export class UserProfileConfigService {
       .then(() => this.appConfigService.initializeColors(this.entityColorConfigs, this.colorConfigs))
       .then(() => this.initAuthService.authenticateUser())
       .then(() => this.initAuthService.loadPrincipal())
-      // .then(() => this.setLanguage())
-
   }
 
   /**
@@ -61,12 +56,4 @@ export class UserProfileConfigService {
       resolve();
     });
   }
-
-  // private setLanguage() {
-  //   this.attributesManagerService.getUserAttributeByName(this.store.getPerunPrincipal().userId, 'preferredLanguage').subscribe(prefLang =>{
-  //     if(prefLang && prefLang.value){
-  //       this.translateService.use(prefLang.value);
-  //     }
-  //   });
-  // }
 }
