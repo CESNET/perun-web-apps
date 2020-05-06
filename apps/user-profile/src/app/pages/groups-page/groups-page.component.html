@@ -7,8 +7,7 @@
   <perun-web-apps-groups-list
     [groups]="membersGroups"
     [hideColumns]="['select', 'menu']"
-    [inDialog]="false"
-    [disableMembers]="false"
+    [disableRouting]="true"
     [pageSize]="5"
   ></perun-web-apps-groups-list>
 </div>
@@ -21,8 +20,7 @@
     <perun-web-apps-groups-list
       [groups]="adminsGroups"
       [hideColumns]="['select', 'menu']"
-      [inDialog]="false"
-      [disableMembers]="false"
+      [disableRouting]="true"
       [pageSize]="5"
     ></perun-web-apps-groups-list>
   </div>

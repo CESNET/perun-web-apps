@@ -36,9 +36,6 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   hideColumns: string[] = [];
 
   @Input()
-  inDialog: boolean;
-
-  @Input()
   disableMembers: boolean;
 
   @Input()
@@ -49,6 +46,9 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
 
   @Input()
   disableHeadCheckbox: boolean;
+
+  @Input()
+  disableRouting = false;
 
   @Output()
   page = new EventEmitter<PageEvent>();
