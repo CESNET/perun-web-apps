@@ -1,1 +1,10 @@
-<p>settings-mailing-lists works!</p>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMailingLists(vo)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{vo.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <perun-web-apps-string-list [values]="mailingLists" [alertText]=""></perun-web-apps-string-list>
+  </mat-expansion-panel>
+</mat-accordion>

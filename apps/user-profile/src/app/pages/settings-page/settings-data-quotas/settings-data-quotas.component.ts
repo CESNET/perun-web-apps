@@ -41,10 +41,16 @@ export class SettingsDataQuotasComponent implements OnInit {
     });
   }
 
-  getMembers(vo: Vo) {
+  getMembersResources(vo: Vo) {
     this.membersService.getMemberByUser(vo.id, this.user.id).subscribe(member => {
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources => {
-        this.resources = resources;
+        resources.forEach(resource =>{
+          this.attributesManagerService.getResourceAttributes(resource.id).subscribe(resAtts =>{
+            if(resAtts.find(att => att.friendlyName === 'defaultDataQuotas')){
+              this.resources.push(resource)
+            }
+          });
+        });
       });
     });
   }
