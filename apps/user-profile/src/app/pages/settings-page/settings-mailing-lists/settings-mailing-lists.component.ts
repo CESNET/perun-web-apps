@@ -52,10 +52,9 @@ export class SettingsMailingListsComponent implements OnInit {
     this.attributesManagerService.getRequiredAttributesMemberResource(memberId, resourceId, true).subscribe(atts => {
       console.log(atts);
       let mailingListAtt = atts.find(att => att.friendlyName === 'optOutMailingList');
-      if (mailingListAtt && mailingListAtt.value) {
+      if (mailingListAtt) {
         // @ts-ignore
         this.mailingLists.push(mailingListAtt.value);
-        console.log(mailingListAtt);
       }
     });
   }
