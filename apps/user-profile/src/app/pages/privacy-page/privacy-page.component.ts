@@ -26,6 +26,7 @@ export class PrivacyPageComponent implements OnInit {
   user: RichUser;
   attributes: Attribute[] = [];
   username = '';
+  hiddenColumns = ['select', 'id'];
 
   ngOnInit() {
     this.userId = this.storage.getPerunPrincipal().userId;

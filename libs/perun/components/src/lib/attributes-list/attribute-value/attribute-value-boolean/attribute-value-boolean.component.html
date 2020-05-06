@@ -1,3 +1,4 @@
 <div>
-  <mat-checkbox [disabled]="(attribute | isVirtualAttribute) || readonly" [(ngModel)]="attribute.value" (change)="_sendEventToParent()"></mat-checkbox>
+  <mat-checkbox *ngIf="!(attribute | isVirtualAttribute) && !readonly" [(ngModel)]="attribute.value" (change)="_sendEventToParent()"></mat-checkbox>
+  <mat-label *ngIf="(attribute | isVirtualAttribute) || readonly">{{attribute.value}}</mat-label>
 </div>

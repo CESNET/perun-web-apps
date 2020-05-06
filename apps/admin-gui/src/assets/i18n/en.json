@@ -1222,13 +1222,6 @@
       "RESOURCES_TAGS_LIST": {
         "EDIT_SUCCESS": "Resource tag was successfully edited."
       },
-      "ATTRIBUTES_LIST": {
-        "FILTER": "Filter by id, name, value or description",
-        "ID": "id",
-        "NAME": "Name",
-        "VALUE": "Value",
-        "DESCRIPTION": "Description"
-      },
       "USERS_LIST": {
         "TABLE_SEARCH": "Filter by name or ID"
       },
@@ -1326,7 +1319,7 @@
         },
         "ATTRIBUTE_VALUE_LIST": {
           "EDIT_DIALOG": {
-            "TITLE": "Edit attribue value",
+            "TITLE": "Edit attribute value",
             "SUBMIT_BUTTON": "Submit",
             "CANCEL_BUTTON": "Cancel"
           },
@@ -1337,8 +1330,12 @@
             "CANCEL_BUTTON": "Cancel"
           }
         },
-        "USER_DONT_EXIST": {
-          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+        "ATTRIBUTES_LIST": {
+          "FILTER": "Filter by id, name, value or description",
+          "ID": "Id",
+          "NAME": "Name",
+          "VALUE": "Value",
+          "DESCRIPTION": "Description"
         }
       },
       "ORGANIZATIONS": {
