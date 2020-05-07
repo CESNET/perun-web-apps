@@ -42,6 +42,7 @@ export class SettingsDataQuotasComponent implements OnInit {
   }
 
   getMembersResources(vo: Vo) {
+    this.resources = [];
     this.membersService.getMemberByUser(vo.id, this.user.id).subscribe(member => {
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources => {
         resources.forEach(resource =>{

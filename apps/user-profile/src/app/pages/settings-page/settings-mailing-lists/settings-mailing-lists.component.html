@@ -1,3 +1,4 @@
+<h2>{{'OPT_OUT_MAILING_LISTS.TITLE' | translate}}</h2>
 <mat-accordion>
   <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMailingLists(vo)">
     <mat-expansion-panel-header>
@@ -5,6 +6,20 @@
         {{vo.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <perun-web-apps-string-list [values]="mailingLists" [alertText]=""></perun-web-apps-string-list>
+
+    <app-alert *ngIf="resources.length === 0" color="warn">{{'OPT_OUT_MAILING_LISTS.NO_MAILING_LISTS_ALERT' | translate}}</app-alert>
+    <mat-accordion *ngIf="resources.length">
+      <mat-expansion-panel *ngFor="let resource of resources" (opened)="getOptOutAttribute(resource)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{resource.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{'OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | translate}}</p>
+        <mat-checkbox [checked]="optOutAttribute && optOutAttribute.value !== null" (change)="setOptOut()"></mat-checkbox>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
   </mat-expansion-panel>
 </mat-accordion>

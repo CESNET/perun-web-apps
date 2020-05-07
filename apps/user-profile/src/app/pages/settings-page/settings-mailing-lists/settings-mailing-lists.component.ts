@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AttributesManagerService,
+  Attribute,
+  AttributesManagerService, InputSetMemberResourceAttribute,
   MembersManagerService,
   ResourcesManagerService,
   RichResource,
@@ -28,6 +29,9 @@ export class SettingsMailingListsComponent implements OnInit {
   vos: Vo[] = [];
   resources: RichResource[] = [];
   mailingLists: string[] = [];
+  optOuts:InputSetMemberResourceAttribute[] = [];
+  optOutAttribute: Attribute;
+  index: number;
 
   ngOnInit() {
     this.user = this.store.getPerunPrincipal().user;
@@ -38,24 +42,36 @@ export class SettingsMailingListsComponent implements OnInit {
   }
 
   getMailingLists(vo: Vo) {
+    this.resources = [];
     this.membersService.getMemberByUser(vo.id, this.user.id).subscribe(member => {
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources => {
-        this.resources = resources;
-        resources.forEach(res => {
-          this.getResourceAttributes(member.id, res.id);
+        resources.forEach(resource =>{
+          this.attributesManagerService.getRequiredAttributesMemberResource(member.id, resource.id).subscribe(resAtts =>{
+            const attribute = resAtts.find(att => att.friendlyName === 'optOutMailingList');
+            if(attribute){
+              this.optOuts.push({
+                resource: resource.id,
+                member: member.id,
+                attribute: attribute
+              });
+              this.resources.push(resource)
+            }
+          });
         });
       });
     });
   }
 
-  getResourceAttributes(memberId: number, resourceId: number) {
-    this.attributesManagerService.getRequiredAttributesMemberResource(memberId, resourceId, true).subscribe(atts => {
-      console.log(atts);
-      let mailingListAtt = atts.find(att => att.friendlyName === 'optOutMailingList');
-      if (mailingListAtt) {
-        // @ts-ignore
-        this.mailingLists.push(mailingListAtt.value);
-      }
-    });
+  getOptOutAttribute(resource: RichResource) {
+    this.index = this.resources.indexOf(resource);
+    this.optOutAttribute = this.optOuts[this.index].attribute;
+  }
+
+  setOptOut() {
+    // @ts-ignore
+    this.optOuts[this.index].attribute.value = this.optOutAttribute.value ? null : 'true';
+    this.attributesManagerService.setMemberResourceAttribute(this.optOuts[this.index]).subscribe(() => {
+      console.log('done')
+    })
   }
 }

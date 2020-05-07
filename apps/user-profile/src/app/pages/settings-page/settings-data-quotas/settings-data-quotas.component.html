@@ -6,8 +6,8 @@
         {{vo.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-
-    <mat-accordion>
+    <app-alert *ngIf="resources.length === 0" color="warn">{{'DATA_QUOTAS.NO_QUOTAS'|translate}}</app-alert>
+    <mat-accordion *ngIf="resources.length">
       <mat-expansion-panel *ngFor="let resource of resources" (opened)="getResAttributes(resource.id)">
         <mat-expansion-panel-header>
           <mat-panel-title>

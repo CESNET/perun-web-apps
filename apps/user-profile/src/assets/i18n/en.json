@@ -82,6 +82,11 @@
     "QUOTA_INFO": "Quotas are using \"soft limit : hard limit\" notation and are bound to specific volume.",
     "NO_QUOTAS": "No assigned data quotas"
   },
+  "OPT_OUT_MAILING_LISTS": {
+    "TITLE": "Opt out mailing lists",
+    "OPT_OUT_LABEL": "Exclude me from this mailing list",
+    "NO_MAILING_LISTS_ALERT": "You have no mailing lists assigned under this virtual organization"
+  },
   "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
