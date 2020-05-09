@@ -76,10 +76,10 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
-import { AddExtSourceDialogComponent } from '../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ApplicationListDetailsComponent } from './components/application-list-details/application-list-details.component';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
+import { MemberSettingsResourceAttributesComponent } from './pages/member-detail-page/member-settings/member-settings-resource-attributes/member-settings-resource-attributes.component';
 
 @NgModule({
   imports: [
@@ -149,7 +149,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     NotificationListComponent,
     VoSettingsExtsourcesComponent,
     GroupSettingsRelationsComponent,
-    ApplicationListDetailsComponent
+    ApplicationListDetailsComponent,
+    MemberSettingsResourceAttributesComponent
   ],
 })
 export class VosModule {

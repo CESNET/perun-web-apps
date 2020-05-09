@@ -50,6 +50,12 @@ export class MemberSettingsOverviewComponent implements OnInit {
         url: `/organizations/${this.vo.id}/members/${this.member.id}/settings/attributes`,
         label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
         style: 'member-btn'
+      },
+      {
+        cssIcon: 'perun-attributes',
+        url: `/organizations/${this.vo.id}/members/${this.member.id}/settings/resource_attributes`,
+        label: 'MENU_ITEMS.MEMBER.RESOURCE_ATTRIBUTES',
+        style: 'member-btn'
       }
     ];
   }

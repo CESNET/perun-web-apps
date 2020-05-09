@@ -62,6 +62,7 @@ import {
 } from './pages/group-detail-page/group-settings/group-settings-notifications/group-settings-notifications.component';
 import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
+import { MemberSettingsResourceAttributesComponent } from './pages/member-detail-page/member-settings/member-settings-resource-attributes/member-settings-resource-attributes.component';
 
 const routes: Routes = [
   {
@@ -198,6 +199,11 @@ const routes: Routes = [
             path: 'attributes',
             component: MemberSettingsAttributesComponent,
             data: {animation: 'MemberSettingsAttributesPage'}
+          },
+          {
+            path: 'resource_attributes',
+            component: MemberSettingsResourceAttributesComponent,
+            data: {animation: 'MemberSettingsResourceAttributesPage'}
           }
         ]
       }

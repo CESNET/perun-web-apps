@@ -8,10 +8,11 @@
     </app-alert>
   </div>
   <div mat-dialog-content>
+    <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
     <perun-web-apps-attributes-list
       (page)="pageChanged($event)"
       [pageSize]="pageSize"
-      *ngIf="attributes !== undefined"
+      *ngIf="attributes !== undefined && !loading"
       #list
       [filterValue]="filterValue"
       [attributes]="attributes"

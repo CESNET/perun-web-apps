@@ -94,11 +94,19 @@ export class EditAttributeDialogComponent implements OnInit {
       }
     } else {
       // TODO attributes with two entities
+      switch (this.data.secondEntity) {
+        case 'resource':
+          this.attributesManager.setMemberResourceAttributes({
+            member: this.data.entityId,
+            resource: this.data.secondEntityId,
+            attributes: this.data.attributes
+          }).subscribe(() => this.onSuccess());
+      }
     }
   }
 
   onSuccess() {
-    this.translate.get('DIALOGS.DELETE_ATTRIBUTES.SUCCESS').subscribe(successMessage => {
+    this.translate.get('DIALOGS.EDIT_ATTRIBUTES.SUCCESS').subscribe(successMessage => {
       this.notificator.showSuccess(successMessage);
       this.dialogRef.close(true);
     });

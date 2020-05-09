@@ -484,6 +484,15 @@
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "RESOURCE_ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove",
+        "FILTER": "Filter resources by name",
+        "SAVE": "Save",
+        "CREATE": "Add",
+        "NO_FILTERED_RESOURCES": "No resources that match the filter found",
+        "NO_RESOURCES": "You have no assigned resources"
       }
     }
   },
@@ -538,7 +547,8 @@
       "OVERVIEW": "Overview",
       "GROUPS": "Groups",
       "SETTINGS": "Settings",
-      "ATTRIBUTES": "Attributes"
+      "ATTRIBUTES": "Attributes",
+      "RESOURCE_ATTRIBUTES": "Resource attributes"
     },
     "ADMIN": {
       "TITLE": "Perun admin",
