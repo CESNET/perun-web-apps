@@ -111,16 +111,14 @@ export class CustomIconService {
       url: 'assets/img/PerunWebImages/external_sources-white.svg',
       name: 'perun-external-sources'
     },
-<<<<<<< HEAD
     // TESTING PURPOSES
     {
       url: 'assets/img/settings1-blue.svg',
       name: 'settings-blue'
-=======
+    },
     {
       url: 'assets/img/PerunWebImages/service_destination-blue.svg',
       name: 'perun-service_destination'
->>>>>>> f232c60... Facilities - services destinations page
     },
   ];
 
