@@ -32,6 +32,7 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
 import { PerunFacilityServicesConfigModule } from '@perun-web-apps/perun/facility-services-config';
 import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-managers/facility-settings-managers.component';
+import { FacilityServicesDestinationsComponent } from './pages/facility-detail-page/facility-services-destinations/facility-services-destinations.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/
     ResourceSettingsAttributesComponent,
     ResourceGroupsComponent,
     FacilityServiceConfigComponent,
-    FacilitySettingsManagersComponent
+    FacilitySettingsManagersComponent,
+    FacilityServicesDestinationsComponent
   ],
   imports: [
     CommonModule,

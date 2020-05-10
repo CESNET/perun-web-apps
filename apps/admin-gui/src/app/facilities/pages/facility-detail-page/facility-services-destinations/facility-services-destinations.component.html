@@ -1,0 +1,23 @@
+<div>
+  <h1 class="page-subtitle">{{'FACILITY_DETAIL.SERVICES_DESTINATIONS.TITLE' | translate}}</h1>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+  <button mat-flat-button color="accent" (click)="addDestination()">
+    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ADD' | translate}}
+  </button>
+  <button mat-flat-button color="warn" class="ml-2" [disabled]="selected.selected.length === 0"  (click)="removeDestination()">
+    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.REMOVE' | translate}}
+  </button>
+  <perun-web-apps-immediate-filter
+    [placeholder]="'FACILITY_DETAIL.SERVICES_DESTINATIONS.FILTER'"
+    (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+  <app-perun-web-apps-destination-list
+    [pageSize]="pageSize"
+    (page)="pageChanged($event)"
+    *ngIf="!loading"
+    [filterValue]="filterValue"
+    [destinations]="destinations"
+    [selection]="selected"
+    [displayedColumns]="displayedColumns">
+  </app-perun-web-apps-destination-list>
+</div>
