@@ -4,22 +4,17 @@
                                  *ngIf="!loading"></perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
-<div *ngIf="!loading && vosWhereIsMember.length !== 0">
+<div *ngIf="!loading && userMemberships.length !== 0">
   <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
-  <perun-web-apps-vo-select-table [filterValue]="filterValue"
-                                  [vos]="vosWhereIsMember"
-                                  [displayedColumns]="displayedColumns"
-                                  [disableRouting]="true"
-                                  [selection]="selection">
-  </perun-web-apps-vo-select-table>
+  <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
+  <app-membership-list [members]="userMemberships"
+                       [selection]="selection"
+                       [filterValue]="filterValue"
+                       [hideColumns]="['description']"></app-membership-list>
 </div>
 
-<div *ngIf="!loading && vosWhereIsAdmin.length !== 0" class="mt-5">
+<div *ngIf="!loading && adminMemberships.length !== 0" class="mt-5">
   <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
-  <perun-web-apps-vo-select-table [filterValue]="filterValue"
-                                  [vos]="vosWhereIsAdmin"
-                                  [displayedColumns]="displayedColumns"
-                                  [disableRouting]="true"
-                                  [selection]="selectionAdmin">
-  </perun-web-apps-vo-select-table>
+  <app-membership-list [members]="adminMemberships"
+                       [hideColumns]="['checkbox', 'description', 'expiration']"></app-membership-list>
 </div>
