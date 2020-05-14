@@ -1,20 +1,29 @@
 <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | translate}}</h1>
 <!--<app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>-->
-<perun-web-apps-immediate-filter [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
+<perun-web-apps-immediate-filter [placeholder]="'ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
                                  *ngIf="!loading"></perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
-<div *ngIf="!loading && userMemberships.length !== 0">
+<div *ngIf="!loading">
   <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
-  <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
-  <app-membership-list [members]="userMemberships"
-                       [selection]="selection"
-                       [filterValue]="filterValue"
-                       [hideColumns]="['description']"></app-membership-list>
+  <div *ngIf="userMemberships.length !== 0">
+    <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
+    <app-membership-list [members]="userMemberships"
+                         [selection]="selection"
+                         [filterValue]="filterValue"
+                         [hideColumns]="['description']"></app-membership-list>
+  </div>
+  <app-alert color="warn" *ngIf="userMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | translate}}</app-alert>
+
 </div>
 
-<div *ngIf="!loading && adminMemberships.length !== 0" class="mt-5">
+<div *ngIf="!loading" class="mt-5">
+  <div *ngIf="adminMemberships.length !== 0">
   <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
   <app-membership-list [members]="adminMemberships"
                        [hideColumns]="['checkbox', 'description', 'expiration']"></app-membership-list>
+  </div>
+  <app-alert color="warn" *ngIf="adminMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | translate}}</app-alert>
 </div>
+
+

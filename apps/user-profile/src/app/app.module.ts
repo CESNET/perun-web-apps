@@ -68,6 +68,7 @@ import { PerunPipesModule, UserFullNamePipe } from '@perun-web-apps/perun/pipes'
 import { CustomTranslatePipe } from './pipes/custom-translate.pipe';
 import { MembershipListComponent } from './components/membership-list/membership-list.component';
 import { ValidateExpirationPipe } from './pipes/validate-expiration.pipe';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -160,7 +161,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     MatSortModule,
     MatCardModule,
     ClipboardModule,
-    PerunPipesModule
+    PerunPipesModule,
+    MatAutocompleteModule
   ],
   providers: [
     CustomIconService,

@@ -17,8 +17,15 @@
     "SAMBA_PASSWORD": "Samba password",
     "SSH_KEYS": "SSH keys"
   },
+  "ORGANIZATIONS": {
+    "FILTER": "Filter by name",
+    "NO_VOS_ALERT": "No virtual organizations found"
+  },
   "GROUPS": {
-    "TITLE": "Groups"
+    "TITLE": "Groups",
+    "SELECT_VO": "Filter by organization",
+    "ALL": "All organizations",
+    "FILTER": "Filter by name"
   },
   "PROFILE_PAGE": {
     "NAME": "Name",
