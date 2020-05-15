@@ -153,7 +153,9 @@ import { EditAttributeDialogComponent } from './components/dialogs/edit-attribut
 import { UserSettingsAppConfigurationComponent } from './components/user-detail-page/user-settings/user-settings-app-configuration/user-settings-app-configuration.component';
 import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
-
+import { RemoveDestinationDialogComponent } from './components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
+import { DestinationListComponent } from './components/destination-list/destination-list.component';
+import { AddServicesDestinationDialogComponent } from './components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -280,7 +282,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     ExtSourcesListComponent,
     ExtSourceTypePipe,
     ConfigTableConfigModule,
-    SideMenuRootItemComponent
+    SideMenuRootItemComponent,
+    DestinationListComponent
   ],
   declarations: [
     PerunNavComponent,
@@ -384,7 +387,10 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
     ExtSourceTypePipe,
     UserRolesComponent,
     EditAttributeDialogComponent,
-    UserSettingsAppConfigurationComponent
+    UserSettingsAppConfigurationComponent,
+    RemoveDestinationDialogComponent,
+    DestinationListComponent,
+    AddServicesDestinationDialogComponent
   ],
   providers: [
     AnyToStringPipe,

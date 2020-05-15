@@ -1,5 +1,4 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { SideMenuService } from '../../../../core/services/common/side-menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,9 +25,7 @@ export class FacilityResourcesComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private facilitiesManager: FacilitiesManagerService,
-              private sideMenuService: SideMenuService,
               private tableConfigService: TableConfigService,
-              private facilityManager: FacilitiesManagerService,
               private route: ActivatedRoute) {
   }
 
@@ -49,7 +46,7 @@ export class FacilityResourcesComponent implements OnInit {
     this.route.parent.params.subscribe(parentParams => {
       const facilityId = parentParams['facilityId'];
 
-      this.facilityManager.getFacilityById(facilityId).subscribe(facility => {
+      this.facilitiesManager.getFacilityById(facilityId).subscribe(facility => {
         this.facility = facility;
 
         this.refreshTable();

@@ -48,14 +48,20 @@ export class FacilityOverviewComponent implements OnInit {
       },
       {
         cssIcon: 'perun-settings2',
-        url: `/facilities/${this.facility.id}/settings`,
-        label: 'MENU_ITEMS.FACILITY.SETTINGS',
+        url: `/facilities/${this.facility.id}/service-config`,
+        label: 'MENU_ITEMS.FACILITY.SERVICE_CONFIG',
+        style: 'facility-btn'
+      },
+      {
+        cssIcon: 'perun-service_destination',
+        url: `/facilities/${this.facility.id}/services-destinations`,
+        label: 'MENU_ITEMS.FACILITY.SERVICES_DESTINATIONS',
         style: 'facility-btn'
       },
       {
         cssIcon: 'perun-settings2',
-        url: `/facilities/${this.facility.id}/service-config`,
-        label: 'MENU_ITEMS.FACILITY.SERVICE_CONFIG',
+        url: `/facilities/${this.facility.id}/settings`,
+        label: 'MENU_ITEMS.FACILITY.SETTINGS',
         style: 'facility-btn'
       }
     ];

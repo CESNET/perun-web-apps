@@ -1,0 +1,96 @@
+<div class="{{data.theme}}">
+
+  <h1 mat-dialog-title>{{'DIALOGS.ADD_SERVICE_DESTINATION.TITLE' | translate}}</h1>
+  <div mat-dialog-content>
+    <div [@openClose]="isInvalid() ? 'open' : 'closed'">
+      <app-alert color="error">{{'DIALOGS.ADD_SERVICE_DESTINATION.' + invalidNotification | translate}}</app-alert>
+    </div>
+    <div class="font-italic">{{'DIALOGS.ADD_SERVICE_DESTINATION.DESCRIPTION' | translate}}</div>
+    <div class="d-flex">
+      <span class="w-25 m-auto font-weight-bold">{{'DIALOGS.ADD_SERVICE_DESTINATION.SERVICE' | translate}}:</span>
+      <div class="w-75">
+        <mat-form-field class="w-100">
+          <mat-select [(ngModel)]="selectedService" required>
+            <mat-option *ngIf="services.length !== 0" value="all">{{'DIALOGS.ADD_SERVICE_DESTINATION.SELECTION_ALL' | translate}}</mat-option>
+            <mat-option *ngIf="services.length === 0" value="noService">{{'DIALOGS.ADD_SERVICE_DESTINATION.NO_SERVICE' | translate}}</mat-option>
+            <mat-option *ngFor="let service of services" [value]="service">
+              {{service.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="selectedService == undefined">
+            {{'DIALOGS.ADD_SERVICE_DESTINATION.CHOOSE_SERVICE' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex">
+      <span class="w-25 m-auto font-weight-bold"></span>
+      <div class="w-75">
+        <mat-checkbox (change)="getServices()" [(ngModel)]="servicesOnFacility">{{'DIALOGS.ADD_SERVICE_DESTINATION.IS_SERVICES_ONLY_ON_FACILITY' | translate}}</mat-checkbox>
+      </div>
+    </div>
+    <div class="d-flex">
+      <span class="w-25 m-auto font-weight-bold">{{'DIALOGS.ADD_SERVICE_DESTINATION.TYPE' | translate}}:</span>
+      <div class="w-75">
+        <mat-form-field class="w-100">
+          <mat-select [(ngModel)]="selectedType">
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{getTypeForView(type)}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex">
+      <span class="w-25 m-auto font-weight-bold">{{getTypeForView(selectedType)}}:</span>
+      <div class="w-75">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            required
+            [disabled]="useFacilityHost && selectedType === 'host'"
+            [(ngModel)]="destination">
+          <mat-error *ngIf="!(useFacilityHost && selectedType === 'host')">
+            {{'DIALOGS.ADD_SERVICE_DESTINATION.REQUIRED_FIELD' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex" *ngIf="selectedType == 'host'">
+      <span class="w-25 m-auto font-weight-bold"></span>
+      <div class="w-75">
+        <mat-checkbox [(ngModel)]="useFacilityHost">{{'DIALOGS.ADD_SERVICE_DESTINATION.USE_FACILITY_HOST' | translate}}</mat-checkbox>
+      </div>
+    </div>
+    <div class="d-flex">
+      <span class="w-25 m-auto font-weight-bold">{{'DIALOGS.ADD_SERVICE_DESTINATION.PROPAGATION' | translate}}:</span>
+      <div class="w-75">
+        <mat-form-field class="w-100">
+          <mat-select [(ngModel)]="selectedPropagation">
+            <mat-option *ngFor="let propagation of propagations" [value]="propagation">
+              {{propagation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="font-italic">{{'DIALOGS.ADD_SERVICE_DESTINATION.PROPAGATION_TYPE_' + selectedPropagation | translate}}</div>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-flat-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.ADD_SERVICE_DESTINATION.CANCEL' | translate}}
+    </button>
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="accent"
+      [disabled]="isInvalid()"
+      (click)="onSubmit()">
+      {{'DIALOGS.ADD_SERVICE_DESTINATION.ADD' | translate}}
+    </button>
+  </div>
+</div>
+

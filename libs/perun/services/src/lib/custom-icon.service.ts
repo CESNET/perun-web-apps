@@ -116,6 +116,10 @@ export class CustomIconService {
       url: 'assets/img/settings1-blue.svg',
       name: 'settings-blue'
     },
+    {
+      url: 'assets/img/PerunWebImages/service_destination-blue.svg',
+      name: 'perun-service_destination'
+    },
   ];
 
   registerPerunRefreshIcon() {
