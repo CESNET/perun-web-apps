@@ -112,7 +112,8 @@
       "TABLE_TYPE": "Type",
       "TABLE_PROPAGATION_TYPE": "Propagation Type",
       "NO_DESTINATION": "Facility has no services destinations. Service configuration can't be propagated.",
-      "REMOVE_SUCCESS": "Facilities were successfully removed"
+      "REMOVE_SUCCESS": "Destinations were successfully removed",
+      "ADD_SUCCESS": "Destinations were successfully added"
     },
     "SETTINGS": {
       "ATTRIBUTES": {

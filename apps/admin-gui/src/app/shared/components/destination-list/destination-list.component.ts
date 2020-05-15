@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { RichDestination, RichResource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -11,7 +20,7 @@ import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
   templateUrl: './destination-list.component.html',
   styleUrls: ['./destination-list.component.scss']
 })
-export class DestinationListComponent implements OnChanges {
+export class DestinationListComponent implements AfterViewInit, OnChanges {
 
   constructor() { }
 
@@ -53,7 +62,6 @@ export class DestinationListComponent implements OnChanges {
   setDataSource() {
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (item, property) => {
         switch (property) {
           case 'service': {
@@ -65,7 +73,8 @@ export class DestinationListComponent implements OnChanges {
       this.dataSource.filterPredicate = (data, filter) => {
         const dataStr = data.service.name + data.id + data.destination + data.type + data.propagationType;
         return dataStr.indexOf(filter) !== -1;
-      }
+      };
+      this.dataSource.paginator = this.paginator;
     }
   }
 
@@ -93,6 +102,10 @@ export class DestinationListComponent implements OnChanges {
 
   pageChanged(event: PageEvent) {
     this.page.emit(event);
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
 }

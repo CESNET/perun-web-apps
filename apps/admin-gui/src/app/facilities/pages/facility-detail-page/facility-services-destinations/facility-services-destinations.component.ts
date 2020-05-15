@@ -50,9 +50,9 @@ export class FacilityServicesDestinationsComponent implements OnInit {
   tableId = TABLE_FACILITY_SERVICES_DESTINATION_LIST;
 
   ngOnInit() {
-    this.loading = true;
-    this.pageSize = this.tableConfigService.getTablePageSize(this.tableId);
 
+    this.pageSize = this.tableConfigService.getTablePageSize(this.tableId);
+    this.loading = true;
     this.route.parent.params.subscribe(parentParams => {
       const facilityId = parentParams['facilityId'];
 
@@ -81,7 +81,10 @@ export class FacilityServicesDestinationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.refreshTable();
+        this.translate.get('FACILITY_DETAIL.SERVICES_DESTINATIONS.ADD_SUCCESS').subscribe(successMessage => {
+          this.refreshTable();
+          this.notificator.showSuccess(successMessage);
+        });
       }
     });
   }
@@ -105,6 +108,7 @@ export class FacilityServicesDestinationsComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent) {
+    console.log(event.pageSize);
     this.pageSize = event.pageSize;
     this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);
   }
