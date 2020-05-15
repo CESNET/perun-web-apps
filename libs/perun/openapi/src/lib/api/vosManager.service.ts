@@ -17,16 +17,16 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { Candidate } from '../model/candidate';
-import { Group } from '../model/group';
-import { InputCreateVoWithVo } from '../model/inputCreateVoWithVo';
-import { InputUpdateVo } from '../model/inputUpdateVo';
-import { MemberCandidate } from '../model/memberCandidate';
-import { PerunException } from '../model/perunException';
-import { RichUser } from '../model/richUser';
-import { User } from '../model/user';
-import { Vo } from '../model/vo';
-import { VoAdminRoles } from '../model/voAdminRoles';
+import { Candidate } from '../model/models';
+import { Group } from '../model/models';
+import { InputCreateVoWithVo } from '../model/models';
+import { InputUpdateVo } from '../model/models';
+import { MemberCandidate } from '../model/models';
+import { PerunException } from '../model/models';
+import { RichUser } from '../model/models';
+import { User } from '../model/models';
+import { Vo } from '../model/models';
+import { VoAdminRoles } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -58,6 +58,42 @@ export class VosManagerService {
 
 
 
+    private addToHttpParams(httpParams: HttpParams, value: any, key?: string): HttpParams {
+        if (typeof value === "object" && value instanceof Date === false) {
+            httpParams = this.addToHttpParamsRecursive(httpParams, value);
+        } else {
+            httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+        }
+        return httpParams;
+    }
+
+    private addToHttpParamsRecursive(httpParams: HttpParams, value?: any, key?: string): HttpParams {
+        if (value == null) {
+            return httpParams;
+        }
+
+        if (typeof value === "object") {
+            if (Array.isArray(value)) {
+                (value as any[]).forEach( elem => httpParams = this.addToHttpParamsRecursive(httpParams, elem, key));
+            } else if (value instanceof Date) {
+                if (key != null) {
+                    httpParams = httpParams.append(key,
+                        (value as Date).toISOString().substr(0, 10));
+                } else {
+                   throw Error("key may not be null if value is Date");
+                }
+            } else {
+                Object.keys(value).forEach( k => httpParams = this.addToHttpParamsRecursive(
+                    httpParams, value[k], key != null ? `${key}.${k}` : k));
+            }
+        } else if (key != null) {
+            httpParams = httpParams.append(key, value);
+        } else {
+            throw Error("key may not be null if value is not object or array");
+        }
+        return httpParams;
+    }
+
     /**
      * Add group as a sponsor of guest members of VO. All members of group will become sponsors.
      * @param vo id of Vo
@@ -65,10 +101,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public addSponsorRoleToGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling addSponsorRoleToGroup.');
         }
@@ -78,17 +114,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (authorizedGroup !== undefined && authorizedGroup !== null) {
-            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>authorizedGroup, 'authorizedGroup');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -102,20 +143,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addSponsorRole/group`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -131,10 +181,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addSponsorRoleToUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addSponsorRoleToUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addSponsorRoleToUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addSponsorRoleToUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public addSponsorRoleToUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public addSponsorRoleToUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling addSponsorRoleToUser.');
         }
@@ -144,17 +194,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>user, 'user');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -168,20 +223,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addSponsorRole/user`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -197,10 +261,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addVoAdminGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public addVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public addVoAdminGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling addVoAdminGroup.');
         }
@@ -210,17 +274,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (authorizedGroup !== undefined && authorizedGroup !== null) {
-            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>authorizedGroup, 'authorizedGroup');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -234,20 +303,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addAdmin/group`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -263,10 +341,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addVoAdminUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addVoAdminUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addVoAdminUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addVoAdminUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addVoAdminUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public addVoAdminUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public addVoAdminUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public addVoAdminUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling addVoAdminUser.');
         }
@@ -276,17 +354,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>user, 'user');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -300,20 +383,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/addAdmin/user`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -329,10 +421,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createVoWithName(name: string, shortName: string, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
-    public createVoWithName(name: string, shortName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
-    public createVoWithName(name: string, shortName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
-    public createVoWithName(name: string, shortName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createVoWithName(name: string, shortName: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Vo>;
+    public createVoWithName(name: string, shortName: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Vo>>;
+    public createVoWithName(name: string, shortName: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Vo>>;
+    public createVoWithName(name: string, shortName: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (name === null || name === undefined) {
             throw new Error('Required parameter name was null or undefined when calling createVoWithName.');
         }
@@ -342,17 +434,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (name !== undefined && name !== null) {
-            queryParameters = queryParameters.set('name', <any>name);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>name, 'name');
         }
         if (shortName !== undefined && shortName !== null) {
-            queryParameters = queryParameters.set('shortName', <any>shortName);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>shortName, 'shortName');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -366,20 +463,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<Vo>(`${this.configuration.basePath}/urlinjsonout/vosManager/createVo/withName`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -394,10 +500,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
-    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
-    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
-    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Vo>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Vo>>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Vo>>;
+    public createVoWithVo(inputCreateVoWithVo: InputCreateVoWithVo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (inputCreateVoWithVo === null || inputCreateVoWithVo === undefined) {
             throw new Error('Required parameter inputCreateVoWithVo was null or undefined when calling createVoWithVo.');
         }
@@ -405,8 +511,11 @@ export class VosManagerService {
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -420,11 +529,14 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
@@ -439,9 +551,15 @@ export class VosManagerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<Vo>(`${this.configuration.basePath}/json/vosManager/createVo/withVo`,
             inputCreateVoWithVo,
             {
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -457,27 +575,32 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteVo(vo: number, force?: boolean, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteVo(vo: number, force?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteVo(vo: number, force?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteVo(vo: number, force?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteVo(vo: number, force?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public deleteVo(vo: number, force?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public deleteVo(vo: number, force?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public deleteVo(vo: number, force?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling deleteVo.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (force !== undefined && force !== null) {
-            queryParameters = queryParameters.set('force', <any>force);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>force, 'force');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -491,20 +614,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/deleteVo`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -521,10 +653,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
-    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
-    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
-    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Candidate>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidates(id: number, searchString: string, maxNumOfResults?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findCandidates.');
         }
@@ -534,20 +666,26 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>id, 'id');
         }
         if (searchString !== undefined && searchString !== null) {
-            queryParameters = queryParameters.set('searchString', <any>searchString);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>searchString, 'searchString');
         }
         if (maxNumOfResults !== undefined && maxNumOfResults !== null) {
-            queryParameters = queryParameters.set('maxNumOfResults', <any>maxNumOfResults);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>maxNumOfResults, 'maxNumOfResults');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -561,19 +699,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -589,10 +736,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findCandidatesForGroup(group: number, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Candidate>>;
-    public findCandidatesForGroup(group: number, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Candidate>>>;
-    public findCandidatesForGroup(group: number, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Candidate>>>;
-    public findCandidatesForGroup(group: number, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Candidate>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Candidate>>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Candidate>>>;
+    public findCandidatesForGroup(group: number, searchString: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (group === null || group === undefined) {
             throw new Error('Required parameter group was null or undefined when calling findCandidatesForGroup.');
         }
@@ -602,17 +749,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (group !== undefined && group !== null) {
-            queryParameters = queryParameters.set('group', <any>group);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>group, 'group');
         }
         if (searchString !== undefined && searchString !== null) {
-            queryParameters = queryParameters.set('searchString', <any>searchString);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>searchString, 'searchString');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -626,19 +778,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<Candidate>>(`${this.configuration.basePath}/json/vosManager/findCandidates/forGroup`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -652,16 +813,19 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllVos(observe?: 'body', reportProgress?: boolean): Observable<Array<Vo>>;
-    public getAllVos(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Vo>>>;
-    public getAllVos(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Vo>>>;
-    public getAllVos(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllVos(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Vo>>;
+    public getAllVos(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Vo>>>;
+    public getAllVos(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Vo>>>;
+    public getAllVos(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -675,18 +839,27 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<Vo>>(`${this.configuration.basePath}/json/vosManager/getAllVos`,
             {
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -703,10 +876,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<MemberCandidate>>;
-    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MemberCandidate>>>;
-    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MemberCandidate>>>;
-    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<MemberCandidate>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForGroup(group: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (group === null || group === undefined) {
             throw new Error('Required parameter group was null or undefined when calling getCompleteCandidatesForGroup.');
         }
@@ -719,22 +892,28 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (group !== undefined && group !== null) {
-            queryParameters = queryParameters.set('group', <any>group);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>group, 'group');
         }
         if (attrNames) {
             attrNames.forEach((element) => {
-                queryParameters = queryParameters.append('attrNames[]', <any>element);
+                queryParameters = this.addToHttpParams(queryParameters,
+                  <any>element, 'attrNames[]');
             })
         }
         if (searchString !== undefined && searchString !== null) {
-            queryParameters = queryParameters.set('searchString', <any>searchString);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>searchString, 'searchString');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -748,19 +927,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<MemberCandidate>>(`${this.configuration.basePath}/json/vosManager/getCompleteCandidates/forGroup`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -777,10 +965,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean): Observable<Array<MemberCandidate>>;
-    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MemberCandidate>>>;
-    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MemberCandidate>>>;
-    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<MemberCandidate>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<MemberCandidate>>>;
+    public getCompleteCandidatesForVo(vo: number, attrNames: Array<string>, searchString: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling getCompleteCandidatesForVo.');
         }
@@ -793,22 +981,28 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (attrNames) {
             attrNames.forEach((element) => {
-                queryParameters = queryParameters.append('attrNames[]', <any>element);
+                queryParameters = this.addToHttpParams(queryParameters,
+                  <any>element, 'attrNames[]');
             })
         }
         if (searchString !== undefined && searchString !== null) {
-            queryParameters = queryParameters.set('searchString', <any>searchString);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>searchString, 'searchString');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -822,19 +1016,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<MemberCandidate>>(`${this.configuration.basePath}/json/vosManager/getCompleteCandidates/forVo`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -848,16 +1051,19 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMyVos(observe?: 'body', reportProgress?: boolean): Observable<Array<Vo>>;
-    public getMyVos(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Vo>>>;
-    public getMyVos(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Vo>>>;
-    public getMyVos(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getMyVos(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Vo>>;
+    public getMyVos(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Vo>>>;
+    public getMyVos(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Vo>>>;
+    public getMyVos(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -871,18 +1077,27 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<Vo>>(`${this.configuration.basePath}/json/vosManager/getVos`,
             {
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -901,10 +1116,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<RichUser>>;
-    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<RichUser>>>;
-    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<RichUser>>>;
-    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<RichUser>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<RichUser>>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<RichUser>>>;
+    public getRichAdminsForVo(vo: number, role: VoAdminRoles, specificAttributes: Array<string>, allUserAttributes: boolean, onlyDirectAdmins: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling getRichAdminsForVo.');
         }
@@ -923,28 +1138,36 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (role !== undefined && role !== null) {
-            queryParameters = queryParameters.set('role', <any>role);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>role, 'role');
         }
         if (specificAttributes) {
             specificAttributes.forEach((element) => {
-                queryParameters = queryParameters.append('specificAttributes', <any>element);
+                queryParameters = this.addToHttpParams(queryParameters,
+                  <any>element, 'specificAttributes');
             })
         }
         if (allUserAttributes !== undefined && allUserAttributes !== null) {
-            queryParameters = queryParameters.set('allUserAttributes', <any>allUserAttributes);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>allUserAttributes, 'allUserAttributes');
         }
         if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
-            queryParameters = queryParameters.set('onlyDirectAdmins', <any>onlyDirectAdmins);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>onlyDirectAdmins, 'onlyDirectAdmins');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -958,19 +1181,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<RichUser>>(`${this.configuration.basePath}/json/vosManager/getRichAdmins`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -986,10 +1218,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'body', reportProgress?: boolean): Observable<Array<Group>>;
-    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Group>>>;
-    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Group>>>;
-    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Group>>;
+    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Group>>>;
+    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Group>>>;
+    public getVoAdminGroups(vo: number, role: VoAdminRoles, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling getVoAdminGroups.');
         }
@@ -999,17 +1231,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (role !== undefined && role !== null) {
-            queryParameters = queryParameters.set('role', <any>role);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>role, 'role');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1023,19 +1260,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<Group>>(`${this.configuration.basePath}/json/vosManager/getAdminGroups`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1052,10 +1298,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
-    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<User>>;
+    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<User>>>;
+    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<User>>>;
+    public getVoAdminUsers(vo: number, role: VoAdminRoles, onlyDirectAdmins: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling getVoAdminUsers.');
         }
@@ -1068,20 +1314,26 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (role !== undefined && role !== null) {
-            queryParameters = queryParameters.set('role', <any>role);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>role, 'role');
         }
         if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
-            queryParameters = queryParameters.set('onlyDirectAdmins', <any>onlyDirectAdmins);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>onlyDirectAdmins, 'onlyDirectAdmins');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1095,19 +1347,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Array<User>>(`${this.configuration.basePath}/json/vosManager/getAdmins`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1122,24 +1383,28 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVoById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
-    public getVoById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
-    public getVoById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
-    public getVoById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVoById(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Vo>;
+    public getVoById(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Vo>>;
+    public getVoById(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Vo>>;
+    public getVoById(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getVoById.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>id, 'id');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1153,19 +1418,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Vo>(`${this.configuration.basePath}/json/vosManager/getVoById`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1180,21 +1454,25 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVoByShortName(shortName?: string, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
-    public getVoByShortName(shortName?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
-    public getVoByShortName(shortName?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
-    public getVoByShortName(shortName?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVoByShortName(shortName?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Vo>;
+    public getVoByShortName(shortName?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Vo>>;
+    public getVoByShortName(shortName?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Vo>>;
+    public getVoByShortName(shortName?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (shortName !== undefined && shortName !== null) {
-            queryParameters = queryParameters.set('shortName', <any>shortName);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>shortName, 'shortName');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1208,19 +1486,28 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<Vo>(`${this.configuration.basePath}/json/vosManager/getVoByShortName`,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1234,16 +1521,19 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVosCount(observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public getVosCount(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public getVosCount(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public getVosCount(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVosCount(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<number>;
+    public getVosCount(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<number>>;
+    public getVosCount(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<number>>;
+    public getVosCount(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1257,18 +1547,27 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.get<number>(`${this.configuration.basePath}/json/vosManager/getVosCount`,
             {
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1284,10 +1583,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public removeSponsorRoleFromGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling removeSponsorRoleFromGroup.');
         }
@@ -1297,17 +1596,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (authorizedGroup !== undefined && authorizedGroup !== null) {
-            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>authorizedGroup, 'authorizedGroup');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1321,20 +1625,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeSponsorRole/group`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1350,10 +1663,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeSponsorRoleFromUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public removeSponsorRoleFromUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling removeSponsorRoleFromUser.');
         }
@@ -1363,17 +1676,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>user, 'user');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1387,20 +1705,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeSponsorRole/user`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1416,10 +1743,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public removeVoAdminGroup(vo: number, authorizedGroup: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling removeVoAdminGroup.');
         }
@@ -1429,17 +1756,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (authorizedGroup !== undefined && authorizedGroup !== null) {
-            queryParameters = queryParameters.set('authorizedGroup', <any>authorizedGroup);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>authorizedGroup, 'authorizedGroup');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1453,20 +1785,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeAdmin/group`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1482,10 +1823,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeVoAdminUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeVoAdminUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeVoAdminUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeVoAdminUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeVoAdminUser(vo: number, user: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public removeVoAdminUser(vo: number, user: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public removeVoAdminUser(vo: number, user: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public removeVoAdminUser(vo: number, user: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (vo === null || vo === undefined) {
             throw new Error('Required parameter vo was null or undefined when calling removeVoAdminUser.');
         }
@@ -1495,17 +1836,22 @@ export class VosManagerService {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (vo !== undefined && vo !== null) {
-            queryParameters = queryParameters.set('vo', <any>vo);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>vo, 'vo');
         }
         if (user !== undefined && user !== null) {
-            queryParameters = queryParameters.set('user', <any>user);
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>user, 'user');
         }
 
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1519,20 +1865,29 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<any>(`${this.configuration.basePath}/urlinjsonout/vosManager/removeAdmin/user`,
             null,
             {
                 params: queryParameters,
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1547,10 +1902,10 @@ export class VosManagerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'body', reportProgress?: boolean): Observable<Vo>;
-    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Vo>>;
-    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Vo>>;
-    public updateVo(inputUpdateVo: InputUpdateVo, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Vo>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Vo>>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Vo>>;
+    public updateVo(inputUpdateVo: InputUpdateVo, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (inputUpdateVo === null || inputUpdateVo === undefined) {
             throw new Error('Required parameter inputUpdateVo was null or undefined when calling updateVo.');
         }
@@ -1558,8 +1913,11 @@ export class VosManagerService {
         let headers = this.defaultHeaders;
 
         // authentication (ApiKeyAuth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        if (this.configuration.apiKeys) {
+            const key: string | undefined = this.configuration.apiKeys["ApiKeyAuth"] || this.configuration.apiKeys["Authorization"];
+            if (key) {
+                headers = headers.set('Authorization', key);
+            }
         }
 
         // authentication (BasicAuth) required
@@ -1573,11 +1931,14 @@ export class VosManagerService {
                 : this.configuration.accessToken;
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
         if (httpHeaderAcceptSelected !== undefined) {
             headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
@@ -1592,9 +1953,15 @@ export class VosManagerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
         return this.httpClient.post<Vo>(`${this.configuration.basePath}/json/vosManager/updateVo`,
             inputUpdateVo,
             {
+                responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
