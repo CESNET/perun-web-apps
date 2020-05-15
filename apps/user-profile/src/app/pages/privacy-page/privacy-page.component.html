@@ -1,19 +1,31 @@
-<mat-accordion>
+<h3>{{'PRIVACY.TITLE' | translate}}</h3>
+<perun-web-apps-immediate-filter [placeholder]="'SERVICES.FILTER' | translate"
+                                 (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
+<mat-spinner class="ml-auto mr-auto" *ngIf="outerLoading"></mat-spinner>
+<mat-accordion *ngIf="!outerLoading">
   <mat-expansion-panel (opened)="getUserData()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{'USER INFORMATION' | translate}}
+        {{'PRIVACY.USER_INFO' | translate}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <perun-web-apps-attributes-list [attributes]="attributes" [readonly]="true" [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+    <ng-template matExpansionPanelContent>
+      <mat-spinner class="ml-auto mr-auto" *ngIf="innerLoading"></mat-spinner>
+      <perun-web-apps-attributes-list *ngIf="!innerLoading" [attributes]="attributes" [readonly]="true"
+                                      [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+    </ng-template>
   </mat-expansion-panel>
 
-  <mat-expansion-panel *ngFor="let vo of vos" (opened)="getMemberData(vo)">
+  <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMemberData(vo)">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{'DATA FOR ' | translate}}{{vo.name}}
+        {{'PRIVACY.DATA' | translate}}{{vo.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <perun-web-apps-attributes-list [attributes]="attributes" [readonly]="true" [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+    <ng-template matExpansionPanelContent>
+      <mat-spinner class="ml-auto mr-auto" *ngIf="innerLoading"></mat-spinner>
+      <perun-web-apps-attributes-list *ngIf="!innerLoading" [attributes]="attributes" [readonly]="true"
+                                      [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+    </ng-template>
   </mat-expansion-panel>
 </mat-accordion>

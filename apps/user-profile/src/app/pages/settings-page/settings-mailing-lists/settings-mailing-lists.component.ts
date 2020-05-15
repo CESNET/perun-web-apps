@@ -32,21 +32,31 @@ export class SettingsMailingListsComponent implements OnInit {
   optOuts:InputSetMemberResourceAttribute[] = [];
   optOutAttribute: Attribute;
   index: number;
+  filteredVos: Vo[] = [];
+  loading: boolean;
+
 
   ngOnInit() {
     this.user = this.store.getPerunPrincipal().user;
 
     this.usersManagerService.getVosWhereUserIsMember(this.user.id).subscribe(vos => {
       this.vos = vos;
+      this.filteredVos = vos;
     });
   }
 
   getMailingLists(vo: Vo) {
+    this.loading = true;
     this.resources = [];
     this.membersService.getMemberByUser(vo.id, this.user.id).subscribe(member => {
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources => {
+        let count = resources.length;
+        if(!count){
+          this.loading = false;
+        }
         resources.forEach(resource =>{
           this.attributesManagerService.getRequiredAttributesMemberResource(member.id, resource.id).subscribe(resAtts =>{
+            count--;
             const attribute = resAtts.find(att => att.friendlyName === 'optOutMailingList');
             if(attribute){
               this.optOuts.push({
@@ -56,6 +66,7 @@ export class SettingsMailingListsComponent implements OnInit {
               });
               this.resources.push(resource)
             }
+            this.loading = count !== 0;
           });
         });
       });
@@ -73,5 +84,9 @@ export class SettingsMailingListsComponent implements OnInit {
     this.attributesManagerService.setMemberResourceAttribute(this.optOuts[this.index]).subscribe(() => {
       console.log('done')
     })
+  }
+
+  applyFilter(filter: string) {
+    this.filteredVos = this.vos.filter(vo => vo.name.toLowerCase().includes(filter.toLowerCase()))
   }
 }
