@@ -1,11 +1,10 @@
-<h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | translate}}</h1>
-<!--<app-refresh-button (refresh)="refreshTable()" *ngIf="!loading"></app-refresh-button>-->
+<h3 class="mt-2">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | translate}}</h3>
 <perun-web-apps-immediate-filter [placeholder]="'ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
                                  *ngIf="!loading"></perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
-<div *ngIf="!loading">
-  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h1>
+<div *ngIf="!loading" class="mt-5">
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h4>
   <div *ngIf="userMemberships.length !== 0">
     <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
     <app-membership-list [members]="userMemberships"
@@ -19,7 +18,7 @@
 
 <div *ngIf="!loading" class="mt-5">
   <div *ngIf="adminMemberships.length !== 0">
-  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h1>
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h4>
   <app-membership-list [members]="adminMemberships"
                        [hideColumns]="['checkbox', 'description', 'expiration']"></app-membership-list>
   </div>

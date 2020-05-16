@@ -4,7 +4,8 @@ import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/opena
 import { MatTableDataSource } from '@angular/material/table';
 
 export interface RemoveStringValueDialogData {
-  values: string[];
+  valueIndex?: number;
+  values?: string[];
   attribute: Attribute;
   userId: number;
   description: string;
@@ -20,11 +21,12 @@ export class RemoveStringValueDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<RemoveStringValueDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: RemoveStringValueDialogData,
-              private attributesManagerService:AttributesManagerService) { }
+              private attributesManagerService: AttributesManagerService) {
+  }
 
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<string>;
-
+  loading: boolean;
   description: string;
   title: string;
 
@@ -39,12 +41,20 @@ export class RemoveStringValueDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     // @ts-ignore
     let values: string[] = this.data.attribute.value ? this.data.attribute.value : [];
-    values = values.filter(elem => !this.data.values.find(el => el === elem));
+    if(this.data.valueIndex !== undefined){
+      values.splice(this.data.valueIndex,1);
+    } else {
+      values = values.filter(elem => !this.data.values.find(el => el === elem));
+    }
     this.data.attribute.value = values;
-
-    this.attributesManagerService.setUserAttribute({ user: this.data.userId, attribute: this.data.attribute }).subscribe(() => {
+    this.attributesManagerService.setUserAttribute({
+      user: this.data.userId,
+      attribute: this.data.attribute
+    }).subscribe(() => {
+      this.loading = false;
       this.dialogRef.close(true);
     });
 

@@ -10,7 +10,7 @@
 <div fxLayout="row" fxFlexAlign="center center">
   <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REQUESTED_QUOTA'|translate}}</p>
   <mat-form-field appearance="standard">
-    <label class="label-width border">
+    <label class="label-width">
       <input
         matInput
         required
@@ -30,7 +30,6 @@
       <textarea
         matInput
         required
-        class="border"
         cdkTextareaAutosize
         cdkAutosizeMinRows="4"
         [formControl]="reasonControl"

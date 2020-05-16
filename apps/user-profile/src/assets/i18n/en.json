@@ -39,6 +39,9 @@
     "TIMEZONE": "Timezone",
     "CHANGE_EMAIL": "Change"
   },
+  "IDENTITIES": {
+    "TITLE": "My identities"
+  },
   "PRIVACY": {
     "TITLE": "Privacy",
     "FILTER": "Filter private data by organization's name",
@@ -64,6 +67,7 @@
     "HEADER_COLUMN": "Public part of ssh key"
   },
   "SAMBA_PASSWORD": {
+    "TITLE": "SAMBA password",
     "INPUT_PLACEHOLDER": "Enter new password",
     "SET_PASSWORD": "Set password"
   },
@@ -79,8 +83,9 @@
     "TITLE": "Preferred shells",
     "NEW_BUTTON": "New",
     "REMOVE_BUTTON": "Remove",
-    "REMOVE_DIALOG_TITLE": "Remove preferred shells",
-    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shells will be removed.",
+    "NO_SHELLS": "You don't have set any preferred shells",
+    "REMOVE_DIALOG_TITLE": "Remove preferred shell",
+    "REMOVE_DIALOG_DESCRIPTION": "Selected preferred shell will be removed.",
     "DESCRIPTION": "List of preferred shells (ordered from the most preferred to least) is used to determine your shell on provided resources. If none of preferred shells is available on resource (or no preferred shell is set), resource`s default is used."
   },
   "ALT_PASSWORDS": {

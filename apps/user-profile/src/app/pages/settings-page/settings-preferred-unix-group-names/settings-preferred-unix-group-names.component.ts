@@ -28,7 +28,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   namespaces: string[] = [];
   userId = this.store.getPerunPrincipal().userId;
   groupNames: Map<string, string[]> = new Map<string, string[]>();
-  groupNameAttributes: Attribute[] = new Array<Attribute>();
+  groupNameAttributes: Attribute[] = [];
 
   selectionList: SelectionModel<string>[] = [];
 
@@ -47,22 +47,24 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
   initSelection(){
     for (let i = 0; i < this.namespaces.length; i++) {
-      this.selectionList.push(new SelectionModel<string>(false, []));
+      this.selectionList.push(new SelectionModel<string>(true, []));
     }
   }
 
   getAttribute(namespace: string) {
     this.attributesManagerService.getUserAttributeByName(this.userId, `urn:perun:user:attribute-def:def:preferredUnixGroupName-namespace:${namespace}`).subscribe(names => {
+      const value = names.value ? names.value : [];
       // @ts-ignore
-      this.groupNames.set(namespace, names.value);
+      this.groupNames.set(namespace, value);
       this.groupNameAttributes.push(names);
     });
   }
 
   addGroupName(namespace: string) {
+    const groups = this.groupNames.get(namespace);
     const dialogRef = this.dialog.open(AddUnixGroupDialogComponent, {
-      width: '600px',
-      data: { namespace: namespace, userId: this.userId }
+      width: '400px',
+      data: { groups: groups, namespace: namespace, userId: this.userId }
     });
 
     dialogRef.afterClosed().subscribe(added => {
@@ -76,7 +78,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
     const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
       width: '600px',
       data: {
-        values: this.selectionList[index],
+        values: this.selectionList[index].selected,
         attribute: this.groupNameAttributes[index],
         userId: this.userId,
         title: this.removeDialogTitle,
@@ -86,6 +88,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(added => {
       if (added) {
+        this.selectionList[index].clear();
         this.getAttribute(namespace);
       }
     });

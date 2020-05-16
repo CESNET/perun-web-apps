@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>{{'SHARED_LIB.PERUN.COMPONENTS.DIALOGS.CHANGE_EMAIL.TITLE'|translate}}</h1>
+<h3 mat-dialog-title>{{'DIALOGS.CHANGE_EMAIL.TITLE'|translate}}</h3>
 <div mat-dialog-content class="dialog-container">
   <mat-form-field>
     <label>
       <input
         matInput
         required
-        placeholder="{{'SHARED_LIB.PERUN.COMPONENTS.DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|translate}}"
+        placeholder="{{'DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|translate}}"
         [formControl]="emailControl"
       >
     </label>
@@ -16,7 +16,7 @@
     mat-stroked-button
     class="ml-auto"
     (click)="onCancel()">
-    {{'SHARED_LIB.PERUN.COMPONENTS.DIALOGS.CHANGE_EMAIL.CANCEL'|translate}}
+    {{'DIALOGS.CHANGE_EMAIL.CANCEL'|translate}}
   </button>
     <button
       mat-flat-button
@@ -24,6 +24,6 @@
       color="accent"
       [disabled]="!emailControl.valid"
       (click)="onSubmit()">
-      {{'SHARED_LIB.PERUN.COMPONENTS.DIALOGS.CHANGE_EMAIL.CHANGE'|translate}}
+      {{'DIALOGS.CHANGE_EMAIL.CHANGE'|translate}}
     </button>
 </div>

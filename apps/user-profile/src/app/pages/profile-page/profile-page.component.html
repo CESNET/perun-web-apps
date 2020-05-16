@@ -1,30 +1,30 @@
-<div fxLayout="column" class="ml-5 mt-3">
-  <div fxLayout="row" class="row-size">
-    <p class="column-size">{{'PROFILE_PAGE.NAME'|translate}}</p>
-    <p>{{fullName}}</p>
+<div class="col ml-2 mt-3">
+  <div class="row row-size">
+    <p class="column-size center-self">{{'PROFILE_PAGE.NAME'|translate}}</p>
+    <p class="center-self">{{fullName}}</p>
   </div>
-  <div fxLayout="row" class="row-size">
-    <p class="column-size">{{'PROFILE_PAGE.ORGANIZATION'|translate}}</p>
-    <p>{{organization}}</p>
+  <div class="row row-size center-self">
+    <p class="column-size center-self">{{'PROFILE_PAGE.ORGANIZATION'|translate}}</p>
+    <p class="center-self">{{organization}}</p>
   </div>
-  <div fxLayout="row" class="row-size">
-    <p class="column-size mt-auto mb-auto pt-0">{{'PROFILE_PAGE.PREFERRED_LANGUAGE'|translate}}</p>
-    <mat-form-field class="mt-auto mb-auto lang-field-width">
-      <mat-select [(value)]="currentLang">
+  <div class="row row-size">
+    <p class="column-size center-self">{{'PROFILE_PAGE.PREFERRED_LANGUAGE'|translate}}</p>
+    <mat-form-field class="lang-field-width center-self">
+      <mat-select [(value)]="currentLang" class="mb-auto ">
         <mat-option (click)="changeLanguage(lang)" *ngFor="let lang of languages" [value]="lang">
           {{lang}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div fxLayout="row" class="row-size">
-    <p class="column-size">{{'PROFILE_PAGE.EMAIL'|translate}}</p>
-    <p>{{email}}</p>
+  <div class="row row-size mt-2">
+    <p class="column-size center-self">{{'PROFILE_PAGE.EMAIL'|translate}}</p>
+    <p class="center-self">{{email}}</p>
     <button mat-stroked-button class="ml-2" (click)="changeEmail()">{{'PROFILE_PAGE.CHANGE_EMAIL'|translate}}</button>
   </div>
-  <div fxLayout="row" class="row-size">
-    <p class="column-size mt-auto mb-auto">{{'PROFILE_PAGE.TIMEZONE'|translate}}</p>
-    <mat-form-field class="mt-auto mb-auto">
+  <div class="row row-size">
+    <p class="column-size center-self">{{'PROFILE_PAGE.TIMEZONE'|translate}}</p>
+    <mat-form-field class="center-self">
       <mat-select [(value)]="currentTimezone">
         <mat-option (click)="changeTimeZone(tz)" *ngFor="let tz of timeZones" [value]="tz">
           {{tz}}

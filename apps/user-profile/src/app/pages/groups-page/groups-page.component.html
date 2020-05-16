@@ -1,6 +1,4 @@
-<!--<app-refresh-button (refresh)="refreshTable()"></app-refresh-button>-->
-
-<h1 class="page-subtitle pt-2">{{'GROUPS.TITLE' | translate}}</h1>
+<h3 class="page-subtitle pt-2">{{'GROUPS.TITLE' | translate}}</h3>
 
 <mat-form-field class="mr-2 w-75" *ngIf="!loading">
   <mat-label>{{'GROUPS.SELECT_VO' | translate}}</mat-label>
@@ -17,7 +15,7 @@
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
 <div *ngIf="!loading && userMemberships.length !== 0">
-  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.GROUPS.MEMBER_GROUPS' | translate}}</h1>
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.GROUPS.MEMBER_GROUPS' | translate}}</h4>
   <button mat-flat-button color="accent" (click)="extendMembership()"
           [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
   <app-membership-list [members]="userMemberships"
@@ -25,7 +23,7 @@
 </div>
 
 <div *ngIf="!loading && adminMemberships.length !== 0" class="mt-5">
-  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.GROUPS.ADMINS_GROUPS' | translate}}</h1>
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.GROUPS.ADMINS_GROUPS' | translate}}</h4>
   <app-membership-list [members]="adminMemberships"
                        [hideColumns]="['checkbox', 'expiration']"></app-membership-list>
 </div>
