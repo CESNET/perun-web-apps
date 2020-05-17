@@ -40,7 +40,11 @@
     "CHANGE_EMAIL": "Change"
   },
   "IDENTITIES": {
-    "TITLE": "My identities"
+    "IDP": "My identities",
+    "CERT": "My certificates",
+    "OTHER": "Other",
+    "ADD": "Add",
+    "REMOVE": "Remove"
   },
   "PRIVACY": {
     "TITLE": "Privacy",
@@ -155,6 +159,13 @@
       "REASON": "Reason:",
       "SEND": "Send",
       "CANCEL": "Cancel"
+    },
+    "REMOVE_USER_EXT_SOURCE": {
+      "TITLE": "Remove user's external identity",
+      "DESCRIPTION": "Following external identity will be removed",
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     }
   },
   "ALERTS": {

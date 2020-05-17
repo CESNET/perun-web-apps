@@ -1,12 +1,26 @@
-<h3 class="mt-2">{{'IDENTITIES.TITLE' | translate}}</h3>
-<button mat-flat-button color="accent" (click)="addIdentity()">ADD</button>
-<button mat-flat-button color="warn" class="ml-2" (click)="removeIdentity()">REMOVE</button>
+<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+<div *ngIf="!loading">
+  <h4>{{'IDENTITIES.IDP' | translate}}</h4>
+  <button mat-flat-button color="accent" (click)="addIdentity()">{{'IDENTITIES.ADD' | translate}}</button>
+  <button mat-flat-button color="warn" class="ml-2" [disabled]="idpSelection.selected.length === 0" (click)="removeIdentity(idpSelection.selected)">{{'IDENTITIES.REMOVE' | translate}}</button>
+  <perun-web-apps-user-ext-sources-list
+    [userExtSources]="idpExtSources"
+    [selection]="idpSelection"
+  ></perun-web-apps-user-ext-sources-list>
 
-<perun-web-apps-user-ext-sources-list
-  [userExtSources]="userExtSources"
-  [selection]="selection"
-></perun-web-apps-user-ext-sources-list>
+  <h4>{{'IDENTITIES.CERT' | translate}}</h4>
+  <button mat-flat-button color="accent" (click)="addIdentity()">{{'IDENTITIES.ADD' | translate}}</button>
+  <button mat-flat-button color="warn" class="ml-2" [disabled]="certSelection.selected.length === 0" (click)="removeIdentity(certSelection.selected)">{{'IDENTITIES.REMOVE' | translate}}</button>
+  <perun-web-apps-user-ext-sources-list
+    [userExtSources]="certExtSources"
+    [selection]="certSelection"
+  ></perun-web-apps-user-ext-sources-list>
 
-<!--<h2 class="mt-3">MY CERTIFICATES</h2>-->
-<!--<button mat-flat-button color="accent" (click)="addIdentity()">ADD</button>-->
-<!--<button mat-flat-button color="warn" class="ml-2" (click)="removeIdentity()">REMOVE</button>-->
+  <h4>{{'IDENTITIES.OTHER' | translate}}</h4>
+  <button mat-flat-button color="warn" class="ml-2" [disabled]="otherSelection.selected.length === 0" (click)="removeIdentity(otherSelection.selected)">{{'IDENTITIES.REMOVE' | translate}}</button>
+  <perun-web-apps-user-ext-sources-list
+    [userExtSources]="otherExtSources"
+    [selection]="otherSelection"
+  ></perun-web-apps-user-ext-sources-list>
+</div>
+
