@@ -37,13 +37,42 @@ export class SideMenuComponent implements OnInit {
     this.translateService.onLangChange.subscribe(lang =>{
       this.lang = lang;
     });
-    this.items.push(this.sideMenuItemService.getProfileItem());
-    this.items.push(this.sideMenuItemService.getIdentitiesItem());
-    this.items.push(this.sideMenuItemService.getServicesItem());
-    this.items.push(this.sideMenuItemService.getGroupsItem());
-    this.items.push(this.sideMenuItemService.getVosItem());
-    this.items.push(this.sideMenuItemService.getPrivacyItem());
-    this.items.push(this.sideMenuItemService.getSettingsItem());
+    const displayedTabs: string[] = this.storeService.get('displayed_tabs');
+    this.items = this.sideMenuItemService.getSideMenuItems();
+
+    this.items = this.items.filter(item => displayedTabs.includes(item.tabName));
+
+    // let item = this.sideMenuItemService.getProfileItem();
+    // if(item.tabName === 'profile'){
+    //   this.items.push(this.sideMenuItemService.getProfileItem());
+    // }
+    //
+    // item = this.sideMenuItemService.getIdentitiesItem();
+    // if(item.tabName === 'profile'){
+    //   this.items.push(this.sideMenuItemService.getIdentitiesItem());
+    // }
+    //
+    // item = this.sideMenuItemService.getServicesItem();
+    // if(item.tabName === 'profile'){
+    //   this.items.push(this.sideMenuItemService.getServicesItem());
+    // }
+    //
+    // item = this.sideMenuItemService.getVosItem();
+    // if(item.tabName === 'profile'){
+    //   this.items.push(this.sideMenuItemService.getVosItem());
+    // }
+    //
+    // item = this.sideMenuItemService.getProfileItem();
+    // if(item.tabName === 'profile'){
+    //   this.items.push(this.sideMenuItemService.getProfileItem());
+    // }
+    //
+    // this.items.push(this.sideMenuItemService.getIdentitiesItem());
+    // this.items.push(this.sideMenuItemService.getServicesItem());
+    // this.items.push(this.sideMenuItemService.getGroupsItem());
+    // this.items.push(this.sideMenuItemService.getVosItem());
+    // this.items.push(this.sideMenuItemService.getPrivacyItem());
+    // this.items.push(this.sideMenuItemService.getSettingsItem());
   }
 
   isActive(regexValue: string) {
