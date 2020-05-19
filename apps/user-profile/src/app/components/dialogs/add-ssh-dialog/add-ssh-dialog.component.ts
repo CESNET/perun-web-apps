@@ -33,7 +33,9 @@ export class AddSshDialogComponent implements OnInit {
   onSubmit() {
     // @ts-ignore
     const keys: string[] = this.data.attribute.value ? this.data.attribute.value : [];
-    keys.push(this.sshControl.value);
+    if(!keys.includes(this.sshControl.value)){
+      keys.push(this.sshControl.value);
+    }
     this.data.attribute.value = keys;
 
     this.attributesManagerService.setUserAttribute({ user: this.data.userId, attribute: this.data.attribute }).subscribe(() => {

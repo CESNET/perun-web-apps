@@ -25,7 +25,10 @@
     "TITLE": "Groups",
     "SELECT_VO": "Filter by organization",
     "ALL": "All organizations",
-    "FILTER": "Filter by name"
+    "FILTER": "Filter by name",
+    "EXTEND": "Extend",
+    "MEMBER_GROUPS": "Groups where you are member",
+    "ADMINS_GROUPS": "Groups where you are admin"
   },
   "SERVICES": {
     "TITLE": "My services",
@@ -58,6 +61,11 @@
     "LOGIN": "Login",
     "LAST_ACCESS": "Last access",
     "NO_IDENTITIES": "No external identities found"
+  },
+  "MEMBERSHIP_LIST": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "EXPIRATION": "Expiration"
   },
   "SSH_KEYS": {
     "SSH_KEYS_TITLE": "SSH keys",
@@ -166,6 +174,9 @@
       "ASK": "Are you sure you want to continue?",
       "CANCEL": "Cancel",
       "REMOVE": "Remove"
+    },
+    "SHOW_SSH": {
+      "CLOSE": "Cancel"
     }
   },
   "ALERTS": {

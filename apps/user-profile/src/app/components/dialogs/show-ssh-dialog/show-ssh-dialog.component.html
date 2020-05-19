@@ -1,0 +1,11 @@
+<textarea
+  matInput
+  cdkTextareaAutosize
+  readonly
+  class="w-100 display-fix"
+>{{sshKey}}</textarea>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="warn" class="ml-auto"
+          (click)="onClose()">{{'DIALOGS.SHOW_SSH.CLOSE' | translate}}</button>
+</mat-dialog-actions>

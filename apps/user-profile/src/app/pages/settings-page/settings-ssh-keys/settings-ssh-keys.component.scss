@@ -1,0 +1,15 @@
+.truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap;
+  //max-width: 10rem;
+}
+
+.center-content {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+label:hover{
+  cursor: pointer;
+}

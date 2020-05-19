@@ -69,6 +69,8 @@ import { CustomTranslatePipe } from './pipes/custom-translate.pipe';
 import { MembershipListComponent } from './components/membership-list/membership-list.component';
 import { ValidateExpirationPipe } from './pipes/validate-expiration.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRippleModule } from '@angular/material/core';
+import { ShowSshDialogComponent } from './components/dialogs/show-ssh-dialog/show-ssh-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -123,7 +125,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     RemoveUserExtSourceDialogComponent,
     CustomTranslatePipe,
     MembershipListComponent,
-    ValidateExpirationPipe
+    ValidateExpirationPipe,
+    ShowSshDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -162,7 +165,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     MatCardModule,
     ClipboardModule,
     PerunPipesModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatRippleModule
   ],
   providers: [
     CustomIconService,
