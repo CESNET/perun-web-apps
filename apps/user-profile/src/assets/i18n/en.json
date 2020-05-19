@@ -11,7 +11,7 @@
   "SETTINGS": {
     "ALTERNATIVE_PASSWORDS": "Alternative passwords",
     "DATA_QUOTAS": "Data quotas",
-    "MAILING_LISTS": "Mailing lists",
+    "MAILING_LISTS": "Opt-out from mailing lists",
     "PREFERRED_SHELLS": "Preferred shells",
     "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group",
     "SAMBA_PASSWORD": "Samba password",

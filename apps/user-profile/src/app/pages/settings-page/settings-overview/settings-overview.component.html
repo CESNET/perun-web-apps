@@ -1,3 +1,6 @@
-<div>
-  <perun-web-apps-menu-buttons-field [items]="items" [size]="'small'"></perun-web-apps-menu-buttons-field>
-</div>
+<mat-list>
+  <mat-list-item *ngFor="let item of items" matRipple [routerLink]="item.url">
+    <mat-icon>{{item.icon}}</mat-icon>
+    <p class="ml-2 mt-auto mb-auto">{{item.label | translate}}</p>
+  </mat-list-item>
+</mat-list>

@@ -4,5 +4,4 @@ export interface MenuItem {
   style: string;
   clickAction?: Function;
   cssIcon: string;
-  tabName?: string;
 }
