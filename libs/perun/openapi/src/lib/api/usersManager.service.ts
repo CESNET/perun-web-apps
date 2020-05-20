@@ -457,6 +457,71 @@ export class UsersManagerService {
     }
 
     /**
+     * Returns list of Groups in selected Vo, where the User is a direct Administrator or he is a member of any group which is Administrator of some of these Groups.
+     * @param user id of User
+     * @param vo id of Vo
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getGroupsInVoWhereUserIsAdmin(user: number, vo: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Group>>;
+    public getGroupsInVoWhereUserIsAdmin(user: number, vo: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Group>>>;
+    public getGroupsInVoWhereUserIsAdmin(user: number, vo: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Group>>>;
+    public getGroupsInVoWhereUserIsAdmin(user: number, vo: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling getGroupsInVoWhereUserIsAdmin.');
+        }
+        if (vo === null || vo === undefined) {
+            throw new Error('Required parameter vo was null or undefined when calling getGroupsInVoWhereUserIsAdmin.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (vo !== undefined && vo !== null) {
+            queryParameters = queryParameters.set('vo', <any>vo);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Group>>(`${this.configuration.basePath}/json/usersManager/getGroupsWhereUserIsAdmin/u-v`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Returns list of Groups in Perun, where the User is a direct Administrator or he is a member of any group which is Administrator of some of these Groups.
      * @param user id of User
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

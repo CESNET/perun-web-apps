@@ -66,7 +66,7 @@ export class RegistrarManagerService {
 
     /**
      * Add new mail notification.
-     * @param inputAddApplicationMailForGroup
+     * @param inputAddApplicationMailForGroup 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -128,7 +128,7 @@ export class RegistrarManagerService {
 
     /**
      * Add new mail notification.
-     * @param inputAddApplicationMailForVo
+     * @param inputAddApplicationMailForVo 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -190,7 +190,7 @@ export class RegistrarManagerService {
 
     /**
      * Manually approves an application.
-     * Expected to be called as a result of direct VO administrator action in the web UI.
+     * Expected to be called as a result of direct VO administrator action in the web UI. 
      * @param id numeric id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1457,7 +1457,7 @@ export class RegistrarManagerService {
 
     /**
      * Get time-limited token proving user identity in external source (for now 3 minutes).
-     * It can be used to join user identity with another by calling consolidateIdentityUsingToken() method and passing the token. Please note, that different authz (identity) must be used to perform both calls.
+     * It can be used to join user identity with another by calling consolidateIdentityUsingToken() method and passing the token. Please note, that different authz (identity) must be used to perform both calls. 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1746,7 +1746,7 @@ export class RegistrarManagerService {
 
     /**
      * Gets an application form for a given Group.
-     * There is exactly one form for membership per Group, one form is used for both initial registration and annual account expansion, just the form items are marked whether the should be present in one, the other, or both types of application.
+     * There is exactly one form for membership per Group, one form is used for both initial registration and annual account expansion, just the form items are marked whether the should be present in one, the other, or both types of application. 
      * @param group id of Group
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1805,7 +1805,7 @@ export class RegistrarManagerService {
 
     /**
      * Gets an application form for a given VO.
-     * There is exactly one form for membership per VO, one form is used for both initial registration and annual account expansion, just the form items are marked whether the should be present in one, the other, or both types of application.
+     * There is exactly one form for membership per VO, one form is used for both initial registration and annual account expansion, just the form items are marked whether the should be present in one, the other, or both types of application. 
      * @param vo id of Vo
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -1864,7 +1864,7 @@ export class RegistrarManagerService {
 
     /**
      * Manually rejects an application.
-     * Expected to be called as a result of direct VO administrator action in the web UI.
+     * Expected to be called as a result of direct VO administrator action in the web UI. 
      * @param id numeric id
      * @param reason description of reason
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2002,7 +2002,7 @@ export class RegistrarManagerService {
 
     /**
      * Sends invitation email to user which is not member of VO and Group
-     * Invitation link targets VO application form fist, after submission, Group application form is displayed.
+     * Invitation link targets VO application form fist, after submission, Group application form is displayed. 
      * @param email email address to send invitation to
      * @param language preferred language to use
      * @param voId id of VO to send invitation into
@@ -2205,8 +2205,8 @@ export class RegistrarManagerService {
 
     /**
      * Re-send mail notification for existing application.
-     * Message of specified type is sent only, when application is in expected state related to the notification. Note, that some data related to processing application are not available (e.g. list of exceptions during approval), since this method doesn\&#39;t perform any action with Application itself. Perun admin can send any notification except USER_INVITE type, see #sendInvitation() for this.
-     * @param inputSendMessage
+     * Message of specified type is sent only, when application is in expected state related to the notification. Note, that some data related to processing application are not available (e.g. list of exceptions during approval), since this method doesn\&#39;t perform any action with Application itself. Perun admin can send any notification except USER_INVITE type, see #sendInvitation() for this. 
+     * @param inputSendMessage 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2268,7 +2268,7 @@ export class RegistrarManagerService {
 
     /**
      * Enable or disable sending for list of mail definitions.
-     * @param inputSetSendingEnabled
+     * @param inputSetSendingEnabled 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2330,7 +2330,7 @@ export class RegistrarManagerService {
 
     /**
      * Updates an e-mail notification.
-     * @param inputUpdateApplicationMail
+     * @param inputUpdateApplicationMail 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2392,7 +2392,7 @@ export class RegistrarManagerService {
 
     /**
      * Updates the form attributes, not the form items.
-     * @param inputUpdateForm
+     * @param inputUpdateForm 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2454,7 +2454,7 @@ export class RegistrarManagerService {
 
     /**
      * Update application form item data value, which was originally submitted by the User.
-     * @param inputFormItemData
+     * @param inputFormItemData 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2516,7 +2516,7 @@ export class RegistrarManagerService {
 
     /**
      * Updates form items sent in list.
-     * @param inputUpdateFormItemsForGroup
+     * @param inputUpdateFormItemsForGroup 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -2578,7 +2578,7 @@ export class RegistrarManagerService {
 
     /**
      * Updates form items sent in list.
-     * @param inputUpdateFormItemsForVo
+     * @param inputUpdateFormItemsForVo 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
