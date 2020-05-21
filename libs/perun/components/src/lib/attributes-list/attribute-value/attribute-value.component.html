@@ -23,6 +23,12 @@
     [attribute]="attribute"
     [readonly]="readonly"
     (sendEventToParent)="_sendEventToParent2()"
-    *ngIf="attribute.type === 'java.lang.String' || attribute.type === 'java.lang.LargeString' || attribute.type === 'java.lang.Integer'">
+    *ngIf="attribute.type === 'java.lang.String' || attribute.type === 'java.lang.LargeString'">
   </perun-web-apps-attribute-value-string>
+  <perun-web-apps-attribute-value-integer
+    [attribute]="attribute"
+    [readonly]="readonly"
+    (sendEventToParent)="_sendEventToParent2()"
+    *ngIf="attribute.type === 'java.lang.Integer'">
+  </perun-web-apps-attribute-value-integer>
 </div>

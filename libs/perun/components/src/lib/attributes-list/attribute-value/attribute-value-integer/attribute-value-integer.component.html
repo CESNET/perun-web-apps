@@ -1,0 +1,8 @@
+<mat-form-field class="w-100" appearance="{{(attribute | isVirtualAttribute) || readonly ? 'none' : 'standard'}}">
+  <input
+    matInput
+    [readonly]="(attribute | isVirtualAttribute) || readonly"
+    [(ngModel)]="attribute.value"
+    type="number"
+    (keydown)="_sendEventToParent()"/>
+</mat-form-field>

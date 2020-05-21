@@ -38,6 +38,7 @@ import { AttributeValueListEditDialogComponent } from './attributes-list/attribu
 import { AttributeValueListDeleteDialogComponent } from './attributes-list/attribute-value/attribute-value-list/attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AttributeValueIntegerComponent } from './attributes-list/attribute-value/attribute-value-integer/attribute-value-integer.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ResourcesListComponent,
     MenuButtonsFieldComponent,
     AttributeValueListEditDialogComponent,
-    AttributeValueListDeleteDialogComponent
+    AttributeValueListDeleteDialogComponent,
+    AttributeValueIntegerComponent
   ],
   exports: [
     VoSelectTableComponent,
