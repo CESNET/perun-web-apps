@@ -14,6 +14,8 @@
 
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
+<app-alert color="warn" *ngIf="!userMemberships.length && !adminMemberships.length && !loading">{{'GROUPS.NO_GROUPS'| translate}}</app-alert>
+
 <div *ngIf="!loading && userMemberships.length !== 0">
   <h4 class="page-subtitle">{{'GROUPS.MEMBER_GROUPS' | translate}}</h4>
   <button mat-flat-button color="accent" (click)="extendMembership()"

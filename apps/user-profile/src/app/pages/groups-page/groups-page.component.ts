@@ -80,7 +80,6 @@ export class GroupsPageComponent implements OnInit {
               entity: group,
               expirationAttribute: atts.find(att => att.friendlyName === 'groupMembershipExpiration')
             });
-            // console.log(`${i} ${j}`);
             this.loading = i !==0 || j !== 0;
           });
         });
@@ -118,6 +117,7 @@ export class GroupsPageComponent implements OnInit {
         }
         this.groupService.getMemberGroups(member.id).subscribe(groups =>{
           let i = groups.length;
+          this.loading = i !== 0;
           groups.forEach(group =>{
             this.attributesManagerService.getMemberGroupAttributes(member.id, group.id).subscribe(atts =>{
               i--;
@@ -130,8 +130,7 @@ export class GroupsPageComponent implements OnInit {
           });
         })
       });
-      //TODO Here should be overload that uses 2 parameters
-      this.usersService.getGroupsWhereUserIsAdmin(this.userId).subscribe(adminGroups => {
+      this.usersService.getGroupsInVoWhereUserIsAdmin(this.userId, vo.id).subscribe(adminGroups => {
         adminGroups.forEach(group =>{
           this.adminMemberships.push({
             entity: group,

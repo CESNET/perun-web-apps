@@ -28,7 +28,8 @@
     "FILTER": "Filter by name",
     "EXTEND": "Extend",
     "MEMBER_GROUPS": "Groups where you are member",
-    "ADMINS_GROUPS": "Groups where you are admin"
+    "ADMINS_GROUPS": "Groups where you are admin",
+    "NO_GROUPS": "No groups found"
   },
   "SERVICES": {
     "TITLE": "My services",
