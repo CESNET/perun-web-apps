@@ -1,14 +1,14 @@
 <div class="col ml-2 mt-3">
   <div class="row row-size">
-    <p class="column-size center-self">{{'PROFILE_PAGE.NAME'|translate}}</p>
+    <p class="column-size center-self">{{'PROFILE_PAGE.NAME'|customTranslate | translate}}</p>
     <p class="center-self">{{fullName}}</p>
   </div>
   <div class="row row-size center-self">
-    <p class="column-size center-self">{{'PROFILE_PAGE.ORGANIZATION'|translate}}</p>
+    <p class="column-size center-self">{{'PROFILE_PAGE.ORGANIZATION'|customTranslate | translate}}</p>
     <p class="center-self">{{organization}}</p>
   </div>
   <div class="row row-size">
-    <p class="column-size center-self">{{'PROFILE_PAGE.PREFERRED_LANGUAGE'|translate}}</p>
+    <p class="column-size center-self">{{'PROFILE_PAGE.PREFERRED_LANGUAGE'|customTranslate | translate}}</p>
     <mat-form-field class="lang-field-width center-self">
       <mat-select [(value)]="currentLang" class="mb-auto ">
         <mat-option (click)="changeLanguage(lang)" *ngFor="let lang of languages" [value]="lang">
@@ -18,12 +18,12 @@
     </mat-form-field>
   </div>
   <div class="row row-size mt-2">
-    <p class="column-size center-self">{{'PROFILE_PAGE.EMAIL'|translate}}</p>
+    <p class="column-size center-self">{{'PROFILE_PAGE.EMAIL'|customTranslate | translate}}</p>
     <p class="center-self">{{email}}</p>
-    <button mat-stroked-button class="ml-2" (click)="changeEmail()">{{'PROFILE_PAGE.CHANGE_EMAIL'|translate}}</button>
+    <button mat-stroked-button class="ml-2" (click)="changeEmail()">{{'PROFILE_PAGE.CHANGE_EMAIL'|customTranslate | translate}}</button>
   </div>
   <div class="row row-size">
-    <p class="column-size center-self">{{'PROFILE_PAGE.TIMEZONE'|translate}}</p>
+    <p class="column-size center-self">{{'PROFILE_PAGE.TIMEZONE'|customTranslate | translate}}</p>
     <mat-form-field class="center-self">
       <mat-select [(value)]="currentTimezone">
         <mat-option (click)="changeTimeZone(tz)" *ngFor="let tz of timeZones" [value]="tz">

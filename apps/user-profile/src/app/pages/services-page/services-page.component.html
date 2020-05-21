@@ -1,5 +1,5 @@
-<h3 class="mt-2">{{'SERVICES.TITLE' | translate}}</h3>
-<perun-web-apps-immediate-filter [placeholder]="'SERVICES.FILTER' | translate"
+<h3 class="mt-2">{{'SERVICES.TITLE' | customTranslate | translate}}</h3>
+<perun-web-apps-immediate-filter [placeholder]="'SERVICES.FILTER' | customTranslate | translate"
                                  (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
 
 <mat-accordion>

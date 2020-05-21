@@ -1,14 +1,14 @@
-<h3 class="mb-3">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.TITLE'|translate}}</h3>
+<h3 class="mb-3">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.TITLE'|customTranslate | translate}}</h3>
 <div fxLayout="row">
-  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.RESOURCE'|translate}}</p>
+  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.RESOURCE'|customTranslate | translate}}</p>
   <p>{{resource}}</p>
 </div>
 <div fxLayout="row">
-  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CURRENT_QUOTA'|translate}}</p>
+  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CURRENT_QUOTA'|customTranslate | translate}}</p>
   <p>{{currentQuota}}</p>
 </div>
 <div fxLayout="row" fxFlexAlign="center center">
-  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REQUESTED_QUOTA'|translate}}</p>
+  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REQUESTED_QUOTA'|customTranslate | translate}}</p>
   <mat-form-field appearance="standard">
     <label class="label-width">
       <input
@@ -24,7 +24,7 @@
   </mat-select>
 </div>
 <div fxLayout="row" fxFlexAlign="center center">
-  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REASON'|translate}}</p>
+  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REASON'|customTranslate | translate}}</p>
   <mat-form-field class="form-width" appearance="standard">
     <label class="label-width">
       <textarea
@@ -45,13 +45,13 @@
     color="accent"
     [disabled]="reasonControl.invalid"
     (click)="onSubmit()">
-    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.SEND'|translate}}
+    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.SEND'|customTranslate | translate}}
   </button>
   <button
     mat-stroked-button
     class="ml-2"
     (click)="onCancel()">
-    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CANCEL'|translate}}
+    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CANCEL'|customTranslate | translate}}
   </button>
 </div>
 

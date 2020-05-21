@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>{{'DIALOGS.ADD_UNIX_GROUP.TITLE'|translate}}</h3>
+<h3 mat-dialog-title>{{'DIALOGS.ADD_UNIX_GROUP.TITLE'|customTranslate | translate}}</h3>
 <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 <div *ngIf="!loading">
   <div mat-dialog-content class="dialog-container">
@@ -18,7 +18,7 @@
       mat-stroked-button
       class="ml-auto"
       (click)="onCancel()">
-      {{'DIALOGS.ADD_UNIX_GROUP.CANCEL'|translate}}
+      {{'DIALOGS.ADD_UNIX_GROUP.CANCEL'|customTranslate | translate}}
     </button>
     <button
       mat-flat-button
@@ -26,7 +26,7 @@
       color="accent"
       [disabled]="!inputControl.valid || groups.includes(inputControl.value)"
       (click)="onSubmit()">
-      {{'DIALOGS.ADD_UNIX_GROUP.ADD'|translate}}
+      {{'DIALOGS.ADD_UNIX_GROUP.ADD'|customTranslate | translate}}
     </button>
   </div>
 </div>

@@ -1,12 +1,12 @@
-<h3 mat-dialog-title>{{'DIALOGS.REMOVE_USER_EXT_SOURCE.TITLE' | translate}}</h3>
+<h3 mat-dialog-title>{{'DIALOGS.REMOVE_USER_EXT_SOURCE.TITLE' | customTranslate | translate}}</h3>
 <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
 <div *ngIf="!loading">
   <div mat-dialog-content>
     <p>
-      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.DESCRIPTION' | translate}}
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.DESCRIPTION' | customTranslate | translate}}
     </p>
     <div class="font-weight-bold">
-      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.ASK' | translate}}
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.ASK' | customTranslate | translate}}
     </div>
     <table mat-table [dataSource]="dataSource" class="w-100">
       <ng-container matColumnDef="name">
@@ -25,14 +25,14 @@
       mat-stroked-button
       class="ml-auto"
       (click)="onCancel()">
-      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.CANCEL' | translate}}
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.CANCEL' | customTranslate | translate}}
     </button>
     <button
       mat-flat-button
       class="ml-2"
       color="warn"
       (click)="onSubmit()">
-      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.REMOVE' | translate}}
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.REMOVE' | customTranslate | translate}}
     </button>
   </div>
 </div>

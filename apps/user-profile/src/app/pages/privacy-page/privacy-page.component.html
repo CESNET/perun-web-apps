@@ -1,12 +1,12 @@
-<h3 class="mt-2">{{'PRIVACY.TITLE' | translate}}</h3>
-<perun-web-apps-immediate-filter [placeholder]="'SERVICES.FILTER' | translate"
+<h3 class="mt-2">{{'PRIVACY.TITLE' | customTranslate | translate}}</h3>
+<perun-web-apps-immediate-filter [placeholder]="'SERVICES.FILTER' | customTranslate | translate"
                                  (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
 <mat-spinner class="ml-auto mr-auto" *ngIf="outerLoading"></mat-spinner>
 <mat-accordion *ngIf="!outerLoading">
   <mat-expansion-panel (opened)="getUserData()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{'PRIVACY.USER_INFO' | translate}}
+        {{'PRIVACY.USER_INFO' | customTranslate | translate}}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
@@ -19,7 +19,7 @@
   <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMemberData(vo)">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{'PRIVACY.DATA' | translate}}{{vo.name}}
+        {{'PRIVACY.DATA' | customTranslate | translate}}{{vo.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>

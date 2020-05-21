@@ -1,5 +1,5 @@
-<h3>{{'DATA_QUOTAS.TITLE' | translate}}</h3>
-<perun-web-apps-immediate-filter [placeholder]="'DATA_QUOTAS.FILTER' | translate"
+<h3>{{'DATA_QUOTAS.TITLE' | customTranslate | translate}}</h3>
+<perun-web-apps-immediate-filter [placeholder]="'DATA_QUOTAS.FILTER' | customTranslate | translate"
                                  (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
 <mat-accordion>
   <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMembersResources(vo)">
@@ -11,7 +11,7 @@
 
     <ng-template matExpansionPanelContent>
       <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-      <app-alert *ngIf="resources.length === 0 && !loading" color="warn">{{'DATA_QUOTAS.NO_QUOTAS'|translate}}</app-alert>
+      <app-alert *ngIf="resources.length === 0 && !loading" color="warn">{{'DATA_QUOTAS.NO_QUOTAS'|customTranslate | translate}}</app-alert>
       <mat-accordion *ngIf="resources.length && !loading">
         <mat-expansion-panel *ngFor="let resource of resources" (opened)="getResAttributes(resource.id)">
           <mat-expansion-panel-header>
@@ -20,12 +20,12 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div *ngIf="defaultQuota">
-            <p><strong>{{'DATA_QUOTAS.QUOTA'|translate}}</strong> {{quotasMarkup}}</p>
-            <p style="color: gray">{{'DATA_QUOTAS.QUOTA_INFO'|translate}}</p>
+            <p><strong>{{'DATA_QUOTAS.QUOTA'|customTranslate | translate}}</strong> {{quotasMarkup}}</p>
+            <p style="color: gray">{{'DATA_QUOTAS.QUOTA_INFO'|customTranslate | translate}}</p>
             <button mat-flat-button color="primary"
-                    (click)="requestChangeQuota(vo, resource)">{{'DATA_QUOTAS.CHANGE'|translate}}</button>
+                    (click)="requestChangeQuota(vo, resource)">{{'DATA_QUOTAS.CHANGE'|customTranslate | translate}}</button>
           </div>
-          <p *ngIf="!defaultQuota">{{'DATA_QUOTAS.NO_QUOTAS'|translate}}</p>
+          <p *ngIf="!defaultQuota">{{'DATA_QUOTAS.NO_QUOTAS'|customTranslate | translate}}</p>
         </mat-expansion-panel>
       </mat-accordion>
     </ng-template>

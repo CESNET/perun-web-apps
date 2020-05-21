@@ -6,7 +6,7 @@
       {{description}}
     </p>
     <div class="font-weight-bold">
-      {{'DIALOGS.REMOVE_STRING_VALUE.ASK' | translate}}
+      {{'DIALOGS.REMOVE_STRING_VALUE.ASK' | customTranslate | translate}}
     </div>
     <table mat-table [dataSource]="dataSource" class="w-100">
       <ng-container matColumnDef="name">
@@ -25,14 +25,14 @@
       mat-stroked-button
       class="ml-auto"
       (click)="onCancel()">
-      {{'DIALOGS.REMOVE_STRING_VALUE.CANCEL' | translate}}
+      {{'DIALOGS.REMOVE_STRING_VALUE.CANCEL' | customTranslate | translate}}
     </button>
     <button
       mat-flat-button
       class="ml-2"
       color="warn"
       (click)="onSubmit()">
-      {{'DIALOGS.REMOVE_STRING_VALUE.REMOVE' | translate}}
+      {{'DIALOGS.REMOVE_STRING_VALUE.REMOVE' | customTranslate | translate}}
     </button>
   </div>
 </div>

@@ -21,15 +21,15 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.NAME' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.NAME' | customTranslate | translate}}</th>
         <td mat-cell class="static-column-size" *matCellDef="let member">{{member.entity.name}}</td>
       </ng-container>
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.DESCRIPTION' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.DESCRIPTION' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let member">{{member.entity.description}}</td>
       </ng-container>
       <ng-container matColumnDef="expiration">
-        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.EXPIRATION' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.EXPIRATION' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let member">
           {{member.expirationAttribute | validateExpiration}}
         </td>

@@ -1,5 +1,5 @@
-<h3>{{'OPT_OUT_MAILING_LISTS.TITLE' | translate}}</h3>
-<perun-web-apps-immediate-filter [placeholder]="'OPT_OUT_MAILING_LISTS.FILTER' | translate"
+<h3>{{'OPT_OUT_MAILING_LISTS.TITLE' | customTranslate | translate}}</h3>
+<perun-web-apps-immediate-filter [placeholder]="'OPT_OUT_MAILING_LISTS.FILTER' | customTranslate | translate"
                                  (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
 <mat-accordion>
   <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMailingLists(vo)">
@@ -11,7 +11,7 @@
     <ng-template matExpansionPanelContent>
       <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
       <app-alert *ngIf="resources.length === 0 && !loading"
-                 color="warn">{{'OPT_OUT_MAILING_LISTS.NO_MAILING_LISTS_ALERT' | translate}}</app-alert>
+                 color="warn">{{'OPT_OUT_MAILING_LISTS.NO_MAILING_LISTS_ALERT' | customTranslate | translate}}</app-alert>
       <mat-accordion *ngIf="resources.length && !loading">
         <mat-expansion-panel *ngFor="let resource of resources" (opened)="getOptOutAttribute(resource)">
           <mat-expansion-panel-header>
@@ -19,7 +19,7 @@
               {{resource.name}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <p>{{'OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | translate}}</p>
+          <p>{{'OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | customTranslate | translate}}</p>
           <mat-checkbox [checked]="optOutAttribute && optOutAttribute.value !== null"
                         (change)="setOptOut()"></mat-checkbox>
 

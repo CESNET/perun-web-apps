@@ -1,28 +1,28 @@
-<h3 class="mt-2">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | translate}}</h3>
+<h3 class="mt-2">{{'SHARED_LIB.PERUN.ORGANIZATIONS.TITLE' | customTranslate | translate}}</h3>
 <perun-web-apps-immediate-filter [placeholder]="'ORGANIZATIONS.FILTER'" (filter)="applyFilter($event)"
                                  *ngIf="!loading"></perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
 <div *ngIf="!loading" class="mt-5">
-  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | translate}}</h4>
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | customTranslate | translate}}</h4>
   <div *ngIf="userMemberships.length !== 0">
-    <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | translate}}</button>
+    <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | customTranslate | translate}}</button>
     <app-membership-list [members]="userMemberships"
                          [selection]="selection"
                          [filterValue]="filterValue"
                          [hideColumns]="['description']"></app-membership-list>
   </div>
-  <app-alert color="warn" *ngIf="userMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | translate}}</app-alert>
+  <app-alert color="warn" *ngIf="userMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | customTranslate | translate}}</app-alert>
 
 </div>
 
 <div *ngIf="!loading" class="mt-5">
   <div *ngIf="adminMemberships.length !== 0">
-  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | translate}}</h4>
+  <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | customTranslate | translate}}</h4>
   <app-membership-list [members]="adminMemberships"
                        [hideColumns]="['checkbox', 'description', 'expiration']"></app-membership-list>
   </div>
-  <app-alert color="warn" *ngIf="adminMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | translate}}</app-alert>
+  <app-alert color="warn" *ngIf="adminMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | customTranslate | translate}}</app-alert>
 </div>
 
 
