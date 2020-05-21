@@ -7,10 +7,10 @@
   <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_MEMBER' | customTranslate | translate}}</h4>
   <div *ngIf="userMemberships.length !== 0">
     <button mat-flat-button color="accent" (click)="extendMembership()" [disabled]="selection.selected.length === 0">{{'EXTEND' | customTranslate | translate}}</button>
-    <app-membership-list [members]="userMemberships"
-                         [selection]="selection"
-                         [filterValue]="filterValue"
-                         [hideColumns]="['description']"></app-membership-list>
+    <perun-web-apps-membership-list [members]="userMemberships"
+                                    [selection]="selection"
+                                    [filterValue]="filterValue"
+                                    [hideColumns]="['description']"></perun-web-apps-membership-list>
   </div>
   <app-alert color="warn" *ngIf="userMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | customTranslate | translate}}</app-alert>
 
@@ -19,8 +19,8 @@
 <div *ngIf="!loading" class="mt-5">
   <div *ngIf="adminMemberships.length !== 0">
   <h4 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.IS_ADMIN' | customTranslate | translate}}</h4>
-  <app-membership-list [members]="adminMemberships"
-                       [hideColumns]="['checkbox', 'description', 'expiration']"></app-membership-list>
+  <perun-web-apps-membership-list [members]="adminMemberships"
+                                  [hideColumns]="['checkbox', 'description', 'expiration']"></perun-web-apps-membership-list>
   </div>
   <app-alert color="warn" *ngIf="adminMemberships.length === 0">{{'ORGANIZATIONS.NO_VOS_ALERT' | customTranslate | translate}}</app-alert>
 </div>

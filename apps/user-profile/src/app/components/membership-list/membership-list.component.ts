@@ -21,7 +21,7 @@ export interface Membership {
 }
 
 @Component({
-  selector: 'app-membership-list',
+  selector: 'perun-web-apps-membership-list',
   templateUrl: './membership-list.component.html',
   styleUrls: ['./membership-list.component.scss']
 })

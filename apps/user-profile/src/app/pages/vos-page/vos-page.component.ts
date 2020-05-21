@@ -57,7 +57,7 @@ export class VosPageComponent implements OnInit {
 
     vos.forEach(vo =>{
       this.membersService.getMembers(vo.id).subscribe(members =>{
-        const member = members.find(member => member.userId === this.userId);
+        const member = members.find(userMember => userMember.userId === this.userId);
         if(!member){
           memberships.push({
             entity: vo,
