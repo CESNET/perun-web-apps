@@ -1,0 +1,53 @@
+<div class="card mt-2" [class.hide-table]="exporting">
+  <div class="card-body table-theme">
+    <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
+    <table
+      class="w-100"
+      mat-table
+      matTableExporter
+      [dataSource]="dataSource"
+      #exporter="matTableExporter">
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+        <td mat-cell *matCellDef="let member" class="static-column-size">
+          <mat-checkbox color="primary"
+                        [disabled]="(member.expirationAttribute | validateExpiration) === 'never'"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(member) : null"
+                        [checked]="selection.isSelected(member)"
+                        [aria-label]="checkboxLabel(member)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.NAME' | translate}}</th>
+        <td mat-cell class="static-column-size" *matCellDef="let member">{{member.entity.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.DESCRIPTION' | translate}}</th>
+        <td mat-cell *matCellDef="let member">{{member.entity.description}}</td>
+      </ng-container>
+      <ng-container matColumnDef="expiration">
+        <th mat-header-cell *matHeaderCellDef>{{'MEMBERSHIP_LIST.EXPIRATION' | translate}}</th>
+        <td mat-cell *matCellDef="let member">
+          {{member.expirationAttribute | validateExpiration}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let member; columns: displayedColumns;">
+      </tr>
+    </table>
+    <mat-paginator
+      [length]="this.members.length"
+      (page)="pageChanged($event)"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+  </div>
+</div>
+
+<mat-spinner *ngIf="exporting" class="ml-auto mr-auto"></mat-spinner>

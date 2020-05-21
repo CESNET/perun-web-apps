@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddSshDialogComponent } from '../../../components/dialogs/add-ssh-dialog/add-ssh-dialog.component';
 import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ShowSshDialogComponent } from '../../../components/dialogs/show-ssh-dialog/show-ssh-dialog.component';
 
 @Component({
   selector: 'perun-web-apps-settings-ssh-keys',
@@ -68,11 +69,11 @@ export class SettingsSSHKeysComponent implements OnInit {
     });
   }
 
-  removeKey(admin: boolean) {
+  removeKey(key: string, admin: boolean) {
     const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
       width: '600px',
       data: {
-        values: admin ? this.selectionAdmin.selected : this.selection.selected,
+        values: [key],
         attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute,
         userId: this.userId,
         title: this.removeDialogTitle,
@@ -104,6 +105,15 @@ export class SettingsSSHKeysComponent implements OnInit {
       // @ts-ignore
       this.adminKeys = sshKeys.value;
       this.loading = false;
+    });
+  }
+
+  showWholeKey(key: string) {
+    this.dialog.open(ShowSshDialogComponent, {
+      width: '600px',
+      data: {
+        value: key
+      }
     });
   }
 }

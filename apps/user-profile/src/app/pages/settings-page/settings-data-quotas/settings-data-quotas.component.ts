@@ -32,19 +32,36 @@ export class SettingsDataQuotasComponent implements OnInit {
   currentQuota: string;
   defaultQuota: string;
   quotasMarkup = '';
+  filteredVos: Vo[] = [];
+  loading: boolean;
 
   ngOnInit() {
     this.user = this.store.getPerunPrincipal().user;
 
     this.usersManagerService.getVosWhereUserIsMember(this.user.id).subscribe(vos => {
       this.vos = vos;
+      this.filteredVos = vos;
     });
   }
 
-  getMembers(vo: Vo) {
+  getMembersResources(vo: Vo) {
+    this.loading = true;
+    this.resources = [];
     this.membersService.getMemberByUser(vo.id, this.user.id).subscribe(member => {
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources => {
-        this.resources = resources;
+        let count = resources.length;
+        if(!count){
+          this.loading = false;
+        }
+        resources.forEach(resource =>{
+          this.attributesManagerService.getResourceAttributes(resource.id).subscribe(resAtts =>{
+            count--;
+            if(resAtts.find(att => att.friendlyName === 'defaultDataQuotas')){
+              this.resources.push(resource)
+            }
+            this.loading = count !==0;
+          });
+        });
       });
     });
   }
@@ -91,5 +108,9 @@ export class SettingsDataQuotasComponent implements OnInit {
       width: '600px',
       data: { vo: vo, resource: resource, user: this.user, currentQuota: this.quotasMarkup }
     });
+  }
+
+  applyFilter(filter: string) {
+    this.filteredVos = this.vos.filter(vo => vo.name.toLowerCase().includes(filter.toLowerCase()))
   }
 }

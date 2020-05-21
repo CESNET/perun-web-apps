@@ -25,6 +25,10 @@ export class UserProfileConfigService {
 
   colorConfigs: ColorConfig[] = [
     {
+      configValue: 'sidemenu_bg_color',
+      cssVariable: '--side-bg'
+    },
+    {
       configValue: 'sidemenu_hover_color',
       cssVariable: '--side-hover'
     },

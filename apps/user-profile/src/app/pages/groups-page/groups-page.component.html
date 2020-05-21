@@ -1,27 +1,29 @@
-<!--<app-refresh-button (refresh)="refreshTable()"></app-refresh-button>-->
+<h3 class="page-subtitle pt-2">{{'GROUPS.TITLE' | translate}}</h3>
 
-<h1 class="page-subtitle pt-2">{{'SHARED_LIB.PERUN.GROUPS.MEMBER_GROUPS' | translate}}</h1>
+<mat-form-field class="mr-2 w-75" *ngIf="!loading">
+  <mat-label>{{'GROUPS.SELECT_VO' | translate}}</mat-label>
+  <input type="text" placeholder="{{'GROUPS.SELECT_VO' | translate}}" aria-label="Assignee" matInput
+         [formControl]="myControl" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="filterByVo($event)">
+    <mat-option value="all">{{'GROUPS.ALL' | translate}}</mat-option>
+    <mat-option *ngFor="let vo of filteredVos | async" [value]="vo">
+      {{vo.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
 
-<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-<div *ngIf="!loading">
-  <perun-web-apps-groups-list
-    [groups]="membersGroups"
-    [hideColumns]="['select', 'menu']"
-    [disableRouting]="true"
-    [pageSize]="5"
-  ></perun-web-apps-groups-list>
+<mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
+
+<div *ngIf="!loading && userMemberships.length !== 0">
+  <h4 class="page-subtitle">{{'GROUPS.MEMBER_GROUPS' | translate}}</h4>
+  <button mat-flat-button color="accent" (click)="extendMembership()"
+          [disabled]="selection.selected.length === 0">{{'GROUPS.EXTEND' | translate}}</button>
+  <app-membership-list [members]="userMemberships"
+                       [selection]="selection"></app-membership-list>
 </div>
 
-<div *ngIf="adminsGroups.length != 0">
-  <h1 class="page-subtitle pt-5">{{'SHARED_LIB.PERUN.GROUPS.ADMINS_GROUPS' | translate}}</h1>
-
-  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-  <div *ngIf="!loading">
-    <perun-web-apps-groups-list
-      [groups]="adminsGroups"
-      [hideColumns]="['select', 'menu']"
-      [disableRouting]="true"
-      [pageSize]="5"
-    ></perun-web-apps-groups-list>
-  </div>
+<div *ngIf="!loading && adminMemberships.length !== 0" class="mt-5">
+  <h4 class="page-subtitle">{{'GROUPS.ADMINS_GROUPS' | translate}}</h4>
+  <app-membership-list [members]="adminMemberships"
+                       [hideColumns]="['checkbox', 'expiration']"></app-membership-list>
 </div>

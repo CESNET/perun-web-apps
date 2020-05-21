@@ -1,9 +1,9 @@
 <footer [ngStyle]="{'background': bgColor}" style="padding-top: 15px; padding-bottom: 15px">
   <div fxLayout="row" fxLayoutAlign="space-evenly none">
     <div *ngFor="let item of items" fxLayout="column" fxLayoutAlign="none left">
-      <h3 [ngStyle]="{'color': headersTextColor}">
+      <h5 [ngStyle]="{'color': headersTextColor}">
         {{getLanguage() === 'en' ? item.title_en : item.title_cz}}
-      </h3>
+      </h5>
       <div *ngIf="item.elements">
         <div *ngFor="let elem of item.elements">
           <a *ngIf="elem.link" [href]="elem.link" [ngStyle]="{'color': linksTextColor}" target="_blank">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</a>

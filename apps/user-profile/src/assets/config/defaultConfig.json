@@ -9,10 +9,35 @@
     "oauth_redirect_uri": "http://gui-dev.org/api-callback"
   },
   "consolidator_base_url": "https://perun-dev.cesnet.cz/",
-  "custom_menu_labels": {
-    "CUSTOM_IDENTITIES_LABEL_cs": "just idea placeholder",
-    "CUSTOM_IDENTITIES_LABEL_en": "same here"
-  },
+  "registrar_base_url": "https://perun-dev.cesnet.cz/fed/registrar/",
+  "displayed_tabs": [
+    "profile",
+    "identities",
+    "services",
+    "groups",
+    "vos",
+    "privacy",
+    "settings",
+    "data_quotas",
+    "ssh_keys",
+    "opt_out",
+    "samba",
+    "alt_passwords",
+    "pref_shells",
+    "pref_group_names"
+  ],
+  "custom_labels": [
+    {
+      "label": "PREFERRED_SHELLS.TITLE",
+      "en": "Preferred shells (custom label)",
+      "cz": "Preferovane shelly (custom label)"
+    },
+    {
+      "label": "MENU_ITEMS.PROFILE",
+      "en": "Profile(cutom label)",
+      "cz": "Profil(cutom label)"
+    }
+  ],
   "header_label": "Generic user profile",
   "preferred_unix_group_names": [
     "einfra",

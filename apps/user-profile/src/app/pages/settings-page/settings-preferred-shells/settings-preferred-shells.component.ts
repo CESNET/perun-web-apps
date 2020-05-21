@@ -27,6 +27,7 @@ export class SettingsPreferredShellsComponent implements OnInit {
   shells: string[] = [];
   removeDialogTitle: string;
   removeDialogDescription: string;
+  loading: boolean;
 
   ngOnInit() {
     this.userId = this.store.getPerunPrincipal().userId;
@@ -37,17 +38,20 @@ export class SettingsPreferredShellsComponent implements OnInit {
     this.shells.push('/bin/bash');
 
     this.prefShellsAttribute.value = this.shells;
-    this.attributesManagerService.setUserAttribute({user: this.userId, attribute: this.prefShellsAttribute}).subscribe(()=>{
-      console.log("done");
+    this.attributesManagerService.setUserAttribute({
+      user: this.userId,
+      attribute: this.prefShellsAttribute
+    }).subscribe(() => {
+      console.log('done');
     });
   }
 
   removeShell(i: number) {
-    this.shells.splice(i,1);
     const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
       width: '600px',
       data: {
-        values: [],
+        valueIndex: i,
+        values: [this.shells[i]],
         attribute: this.prefShellsAttribute,
         userId: this.userId,
         title: this.removeDialogTitle,
@@ -63,18 +67,24 @@ export class SettingsPreferredShellsComponent implements OnInit {
   }
 
   private getAttribute() {
+    this.loading = true;
     this.attributesManagerService.getUserAttributeByName(this.userId, 'urn:perun:user:attribute-def:def:preferredShells').subscribe(attribute => {
       this.prefShellsAttribute = attribute;
 
       // @ts-ignore
       this.shells = this.prefShellsAttribute.value ? this.prefShellsAttribute.value : [];
-    })
+      this.loading = false;
+    });
   }
 
   changeValue() {
+    this.loading = true;
     this.prefShellsAttribute.value = this.shells;
-    this.attributesManagerService.setUserAttribute({user: this.userId, attribute: this.prefShellsAttribute}).subscribe(()=>{
-      console.log("done");
+    this.attributesManagerService.setUserAttribute({
+      user: this.userId,
+      attribute: this.prefShellsAttribute
+    }).subscribe(() => {
+      this.getAttribute();
     });
   }
 }

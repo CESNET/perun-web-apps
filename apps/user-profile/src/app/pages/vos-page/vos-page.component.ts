@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PerunPrincipal, UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { MembersManagerService, PerunPrincipal, UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Membership } from '../../components/membership-list/membership-list.component';
 
 @Component({
   selector: 'perun-web-apps-vos-page',
@@ -11,18 +13,22 @@ export class VosPageComponent implements OnInit {
 
   constructor(
     private usersService: UsersManagerService,
-    private store: StoreService
+    private store: StoreService,
+    private membersService: MembersManagerService
   ) {
   }
 
   principal: PerunPrincipal;
-  vosWhereIsAdmin: Vo[];
-  vosWhereIsMember: Vo[];
   loading: boolean;
   userId: number;
   filterValue = '';
+  selection = new SelectionModel<Membership>(false, []);
+  displayedColumns = ['checkbox','id', 'name'];
 
-  displayedColumns = ['id', 'name'];
+  userMemberships: Membership[] = [];
+  adminMemberships: Membership[] = [];
+
+  vosCount = 0;
 
   ngOnInit() {
     this.principal = this.store.getPerunPrincipal();
@@ -34,11 +40,10 @@ export class VosPageComponent implements OnInit {
   refreshTable() {
     this.loading = true;
     this.usersService.getVosWhereUserIsMember(this.userId).subscribe(vosMember => {
-      this.vosWhereIsMember = vosMember;
-
       this.usersService.getVosWhereUserIsAdmin(this.userId).subscribe(vosAdmin => {
-        this.vosWhereIsAdmin = vosAdmin;
-        this.loading = false;
+        this.vosCount = vosMember.length + vosAdmin.length;
+        this.fillMemberships(vosMember, this.userMemberships);
+        this.fillMemberships(vosAdmin, this.adminMemberships);
       });
     });
   }
@@ -48,4 +53,38 @@ export class VosPageComponent implements OnInit {
   }
 
 
+  private fillMemberships(vos: Array<Vo>, memberships: Membership[]) {
+
+    vos.forEach(vo =>{
+      this.membersService.getMembers(vo.id).subscribe(members =>{
+        const member = members.find(member => member.userId === this.userId);
+        if(!member){
+          memberships.push({
+            entity: vo,
+            expirationAttribute: null
+          });
+         this.isEverythingLoaded();
+        } else {
+          this.membersService.getRichMemberWithAttributes(member.id).subscribe(richMember =>{
+            const expirationAtt = richMember.memberAttributes.find(att => att.friendlyName === 'membershipExpiration');
+            memberships.push({
+              entity: vo,
+              expirationAttribute: expirationAtt
+            });
+            this.isEverythingLoaded()
+          })
+        }
+      });
+    });
+  }
+
+  isEverythingLoaded(){
+    this.vosCount--;
+    this.loading = this.vosCount !== 0;
+  }
+
+  extendMembership() {
+    const registrarUrl = this.store.get('registrar_base_url');
+    window.location.href = `${registrarUrl}?vo=${this.selection.selected[0].entity.shortName}`;
+  }
 }

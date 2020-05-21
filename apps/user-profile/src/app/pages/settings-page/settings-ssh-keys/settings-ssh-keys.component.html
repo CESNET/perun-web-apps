@@ -1,21 +1,37 @@
 <h3>{{'SSH_KEYS.SSH_KEYS_TITLE'|translate}}</h3>
 <p>{{'SSH_KEYS.SSH_KEYS_DESCRIPTION'|translate}}</p>
 <button mat-flat-button color="accent" (click)="addKey(false)">{{'SSH_KEYS.NEW_KEY'|translate}}</button>
-<button mat-flat-button color="warn" class="ml-2" [disabled]="!userKeys || !selection.selected.length"
-        (click)="removeKey(false)">{{'SSH_KEYS.REMOVE_KEY'|translate}}</button>
-<perun-web-apps-string-list
-  [values]="userKeys"
-  [selection]="selection"
-  [alertText]="alertText"
-  [headerColumnText]="headerColumnText"></perun-web-apps-string-list>
+<mat-list>
+  <mat-list-item *ngFor="let key of userKeys" style="width: auto" matRipple>
+    <label class="truncate center-content" (click)="showWholeKey(key)">{{key}}</label>
+    <button mat-icon-button color="accent" class="ml-auto center-content" [cdkCopyToClipboard]="key">
+      <mat-icon>
+        file_copy
+      </mat-icon>
+    </button>
+    <button mat-icon-button color="warn" class="ml-2 center-content" (click)="removeKey(key, false)">
+      <mat-icon>
+        delete
+      </mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
 
 <h3>{{'SSH_KEYS.ADMIN_SSH_KEYS_TITLE'|translate}}</h3>
 <p>{{'SSH_KEYS.ADMIN_SSH_KEYS_DESCRIPTION'|translate}}</p>
 <button mat-flat-button color="accent" (click)="addKey(true)">{{'SSH_KEYS.NEW_KEY'|translate}}</button>
-<button mat-flat-button color="warn" class="ml-2" [disabled]="!adminKeys || !selectionAdmin.selected.length"
-        (click)="removeKey(true)">{{'SSH_KEYS.REMOVE_KEY'|translate}}</button>
-<perun-web-apps-string-list
-  [values]="adminKeys"
-  [selection]="selectionAdmin"
-  [alertText]="alertText"
-  [headerColumnText]="headerColumnText"></perun-web-apps-string-list>
+<mat-list>
+  <mat-list-item *ngFor="let key of adminKeys" style="width: auto" matRipple>
+    <label class="truncate center-content" (click)="showWholeKey(key)">{{key}}</label>
+    <button mat-icon-button color="accent" class="ml-auto center-content" [cdkCopyToClipboard]="key">
+      <mat-icon>
+        file_copy
+      </mat-icon>
+    </button>
+    <button mat-icon-button color="warn" class="ml-2 center-content" (click)="removeKey(key, true)">
+      <mat-icon>
+        delete
+      </mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>

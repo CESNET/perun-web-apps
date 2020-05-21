@@ -27,27 +27,41 @@ export class PrivacyPageComponent implements OnInit {
   attributes: Attribute[] = [];
   username = '';
   hiddenColumns = ['select', 'id'];
+  outerLoading: boolean;
+  innerLoading: boolean;
+  filteredVos: Vo[] = [];
 
   ngOnInit() {
+    this.outerLoading = true;
     this.userId = this.storage.getPerunPrincipal().userId;
     this.usersManagerService.getVosWhereUserIsMember(this.userId).subscribe(vos => {
       this.vos = vos;
+      this.filteredVos = vos;
+      this.outerLoading = false;
     });
   }
 
   getUserData() {
+    this.innerLoading = true;
     this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe(user => {
       this.user = user;
       this.attributes = user.userAttributes;
       this.username = new UserFullNamePipe().transform(user);
+      this.innerLoading = false;
     });
   }
 
   getMemberData(vo: Vo) {
+    this.innerLoading = true;
     this.membersService.getMemberByUser(vo.id, this.userId).subscribe(member =>{
       this.membersService.getRichMemberWithAttributes(member.id).subscribe(richMember =>{
         this.attributes = richMember.memberAttributes;
+        this.innerLoading = false;
       });
     });
+  }
+
+  applyFilter(filter: string) {
+    this.filteredVos = this.vos.filter(res => res.name.toLowerCase().includes(filter.toLowerCase()))
   }
 }

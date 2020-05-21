@@ -23,21 +23,29 @@ export class ServicesPageComponent implements OnInit {
   vos: Vo[];
   userId: number;
   resources: RichResource[] = [];
-
+  filteredVos: Vo[] = [];
+  loading: boolean;
   hiddenColumns: string[] = ['select', 'id', 'facility', 'tags'];
 
   ngOnInit() {
     this.userId = this.storage.getPerunPrincipal().userId;
     this.usersManagerService.getVosWhereUserIsMember(this.userId).subscribe(vos => {
       this.vos = vos;
+      this.filteredVos = vos;
     });
   }
 
   getMemberData(vo: Vo) {
+    this.loading = true;
     this.membersManagerService.getMemberByUser(vo.id, this.userId).subscribe(member =>{
       this.resourcesManagerService.getAssignedRichResourcesWithMember(member.id).subscribe(resources =>{
         this.resources = resources;
+        this.loading = false;
       })
     })
+  }
+
+  applyFilter(filter: string) {
+    this.filteredVos = this.vos.filter(res => res.name.toLowerCase().includes(filter.toLowerCase()))
   }
 }

@@ -4,7 +4,8 @@ import { UserExtSource, UsersManagerService} from '@perun-web-apps/perun/openapi
 import { MatTableDataSource } from '@angular/material/table';
 
 export interface RemoveUserExtSourceDialogData {
-  extSources: UserExtSource[]
+  userId: number;
+  extSources: UserExtSource[];
 }
 
 @Component({
@@ -40,7 +41,10 @@ export class RemoveUserExtSourceDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    //TODO there will be method for removing selected identity
+    this.usersManagerService.removeUserExtSource(this.data.userId, this.data.extSources[0].extSource.id).subscribe(() =>{
+      this.loading = false;
+      this.dialogRef.close(true);
+    })
   }
 
 }

@@ -6,6 +6,7 @@ import { FormControl, Validators } from '@angular/forms';
 export interface AddUnixGroupDialogData {
   userId: number;
   namespace: string;
+  groups: string[];
 }
 
 @Component({
@@ -20,9 +21,12 @@ export class AddUnixGroupDialogComponent implements OnInit {
               private attributesManagerService: AttributesManagerService) { }
 
   inputControl: FormControl;
+  loading: boolean;
+  groups: string[] = [];
 
   ngOnInit() {
     this.inputControl = new FormControl(null, Validators.required);
+    this.groups = this.data.groups;
   }
 
   onCancel(){
@@ -30,6 +34,7 @@ export class AddUnixGroupDialogComponent implements OnInit {
   }
 
   onSubmit(){
+    this.loading = true;
     this.attributesManagerService.getUserAttributeByName(this.data.userId, `urn:perun:user:attribute-def:def:preferredUnixGroupName-namespace:${this.data.namespace}`).subscribe(attribute =>{
       // @ts-ignore
       const groups: string[] = attribute.value ? attribute.value : [];
@@ -37,6 +42,7 @@ export class AddUnixGroupDialogComponent implements OnInit {
       attribute.value = groups;
 
       this.attributesManagerService.setUserAttribute({user: this.data.userId, attribute: attribute}).subscribe(()=>{
+        this.loading = false;
         this.dialogRef.close(true);
       });
     });

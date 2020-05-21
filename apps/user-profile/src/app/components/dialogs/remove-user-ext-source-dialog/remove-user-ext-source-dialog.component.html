@@ -1,1 +1,38 @@
-<p>remove-user-ext-source-dialog works!</p>
+<h3 mat-dialog-title>{{'DIALOGS.REMOVE_USER_EXT_SOURCE.TITLE' | translate}}</h3>
+<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+<div *ngIf="!loading">
+  <div mat-dialog-content>
+    <p>
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.DESCRIPTION' | translate}}
+    </p>
+    <div class="font-weight-bold">
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.ASK' | translate}}
+    </div>
+    <table mat-table [dataSource]="dataSource" class="w-100">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let richUserExtSource"> {{richUserExtSource.userExtSource.extSource.name}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-weight-bolder"></tr>
+      <tr mat-row *matRowDef="let richUserExtSource; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div mat-dialog-actions>
+
+    <button
+      mat-stroked-button
+      class="ml-auto"
+      (click)="onCancel()">
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.CANCEL' | translate}}
+    </button>
+    <button
+      mat-flat-button
+      class="ml-2"
+      color="warn"
+      (click)="onSubmit()">
+      {{'DIALOGS.REMOVE_USER_EXT_SOURCE.REMOVE' | translate}}
+    </button>
+  </div>
+</div>

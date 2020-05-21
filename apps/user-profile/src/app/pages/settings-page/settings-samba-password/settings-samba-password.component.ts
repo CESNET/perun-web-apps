@@ -31,7 +31,6 @@ export class SettingsSambaPasswordComponent implements OnInit {
 
     const timestamp = new Date().getTime().toString();
     this.usersManagerService.createAlternativePassword(this.userId,timestamp,'samba-du',this.sambaControl.value).subscribe(() => {
-      console.log('done');
       this.sambaControl.setValue('');
       this.getSambaAttribute();
     });
@@ -39,7 +38,6 @@ export class SettingsSambaPasswordComponent implements OnInit {
 
   getSambaAttribute(){
     this.attributesManagerService.getUserAttributeByName(this.userId, 'urn:perun:user:attribute-def:def:altPasswords:samba-du').subscribe(att => {
-      console.log(att);
       this.sambaExists = !!att.value;
       this.sambaAttribute = att;
     });
