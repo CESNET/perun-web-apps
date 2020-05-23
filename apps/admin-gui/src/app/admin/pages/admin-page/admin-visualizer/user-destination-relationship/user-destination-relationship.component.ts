@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operato
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
-import { NotificatorService } from '../../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { User, UsersManagerService, FacilitiesManagerService, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({

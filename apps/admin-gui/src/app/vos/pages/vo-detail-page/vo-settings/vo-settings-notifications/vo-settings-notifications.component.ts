@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {
   DeleteNotificationDialogComponent
 } from '../../../../../shared/components/dialogs/delete-notification-dialog/delete-notification-dialog.component';
-import {NotificatorService} from '../../../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {
   EditEmailFooterDialogComponent
 } from '../../../../../shared/components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';

@@ -9,7 +9,7 @@ import {
 } from '../../../../../shared/components/dialogs/create-attribute-dialog/create-attribute-dialog.component';
 import {Component, HostBinding, OnInit, ViewChild} from '@angular/core';
 import {AttributesListComponent} from '@perun-web-apps/perun/components';
-import {NotificatorService} from '../../../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {TranslateService} from '@ngx-translate/core';
 import { filterCoreAttributes } from '@perun-web-apps/perun/utils';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';

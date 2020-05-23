@@ -2,7 +2,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/common/side-menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { NotificatorService } from '../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveMembersDialogComponent } from '../../../../shared/components/dialogs/remove-members-dialog/remove-members-dialog.component';

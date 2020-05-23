@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthService } from '@perun-web-apps/perun/services';
-import { ApiRequestConfigurationService } from '../../../../../apps/admin-gui/src/app/core/services/api/api-request-configuration.service';
-import { NotificatorService } from '../../../../../apps/admin-gui/src/app/core/services/common/notificator.service';
 import { RPCError } from '@perun-web-apps/perun/models';
-import { StoreService } from '@perun-web-apps/perun/services';
+import { AuthService } from './auth.service';
+import { StoreService } from './store.service';
+import { NotificatorService } from './notificator.service';
+import { ApiRequestConfigurationService } from './api-request-configuration.service';
+
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {

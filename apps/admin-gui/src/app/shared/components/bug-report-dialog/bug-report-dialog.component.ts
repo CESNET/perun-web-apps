@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
-import {NotificatorService} from '../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { RtMessagesService } from '@perun-web-apps/perun/services';
 
@@ -37,7 +37,7 @@ export class BugReportDialogComponent implements OnInit {
   }
 
   sendBugReport() {
-    this.rtMessages.sendMessageToRT('perun', this.subject, this.getFullEmailBody()).subscribe(rtMessage => {
+    this.rtMessages.sendMessageToRT('perun', this.subject, this.getFullEmailBody()).subscribe(() => {
       // TODO show ticket number and email
       this.dialogRef.afterClosed()
         .subscribe(() => this.notificator.showSuccess(this.translate.instant('DIALOGS.BUG_REPORT.SUCCESS')));

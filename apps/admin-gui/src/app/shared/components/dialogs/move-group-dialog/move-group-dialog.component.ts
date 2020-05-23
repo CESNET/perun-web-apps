@@ -4,10 +4,10 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {openClose} from '../../../animations/Animations';
-import {NotificatorService} from '../../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {TranslateService} from '@ngx-translate/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
-import { ApiRequestConfigurationService } from '../../../../core/services/api/api-request-configuration.service';
+import { ApiRequestConfigurationService } from '@perun-web-apps/perun/services';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 
 export interface MoveGroupDialogData {

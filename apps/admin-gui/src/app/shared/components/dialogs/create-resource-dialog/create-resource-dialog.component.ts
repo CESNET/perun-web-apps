@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ResourcesManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { NotificatorService } from '../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface CreateResourceDialogData {

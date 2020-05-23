@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificatorService } from '../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { RtMessagesService } from '@perun-web-apps/perun/services';
 
 @Component({

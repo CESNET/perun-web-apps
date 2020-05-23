@@ -2,7 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import {NotificatorService} from '../../../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {SelectionModel} from '@angular/cdk/collections';
 import {
   AddEditNotificationDialogComponent
@@ -17,7 +17,7 @@ import {
   EditEmailFooterDialogComponent
 } from '../../../../../shared/components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';
 import { ApplicationForm, ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
-import { ApiRequestConfigurationService } from '../../../../../core/services/api/api-request-configuration.service';
+import { ApiRequestConfigurationService } from '@perun-web-apps/perun/services';
 import { createNewApplicationMail } from '@perun-web-apps/perun/utils';
 import { PageEvent } from '@angular/material/paginator';
 import {

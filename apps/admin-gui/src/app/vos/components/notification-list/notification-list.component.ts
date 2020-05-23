@@ -8,7 +8,7 @@ import {
   AddEditNotificationDialogComponent
 } from '../../../shared/components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
 import {TranslateService} from '@ngx-translate/core';
-import {NotificatorService} from '../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 

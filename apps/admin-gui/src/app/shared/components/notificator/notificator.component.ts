@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import {NotificationData} from '../../models/NotificationData';
-import {NotificatorService} from '../../../core/services/common/notificator.service';
+import {NotificationData} from '@perun-web-apps/perun/models';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {flyInOut} from '../../animations/Animations';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from '../../../app.component';

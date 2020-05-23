@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NotificationData } from '../../../shared/models/NotificationData';
+import { NotificationData } from '@perun-web-apps/perun/models';
 
 @Injectable({
   providedIn: 'root'

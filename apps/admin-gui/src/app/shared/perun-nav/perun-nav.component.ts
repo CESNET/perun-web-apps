@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthzResolverService, PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
@@ -8,7 +8,7 @@ import { ShowNotificationHistoryDialogComponent } from '../components/dialogs/sh
 import { NotificationStorageService } from '../../core/services/common/notification-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificatorService } from '../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-perun-nav-menu',

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificatorService } from '../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface RemoveVoDialogData {

@@ -1,11 +1,11 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {
   DeleteApplicationFormItemDialogComponent
 } from '../../../shared/components/dialogs/delete-application-form-item-dialog/delete-application-form-item-dialog.component';
-import {NotificatorService} from '../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {TranslateService} from '@ngx-translate/core';
 import {
   EditApplicationFormItemDialogComponent

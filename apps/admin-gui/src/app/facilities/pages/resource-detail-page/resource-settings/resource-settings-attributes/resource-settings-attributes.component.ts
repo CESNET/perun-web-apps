@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import {NotificatorService} from '../../../../../core/services/common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {TranslateService} from '@ngx-translate/core';
 import {AttributesListComponent} from '@perun-web-apps/perun/components';
 import {SelectionModel} from '@angular/cdk/collections';

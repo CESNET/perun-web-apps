@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationReSendNotificationDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-dialog/application-re-send-notification-dialog.component';
 import { ApplicationRejectDialogComponent } from '../../../shared/components/dialogs/application-reject-dialog/application-reject-dialog.component';
-import { NotificatorService } from '../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 import { Application, ApplicationFormItemData, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
@@ -82,7 +82,7 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   deleteApplication() {
-    this.registrarManager.deleteApplication(this.application.id).subscribe(any => {
+    this.registrarManager.deleteApplication(this.application.id).subscribe(() => {
       this.translate.get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE_MESSAGE').subscribe(successMessage => {
         this.notificator.showSuccess(successMessage);
         this.router.navigateByUrl(this.router.url.substring(0, this.router.url.lastIndexOf('/')));
@@ -96,7 +96,7 @@ export class ApplicationDetailComponent implements OnInit {
       data: {applicationId: this.application.id}
     });
 
-    dialogRef.afterClosed().subscribe(value => {
+    dialogRef.afterClosed().subscribe(() => {
       this.loading = true;
       this.registrarManager.getApplicationById(this.application.id).subscribe(reloaded => {
         this.application = reloaded;
@@ -106,7 +106,7 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   approveApplication() {
-    this.registrarManager.approveApplication(this.application.id).subscribe( application => {
+    this.registrarManager.approveApplication(this.application.id).subscribe( () => {
       this.translate.get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_MESSAGE').subscribe(successMessage => {
         this.notificator.showSuccess(successMessage);
       });
@@ -119,7 +119,7 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   verifyApplication() {
-    this.registrarManager.verifyApplication(this.application.id).subscribe(application => {
+    this.registrarManager.verifyApplication(this.application.id).subscribe(() => {
       this.translate.get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY_MESSAGE').subscribe(successMessage => {
         this.notificator.showSuccess(successMessage);
       });

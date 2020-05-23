@@ -4,7 +4,7 @@ import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/opena
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExtSourceDialogComponent } from '../../../../../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
-import { NotificatorService } from '../../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { PageEvent } from '@angular/material/paginator';
 import {

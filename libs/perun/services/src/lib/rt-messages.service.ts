@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
-import { PerunApiService } from '@perun-web-apps/perun/services';
 import { RTMessage } from '@perun-web-apps/perun/models';
+import { PerunApiService } from './perun-api-service';
 
 @Injectable({
   providedIn: 'root'

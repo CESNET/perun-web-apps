@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {NotificationData} from '../../models/NotificationData';
+import {NotificationData} from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
 import {NotificationDialogComponent} from '../notification-dialog/notification-dialog.component';
 import { NotificationStorageService } from '../../../core/services/common/notification-storage.service';

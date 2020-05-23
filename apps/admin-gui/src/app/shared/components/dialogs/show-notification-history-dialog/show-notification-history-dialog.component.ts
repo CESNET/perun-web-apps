@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationStorageService } from '../../../../core/services/common/notification-storage.service';
-import { NotificationData } from '../../../models/NotificationData';
+import { NotificationData } from '@perun-web-apps/perun/models';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({

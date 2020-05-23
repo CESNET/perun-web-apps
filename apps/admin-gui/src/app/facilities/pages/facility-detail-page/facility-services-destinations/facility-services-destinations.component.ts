@@ -15,7 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { PageEvent } from '@angular/material/paginator';
 import { RemoveDestinationDialogComponent } from '../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificatorService } from '../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { AddServicesDestinationDialogComponent } from '../../../../shared/components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
 
 @Component({

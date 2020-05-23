@@ -5,7 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CreateResourceTagDialogComponent } from '../../../../../shared/components/dialogs/create-resource-tag-dialog/create-resource-tag-dialog.component';
 import { DeleteResourceTagDialogComponent } from '../../../../../shared/components/dialogs/delete-resource-tag-dialog/delete-resource-tag-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificatorService } from '../../../../../core/services/common/notificator.service';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import { PageEvent } from '@angular/material/paginator';
 import { TABLE_VO_RESOURCES_TAGS, TableConfigService } from '@perun-web-apps/config/table-config';

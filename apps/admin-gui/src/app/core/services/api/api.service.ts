@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {NotificatorService} from '../common/notificator.service';
+import {NotificatorService} from '@perun-web-apps/perun/services';
 import {AuthService, PerunApiService, StoreService} from '@perun-web-apps/perun/services';
 import { RPCError } from '@perun-web-apps/perun/models';
 

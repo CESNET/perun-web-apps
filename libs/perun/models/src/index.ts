@@ -14,4 +14,5 @@ export * from './lib/Task';
 export * from './lib/TreeGroup';
 export * from './lib/GroupFlatNode';
 export * from './lib/MenuItem'
+export * from './lib/NotificationData'
 
