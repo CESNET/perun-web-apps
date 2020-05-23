@@ -1,31 +1,3 @@
-<perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.FILTER' | translate"></perun-web-apps-immediate-filter>
-
+<perun-web-apps-two-entity-attribute-page [entityValues]="resources" [firstEntity]="'member'" [firstEntityId]="memberId"
+                                          [secondEntity]="'resource'" *ngIf="!loading"></perun-web-apps-two-entity-attribute-page>
 <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-<app-alert *ngIf="resources.length === 0 && !loading" color="warn">{{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.NO_RESOURCES'|translate}}</app-alert>
-<app-alert *ngIf="filteredResources.length === 0 && resources.length && !loading" color="warn">{{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.NO_FILTERED_RESOURCES'|translate}}</app-alert>
-<mat-accordion *ngIf="!loading">
-  <mat-expansion-panel *ngFor="let resource of filteredResources" (opened)="getResourceAttributes(resource.id)" (closed)="selection.clear()">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{resource.name}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <ng-template matExpansionPanelContent>
-      <button mat-flat-button class="mr-2" color="accent" (click)="onAdd(resource.id)">
-        {{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.CREATE' | translate}}
-      </button>
-
-      <button mat-flat-button class="mr-2" color="accent" (click)="onSave(resource.id)" [disabled]="selection.selected.length === 0">
-        {{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.SAVE' | translate}}
-      </button>
-
-      <button mat-flat-button color="warn" (click)="onDelete(resource.id)" [disabled]="selection.selected.length === 0">
-        {{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.DELETE' | translate}}
-      </button>
-      <mat-spinner class="ml-auto mr-auto" *ngIf="innerLoading"></mat-spinner>
-      <perun-web-apps-attributes-list [attributes]="attributes" [selection]="selection" #list *ngIf="!innerLoading"></perun-web-apps-attributes-list>
-    </ng-template>
-  </mat-expansion-panel>
-</mat-accordion>
-

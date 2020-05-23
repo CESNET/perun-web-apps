@@ -158,6 +158,7 @@ import { DestinationListComponent } from './components/destination-list/destinat
 import { AddServicesDestinationDialogComponent } from './components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
 import { AddGroupResourceDialogComponent } from './components/dialogs/add-group-resource-dialog/add-group-resource-dialog.component';
 import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
+import { TwoEntityAttributePageComponent } from './components/two-entity-attribute-page/two-entity-attribute-page.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -285,7 +286,8 @@ import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-
     ExtSourceTypePipe,
     ConfigTableConfigModule,
     SideMenuRootItemComponent,
-    DestinationListComponent
+    DestinationListComponent,
+    TwoEntityAttributePageComponent
   ],
   declarations: [
     PerunNavComponent,
@@ -394,7 +396,8 @@ import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-
     DestinationListComponent,
     AddServicesDestinationDialogComponent,
     AddGroupResourceDialogComponent,
-    RemoveGroupResourceDialogComponent
+    RemoveGroupResourceDialogComponent,
+    TwoEntityAttributePageComponent
   ],
   providers: [
     AnyToStringPipe,
