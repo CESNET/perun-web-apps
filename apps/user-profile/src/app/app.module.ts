@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, forwardRef, NgModule, Provider } from '@angular/core';
 import { AppComponent } from './app.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -71,6 +71,13 @@ import { ValidateExpirationPipe } from './pipes/validate-expiration.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule } from '@angular/material/core';
 import { ShowSshDialogComponent } from './components/dialogs/show-ssh-dialog/show-ssh-dialog.component';
+import { ApiInterceptor } from '@perun-web-apps/perun/services';
+
+export const API_INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  useExisting: forwardRef(() => ApiInterceptor),
+  multi: true
+};
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -181,7 +188,9 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
       useFactory: apiConfigFactory,
       deps:[StoreService]
     },
-    UserFullNamePipe
+    UserFullNamePipe,
+    ApiInterceptor,
+    API_INTERCEPTOR_PROVIDER
   ],
   bootstrap: [AppComponent]
 })

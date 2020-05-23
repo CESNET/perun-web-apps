@@ -21,7 +21,7 @@ import { AdminGuiConfigService } from './core/services/common/admin-gui-config.s
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
 // @ts-ignore
 import { StoreService } from '@perun-web-apps/perun/services';
-import { ApiInterceptor } from './core/services/api/ApiInterceptor';
+import { ApiInterceptor } from '@perun-web-apps/perun/services';
 import { GeneralModule } from '@perun-web-apps/general';
 
 
