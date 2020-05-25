@@ -33,6 +33,7 @@ import { InputSetFacilityUserAttributes } from '../model/inputSetFacilityUserAtt
 import { InputSetGroupAttribute } from '../model/inputSetGroupAttribute';
 import { InputSetGroupAttributes } from '../model/inputSetGroupAttributes';
 import { InputSetGroupResourceAttribute } from '../model/inputSetGroupResourceAttribute';
+import { InputSetGroupResourceAttributes } from '../model/inputSetGroupResourceAttributes';
 import { InputSetHostAttribute } from '../model/inputSetHostAttribute';
 import { InputSetHostAttributes } from '../model/inputSetHostAttributes';
 import { InputSetMemberAttribute } from '../model/inputSetMemberAttribute';
@@ -53,6 +54,7 @@ import { InputSetUserAttributes } from '../model/inputSetUserAttributes';
 import { InputSetUserExtSourceAttribute } from '../model/inputSetUserExtSourceAttribute';
 import { InputSetUserExtSourceAttributes } from '../model/inputSetUserExtSourceAttributes';
 import { InputSetUserFacilityAttribute } from '../model/inputSetUserFacilityAttribute';
+import { InputSetUserFacilityAttributes } from '../model/inputSetUserFacilityAttributes';
 import { InputSetVoAttribute } from '../model/inputSetVoAttribute';
 import { InputSetVoAttributes } from '../model/inputSetVoAttributes';
 import { PerunException } from '../model/perunException';
@@ -1875,6 +1877,71 @@ export class AttributesManagerService {
 
 
         return this.httpClient.get<Attribute>(`${this.configuration.basePath}/json/attributesManager/getAttribute/name-group-resource`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Returns all non-empty Group-Resource attributes for selected Group and Resource.
+     * @param group id of Group
+     * @param resource id of Resource
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getGroupResourceAttributes(group: number, resource: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getGroupResourceAttributes(group: number, resource: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getGroupResourceAttributes(group: number, resource: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getGroupResourceAttributes(group: number, resource: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (group === null || group === undefined) {
+            throw new Error('Required parameter group was null or undefined when calling getGroupResourceAttributes.');
+        }
+        if (resource === null || resource === undefined) {
+            throw new Error('Required parameter resource was null or undefined when calling getGroupResourceAttributes.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (group !== undefined && group !== null) {
+            queryParameters = queryParameters.set('group', <any>group);
+        }
+        if (resource !== undefined && resource !== null) {
+            queryParameters = queryParameters.set('resource', <any>resource);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getAttributes/group-resource`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -5558,6 +5625,71 @@ export class AttributesManagerService {
     }
 
     /**
+     * Returns all non-empty User-Facility attributes for selected User and Facility.
+     * @param user id of User
+     * @param facility id of Facility
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserFacilityAttributes(user: number, facility: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Attribute>>;
+    public getUserFacilityAttributes(user: number, facility: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Attribute>>>;
+    public getUserFacilityAttributes(user: number, facility: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Attribute>>>;
+    public getUserFacilityAttributes(user: number, facility: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (user === null || user === undefined) {
+            throw new Error('Required parameter user was null or undefined when calling getUserFacilityAttributes.');
+        }
+        if (facility === null || facility === undefined) {
+            throw new Error('Required parameter facility was null or undefined when calling getUserFacilityAttributes.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (user !== undefined && user !== null) {
+            queryParameters = queryParameters.set('user', <any>user);
+        }
+        if (facility !== undefined && facility !== null) {
+            queryParameters = queryParameters.set('facility', <any>facility);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Attribute>>(`${this.configuration.basePath}/json/attributesManager/getAttributes/user-facility`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Returns a Vo Attribute by its id.
      * This is an overloaded method getAttribute, specialized for virtual organization and attribute id.
      * @param vo id of Vo
@@ -8589,6 +8721,68 @@ export class AttributesManagerService {
     }
 
     /**
+     * Sets Attributes for Group and Resource.
+     * @param inputSetGroupResourceAttributes 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public setGroupResourceAttributes(inputSetGroupResourceAttributes: InputSetGroupResourceAttributes, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public setGroupResourceAttributes(inputSetGroupResourceAttributes: InputSetGroupResourceAttributes, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public setGroupResourceAttributes(inputSetGroupResourceAttributes: InputSetGroupResourceAttributes, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public setGroupResourceAttributes(inputSetGroupResourceAttributes: InputSetGroupResourceAttributes, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputSetGroupResourceAttributes === null || inputSetGroupResourceAttributes === undefined) {
+            throw new Error('Required parameter inputSetGroupResourceAttributes was null or undefined when calling setGroupResourceAttributes.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/json/attributesManager/setAttributes/group-resource`,
+            inputSetGroupResourceAttributes,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Sets Attribute for Host.
      * @param inputSetHostAttribute 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -9819,6 +10013,68 @@ export class AttributesManagerService {
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/json/attributesManager/setAttribute/facility-user`,
             inputSetUserFacilityAttribute,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Sets Attributes for User and Facility.
+     * @param inputSetUserFacilityAttributes 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public setUserFacilityAttributes(inputSetUserFacilityAttributes: InputSetUserFacilityAttributes, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public setUserFacilityAttributes(inputSetUserFacilityAttributes: InputSetUserFacilityAttributes, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public setUserFacilityAttributes(inputSetUserFacilityAttributes: InputSetUserFacilityAttributes, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public setUserFacilityAttributes(inputSetUserFacilityAttributes: InputSetUserFacilityAttributes, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (inputSetUserFacilityAttributes === null || inputSetUserFacilityAttributes === undefined) {
+            throw new Error('Required parameter inputSetUserFacilityAttributes was null or undefined when calling setUserFacilityAttributes.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (ApiKeyAuth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (BasicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // authentication (BearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/json/attributesManager/setAttributes/facility-user`,
+            inputSetUserFacilityAttributes,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
