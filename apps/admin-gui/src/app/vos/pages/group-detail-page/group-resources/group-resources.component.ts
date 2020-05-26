@@ -4,6 +4,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Group, GroupsManagerService, ResourcesManagerService, RichResource } from '@perun-web-apps/perun/openapi';
 import { PageEvent } from '@angular/material/paginator';
 import { TableConfigService, TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
+import { MatDialog } from '@angular/material/dialog';
+import { AddGroupResourceDialogComponent } from '../../../../shared/components/dialogs/add-group-resource-dialog/add-group-resource-dialog.component';
+import { RemoveGroupResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
 
 @Component({
   selector: 'app-group-resources',
@@ -20,7 +23,8 @@ export class GroupResourcesComponent implements OnInit {
   constructor(private resourcesManager: ResourcesManagerService,
               private groupService: GroupsManagerService,
               private tableConfigService: TableConfigService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialog: MatDialog) {
   }
 
   group: Group;
@@ -32,13 +36,17 @@ export class GroupResourcesComponent implements OnInit {
   pageSize: number;
   tableId = TABLE_GROUP_RESOURCES_LIST;
 
+  groupId: number;
+  voId: number;
+
   ngOnInit() {
     this.pageSize = this.tableConfigService.getTablePageSize(this.tableId);
 
     this.route.parent.params.subscribe(parentParams => {
-      const groupId = parentParams['groupId'];
+      this.groupId = parentParams['groupId'];
+      this.voId = parentParams['voId'];
 
-      this.groupService.getGroupById(groupId).subscribe(group => {
+      this.groupService.getGroupById(this.groupId).subscribe(group => {
         this.group = group;
 
         this.refreshTable();
@@ -61,5 +69,32 @@ export class GroupResourcesComponent implements OnInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);
+  }
+
+  addResource() {
+    const dialogRef = this.dialog.open(AddGroupResourceDialogComponent, {
+      width: '750px',
+      data: {theme: 'group-theme', groupId: this.groupId, voId: this.voId, unwantedResources: this.resources.map(res => res.id)}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.refreshTable();
+      }
+    });
+  }
+
+  removeResource() {
+    const dialogRef = this.dialog.open(RemoveGroupResourceDialogComponent, {
+      width: '450px',
+      data: {theme: 'group-theme', resources: this.selected.selected, groupId: this.groupId}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selected.clear();
+        this.refreshTable();
+      }
+    });
   }
 }

@@ -1,7 +1,10 @@
 <div>
   <h1 class="page-subtitle">{{'GROUP_DETAIL.RESOURCES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button mat-flat-button color="warn" [disabled]="selected.selected.length === 0">
+  <button mat-flat-button color="accent" (click)="addResource()" class="mr-2">
+    {{'GROUP_DETAIL.RESOURCES.ADD' | translate}}
+  </button>
+  <button mat-flat-button color="warn" [disabled]="selected.selected.length === 0" (click)="removeResource()">
     {{'GROUP_DETAIL.RESOURCES.DELETE' | translate}}
   </button>
   <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"></perun-web-apps-immediate-filter>

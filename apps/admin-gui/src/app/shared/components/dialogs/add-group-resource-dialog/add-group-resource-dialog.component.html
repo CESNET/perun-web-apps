@@ -1,0 +1,32 @@
+<div class="{{theme}}">
+  <h3>{{'DIALOGS.ADD_GROUP_RESOURCES.TITLE'| translate}}</h3>
+  <perun-web-apps-immediate-filter (filter)="applyFilter($event)" [placeholder]="'DIALOGS.ADD_GROUP_RESOURCES.FILTER' | translate"></perun-web-apps-immediate-filter>
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading">
+    <div mat-dialog-content>
+      <perun-web-apps-resources-list
+        [resources]="resources"
+        [disableRouting]="true"
+        [selection]="selection"
+        [hideColumns]="hiddenColumns"
+        [filterValue]="filterValue"
+      ></perun-web-apps-resources-list>
+    </div>
+    <div mat-dialog-actions>
+      <button
+        mat-flat-button
+        class="ml-auto"
+        (click)="onCancel()">
+        {{'DIALOGS.ADD_GROUP_RESOURCES.CANCEL' | translate}}
+      </button>
+      <button
+        mat-flat-button
+        class="ml-2"
+        color="accent"
+        [disabled]="selection.selected.length === 0"
+        (click)="onSubmit()">
+        {{'DIALOGS.ADD_GROUP_RESOURCES.ADD' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

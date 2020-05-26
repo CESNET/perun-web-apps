@@ -156,6 +156,8 @@ import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 import { RemoveDestinationDialogComponent } from './components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
 import { DestinationListComponent } from './components/destination-list/destination-list.component';
 import { AddServicesDestinationDialogComponent } from './components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
+import { AddGroupResourceDialogComponent } from './components/dialogs/add-group-resource-dialog/add-group-resource-dialog.component';
+import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -390,7 +392,9 @@ import { AddServicesDestinationDialogComponent } from './components/dialogs/add-
     UserSettingsAppConfigurationComponent,
     RemoveDestinationDialogComponent,
     DestinationListComponent,
-    AddServicesDestinationDialogComponent
+    AddServicesDestinationDialogComponent,
+    AddGroupResourceDialogComponent,
+    RemoveGroupResourceDialogComponent
   ],
   providers: [
     AnyToStringPipe,
