@@ -244,7 +244,7 @@
       },
       "GROUPS": {
         "MEMBER_GROUPS": "Členské skupiny",
-        "ADMINS_GROUPS": "Skupiny kde je uživatel administrátorem"
+        "ADMINS_GROUPS": "Skupiny, kde je uživatel administrátorem"
       },
       "REFRESH_BUTTON": "Obnovit"
     },
