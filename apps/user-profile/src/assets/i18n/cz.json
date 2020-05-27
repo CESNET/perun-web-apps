@@ -240,7 +240,7 @@
         "TITLE": "Uživatelské organizace",
         "FILTER": "Filtrovat dle jména nebo ID",
         "IS_ADMIN": "Organizace kde jste administrátorem",
-        "IS_MEMBER": "Organizace kde jste členem"
+        "IS_MEMBER": "Organizace, kde jste členem"
       },
       "GROUPS": {
         "MEMBER_GROUPS": "Členské skupiny",
