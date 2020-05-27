@@ -76,7 +76,7 @@
     "NEW_KEY": "Nový klíč",
     "REMOVE_KEY": "Odstranit",
     "REMOVE_DIALOG_TITLE": "Odstranit SSH klíč",
-    "REMOVE_DIALOG_DESCRIPTION": "Vámi vybrané SSH klíče budou odstraneny"
+    "REMOVE_DIALOG_DESCRIPTION": "Vámi vybrané SSH klíče budou odstraněny"
   },
   "SAMBA_PASSWORD": {
     "TITLE": "Heslo pro službu SAMBA",
