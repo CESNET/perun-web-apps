@@ -118,7 +118,7 @@
     "NO_QUOTAS": "Nebyly nalezeny žádné služby, kde by bylo možné zažádat o změnu kvóty."
   },
   "OPT_OUT_MAILING_LISTS": {
-    "TITLE": "Vyřazení se zoznamu adresátú",
+    "TITLE": "Vyřazení ze seznamu adresátů",
     "FILTER": "Filtrovat zoznamy adresátú dle jména organizace",
     "OPT_OUT_LABEL": "Vyřadit mně z tohoto zoznamu adresátú",
     "NO_MAILING_LISTS_ALERT": "Nemáte žádné zoznamy adresátú v této organizaci"
