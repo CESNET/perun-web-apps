@@ -39,7 +39,7 @@
     "NAME": "Name",
     "ORGANIZATION": "Organization",
     "PREFERRED_LANGUAGE": "Preferred language",
-    "EMAIL": "E-mail",
+    "EMAIL": "Preferred e-mail",
     "TIMEZONE": "Timezone",
     "CHANGE_EMAIL": "Change"
   },
@@ -76,8 +76,7 @@
     "NEW_KEY": "Add new key",
     "REMOVE_KEY": "Remove selected key",
     "REMOVE_DIALOG_TITLE": "Remove ssh key",
-    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed.",
-    "HEADER_COLUMN": "Public part of ssh key"
+    "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed."
   },
   "SAMBA_PASSWORD": {
     "TITLE": "SAMBA password",
