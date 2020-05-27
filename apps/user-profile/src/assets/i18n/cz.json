@@ -148,7 +148,7 @@
     },
     "REMOVE_ALT_PASSWORD": {
       "TITLE": "Odstranění alternativního hesla",
-      "DESCRIPTION": "Alternativní heslo s nasledujícím popisem bude odstraneno",
+      "DESCRIPTION": "Alternativní heslo s nasledujícím popisem bude odstraněno",
       "ASK": "Jste si jistí, že chcete pokračovat?",
       "CANCEL": "Zrušit",
       "REMOVE": "Odstranit"
