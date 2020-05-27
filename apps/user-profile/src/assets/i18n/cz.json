@@ -224,7 +224,7 @@
           },
           "DELETE_DIALOG": {
             "TITLE": "Vymazat hodnotu atributu",
-            "DESCRIPTION": "Naozaj chcete vymazat hodnotu atributu se seznamu?",
+            "DESCRIPTION": "Skutečně chcete vymazat hodnotu atributu se seznamu?",
             "SUBMIT_BUTTON": "Odstranit",
             "CANCEL_BUTTON": "Zrušit"
           }
