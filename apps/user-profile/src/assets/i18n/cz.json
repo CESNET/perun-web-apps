@@ -170,7 +170,7 @@
     },
     "REMOVE_USER_EXT_SOURCE": {
       "TITLE": "Odstranění externí identity",
-      "DESCRIPTION": "Nasledující externí identita bude odstranena",
+      "DESCRIPTION": "Nasledující externí identita bude odstraněna",
       "ASK": "Jste si jistí, že chcete pokračovat?",
       "CANCEL": "Zrušit",
       "REMOVE": "Odstranit"
