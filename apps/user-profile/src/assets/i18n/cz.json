@@ -181,7 +181,7 @@
   },
   "ALERTS": {
     "NO_SSH_KEYS": "Nemáte žádné SSH klíče",
-    "NO_SAMBA": "Dosud nemáte hslo pro službu SAMBA.",
+    "NO_SAMBA": "Dosud nemáte heslo pro službu SAMBA.",
     "SAMBA_EXISTS": "Heslo pro službu SAMBA již máte nastaveno. Můžete je změnit zadáním nového hesla.",
     "NO_PREFERRED_UNIX_GROUPS": "Nemáte nastaveny žádné preferované jména Unixových skupin pro vybraný jmený prostor",
     "NO_ALT_PASSWORDS": "Nemáte žádná alternativní hesla"
