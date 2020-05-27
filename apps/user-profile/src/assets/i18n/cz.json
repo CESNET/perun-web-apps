@@ -96,7 +96,7 @@
     "NEW_BUTTON": "Přidat nový preferovaný shell",
     "REMOVE_BUTTON": "Odstranit",
     "NO_SHELLS": "Nemáte nastaveny žádné preferované shelly",
-    "REMOVE_DIALOG_TITLE": "Odstranení preferovaného shellu",
+    "REMOVE_DIALOG_TITLE": "Odstranění preferovaného shellu",
     "REMOVE_DIALOG_DESCRIPTION": "Vámi vybrané preferované shelly budou odstraneny",
     "DESCRIPTION": "Seznam shellu, seřazených od nejvíce preferovaných po nejméně preferované, je použit pro rozhodnutí při výběru shellu na vašich strojích. Pokud žádný z preferovaných shellu není na daném stroji dostupný (nebo není žádný preferovaný shell zvolen), použije se výchozí shell daného stroje."
   },
