@@ -210,7 +210,7 @@
           "DELETE": "Odstranit vybrané",
           "TABLE_RESOURCE_ID": "id",
           "TABLE_RESOURCE_NAME": "Jméno",
-          "TABLE_FACILITY_NAME": "Jméno zdroje z reálního světa",
+          "TABLE_FACILITY_NAME": "Jméno zdroje z reálného světa",
           "TABLE_RESOURCE_TAGS": "Tagy",
           "TABLE_SEARCH": "Filtrovat dle jména, popisu nebo ID",
           "TABLE_RESOURCE_DESCRIPTION": "Popis",
