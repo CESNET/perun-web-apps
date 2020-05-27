@@ -88,7 +88,7 @@
     "NEW_BUTTON": "Přidat preferované jméno skupiny",
     "REMOVE_BUTTON": "Odstranit",
     "REMOVE_DIALOG_TITLE": "Odstranit preferované jméno Unixové skupiny",
-    "REMOVE_DIALOG_DESCRIPTION": "Vámy vybraná preferovaná jména Unixových skupin budou odstraneny",
+    "REMOVE_DIALOG_DESCRIPTION": "Vámi vybraná preferovaná jména Unixových skupin budou odstraněna",
     "HEADER_COLUMN": "Jméno"
   },
   "PREFERRED_SHELLS": {
