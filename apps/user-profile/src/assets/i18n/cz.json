@@ -71,7 +71,7 @@
   "SSH_KEYS": {
     "SSH_KEYS_TITLE": "SSH klíče",
     "SSH_KEYS_DESCRIPTION": "Zde je seznam Vašich SSH klíčů.",
-    "ADMIN_SSH_KEYS_TITLE": "Zoznam vašich administratorských SSH klíčú",
+    "ADMIN_SSH_KEYS_TITLE": "Seznam vašich administratorských SSH klíčú",
     "ADMIN_SSH_KEYS_DESCRIPTION": "Zde je seznam Vašich SSH klíčů, které jsou používány pro přístup na učet root.",
     "NEW_KEY": "Nový klíč",
     "REMOVE_KEY": "Odstranit",
