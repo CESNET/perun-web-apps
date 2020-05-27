@@ -120,7 +120,7 @@
   "OPT_OUT_MAILING_LISTS": {
     "TITLE": "Vyřazení ze seznamu adresátů",
     "FILTER": "Filtrovat seznamy adresátů dle jména organizace",
-    "OPT_OUT_LABEL": "Vyřadit mně z tohoto zoznamu adresátú",
+    "OPT_OUT_LABEL": "Vyřadit mě z tohoto seznamu adresátů",
     "NO_MAILING_LISTS_ALERT": "Nemáte žádné zoznamy adresátú v této organizaci"
   },
   "DIALOGS": {
