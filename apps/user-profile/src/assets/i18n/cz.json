@@ -115,7 +115,7 @@
     "QUOTA": "Datová kvóta: ",
     "CHANGE": "Změnit",
     "QUOTA_INFO": "Kvóty dat používají \"soft limit : hard limit\" notaci a jsou vázány na specifický objem dat.",
-    "NO_QUOTAS": "Nebyly nalezeny žádné služby, kde by bylo možná zažádat o změnu kvóty."
+    "NO_QUOTAS": "Nebyly nalezeny žádné služby, kde by bylo možné zažádat o změnu kvóty."
   },
   "OPT_OUT_MAILING_LISTS": {
     "TITLE": "Vyřazení se zoznamu adresátú",
