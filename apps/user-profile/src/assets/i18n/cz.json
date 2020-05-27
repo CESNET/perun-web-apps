@@ -11,7 +11,7 @@
   "SETTINGS": {
     "ALTERNATIVE_PASSWORDS": "Alternativní hesla",
     "DATA_QUOTAS": "Kvóty dat",
-    "MAILING_LISTS": "Vyřazení se zoznamu adresátú",
+    "MAILING_LISTS": "Vyřazení ze seznamu adresátú",
     "PREFERRED_SHELLS": "Preferované shelly",
     "PREFERRED_UNIX_GROUP_NAMES": "Preferovaná jména Unixových skupin",
     "SAMBA_PASSWORD": "Heslo pro službu SAMBA",
