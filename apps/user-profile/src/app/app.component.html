@@ -4,11 +4,11 @@
 <!--SIDE MENU-->
 <mat-sidenav-container>
   <mat-sidenav #sidenav [ngStyle]="{'background': sideMenuBgColor}" mode="side" opened
-               style="width: 200px; height: auto">
-    <perun-web-apps-side-menu style="overflow: hidden"></perun-web-apps-side-menu>
+               class="side-menu-size">
+    <perun-web-apps-side-menu class="overflow-hidden"></perun-web-apps-side-menu>
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
-    <div id="content-wrap" style="height: 75vh">
+    <div id="content-wrap">
       <breadcrumb #parent>
         <span *ngFor="let route of parent.breadcrumbs" class="custom-breadcrumb">
           <a *ngIf="!route.terminal" [routerLink]="[route.url]" href="" mat-button>{{ route.displayName | translate}}</a>
@@ -23,4 +23,3 @@
 
 <!--FOOTER-->
 <perun-web-apps-footer></perun-web-apps-footer>
-

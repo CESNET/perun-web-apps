@@ -28,7 +28,7 @@ export class GroupsPageComponent implements OnInit {
   filteredVos: Observable<Vo[]>;
 
   selection = new SelectionModel<Membership>(false, []);
-  displayedColumns = ['checkbox','id', 'name'];
+  displayedColumns = ['checkbox', 'id', 'name'];
 
   userMemberships: Membership[] = [];
   adminMemberships: Membership[] = [];
@@ -45,7 +45,6 @@ export class GroupsPageComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.userId = this.store.getPerunPrincipal().userId;
-    console.log(this.store.getPerunPrincipal());
 
     this.usersService.getVosWhereUserIsMember(this.userId).subscribe(vos => {
       this.vos = vos;
@@ -65,33 +64,32 @@ export class GroupsPageComponent implements OnInit {
 
   getAllGroups() {
     this.loading = true;
-    let i = this.vos.length;
+    let i = 0;
     this.userMemberships = [];
     this.adminMemberships = [];
     const allMemberIds = this.store.getPerunPrincipal().roles['SELF']['Member'];
-    allMemberIds.forEach(memberId =>{
+    allMemberIds.forEach(memberId => {
       this.groupService.getMemberGroups(memberId).subscribe(groups => {
-        i--;
-        let j = groups.length;
-        groups.forEach(group =>{
-          this.attributesManagerService.getMemberGroupAttributes(memberId, group.id).subscribe(atts =>{
-            j--;
+        i += groups.length;
+        groups.forEach(group => {
+          this.attributesManagerService.getMemberGroupAttributes(memberId, group.id).subscribe(atts => {
+            i--;
             this.userMemberships.push({
               entity: group,
               expirationAttribute: atts.find(att => att.friendlyName === 'groupMembershipExpiration')
             });
-            this.loading = i !==0 || j !== 0;
+            this.loading = i !== 0;
           });
         });
       });
     });
 
     this.usersService.getGroupsWhereUserIsAdmin(this.userId).subscribe(adminGroups => {
-      adminGroups.forEach(group =>{
+      adminGroups.forEach(group => {
         this.adminMemberships.push({
           entity: group,
           expirationAttribute: null
-        })
+        });
       });
     });
   }
@@ -109,17 +107,17 @@ export class GroupsPageComponent implements OnInit {
       this.adminMemberships = [];
       this.loading = true;
       const vo: Vo = event.option.value;
-      this.memberService.getMembers(vo.id).subscribe(members =>{
+      this.memberService.getMembers(vo.id).subscribe(members => {
         const member = members.find(mem => mem.userId === this.userId);
-        if(!member){
+        if (!member) {
           this.loading = false;
-          return
+          return;
         }
-        this.groupService.getMemberGroups(member.id).subscribe(groups =>{
+        this.groupService.getMemberGroups(member.id).subscribe(groups => {
           let i = groups.length;
           this.loading = i !== 0;
-          groups.forEach(group =>{
-            this.attributesManagerService.getMemberGroupAttributes(member.id, group.id).subscribe(atts =>{
+          groups.forEach(group => {
+            this.attributesManagerService.getMemberGroupAttributes(member.id, group.id).subscribe(atts => {
               i--;
               this.userMemberships.push({
                 entity: group,
@@ -128,14 +126,14 @@ export class GroupsPageComponent implements OnInit {
               this.loading = i !== 0;
             });
           });
-        })
+        });
       });
       this.usersService.getGroupsInVoWhereUserIsAdmin(this.userId, vo.id).subscribe(adminGroups => {
-        adminGroups.forEach(group =>{
+        adminGroups.forEach(group => {
           this.adminMemberships.push({
             entity: group,
             expirationAttribute: null
-          })
+          });
         });
       });
     }
@@ -143,7 +141,7 @@ export class GroupsPageComponent implements OnInit {
 
   extendMembership() {
     const registrarUrl = this.store.get('registrar_base_url');
-    const group: Group =  this.selection.selected[0].entity;
+    const group: Group = this.selection.selected[0].entity;
     const voShortname = this.vos.find(vo => vo.id === group.voId).shortName;
     window.location.href = `${registrarUrl}?vo=${voShortname}&group=${this.selection.selected[0].entity.shortName}`;
   }

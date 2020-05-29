@@ -8,7 +8,7 @@
     [selection]="idpSelection"
   ></perun-web-apps-user-ext-sources-list>
 
-  <h4>{{'IDENTITIES.CERT' | customTranslate | translate}}</h4>
+  <h4 class="mt-5">{{'IDENTITIES.CERT' | customTranslate | translate}}</h4>
   <button mat-flat-button color="accent" (click)="addIdentity()">{{'IDENTITIES.ADD' | customTranslate | translate}}</button>
   <button mat-flat-button color="warn" class="ml-2" [disabled]="certSelection.selected.length === 0" (click)="removeIdentity(certSelection.selected)">{{'IDENTITIES.REMOVE' | customTranslate | translate}}</button>
   <perun-web-apps-user-ext-sources-list
@@ -16,7 +16,7 @@
     [selection]="certSelection"
   ></perun-web-apps-user-ext-sources-list>
 
-  <h4>{{'IDENTITIES.OTHER' | customTranslate | translate}}</h4>
+  <h4 class="mt-5">{{'IDENTITIES.OTHER' | customTranslate | translate}}</h4>
   <button mat-flat-button color="warn" class="ml-2" [disabled]="otherSelection.selected.length === 0" (click)="removeIdentity(otherSelection.selected)">{{'IDENTITIES.REMOVE' | customTranslate | translate}}</button>
   <perun-web-apps-user-ext-sources-list
     [userExtSources]="otherExtSources"

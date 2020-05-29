@@ -70,9 +70,13 @@ export class SettingsAlternativePasswordsComponent implements OnInit {
     this.loading = true;
     this.attributesManagerService.getUserAttributeByName(this.userId, `urn:perun:user:attribute-def:def:altPasswords:einfra`).subscribe(att => {
       this.altPasswordsAttribute = att;
-      const foo = Object.keys(att.value);
-      this.passwordDescriptions = new Set<string>(foo);
-      this.displayedValues = Array.from(this.passwordDescriptions.values());
+      if(att.value){
+        const foo = Object.keys(att.value);
+        this.passwordDescriptions = new Set<string>(foo);
+        this.displayedValues = Array.from(this.passwordDescriptions.values());
+      }else {
+        this.displayedValues = [];
+      }
       this.loading = false;
     });
   }
@@ -82,7 +86,6 @@ export class SettingsAlternativePasswordsComponent implements OnInit {
   }
 
   removeAltPasswords() {
-    console.log(this.selection.selected);
     const dialogRef = this.dialog.open(RemoveAltPasswordDialogComponent, {
       width: '600px',
       data: {

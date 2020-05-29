@@ -3,8 +3,7 @@
   <div class="card-body">
     <perun-web-apps-table-options (end)="exporting = false" (start)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
 
-    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id"
-           matSortDirection="asc" matSortDisableClear
+    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter"
            class="w-100">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef></th>
@@ -18,23 +17,19 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="mail" >
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'USER_EXT_SOURCES_LIST.MAIL' | customTranslate | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'USER_EXT_SOURCES_LIST.MAIL' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.attributes | getMailFromAttributes}}</td>
       </ng-container>
       <ng-container matColumnDef="extSourceName" >
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'USER_EXT_SOURCES_LIST.EXT_SOURCE_NAME' | customTranslate | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'USER_EXT_SOURCES_LIST.EXT_SOURCE_NAME' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.extSource.name}}</td>
       </ng-container>
       <ng-container matColumnDef="login">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'USER_EXT_SOURCES_LIST.LOGIN' | customTranslate | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'USER_EXT_SOURCES_LIST.LOGIN' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.login}}</td>
       </ng-container>
       <ng-container matColumnDef="lastAccess" class="pl-3">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'USER_EXT_SOURCES_LIST.LAST_ACCESS' | customTranslate | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef>{{'USER_EXT_SOURCES_LIST.LAST_ACCESS' | customTranslate | translate}}</th>
         <td mat-cell *matCellDef="let richUserExtSource">{{richUserExtSource.userExtSource.lastAccess | parseLastAccess}}</td>
       </ng-container>
 

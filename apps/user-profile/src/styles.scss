@@ -89,3 +89,7 @@ $perun-theme: mat-light-theme($perun-primary, $perun-accent, $perun-warn);
 
   @include angular-material-theme($user-theme);
 }
+
+button:focus {
+  outline: none !important;
+}

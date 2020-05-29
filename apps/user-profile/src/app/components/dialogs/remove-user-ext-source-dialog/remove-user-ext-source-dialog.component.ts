@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserExtSource, UsersManagerService} from '@perun-web-apps/perun/openapi';
+import { RichUserExtSource, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { MatTableDataSource } from '@angular/material/table';
 
 export interface RemoveUserExtSourceDialogData {
   userId: number;
-  extSources: UserExtSource[];
+  extSources: RichUserExtSource[];
 }
 
 @Component({
@@ -28,11 +28,11 @@ export class RemoveUserExtSourceDialogComponent implements OnInit {
   loading: boolean;
 
   displayedColumns: string[] = ['name'];
-  dataSource: MatTableDataSource<UserExtSource>;
+  dataSource: MatTableDataSource<RichUserExtSource>;
 
   ngOnInit() {
     // this.theme = this.data.theme;
-    this.dataSource = new MatTableDataSource<UserExtSource>(this.data.extSources);
+    this.dataSource = new MatTableDataSource<RichUserExtSource>(this.data.extSources);
   }
 
   onCancel() {
@@ -41,10 +41,10 @@ export class RemoveUserExtSourceDialogComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.usersManagerService.removeUserExtSource(this.data.userId, this.data.extSources[0].extSource.id).subscribe(() =>{
+    this.usersManagerService.removeUserExtSource(this.data.userId, this.data.extSources[0].userExtSource.extSource.id,false).subscribe(() =>{
       this.loading = false;
       this.dialogRef.close(true);
-    })
+    }, () => this.loading = false);
   }
 
 }

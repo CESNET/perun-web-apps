@@ -45,7 +45,6 @@ export class UserExtSourcesListComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.userExtSources);
     this.displayedColumns = this.displayedColumns.filter(x => !this.hideColumns.includes(x));
     this.dataSource = new MatTableDataSource<RichUserExtSource>(this.userExtSources);
     this.setDataSource();
