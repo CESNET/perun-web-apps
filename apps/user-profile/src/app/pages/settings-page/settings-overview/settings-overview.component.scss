@@ -1,5 +1,5 @@
 mat-list-item:hover{
-  background: var(--side-bg);
-  color: var(--side-text-active);
+  background: var(--side-hover) !important;
+  color: var(--side-text-active) !important;
   cursor: pointer;
 }
