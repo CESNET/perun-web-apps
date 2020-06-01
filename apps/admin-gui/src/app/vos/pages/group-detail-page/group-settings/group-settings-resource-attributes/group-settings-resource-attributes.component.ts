@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
-import { AttributesListComponent } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'perun-web-apps-group-settings-resource-attributes',
@@ -13,9 +12,6 @@ export class GroupSettingsResourceAttributesComponent implements OnInit {
   constructor(protected route: ActivatedRoute,
               private resourcesManagerService: ResourcesManagerService) {
   }
-
-  @ViewChild('list')
-  list: AttributesListComponent;
 
   groupId: number;
   resources: Resource[] = [];

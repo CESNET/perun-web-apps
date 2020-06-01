@@ -83,12 +83,22 @@ export class EditAttributeDialogComponent implements OnInit {
         }
         break;
       case 'user':
-        this.attributesManager.setUserAttributes({
-          user: this.data.entityId,
-          attributes: this.data.attributes
-        }).subscribe(() => {
-          this.onSuccess();
-        });
+        switch (this.data.secondEntity) {
+          case 'facility':
+            this.attributesManager.setUserFacilityAttributes({
+              user: this.data.entityId,
+              facility: this.data.secondEntityId,
+              attributes: this.data.attributes
+            }).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.setUserAttributes({
+              user: this.data.entityId,
+              attributes: this.data.attributes
+            }).subscribe(() => {
+              this.onSuccess();
+            });
+        }
         break;
       case 'member':
         switch (this.data.secondEntity) {

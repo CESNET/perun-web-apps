@@ -59,18 +59,24 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     this.filteredEntityValues = this.entityValues;
   }
 
-  getResourceAttributes(entityId: number) {
+  getAttributes(entityId: number) {
     this.innerLoading = true;
     switch (this.firstEntity) {
       case 'member':
-        this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(resAttributes => {
-          this.attributes = resAttributes;
+        this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(attributes => {
+          this.attributes = attributes;
           this.innerLoading = false;
         });
         break;
       case 'group':
-        this.attributesManagerService.getGroupResourceAttributes(this.firstEntityId, entityId).subscribe(resAttributes => {
-          this.attributes = resAttributes;
+        this.attributesManagerService.getGroupResourceAttributes(this.firstEntityId, entityId).subscribe(attributes => {
+          this.attributes = attributes;
+          this.innerLoading = false;
+        });
+        break;
+      case 'user':
+        this.attributesManagerService.getUserFacilityAttributes(this.firstEntityId, entityId).subscribe(attributes => {
+          this.attributes = attributes;
           this.innerLoading = false;
         });
         break;
@@ -101,7 +107,7 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selection.clear();
-        this.getResourceAttributes(entityId);
+        this.getAttributes(entityId);
       }
     });
   }
@@ -121,7 +127,7 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(didConfirm => {
       if (didConfirm) {
         this.selection.clear();
-        this.getResourceAttributes(entityId);
+        this.getAttributes(entityId);
       }
     });
   }
@@ -142,7 +148,7 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selection.clear();
-        this.getResourceAttributes(entityId);
+        this.getAttributes(entityId);
       }
     });
   }

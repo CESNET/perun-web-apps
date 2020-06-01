@@ -216,12 +216,24 @@ export class CreateAttributeDialogComponent implements OnInit {
         });
         break;
       case 'user':
-        this.attributesManager.setUserAttributes({
-          user: this.data.entityId,
-          attributes: this.selected.selected
-        }).subscribe(() => {
-          this.handleSuccess();
-        });
+        switch (this.data.secondEntity) {
+          case 'facility':
+            this.attributesManager.setUserFacilityAttributes({
+              user: this.data.entityId,
+              facility: this.data.secondEntityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+            break;
+          default:
+            this.attributesManager.setUserAttributes({
+              user: this.data.entityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+        }
         break;
       case 'vo':
         this.attributesManager.setVoAttributes({

@@ -102,9 +102,14 @@ export class SideMenuItemService {
           activatedRegex: `^/profile/settings$`,
           children: [
             {
-              label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',
+              label: 'MENU_ITEMS.USER.ATTRIBUTES',
               url: [`/profile/settings/attributes`],
               activatedRegex: `^/profile/settings/attributes`
+            },
+            {
+              label: 'MENU_ITEMS.USER.FACILITY_ATTRIBUTES',
+              url: [`/profile/settings/facilityAttributes`],
+              activatedRegex: `^/profile/settings/facilityAttributes`
             },
             {
               label: 'MENU_ITEMS.USER.ROLES',

@@ -71,9 +71,13 @@ export class DeleteAttributeDialogComponent implements OnInit {
         }
         break;
       case 'user':
-        this.attributesManager.removeUserAttributes(this.data.entityId, ids).subscribe(() => {
-          this.onSuccess();
-        });
+        switch (this.data.secondEntity) {
+          case 'facility':
+            this.attributesManager.removeUserFacilityAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.removeUserAttributes(this.data.entityId, ids).subscribe(() => this.onSuccess());
+        }
         break;
       case 'member':
         switch (this.data.secondEntity) {

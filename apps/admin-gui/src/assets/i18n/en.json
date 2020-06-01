@@ -586,6 +586,7 @@
       "ORGANIZATIONS": "Organizations",
       "DETAIL": "Detail",
       "ATTRIBUTES": "Attributes",
+      "FACILITY_ATTRIBUTES": "Facility attributes",
       "TITLE": "User - ",
       "ROLES": "Roles",
       "GUI_CONFIG": "Gui configuration"

@@ -4,7 +4,7 @@
 <app-alert *ngIf="entityValues.length === 0 && !loading" color="warn">{{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.NO_RESOURCES'|translate}}</app-alert>
 <app-alert *ngIf="filteredEntityValues.length === 0 && entityValues.length && !loading" color="warn">{{'MEMBER_DETAIL.SETTINGS.RESOURCE_ATTRIBUTES.NO_FILTERED_RESOURCES'|translate}}</app-alert>
 <mat-accordion *ngIf="!loading">
-  <mat-expansion-panel *ngFor="let entity of filteredEntityValues" (opened)="getResourceAttributes(entity.id)" (closed)="selection.clear()">
+  <mat-expansion-panel *ngFor="let entity of filteredEntityValues" (opened)="getAttributes(entity.id)" (closed)="selection.clear()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{entity.name}}
