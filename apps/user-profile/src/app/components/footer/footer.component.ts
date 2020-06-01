@@ -40,5 +40,4 @@ export class FooterComponent implements OnInit {
   getLanguage(){
     return this.translateService.currentLang;
   }
-
 }

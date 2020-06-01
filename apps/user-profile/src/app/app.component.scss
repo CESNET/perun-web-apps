@@ -4,13 +4,12 @@
   @media (max-width: 768px) {
     padding-bottom: 500px;
   };
-  min-height: 75vh;
 }
 
 #content-inner {
-  margin: 10px;
   position: relative;
   overflow-x: hidden;
+  min-height: calc(100vh - 64px);
 }
 
 a{

@@ -8,18 +8,18 @@
     <perun-web-apps-side-menu class="overflow-hidden"></perun-web-apps-side-menu>
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
-    <div id="content-wrap">
+    <div id="content-wrap" [ngStyle]="{'min-height': getContentHeight()}">
       <breadcrumb #parent>
         <span *ngFor="let route of parent.breadcrumbs" class="custom-breadcrumb">
-          <a *ngIf="!route.terminal" [routerLink]="[route.url]" href="" mat-button>{{ route.displayName | translate}}</a>
+          <a *ngIf="!route.terminal" [routerLink]="[route.url]" href=""
+             mat-button>{{ route.displayName | translate}}</a>
           <a *ngIf="route.terminal" mat-button>{{ route.displayName | translate}}</a>
         </span>
       </breadcrumb>
       <router-outlet></router-outlet>
     </div>
 
+    <perun-web-apps-footer></perun-web-apps-footer>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!--FOOTER-->
-<perun-web-apps-footer></perun-web-apps-footer>

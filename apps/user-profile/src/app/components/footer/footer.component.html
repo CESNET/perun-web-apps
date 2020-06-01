@@ -1,4 +1,4 @@
-<footer [ngStyle]="{'background': bgColor}" style="padding-top: 15px; padding-bottom: 15px">
+<footer [ngStyle]="{'background': bgColor}" style="padding-top: 15px; padding-bottom: 15px; height: 180px">
   <div fxLayout="row" fxLayoutAlign="space-evenly none">
     <div *ngFor="let item of items" fxLayout="column" fxLayoutAlign="none left">
       <h5 [ngStyle]="{'color': headersTextColor}">
@@ -6,8 +6,10 @@
       </h5>
       <div *ngIf="item.elements">
         <div *ngFor="let elem of item.elements">
-          <a *ngIf="elem.link" [href]="elem.link" [ngStyle]="{'color': linksTextColor}" target="_blank">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</a>
-          <p *ngIf="!elem.link" [ngStyle]="{'color': linksTextColor}">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</p>
+          <a *ngIf="elem.link" [href]="elem.link" [ngStyle]="{'color': linksTextColor}"
+             target="_blank">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</a>
+          <p *ngIf="!elem.link"
+             [ngStyle]="{'color': linksTextColor}">{{getLanguage() === 'en' ? elem.label_en : elem.label_cz}}</p>
         </div>
       </div>
     </div>
