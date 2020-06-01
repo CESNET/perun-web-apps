@@ -55,34 +55,40 @@ export class DeleteAttributeDialogComponent implements OnInit {
       payload[this.data.secondEntity] = this.data.secondEntityId;
     }
 
-    if (this.data.secondEntity === undefined) {
-      if (this.data.entity === 'vo') {
+    switch (this.data.entity) {
+      case 'vo':
         this.attributesManager.removeVoAttributes(this.data.entityId, ids).subscribe(() => {
           this.onSuccess();
         });
-      } else if (this.data.entity === 'group') {
-        this.attributesManager.removeGroupAttributes(this.data.entityId, ids).subscribe(() => {
-          this.onSuccess();
-        });
-      } else if (this.data.entity === 'user') {
+        break;
+      case 'group':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.removeGroupResourceAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.removeGroupAttributes(this.data.entityId, ids).subscribe(() => this.onSuccess());
+        }
+        break;
+      case 'user':
         this.attributesManager.removeUserAttributes(this.data.entityId, ids).subscribe(() => {
           this.onSuccess();
         });
-      } else if (this.data.entity === 'member') {
-        this.attributesManager.removeMemberAttributes(this.data.entityId, ids).subscribe(() => {
-          this.onSuccess();
-        });
-      } else if (this.data.entity === 'facility') {
+        break;
+      case 'member':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.removeMemberResourceAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.removeMemberAttributes(this.data.entityId, ids).subscribe(() => this.onSuccess());
+        }
+        break;
+      case 'facility':
         this.attributesManager.removeFacilityAttributes(this.data.entityId, ids).subscribe(() => {
           this.onSuccess();
         });
-      }
-    } else {
-      // TODO handle attributes for two entities
-      switch (this.data.secondEntity) {
-        case 'resource':
-          this.attributesManager.removeMemberResourceAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
-      }
+        break;
     }
   }
 

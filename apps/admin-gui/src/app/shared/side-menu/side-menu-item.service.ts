@@ -320,6 +320,11 @@ export class SideMenuItemService {
               activatedRegex: '/organizations/\\d+/groups/\\d+/settings/attributes$'
             },
             {
+              label: 'MENU_ITEMS.GROUP.RESOURCE_ATTRIBUTES',
+              url: [`/organizations/${group.voId}/groups/${group.id}/settings/resourceAttributes`],
+              activatedRegex: '/organizations/\\d+/groups/\\d+/settings/resourceAttributes$'
+            },
+            {
               label: 'MENU_ITEMS.GROUP.EXPIRATION',
               url: [`/organizations/${group.voId}/groups/${group.id}/settings/expiration`],
               activatedRegex: '/organizations/\\d+/groups/\\d+/settings/expiration$'

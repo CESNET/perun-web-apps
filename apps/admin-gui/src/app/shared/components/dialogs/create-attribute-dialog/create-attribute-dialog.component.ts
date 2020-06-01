@@ -158,69 +158,79 @@ export class CreateAttributeDialogComponent implements OnInit {
       return;
     }
 
-    if (!this.data.secondEntity) {
-      switch (this.data.entity) {
-        case 'facility':
-          this.attributesManager.setFacilityAttributes({
-            facility: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-        case 'group':
-          this.attributesManager.setGroupAttributes({
-            group: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-        case 'member':
-          this.attributesManager.setMemberAttributes({
-            member: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-        case 'resource':
-          this.attributesManager.setResourceAttributes({
-            resource: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-        case 'user':
-          this.attributesManager.setUserAttributes({
-            user: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-        case 'vo':
-          this.attributesManager.setVoAttributes({
-            vo: this.data.entityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-      }
-    } else {
-      switch (this.data.secondEntity) {
-        case 'resource':
-          this.attributesManager.setMemberResourceAttributes({
-            member: this.data.entityId,
-            resource: this.data.secondEntityId,
-            attributes: this.selected.selected
-          }).subscribe(() => {
-            this.handleSuccess();
-          });
-          break;
-      }
+    switch (this.data.entity) {
+      case 'facility':
+        this.attributesManager.setFacilityAttributes({
+          facility: this.data.entityId,
+          attributes: this.selected.selected
+        }).subscribe(() => {
+          this.handleSuccess();
+        });
+        break;
+      case 'group':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.setGroupResourceAttributes({
+              group: this.data.entityId,
+              resource: this.data.secondEntityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+            break;
+          default:
+            this.attributesManager.setGroupAttributes({
+              group: this.data.entityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+        }
+        break;
+      case 'member':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.setMemberResourceAttributes({
+              member: this.data.entityId,
+              resource: this.data.secondEntityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+            break;
+          default:
+            this.attributesManager.setMemberAttributes({
+              member: this.data.entityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+        }
+        break;
+      case 'resource':
+        this.attributesManager.setResourceAttributes({
+          resource: this.data.entityId,
+          attributes: this.selected.selected
+        }).subscribe(() => {
+          this.handleSuccess();
+        });
+        break;
+      case 'user':
+        this.attributesManager.setUserAttributes({
+          user: this.data.entityId,
+          attributes: this.selected.selected
+        }).subscribe(() => {
+          this.handleSuccess();
+        });
+        break;
+      case 'vo':
+        this.attributesManager.setVoAttributes({
+          vo: this.data.entityId,
+          attributes: this.selected.selected
+        }).subscribe(() => {
+          this.handleSuccess();
+        });
+        break;
     }
   }
 

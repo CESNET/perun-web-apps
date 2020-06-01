@@ -553,6 +553,7 @@
       "APPLICATIONS": "Applications",
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes",
+      "RESOURCE_ATTRIBUTES": "Resource attributes",
       "MANAGERS": "Managers",
       "EXPIRATION": "Membership",
       "APPLICATION_FORM": "Application form",

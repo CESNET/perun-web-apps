@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
-import { Attribute, AttributesManagerService} from '@perun-web-apps/perun/openapi';
+import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { MatTableDataSource } from '@angular/material/table';
 import { AttrEntity } from '@perun-web-apps/perun/models';
 
@@ -55,53 +55,67 @@ export class EditAttributeDialogComponent implements OnInit {
       payload[this.data.secondEntity] = this.data.secondEntityId;
     }
 
-    if (this.data.secondEntity === undefined) {
-      if (this.data.entity === 'vo') {
+    switch (this.data.entity) {
+      case 'vo':
         this.attributesManager.setVoAttributes({
           vo: this.data.entityId,
           attributes: this.data.attributes
         }).subscribe(() => {
           this.onSuccess();
         });
-      } else if (this.data.entity === 'group') {
-        this.attributesManager.setGroupAttributes({
-          group: this.data.entityId,
-          attributes: this.data.attributes
-        }).subscribe(() => {
-          this.onSuccess();
-        });
-      } else if (this.data.entity === 'user') {
+        break;
+      case 'group':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.setGroupResourceAttributes({
+              group: this.data.entityId,
+              resource: this.data.secondEntityId,
+              attributes: this.data.attributes
+            }).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.setGroupAttributes({
+              group: this.data.entityId,
+              attributes: this.data.attributes
+            }).subscribe(() => {
+              this.onSuccess();
+            });
+        }
+        break;
+      case 'user':
         this.attributesManager.setUserAttributes({
           user: this.data.entityId,
           attributes: this.data.attributes
         }).subscribe(() => {
           this.onSuccess();
         });
-      } else if (this.data.entity === 'member') {
-        this.attributesManager.setMemberAttributes({
-          member: this.data.entityId,
-          attributes: this.data.attributes
-        }).subscribe(() => {
-          this.onSuccess();
-        });
-      } else if (this.data.entity === 'facility') {
+        break;
+      case 'member':
+        switch (this.data.secondEntity) {
+          case 'resource':
+            this.attributesManager.setMemberResourceAttributes({
+              member: this.data.entityId,
+              resource: this.data.secondEntityId,
+              attributes: this.data.attributes
+            }).subscribe(() => this.onSuccess());
+            break;
+          default:
+            this.attributesManager.setMemberAttributes({
+              member: this.data.entityId,
+              attributes: this.data.attributes
+            }).subscribe(() => {
+              this.onSuccess();
+            });
+        }
+        break;
+      case 'facility':
         this.attributesManager.setFacilityAttributes({
           facility: this.data.entityId,
           attributes: this.data.attributes
         }).subscribe(() => {
           this.onSuccess();
         });
-      }
-    } else {
-      // TODO attributes with two entities
-      switch (this.data.secondEntity) {
-        case 'resource':
-          this.attributesManager.setMemberResourceAttributes({
-            member: this.data.entityId,
-            resource: this.data.secondEntityId,
-            attributes: this.data.attributes
-          }).subscribe(() => this.onSuccess());
-      }
+        break;
     }
   }
 

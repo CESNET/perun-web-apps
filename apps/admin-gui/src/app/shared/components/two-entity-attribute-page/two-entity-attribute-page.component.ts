@@ -61,10 +61,21 @@ export class TwoEntityAttributePageComponent implements OnChanges {
 
   getResourceAttributes(entityId: number) {
     this.innerLoading = true;
-    this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(resAttributes => {
-      this.attributes = resAttributes;
-      this.innerLoading = false;
-    });
+    switch (this.firstEntity) {
+      case 'member':
+        this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(resAttributes => {
+          this.attributes = resAttributes;
+          this.innerLoading = false;
+        });
+        break;
+      case 'group':
+        this.attributesManagerService.getGroupResourceAttributes(this.firstEntityId, entityId).subscribe(resAttributes => {
+          this.attributes = resAttributes;
+          this.innerLoading = false;
+        });
+        break;
+    }
+
   }
 
   applyFilter(filterValue: string) {
@@ -124,7 +135,7 @@ export class TwoEntityAttributePageComponent implements OnChanges {
         secondEntity: this.secondEntity,
         secondEntityId: entityId,
         notEmptyAttributes: this.attributes,
-        style: 'member-theme'
+        style: `${this.firstEntity}-theme`
       }
     });
 

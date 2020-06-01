@@ -51,6 +51,12 @@ export class GroupSettingsOverviewComponent implements OnInit {
         style: 'group-btn'
       },
       {
+        cssIcon: 'perun-attributes',
+        url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/resourceAttributes`,
+        label: 'MENU_ITEMS.GROUP.RESOURCE_ATTRIBUTES',
+        style: 'group-btn'
+      },
+      {
         cssIcon: 'perun-group',
         url: `/organizations/${this.vo.id}/groups/${this.group.id}/settings/expiration`,
         label: 'MENU_ITEMS.GROUP.EXPIRATION',
