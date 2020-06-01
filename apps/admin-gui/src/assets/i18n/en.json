@@ -565,7 +565,8 @@
       "GROUPS": "Groups",
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes",
-      "RESOURCE_ATTRIBUTES": "Resource attributes"
+      "RESOURCE_ATTRIBUTES": "Resource attributes",
+      "GROUP_ATTRIBUTES": "Group attributes"
     },
     "ADMIN": {
       "TITLE": "Perun admin",

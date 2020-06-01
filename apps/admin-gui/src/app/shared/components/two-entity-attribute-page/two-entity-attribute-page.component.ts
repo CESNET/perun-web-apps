@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   Attribute,
   AttributesManagerService,
-  Facility,
+  Facility, Group,
   Resource,
   ResourcesManagerService
 } from '@perun-web-apps/perun/openapi';
@@ -15,7 +15,7 @@ import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dial
 import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 
 @Component({
-  selector: 'perun-web-apps-two-entity-attribute-page',
+  selector: 'app-two-entity-attribute-page',
   templateUrl: './two-entity-attribute-page.component.html',
   styleUrls: ['./two-entity-attribute-page.component.scss']
 })
@@ -43,7 +43,7 @@ export class TwoEntityAttributePageComponent implements OnChanges {
   secondEntity: string;
 
   @Input()
-  entityValues: Resource[] | Facility[];
+  entityValues: Resource[] | Facility[] | Group[];
 
 
   attributes: Attribute[] = [];
@@ -63,10 +63,19 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     this.innerLoading = true;
     switch (this.firstEntity) {
       case 'member':
-        this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(attributes => {
-          this.attributes = attributes;
-          this.innerLoading = false;
-        });
+        switch (this.secondEntity) {
+          case 'resource':
+            this.attributesManagerService.getMemberResourceAttributes(this.firstEntityId, entityId).subscribe(attributes => {
+              this.attributes = attributes;
+              this.innerLoading = false;
+            });
+            break;
+          case 'group':
+            this.attributesManagerService.getMemberGroupAttributes(this.firstEntityId, entityId).subscribe(attributes => {
+              this.attributes = attributes;
+              this.innerLoading = false;
+            });
+        }
         break;
       case 'group':
         this.attributesManagerService.getGroupResourceAttributes(this.firstEntityId, entityId).subscribe(attributes => {

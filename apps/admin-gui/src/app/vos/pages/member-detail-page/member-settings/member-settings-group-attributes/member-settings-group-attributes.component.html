@@ -1,0 +1,3 @@
+<app-two-entity-attribute-page [entityValues]="groups" [firstEntity]="'member'" [firstEntityId]="memberId"
+                               [secondEntity]="'group'" *ngIf="!loading"></app-two-entity-attribute-page>
+<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>

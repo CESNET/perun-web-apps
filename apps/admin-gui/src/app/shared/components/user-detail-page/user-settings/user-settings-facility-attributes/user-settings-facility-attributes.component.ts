@@ -4,7 +4,7 @@ import { FacilitiesManagerService, Facility } from '@perun-web-apps/perun/openap
 import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
-  selector: 'perun-web-apps-user-settings-facility-attributes',
+  selector: 'app-user-settings-facility-attributes',
   templateUrl: './user-settings-facility-attributes.component.html',
   styleUrls: ['./user-settings-facility-attributes.component.scss']
 })

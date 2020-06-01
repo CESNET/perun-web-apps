@@ -84,6 +84,9 @@ export class DeleteAttributeDialogComponent implements OnInit {
           case 'resource':
             this.attributesManager.removeMemberResourceAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
             break;
+          case 'group':
+            this.attributesManager.removeMemberGroupAttributes(this.data.entityId, this.data.secondEntityId, ids).subscribe(() => this.onSuccess());
+            break;
           default:
             this.attributesManager.removeMemberAttributes(this.data.entityId, ids).subscribe(() => this.onSuccess());
         }

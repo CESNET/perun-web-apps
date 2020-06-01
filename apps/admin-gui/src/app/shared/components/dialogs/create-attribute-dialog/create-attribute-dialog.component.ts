@@ -198,6 +198,15 @@ export class CreateAttributeDialogComponent implements OnInit {
               this.handleSuccess();
             });
             break;
+          case 'group':
+            this.attributesManager.setMemberGroupAttributes({
+              member: this.data.entityId,
+              group: this.data.secondEntityId,
+              attributes: this.selected.selected
+            }).subscribe(() => {
+              this.handleSuccess();
+            });
+            break;
           default:
             this.attributesManager.setMemberAttributes({
               member: this.data.entityId,

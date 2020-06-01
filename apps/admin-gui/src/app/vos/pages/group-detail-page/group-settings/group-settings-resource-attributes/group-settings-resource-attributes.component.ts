@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
-  selector: 'perun-web-apps-group-settings-resource-attributes',
+  selector: 'app-group-settings-resource-attributes',
   templateUrl: './group-settings-resource-attributes.component.html',
   styleUrls: ['./group-settings-resource-attributes.component.scss']
 })
@@ -22,7 +22,6 @@ export class GroupSettingsResourceAttributesComponent implements OnInit {
     this.loading = true;
     this.route.parent.parent.params.subscribe(parent => {
       this.groupId = parent['groupId'];
-      console.log(this.groupId);
       this.resourcesManagerService.getAssignedResourcesWithGroup(this.groupId).subscribe(resources => {
         this.resources = resources;
         this.loading = false;

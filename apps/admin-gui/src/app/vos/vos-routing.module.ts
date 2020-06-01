@@ -64,6 +64,7 @@ import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-setting
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 import { MemberSettingsResourceAttributesComponent } from './pages/member-detail-page/member-settings/member-settings-resource-attributes/member-settings-resource-attributes.component';
 import { GroupSettingsResourceAttributesComponent } from './pages/group-detail-page/group-settings/group-settings-resource-attributes/group-settings-resource-attributes.component';
+import { MemberSettingsGroupAttributesComponent } from './pages/member-detail-page/member-settings/member-settings-group-attributes/member-settings-group-attributes.component';
 
 const routes: Routes = [
   {
@@ -202,10 +203,15 @@ const routes: Routes = [
             data: {animation: 'MemberSettingsAttributesPage'}
           },
           {
-            path: 'resource_attributes',
+            path: 'resourceAttributes',
             component: MemberSettingsResourceAttributesComponent,
             data: {animation: 'MemberSettingsResourceAttributesPage'}
-          }
+          },
+          {
+            path: 'groupAttributes',
+            component: MemberSettingsGroupAttributesComponent,
+            data: {animation: 'MemberSettingsGroupAttributesPage'}
+          },
         ]
       }
     ]
@@ -257,6 +263,11 @@ const routes: Routes = [
             path: 'resourceAttributes',
             component: GroupSettingsResourceAttributesComponent,
             data: {animation: 'GroupSettingsResourceAttributesPage'}
+          },
+          {
+            path: 'groupAttributes',
+            component: MemberSettingsGroupAttributesComponent,
+            data: {animation: 'MemberSettingsGroupAttributesPage'}
           },
           {
             path: 'expiration',

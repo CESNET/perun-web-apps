@@ -109,6 +109,13 @@ export class EditAttributeDialogComponent implements OnInit {
               attributes: this.data.attributes
             }).subscribe(() => this.onSuccess());
             break;
+          case 'group':
+            this.attributesManager.setMemberGroupAttributes({
+              member: this.data.entityId,
+              group: this.data.secondEntityId,
+              attributes: this.data.attributes
+            }).subscribe(() => this.onSuccess());
+            break;
           default:
             this.attributesManager.setMemberAttributes({
               member: this.data.entityId,

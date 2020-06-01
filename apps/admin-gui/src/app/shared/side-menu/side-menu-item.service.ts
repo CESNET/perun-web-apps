@@ -412,7 +412,12 @@ export class SideMenuItemService {
               label: 'MENU_ITEMS.MEMBER.RESOURCE_ATTRIBUTES',
               url: [`/organizations/${member.voId}/members/${member.id}/settings/resource_attributes`],
               activatedRegex: '/organizations/\\d+/members/\\d+/settings/resource_attributes'
-            }
+            },
+            {
+              label: 'MENU_ITEMS.MEMBER.GROUP_ATTRIBUTES',
+              url: [`/organizations/${member.voId}/members/${member.id}/settings/groupAttributes`],
+              activatedRegex: '/organizations/\\d+/members/\\d+/settings/groupAttributes$'
+            },
           ],
           showChildrenRegex: '/organizations/\\d+/members/\\d+/settings'
         }
