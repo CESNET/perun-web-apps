@@ -1,32 +1,33 @@
 <h3 class="mb-3">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.TITLE'|customTranslate | translate}}</h3>
-<div fxLayout="row">
-  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.RESOURCE'|customTranslate | translate}}</p>
-  <p>{{resource}}</p>
-</div>
-<div fxLayout="row">
-  <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CURRENT_QUOTA'|customTranslate | translate}}</p>
-  <p>{{currentQuota}}</p>
-</div>
-<div fxLayout="row" fxFlexAlign="center center">
-  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REQUESTED_QUOTA'|customTranslate | translate}}</p>
-  <mat-form-field appearance="standard">
-    <label class="label-width">
-      <input
-        matInput
-        required
-        [formControl]="newValueControl">
-    </label>
-  </mat-form-field>
-  <mat-select [(value)]="selectedUnit" class="select-width mt-auto mb-auto ml-2">
-    <mat-option *ngFor="let unit of units" [value]="selectedUnit">
-      {{unit}}
-    </mat-option>
-  </mat-select>
-</div>
-<div fxLayout="row" fxFlexAlign="center center">
-  <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REASON'|customTranslate | translate}}</p>
-  <mat-form-field class="form-width" appearance="standard">
-    <label class="label-width">
+<div class="user-theme">
+  <div fxLayout="row">
+    <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.RESOURCE'|customTranslate | translate}}</p>
+    <p>{{resource}}</p>
+  </div>
+  <div fxLayout="row">
+    <p class="column-size">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CURRENT_QUOTA'|customTranslate | translate}}</p>
+    <p>{{currentQuota}}</p>
+  </div>
+  <div fxLayout="row" fxFlexAlign="center center">
+    <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REQUESTED_QUOTA'|customTranslate | translate}}</p>
+    <mat-form-field appearance="standard">
+      <label class="label-width">
+        <input
+          matInput
+          required
+          [formControl]="newValueControl">
+      </label>
+    </mat-form-field>
+    <mat-select [(value)]="selectedUnit" class="select-width mt-auto mb-auto ml-2">
+      <mat-option *ngFor="let unit of units" [value]="selectedUnit">
+        {{unit}}
+      </mat-option>
+    </mat-select>
+  </div>
+  <div fxLayout="row" fxFlexAlign="center center">
+    <p class="column-size mt-auto mb-auto">{{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.REASON'|customTranslate | translate}}</p>
+    <mat-form-field class="form-width" appearance="standard">
+      <label class="label-width">
       <textarea
         matInput
         required
@@ -34,24 +35,24 @@
         cdkAutosizeMinRows="4"
         [formControl]="reasonControl"
       ></textarea>
-    </label>
-  </mat-form-field>
-</div>
+      </label>
+    </mat-form-field>
+  </div>
 
-<div mat-dialog-actions>
-  <button
-    mat-flat-button
-    class="ml-auto"
-    color="accent"
-    [disabled]="reasonControl.invalid"
-    (click)="onSubmit()">
-    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.SEND'|customTranslate | translate}}
-  </button>
-  <button
-    mat-stroked-button
-    class="ml-2"
-    (click)="onCancel()">
-    {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CANCEL'|customTranslate | translate}}
-  </button>
+  <div mat-dialog-actions>
+    <button
+      mat-flat-button
+      class="ml-auto"
+      color="accent"
+      [disabled]="reasonControl.invalid"
+      (click)="onSubmit()">
+      {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.SEND'|customTranslate | translate}}
+    </button>
+    <button
+      mat-stroked-button
+      class="ml-2"
+      (click)="onCancel()">
+      {{'DIALOGS.REQUEST_DATA_QUOTA_CHANGE.CANCEL'|customTranslate | translate}}
+    </button>
+  </div>
 </div>
-

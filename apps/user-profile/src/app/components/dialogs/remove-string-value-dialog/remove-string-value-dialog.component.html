@@ -1,6 +1,9 @@
 <h3 mat-dialog-title>{{title}}</h3>
-<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-<div *ngIf="!loading">
+<div class="user-theme">
+  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+</div>
+
+<div *ngIf="!loading" class="user-theme">
   <div mat-dialog-content>
     <p>
       {{description}}

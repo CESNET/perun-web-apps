@@ -19,9 +19,12 @@
               {{resource.name}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <p>{{'OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | customTranslate | translate}}</p>
-          <mat-checkbox [checked]="optOutAttribute && optOutAttribute.value !== null"
-                        (change)="setOptOut()"></mat-checkbox>
+          <div class="row">
+            <p>{{'OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | customTranslate | translate}}</p>
+            <mat-checkbox class="ml-3" [checked]="optOutAttribute && optOutAttribute.value !== null"
+                          (change)="setOptOut()"></mat-checkbox>
+          </div>
+
 
         </mat-expansion-panel>
       </mat-accordion>

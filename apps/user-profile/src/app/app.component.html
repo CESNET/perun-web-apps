@@ -1,10 +1,8 @@
-<!--HEADER-->
 <perun-web-apps-header (sidenavToggle)="sidenav.toggle()"></perun-web-apps-header>
 
-<!--SIDE MENU-->
 <mat-sidenav-container>
   <mat-sidenav #sidenav [ngStyle]="{'background': sideMenuBgColor}" mode="side" opened
-               class="side-menu-size">
+               class="side-menu-size" fixedInViewport fixedTopGap="64">
     <perun-web-apps-side-menu class="overflow-hidden"></perun-web-apps-side-menu>
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
@@ -20,6 +18,5 @@
     </div>
 
     <perun-web-apps-footer></perun-web-apps-footer>
-
   </mat-sidenav-content>
 </mat-sidenav-container>
