@@ -1,7 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import {MenuItem} from '@perun-web-apps/perun/models';
 import {
-  AuthzResolverService, FacilitiesManagerService,
+  FacilitiesManagerService,
   Facility,
   Group,
   User,
@@ -10,17 +9,20 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
 import {
-  TABLE_USER_PROFILE_DASHBOARD_VO, TABLE_USER_PROFILE_DASHBOARD_GROUP,
-  TableConfigService, TABLE_USER_PROFILE_DASHBOARD_FACILITY
+  TABLE_USER_PROFILE_DASHBOARD_FACILITY,
+  TABLE_USER_PROFILE_DASHBOARD_GROUP,
+  TABLE_USER_PROFILE_DASHBOARD_VO,
+  TableConfigService
 } from '@perun-web-apps/config/table-config';
+import { MenuItem } from '@perun-web-apps/perun/models';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-user-overview',
-  templateUrl: './user-overview.component.html',
-  styleUrls: ['./user-overview.component.scss']
+  selector: 'perun-web-apps-user-dashboard',
+  templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserOverviewComponent implements OnInit {
+export class UserDashboardComponent implements OnInit {
 
   @HostBinding('class.router-component') true;
 

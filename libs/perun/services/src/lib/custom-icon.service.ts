@@ -111,6 +111,18 @@ export class CustomIconService {
       url: 'assets/img/PerunWebImages/external_sources-white.svg',
       name: 'perun-external-sources'
     },
+    {
+      url: 'assets/img/PerunWebImages/vo-dark.svg',
+      name: 'perun-vo-black'
+    },
+    {
+      url: 'assets/img/PerunWebImages/group-dark.svg',
+      name: 'perun-group-black'
+    },
+    {
+      url: 'assets/img/PerunWebImages/facility-dark.svg',
+      name: 'perun-facility-black'
+    },
     // TESTING PURPOSES
     {
       url: 'assets/img/settings1-blue.svg',

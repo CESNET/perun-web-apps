@@ -26,7 +26,7 @@ export class UserRolesComponent implements OnInit {
   ngOnInit() {
     this.route.parent.parent.params.subscribe(params => {
       let userId: number;
-      if (params['profile']) {
+      if (params['home']) {
         this.principal = this.store.getPerunPrincipal();
         userId = this.principal.userId;
       } else {

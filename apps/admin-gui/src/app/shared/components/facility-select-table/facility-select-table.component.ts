@@ -34,6 +34,9 @@ export class FacilitySelectTableComponent implements AfterViewInit, OnChanges {
   @Input()
   pageSize = 10;
 
+  @Input()
+  displayedColumns: string[] = ['id', 'recent', 'name', 'description', 'technicalOwners'];
+
   @Output()
   page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
@@ -48,7 +51,6 @@ export class FacilitySelectTableComponent implements AfterViewInit, OnChanges {
 
   private sort: MatSort;
 
-  displayedColumns: string[] = ['id', 'recent', 'name', 'description', 'technicalOwners'];
   dataSource: MatTableDataSource<RichFacility>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
@@ -77,7 +79,10 @@ export class FacilitySelectTableComponent implements AfterViewInit, OnChanges {
         if (data.id.toString(10).startsWith(filter)) {
           return true;
         }
-        return parseTechnicalOwnersNames(data.facilityOwners).toLowerCase().indexOf(lowerCaseFilter) !== -1;
+        if (this.displayedColumns.indexOf('technicalOwners') !== -1) {
+          return parseTechnicalOwnersNames(data.facilityOwners).toLowerCase().indexOf(lowerCaseFilter) !== -1;
+        }
+        return false;
       });
     }
   }

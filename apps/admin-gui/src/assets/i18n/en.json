@@ -17,7 +17,7 @@
     "ACCESS": "Access management",
     "FACILITIES": "Facilities management",
     "ADMIN": "Perun admin",
-    "PROFILE": "Profile",
+    "HOME": "Home",
     "ACCESS_DESC": "Manage organizations, groups and members.",
     "FACILITIES_DESC": "Manage facilities and resources.",
     "ADMIN_DESC": "Manage attributes, users and do diagnostics.",
@@ -1271,7 +1271,11 @@
       "FULL_NAME": "Full name",
       "USER_ID": "User ID",
       "USER_TYPE": "User type",
-      "EDIT_NAME": "Edit name"
+      "EDIT_NAME": "Edit name",
+      "MY_VO": "Vo where you are admin",
+      "MY_GROUPS": "Groups where you are admin",
+      "MY_FACILITIES": "Facilities where you are admin",
+      "FILTER": "Filter"
     },
     "SETTINGS": {
       "ATTRIBUTES": {
@@ -1336,6 +1340,12 @@
         "NO_KEYS_WARNING": "Use 'Add' button to add new Key-Attribute pair",
         "SAVE_SUCCESS": "Attributes successfully saved",
         "REMOVE_SUCCESS": "Attributes successfully removed"
+      },
+      "USER_DETAIL": {
+        "GROUPS": {
+          "MEMBER_GROUPS": "Groups where you are member",
+          "ADMINS_GROUPS": "Groups where you are admin"
+        }
       }
     },
     "FOOTER": {

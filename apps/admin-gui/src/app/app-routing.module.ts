@@ -18,8 +18,7 @@ import { UserSettingsFacilityAttributesComponent } from './shared/components/use
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainMenuPageComponent,
+    path: '', redirectTo: '/home', pathMatch: 'full'
   },
   {
     path: 'api-callback',
@@ -38,7 +37,7 @@ const routes: Routes = [
     loadChildren: () => import('./facilities/facilities.module').then(m => m.FacilitiesModule),
   },
   {
-    path: ':profile',
+    path: ':home',
     component: UserProfileComponent,
     children: [
       {

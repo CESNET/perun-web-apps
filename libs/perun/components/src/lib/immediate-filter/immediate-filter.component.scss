@@ -1,3 +1,5 @@
 .filter-field {
-  width:350px !important;
+  max-width:350px !important;
+  width:100% !important;
+  min-width:auto !important;
 }

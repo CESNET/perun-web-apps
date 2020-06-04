@@ -162,6 +162,8 @@ import { TwoEntityAttributePageComponent } from './components/two-entity-attribu
 import { UserSettingsFacilityAttributesComponent } from './components/user-detail-page/user-settings/user-settings-facility-attributes/user-settings-facility-attributes.component';
 import { UserLoginsPipe } from './pipes/user-logins.pipe';
 import { AttributeImportDialogComponent } from './components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
+import { FacilitySelectTableComponent } from './components/facility-select-table/facility-select-table.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -290,7 +292,8 @@ import { AttributeImportDialogComponent } from './components/dialogs/attribute-i
     ConfigTableConfigModule,
     SideMenuRootItemComponent,
     DestinationListComponent,
-    TwoEntityAttributePageComponent
+    TwoEntityAttributePageComponent,
+    FacilitySelectTableComponent
   ],
   declarations: [
     PerunNavComponent,
@@ -315,7 +318,6 @@ import { AttributeImportDialogComponent } from './components/dialogs/attribute-i
     MemberEmailPipe,
     MemberLoginsPipe,
     RemoveMembersDialogComponent,
-    SideMenuRootItemComponent,
     DebuggerPageComponent,
     TechnicalOwnersPipe,
     RemoveResourceDialogComponent,
@@ -403,7 +405,8 @@ import { AttributeImportDialogComponent } from './components/dialogs/attribute-i
     TwoEntityAttributePageComponent,
     UserSettingsFacilityAttributesComponent,
     UserLoginsPipe,
-    AttributeImportDialogComponent
+    AttributeImportDialogComponent,
+    FacilitySelectTableComponent
   ],
   providers: [
     AnyToStringPipe,

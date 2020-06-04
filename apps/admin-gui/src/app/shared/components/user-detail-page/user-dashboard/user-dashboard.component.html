@@ -1,15 +1,13 @@
 <div class="dashboard-container">
-  <div>
-    <mat-card class="card-container" *ngIf="this.adminVo !== []">
+  <div *ngIf="this.adminVo.length !== 0">
+    <mat-card>
       <mat-card-header>
         <mat-icon mat-card-avatar svgIcon='perun-vo-black' class="cover-image"></mat-icon>
         <mat-card-title>{{'USER_DETAIL.OVERVIEW.MY_VO' | translate}}</mat-card-title>
-        <mat-card-subtitle class="header">
-            <perun-web-apps-immediate-filter (filter)="this.voFilterValue = $event"
-                                             [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
-        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <perun-web-apps-immediate-filter (filter)="this.voFilterValue = $event"
+                                         [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
         <perun-web-apps-vo-select-table (page)="pageChanged($event, voTableId, voPageSize)"
                                         [pageSize]="voPageSize"
                                         [displayedColumns]="['id', 'name']"
@@ -17,21 +15,20 @@
                                         [vos]="this.adminVo"
                                         [filterValue]="voFilterValue">
         </perun-web-apps-vo-select-table>
+
       </mat-card-content>
     </mat-card>
   </div>
 
-  <div>
-    <mat-card class="card-container" *ngIf="this.adminGroup !== []">
+  <div *ngIf="this.adminGroup.length !== 0">
+    <mat-card class="card-container">
       <mat-card-header>
         <mat-icon mat-card-avatar svgIcon='perun-group-black' class="cover-image"></mat-icon>
         <mat-card-title>{{'USER_DETAIL.OVERVIEW.MY_GROUPS' | translate}}</mat-card-title>
-        <mat-card-subtitle class="header">
-          <perun-web-apps-immediate-filter (filter)="this.groupFilterValue = $event"
-                                           [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
-        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <perun-web-apps-immediate-filter (filter)="this.groupFilterValue = $event"
+                                         [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
         <perun-web-apps-groups-list (page)="pageChanged($event, groupTableId, groupPageSize)"
                                     [pageSize]="groupPageSize"
                                     [groups]="this.adminGroup"
@@ -43,22 +40,20 @@
   </div>
 
 
-  <div>
+  <div *ngIf="this.adminFacility.length !== 0">
     <mat-card class="card-container">
       <mat-card-header>
         <mat-icon mat-card-avatar svgIcon='perun-facility-black' class="cover-image"></mat-icon>
         <mat-card-title>{{'USER_DETAIL.OVERVIEW.MY_FACILITIES' | translate}}</mat-card-title>
-        <mat-card-subtitle class="header">
-          <perun-web-apps-immediate-filter (filter)="this.facilityFilterValue = $event"
-                                           [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
-        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <perun-web-apps-immediate-filter (filter)="this.facilityFilterValue = $event"
+                                         [placeholder]="'USER_DETAIL.OVERVIEW.FILTER'"></perun-web-apps-immediate-filter>
         <app-facility-select-table (page)="pageChanged($event, facilityTableId, facilityPageSize)"
-                                    [pageSize]="facilityPageSize"
-                                    [facilities]="this.adminFacility"
-                                    [displayedColumns]="['id', 'name']"
-                                    [filterValue]="facilityFilterValue">
+                                   [pageSize]="facilityPageSize"
+                                   [facilities]="this.adminFacility"
+                                   [displayedColumns]="['id', 'name']"
+                                   [filterValue]="facilityFilterValue">
         </app-facility-select-table>
       </mat-card-content>
     </mat-card>

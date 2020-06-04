@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { PerunPrincipal, User } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,18 +12,22 @@ import { StoreService } from '@perun-web-apps/perun/services';
 export class UserProfileComponent implements OnInit {
 
   constructor(
-    public authResolver: GuiAuthResolver,
     private sideMenuService: SideMenuService,
-    private store: StoreService
+    private store: StoreService,
+    private router: Router
   ) {
   }
 
   principal: PerunPrincipal;
   user: User;
-  path = `/profile`;
-  regex = `/profile`;
+  path: string;
 
   ngOnInit() {
+    this.path = this.router.url;
+    this.router.events.subscribe(path => {
+      this.path = this.router.url;
+      console.log(this.path);
+    });
     this.principal = this.store.getPerunPrincipal();
     this.user = this.principal.user;
 

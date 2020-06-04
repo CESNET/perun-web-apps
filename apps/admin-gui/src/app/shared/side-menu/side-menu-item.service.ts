@@ -64,9 +64,9 @@ export class SideMenuItemService {
 
   getUserItem(user: User): SideMenuItem {
     return {
-      baseLink: ['/profile'],
+      baseLink: ['/home'],
       expandable: false,
-      label: 'MAIN_MENU.PROFILE',
+      label: 'MAIN_MENU.HOME',
       colorClass: 'base-item-color-activated',
       icon: 'perun-user',
       baseColorClass: 'base-item-color',
@@ -78,51 +78,51 @@ export class SideMenuItemService {
       links: [
         {
           label: 'MENU_ITEMS.USER.OVERVIEW',
-          url: ['/profile'],
-          activatedRegex: '^/profile$'
+          url: ['/home'],
+          activatedRegex: '^/home$'
         },
         {
           label: 'MENU_ITEMS.USER.DETAIL',
-          url: ['/profile/detail'],
-          activatedRegex: `^/profile/detail`
+          url: ['/home/detail'],
+          activatedRegex: `^/home/detail`
         },
         {
           label: 'MENU_ITEMS.USER.ORGANIZATIONS',
-          url: [`/profile/organizations`],
-          activatedRegex: `^/profile/organizations`
+          url: [`/home/organizations`],
+          activatedRegex: `^/home/organizations`
         },
         {
           label: 'MENU_ITEMS.USER.GROUPS',
-          url: [`/profile/groups`],
-          activatedRegex: `^/profile/groups`
+          url: [`/home/groups`],
+          activatedRegex: `^/home/groups`
         },
         {
           label: 'MENU_ITEMS.USER.SETTINGS',
-          url: [`/profile/settings`],
-          activatedRegex: `^/profile/settings$`,
+          url: [`/home/settings`],
+          activatedRegex: `^/home/settings$`,
           children: [
             {
               label: 'MENU_ITEMS.USER.ATTRIBUTES',
-              url: [`/profile/settings/attributes`],
-              activatedRegex: `^/profile/settings/attributes`
+              url: [`/home/settings/attributes`],
+              activatedRegex: `^/home/settings/attributes`
             },
             {
               label: 'MENU_ITEMS.USER.FACILITY_ATTRIBUTES',
-              url: [`/profile/settings/facilityAttributes`],
-              activatedRegex: `^/profile/settings/facilityAttributes`
+              url: [`/home/settings/facilityAttributes`],
+              activatedRegex: `^/home/settings/facilityAttributes`
             },
             {
               label: 'MENU_ITEMS.USER.ROLES',
-              url: [`/profile/settings/roles`],
-              activatedRegex: `^/profile/settings/roles`
+              url: [`/home/settings/roles`],
+              activatedRegex: `^/home/settings/roles`
             },
             {
               label: 'MENU_ITEMS.USER.GUI_CONFIG',
-              url: ['/profile/settings/gui-config'],
-              activatedRegex: '/profile/settings/gui-config'
+              url: ['/home/settings/gui-config'],
+              activatedRegex: '/home/settings/gui-config'
             }
           ],
-          showChildrenRegex: `^/profile/settings`
+          showChildrenRegex: `^/home/settings`
         },
       ],
     };
