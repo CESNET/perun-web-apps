@@ -536,6 +536,7 @@
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes",
       "SERVICE_CONFIG": "Services configuration",
+      "OWNERS": "Owners",
       "MANAGERS": "Managers",
       "SERVICES_DESTINATIONS": "Services destinations"
     },

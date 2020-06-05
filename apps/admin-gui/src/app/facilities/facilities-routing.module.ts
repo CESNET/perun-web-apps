@@ -25,6 +25,7 @@ import { ResourceGroupsComponent } from './pages/resource-detail-page/resource-g
 import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
 import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-managers/facility-settings-managers.component';
 import { FacilityServicesDestinationsComponent } from './pages/facility-detail-page/facility-services-destinations/facility-services-destinations.component';
+import { FacilitySettingsOwnersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-owners/facility-settings-owners.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,11 @@ const routes: Routes = [
             path: 'attributes',
             component: FacilitySettingsAttributesComponent,
             data: {animation: 'FacilitySettingsAttributesPage'}
+          },
+          {
+            path: 'owners',
+            component: FacilitySettingsOwnersComponent,
+            data: {animation: 'FacilitySettingOwnersPage'}
           },
           {
             path: 'managers',

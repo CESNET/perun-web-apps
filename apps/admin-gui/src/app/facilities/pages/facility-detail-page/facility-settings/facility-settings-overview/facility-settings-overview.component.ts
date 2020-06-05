@@ -41,6 +41,12 @@ export class FacilitySettingsOverviewComponent implements OnInit {
         style: 'facility-btn'
       },
       {
+        cssIcon: 'perun-user',
+        url: `/facilities/${this.facility.id}/settings/owners`,
+        label: 'MENU_ITEMS.FACILITY.OWNERS',
+        style: 'facility-btn'
+      },
+      {
         cssIcon: 'perun-manager',
         url: `/facilities/${this.facility.id}/settings/managers`,
         label: 'MENU_ITEMS.FACILITY.MANAGERS',
