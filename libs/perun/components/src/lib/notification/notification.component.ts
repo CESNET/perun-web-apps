@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {NotificationData} from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
-import {NotificationDialogComponent} from '../notification-dialog/notification-dialog.component';
-import { NotificationStorageService } from '../../../core/services/common/notification-storage.service';
+
+import { NotificationStorageService } from '@perun-web-apps/perun/services';
 import { doAfterDelay } from '@perun-web-apps/perun/utils';
+import { NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 
 @Component({
-  selector: 'app-notification',
+  selector: 'perun-web-apps-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss']
 })

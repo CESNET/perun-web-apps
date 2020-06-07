@@ -2,8 +2,8 @@
   <div *ngIf="notifications.length !== 0" class="hide-horizontal-scrollbar">
     <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
       <div *cdkVirtualFor="let data of notifications" class="mb-1">
-        <app-notification [data]="data" [inDialog]="true">
-        </app-notification>
+        <perun-web-apps-notification [data]="data" [inDialog]="true">
+        </perun-web-apps-notification>
       </div>
     </cdk-virtual-scroll-viewport>
   </div>

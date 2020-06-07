@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
               private translateService:TranslateService) {
   }
 
+  public static minWidth = 992;
+
   sideMenuBgColor = this.store.get('theme', 'sidemenu_bg_color');
   contentBackgroundColor = this.store.get('theme', 'content_bg_color');
   footerHeight = 180;

@@ -4,7 +4,7 @@ import {SideMenuService} from '../../core/services/common/side-menu.service';
 import {AppComponent} from '../../app.component';
 import {SideMenuItemService} from './side-menu-item.service';
 import {GuiAuthResolver} from '@perun-web-apps/perun/services';
-import {rollInOut} from '../animations/Animations';
+import {rollInOut} from '@perun-web-apps/perun/animations';
 import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, HostListener } from '@angular/core';
 import {NotificationData} from '@perun-web-apps/perun/models';
 import {NotificatorService} from '@perun-web-apps/perun/services';
-import {flyInOut} from '../../animations/Animations';
+import {flyInOut} from '@perun-web-apps/perun/animations';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from '../../../app.component';
-import { NotificationStorageService } from '../../../core/services/common/notification-storage.service';
+import { NotificationStorageService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-notificator',

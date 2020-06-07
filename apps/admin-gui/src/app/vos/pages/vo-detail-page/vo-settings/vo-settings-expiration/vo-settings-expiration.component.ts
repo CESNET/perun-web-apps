@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {openClose} from '../../../../../shared/animations/Animations';
+import {openClose} from '@perun-web-apps/perun/animations';
 import {ActivatedRoute} from '@angular/router';
 import {NotificatorService} from '@perun-web-apps/perun/services';
 import {TranslateService} from '@ngx-translate/core';

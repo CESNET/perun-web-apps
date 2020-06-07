@@ -41,8 +41,6 @@ import {DeleteGroupDialogComponent} from './components/dialogs/delete-group-dial
 import {SettingsToggleItemComponent} from './components/settings-toggle-item/settings-toggle-item.component';
 import { ApplicationStatePipe } from './pipes/application-state.pipe';
 import { NotificatorComponent } from './components/notificator/notificator.component';
-import { NotificationComponent } from './components/notification/notification.component';
-import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 import { AttributeTypeCleanPipe } from './pipes/attribute-type-clean.pipe';
 import { NameSpaceToDefPipe } from './pipes/name-space-to-def.pipe';
 import {UsersListComponent} from './components/users-list/users-list.component';
@@ -126,8 +124,6 @@ import { DeleteAttributeDefinitionDialogComponent } from './components/dialogs/d
 // tslint:disable-next-line:max-line-length
 import { CreateAttributeDefinitionDialogComponent } from './components/dialogs/create-attribute-definition-dialog/create-attribute-definition-dialog.component';
 import { PerunFooterComponent } from './perun-footer/perun-footer.component';
-import { BugReportDialogComponent } from './components/bug-report-dialog/bug-report-dialog.component';
-import { AutoFocusDirective } from './directives/auto-focus.directive';
 import {MatTableExporterModule} from 'mat-table-exporter';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { EditAttributeDefinitionDialogComponent } from './components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
@@ -302,8 +298,6 @@ import { AttributeImportDialogComponent } from './components/dialogs/attribute-i
     SettingsToggleItemComponent,
     ApplicationStatePipe,
     NotificatorComponent,
-    NotificationComponent,
-    NotificationDialogComponent,
     AttributeTypeCleanPipe,
     NameSpaceToDefPipe,
     UsersListComponent,
@@ -372,12 +366,9 @@ import { AttributeImportDialogComponent } from './components/dialogs/attribute-i
     DeleteAttributeDefinitionDialogComponent,
     CreateAttributeDefinitionDialogComponent,
     PerunFooterComponent,
-    BugReportDialogComponent,
-    AutoFocusDirective,
     EditAttributeDefinitionDialogComponent,
     EntitylessAttributeKeysListComponent,
     ServicesListComponent,
-    AutoFocusDirective,
     ReportIssueDialogComponent,
     RemoveVoDialogComponent,
     CreateVoDialogComponent,

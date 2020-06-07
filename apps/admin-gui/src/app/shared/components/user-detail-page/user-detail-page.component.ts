@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {fadeIn} from '../../animations/Animations';
+import {fadeIn} from '@perun-web-apps/perun/animations';
 
 @Component({
   selector: 'app-user-detail-page',

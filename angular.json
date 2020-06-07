@@ -949,6 +949,70 @@
           }
         }
       }
+    },
+    "perun-animations": {
+      "projectType": "library",
+      "root": "libs/perun/animations",
+      "sourceRoot": "libs/perun/animations/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/animations/tsconfig.lib.json",
+              "libs/perun/animations/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/perun/animations/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/animations/jest.config.js",
+            "tsConfig": "libs/perun/animations/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/perun/animations/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "perun-directives": {
+      "projectType": "library",
+      "root": "libs/perun/directives",
+      "sourceRoot": "libs/perun/directives/src",
+      "prefix": "perun-web-apps",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/perun/directives/tsconfig.lib.json",
+              "libs/perun/directives/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/perun/directives/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/perun/directives/jest.config.js",
+            "tsConfig": "libs/perun/directives/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/perun/directives/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

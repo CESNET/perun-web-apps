@@ -81,7 +81,8 @@
   "SAMBA_PASSWORD": {
     "TITLE": "Heslo pro službu SAMBA",
     "INPUT_PLACEHOLDER": "Zadejte nové heslo",
-    "SET_PASSWORD": "Nastavit heslo"
+    "SET_PASSWORD": "Nastavit heslo",
+    "SUCCESS_MESSAGE": "Heslo pro službu SAMBA bylo nastaveno"
   },
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferovaná jména Unixových skupin",
@@ -166,7 +167,8 @@
       "REQUESTED_QUOTA": "Požadovaná kvóta:",
       "REASON": "Důvod:",
       "SEND": "Poslat",
-      "CANCEL": "Zrušit"
+      "CANCEL": "Zrušit",
+      "SUCCESS": "Žádost o změnu datové kvóty byla odoslána"
     },
     "REMOVE_USER_EXT_SOURCE": {
       "TITLE": "Odstranění externí identity",
@@ -234,6 +236,17 @@
           "NAME": "Jméno",
           "VALUE": "Hodnota",
           "DESCRIPTION": "Popis"
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje."
+        },
+        "NOTIFICATOR": {
+          "NOTIFICATION": {
+            "DEFAULT_ACTION": "Zobrazit",
+            "DIALOG_CLOSE": "Zavřít",
+            "DIALOG_BUG_REPORT": "Nahlásit chybu",
+            "DEFAULT_RPC_ERROR_MESSAGE": "Operace se nezdařila."
+          }
         }
       },
       "ORGANIZATIONS": {

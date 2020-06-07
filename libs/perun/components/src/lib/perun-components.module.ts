@@ -39,6 +39,10 @@ import { AttributeValueListDeleteDialogComponent } from './attributes-list/attri
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AttributeValueIntegerComponent } from './attributes-list/attribute-value/attribute-value-integer/attribute-value-integer.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationDialogComponent } from './notification-dialog/notification-dialog.component';
+import { BugReportDialogComponent } from './bug-report-dialog/bug-report-dialog.component';
+import { AutoFocusDirective } from '@perun-web-apps/perun/directives';
 
 
 @NgModule({
@@ -85,7 +89,11 @@ import { AttributeValueIntegerComponent } from './attributes-list/attribute-valu
     MenuButtonsFieldComponent,
     AttributeValueListEditDialogComponent,
     AttributeValueListDeleteDialogComponent,
-    AttributeValueIntegerComponent
+    AttributeValueIntegerComponent,
+    NotificationComponent,
+    NotificationDialogComponent,
+    BugReportDialogComponent,
+    AutoFocusDirective
   ],
   exports: [
     VoSelectTableComponent,
@@ -102,7 +110,9 @@ import { AttributeValueIntegerComponent } from './attributes-list/attribute-valu
     AttributeValueMapComponent,
     AttributeValueStringComponent,
     ResourcesListComponent,
-    MenuButtonsFieldComponent
+    MenuButtonsFieldComponent,
+    NotificationComponent,
+    AutoFocusDirective
   ]
 })
 export class PerunSharedComponentsModule {

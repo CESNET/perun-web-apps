@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {openClose} from '../../../animations/Animations';
+import {openClose} from '@perun-web-apps/perun/animations';
 import {
   Group,
   GroupsManagerService,

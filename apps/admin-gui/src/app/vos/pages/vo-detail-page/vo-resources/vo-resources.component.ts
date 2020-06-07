@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fadeIn } from '../../../../shared/animations/Animations';
+import { fadeIn } from '@perun-web-apps/perun/animations';
 
 @Component({
   selector: 'app-vo-resources',

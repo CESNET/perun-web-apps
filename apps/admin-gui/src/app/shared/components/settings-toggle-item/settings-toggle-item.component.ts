@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {openClose} from '../../animations/Animations';
+import {openClose} from '@perun-web-apps/perun/animations';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({

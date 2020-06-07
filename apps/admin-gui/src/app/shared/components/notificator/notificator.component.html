@@ -1,7 +1,7 @@
 <div id="notificator"
   [ngStyle]="{'top': getNotificatorTop()}">
   <div *ngFor="let data of notifications; let i = index" @flyInOut>
-    <app-notification (closeNotification)="removeNotification(i)" [data]="data" [newNotification]="true">
-    </app-notification>
+    <perun-web-apps-notification (closeNotification)="removeNotification(i)" [data]="data" [newNotification]="true">
+    </perun-web-apps-notification>
   </div>
 </div>

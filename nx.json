@@ -79,6 +79,12 @@
     },
     "perun-pipes": {
       "tags": []
+    },
+    "perun-animations": {
+      "tags": []
+    },
+    "perun-directives": {
+      "tags": []
     }
   },
   "tasksRunnerOptions": {

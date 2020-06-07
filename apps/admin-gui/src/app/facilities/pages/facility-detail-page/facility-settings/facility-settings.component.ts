@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {fadeIn} from '../../../../shared/animations/Animations';
+import {fadeIn} from '@perun-web-apps/perun/animations';
 
 @Component({
   selector: 'app-facility-settings',

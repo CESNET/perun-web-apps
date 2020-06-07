@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { RichResource, RTMessagesManagerService, User, Vo } from '@perun-web-apps/perun/openapi';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { NotificatorService } from '@perun-web-apps/perun/services';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface RequestChangeDataQuotaDialogData {
   vo: Vo;
@@ -20,8 +22,11 @@ export class RequestChangeDataQuotaDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<RequestChangeDataQuotaDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: RequestChangeDataQuotaDialogData,
-              private rtMessagesService:RTMessagesManagerService
+              private rtMessagesService:RTMessagesManagerService,
+              private notificator: NotificatorService,
+              private translate: TranslateService
   ) {
+    translate.get('DIALOGS.REQUEST_DATA_QUOTA_CHANGE.SUCCESS').subscribe(res => this.successMessage = res);
   }
 
   resource = '';
@@ -30,6 +35,7 @@ export class RequestChangeDataQuotaDialogComponent implements OnInit {
   newValueControl: FormControl;
   units: string[] = ['MiB', 'GiB', 'TiB'];
   selectedUnit = 'GiB';
+  successMessage: string;
 
   ngOnInit(): void {
     this.resource = this.data.resource.name;
@@ -48,7 +54,8 @@ export class RequestChangeDataQuotaDialogComponent implements OnInit {
     const text = `QUOTA CHANGE REQUEST↵ ↵ User: ${name} (user ID: ${this.data.user.id})↵ VO: ${this.data.vo.shortName} / ${this.data.vo.name} (vo ID: ${this.data.vo.id})↵ Resource: ${this.data.resource.name} (resource ID: ${this.data.resource.id})↵ Data quota↵ Requested quota: ${this.newValueControl.value}↵ Reason: ${this.reasonControl.value}↵ ↵ ↵ -------------------------------------↵ Sent from Perun GUI`;
 
     this.rtMessagesService.sentMessageToRTWithQueue('', subject, text).subscribe(() =>{
-      console.log('done');
+      this.notificator.showSuccess(this.successMessage);
+      this.dialogRef.close();
     });
   }
 }

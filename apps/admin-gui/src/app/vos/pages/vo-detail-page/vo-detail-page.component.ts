@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.service';
-import { fadeIn } from '../../../shared/animations/Animations';
+import { fadeIn } from '@perun-web-apps/perun/animations';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { addRecentlyVisited } from '@perun-web-apps/perun/utils';
 

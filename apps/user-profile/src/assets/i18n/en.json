@@ -81,7 +81,8 @@
   "SAMBA_PASSWORD": {
     "TITLE": "SAMBA password",
     "INPUT_PLACEHOLDER": "Enter new password",
-    "SET_PASSWORD": "Set password"
+    "SET_PASSWORD": "Set password",
+    "SUCCESS_MESSAGE": "SAMBA password has been set"
   },
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferred unix group names",
@@ -166,7 +167,8 @@
       "REQUESTED_QUOTA": "Requested quota:",
       "REASON": "Reason:",
       "SEND": "Send",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "SUCCESS": "Request for changing the data quota has been sent"
     },
     "REMOVE_USER_EXT_SOURCE": {
       "TITLE": "Remove user's external identity",
@@ -234,6 +236,17 @@
           "NAME": "Name",
           "VALUE": "Value",
           "DESCRIPTION": "Description"
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+        },
+        "NOTIFICATOR": {
+          "NOTIFICATION": {
+            "DEFAULT_ACTION": "Show",
+            "DIALOG_CLOSE": "Close",
+            "DIALOG_BUG_REPORT": "Report a bug",
+            "DEFAULT_RPC_ERROR_MESSAGE": "An operation failed."
+          }
         }
       },
       "ORGANIZATIONS": {

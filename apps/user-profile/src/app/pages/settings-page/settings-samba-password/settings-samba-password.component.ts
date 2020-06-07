@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Attribute, AttributesManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { StoreService } from '@perun-web-apps/perun/services';
+import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { FormControl} from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perun-web-apps-settings-samba-password',
@@ -12,13 +13,18 @@ export class SettingsSambaPasswordComponent implements OnInit {
 
   constructor(private attributesManagerService: AttributesManagerService,
               private store: StoreService,
-              private usersManagerService:UsersManagerService) {
+              private usersManagerService:UsersManagerService,
+              private notificator: NotificatorService,
+              private translate: TranslateService) {
+    translate.get('SAMBA_PASSWORD.SUCCESS_MESSAGE').subscribe(res => this.successMessage = res);
   }
 
   sambaExists: boolean;
   sambaAttribute: Attribute;
   sambaControl: FormControl;
   userId: number;
+
+  successMessage: string;
 
   ngOnInit() {
     this.userId = this.store.getPerunPrincipal().userId;
@@ -33,6 +39,7 @@ export class SettingsSambaPasswordComponent implements OnInit {
     this.usersManagerService.createAlternativePassword(this.userId,timestamp,'samba-du',this.sambaControl.value).subscribe(() => {
       this.sambaControl.setValue('');
       this.getSambaAttribute();
+      this.notificator.showSuccess(this.successMessage);
     });
   }
 

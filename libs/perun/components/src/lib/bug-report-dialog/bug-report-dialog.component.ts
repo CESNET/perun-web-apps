@@ -11,7 +11,7 @@ export interface BugReportData {
 }
 
 @Component({
-  selector: 'app-bug-report-dialog',
+  selector: 'perun-web-apps-bug-report-dialog',
   templateUrl: './bug-report-dialog.component.html',
   styleUrls: ['./bug-report-dialog.component.scss']
 })

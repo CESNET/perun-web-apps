@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {fadeIn} from '../../animations/Animations';
+import {fadeIn} from '@perun-web-apps/perun/animations';
 
 @Component({
   selector: 'app-animated-router-outlet',

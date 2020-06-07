@@ -5,7 +5,7 @@ import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { AuthService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowNotificationHistoryDialogComponent } from '../components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
-import { NotificationStorageService } from '../../core/services/common/notification-storage.service';
+import { NotificationStorageService } from '@perun-web-apps/perun/services';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';

@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {SideMenuItem} from '../side-menu.component';
-import { openClose, rollInOut } from '../../animations/Animations';
+import { openClose, rollInOut } from '@perun-web-apps/perun/animations';
 import {MatSidenav} from '@angular/material/sidenav';
 import { StoreService } from '@perun-web-apps/perun/services';
 

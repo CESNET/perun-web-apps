@@ -1186,14 +1186,6 @@
     "EMAIL": "Email",
     "LOGINS": "Logins"
   },
-  "NOTIFICATOR": {
-    "NOTIFICATION": {
-      "DEFAULT_ACTION": "Show",
-      "DIALOG_CLOSE": "Close",
-      "DIALOG_BUG_REPORT": "Report a bug",
-      "DEFAULT_RPC_ERROR_MESSAGE": "An operation failed."
-    }
-  },
   "ADMIN_USER": {
     "TITLE": "User - "
   },
@@ -1413,6 +1405,14 @@
         },
         "TABLE_OPTIONS": {
           "EXPORT_TO_FILE": "Export to file"
+        },
+        "NOTIFICATOR": {
+          "NOTIFICATION": {
+            "DEFAULT_ACTION": "Show",
+            "DIALOG_CLOSE": "Close",
+            "DIALOG_BUG_REPORT": "Report a bug",
+            "DEFAULT_RPC_ERROR_MESSAGE": "An operation failed."
+          }
         }
       },
       "ORGANIZATIONS": {

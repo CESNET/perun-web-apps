@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {openClose, tagsOpenClose} from '../../../animations/Animations';
+import {openClose, tagsOpenClose} from '@perun-web-apps/perun/animations';
 import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 
 export interface ApplicationFormAddEditMailDialogData {

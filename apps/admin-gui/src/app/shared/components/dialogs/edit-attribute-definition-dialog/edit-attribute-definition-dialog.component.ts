@@ -10,7 +10,7 @@ import {
   Service,
   ServicesManagerService
 } from '@perun-web-apps/perun/openapi';
-import { slideInOutLeft, slideInOutRight, switchAnimation } from '../../../animations/Animations';
+import { slideInOutLeft, slideInOutRight, switchAnimation } from '@perun-web-apps/perun/animations';
 import { Role } from '@perun-web-apps/perun/models';
 import { PageEvent } from '@angular/material/paginator';
 import {

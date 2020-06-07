@@ -24,7 +24,7 @@ export class NotificatorService {
 
   getDefaultActionMessage(): string {
     if (this.defaultAction === undefined) {
-      return this.defaultAction = this.translate.instant('NOTIFICATOR.NOTIFICATION.DEFAULT_ACTION');
+      return this.defaultAction = this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.NOTIFICATOR.NOTIFICATION.DEFAULT_ACTION');
     } else {
       return this.defaultAction;
     }
@@ -32,7 +32,7 @@ export class NotificatorService {
 
   getDefaultRpcMessage(): string {
     if (this.defaultRpcMessage === undefined) {
-      return this.defaultRpcMessage = this.translate.instant('NOTIFICATOR.NOTIFICATION.DEFAULT_RPC_ERROR_MESSAGE');
+      return this.defaultRpcMessage = this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.NOTIFICATOR.NOTIFICATION.DEFAULT_RPC_ERROR_MESSAGE');
     } else {
       return this.defaultRpcMessage;
     }

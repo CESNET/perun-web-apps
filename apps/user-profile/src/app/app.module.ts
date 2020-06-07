@@ -72,6 +72,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule } from '@angular/material/core';
 import { ShowSshDialogComponent } from './components/dialogs/show-ssh-dialog/show-ssh-dialog.component';
 import { ApiInterceptor } from '@perun-web-apps/perun/services';
+import { NotificatorComponent } from './components/notificator/notificator.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -133,7 +134,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     CustomTranslatePipe,
     MembershipListComponent,
     ValidateExpirationPipe,
-    ShowSshDialogComponent
+    ShowSshDialogComponent,
+    NotificatorComponent
   ],
   imports: [
     BrowserModule,
