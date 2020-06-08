@@ -54,7 +54,7 @@
     "sidemenu_group_bg_color":"#33691e",
     "sidemenu_facility_bg_color": "#d84315",
     "sidemenu_resource_bg_color":"#6a1b9a",
-    "sidemenu_user_bg_color": "#000000",
+    "sidemenu_user_bg_color": "#00796b",
     "sidemenu_item_links_text_color": "#ffffff",
     "sidemenu_vo_text_color": "#ffffff",
     "sidemenu_member_text_color":"#ffffff",

@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
 import {NoPreloading, RouterModule, Routes} from '@angular/router';
-import {MainMenuPageComponent} from './main-menu-page/main-menu-page.component';
 import {AuthCallbackComponent} from './core/components/auth-callback/auth-callback.component';
 import {UserProfileComponent} from './shared/components/user-profile/user-profile.component';
-import {UserOverviewComponent} from './shared/components/user-detail-page/user-overview/user-overview.component';
-import {UserDetailComponent} from './shared/components/user-detail-page/user-detail/user-detail.component';
 import {UserOrganizationsComponent} from './shared/components/user-detail-page/user-organizations/user-organizations.component';
 import {UserGroupsComponent} from './shared/components/user-detail-page/user-groups/user-groups.component';
 import {UserSettingsComponent} from './shared/components/user-detail-page/user-settings/user-settings.component';
@@ -15,6 +12,7 @@ import {UserSettingsAttributesComponent} from './shared/components/user-detail-p
 import { UserRolesComponent } from './shared/components/user-detail-page/user-settings/user-roles/user-roles.component';
 import { UserSettingsAppConfigurationComponent } from './shared/components/user-detail-page/user-settings/user-settings-app-configuration/user-settings-app-configuration.component';
 import { UserSettingsFacilityAttributesComponent } from './shared/components/user-detail-page/user-settings/user-settings-facility-attributes/user-settings-facility-attributes.component';
+import { UserDashboardComponent } from './shared/components/user-detail-page/user-dashboard/user-dashboard.component';
 
 const routes: Routes = [
   {
@@ -42,13 +40,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: UserOverviewComponent,
+        component: UserDashboardComponent,
         data: {animation: 'UserOverviewPage'}
-      },
-      {
-        path: 'detail',
-        component: UserDetailComponent,
-        data: {animation: 'UserDetailPage'}
       },
       {
         path: 'organizations',

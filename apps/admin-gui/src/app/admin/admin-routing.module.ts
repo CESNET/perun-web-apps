@@ -17,7 +17,6 @@ import {
 import {AdminUsersComponent} from './pages/admin-page/admin-users/admin-users.component';
 import {AdminUserDetailPageComponent} from './pages/admin-user-detail-page/admin-user-detail-page.component';
 import {UserOverviewComponent} from '../shared/components/user-detail-page/user-overview/user-overview.component';
-import {UserDetailComponent} from '../shared/components/user-detail-page/user-detail/user-detail.component';
 import {UserOrganizationsComponent} from '../shared/components/user-detail-page/user-organizations/user-organizations.component';
 import {UserGroupsComponent} from '../shared/components/user-detail-page/user-groups/user-groups.component';
 import {UserSettingsComponent} from '../shared/components/user-detail-page/user-settings/user-settings.component';
@@ -89,11 +88,6 @@ const routes: Routes = [
         path: '',
         component: UserOverviewComponent,
         data: {animation: 'UserOverviewPage'}
-      },
-      {
-        path: 'detail',
-        component: UserDetailComponent,
-        data: {animation: 'UserDetailPage'}
       },
       {
         path: 'organizations',

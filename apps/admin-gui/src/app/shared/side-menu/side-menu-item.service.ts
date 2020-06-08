@@ -82,11 +82,6 @@ export class SideMenuItemService {
           activatedRegex: '^/home$'
         },
         {
-          label: 'MENU_ITEMS.USER.DETAIL',
-          url: ['/home/detail'],
-          activatedRegex: `^/home/detail`
-        },
-        {
           label: 'MENU_ITEMS.USER.ORGANIZATIONS',
           url: [`/home/organizations`],
           activatedRegex: `^/home/organizations`
@@ -446,11 +441,6 @@ export class SideMenuItemService {
           label: 'MENU_ITEMS.USER.OVERVIEW',
           url: [path],
           activatedRegex: `${regex}$`
-        },
-        {
-          label: 'MENU_ITEMS.USER.DETAIL',
-          url: [`${path}/detail`],
-          activatedRegex: `${regex}/detail`
         },
         {
           label: 'MENU_ITEMS.USER.ORGANIZATIONS',

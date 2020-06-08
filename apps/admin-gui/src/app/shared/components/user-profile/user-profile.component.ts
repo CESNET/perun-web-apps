@@ -26,7 +26,6 @@ export class UserProfileComponent implements OnInit {
     this.path = this.router.url;
     this.router.events.subscribe(path => {
       this.path = this.router.url;
-      console.log(this.path);
     });
     this.principal = this.store.getPerunPrincipal();
     this.user = this.principal.user;

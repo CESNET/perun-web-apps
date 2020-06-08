@@ -108,7 +108,6 @@ import {
 import {DisplayedRolePipe} from './pipes/displayed-role.pipe';
 import { AnimatedRouterOutletComponent } from './components/animated-router-outlet/animated-router-outlet.component';
 import { UserEmailPipe } from './pipes/user-email.pipe';
-import { UserDetailComponent } from './components/user-detail-page/user-detail/user-detail.component';
 import { ResourcesTagsListComponent } from './components/resources-tags-list/resources-tags-list.component';
 import { DebounceFilterComponent } from './components/debounce-filter/debounce-filter.component';
 import { UserDetailPageComponent } from './components/user-detail-page/user-detail-page.component';
@@ -163,6 +162,7 @@ import { UserSettingsFacilityAttributesComponent } from './components/user-detai
 import { UserLoginsPipe } from './pipes/user-logins.pipe';
 import { AttributeImportDialogComponent } from './components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
 import { FacilitySelectTableComponent } from './components/facility-select-table/facility-select-table.component';
+import { UserDashboardComponent } from './components/user-detail-page/user-dashboard/user-dashboard.component';
 
 @NgModule({
   imports: [
@@ -283,7 +283,6 @@ import { FacilitySelectTableComponent } from './components/facility-select-table
     ResourcesTagsListComponent,
     DebounceFilterComponent,
     ResourcesTagsListComponent,
-    UserDetailComponent,
     UserDetailPageComponent,
     PerunFooterComponent,
     CreateResourceDialogComponent,
@@ -356,7 +355,6 @@ import { FacilitySelectTableComponent } from './components/facility-select-table
     NotificationsCopyMailsDialogComponent,
     AnimatedRouterOutletComponent,
     UserEmailPipe,
-    UserDetailComponent,
     ResourcesTagsListComponent,
     UserDetailPageComponent,
     UserOverviewComponent,
@@ -370,7 +368,6 @@ import { FacilitySelectTableComponent } from './components/facility-select-table
     UserProfileComponent,
     DebounceFilterComponent,
     ResourcesTagsListComponent,
-    UserDetailComponent,
     DeleteAttributeDefinitionDialogComponent,
     CreateAttributeDefinitionDialogComponent,
     PerunFooterComponent,
@@ -406,7 +403,8 @@ import { FacilitySelectTableComponent } from './components/facility-select-table
     UserSettingsFacilityAttributesComponent,
     UserLoginsPipe,
     AttributeImportDialogComponent,
-    FacilitySelectTableComponent
+    FacilitySelectTableComponent,
+    UserDashboardComponent
   ],
   providers: [
     AnyToStringPipe,

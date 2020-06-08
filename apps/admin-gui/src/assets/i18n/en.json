@@ -1272,9 +1272,9 @@
       "USER_ID": "User ID",
       "USER_TYPE": "User type",
       "EDIT_NAME": "Edit name",
-      "MY_VO": "Vo where you are admin",
-      "MY_GROUPS": "Groups where you are admin",
-      "MY_FACILITIES": "Facilities where you are admin",
+      "MY_VO": "Your organizations",
+      "MY_GROUPS": "Your groups",
+      "MY_FACILITIES": "Your facilities",
       "FILTER": "Filter"
     },
     "SETTINGS": {
