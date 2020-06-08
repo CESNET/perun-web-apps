@@ -12,6 +12,7 @@ import {
 } from '../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationForm } from '@perun-web-apps/perun/openapi';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-application-form-list',
@@ -51,13 +52,14 @@ export class ApplicationFormListComponent implements OnChanges {
   }
 
   edit(applicationFormItem: ApplicationFormItem) {
-    const editDialog = this.dialog.open(EditApplicationFormItemDialogComponent, {
-      width: '600px',
-      height: '600px',
-      data: {voId: this.applicationForm.vo.id,
-        group: this.applicationForm.group,
-        applicationFormItem: applicationFormItem}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.height = '600px';
+    config.data = {voId: this.applicationForm.vo.id,
+      group: this.applicationForm.group,
+      applicationFormItem: applicationFormItem}
+
+    const editDialog = this.dialog.open(EditApplicationFormItemDialogComponent, config);
     editDialog.afterClosed().subscribe((success) => {
       if (success) {
         this.itemsChanged.push(applicationFormItem.id);
@@ -67,9 +69,10 @@ export class ApplicationFormListComponent implements OnChanges {
   }
 
   delete(applicationFormItem: ApplicationFormItem) {
-    const dialog = this.dialog.open(DeleteApplicationFormItemDialogComponent, {
-      width: '500px'
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+
+    const dialog = this.dialog.open(DeleteApplicationFormItemDialogComponent, config);
     dialog.afterClosed().subscribe(deleteItem => {
       if (deleteItem) {
         applicationFormItem.forDelete = true;

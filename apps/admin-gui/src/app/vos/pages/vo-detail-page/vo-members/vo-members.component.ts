@@ -13,6 +13,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { FormControl } from '@angular/forms';
 import { TABLE_VO_MEMBERS, TableConfigService } from '@perun-web-apps/config/table-config';
 import { PageEvent } from '@angular/material/paginator';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-members',
@@ -101,15 +102,16 @@ export class VoMembersComponent implements OnInit {
   }
 
   onAddMember() {
-    const dialogRef = this.dialog.open(AddMemberDialogComponent, {
-      width: '1000px',
-      data: {
-        entityId: this.vo.id,
-        voId: this.vo.id,
-        theme: 'vo-theme',
-        type: 'vo'
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data = {
+      entityId: this.vo.id,
+      voId: this.vo.id,
+      theme: 'vo-theme',
+      type: 'vo'
+    };
+
+    const dialogRef = this.dialog.open(AddMemberDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(() => {
       if (this.firstSearchDone) {
@@ -125,10 +127,11 @@ export class VoMembersComponent implements OnInit {
   }
 
   onRemoveMembers() {
-    const dialogRef = this.dialog.open(RemoveMembersDialogComponent, {
-      width: '450px',
-      data: { members: this.selection.selected }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = { members: this.selection.selected };
+
+    const dialogRef = this.dialog.open(RemoveMembersDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(wereMembersDeleted => {
       if (wereMembersDeleted) {

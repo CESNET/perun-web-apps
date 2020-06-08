@@ -6,6 +6,7 @@ import { AddUnixGroupDialogComponent } from '../../../components/dialogs/add-uni
 import { TranslateService } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-settings-preferred-unix-group-names',
@@ -62,10 +63,12 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
   addGroupName(namespace: string) {
     const groups = this.groupNames.get(namespace);
-    const dialogRef = this.dialog.open(AddUnixGroupDialogComponent, {
-      width: '400px',
-      data: { groups: groups, namespace: namespace, userId: this.userId }
-    });
+
+    const config = getDefaultDialogConfig();
+    config.width = '400px';
+    config.data = { groups: groups, namespace: namespace, userId: this.userId };
+
+    const dialogRef = this.dialog.open(AddUnixGroupDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(added => {
       if (added) {
@@ -75,16 +78,17 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   }
 
   removeGroupName(namespace: string, index: number) {
-    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
-      width: '600px',
-      data: {
-        values: this.selectionList[index].selected,
-        attribute: this.groupNameAttributes[index],
-        userId: this.userId,
-        title: this.removeDialogTitle,
-        description: this.removeDialogDescription
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      values: this.selectionList[index].selected,
+      attribute: this.groupNameAttributes[index],
+      userId: this.userId,
+      title: this.removeDialogTitle,
+      description: this.removeDialogDescription
+    };
+
+    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(added => {
       if (added) {

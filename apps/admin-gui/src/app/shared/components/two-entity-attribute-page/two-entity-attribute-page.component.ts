@@ -13,6 +13,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { EditAttributeDialogComponent } from '../dialogs/edit-attribute-dialog/edit-attribute-dialog.component';
 import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
 import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-two-entity-attribute-page',
@@ -102,16 +103,17 @@ export class TwoEntityAttributePageComponent implements OnChanges {
     // have to use this to update attribute with map in it, before saving it
     this.list.updateMapAttributes();
 
-    const dialogRef = this.dialog.open(EditAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.firstEntityId,
-        entity: this.firstEntity,
-        secondEntity: this.secondEntity,
-        secondEntityId: entityId,
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.firstEntityId,
+      entity: this.firstEntity,
+      secondEntity: this.secondEntity,
+      secondEntityId: entityId,
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(EditAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -122,16 +124,17 @@ export class TwoEntityAttributePageComponent implements OnChanges {
   }
 
   onDelete(entityId: number) {
-    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.firstEntityId,
-        entity: this.firstEntity,
-        secondEntity: this.secondEntity,
-        secondEntityId: entityId,
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.firstEntityId,
+      entity: this.firstEntity,
+      secondEntity: this.secondEntity,
+      secondEntityId: entityId,
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(didConfirm => {
       if (didConfirm) {
@@ -142,17 +145,18 @@ export class TwoEntityAttributePageComponent implements OnChanges {
   }
 
   onAdd(entityId: number){
-    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, {
-      width: '1050px',
-      data: {
-        entityId: this.firstEntityId,
-        entity: this.firstEntity,
-        secondEntity: this.secondEntity,
-        secondEntityId: entityId,
-        notEmptyAttributes: this.attributes,
-        style: `${this.firstEntity}-theme`
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1050px';
+    config.data = {
+      entityId: this.firstEntityId,
+      entity: this.firstEntity,
+      secondEntity: this.secondEntity,
+      secondEntityId: entityId,
+      notEmptyAttributes: this.attributes,
+      style: `${this.firstEntity}-theme`
+    };
+
+    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

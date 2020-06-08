@@ -7,7 +7,7 @@ import { DeleteGroupDialogComponent } from '../../../../shared/components/dialog
 import { SelectionModel } from '@angular/cdk/collections';
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { applyFilter } from '@perun-web-apps/perun/utils';
+import { applyFilter, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 import { TABLE_VO_GROUPS, TableConfigService } from '@perun-web-apps/config/table-config';
@@ -50,10 +50,11 @@ export class VoGroupsComponent implements OnInit {
   checkbox: MatCheckbox;
 
   onCreateGroup() {
-    const dialogRef = this.dialog.open(CreateGroupDialogComponent, {
-      width: '350px',
-      data: {voId: this.vo.id, parentGroup: null}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '350px';
+    config.data = {voId: this.vo.id, parentGroup: null};
+
+    const dialogRef = this.dialog.open(CreateGroupDialogComponent, config);
 
     dialogRef.afterClosed().subscribe((success) => {
       if (success) {
@@ -86,10 +87,11 @@ export class VoGroupsComponent implements OnInit {
   }
 
   deleteGroup() {
-    const dialogRef = this.dialog.open(DeleteGroupDialogComponent, {
-      width: '450px',
-      data: {voId: this.vo.id, groups: this.selected.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {voId: this.vo.id, groups: this.selected.selected};
+
+    const dialogRef = this.dialog.open(DeleteGroupDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -104,13 +106,14 @@ export class VoGroupsComponent implements OnInit {
 
   onMoveGroup(group: GroupFlatNode | Group) {
     console.log('Vo - ' + group);
-    const dialogRef = this.dialog.open(MoveGroupDialogComponent, {
-      width: '550px',
-      data: {
-        group: group,
-        theme: 'vo-theme'
-      },
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '550px';
+    config.data = {
+      group: group,
+      theme: 'vo-theme'
+    };
+
+    const dialogRef = this.dialog.open(MoveGroupDialogComponent, config);
     dialogRef.afterClosed().subscribe(groupMoved => {
       if (groupMoved) {
         this.loadAllGroups();

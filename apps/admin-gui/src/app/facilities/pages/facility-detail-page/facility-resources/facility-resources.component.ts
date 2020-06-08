@@ -10,6 +10,7 @@ import {
   TABLE_FACILITY_RESOURCES_LIST,
   TableConfigService
 } from '@perun-web-apps/config/table-config';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-facility-resources',
@@ -55,10 +56,11 @@ export class FacilityResourcesComponent implements OnInit {
   }
 
   removeResource() {
-    const dialogRef = this.dialog.open(RemoveResourceDialogComponent, {
-      width: '450px',
-      data: {theme: 'facility-theme', resources: this.selected.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {theme: 'facility-theme', resources: this.selected.selected};
+
+    const dialogRef = this.dialog.open(RemoveResourceDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -81,10 +83,11 @@ export class FacilityResourcesComponent implements OnInit {
   }
 
   createResource() {
-    const dialogRef = this.dialog.open(CreateResourceDialogComponent, {
-      width: '600px',
-      data: {facilityId: this.facility.id, theme: 'facility-theme'}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {facilityId: this.facility.id, theme: 'facility-theme'};
+
+    const dialogRef = this.dialog.open(CreateResourceDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

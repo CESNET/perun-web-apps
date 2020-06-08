@@ -6,6 +6,7 @@ import {SideMenuService} from '../../../../core/services/common/side-menu.servic
 import {ActivatedRoute, Router} from '@angular/router';
 import {GuiAuthResolver} from '@perun-web-apps/perun/services';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-overview',
@@ -105,10 +106,11 @@ export class VoOverviewComponent implements OnInit {
         style: 'vo-btn',
         url: `/organizations/${this.vo.id}/invite-member`,
         clickAction: function (dialog: MatDialog, voId: number) {
-          dialog.open(InviteMemberDialogComponent, {
-            width: '450px',
-            data: {voId: voId}
-          });
+          const config = getDefaultDialogConfig();
+          config.width = '450px';
+          config.data = {voId: voId};
+
+          dialog.open(InviteMemberDialogComponent, config);
         }
       },
       {

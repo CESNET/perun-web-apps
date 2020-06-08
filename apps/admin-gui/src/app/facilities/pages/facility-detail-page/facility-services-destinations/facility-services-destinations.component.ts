@@ -17,6 +17,7 @@ import { RemoveDestinationDialogComponent } from '../../../../shared/components/
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { AddServicesDestinationDialogComponent } from '../../../../shared/components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-perun-web-apps-facility-services-destinations',
@@ -74,10 +75,11 @@ export class FacilityServicesDestinationsComponent implements OnInit {
   }
 
   addDestination() {
-    const dialogRef = this.dialog.open(AddServicesDestinationDialogComponent, {
-      width: '600px',
-      data: {facility: this.facility, theme: 'facility-theme'}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {facility: this.facility, theme: 'facility-theme'};
+
+    const dialogRef = this.dialog.open(AddServicesDestinationDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -90,10 +92,11 @@ export class FacilityServicesDestinationsComponent implements OnInit {
   }
 
   removeDestination() {
-    const dialogRef = this.dialog.open(RemoveDestinationDialogComponent, {
-      width: '600px',
-      data: {destinations: this.selected.selected, theme: 'facility-theme'}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {destinations: this.selected.selected, theme: 'facility-theme'};
+
+    const dialogRef = this.dialog.open(RemoveDestinationDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

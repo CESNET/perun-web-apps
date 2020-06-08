@@ -9,6 +9,7 @@ import { NotificatorService } from '@perun-web-apps/perun/services';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import { PageEvent } from '@angular/material/paginator';
 import { TABLE_VO_RESOURCES_TAGS, TableConfigService } from '@perun-web-apps/config/table-config';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-resources-tags',
@@ -44,10 +45,11 @@ export class VoResourcesTagsComponent implements OnInit {
   }
 
   deleteTag() {
-    const dialogRef = this.dialog.open(DeleteResourceTagDialogComponent, {
-      width: '450px',
-      data: {tagsForDelete: this.selection.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {tagsForDelete: this.selection.selected};
+
+    const dialogRef = this.dialog.open(DeleteResourceTagDialogComponent, config);
 
     dialogRef.afterClosed().subscribe( success => {
       if (success) {
@@ -60,10 +62,11 @@ export class VoResourcesTagsComponent implements OnInit {
   }
 
   create() {
-    const dialogRef = this.dialog.open(CreateResourceTagDialogComponent, {
-      width: '450px',
-      data: {voId: this.voId}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {voId: this.voId};
+
+    const dialogRef = this.dialog.open(CreateResourceTagDialogComponent, config);
 
     dialogRef.afterClosed().subscribe( success => {
       if (success) {

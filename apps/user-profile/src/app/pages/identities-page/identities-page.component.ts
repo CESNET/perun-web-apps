@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveUserExtSourceDialogComponent } from '../../components/dialogs/remove-user-ext-source-dialog/remove-user-ext-source-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-identities-page',
@@ -78,13 +79,14 @@ export class IdentitiesPageComponent implements OnInit {
   }
 
   removeIdentity(selected: UserExtSource[]) {
-    const dialogRef = this.dialog.open(RemoveUserExtSourceDialogComponent,{
-      width: '600px',
-      data: {
-        userId: this.userId,
-        extSources: selected
-      },
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      userId: this.userId,
+      extSources: selected
+    };
+
+    const dialogRef = this.dialog.open(RemoveUserExtSourceDialogComponent,config);
     dialogRef.afterClosed().subscribe((success) => {
       if (success){
         this.refreshTables();

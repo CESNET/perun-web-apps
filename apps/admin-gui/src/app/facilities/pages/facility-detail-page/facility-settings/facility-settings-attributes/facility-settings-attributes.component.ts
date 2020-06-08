@@ -11,7 +11,7 @@ import {
 import {
   CreateAttributeDialogComponent
 } from '../../../../../shared/components/dialogs/create-attribute-dialog/create-attribute-dialog.component';
-import { filterCoreAttributes } from '@perun-web-apps/perun/utils';
+import { filterCoreAttributes, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { EditAttributeDialogComponent } from '../../../../../shared/components/dialogs/edit-attribute-dialog/edit-attribute-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
@@ -62,14 +62,15 @@ export class FacilitySettingsAttributesComponent implements OnInit {
   }
 
   onDelete() {
-    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.facilityId,
-        entity: 'facility',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.facilityId,
+      entity: 'facility',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -82,14 +83,15 @@ export class FacilitySettingsAttributesComponent implements OnInit {
     // have to use this to update attribute with map in it, before saving it
     this.list.updateMapAttributes();
 
-    const dialogRef = this.dialog.open(EditAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.facilityId,
-        entity: 'facility',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.facilityId,
+      entity: 'facility',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(EditAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -99,15 +101,16 @@ export class FacilitySettingsAttributesComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, {
-      width: '1050px',
-      data: {
-        entityId: this.facilityId,
-        entity: 'facility',
-        notEmptyAttributes: this.attributes,
-        style: 'facility-theme'
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1050px';
+    config.data = {
+      entityId: this.facilityId,
+      entity: 'facility',
+      notEmptyAttributes: this.attributes,
+      style: 'facility-theme'
+    };
+
+    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'saved') {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SideMenuService} from '../../../core/services/common/side-menu.service';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
+import { getDefaultDialogConfig, getRecentlyVisited, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveVoDialogComponent } from '../../../shared/components/dialogs/remove-vo-dialog/remove-vo-dialog.component';
@@ -63,10 +63,11 @@ export class VoSelectPageComponent implements OnInit {
   }
 
   onCreateVo() {
-    const dialogRef = this.dialog.open(CreateVoDialogComponent, {
-      width: '600px',
-      data: { theme: 'vo-theme'}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = { theme: 'vo-theme'};
+
+    const dialogRef = this.dialog.open(CreateVoDialogComponent, config);
 
     dialogRef.afterClosed().subscribe( isVoCreated => {
       if (isVoCreated){
@@ -76,10 +77,11 @@ export class VoSelectPageComponent implements OnInit {
   }
 
   onRemoveVo() {
-    const dialogRef = this.dialog.open(RemoveVoDialogComponent, {
-      width: '600px',
-      data: { theme: 'vo-theme', vos: this.selection.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = { theme: 'vo-theme', vos: this.selection.selected};
+
+    const dialogRef = this.dialog.open(RemoveVoDialogComponent, config);
 
     dialogRef.afterClosed().subscribe( isVoRemoved => {
       if (isVoRemoved){

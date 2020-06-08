@@ -11,6 +11,7 @@ import {
   TABLE_VO_EXTSOURCES_SETTINGS,
   TableConfigService
 } from '@perun-web-apps/config/table-config';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-settings-extsources',
@@ -59,14 +60,15 @@ export class VoSettingsExtsourcesComponent implements OnInit {
   }
 
   onAdd() {
-    const dialogRef = this.dialog.open(AddExtSourceDialogComponent, {
-      width: '1000px',
-      data: {
-        voId: this.voId,
-        voExtSources: this.extSources,
-        theme: 'vo-theme'
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data= {
+      voId: this.voId,
+      voExtSources: this.extSources,
+      theme: 'vo-theme'
+    };
+
+    const dialogRef = this.dialog.open(AddExtSourceDialogComponent, config);
     dialogRef.afterClosed().subscribe(added => {
       if (added) {
         this.refreshTable();

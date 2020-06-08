@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 import { EditAttributeDefinitionDialogComponent } from '../../../shared/components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
-import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
+import { getDefaultDialogConfig, TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-attr-def-list',
@@ -106,12 +106,13 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
   }
 
   onRowClick(attDef: AttributeDefinition) {
-    const dialogRef = this.dialog.open(EditAttributeDefinitionDialogComponent, {
-      width: '700px',
-      data: {
-        attDef: attDef
-      },
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '700px';
+    config.data = {
+      attDef: attDef
+    };
+
+    const dialogRef = this.dialog.open(EditAttributeDefinitionDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

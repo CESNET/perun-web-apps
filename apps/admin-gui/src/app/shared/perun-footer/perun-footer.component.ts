@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportIssueDialogComponent } from '../components/report-issue-dialog/report-issue-dialog.component';
 import { StoreService } from '@perun-web-apps/perun/services';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-perun-footer',
@@ -44,8 +45,9 @@ export class PerunFooterComponent implements OnInit {
   }
 
   openBugReportDialog() {
-    this.dialog.open(ReportIssueDialogComponent, {
-      width: '550px',
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '550px';
+
+    this.dialog.open(ReportIssueDialogComponent, config);
   }
 }

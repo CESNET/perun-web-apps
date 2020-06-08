@@ -9,6 +9,7 @@ import { RemoveMembersDialogComponent } from '../../../../shared/components/dial
 import { Group, GroupsManagerService, RichMember } from '@perun-web-apps/perun/openapi';
 import { PageEvent } from '@angular/material/paginator';
 import { TABLE_GROUP_MEMBERS, TableConfigService } from '@perun-web-apps/config/table-config';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-group-members',
@@ -79,16 +80,17 @@ export class GroupMembersComponent implements OnInit {
   }
 
   onAddMember() {
-    const dialogRef = this.dialog.open(AddMemberDialogComponent, {
-      width: '1000px',
-      data: {
-        voId: this.group.voId,
-        group: this.group,
-        entityId: this.group.id,
-        theme: 'group-theme',
-        type: 'group',
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data = {
+      voId: this.group.voId,
+      group: this.group,
+      entityId: this.group.id,
+      theme: 'group-theme',
+      type: 'group',
+    };
+
+    const dialogRef = this.dialog.open(AddMemberDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(() => {
       if (this.firstSearchDone) {
@@ -104,13 +106,14 @@ export class GroupMembersComponent implements OnInit {
   }
 
   onRemoveMembers() {
-    const dialogRef = this.dialog.open(RemoveMembersDialogComponent, {
-      width: '450px',
-      data: {
-        groupId: this.group.id,
-        members: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      groupId: this.group.id,
+      members: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(RemoveMembersDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(wereMembersDeleted => {
       if (wereMembersDeleted) {

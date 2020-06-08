@@ -10,6 +10,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestChangeDataQuotaDialogComponent } from '../../../components/dialogs/request-change-data-quota-dialog/request-change-data-quota-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-settings-data-quotas',
@@ -104,10 +105,11 @@ export class SettingsDataQuotasComponent implements OnInit {
   }
 
   requestChangeQuota(vo: Vo, resource: RichResource) {
-    this.dialog.open(RequestChangeDataQuotaDialogComponent, {
-      width: '600px',
-      data: { vo: vo, resource: resource, user: this.user, currentQuota: this.quotasMarkup }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = { vo: vo, resource: resource, user: this.user, currentQuota: this.quotasMarkup };
+
+    this.dialog.open(RequestChangeDataQuotaDialogComponent, config);
   }
 
   applyFilter(filter: string) {

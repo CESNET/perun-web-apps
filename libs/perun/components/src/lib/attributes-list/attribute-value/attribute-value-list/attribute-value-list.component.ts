@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AttributeValueListEditDialogComponent } from './attribute-value-list-edit-dialog/attribute-value-list-edit-dialog.component';
 import { AttributeValueListDeleteDialogComponent } from './attribute-value-list-delete-dialog/attribute-value-list-delete-dialog.component';
 import { IsVirtualAttributePipe } from '@perun-web-apps/perun/pipes';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-attribute-value-list',
@@ -59,10 +60,11 @@ export class AttributeValueListComponent implements OnInit {
   }
 
   remove(chip: string): void {
-    const dialogRef = this.dialog.open(AttributeValueListDeleteDialogComponent, {
-      width: '400px',
-      data: { name: chip }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '400px';
+    config.data = { name: chip };
+
+    const dialogRef = this.dialog.open(AttributeValueListDeleteDialogComponent, config);
     dialogRef.afterClosed().subscribe( (success) => {
       if (success) {
         //@ts-ignore
@@ -83,10 +85,12 @@ export class AttributeValueListComponent implements OnInit {
   edit(chip: string) {
     // @ts-ignore
     const index = this.attribute.value.indexOf(chip);
-    const dialogRef = this.dialog.open(AttributeValueListEditDialogComponent, {
-      width: '600px',
-      data: { attribute: this.attribute, index: index }
-    });
+
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = { attribute: this.attribute, index: index };
+
+    const dialogRef = this.dialog.open(AttributeValueListEditDialogComponent, config);
     dialogRef.afterClosed().subscribe( (success) => {
       if (success) {
         this.sendEventToParent.emit();

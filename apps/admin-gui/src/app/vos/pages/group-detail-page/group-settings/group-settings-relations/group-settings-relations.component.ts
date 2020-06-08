@@ -10,6 +10,7 @@ import {
   TableConfigService
 } from '@perun-web-apps/config/table-config';
 import { PageEvent } from '@angular/material/paginator';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-group-settings-relations',
@@ -49,16 +50,17 @@ export class GroupSettingsRelationsComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogRef = this.dialog.open(CreateRelationDialogComponent, {
-      width: '1050px',
-      data: {
-        groups: this.groups,
-        theme: 'group-theme',
-        groupId: +this.groupId,
-        voId: this.voId,
-        reverse: this.reverse
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1050px';
+    config.data = {
+      groups: this.groups,
+      theme: 'group-theme',
+      groupId: +this.groupId,
+      voId: this.voId,
+      reverse: this.reverse
+    };
+
+    const dialogRef = this.dialog.open(CreateRelationDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -68,15 +70,16 @@ export class GroupSettingsRelationsComponent implements OnInit {
   }
 
   onDelete() {
-    const dialogRef = this.dialog.open(RemoveRelationDialogComponent, {
-      width: '450px',
-      data: {
-        groups: this.selection.selected,
-        theme: 'group-theme',
-        groupId: +this.groupId,
-        reverse: this.reverse
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      groups: this.selection.selected,
+      theme: 'group-theme',
+      groupId: +this.groupId,
+      reverse: this.reverse
+    };
+
+    const dialogRef = this.dialog.open(RemoveRelationDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

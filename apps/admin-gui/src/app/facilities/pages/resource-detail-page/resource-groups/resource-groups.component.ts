@@ -11,6 +11,7 @@ import {
   TableConfigService
 } from '@perun-web-apps/config/table-config';
 import { PageEvent } from '@angular/material/paginator';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-perun-web-apps-resource-groups',
@@ -56,10 +57,11 @@ export class ResourceGroupsComponent implements OnInit {
   }
 
   addGroup() {
-    const dialogRef = this.dialog.open(AssignGroupToResourceDialogComponent, {
-      width: '800px',
-      data: {theme: 'resource-theme', resourceId: this.resourceId}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '800px';
+    config.data = {theme: 'resource-theme', resourceId: this.resourceId};
+
+    const dialogRef = this.dialog.open(AssignGroupToResourceDialogComponent, config);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) {
         this.loadAllGroups();
@@ -68,10 +70,11 @@ export class ResourceGroupsComponent implements OnInit {
   }
 
   removeGroups() {
-    const dialogRef = this.dialog.open(RemoveGroupFromResourceDialogComponent, {
-      width: '500px',
-      data: {resourceId: this.resourceId, groups: this.selected.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {resourceId: this.resourceId, groups: this.selected.selected};
+
+    const dialogRef = this.dialog.open(RemoveGroupFromResourceDialogComponent, config);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) {
         this.loadAllGroups();

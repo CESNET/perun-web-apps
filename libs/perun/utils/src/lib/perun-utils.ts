@@ -12,6 +12,8 @@ import {
   Candidate, ApplicationMail
 } from '@perun-web-apps/perun/openapi';
 import { Attribute, AttributeDefinition } from '@perun-web-apps/perun/openapi';
+import { MatDialogConfig } from '@angular/material/dialog';
+
 
 
 export const TABLE_ITEMS_COUNT_OPTIONS = [5, 10, 25, 100, 1000, 10000];
@@ -539,4 +541,12 @@ export function createNewApplicationMail(): ApplicationMail {
           send: true,
           message: { ['en']: {locale: 'en', subject: '', text: ''},
             ['cs']: {locale: 'cs', subject: '', text: ''}} };
+}
+
+
+export function getDefaultDialogConfig():  MatDialogConfig{
+  const config = new MatDialogConfig();
+  config.disableClose = true;
+
+  return config
 }

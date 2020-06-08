@@ -5,7 +5,7 @@ import { DeleteAttributeDefinitionDialogComponent } from '../../../../shared/com
 import { MatDialog } from '@angular/material/dialog';
 // tslint:disable-next-line:max-line-length
 import { CreateAttributeDefinitionDialogComponent } from '../../../../shared/components/dialogs/create-attribute-definition-dialog/create-attribute-definition-dialog.component';
-import { filterCoreAttributesDefinitions } from '@perun-web-apps/perun/utils';
+import { filterCoreAttributesDefinitions, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { PageEvent } from '@angular/material/paginator';
 import { TABLE_ADMIN_ATTRIBUTES, TableConfigService } from '@perun-web-apps/config/table-config';
@@ -42,9 +42,10 @@ export class AdminAttributesComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogRef = this.dialog.open(CreateAttributeDefinitionDialogComponent, {
-      width: '500px',
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+
+    const dialogRef = this.dialog.open(CreateAttributeDefinitionDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -54,12 +55,13 @@ export class AdminAttributesComponent implements OnInit {
   }
 
   onDelete() {
-    const dialogRef = this.dialog.open(DeleteAttributeDefinitionDialogComponent, {
-      width: '450px',
-      data: {
-        attributes: this.selected.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      attributes: this.selected.selected
+    };
+
+    const dialogRef = this.dialog.open(DeleteAttributeDefinitionDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -87,9 +89,10 @@ export class AdminAttributesComponent implements OnInit {
   }
 
   onImport() {
-    const dialogRef = this.dialog.open(AttributeImportDialogComponent, {
-      width: '700px'
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '700px';
+
+    const dialogRef = this.dialog.open(AttributeImportDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(value => {
       if (value === true) {

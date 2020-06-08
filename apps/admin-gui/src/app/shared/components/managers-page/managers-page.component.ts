@@ -10,6 +10,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { Role } from '@perun-web-apps/perun/models';
 import { TABLE_GROUP_MANAGERS_PAGE, TableConfigService } from '@perun-web-apps/config/table-config';
 import { PageEvent } from '@angular/material/paginator';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-managers-page',
@@ -92,15 +93,16 @@ export class ManagersPageComponent implements OnInit {
   }
 
   addManager() {
-    const dialogRef = this.dialog.open(AddManagerDialogComponent, {
-      width: '1000px',
-      data: {
-        complementaryObject: this.complementaryObject,
-        theme: this.theme,
-        availableRoles: this.availableRoles,
-        selectedRole: this.selectedRole
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data = {
+      complementaryObject: this.complementaryObject,
+      theme: this.theme,
+      availableRoles: this.availableRoles,
+      selectedRole: this.selectedRole
+    };
+
+    const dialogRef = this.dialog.open(AddManagerDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(() => {
       this.changeUser();
@@ -108,15 +110,16 @@ export class ManagersPageComponent implements OnInit {
   }
 
   removeManager() {
-    const dialogRef = this.dialog.open(RemoveManagerDialogComponent, {
-      width: '450px',
-      data: {
-        managers: this.selectionUsers.selected,
-        complementaryObject: this.complementaryObject,
-        role: this.selectedRole,
-        theme: this.theme
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      managers: this.selectionUsers.selected,
+      complementaryObject: this.complementaryObject,
+      role: this.selectedRole,
+      theme: this.theme
+    };
+
+    const dialogRef = this.dialog.open(RemoveManagerDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -126,15 +129,16 @@ export class ManagersPageComponent implements OnInit {
   }
 
   removeGroup() {
-    const dialogRef = this.dialog.open(RemoveGroupManagerDialogComponent, {
-      width: '450px',
-      data: {
-        groups: this.selectionGroups.selected,
-        complementaryObject: this.complementaryObject,
-        role: this.selectedRole,
-        theme: this.theme
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      groups: this.selectionGroups.selected,
+      complementaryObject: this.complementaryObject,
+      role: this.selectedRole,
+      theme: this.theme
+    };
+
+    const dialogRef = this.dialog.open(RemoveGroupManagerDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -144,16 +148,16 @@ export class ManagersPageComponent implements OnInit {
   }
 
   addGroup() {
-    const dialogRef = this.dialog.open(AddGroupManagerDialogComponent, {
-      width: '1000px',
-      data: {
-        complementaryObject: this.complementaryObject,
-        availableRoles: this.availableRoles,
-        theme: this.theme,
-        selectedRole: this.selectedRole
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data = {
+      complementaryObject: this.complementaryObject,
+      availableRoles: this.availableRoles,
+      theme: this.theme,
+      selectedRole: this.selectedRole
+    };
 
+    const dialogRef = this.dialog.open(AddGroupManagerDialogComponent, config);
     dialogRef.afterClosed().subscribe(() => {
       this.changeUser();
     });

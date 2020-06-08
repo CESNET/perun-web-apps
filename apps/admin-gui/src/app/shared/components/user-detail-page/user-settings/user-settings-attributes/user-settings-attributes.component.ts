@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AttributesListComponent } from '@perun-web-apps/perun/components';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CreateAttributeDialogComponent } from '../../../dialogs/create-attribute-dialog/create-attribute-dialog.component';
-import { filterCoreAttributes } from '@perun-web-apps/perun/utils';
+import { filterCoreAttributes, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { DeleteAttributeDialogComponent } from '../../../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
@@ -67,15 +67,16 @@ export class UserSettingsAttributesComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, {
-      width: '1050px',
-      data: {
-        entityId: this.userId,
-        entity: 'user',
-        notEmptyAttributes: this.attributes,
-        style: 'user-theme'
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1050px';
+    config.data = {
+      entityId: this.userId,
+      entity: 'user',
+      notEmptyAttributes: this.attributes,
+      style: 'user-theme'
+    };
+
+    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -88,14 +89,15 @@ export class UserSettingsAttributesComponent implements OnInit {
     // have to use this to update attribute with map in it, before saving it
     this.list.updateMapAttributes();
 
-    const dialogRef = this.dialog.open(EditAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.userId,
-        entity: 'user',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.userId,
+      entity: 'user',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(EditAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -105,14 +107,15 @@ export class UserSettingsAttributesComponent implements OnInit {
   }
 
   onDelete() {
-    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.userId,
-        entity: 'user',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.userId,
+      entity: 'user',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(didConfirm => {
       if (didConfirm) {

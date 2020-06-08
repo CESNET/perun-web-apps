@@ -18,7 +18,7 @@ import {
 } from '../../../../../shared/components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';
 import { ApplicationForm, ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '@perun-web-apps/perun/services';
-import { createNewApplicationMail } from '@perun-web-apps/perun/utils';
+import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { PageEvent } from '@angular/material/paginator';
 import {
   TABLE_GROUP_SETTINGS_NOTIFICATIONS,
@@ -85,15 +85,17 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   add() {
     const applicationMail: ApplicationMail = createNewApplicationMail();
     applicationMail.formId = this.applicationForm.id;
-    const dialog = this.dialog.open(AddEditNotificationDialogComponent, {
-      width: '1400px',
-      height: '700px',
-      data: {voId: this.voId,
-        groupId: this.groupId,
-        createMailNotification: true,
-        applicationMail: applicationMail,
-        applicationMails: this.applicationMails}
-    });
+
+    const config = getDefaultDialogConfig();
+    config.width = '1400px';
+    config.height = '700px';
+    config.data = {voId: this.voId,
+      groupId: this.groupId,
+      createMailNotification: true,
+      applicationMail: applicationMail,
+      applicationMails: this.applicationMails};
+
+    const dialog = this.dialog.open(AddEditNotificationDialogComponent, config);
     dialog.afterClosed().subscribe( success => {
       if (success) {
         this.translate.get('GROUP_DETAIL.SETTINGS.NOTIFICATIONS.ADD_SUCCESS').subscribe( text => {
@@ -106,10 +108,11 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   }
 
   remove() {
-    const dialog = this.dialog.open(DeleteNotificationDialogComponent, {
-      width: '500px',
-      data: {voId: this.voId, groupId: this.groupId, mails: this.selection.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {voId: this.voId, groupId: this.groupId, mails: this.selection.selected};
+
+    const dialog = this.dialog.open(DeleteNotificationDialogComponent, config);
     dialog.afterClosed().subscribe( success => {
       if (success) {
         this.translate.get('GROUP_DETAIL.SETTINGS.NOTIFICATIONS.DELETE_SUCCESS').subscribe( text => {
@@ -122,10 +125,11 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   }
 
   copy() {
-    const dialog = this.dialog.open(NotificationsCopyMailsDialogComponent, {
-      width: '500px',
-      data: {voId: this.voId, groupId: this.groupId}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {voId: this.voId, groupId: this.groupId};
+
+    const dialog = this.dialog.open(NotificationsCopyMailsDialogComponent, config);
     dialog.afterClosed().subscribe( copyFrom => {
       if (copyFrom) {
         this.selection.clear();
@@ -143,10 +147,11 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   }
 
   changeEmailFooter() {
-    this.dialog.open(EditEmailFooterDialogComponent, {
-      width: '500px',
-      data: {voId: this.voId, groupId: this.groupId}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {voId: this.voId, groupId: this.groupId};
+
+    this.dialog.open(EditEmailFooterDialogComponent, config);
   }
 
   changeSelection(selection: SelectionModel<ApplicationMail>) {

@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowGeneratedPasswordDialogComponent } from '../../../components/dialogs/show-generated-password-dialog/show-generated-password-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RemoveAltPasswordDialogComponent } from '../../../components/dialogs/remove-alt-password-dialog/remove-alt-password-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-settings-alternative-passwords',
@@ -45,10 +46,11 @@ export class SettingsAlternativePasswordsComponent implements OnInit {
   createPassword() {
     const password = this.generatePassword();
     this.usersManagerService.createAlternativePassword(this.userId, this.altPasswordCtrl.value, 'einfra', password).subscribe(() => {
-      this.dialog.open(ShowGeneratedPasswordDialogComponent, {
-        width: '600px',
-        data: { password: password }
-      });
+      const config = getDefaultDialogConfig();
+      config.width = '600px';
+      config.data = { password: password };
+
+      this.dialog.open(ShowGeneratedPasswordDialogComponent, config);
       this.getAltPasswords();
       this.altPasswordCtrl.setValue('');
     });
@@ -86,14 +88,15 @@ export class SettingsAlternativePasswordsComponent implements OnInit {
   }
 
   removeAltPasswords() {
-    const dialogRef = this.dialog.open(RemoveAltPasswordDialogComponent, {
-      width: '600px',
-      data: {
-        description: this.selection.selected,
-        passwordId: this.altPasswordsAttribute.value[this.selection.selected[0]],
-        userId: this.userId
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      description: this.selection.selected,
+      passwordId: this.altPasswordsAttribute.value[this.selection.selected[0]],
+      userId: this.userId
+    };
+
+    const dialogRef = this.dialog.open(RemoveAltPasswordDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(added => {
       if (added) {

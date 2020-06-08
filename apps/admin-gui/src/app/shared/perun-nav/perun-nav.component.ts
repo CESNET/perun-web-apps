@@ -9,6 +9,7 @@ import { NotificationStorageService } from '@perun-web-apps/perun/services';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-perun-nav-menu',
@@ -55,9 +56,11 @@ export class PerunNavComponent implements OnInit, AfterViewInit {
 
   showNotificationHistory() {
     this.notificationStorageService.newNotificationsCount = 0;
-    this.dialog.open(ShowNotificationHistoryDialogComponent, {
-      width: '520px'
-    });
+
+    const config = getDefaultDialogConfig();
+    config.width = '520px';
+
+    this.dialog.open(ShowNotificationHistoryDialogComponent, config);
 
   }
 

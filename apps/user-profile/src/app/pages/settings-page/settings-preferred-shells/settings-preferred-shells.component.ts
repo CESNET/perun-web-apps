@@ -4,6 +4,7 @@ import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/opena
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-settings-preferred-shells',
@@ -47,17 +48,18 @@ export class SettingsPreferredShellsComponent implements OnInit {
   }
 
   removeShell(i: number) {
-    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
-      width: '600px',
-      data: {
-        valueIndex: i,
-        values: [this.shells[i]],
-        attribute: this.prefShellsAttribute,
-        userId: this.userId,
-        title: this.removeDialogTitle,
-        description: this.removeDialogDescription
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      valueIndex: i,
+      values: [this.shells[i]],
+      attribute: this.prefShellsAttribute,
+      userId: this.userId,
+      title: this.removeDialogTitle,
+      description: this.removeDialogDescription
+    };
+
+    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(sshAdded => {
       if (sshAdded) {

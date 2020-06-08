@@ -7,6 +7,7 @@ import { AddSshDialogComponent } from '../../../components/dialogs/add-ssh-dialo
 import { RemoveStringValueDialogComponent } from '../../../components/dialogs/remove-string-value-dialog/remove-string-value-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowSshDialogComponent } from '../../../components/dialogs/show-ssh-dialog/show-ssh-dialog.component';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-settings-ssh-keys',
@@ -57,10 +58,12 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   addKey(admin: boolean) {
-    const dialogRef = this.dialog.open(AddSshDialogComponent, {
-      width: '800px',
-      data: { attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute, userId: this.userId }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '800px';
+    config.data = { attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute,
+      userId: this.userId };
+
+    const dialogRef = this.dialog.open(AddSshDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(sshAdded => {
       if (sshAdded) {
@@ -70,16 +73,17 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   removeKey(key: string, admin: boolean) {
-    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, {
-      width: '600px',
-      data: {
-        values: [key],
-        attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute,
-        userId: this.userId,
-        title: this.removeDialogTitle,
-        description: this.removeDialogDescription
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      values: [key],
+      attribute: admin ? this.adminKeyAttribute : this.userKeyAttribute,
+      userId: this.userId,
+      title: this.removeDialogTitle,
+      description: this.removeDialogDescription
+    };
+
+    const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(sshAdded => {
       if (sshAdded) {
@@ -109,11 +113,12 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   showWholeKey(key: string) {
-    this.dialog.open(ShowSshDialogComponent, {
-      width: '600px',
-      data: {
-        value: key
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '600px';
+    config.data = {
+      value: key
+    };
+
+    this.dialog.open(ShowSshDialogComponent, config);
   }
 }

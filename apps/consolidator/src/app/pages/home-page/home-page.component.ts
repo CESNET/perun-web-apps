@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddIdentityDialogComponent } from '../../components/add-identity-dialog/add-identity-dialog.component';
 import { Identity } from '../../models/Identity';
 import { AuthzResolverService, UsersManagerService, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 
 @Component({
@@ -40,7 +41,10 @@ export class HomePageComponent implements OnInit {
   }
 
   addIdentity() {
-    const dialogRef = this.dialog.open(AddIdentityDialogComponent, {width: '700px'});
+    const config = getDefaultDialogConfig();
+    config.width = '700px';
+
+    const dialogRef = this.dialog.open(AddIdentityDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);

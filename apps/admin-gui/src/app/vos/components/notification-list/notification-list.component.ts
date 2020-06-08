@@ -10,7 +10,7 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {NotificatorService} from '@perun-web-apps/perun/services';
 import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
+import { getDefaultDialogConfig, TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-notification-list',
@@ -100,11 +100,12 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   }
 
   openApplicationMailDetail(applicationMail: ApplicationMail) {
-    const dialog = this.dialog.open(AddEditNotificationDialogComponent, {
-      width: '1400px',
-      height: '700px',
-      data: {voId: this.voId, groupId: this.groupId, createMailNotification: false, applicationMail: applicationMail}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1400px';
+    config.height = '700px';
+    config.data = {voId: this.voId, groupId: this.groupId, createMailNotification: false, applicationMail: applicationMail};
+
+    const dialog = this.dialog.open(AddEditNotificationDialogComponent, config);
     dialog.afterClosed().subscribe( success => {
       if (success) {
         this.translate.get('VO_DETAIL.SETTINGS.NOTIFICATIONS.EDIT_SUCCESS').subscribe( text => {

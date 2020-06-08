@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteGroupDialogComponent } from '../../../../shared/components/dialogs/delete-group-dialog/delete-group-dialog.component';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { applyFilter } from '@perun-web-apps/perun/utils';
+import { applyFilter, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_GROUP_SUBGROUPS, TableConfigService } from '@perun-web-apps/config/table-config';
@@ -45,10 +45,11 @@ export class GroupSubgroupsComponent implements OnInit {
   checkbox: MatCheckbox;
 
   onCreateGroup() {
-    const dialogRef = this.dialog.open(CreateGroupDialogComponent, {
-      width: '350px',
-      data: {parentGroup: this.group}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '350px';
+    config.data = {parentGroup: this.group};
+
+    const dialogRef = this.dialog.open(CreateGroupDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();
@@ -79,10 +80,11 @@ export class GroupSubgroupsComponent implements OnInit {
   }
 
   deleteGroup() {
-    const dialogRef = this.dialog.open(DeleteGroupDialogComponent, {
-      width: '450px',
-      data: {voId: this.group.id, groups: this.selected.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {voId: this.group.id, groups: this.selected.selected};
+
+    const dialogRef = this.dialog.open(DeleteGroupDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

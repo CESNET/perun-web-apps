@@ -3,7 +3,7 @@ import {NotificationData} from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
 
 import { NotificationStorageService } from '@perun-web-apps/perun/services';
-import { doAfterDelay } from '@perun-web-apps/perun/utils';
+import { doAfterDelay, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 
 @Component({
@@ -44,11 +44,12 @@ export class NotificationComponent implements OnInit{
     if (this.data.action !== undefined) {
       this.data.action();
     } else {
-      const dialogRef = this.dialog.open(NotificationDialogComponent, {
-        width: '550px',
-        data: this.data,
-        autoFocus: false
-      });
+      const config = getDefaultDialogConfig();
+      config.width = '550px';
+      config.data = this.data;
+      config.autoFocus = false;
+
+      const dialogRef = this.dialog.open(NotificationDialogComponent, config);
 
       dialogRef.afterClosed().subscribe(() =>{
         this.closeSelf();

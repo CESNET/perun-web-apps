@@ -7,6 +7,7 @@ import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ServerDownDialogComponent } from '@perun-web-apps/general';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 
 @Injectable({
@@ -108,14 +109,15 @@ export class AdminGuiConfigService {
 
   private handlePrincipalErr(err: any) {
     this.translate.get('GENERAL.PRINCIPAL.ERROR.TITLE').subscribe(sdf => console.log(sdf));
-    this.dialog.open(ServerDownDialogComponent, {
-      data: {
-        title: this.translate.instant('GENERAL.PRINCIPAL_ERROR.TITLE'),
+
+    const config = getDefaultDialogConfig();
+    config.data = {
+      title: this.translate.instant('GENERAL.PRINCIPAL_ERROR.TITLE'),
         message: this.translate.instant('GENERAL.PRINCIPAL_ERROR.MESSAGE'),
         action: this.translate.instant('GENERAL.PRINCIPAL_ERROR.ACTION'),
-      },
-      disableClose: true
-    });
+    };
+
+    this.dialog.open(ServerDownDialogComponent, config);
     throw err;
   }
 }

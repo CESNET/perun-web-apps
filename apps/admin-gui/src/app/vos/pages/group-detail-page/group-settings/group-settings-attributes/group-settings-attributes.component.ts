@@ -11,7 +11,7 @@ import {
 import {
   DeleteAttributeDialogComponent
 } from '../../../../../shared/components/dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
-import { filterCoreAttributes } from '@perun-web-apps/perun/utils';
+import { filterCoreAttributes, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { EditAttributeDialogComponent } from '../../../../../shared/components/dialogs/edit-attribute-dialog/edit-attribute-dialog.component';
 import {
@@ -65,15 +65,16 @@ export class GroupSettingsAttributesComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, {
-      width: '1050px',
-      data: {
-        entityId: this.groupId,
-        entity: 'group',
-        notEmptyAttributes: this.attributes,
-        style: 'group-theme'
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '1050px';
+    config.data = {
+      entityId: this.groupId,
+      entity: 'group',
+      notEmptyAttributes: this.attributes,
+      style: 'group-theme'
+    };
+
+    const dialogRef = this.dialog.open(CreateAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -86,14 +87,15 @@ export class GroupSettingsAttributesComponent implements OnInit {
     // have to use this to update attribute with map in it, before saving it
     this.list.updateMapAttributes();
 
-    const dialogRef = this.dialog.open(EditAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.groupId,
-        entity: 'group',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.groupId,
+      entity: 'group',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(EditAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -103,14 +105,15 @@ export class GroupSettingsAttributesComponent implements OnInit {
   }
 
   onDelete() {
-    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, {
-      width: '450px',
-      data: {
-        entityId: this.groupId,
-        entity: 'group',
-        attributes: this.selection.selected
-      }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {
+      entityId: this.groupId,
+      entity: 'group',
+      attributes: this.selection.selected
+    };
+
+    const dialogRef = this.dialog.open(DeleteAttributeDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(didConfirm => {
       if (didConfirm) {

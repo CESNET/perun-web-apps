@@ -6,6 +6,7 @@ import { GuiAuthResolver } from './gui-auth-resolver.service';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDontExistDialogComponent } from '@perun-web-apps/general';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,8 @@ export class InitAuthService {
       .toPromise()
       .then(perunPrincipal => {
         if (perunPrincipal.user === null) {
-          this.dialog.open(UserDontExistDialogComponent, { disableClose: true });
+          const config = getDefaultDialogConfig();
+          this.dialog.open(UserDontExistDialogComponent, config);
         } else {
           this.storeService.setPerunPrincipal(perunPrincipal);
           this.authResolver.init(perunPrincipal);

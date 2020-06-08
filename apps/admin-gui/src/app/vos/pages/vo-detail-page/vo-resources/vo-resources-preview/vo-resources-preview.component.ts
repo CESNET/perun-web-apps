@@ -6,6 +6,7 @@ import { RemoveResourceDialogComponent } from '../../../../../shared/components/
 import { MatDialog } from '@angular/material/dialog';
 import { TABLE_VO_RESOURCES_LIST, TableConfigService } from '@perun-web-apps/config/table-config';
 import { PageEvent } from '@angular/material/paginator';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-resources-preview',
@@ -63,10 +64,11 @@ export class VoResourcesPreviewComponent implements OnInit {
   }
 
   deleteSelectedResources() {
-    const dialogRef = this.dialog.open(RemoveResourceDialogComponent, {
-      width: '450px',
-      data: {theme: 'vo-theme', resources: this.selected.selected}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '450px';
+    config.data = {theme: 'vo-theme', resources: this.selected.selected};
+
+    const dialogRef = this.dialog.open(RemoveResourceDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

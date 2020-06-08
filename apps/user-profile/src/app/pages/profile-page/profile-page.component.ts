@@ -10,6 +10,7 @@ import {
   UsersManagerService
 } from '@perun-web-apps/perun/openapi';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'perun-web-apps-profile-page',
@@ -95,10 +96,11 @@ export class ProfilePageComponent implements OnInit {
   }
 
   changeEmail() {
-    const dialogRef = this.dialog.open(ChangeEmailDialogComponent, {
-      width: '350px',
-      data: { userId: this.userId, attribute: this.emailAttribute }
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '350px';
+    config.data = { userId: this.userId, attribute: this.emailAttribute };
+
+    const dialogRef = this.dialog.open(ChangeEmailDialogComponent, config);
 
     dialogRef.afterClosed().subscribe((success) => {
       if (success) {

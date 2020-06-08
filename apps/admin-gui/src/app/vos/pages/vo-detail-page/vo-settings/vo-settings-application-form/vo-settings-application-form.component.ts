@@ -17,6 +17,7 @@ import {
 } from '../../../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-vo-settings-application-form',
@@ -62,30 +63,34 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   }
 
   add() {
-    const dialog = this.dialog.open(AddApplicationFormItemDialogComponent, {
-      width: '500px',
-      data: {applicationFormItems: this.applicationFormItems}
-    });
+    const config = getDefaultDialogConfig()
+    config.width = '500px';
+    config.data = {applicationFormItems: this.applicationFormItems};
+
+    const dialog = this.dialog.open(AddApplicationFormItemDialogComponent, config);
     dialog.afterClosed().subscribe( success => {
       // success is field contains of two items: first is applicationFormItems with new item in it,
       // second item is new Application Form Item
       if (success) {
         this.applicationFormItems = Object.assign([], success[0]);
-        this.dialog.open(EditApplicationFormItemDialogComponent, {
-          width: '600px',
-          height: '600px',
-          data: {voId: this.voId, applicationFormItem: success[1]}
-        });
+
+        const config = getDefaultDialogConfig();
+        config.width = '600px';
+        config.height = '600px';
+        config.data = {voId: this.voId, applicationFormItem: success[1]};
+
+        this.dialog.open(EditApplicationFormItemDialogComponent, config);
         this.itemsChanged = true;
       }
     });
   }
 
   copy() {
-    const dialog = this.dialog.open(ApplicationFormCopyItemsDialogComponent, {
-      width: '500px',
-      data: {voId: this.voId}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {voId: this.voId};
+
+    const dialog = this.dialog.open(ApplicationFormCopyItemsDialogComponent, config);
     dialog.afterClosed().subscribe( copyFrom => {
       if (copyFrom) {
         this.updateFormItems();
@@ -94,10 +99,11 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   }
 
   settings() {
-    const dialog = this.dialog.open(UpdateApplicationFormDialogComponent, {
-      width: '400px',
-      data: {applicationForm: this.applicationForm}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '400px';
+    config.data = {applicationForm: this.applicationForm};
+
+    const dialog = this.dialog.open(UpdateApplicationFormDialogComponent, config);
     dialog.afterClosed().subscribe( newForm => {
       if (newForm) {
         this.translate.get('VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_SETTINGS_SUCCESS').subscribe( successMessage => {

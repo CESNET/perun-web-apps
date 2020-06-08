@@ -8,6 +8,7 @@ import { ApplicationRejectDialogComponent } from '../../../shared/components/dia
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { ApplicationFormItem } from '@perun-web-apps/perun/models';
 import { Application, ApplicationFormItemData, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-application-detail',
@@ -75,10 +76,11 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   resendNotification() {
-    this.dialog.open(ApplicationReSendNotificationDialogComponent, {
-      width: '500px',
-      data: {applicationId: this.application.id}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {applicationId: this.application.id};
+
+    this.dialog.open(ApplicationReSendNotificationDialogComponent, config);
   }
 
   deleteApplication() {
@@ -91,10 +93,11 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   rejectApplication() {
-    const dialogRef = this.dialog.open(ApplicationRejectDialogComponent, {
-      width: '500px',
-      data: {applicationId: this.application.id}
-    });
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {applicationId: this.application.id};
+
+    const dialogRef = this.dialog.open(ApplicationRejectDialogComponent, config);
 
     dialogRef.afterClosed().subscribe(() => {
       this.loading = true;

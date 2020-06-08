@@ -14,7 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {SelectionModel} from '@angular/cdk/collections';
 import { RichMember } from '@perun-web-apps/perun/openapi';
-import { parseEmail, parseFullName, TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
+import {
+  getDefaultDialogConfig,
+  parseEmail,
+  parseFullName,
+  TABLE_ITEMS_COUNT_OPTIONS
+} from '@perun-web-apps/perun/utils';
 import { ChangeMemberStatusDialogComponent } from '../../../shared/components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
 
 @Component({
@@ -114,10 +119,11 @@ export class MembersListComponent implements OnChanges, AfterViewInit {
   changeStatus(event: any, member: RichMember) {
     event.stopPropagation();
     if (member.status === 'INVALID') {
-      const dialogRef = this.dialog.open(ChangeMemberStatusDialogComponent, {
-        width: '500px',
-        data: {member: member}
-      });
+      const config = getDefaultDialogConfig();
+      config.width = '500px';
+      config.data = {member: member};
+
+      const dialogRef = this.dialog.open(ChangeMemberStatusDialogComponent, config);
       dialogRef.afterClosed().subscribe( success => {
         if (success) {
           this.updateTable.emit(true);
