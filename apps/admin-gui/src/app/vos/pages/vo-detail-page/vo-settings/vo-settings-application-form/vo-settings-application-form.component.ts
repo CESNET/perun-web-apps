@@ -63,7 +63,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   }
 
   add() {
-    const config = getDefaultDialogConfig()
+    let config = getDefaultDialogConfig()
     config.width = '500px';
     config.data = {applicationFormItems: this.applicationFormItems};
 
@@ -74,7 +74,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
       if (success) {
         this.applicationFormItems = Object.assign([], success[0]);
 
-        const config = getDefaultDialogConfig();
+        config = getDefaultDialogConfig();
         config.width = '600px';
         config.height = '600px';
         config.data = {voId: this.voId, applicationFormItem: success[1]};
