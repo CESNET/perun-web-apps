@@ -415,8 +415,8 @@ export class SideMenuItemService {
             },
             {
               label: 'MENU_ITEMS.MEMBER.RESOURCE_ATTRIBUTES',
-              url: [`/organizations/${member.voId}/members/${member.id}/settings/resource_attributes`],
-              activatedRegex: '/organizations/\\d+/members/\\d+/settings/resource_attributes'
+              url: [`/organizations/${member.voId}/members/${member.id}/settings/resourceAttributes`],
+              activatedRegex: '/organizations/\\d+/members/\\d+/settings/resourceAttributes'
             },
             {
               label: 'MENU_ITEMS.MEMBER.GROUP_ATTRIBUTES',
