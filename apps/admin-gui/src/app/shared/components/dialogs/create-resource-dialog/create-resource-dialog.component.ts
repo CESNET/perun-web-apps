@@ -57,7 +57,8 @@ export class CreateResourceDialogComponent implements OnInit {
 
   _filter(value: string): Vo[] {
     const filterValue = value.toLowerCase();
-    return this.vos.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.vos.filter(option => option.name.toLowerCase().indexOf(filterValue) >=0
+      || option.shortName.toLowerCase().indexOf(filterValue) >= 0);
   }
 
   onSubmit() {

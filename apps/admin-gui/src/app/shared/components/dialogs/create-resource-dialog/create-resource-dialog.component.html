@@ -9,7 +9,7 @@
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let vo of filteredVos | async" [value]="vo.name"
                     (click)="selectedVo = vo">
-          {{vo.name}}
+          {{vo.name}}, {{vo.shortName}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

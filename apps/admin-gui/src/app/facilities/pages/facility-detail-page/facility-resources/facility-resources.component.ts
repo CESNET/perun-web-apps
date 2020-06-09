@@ -84,7 +84,7 @@ export class FacilityResourcesComponent implements OnInit {
 
   createResource() {
     const config = getDefaultDialogConfig();
-    config.width = '600px';
+    config.width = '1350px';
     config.data = {facilityId: this.facility.id, theme: 'facility-theme'};
 
     const dialogRef = this.dialog.open(CreateResourceDialogComponent, config);
