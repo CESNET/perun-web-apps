@@ -18,7 +18,7 @@ import { MenuItem } from '@perun-web-apps/perun/models';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'perun-web-apps-user-dashboard',
+  selector: 'app-perun-web-apps-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss']
 })

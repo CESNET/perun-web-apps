@@ -37,12 +37,12 @@ export class AppConfigService {
 
   initializeColors(entityColorConfigs: EntityColorConfig[], colorConfigs: ColorConfig[]): Promise<void> {
     return new Promise<void>((resolve => {
-      colorConfigs.forEach(cc => {        //konfigurace pro jednotlive
+      colorConfigs.forEach(cc => {        //configuration for single items
         const color = this.storeService.get('theme', cc.configValue);
         document.documentElement.style.setProperty(cc.cssVariable, color);
       });
 
-      entityColorConfigs.forEach(ecc => {       //konfigurace pro cele entity
+      entityColorConfigs.forEach(ecc => {       //configuration for whole entities
         const color = this.storeService.get('theme', ecc.configValue);
         // set CSS variable for given entity
         document.documentElement.style.setProperty(ecc.cssVariable, color);
