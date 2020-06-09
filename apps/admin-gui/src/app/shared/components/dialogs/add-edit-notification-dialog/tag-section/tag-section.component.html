@@ -1,5 +1,5 @@
 <div *ngFor="let tag of tags">
-  <button mat-stroked-button
+  <button mat-flat-button
           (click)="addTag('{' + tag[0] + '}')">{{tag[0]}}
   </button> - {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.' + tag[1] | translate}}
 </div>
