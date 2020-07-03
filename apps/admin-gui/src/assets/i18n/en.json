@@ -548,6 +548,11 @@
         "NO_FILTERED_RESOURCES": "No resources that match the filter found",
         "NO_RESOURCES": "You have no assigned resources"
       }
+    },
+    "RESOURCES": {
+      "TITLE": "Resources",
+      "FILTER": "Filter",
+      "ADD": "Add"
     }
   },
   "MENU_ITEMS": {
@@ -608,6 +613,7 @@
       "GROUPS": "Groups",
       "SETTINGS": "Settings",
       "ATTRIBUTES": "Attributes",
+      "RESOURCES": "Resources",
       "RESOURCE_ATTRIBUTES": "Resource attributes",
       "GROUP_ATTRIBUTES": "Group attributes"
     },
@@ -1252,6 +1258,21 @@
       "DESCRIPTION": "Following facility owners will be removed.",
       "ASK": "Are you sure you want to proceed?",
       "SUCCESS": "Owners were successfully removed"
+    },
+    "ADD_MEMBER_TO_RESOURCE": {
+      "TITLE": "Add member to resource",
+      "CONTINUE": "Continue",
+      "CANCEL": "Cancel",
+      "BACK": "Back",
+      "SUBMIT": "Submit",
+      "FILTER": "Filter by facility:",
+      "SELECTED": "Selected resource:",
+      "DESCRIPTION": "Description:",
+      "SERVICES": "Services on resource:",
+      "SUCCESS": "Member was added to resource",
+      "NO_GROUPS": "Resource has no groups assigned",
+      "ADD_GROUP": "Add group",
+      "SELECT_RESOURCE": "Select resource"
     }
   },
   "MEMBERS_LIST": {

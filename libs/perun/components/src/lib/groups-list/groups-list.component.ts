@@ -39,6 +39,12 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   disableMembers: boolean;
 
   @Input()
+  disableGroups: boolean;
+
+  @Input()
+  groupsToDisable: Set<number> = new Set<number>();
+
+  @Input()
   pageSize = 10;
 
   @Input()
@@ -115,6 +121,10 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  disableSelect(id: number): boolean {
+    return this.disableGroups && this.groupsToDisable.has(id);
   }
 
   ngAfterViewInit(): void {

@@ -171,6 +171,7 @@ import { AddFacilityOwnerDialogComponent } from './components/dialogs/add-facili
 import { RemoveFacilityOwnerDialogComponent } from './components/dialogs/remove-facility-owner-dialog/remove-facility-owner-dialog.component';
 import { GroupSyncDetailDialogComponent } from './components/dialogs/group-sync-detail-dialog/group-sync-detail-dialog.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { AddMemberToResourceComponent } from './components/dialogs/add-member-to-resource/add-member-to-resource.component';
 
 @NgModule({
   imports: [
@@ -425,7 +426,8 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     AddFacilityOwnerDialogComponent,
     RemoveFacilityOwnerDialogComponent,
     GroupSyncDetailDialogComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    AddMemberToResourceComponent
   ],
   providers: [
     AnyToStringPipe,

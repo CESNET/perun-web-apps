@@ -414,6 +414,11 @@ export class SideMenuItemService {
           activatedRegex: '/organizations/\\d+/members/\\d+/groups'
         },
         {
+          label: 'MENU_ITEMS.MEMBER.RESOURCES',
+          url: [`/organizations/${member.voId}/members/${member.id}/resources`],
+          activatedRegex: '/organizations/\\d+/members/\\d+/resources'
+        },
+        {
           label: 'MENU_ITEMS.MEMBER.SETTINGS',
           url: [`/organizations/${member.voId}/members/${member.id}/settings`],
           activatedRegex: '/organizations/\\d+/members/\\d+/settings$',

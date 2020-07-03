@@ -1,0 +1,1 @@
+//# sourceMappingURL=richResource.js.map

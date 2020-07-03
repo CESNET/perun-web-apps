@@ -1,0 +1,255 @@
+import { __decorate, __metadata, __param } from "tslib";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
+import { createNewApplicationFormItem } from '@perun-web-apps/perun/utils';
+export class SelectionItem {
+    constructor(displayName, value) {
+        this.value = value;
+        this.displayName = displayName;
+    }
+}
+let EditApplicationFormItemDialogComponent = class EditApplicationFormItemDialogComponent {
+    constructor(dialogRef, data, attributesManager, translateService) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.attributesManager = attributesManager;
+        this.translateService = translateService;
+        this.federationAttributes = [];
+        this.federationAttribute = '';
+        this.sourceAttributes = [];
+        this.destinationAttributes = [];
+        this.optionsEn = [];
+        this.optionsCs = [];
+    }
+    ngOnInit() {
+        this.applicationFormItem = createNewApplicationFormItem();
+        this.copy(this.data.applicationFormItem, this.applicationFormItem);
+        this.attributesManager.getAllAttributeDefinitions().subscribe(attributeDefinitions => {
+            this.attributeDefinitions = attributeDefinitions;
+            this.getDestinationAndSourceAttributes();
+        });
+        this.getFederationAttributes();
+        this.getFederationAttribute();
+        if (this.applicationFormItem.perunDestinationAttribute === null) {
+            this.applicationFormItem.perunDestinationAttribute = '';
+        }
+        if (this.applicationFormItem.perunSourceAttribute === null) {
+            this.applicationFormItem.perunSourceAttribute = '';
+        }
+        this.getOptions();
+    }
+    cancel() {
+        this.dialogRef.close();
+    }
+    submit() {
+        this.updateOptions();
+        this.copy(this.applicationFormItem, this.data.applicationFormItem);
+        this.dialogRef.close(true);
+    }
+    onChangingType(type) {
+        if (this.applicationFormItem.applicationTypes.includes(type)) {
+            const index = this.applicationFormItem.applicationTypes.indexOf(type);
+            this.applicationFormItem.applicationTypes.splice(index, 1);
+        }
+        else {
+            this.applicationFormItem.applicationTypes.push(type);
+        }
+    }
+    getDestinationAndSourceAttributes() {
+        this.translateService.get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.NO_SELECTED_ITEM').subscribe(noItem => {
+            this.sourceAttributes.push(new SelectionItem(noItem, ''));
+            this.destinationAttributes.push(new SelectionItem(noItem, ''));
+        });
+        for (const attribute of this.attributeDefinitions) {
+            if (attribute.entity.toLowerCase() === 'user' || attribute.entity.toLowerCase() === 'member') {
+                // add only member and user attributes
+                this.sourceAttributes.push(new SelectionItem(attribute.friendlyName + ' (' + attribute.entity + ' / ' + this.getDefinition(attribute) + ')', attribute.namespace + ':' + attribute.friendlyName));
+                this.destinationAttributes.push(new SelectionItem(attribute.friendlyName + ' (' + attribute.entity + ' / ' + this.getDefinition(attribute) + ')', attribute.namespace + ':' + attribute.friendlyName));
+            }
+            else if (attribute.entity.toLowerCase() === 'vo') {
+                // source attributes can be VO too
+                this.sourceAttributes.push(new SelectionItem(attribute.friendlyName + ' (' + attribute.entity + ' / ' + this.getDefinition(attribute) + ')', attribute.namespace + ':' + attribute.friendlyName));
+            }
+            else if (attribute.entity.toLowerCase() === 'group' && this.data.group) {
+                // if dialog is for group
+                this.sourceAttributes.push(new SelectionItem(attribute.friendlyName + ' (' + attribute.entity + ' / ' + this.getDefinition(attribute) + ')', attribute.namespace + ':' + attribute.friendlyName));
+            }
+        }
+    }
+    getFederationAttributes() {
+        this.translateService.get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.NO_SELECTED_ITEM').subscribe(noItem => {
+            this.federationAttributes.push(new SelectionItem(noItem, ''));
+            this.translateService.get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.CUSTOM_VALUE').subscribe(custom => {
+                this.federationAttributes.push(new SelectionItem(custom, 'custom'));
+                this.federationAttributes.push(new SelectionItem('Display name', 'displayName'));
+                this.federationAttributes.push(new SelectionItem('Common name', 'cn'));
+                this.federationAttributes.push(new SelectionItem('Mail', 'mail'));
+                this.federationAttributes.push(new SelectionItem('Organization', 'o'));
+                this.federationAttributes.push(new SelectionItem('Level of Assurance (LoA)', 'loa'));
+                this.federationAttributes.push(new SelectionItem('First name', 'givenName'));
+                this.federationAttributes.push(new SelectionItem('Surname', 'sn'));
+                this.federationAttributes.push(new SelectionItem('EPPN', 'eppn'));
+                this.federationAttributes.push(new SelectionItem('IdP Category', 'md_entityCategory'));
+                this.federationAttributes.push(new SelectionItem('IdP Affiliation', 'affiliation'));
+                this.federationAttributes.push(new SelectionItem('EduPersonScopedAffiliation', 'eduPersonScopedAffiliation'));
+                this.federationAttributes.push(new SelectionItem('Forwarded Affiliation from Proxy', 'forwardedScopedAffiliation'));
+                this.federationAttributes.push(new SelectionItem('schacHomeOrganization', 'schacHomeOrganization'));
+                this.federationAttributes.push(new SelectionItem('Login', 'uid'));
+                this.federationAttributes.push(new SelectionItem('Alternative login name', 'alternativeLoginName'));
+            });
+        });
+    }
+    getFederationAttribute() {
+        if (this.applicationFormItem.federationAttribute) {
+            for (const attribute of this.federationAttributes) {
+                if (attribute.value === this.applicationFormItem.federationAttribute) {
+                    this.federationAttribute = attribute.value;
+                    return;
+                }
+            }
+            this.federationAttribute = 'custom';
+        }
+    }
+    federationAttributeschanged() {
+        if (this.federationAttribute !== 'custom') {
+            this.applicationFormItem.federationAttribute = this.federationAttribute;
+        }
+        else {
+            this.applicationFormItem.federationAttribute = '';
+        }
+    }
+    getDefinition(attribute) {
+        const temp = attribute.namespace.split(':');
+        if (temp[4] === null) {
+            return 'null';
+        }
+        return temp[4];
+    }
+    addEnOption() {
+        this.optionsEn.push(['', '']);
+    }
+    addCsOption() {
+        this.optionsCs.push(['', '']);
+    }
+    updateOptions() {
+        let enOptions = '';
+        for (const item of this.optionsEn) {
+            if (item[0] !== '' && item[1] !== '') {
+                if (enOptions === '') {
+                    enOptions = item[0] + '#' + item[1];
+                }
+                else {
+                    enOptions = enOptions + '|' + item[0] + '#' + item[1];
+                }
+            }
+        }
+        this.applicationFormItem.i18n['en'].options = enOptions;
+        let csOptions = '';
+        for (const item of this.optionsCs) {
+            if (item[0] !== '' && item[1] !== '') {
+                if (csOptions === '') {
+                    csOptions = item[0] + '#' + item[1];
+                }
+                else {
+                    csOptions = csOptions + '|' + item[0] + '#' + item[1];
+                }
+            }
+        }
+        this.applicationFormItem.i18n['cs'].options = csOptions;
+    }
+    getOptions() {
+        if (this.applicationFormItem.i18n['en'].options) {
+            const tempen = this.applicationFormItem.i18n['en'].options.split('|');
+            for (const item of tempen) {
+                const line = item.split('#');
+                this.optionsEn.push([line[0], line[1]]);
+            }
+        }
+        if (this.applicationFormItem.i18n['cs'].options) {
+            const tempcs = this.applicationFormItem.i18n['cs'].options.split('|');
+            for (const item of tempcs) {
+                const line = item.split('#');
+                this.optionsCs.push([line[0], line[1]]);
+            }
+        }
+    }
+    sortEnOptionsAZ() {
+        this.optionsEn = this.optionsEn.sort((n1, n2) => {
+            if (n1[1] > n2[1]) {
+                return 1;
+            }
+            if (n1[1] < n2[1]) {
+                return -1;
+            }
+            return 0;
+        });
+    }
+    sortEnOptionsZA() {
+        this.optionsEn = this.optionsEn.sort((n1, n2) => {
+            if (n1[1] > n2[1]) {
+                return -1;
+            }
+            if (n1[1] < n2[1]) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+    sortCsOptionsZA() {
+        this.optionsCs = this.optionsCs.sort((n1, n2) => {
+            if (n1[1] > n2[1]) {
+                return -1;
+            }
+            if (n1[1] < n2[1]) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+    sortCsOptionsAZ() {
+        this.optionsCs = this.optionsCs.sort((n1, n2) => {
+            if (n1[1] > n2[1]) {
+                return 1;
+            }
+            if (n1[1] < n2[1]) {
+                return -1;
+            }
+            return 0;
+        });
+    }
+    copy(from, to) {
+        to.applicationTypes = from.applicationTypes;
+        to.federationAttribute = from.federationAttribute;
+        to.forDelete = from.forDelete;
+        to.i18n['cs'].errorMessage = from.i18n['cs'].errorMessage;
+        to.i18n['cs'].help = from.i18n['cs'].help;
+        to.i18n['cs'].label = from.i18n['cs'].label;
+        to.i18n['cs'].options = from.i18n['cs'].options;
+        to.i18n['en'].errorMessage = from.i18n['en'].errorMessage;
+        to.i18n['en'].help = from.i18n['en'].help;
+        to.i18n['en'].label = from.i18n['en'].label;
+        to.i18n['en'].options = from.i18n['en'].options;
+        to.id = from.id;
+        to.ordnum = from.ordnum;
+        to.perunDestinationAttribute = from.perunDestinationAttribute;
+        to.perunSourceAttribute = from.perunSourceAttribute;
+        to.regex = from.regex;
+        to.required = from.required;
+        to.shortname = from.shortname;
+        to.type = from.type;
+    }
+};
+EditApplicationFormItemDialogComponent = __decorate([
+    Component({
+        selector: 'app-edit-application-form-item-dialog',
+        templateUrl: './edit-application-form-item-dialog.component.html',
+        styleUrls: ['./edit-application-form-item-dialog.component.scss']
+    }),
+    __param(1, Inject(MAT_DIALOG_DATA)),
+    __metadata("design:paramtypes", [MatDialogRef, Object, AttributesManagerService,
+        TranslateService])
+], EditApplicationFormItemDialogComponent);
+export { EditApplicationFormItemDialogComponent };
+//# sourceMappingURL=edit-application-form-item-dialog.component.js.map

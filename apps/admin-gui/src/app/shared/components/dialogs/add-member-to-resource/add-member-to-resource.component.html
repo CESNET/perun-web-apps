@@ -1,0 +1,97 @@
+<div class="{{theme}}">
+  <h1 mat-dialog-title>{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.TITLE' | translate}}</h1>
+  <mat-horizontal-stepper #stepper [linear]="true">
+    <div class="dialog-container" mat-dialog-content>
+      <mat-step completed=false>
+        <ng-template matStepLabel>{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.SELECT_RESOURCE' | translate}}</ng-template>
+        <div>
+          <div>
+            <mat-form-field class="input-style">
+              <input [formControl]="facilityCtrl" [matAutocomplete]="autoFacility"
+                     aria-label="Number"
+                     placeholder="{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.FILTER' | translate}}"
+                     matInput
+                     type="text">
+              <mat-autocomplete #autoFacility="matAutocomplete" autoActiveFirstOption>
+                <mat-option *ngFor="let facility of filteredFacilities | async" [value]="facility">
+                  {{facility}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <div>
+            <mat-form-field class="input-style">
+              <mat-select
+                disableOptionCentering="true"
+                placeholder="{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.SELECTED' | translate}}">
+                <mat-option (click)="setResource(resource);
+                           stepper.selected.completed = true" *ngFor="let resource of filteredResources | async"
+                            [value]="resource">
+                  {{resource.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <span class="font-weight-bold">{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.DESCRIPTION' | translate}}</span>
+          <div class="ml-5"> {{description}} </div>
+        </div>
+        <div>
+          <span class="font-weight-bold">{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.SERVICES' | translate}}</span>
+          <div *ngFor="let service of services" class="ml-5">{{service.name}}</div>
+        </div>
+
+        <div mat-dialog-actions>
+          <button
+            (click)="onCancel()"
+            class="ml-auto"
+            mat-flat-button>{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.CANCEL' | translate}}</button>
+          <button
+            (click)="loadGroups()"
+            [disabled]="selectedResource == null"
+            class="ml-2"
+            color="accent"
+            mat-flat-button
+            matStepperNext
+          >{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.CONTINUE' | translate}}</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.ADD_GROUP' | translate}}</ng-template>
+        <div *ngIf="groups.length !== 0">
+          <perun-web-apps-groups-list
+            [disableRouting]="true"
+            [disableGroups]="true"
+            [disableHeadCheckbox]="true"
+            [groupsToDisable]="membersGroupsId"
+            [groups]="groups"
+            [hideColumns]="['vo', 'menu']"
+            [selection]="selectedGroups">
+          </perun-web-apps-groups-list>
+        </div>
+        <app-alert *ngIf="groups.length === 0" color="warn">
+          {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.NO_GROUPS' | translate}}
+        </app-alert>
+        <div mat-dialog-actions>
+          <button
+            (click)="selectedGroups.clear()"
+            class="ml-auto"
+            mat-flat-button
+            matStepperPrevious>
+            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.BACK' | translate}}</button>
+          <button
+            (click)="onFinish()"
+            [disabled]="selectedGroups.selected.length === 0"
+            class="ml-2"
+            color="accent"
+            mat-flat-button
+            matStepperNext>
+            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.SUBMIT' | translate}}</button>
+        </div>
+      </mat-step>
+    </div>
+  </mat-horizontal-stepper>
+</div>

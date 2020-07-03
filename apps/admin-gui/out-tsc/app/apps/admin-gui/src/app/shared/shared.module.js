@@ -1,0 +1,426 @@
+import { __decorate, __metadata } from "tslib";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PerunNavComponent } from './perun-nav/perun-nav.component';
+import { RouterModule } from '@angular/router';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SideMenuComponent } from './side-menu/side-menu.component';
+import { SideMenuItemComponent } from './side-menu/side-menu-item/side-menu-item.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CreateGroupDialogComponent } from './components/dialogs/create-group-dialog/create-group-dialog.component';
+import { InviteMemberDialogComponent } from './components/dialogs/invite-member-dialog/invite-member-dialog.component';
+import { DeleteGroupDialogComponent } from './components/dialogs/delete-group-dialog/delete-group-dialog.component';
+import { SettingsToggleItemComponent } from './components/settings-toggle-item/settings-toggle-item.component';
+import { ApplicationStatePipe } from './pipes/application-state.pipe';
+import { NotificatorComponent } from './components/notificator/notificator.component';
+import { AttributeTypeCleanPipe } from './pipes/attribute-type-clean.pipe';
+import { NameSpaceToDefPipe } from './pipes/name-space-to-def.pipe';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { ApplicationReSendNotificationDialogComponent } from './components/dialogs/application-re-send-notification-dialog/application-re-send-notification-dialog.component';
+import { ApplicationRejectDialogComponent } from './components/dialogs/application-reject-dialog/application-reject-dialog.component';
+import { AnyToStringPipe } from './pipes/any-to-string.pipe';
+import { DeleteAttributeDialogComponent } from './components/dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
+import { MemberStatusIconPipe } from './pipes/member-status-icon.pipe';
+import { MemberStatusIconColorPipe } from './pipes/member-status-icon-color.pipe';
+import { MemberEmailPipe } from './pipes/member-email.pipe';
+import { MemberLoginsPipe } from './pipes/member-logins.pipe';
+import { RemoveMembersDialogComponent } from './components/dialogs/remove-members-dialog/remove-members-dialog.component';
+import { SideMenuRootItemComponent } from './side-menu/side-menu-root-item/side-menu-root-item.component';
+import { DebuggerPageComponent } from './debugger-page/debugger-page.component';
+import { TechnicalOwnersPipe } from './pipes/technical-owners.pipe';
+import { RemoveResourceDialogComponent } from './components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
+import { AddManagerDialogComponent } from './components/dialogs/add-manager-dialog/add-manager-dialog.component';
+import { RemoveManagerDialogComponent } from './components/dialogs/remove-manager-dialog/remove-manager-dialog.component';
+import { AddGroupManagerDialogComponent } from './components/dialogs/add-group-manager-dialog/add-group-manager-dialog.component';
+import { RemoveGroupManagerDialogComponent } from './components/dialogs/remove-group-manager-dialog/remove-group-manager-dialog.component';
+import { ApplicationFormItemTypePipe } from './pipes/application-form-item-type.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { UpdateApplicationFormDialogComponent } from './components/dialogs/update-application-form-dialog/update-application-form-dialog.component';
+import { DeleteApplicationFormItemDialogComponent } from './components/dialogs/delete-application-form-item-dialog/delete-application-form-item-dialog.component';
+import { ApplicationFormCopyItemsDialogComponent } from './components/dialogs/application-form-copy-items-dialog/application-form-copy-items-dialog.component';
+import { AddApplicationFormItemDialogComponent } from './components/dialogs/add-application-form-item-dialog/add-application-form-item-dialog.component';
+import { EditApplicationFormItemDialogComponent } from './components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
+import { ApplicationFormWidgetDescriptionPipe } from './pipes/application-form-widget-description.pipe';
+import { CreateAttributeDialogComponent } from './components/dialogs/create-attribute-dialog/create-attribute-dialog.component';
+import { AddMemberDialogComponent } from './components/dialogs/add-member-dialog/add-member-dialog.component';
+import { MembersCandidatesListComponent } from './components/members-candidates-list/members-candidates-list.component';
+import { UserVoPipe } from './pipes/vo-or-ext-source.pipe';
+import { CreateResourceTagDialogComponent } from './components/dialogs/create-resource-tag-dialog/create-resource-tag-dialog.component';
+import { DeleteResourceTagDialogComponent } from './components/dialogs/delete-resource-tag-dialog/delete-resource-tag-dialog.component';
+import { MoveGroupDialogComponent } from './components/dialogs/move-group-dialog/move-group-dialog.component';
+import { ManagersPageComponent } from './components/managers-page/managers-page.component';
+import { DeleteNotificationDialogComponent } from './components/dialogs/delete-notification-dialog/delete-notification-dialog.component';
+import { EditEmailFooterDialogComponent } from './components/dialogs/edit-email-footer-dialog/edit-email-footer-dialog.component';
+import { AddEditNotificationDialogComponent } from './components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TagSectionComponent } from './components/dialogs/add-edit-notification-dialog/tag-section/tag-section.component';
+import { TagBarComponent } from './components/dialogs/add-edit-notification-dialog/tag-bar/tag-bar.component';
+import { NotificationsCopyMailsDialogComponent } from './components/dialogs/notifications-copy-mails-dialog/notifications-copy-mails-dialog.component';
+import { DisplayedRolePipe } from './pipes/displayed-role.pipe';
+import { AnimatedRouterOutletComponent } from './components/animated-router-outlet/animated-router-outlet.component';
+import { UserEmailPipe } from './pipes/user-email.pipe';
+import { ResourcesTagsListComponent } from './components/resources-tags-list/resources-tags-list.component';
+import { DebounceFilterComponent } from './components/debounce-filter/debounce-filter.component';
+import { UserDetailPageComponent } from './components/user-detail-page/user-detail-page.component';
+import { UserOverviewComponent } from './components/user-detail-page/user-overview/user-overview.component';
+import { UserGroupsComponent } from './components/user-detail-page/user-groups/user-groups.component';
+import { UserSettingsComponent } from './components/user-detail-page/user-settings/user-settings.component';
+import { UserOrganizationsComponent } from './components/user-detail-page/user-organizations/user-organizations.component';
+import { UserSettingsAttributesComponent } from './components/user-detail-page/user-settings/user-settings-attributes/user-settings-attributes.component';
+import { UserSettingsOverviewComponent } from './components/user-detail-page/user-settings/user-settings-overview/user-settings-overview.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+// tslint:disable-next-line:max-line-length
+import { DeleteAttributeDefinitionDialogComponent } from './components/dialogs/delete-attribute-definition-dialog/delete-attribute-definition-dialog.component';
+// tslint:disable-next-line:max-line-length
+import { CreateAttributeDefinitionDialogComponent } from './components/dialogs/create-attribute-definition-dialog/create-attribute-definition-dialog.component';
+import { PerunFooterComponent } from './perun-footer/perun-footer.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { EditAttributeDefinitionDialogComponent } from './components/dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
+import { EntitylessAttributeKeysListComponent } from './components/entityless-attribute-keys-list/entityless-attribute-keys-list.component';
+import { ServicesListComponent } from './components/services-list/services-list.component';
+import { ReportIssueDialogComponent } from './components/report-issue-dialog/report-issue-dialog.component';
+import { RemoveVoDialogComponent } from './components/dialogs/remove-vo-dialog/remove-vo-dialog.component';
+import { CreateVoDialogComponent } from './components/dialogs/create-vo-dialog/create-vo-dialog.component';
+import { ShowNotificationHistoryDialogComponent } from './components/dialogs/show-notification-history-dialog/show-notification-history-dialog.component';
+import { ExtSourcesListComponent } from './components/ext-sources-list/ext-sources-list.component';
+import { AddExtSourceDialogComponent } from './components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
+import { CreateRelationDialogComponent } from './components/dialogs/create-relation-dialog/create-relation-dialog.component';
+import { RemoveRelationDialogComponent } from './components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
+import { ChangeMemberStatusDialogComponent } from './components/dialogs/change-member-status-dialog/change-member-status-dialog.component';
+import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
+import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
+import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
+import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
+// @ts-ignore
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { UserRolesComponent } from './components/user-detail-page/user-settings/user-roles/user-roles.component';
+import { UserSettingsAppConfigurationComponent } from './components/user-detail-page/user-settings/user-settings-app-configuration/user-settings-app-configuration.component';
+import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
+import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
+import { RemoveDestinationDialogComponent } from './components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
+import { DestinationListComponent } from './components/destination-list/destination-list.component';
+import { AddServicesDestinationDialogComponent } from './components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
+import { AddGroupResourceDialogComponent } from './components/dialogs/add-group-resource-dialog/add-group-resource-dialog.component';
+import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
+import { TwoEntityAttributePageComponent } from './components/two-entity-attribute-page/two-entity-attribute-page.component';
+import { UserSettingsFacilityAttributesComponent } from './components/user-detail-page/user-settings/user-settings-facility-attributes/user-settings-facility-attributes.component';
+import { UserLoginsPipe } from './pipes/user-logins.pipe';
+import { AttributeImportDialogComponent } from './components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
+import { FacilitySelectTableComponent } from './components/facility-select-table/facility-select-table.component';
+import { UserDashboardComponent } from './components/user-detail-page/user-dashboard/user-dashboard.component';
+import { HostsListComponent } from './components/hosts-list/hosts-list.component';
+import { UserSettingsServiceIdentitiesComponent } from './components/user-detail-page/user-settings/user-settings-service-identities/user-settings-service-identities.component';
+import { BlacklistListComponent } from './components/blacklist-list/blacklist-list.component';
+import { SecurityTeamsListComponent } from './components/security-teams-list/security-teams-list.component';
+import { UserIdentitiesComponent } from './components/user-detail-page/user-identities/user-identities.component';
+import { AddUserExtSourceDialogComponent } from './components/dialogs/add-user-ext-source-dialog/add-user-ext-source-dialog.component';
+import { AddHostDialogComponent } from './components/dialogs/add-host-dialog/add-host-dialog.component';
+import { RemoveHostDialogComponent } from './components/dialogs/remove-host-dialog/remove-host-dialog.component';
+import { OwnersListComponent } from './components/owners-list/owners-list.component';
+import { AddFacilityOwnerDialogComponent } from './components/dialogs/add-facility-owner-dialog/add-facility-owner-dialog.component';
+import { RemoveFacilityOwnerDialogComponent } from './components/dialogs/remove-facility-owner-dialog/remove-facility-owner-dialog.component';
+import { GroupSyncDetailDialogComponent } from './components/dialogs/group-sync-detail-dialog/group-sync-detail-dialog.component';
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { AddMemberToResourceComponent } from './components/dialogs/add-member-to-resource/add-member-to-resource.component';
+let SharedModule = class SharedModule {
+    constructor(translate) {
+        this.translate = translate;
+        translate.addLangs(['en', 'cs']);
+    }
+};
+SharedModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            RouterModule,
+            MatAutocompleteModule,
+            MatInputModule,
+            MatFormFieldModule,
+            ReactiveFormsModule,
+            FormsModule,
+            MatIconModule,
+            MatSidenavModule,
+            MatExpansionModule,
+            TranslateModule.forChild({}),
+            MatButtonModule,
+            MatSortModule,
+            MatTableModule,
+            MatTabsModule,
+            MatTreeModule,
+            MatButtonModule,
+            MatCheckboxModule,
+            MatDialogModule,
+            MatSelectModule,
+            MatSnackBarModule,
+            MatProgressSpinnerModule,
+            MatProgressBarModule,
+            MatTooltipModule,
+            MatSlideToggleModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatRadioModule,
+            MatDividerModule,
+            MatRippleModule,
+            MatPaginatorModule,
+            MatCardModule,
+            MatStepperModule,
+            DragDropModule,
+            DragDropModule,
+            MatCardModule,
+            MatChipsModule,
+            MatMenuModule,
+            MatTableExporterModule,
+            ScrollingModule,
+            UiAlertsModule,
+            MatBadgeModule,
+            PerunSharedComponentsModule,
+            ConfigTableConfigModule,
+            PerunPipesModule
+        ],
+        exports: [
+            PerunNavComponent,
+            MatAutocompleteModule,
+            MatInputModule,
+            MatFormFieldModule,
+            RouterModule,
+            ReactiveFormsModule,
+            FormsModule,
+            MatIconModule,
+            SideMenuComponent,
+            MatSidenavModule,
+            TranslateModule,
+            MatSortModule,
+            MatTableModule,
+            MatTabsModule,
+            MatTreeModule,
+            MatButtonModule,
+            MatCheckboxModule,
+            MatDialogModule,
+            MatSelectModule,
+            MatSnackBarModule,
+            MatProgressSpinnerModule,
+            MatProgressBarModule,
+            MatTooltipModule,
+            MatSlideToggleModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatRadioModule,
+            MatDividerModule,
+            MatCardModule,
+            MatStepperModule,
+            SettingsToggleItemComponent,
+            MatRippleModule,
+            ApplicationStatePipe,
+            MatPaginatorModule,
+            NotificatorComponent,
+            AttributeTypeCleanPipe,
+            NameSpaceToDefPipe,
+            UsersListComponent,
+            MemberStatusIconPipe,
+            MemberStatusIconColorPipe,
+            MemberEmailPipe,
+            MemberLoginsPipe,
+            TechnicalOwnersPipe,
+            ApplicationFormItemTypePipe,
+            DragDropModule,
+            ApplicationFormWidgetDescriptionPipe,
+            RemoveManagerDialogComponent,
+            AddManagerDialogComponent,
+            AddGroupManagerDialogComponent,
+            RemoveGroupManagerDialogComponent,
+            ApplicationFormWidgetDescriptionPipe,
+            TechnicalOwnersPipe,
+            UsersListComponent,
+            AnyToStringPipe,
+            AddMemberDialogComponent,
+            MembersCandidatesListComponent,
+            UserVoPipe,
+            MatChipsModule,
+            MatChipsModule,
+            MatExpansionModule,
+            MatMenuModule,
+            ScrollingModule,
+            ManagersPageComponent,
+            ScrollingModule,
+            DisplayedRolePipe,
+            ScrollingModule,
+            AnimatedRouterOutletComponent,
+            ResourcesTagsListComponent,
+            DebounceFilterComponent,
+            ResourcesTagsListComponent,
+            UserDetailPageComponent,
+            PerunFooterComponent,
+            CreateResourceDialogComponent,
+            ExtSourcesListComponent,
+            ExtSourceTypePipe,
+            ConfigTableConfigModule,
+            SideMenuRootItemComponent,
+            DestinationListComponent,
+            TwoEntityAttributePageComponent,
+            FacilitySelectTableComponent,
+            HostsListComponent,
+            BlacklistListComponent,
+            SecurityTeamsListComponent,
+            OwnersListComponent
+        ],
+        declarations: [
+            PerunNavComponent,
+            SideMenuComponent,
+            SideMenuItemComponent,
+            CreateGroupDialogComponent,
+            InviteMemberDialogComponent,
+            DeleteGroupDialogComponent,
+            SettingsToggleItemComponent,
+            ApplicationStatePipe,
+            NotificatorComponent,
+            AttributeTypeCleanPipe,
+            NameSpaceToDefPipe,
+            UsersListComponent,
+            ApplicationStatePipe,
+            ApplicationReSendNotificationDialogComponent,
+            ApplicationRejectDialogComponent,
+            MemberStatusIconPipe,
+            MemberStatusIconColorPipe,
+            MemberEmailPipe,
+            MemberLoginsPipe,
+            RemoveMembersDialogComponent,
+            DebuggerPageComponent,
+            TechnicalOwnersPipe,
+            RemoveResourceDialogComponent,
+            AddManagerDialogComponent,
+            RemoveManagerDialogComponent,
+            AddManagerDialogComponent,
+            AddGroupManagerDialogComponent,
+            RemoveGroupManagerDialogComponent,
+            ApplicationFormItemTypePipe,
+            UpdateApplicationFormDialogComponent,
+            DeleteApplicationFormItemDialogComponent,
+            ApplicationFormCopyItemsDialogComponent,
+            AddApplicationFormItemDialogComponent,
+            EditApplicationFormItemDialogComponent,
+            ApplicationFormWidgetDescriptionPipe,
+            TechnicalOwnersPipe,
+            SideMenuRootItemComponent,
+            ApplicationRejectDialogComponent,
+            AnyToStringPipe,
+            DeleteAttributeDialogComponent,
+            AddMemberDialogComponent,
+            MembersCandidatesListComponent,
+            UserVoPipe,
+            CreateAttributeDialogComponent,
+            CreateResourceTagDialogComponent,
+            DeleteResourceTagDialogComponent,
+            MoveGroupDialogComponent,
+            DeleteNotificationDialogComponent,
+            EditEmailFooterDialogComponent,
+            AddEditNotificationDialogComponent,
+            TagSectionComponent,
+            TagBarComponent,
+            NotificationsCopyMailsDialogComponent,
+            ManagersPageComponent,
+            DisplayedRolePipe,
+            NotificationsCopyMailsDialogComponent,
+            AnimatedRouterOutletComponent,
+            UserEmailPipe,
+            ResourcesTagsListComponent,
+            UserDetailPageComponent,
+            UserOverviewComponent,
+            UserGroupsComponent,
+            UserSettingsComponent,
+            UserOrganizationsComponent,
+            UserSettingsAttributesComponent,
+            UserSettingsOverviewComponent,
+            ResourcesTagsListComponent,
+            DebounceFilterComponent,
+            UserProfileComponent,
+            DebounceFilterComponent,
+            ResourcesTagsListComponent,
+            DeleteAttributeDefinitionDialogComponent,
+            CreateAttributeDefinitionDialogComponent,
+            PerunFooterComponent,
+            EditAttributeDefinitionDialogComponent,
+            EntitylessAttributeKeysListComponent,
+            ServicesListComponent,
+            ReportIssueDialogComponent,
+            RemoveVoDialogComponent,
+            CreateVoDialogComponent,
+            ShowNotificationHistoryDialogComponent,
+            CreateRelationDialogComponent,
+            RemoveRelationDialogComponent,
+            ChangeMemberStatusDialogComponent,
+            ChangeMemberStatusDialogComponent,
+            RemoveGroupFromResourceDialogComponent,
+            AssignGroupToResourceDialogComponent,
+            CreateResourceDialogComponent,
+            ExtSourcesListComponent,
+            AddExtSourceDialogComponent,
+            ExtSourceTypePipe,
+            UserRolesComponent,
+            UserSettingsAppConfigurationComponent,
+            RemoveDestinationDialogComponent,
+            DestinationListComponent,
+            AddServicesDestinationDialogComponent,
+            AddGroupResourceDialogComponent,
+            RemoveGroupResourceDialogComponent,
+            TwoEntityAttributePageComponent,
+            UserSettingsFacilityAttributesComponent,
+            UserLoginsPipe,
+            AttributeImportDialogComponent,
+            FacilitySelectTableComponent,
+            UserDashboardComponent,
+            UserSettingsServiceIdentitiesComponent,
+            HostsListComponent,
+            BlacklistListComponent,
+            SecurityTeamsListComponent,
+            HostsListComponent,
+            UserIdentitiesComponent,
+            AddUserExtSourceDialogComponent,
+            SecurityTeamsListComponent,
+            AddHostDialogComponent,
+            RemoveHostDialogComponent,
+            OwnersListComponent,
+            AddFacilityOwnerDialogComponent,
+            RemoveFacilityOwnerDialogComponent,
+            GroupSyncDetailDialogComponent,
+            NotFoundPageComponent,
+            AddMemberToResourceComponent
+        ],
+        providers: [
+            AnyToStringPipe,
+            ExtSourceTypePipe
+        ]
+    }),
+    __metadata("design:paramtypes", [TranslateService])
+], SharedModule);
+export { SharedModule };
+//# sourceMappingURL=shared.module.js.map

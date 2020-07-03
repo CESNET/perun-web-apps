@@ -19,7 +19,9 @@
                           (click)="$event.stopPropagation()"
                           [aria-label]="checkboxLabel(row)"
                           [checked]="selection.isSelected(row)"
-                          [disabled]="row.name === 'members' && disableMembers"
+                          [disabled]="(row.name === 'members' && disableMembers) || disableSelect(row.id)"
+                          matTooltip="Already member"
+                          [matTooltipDisabled]="!disableSelect(row.id)"
                           color="primary">
             </mat-checkbox>
           </td>

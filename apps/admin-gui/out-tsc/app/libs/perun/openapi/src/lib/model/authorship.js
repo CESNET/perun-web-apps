@@ -1,0 +1,1 @@
+//# sourceMappingURL=authorship.js.map
