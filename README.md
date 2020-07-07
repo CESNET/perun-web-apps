@@ -14,7 +14,7 @@ ng serve admin-gui --public-host=http://localhost:4200 --disable-host-check
 Command to serve the consolidator:
 
 ```shell script
-nx serve consolidator --disable-host-check --baseHref=/krb/nic/ --deployUrl=/krb/nic/ --publicHost=localhost:4200
+ng serve consolidator --disable-host-check --baseHref=/krb/nic/ --deployUrl=/krb/nic/ --publicHost=localhost:4200
 ```
 
 ## Apache config
