@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import {User, UserManager, UserManagerSettings} from 'oidc-client';
 import {from, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { StoreService } from './store.service';
 
 
@@ -58,12 +58,13 @@ export class AuthService {
   }
 
   authenticate(): Promise<boolean> {
-    const currentPathname = window.location.pathname;
+    const currentPathname = location.pathname;
+    const queryParams = location.search.substr(1);
 
     if (currentPathname === '/api-callback') {
       return this.handleAuthCallback();
     } else {
-      return this.verifyAuthentication(currentPathname);
+      return this.verifyAuthentication(currentPathname, queryParams);
     }
   }
 
@@ -76,11 +77,7 @@ export class AuthService {
 
   isLoggedInPromise(): Observable<boolean> {
     return from(this.manager.getUser()).pipe(map<User, boolean>((user) => {
-      if (user) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!user;
     }));
   }
 
@@ -126,13 +123,15 @@ export class AuthService {
    * save current path and start authentication;
    *
    * @param path current url path
+   * @param queryParams current url's query parameters
    */
-  private verifyAuthentication(path: string): Promise<any> {
+  private verifyAuthentication(path: string, queryParams: string): Promise<any> {
     return this.isLoggedInPromise()
       .toPromise()
       .then(isLoggedIn => {
         if (!isLoggedIn) {
           sessionStorage.setItem('auth:redirect', path);
+          sessionStorage.setItem('auth:queryParams', queryParams);
           this.startAuthentication().then(r => console.log('R:' + r));
         }
         return isLoggedIn;
@@ -149,9 +148,17 @@ export class AuthService {
   private handleAuthCallback(): Promise<boolean> {
     return this.completeAuthentication().then(() => {
       const redirectUrl = sessionStorage.getItem('auth:redirect');
+      const params = sessionStorage.getItem('auth:queryParams').split('&');
+      const queryParams: Params = {};
+      params.forEach(param => {
+        const elements = param.split('=');
+        queryParams[elements[0]] = elements[1];
+      })
       if (redirectUrl) {
         sessionStorage.removeItem('auth:redirect');
-        this.router.navigate([redirectUrl]);
+        sessionStorage.removeItem('auth:queryParams');
+
+        this.router.navigate([redirectUrl], {queryParams: queryParams});
       } else {
         this.router.navigate(['/']);
       }

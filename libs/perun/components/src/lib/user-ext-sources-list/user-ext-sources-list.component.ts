@@ -25,6 +25,10 @@ export class UserExtSourcesListComponent implements AfterViewInit, OnChanges {
   hideColumns: string[] = [];
   @Input()
   pageSize = 5;
+  @Input()
+  extSourceNameHeader: string;
+  @Input()
+  loginHeader: string;
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;

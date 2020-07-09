@@ -1255,13 +1255,14 @@ export class UsersManagerService {
      * @param user id of User
      * @param email new email address to set
      * @param lang language to get confirmation mail in (optional)
+     * @param linkPath path that is appended to the url of the verification link (optional)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public requestPreferredEmailChange(user: number, email: string, lang?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public requestPreferredEmailChange(user: number, email: string, lang?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public requestPreferredEmailChange(user: number, email: string, lang?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public requestPreferredEmailChange(user: number, email: string, lang?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public requestPreferredEmailChange(user: number, email: string, lang?: string, linkPath?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public requestPreferredEmailChange(user: number, email: string, lang?: string, linkPath?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public requestPreferredEmailChange(user: number, email: string, lang?: string, linkPath?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public requestPreferredEmailChange(user: number, email: string, lang?: string, linkPath?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (user === null || user === undefined) {
             throw new Error('Required parameter user was null or undefined when calling requestPreferredEmailChange.');
         }
@@ -1278,6 +1279,9 @@ export class UsersManagerService {
         }
         if (lang !== undefined && lang !== null) {
             queryParameters = queryParameters.set('lang', <any>lang);
+        }
+        if (linkPath !== undefined && linkPath !== null) {
+            queryParameters = queryParameters.set('linkPath', <any>linkPath);
         }
 
         let headers = this.defaultHeaders;

@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>{{'DIALOGS.ADD_UNIX_GROUP.TITLE'|customTranslate | translate}}</h3>
+<h1 mat-dialog-title>{{'DIALOGS.ADD_UNIX_GROUP.TITLE'|customTranslate | translate}}</h1>
 <div class="user-theme">
   <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
   <div *ngIf="!loading">
@@ -16,7 +16,7 @@
     </div>
     <div mat-dialog-actions>
       <button
-        mat-stroked-button
+        mat-flat-button
         class="ml-auto"
         (click)="onCancel()">
         {{'DIALOGS.ADD_UNIX_GROUP.CANCEL'|customTranslate | translate}}

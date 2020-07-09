@@ -1,52 +1,56 @@
-<div class="card mt-3" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0 || hosts.length === 0">
+<div [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0 || hosts.length === 0" class="card mt-3">
   <div class="card-body">
     <perun-web-apps-table-options (exportEnd)="exporting = false" (exportStart)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
-    <table
-      mat-table matTableExporter
-      [dataSource]="dataSource"
-      #exporter="matTableExporter"
-      matSort matSortActive="id"
-      matSortDirection="asc" matSortDisableClear
-      class="w-100">
+    <div class="overflow-auto">
+      <table
+        #exporter="matTableExporter" [dataSource]="dataSource"
+        class="w-100"
+        mat-table
+        matSort matSortActive="id"
+        matSortDirection="asc" matSortDisableClear
+        matTableExporter>
 
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox color="primary"
-                        (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                        [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let host" class="static-column-size">
-          <mat-checkbox color="primary"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(host) : null"
-                        [checked]="selection.isSelected(host)"
-                        [aria-label]="checkboxLabel(host)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [aria-label]="checkboxLabel()"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let host" class="static-column-size" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(host) : null"
+                          (click)="$event.stopPropagation()"
+                          [aria-label]="checkboxLabel(host)"
+                          [checked]="selection.isSelected(host)"
+                          color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.HOSTS_LIST.TABLE_HOST_ID' | translate}}</th>
-        <td mat-cell class="static-column-size" *matCellDef="let host">{{host.id}}</td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.HOSTS_LIST.TABLE_HOST_NAME' | translate}}</th>
-        <td mat-cell *matCellDef="let host">{{host.hostname}}</td>
-      </ng-container>
+        <ng-container matColumnDef="id">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED.COMPONENTS.HOSTS_LIST.TABLE_HOST_ID' | translate}}</th>
+          <td *matCellDef="let host" class="static-column-size" mat-cell>{{host.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED.COMPONENTS.HOSTS_LIST.TABLE_HOST_NAME' | translate}}</th>
+          <td *matCellDef="let host" mat-cell>{{host.hostname}}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let host; columns: displayedColumns;"
-        (click)="selectHost(host)"
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr
+          (click)="selectHost(host)"
+          *matRowDef="let host; columns: displayedColumns;"
+          class="dark-hover-list-item"
+          mat-row
         >
-      </tr>
-    </table>
+        </tr>
+      </table>
+    </div>
+
     <mat-paginator
       [length]="this.hosts.length"
       [pageSize]="pageSize"

@@ -56,17 +56,20 @@ export class SettingsMailingListsComponent implements OnInit {
         }
         resources.forEach(resource =>{
           this.attributesManagerService.getRequiredAttributesMemberResource(member.id, resource.id).subscribe(resAtts =>{
-            count--;
-            const attribute = resAtts.find(att => att.friendlyName === 'optOutMailingList');
-            if(attribute){
-              this.optOuts.push({
-                resource: resource.id,
-                member: member.id,
-                attribute: attribute
-              });
-              this.resources.push(resource)
-            }
-            this.loading = count !== 0;
+            this.attributesManagerService.getResourceAttributeByName(resource.id, 'urn:perun:resource:attribute-def:def:disableMailingListOptOut').subscribe(disableOptOut => {
+              count--;
+              const attribute = resAtts.find(att => att.friendlyName === 'optOutMailingList');
+              // @ts-ignore
+              if(attribute && !(disableOptOut && disableOptOut.value as string === 'true')){
+                this.optOuts.push({
+                  resource: resource.id,
+                  member: member.id,
+                  attribute: attribute
+                });
+                this.resources.push(resource)
+              }
+              this.loading = count !== 0;
+            });
           });
         });
       });

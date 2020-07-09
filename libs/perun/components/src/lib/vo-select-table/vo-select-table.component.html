@@ -1,55 +1,58 @@
-<div class="card mt-3" [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0">
+<div [class.hide-table]="exporting" [hidden]="dataSource.filteredData.length === 0" class="card mt-3">
   <div class="card-body">
     <perun-web-apps-table-options (exportEnd)="exporting = false" (exportStart)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
-    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortDirection="asc" matSortDisableClear
-           class="w-100">
-      <ng-container matColumnDef="checkbox">
-        <th mat-header-cell *matHeaderCellDef>
-        </th>
-        <td mat-cell *matCellDef="let member" class="static-column-size">
-          <mat-checkbox color="primary"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(member) : null"
-                        [checked]="selection.isSelected(member)"
-                        [aria-label]="checkboxLabel(member)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.ID' | translate}}</th>
-        <td mat-cell class="static-column-size" *matCellDef="let vo">{{vo.id}}</td>
-      </ng-container>
-      <ng-container matColumnDef="recent">
-        <th mat-header-cell *matHeaderCellDef>
-        </th>
-        <td mat-cell *matCellDef="let vo">
-          <mat-icon
-            class="align-bottom"
-            *ngIf="recentIds.indexOf(vo.id) > -1"
-            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.RECENT' | translate}}">
-            visibility
-          </mat-icon>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="shortName">
-        <th mat-header-cell *matHeaderCellDef
-        mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.SHORTNAME' | translate}}</th>
-        <td mat-cell *matCellDef="let vo">{{vo.shortName}}</td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.NAME' | translate}}</th>
-        <td mat-cell *matCellDef="let vo">{{vo.name}}</td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let vo; columns: displayedColumns;"
-        [class.disable-outline]="disableRouting"
-        [routerLink]="disableRouting ? null : ['/organizations', vo.id]">
-      </tr>
-    </table>
+    <div class="overflow-auto">
+      <table #exporter="matTableExporter" [dataSource]="dataSource" class="w-100" mat-table matSort matSortDirection="asc" matSortDisableClear
+             matTableExporter>
+        <ng-container matColumnDef="checkbox">
+          <th *matHeaderCellDef mat-header-cell>
+          </th>
+          <td *matCellDef="let member" class="static-column-size" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(member) : null"
+                          (click)="$event.stopPropagation()"
+                          [aria-label]="checkboxLabel(member)"
+                          [checked]="selection.isSelected(member)"
+                          color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.ID' | translate}}</th>
+          <td *matCellDef="let vo" class="static-column-size" mat-cell>{{vo.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="recent">
+          <th *matHeaderCellDef mat-header-cell>
+          </th>
+          <td *matCellDef="let vo" mat-cell>
+            <mat-icon
+              *ngIf="recentIds.indexOf(vo.id) > -1"
+              class="align-bottom"
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.RECENT' | translate}}">
+              visibility
+            </mat-icon>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="shortName">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.SHORTNAME' | translate}}</th>
+          <td *matCellDef="let vo" mat-cell>{{vo.shortName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.VO_SELECT_TABLE.NAME' | translate}}</th>
+          <td *matCellDef="let vo" mat-cell>{{vo.name}}</td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr
+          *matRowDef="let vo; columns: displayedColumns;"
+          [class.disable-outline]="disableRouting"
+          [routerLink]="disableRouting ? null : ['/organizations', vo.id]"
+          class="dark-hover-list-item"
+          mat-row>
+        </tr>
+      </table>
+    </div>
     <mat-paginator
       (page)="page.emit($event)"
       [length]="this.vos.length"

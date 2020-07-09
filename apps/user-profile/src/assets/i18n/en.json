@@ -13,20 +13,23 @@
     "DATA_QUOTAS": "Data quotas",
     "MAILING_LISTS": "Opt-out from mailing lists",
     "PREFERRED_SHELLS": "Preferred shells",
-    "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group",
+    "PREFERRED_UNIX_GROUP_NAMES": "Preferred unix group names",
     "SAMBA_PASSWORD": "Samba password",
-    "SSH_KEYS": "SSH keys"
+    "SSH_KEYS": "SSH keys",
+    "PASSWORD_RESET": "Password reset"
   },
   "ORGANIZATIONS": {
     "FILTER": "Filter by name",
-    "NO_VOS_ALERT": "No virtual organizations found"
+    "NO_VOS_ALERT": "No organizations found",
+    "TITLE": "User organizations",
+    "IS_ADMIN": "Organizations where you are admin",
+    "IS_MEMBER": "Organizations where you are member"
   },
   "GROUPS": {
     "TITLE": "Groups",
     "SELECT_VO": "Filter by organization",
     "ALL": "All organizations",
     "FILTER": "Filter by name",
-    "EXTEND": "Extend",
     "MEMBER_GROUPS": "Groups where you are member",
     "ADMINS_GROUPS": "Groups where you are admin",
     "NO_GROUPS": "No groups found"
@@ -41,14 +44,18 @@
     "PREFERRED_LANGUAGE": "Preferred language",
     "EMAIL": "Preferred e-mail",
     "TIMEZONE": "Timezone",
-    "CHANGE_EMAIL": "Change"
+    "CHANGE_EMAIL": "Change",
+    "MAIL_CHANGE_SUCCESS": "Preferred mail has been changed"
   },
   "IDENTITIES": {
     "IDP": "My identities",
     "CERT": "My certificates",
     "OTHER": "Other",
     "ADD": "Add",
-    "REMOVE": "Remove"
+    "REMOVE": "Remove",
+    "EXT_SOURCE_NAME_CERT": "Certificate issuer",
+    "EXT_SOURCE_NAME_OTHER": "External source name",
+    "LOGIN_CERT": "Identity"
   },
   "PRIVACY": {
     "TITLE": "Privacy",
@@ -59,7 +66,9 @@
   "MEMBERSHIP_LIST": {
     "NAME": "Name",
     "DESCRIPTION": "Description",
-    "EXPIRATION": "Expiration"
+    "EXPIRATION": "Expiration",
+    "NO_MEMBERSHIPS": "No results match current filter",
+    "EXTEND": "Extend"
   },
   "SSH_KEYS": {
     "SSH_KEYS_TITLE": "SSH keys",
@@ -75,7 +84,8 @@
     "TITLE": "SAMBA password",
     "INPUT_PLACEHOLDER": "Enter new password",
     "SET_PASSWORD": "Set password",
-    "SUCCESS_MESSAGE": "SAMBA password has been set"
+    "SUCCESS_MESSAGE": "SAMBA password has been set",
+    "PASSWORD_VALIDATION": "The password must consist of at least 3 out of 4 character groups: lower-case letters, upper-case letters, digits, special characters"
   },
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferred unix group names",
@@ -117,13 +127,21 @@
     "OPT_OUT_LABEL": "Exclude me from this mailing list",
     "NO_MAILING_LISTS_ALERT": "You have no mailing lists assigned under this virtual organization"
   },
+  "PASSWORD_RESET": {
+    "TITLE": "Password reset",
+    "CHANGE_PASSWORD": "Change password",
+    "NAMESPACE": "Namespace",
+    "LOGIN": "Login"
+  },
   "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Change email",
       "INPUT_PLACEHOLDER": "New email",
       "CANCEL": "Cancel",
       "CHANGE": "Change",
-      "SUCCESS": "Request for changing preferred email has been sent. Please check your mailbox."
+      "SUCCESS": "Request for changing preferred email has been sent. Please check your mailbox.",
+      "PENDING_MAILS_BEGIN": "Validation e-mail has been sent to ",
+      "PENDING_MAILS_END": ". Check your inbox and complete validation by clicking on link in received e-mail."
     },
     "ADD_SSH": {
       "TITLE": "Add new ssh key",
@@ -156,10 +174,10 @@
     },
     "REQUEST_DATA_QUOTA_CHANGE": {
       "TITLE": "Data quota change request",
-      "RESOURCE": "Resource:",
-      "CURRENT_QUOTA": "Current quota:",
-      "REQUESTED_QUOTA": "Requested quota:",
-      "REASON": "Reason:",
+      "RESOURCE": "Resource",
+      "CURRENT_QUOTA": "Current quota",
+      "REQUESTED_QUOTA": "Requested quota",
+      "REASON": "Reason",
       "SEND": "Send",
       "CANCEL": "Cancel",
       "SUCCESS": "Request for changing the data quota has been sent"

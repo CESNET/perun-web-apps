@@ -16,6 +16,7 @@ import { SettingsSambaPasswordComponent } from './pages/settings-page/settings-s
 import { SettingsSSHKeysComponent } from './pages/settings-page/settings-ssh-keys/settings-ssh-keys.component';
 import { PrivacyPageComponent } from './pages/privacy-page/privacy-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { SettingsPasswordResetComponent } from './pages/settings-page/settings-password-reset/settings-password-reset.component';
 
 const routes: Routes = [
   {
@@ -102,7 +103,12 @@ const routes: Routes = [
             path: 'sshKeys',
             component: SettingsSSHKeysComponent,
             data: { breadcrumb: 'SETTINGS.SSH_KEYS'}
-          }
+          },
+          {
+            path: 'passwordReset',
+            component: SettingsPasswordResetComponent,
+            data: { breadcrumb: 'SETTINGS.PASSWORD_RESET'}
+          },
         ]
       }
     ]

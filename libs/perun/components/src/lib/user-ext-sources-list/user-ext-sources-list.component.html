@@ -1,53 +1,55 @@
-<div class="card mt-2" [class.hide-table]="exporting"
+<div [class.hide-table]="exporting" class="card mt-2"
      [hidden]="userExtSources.length === 0 || dataSource.filteredData.length === 0">
   <div class="card-body">
     <perun-web-apps-table-options (exportEnd)="exporting = false" (exportStart)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
+    <div class="overflow-auto">
+      <table #exporter="matTableExporter" [dataSource]="dataSource" class="w-100" mat-table
+             matTableExporter>
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" class="static-column-size" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                          (click)="$event.stopPropagation()"
+                          [aria-label]="checkboxLabel(row)"
+                          [checked]="selection.isSelected(row)"
+                          color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="id" >
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.ID' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="mail" >
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.MAIL' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.attributes | getMailFromAttributes}}</td>
+        </ng-container>
+        <ng-container matColumnDef="extSourceName" >
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.EXT_SOURCE_NAME' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.extSource.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="login">
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LOGIN' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.login}}</td>
+        </ng-container>
+        <ng-container matColumnDef="loa" >
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LOA' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.loa}}</td>
+        </ng-container>
+        <ng-container class="pl-3" matColumnDef="lastAccess">
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LAST_ACCESS' | customTranslate | translate}}</th>
+          <td *matCellDef="let richUserExtSource" mat-cell>{{richUserExtSource.userExtSource.lastAccess | parseLastAccess}}</td>
+        </ng-container>
 
-    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter"
-           class="w-100">
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td *matCellDef="let row" class="static-column-size" mat-cell>
-          <mat-checkbox color="primary"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="id" >
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.ID' | customTranslate | translate}}</th>
-        <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.id}}</td>
-      </ng-container>
-      <ng-container matColumnDef="mail" >
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.MAIL' | customTranslate | translate}}</th>
-        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.attributes | getMailFromAttributes}}</td>
-      </ng-container>
-      <ng-container matColumnDef="extSourceName" >
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.EXT_SOURCE_NAME' | customTranslate | translate}}</th>
-        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.extSource.name}}</td>
-      </ng-container>
-      <ng-container matColumnDef="login">
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LOGIN' | customTranslate | translate}}</th>
-        <td mat-cell *matCellDef="let richUserExtSource" class="truncate">{{richUserExtSource.userExtSource.login}}</td>
-      </ng-container>
-      <ng-container matColumnDef="loa" >
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LOA' | customTranslate | translate}}</th>
-        <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>{{richUserExtSource.userExtSource.loa}}</td>
-      </ng-container>
-      <ng-container matColumnDef="lastAccess" class="pl-3">
-        <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.LAST_ACCESS' | customTranslate | translate}}</th>
-        <td mat-cell *matCellDef="let richUserExtSource">{{richUserExtSource.userExtSource.lastAccess | parseLastAccess}}</td>
-      </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr
+          *matRowDef="let userExtSource; columns: displayedColumns;"
+          class="dark-hover-list-item"
+          mat-row>
+        </tr>
+      </table>
+    </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let userExtSource; columns: displayedColumns;"
-        class="dark-hover-list-item">
-      </tr>
-    </table>
     <mat-paginator [length]="this.userExtSources.length" [pageSize]="pageSize"
                    [pageSizeOptions]="[5,10,25]"></mat-paginator>
   </div>

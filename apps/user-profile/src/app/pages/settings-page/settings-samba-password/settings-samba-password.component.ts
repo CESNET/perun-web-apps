@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Attribute, AttributesManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { FormControl} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -28,7 +28,7 @@ export class SettingsSambaPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.store.getPerunPrincipal().userId;
-    this.sambaControl = new FormControl('', []);
+    this.sambaControl = new FormControl('', [Validators.pattern('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])|(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&\/=?_.,:;\\-])|(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&\/=?_.,:;\\-])|(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&\/=?_.,:;\\-])).{3,}')]);
     this.getSambaAttribute();
   }
 

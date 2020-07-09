@@ -28,7 +28,7 @@ export class GroupsPageComponent implements OnInit {
   filteredVos: Observable<Vo[]>;
 
   selection = new SelectionModel<Membership>(false, []);
-  displayedColumns = ['checkbox', 'id', 'name'];
+  displayedColumns = ['id', 'name'];
 
   userMemberships: Membership[] = [];
   adminMemberships: Membership[] = [];
@@ -139,10 +139,10 @@ export class GroupsPageComponent implements OnInit {
     }
   }
 
-  extendMembership() {
+  extendMembership(membership: Membership) {
     const registrarUrl = this.store.get('registrar_base_url');
-    const group: Group = this.selection.selected[0].entity;
+    const group: Group = membership.entity;
     const voShortname = this.vos.find(vo => vo.id === group.voId).shortName;
-    window.location.href = `${registrarUrl}?vo=${voShortname}&group=${this.selection.selected[0].entity.shortName}`;
+    window.location.href = `${registrarUrl}?vo=${voShortname}&group=${membership.entity.shortName}`;
   }
 }

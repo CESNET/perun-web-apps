@@ -11,6 +11,8 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'perun-web-apps-profile-page',
@@ -23,16 +25,24 @@ export class ProfilePageComponent implements OnInit {
   languages = ['en', 'cz'];
   timeZones = moment.tz.names();
 
+  successMessage: string;
+
+  userId: number;
+  loading: boolean;
+
   constructor(
     private translateService: TranslateService,
     private dialog: MatDialog,
     private authzResolverService: AuthzResolverService,
     private attributesManagerService: AttributesManagerService,
-    private usersManagerService:UsersManagerService
+    private usersManagerService: UsersManagerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private translate: TranslateService,
+    private notificator: NotificatorService
   ) {
+    translate.get('PROFILE_PAGE.MAIL_CHANGE_SUCCESS').subscribe(res => this.successMessage = res);
   }
-
-  userId: number;
 
   languageAttribute: Attribute;
   timezoneAttribute: Attribute;
@@ -44,10 +54,27 @@ export class ProfilePageComponent implements OnInit {
   currentTimezone = '';
 
   ngOnInit() {
+    const params = this.route.snapshot.queryParamMap;
+    const i = params.get('i');
+    const m = params.get('m');
+    const u = params.get('u');
+    this.loading = true;
+    if (i && m && u) {
+      this.usersManagerService.validatePreferredEmailChange(i, m, Number.parseInt(u, 10)).subscribe(() => {
+        this.notificator.showSuccess(this.successMessage);
+        this.router.navigate([], { replaceUrl: true});
+        this.getData();
+      });
+    } else {
+      this.getData();
+    }
+  }
+
+  getData() {
     this.authzResolverService.getPerunPrincipal().subscribe(principal => {
       this.userId = principal.userId;
 
-      this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe(richUser=>{
+      this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe(richUser => {
         this.fullName = new UserFullNamePipe().transform(richUser);
 
         this.organizationAttribute = richUser.userAttributes.find(att => att.friendlyName === 'organization');
@@ -64,7 +91,8 @@ export class ProfilePageComponent implements OnInit {
 
         this.timezoneAttribute = richUser.userAttributes.find(att => att.friendlyName === 'timezone');
         // @ts-ignore
-        this.currentTimezone =this.timezoneAttribute && this.timezoneAttribute.value ? this.timezoneAttribute.value : '-';
+        this.currentTimezone = this.timezoneAttribute && this.timezoneAttribute.value ? this.timezoneAttribute.value : '-';
+        this.loading = false;
       });
     });
   }
@@ -73,21 +101,23 @@ export class ProfilePageComponent implements OnInit {
     this.currentLang = lang;
     this.translateService.use(this.currentLang);
 
-    if(!this.languageAttribute){
+    if (!this.languageAttribute) {
       this.attributesManagerService.getAttributeDefinitionByName('urn:perun:user:attribute-def:def:preferredLanguage').subscribe(att => {
         this.languageAttribute = att as Attribute;
         this.setLanguage();
-      })
-    }
-    else {
+      });
+    } else {
       this.setLanguage();
     }
   }
 
-  setLanguage(){
+  setLanguage() {
     // @ts-ignore
     this.languageAttribute.value = this.currentLang;
-    this.attributesManagerService.setUserAttribute({ user: this.userId, attribute: this.languageAttribute }).subscribe(() => {
+    this.attributesManagerService.setUserAttribute({
+      user: this.userId,
+      attribute: this.languageAttribute
+    }).subscribe(() => {
       // this.notificator.showSuccess("done");
     });
   }
@@ -95,21 +125,23 @@ export class ProfilePageComponent implements OnInit {
   changeTimeZone(tz: string) {
     this.currentTimezone = tz;
 
-    if(!this.timezoneAttribute){
+    if (!this.timezoneAttribute) {
       this.attributesManagerService.getAttributeDefinitionByName('urn:perun:user:attribute-def:def:timezone').subscribe(att => {
-       this.timezoneAttribute = att as Attribute;
-       this.setTimeZone();
-      })
-    }
-    else {
+        this.timezoneAttribute = att as Attribute;
+        this.setTimeZone();
+      });
+    } else {
       this.setTimeZone();
     }
   }
 
-  setTimeZone(){
+  setTimeZone() {
     // @ts-ignore
     this.timezoneAttribute.value = this.currentTimezone;
-    this.attributesManagerService.setUserAttribute({ user: this.userId, attribute: this.timezoneAttribute }).subscribe(() => {
+    this.attributesManagerService.setUserAttribute({
+      user: this.userId,
+      attribute: this.timezoneAttribute
+    }).subscribe(() => {
       // this.notificator.showSuccess("done");
     });
   }
@@ -127,6 +159,7 @@ export class ProfilePageComponent implements OnInit {
       }
     });
   }
+
   getEmail() {
     this.attributesManagerService.getUserAttributeByName(this.userId, 'urn:perun:user:attribute-def:def:preferredMail').subscribe(attribute => {
       // @ts-ignore

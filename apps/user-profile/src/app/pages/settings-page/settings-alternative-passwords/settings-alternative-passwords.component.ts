@@ -58,12 +58,15 @@ export class SettingsAlternativePasswordsComponent implements OnInit {
 
   generatePassword(): string {
     const length = 16,
-      charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&\/=?_.,:;\\-';
      let retVal = '';
     let i = 0;
     const n = charset.length;
     for (; i < length; ++i) {
       retVal += charset.charAt(Math.random() * n);
+    }
+    if(!retVal.match('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])|(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&\/=?_.,:;\\-])|(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&\/=?_.,:;\\-])|(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&\/=?_.,:;\\-])).{3,}')){
+      this.generatePassword();
     }
     return retVal;
   }

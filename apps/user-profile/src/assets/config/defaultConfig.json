@@ -8,8 +8,16 @@
     "oauth_post_logout_redirect_uri": "",
     "oauth_redirect_uri": "http://gui-dev.org/api-callback"
   },
+  "login_namespace_attributes": [
+    "urn:perun:user:attribute-def:def:login-namespace:einfra",
+    "urn:perun:user:attribute-def:def:login-namespace:einfra-services",
+    "urn:perun:user:attribute-def:def:login-namespace:egi-ui",
+    "urn:perun:user:attribute-def:def:login-namespace:sitola"
+  ],
   "consolidator_base_url": "https://perun-dev.cesnet.cz/",
   "registrar_base_url": "https://perun-dev.cesnet.cz/fed/registrar/",
+  "pwd_reset_base_url": "https://perun-dev.cesnet.cz/fed/pwd-reset/",
+  "rt_url": "",
   "displayed_tabs": [
     "profile",
     "identities",
@@ -24,7 +32,8 @@
     "samba",
     "alt_passwords",
     "pref_shells",
-    "pref_group_names"
+    "pref_group_names",
+    "password_reset"
   ],
   "custom_labels": [
     {
@@ -90,7 +99,16 @@
         ]
       }
     ],
-    "copyright": "© 2020 Copyright: CESNET, CERIT-SC, Version 0.0.0"
+    "copyright_items": [
+      {
+        "name": "CESNET",
+        "url": "https://www.cesnet.cz/"
+      },
+      {
+        "name": "CERIT-SC",
+        "url": "https://www.cerit-sc.cz/"
+      }
+    ]
   },
   "theme": {
     "content_bg_color": "",

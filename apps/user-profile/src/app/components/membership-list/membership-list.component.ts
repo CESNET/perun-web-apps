@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator} from '@angular/material/paginator';
 import { Attribute, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
@@ -58,19 +58,13 @@ export class MembershipListComponent implements OnChanges, AfterViewInit {
   filterValue = '';
 
   @Output()
-  page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
-
-  @Output()
-  updateTable = new EventEmitter<boolean>();
+  extendMembership: EventEmitter<Membership> = new EventEmitter<Membership>();
 
   exporting = false;
 
-  displayedColumns: string[] = ['checkbox', 'name', 'description', 'expiration'];
+  displayedColumns: string[] = ['checkbox', 'name', 'description', 'expirationAttribute', 'extend'];
   dataSource: MatTableDataSource<Membership>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
-
-  expiration: string;
-
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -96,7 +90,11 @@ export class MembershipListComponent implements OnChanges, AfterViewInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.entity.id + 1}`;
   }
 
-  pageChanged(event: PageEvent) {
-    this.page.emit(event);
+  // pageChanged(event: PageEvent) {
+  //   this.page.emit(event);
+  // }
+
+  extend(membership: Membership) {
+    this.extendMembership.emit(membership);
   }
 }

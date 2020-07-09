@@ -93,3 +93,20 @@ $perun-theme: mat-light-theme($perun-primary, $perun-accent, $perun-warn);
 button:focus {
   outline: none !important;
 }
+
+.page-subtitle {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.page-title {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.dark-hover-list-item {
+  &:hover {
+    background-color: rgba(0, 0, 0, .05);
+  }
+}

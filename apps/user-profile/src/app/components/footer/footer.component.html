@@ -14,7 +14,10 @@
       </div>
     </div>
   </div>
-  <div fxLayoutAlign="center">
-    <a [ngStyle]="{'color': linksTextColor}">{{copyright}}</a>
+  <div [ngStyle]="{'color': linksTextColor}" fxLayoutAlign="center">
+    © {{currentYear}} Copyright:
+    <span *ngFor="let item of copyrightItems; let index = index">
+      {{index ? ',' : '&nbsp;'}}<a [href]="item.url" [ngStyle]="{'color': linksTextColor}"  class="text-decoration-none" target="_blank">{{item.name}}</a>
+    </span>
   </div>
 </footer>

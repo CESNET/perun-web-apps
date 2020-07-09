@@ -15,18 +15,21 @@
     "PREFERRED_SHELLS": "Preferované shelly",
     "PREFERRED_UNIX_GROUP_NAMES": "Preferovaná jména Unixových skupin",
     "SAMBA_PASSWORD": "Heslo pro službu SAMBA",
-    "SSH_KEYS": "SSH klíče"
+    "SSH_KEYS": "SSH klíče",
+    "PASSWORD_RESET": "Změna hesla"
   },
   "ORGANIZATIONS": {
     "FILTER": "Filtrovat dle jména",
-    "NO_VOS_ALERT": "Žádné virtuální organizace nebyly nalezeny"
+    "NO_VOS_ALERT": "Žádné virtuální organizace nebyly nalezeny",
+    "TITLE": "Uživatelské organizace",
+    "IS_ADMIN": "Organizace, kde jste administrátorem",
+    "IS_MEMBER": "Organizace, kde jste členem"
   },
   "GROUPS": {
     "TITLE": "Moje Skupiny",
     "SELECT_VO": "Filtrovat dle organizace",
     "ALL": "Všechny organizace",
     "FILTER": "Filtrovat dle jména",
-    "EXTEND": "Prodloužit členství",
     "MEMBER_GROUPS": "Skupiny ve kterých jste členem",
     "ADMINS_GROUPS": "Skupiny ve kterých jste administrátorem",
     "NO_GROUPS": "Nenalezeny žádné skupiny."
@@ -41,14 +44,18 @@
     "PREFERRED_LANGUAGE": "Preferovaný jazyk",
     "EMAIL": "Preferovaný email",
     "TIMEZONE": "Časová zóna",
-    "CHANGE_EMAIL": "Aktualizovat"
+    "CHANGE_EMAIL": "Aktualizovat",
+    "MAIL_CHANGE_SUCCESS": "Preferovaný email byl změněn"
   },
   "IDENTITIES": {
     "IDP": "Moje identity",
     "CERT": "Moje certifikáty",
     "OTHER": "Ostatní",
     "ADD": "Přidat",
-    "REMOVE": "Odstranit"
+    "REMOVE": "Odstranit",
+    "EXT_SOURCE_NAME_CERT": "Poskytovatel certifikátu",
+    "EXT_SOURCE_NAME_OTHER": "Jméno externího zdroje",
+    "LOGIN_CERT": "Identita"
   },
   "PRIVACY": {
     "TITLE": "Soukromí",
@@ -59,7 +66,9 @@
   "MEMBERSHIP_LIST": {
     "NAME": "Jméno",
     "DESCRIPTION": "Popis",
-    "EXPIRATION": "Expirace členství"
+    "EXPIRATION": "Expirace členství",
+    "NO_MEMBERSHIPS": "Žádné výsledky nesplňují zadané vyhledávací parametry.",
+    "EXTEND": "Prodloužit členství"
   },
   "SSH_KEYS": {
     "SSH_KEYS_TITLE": "SSH klíče",
@@ -75,7 +84,8 @@
     "TITLE": "Heslo pro službu SAMBA",
     "INPUT_PLACEHOLDER": "Zadejte nové heslo",
     "SET_PASSWORD": "Nastavit heslo",
-    "SUCCESS_MESSAGE": "Heslo pro službu SAMBA bylo nastaveno"
+    "SUCCESS_MESSAGE": "Heslo pro službu SAMBA bylo nastaveno",
+    "PASSWORD_VALIDATION": "Heslo musí obsahovat alespoň 3 ze 4 skupin znaků: malá písmena, velká písmena, číslice, speciální znaky"
   },
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferovaná jména Unixových skupin",
@@ -117,13 +127,21 @@
     "OPT_OUT_LABEL": "Vyřadit mě z tohoto seznamu adresátů",
     "NO_MAILING_LISTS_ALERT": "Nemáte žádné seznamy adresátů v této organizaci"
   },
+  "PASSWORD_RESET": {
+    "TITLE": "Změna hesla",
+    "CHANGE_PASSWORD": "Změnit heslo",
+    "NAMESPACE": "Jmenný prostor",
+    "LOGIN": "Přihlašovací jméno"
+  },
   "DIALOGS": {
     "CHANGE_EMAIL": {
       "TITLE": "Aktualizovat email",
       "INPUT_PLACEHOLDER": "Nový email",
       "CANCEL": "Zrušit",
       "CHANGE": "Změnit",
-      "SUCCESS": "Žádost o změnu preferovaného emailu byla odeslána na zadanou adresu."
+      "SUCCESS": "Žádost o změnu preferovaného emailu byla odeslána na zadanou adresu.",
+      "PENDING_MAILS_BEGIN": "Potvrzovací email byl odeslán na ",
+      "PENDING_MAILS_END": ". Podívejte se do své mailové schránky a dokončete validaci kliknutím na link v emailu."
     },
     "ADD_SSH": {
       "TITLE": "Přidat nový SSH klíč",
@@ -156,10 +174,10 @@
     },
     "REQUEST_DATA_QUOTA_CHANGE": {
       "TITLE": "Žádost o změnu datové kvóty",
-      "RESOURCE": "Zdroj:",
-      "CURRENT_QUOTA": "Momentální kvóta:",
-      "REQUESTED_QUOTA": "Požadovaná kvóta:",
-      "REASON": "Důvod:",
+      "RESOURCE": "Zdroj",
+      "CURRENT_QUOTA": "Momentální kvóta",
+      "REQUESTED_QUOTA": "Požadovaná kvóta",
+      "REASON": "Důvod",
       "SEND": "Poslat",
       "CANCEL": "Zrušit",
       "SUCCESS": "Žádost o změnu datové kvóty byla odeslána"
@@ -179,7 +197,7 @@
     "NO_SSH_KEYS": "Nemáte žádné SSH klíče",
     "NO_SAMBA": "Dosud nemáte heslo pro službu SAMBA.",
     "SAMBA_EXISTS": "Heslo pro službu SAMBA již máte nastaveno. Můžete je změnit zadáním nového hesla.",
-    "NO_PREFERRED_UNIX_GROUPS": "Nemáte nastaveny žádné preferované jména Unixových skupin pro vybraný jmenný prostor",
+    "NO_PREFERRED_UNIX_GROUPS": "Nemáte nastaveny žádné preferované jména Unixových skupin pro tento jmenný prostor",
     "NO_ALT_PASSWORDS": "Nemáte žádná alternativní hesla"
   },
   "SHARED_LIB": {

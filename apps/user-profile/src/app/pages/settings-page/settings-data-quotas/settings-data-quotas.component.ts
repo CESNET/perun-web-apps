@@ -106,7 +106,7 @@ export class SettingsDataQuotasComponent implements OnInit {
 
   requestChangeQuota(vo: Vo, resource: RichResource) {
     const config = getDefaultDialogConfig();
-    config.width = '600px';
+    config.width = '400px';
     config.data = { vo: vo, resource: resource, user: this.user, currentQuota: this.quotasMarkup };
 
     this.dialog.open(RequestChangeDataQuotaDialogComponent, config);

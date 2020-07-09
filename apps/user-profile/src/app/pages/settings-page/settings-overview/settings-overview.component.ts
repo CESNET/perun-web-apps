@@ -68,6 +68,12 @@ export class SettingsOverviewComponent implements OnInit {
         url: `/profile/settings/sshKeys`,
         label: 'SETTINGS.SSH_KEYS',
         tabName: 'ssh_keys'
+      },
+      {
+        icon: 'lock',
+        url: `/profile/settings/passwordReset`,
+        label: 'SETTINGS.PASSWORD_RESET',
+        tabName: 'password_reset'
       }
     ];
   }

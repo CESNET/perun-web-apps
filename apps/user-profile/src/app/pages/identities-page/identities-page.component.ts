@@ -28,9 +28,13 @@ export class IdentitiesPageComponent implements OnInit {
   idpExtSources: RichUserExtSource[] = [];
   certExtSources: RichUserExtSource[] = [];
   otherExtSources: RichUserExtSource[] = [];
-  idpSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(false, []);
-  certSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(false, []);
-  otherSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(false, []);
+  idpSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(true, []);
+  certSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(true, []);
+  otherSelection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(true, []);
+
+  extSourceNameCert = 'IDENTITIES.EXT_SOURCE_NAME_CERT';
+  loginCert = 'IDENTITIES.LOGIN_CERT';
+  extSourceNameOther = 'IDENTITIES.EXT_SOURCE_NAME_OTHER';
 
   userId: number;
   loading: boolean;
@@ -83,18 +87,19 @@ export class IdentitiesPageComponent implements OnInit {
 
   }
 
-  removeIdentity(selected: UserExtSource[]) {
+  removeIdentity(selection: SelectionModel<UserExtSource>) {
     const config = getDefaultDialogConfig();
     config.width = '600px';
     config.data = {
       theme: 'user-theme',
       userId: this.userId,
-      extSources: selected
+      extSources: selection.selected
     };
 
     const dialogRef = this.dialog.open(RemoveUserExtSourceDialogComponent,config);
     dialogRef.afterClosed().subscribe((success) => {
       if (success){
+        selection.clear();
         this.refreshTables();
       }
     })
@@ -106,7 +111,7 @@ export class IdentitiesPageComponent implements OnInit {
     }
     else if(ues.userExtSource.extSource.type.endsWith('X509')){
       this.certExtSources.push(ues)
-    } else {
+      console.log(ues)    } else {
       this.otherExtSources.push(ues)
     }
   }

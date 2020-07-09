@@ -53,7 +53,7 @@ export class StringListComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.setDataSource();
   }
 
 }

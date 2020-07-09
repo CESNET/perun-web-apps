@@ -1,58 +1,61 @@
 <div class="mt-3" [hidden]="this.services === undefined || this.services.length === 0">
   <div>
-    <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear
-           class="w-100">
+    <div class="overflow-auto">
+      <table [dataSource]="dataSource" class="w-100" mat-table matSort matSortActive="id" matSortDirection="asc"
+             matSortDisableClear>
 
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox color="primary"
-                        (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                        [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let service" class="static-column-size">
-          <mat-checkbox color="primary"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(service) : null"
-                        [checked]="selection.isSelected(service)"
-                        [aria-label]="checkboxLabel(service)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [aria-label]="checkboxLabel()"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let service" class="static-column-size" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(service) : null"
+                          (click)="$event.stopPropagation()"
+                          [aria-label]="checkboxLabel(service)"
+                          [checked]="selection.isSelected(service)"
+                          color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.ID' | translate}}</th>
-        <td mat-cell class="static-column-size" *matCellDef="let service">{{service.id}}</td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.NAME' | translate}}</th>
-        <td mat-cell *matCellDef="let service">{{service.name}}</td>
-      </ng-container>
-      <ng-container matColumnDef="enabled">
-        <th mat-header-cell *matHeaderCellDef>{{'SHARED.COMPONENTS.SERVICES_LIST.ENABLED' | translate}}</th>
-        <td mat-cell *matCellDef="let service">{{service.enabled}}</td>
-      </ng-container>
-      <ng-container matColumnDef="script">
-        <th mat-header-cell *matHeaderCellDef>{{'SHARED.COMPONENTS.SERVICES_LIST.SCRIPT' | translate}}</th>
-        <td mat-cell *matCellDef="let service">{{service.script}}</td>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef
-            mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.DESCRIPTION' | translate}}</th>
-        <td mat-cell *matCellDef="let service">{{service.description}}</td>
-      </ng-container>
+        <ng-container matColumnDef="id">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.ID' | translate}}</th>
+          <td *matCellDef="let service" class="static-column-size" mat-cell>{{service.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.NAME' | translate}}</th>
+          <td *matCellDef="let service" mat-cell>{{service.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="enabled">
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED.COMPONENTS.SERVICES_LIST.ENABLED' | translate}}</th>
+          <td *matCellDef="let service" mat-cell>{{service.enabled}}</td>
+        </ng-container>
+        <ng-container matColumnDef="script">
+          <th *matHeaderCellDef mat-header-cell>{{'SHARED.COMPONENTS.SERVICES_LIST.SCRIPT' | translate}}</th>
+          <td *matCellDef="let service" mat-cell>{{service.script}}</td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th *matHeaderCellDef mat-header-cell
+              mat-sort-header>{{'SHARED.COMPONENTS.SERVICES_LIST.DESCRIPTION' | translate}}</th>
+          <td *matCellDef="let service" mat-cell>{{service.description}}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let service; columns: displayedColumns;"
-        class="dark-hover-list-item">
-      </tr>
-    </table>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr
+          *matRowDef="let service; columns: displayedColumns;"
+          class="dark-hover-list-item"
+          mat-row>
+        </tr>
+      </table>
+    </div>
+
   </div>
 </div>
 

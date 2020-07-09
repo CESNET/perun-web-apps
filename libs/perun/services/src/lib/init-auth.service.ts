@@ -29,7 +29,7 @@ export class InitAuthService {
   authenticateUser(): Promise<boolean> {
     this.authService.loadConfigData();
 
-    if (this.storeService.get('skip_oidc')) {
+    if (this.storeService.skipOidc()) {
       return new Promise<boolean>(resolve => resolve(true));
     } else {
       return this.authService.authenticate();

@@ -547,7 +547,7 @@ export function createNewApplicationMail(): ApplicationMail {
 export function getDefaultDialogConfig(): MatDialogConfig {
   const config = new MatDialogConfig();
   config.disableClose = true;
-
+  config.autoFocus = false;
   return config
 }
 

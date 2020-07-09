@@ -1,4 +1,4 @@
-<h3>{{'PREFERRED_UNIX_GROUP_NAMES.TITLE' | customTranslate | translate}}</h3>
+<h1 class="page-title">{{'PREFERRED_UNIX_GROUP_NAMES.TITLE' | customTranslate | translate}}</h1>
 <div *ngFor="let namespace of namespaces; let i = index" class="mt-4">
   <h4>{{namespace}}</h4>
   <button mat-flat-button color="accent" (click)="addGroupName(namespace)">{{'PREFERRED_UNIX_GROUP_NAMES.NEW_BUTTON' | customTranslate | translate}}</button>

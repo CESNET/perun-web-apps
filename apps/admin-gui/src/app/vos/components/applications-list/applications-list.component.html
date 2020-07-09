@@ -1,71 +1,74 @@
-<div class="card mt-2" [class.hide-table]="exporting" [hidden]="this.applications.length === 0 || dataSource.filteredData.length === 0">
+<div [class.hide-table]="exporting" [hidden]="this.applications.length === 0 || dataSource.filteredData.length === 0" class="card mt-2">
   <div class="card-body table-theme">
     <perun-web-apps-table-options (exportEnd)="exporting = false" (exportStart)="exporting = true" [exporter]="exporter"></perun-web-apps-table-options>
-    <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear class="w-100">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_ID' | translate}}</th>
-        <td mat-cell class="static-column-size" *matCellDef="let application">{{application.id}}</td>
-      </ng-container>
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_CREATED_DATE' | translate}}</th>
-        <td mat-cell *matCellDef="let application">{{application.createdAt | date}}</td>
-      </ng-container>
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_TYPE' | translate}}</th>
-        <td mat-cell *matCellDef="let application">
-          <div *ngIf="application.type == 'INITIAL'; else extension">
-            <mat-icon matTooltip="Initial" matTooltipPosition="above">arrow_right_alt</mat-icon>
-          </div>
-          <ng-template #extension>
-            <mat-icon matTooltip="Extension" matTooltipPosition="above">cached</mat-icon>
-          </ng-template>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_STATE' | translate}}</th>
-        <td mat-cell *matCellDef="let application">
-          <span [outerHTML]="application.state | applicationState"></span>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="user">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_SUBMITTED_BY' | translate}}</th>
-        <td mat-cell *matCellDef="let application">
-          <div *ngIf="application.user == null; else name">
-            {{application.createdBy.slice(application.createdBy.lastIndexOf('=')+1, application.createdBy.length)}}
-          </div>
-          <ng-template #name>
-            {{application.user | userFullName}}
-          </ng-template>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="extSourceLoa">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_LOA' | translate}}</th>
-        <td mat-cell *matCellDef="let application">{{application.extSourceLoa}}</td>
-      </ng-container>
-      <ng-container matColumnDef="group">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_GROUP_NAME' | translate}}</th>
-        <td mat-cell *matCellDef="let application">
-          <div *ngIf="application.group == null; else groupName" class="font-italic text-muted">
-            -
-          </div>
-          <ng-template #groupName>
-            {{application.group.name}}
-          </ng-template>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="modifiedBy">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_MODIFIED_BY' | translate}}</th>
-        <td mat-cell *matCellDef="let application">{{getFriendlyName(application.modifiedBy)}}</td>
-      </ng-container>
+    <div class="overflow-auto">
+      <table #exporter="matTableExporter" [dataSource]="dataSource" class="w-100" mat-table matSort matSortActive="id" matSortDirection="asc" matSortDisableClear matTableExporter>
+        <ng-container matColumnDef="id">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_ID' | translate}}</th>
+          <td *matCellDef="let application" class="static-column-size" mat-cell>{{application.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_CREATED_DATE' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>{{application.createdAt | date}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_TYPE' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>
+            <div *ngIf="application.type == 'INITIAL'; else extension">
+              <mat-icon matTooltip="Initial" matTooltipPosition="above">arrow_right_alt</mat-icon>
+            </div>
+            <ng-template #extension>
+              <mat-icon matTooltip="Extension" matTooltipPosition="above">cached</mat-icon>
+            </ng-template>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="state">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_STATE' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>
+            <span [outerHTML]="application.state | applicationState"></span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="user">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_SUBMITTED_BY' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>
+            <div *ngIf="application.user == null; else name">
+              {{application.createdBy.slice(application.createdBy.lastIndexOf('=')+1, application.createdBy.length)}}
+            </div>
+            <ng-template #name>
+              {{application.user | userFullName}}
+            </ng-template>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="extSourceLoa">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_LOA' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>{{application.extSourceLoa}}</td>
+        </ng-container>
+        <ng-container matColumnDef="group">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_GROUP_NAME' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>
+            <div *ngIf="application.group == null; else groupName" class="font-italic text-muted">
+              -
+            </div>
+            <ng-template #groupName>
+              {{application.group.name}}
+            </ng-template>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="modifiedBy">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'VO_DETAIL.APPLICATION.TABLE_MODIFIED_BY' | translate}}</th>
+          <td *matCellDef="let application" mat-cell>{{getFriendlyName(application.modifiedBy)}}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let application; columns: displayedColumns;"
-        (click)="selectApplication(application)"
-        class="dark-hover-list-item">
-      </tr>
-    </table>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr
+          (click)="selectApplication(application)"
+          *matRowDef="let application; columns: displayedColumns;"
+          class="dark-hover-list-item"
+          mat-row>
+        </tr>
+      </table>
+    </div>
+
     <mat-paginator
       [length]="this.applications.length"
       [pageSize]="pageSize"

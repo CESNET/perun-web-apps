@@ -25,7 +25,8 @@ export class FooterComponent implements OnInit {
               private translateService: TranslateService) { }
 
   items: FooterItem[];
-  copyright: string;
+  copyrightItems = [];
+  currentYear = (new Date()).getFullYear();
 
   headersTextColor = this.storeService.get('theme', 'footer_headers_text_color');
   linksTextColor = this.storeService.get('theme', 'footer_links_text_color');
@@ -34,7 +35,7 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.items = this.storeService.get('footer', 'columns');
-    this.copyright = this.storeService.get('footer', 'copyright');
+    this.copyrightItems = this.storeService.get('footer', 'copyright_items');
   }
 
   getLanguage(){

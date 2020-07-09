@@ -36,6 +36,10 @@ export class StoreService {
     return this.get("login_namespace_attributes");
   }
 
+  skipOidc(): boolean {
+    return this.get('skip_oidc');
+  }
+
   /**
    * Get key from json configuration. If key is not present in instance
    * configuration method returns value from default configuration.

@@ -57,11 +57,13 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   dataSource: MatTableDataSource<Group>;
 
   exporting = false;
+  disabledRouting: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
   ngOnChanges(changes: SimpleChanges) {
+    this.disabledRouting = this.disableRouting;
     this.hasMembersGroup = this.checkIfHasMembersGroup();
     this.dataSource = new MatTableDataSource<Group>(this.groups);
     this.setDataSource();
@@ -121,6 +123,7 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
 
   onMoveGroup(group: Group) {
     this.moveGroup.emit(group);
+    this.disabledRouting = false;
   }
 
   pageChanged(event: PageEvent) {

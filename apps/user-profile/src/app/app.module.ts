@@ -70,6 +70,7 @@ import { ApiInterceptor } from '@perun-web-apps/perun/services';
 import { NotificatorComponent } from './components/notificator/notificator.component';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { ApiService } from '@perun-web-apps/perun/services';
+import { SettingsPasswordResetComponent } from './pages/settings-page/settings-password-reset/settings-password-reset.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -127,7 +128,8 @@ const loadConfigs = (appConfig: UserProfileConfigService) => {
     MembershipListComponent,
     ValidateExpirationPipe,
     ShowSshDialogComponent,
-    NotificatorComponent
+    NotificatorComponent,
+    SettingsPasswordResetComponent
   ],
   imports: [
     BrowserModule,

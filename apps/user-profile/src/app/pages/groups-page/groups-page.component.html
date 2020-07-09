@@ -1,4 +1,4 @@
-<h3 class="page-subtitle pt-2">{{'GROUPS.TITLE' | customTranslate | translate}}</h3>
+<h1 class="page-title pt-2">{{'GROUPS.TITLE' | customTranslate | translate}}</h1>
 <div class="user-theme">
   <mat-form-field class="mr-2 w-75" *ngIf="!loading">
     <mat-label>{{'GROUPS.SELECT_VO' | translate}}</mat-label>
@@ -14,20 +14,21 @@
 
   <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
 
-  <app-alert color="warn" *ngIf="!userMemberships.length && !adminMemberships.length && !loading">{{'GROUPS.NO_GROUPS'| customTranslate | translate}}</app-alert>
+  <app-alert color="warn"
+             *ngIf="!userMemberships.length && !adminMemberships.length && !loading">{{'GROUPS.NO_GROUPS'| customTranslate | translate}}</app-alert>
 
   <div *ngIf="!loading && userMemberships.length !== 0">
     <h4 class="page-subtitle">{{'GROUPS.MEMBER_GROUPS' | customTranslate | translate}}</h4>
-    <button mat-flat-button color="accent" (click)="extendMembership()"
-            [disabled]="selection.selected.length === 0">{{'GROUPS.EXTEND' | customTranslate | translate}}</button>
     <perun-web-apps-membership-list [members]="userMemberships"
-                                    [selection]="selection"></perun-web-apps-membership-list>
+                                    [selection]="selection"
+                                    [hideColumns]="['checkbox']"
+                                    (extendMembership)="extendMembership($event)"></perun-web-apps-membership-list>
   </div>
 
   <div *ngIf="!loading && adminMemberships.length !== 0" class="mt-5">
     <h4 class="page-subtitle">{{'GROUPS.ADMINS_GROUPS' | customTranslate | translate}}</h4>
     <perun-web-apps-membership-list [members]="adminMemberships"
-                                    [hideColumns]="['checkbox', 'expiration']"></perun-web-apps-membership-list>
+                                    [hideColumns]="['checkbox', 'expiration', 'extend']"></perun-web-apps-membership-list>
   </div>
 
 </div>

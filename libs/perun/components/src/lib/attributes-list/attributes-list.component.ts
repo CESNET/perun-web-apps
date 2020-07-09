@@ -47,7 +47,7 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
 
   private sort: MatSort;
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'value', 'description'];
+  displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   dataSource: MatTableDataSource<Attribute>;
 
   // set this true when used in dialog window

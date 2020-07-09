@@ -30,7 +30,7 @@ export class ApiInterceptor implements HttpInterceptor {
         }
       })
     }
-    if (apiUrl !== undefined && req.url.toString().indexOf(apiUrl) !== -1 && !this.authService.isLoggedIn()) {
+    if (apiUrl !== undefined && req.url.toString().indexOf(apiUrl) !== -1 && !this.store.skipOidc() && !this.authService.isLoggedIn()) {
       const err: RPCError = {
         message: "Your authentication has timed out.",
         errorId: null,
