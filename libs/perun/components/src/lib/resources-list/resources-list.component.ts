@@ -47,7 +47,7 @@ export class ResourcesListComponent implements AfterViewInit, OnChanges {
 
   private sort: MatSort;
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'facility', 'tags', 'description'];
+  displayedColumns: string[] = ['select', 'id', 'name', 'facility', 'tags', 'description', 'vo name'];
   dataSource: MatTableDataSource<RichResource>;
 
   exporting = false;
@@ -64,6 +64,9 @@ export class ResourcesListComponent implements AfterViewInit, OnChanges {
   }
 
   setDataSource() {
+    if (!window.location.pathname.startsWith('/facilities')){
+      this.hideColumns.push('vo name');
+    }
     if (!!this.dataSource) {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

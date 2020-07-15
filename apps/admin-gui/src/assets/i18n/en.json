@@ -1515,6 +1515,7 @@
           "TABLE_RESOURCE_NAME": "Name",
           "TABLE_FACILITY_NAME": "Facility name",
           "TABLE_RESOURCE_TAGS": "Tags",
+          "TABLE_VO_NAME": "vo name",
           "TABLE_SEARCH": "Filter by name, description or ID",
           "TABLE_RESOURCE_DESCRIPTION": "Description",
           "NO_RESOURCES_WARNING": "No resources assigned."

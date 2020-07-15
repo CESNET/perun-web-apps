@@ -47,6 +47,10 @@
              mat-sort-header>{{'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_RESOURCE_DESCRIPTION' | translate}}</th>
          <td *matCellDef="let resource" mat-cell>{{resource.description}}</td>
        </ng-container>
+       <ng-container matColumnDef="vo name">
+         <th *matHeaderCellDef mat-header-cell>{{'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_VO_NAME' | translate}}</th>
+         <td *matCellDef="let resource" mat-cell>{{resource.vo.name}}</td>
+       </ng-container>
 
        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
        <tr
