@@ -140,6 +140,7 @@ export * from './mailType';
 export * from './member';
 export * from './memberCandidate';
 export * from './memberWithSponsors';
+export * from './namespaceRules';
 export * from './owner';
 export * from './perunBean';
 export * from './perunException';
