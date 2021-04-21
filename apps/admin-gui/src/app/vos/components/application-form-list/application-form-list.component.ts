@@ -12,6 +12,7 @@ import {
 } from '../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationForm, ApplicationFormItem } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application-form-list',
@@ -22,6 +23,7 @@ export class ApplicationFormListComponent implements OnChanges {
 
   constructor(private dialog: MatDialog,
               private notificator: NotificatorService,
+              private router: Router,
               private translate: TranslateService) { }
 
   @Input()
@@ -125,5 +127,9 @@ export class ApplicationFormListComponent implements OnChanges {
 
   restore(applicationFormItem: ApplicationFormItem) {
     applicationFormItem.forDelete = false;
+  }
+
+  openManagingGroups(applicationFormItem: ApplicationFormItem) {
+    this.router.navigate(['/organizations', this.applicationForm.vo.id, 'settings', 'applicationForm', 'manageGroups']);
   }
 }
