@@ -73,7 +73,8 @@ import { UniversalRemoveItemsDialogComponent } from './universal-remove-items-di
     EditAttributeDialogComponent,
     AttributeValueListEditDialogComponent,
     AttributeValueListDeleteDialogComponent,
-    ChangeEmailDialogComponent
+    ChangeEmailDialogComponent,
+    UniversalRemoveItemsDialogComponent
   ]
 })
 export class PerunDialogsModule {

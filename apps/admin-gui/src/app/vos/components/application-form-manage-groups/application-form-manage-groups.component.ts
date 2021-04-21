@@ -7,8 +7,8 @@ import { TABLE_APPLICATION_FORM_ITEM_MANAGE_GROUP, TableConfigService } from '@p
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
-import { UniversalRemoveItemsDialogComponent } from '../../../../../../../libs/perun/dialogs/src/lib/universal-remove-items-dialog/universal-remove-items-dialog.component';
 import { AddGroupToRegistrationComponent } from '../../../shared/components/dialogs/add-group-to-registration/add-group-to-registration.component';
+import { UniversalRemoveItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 @Component({
   selector: 'app-application-form-manage-groups',
