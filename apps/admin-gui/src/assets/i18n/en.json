@@ -398,7 +398,8 @@
           "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and by that make a new applications to these groups.",
           "FILTER": "Filter",
           "REMOVE_GROUP_DIALOG_TITLE": "Confirm removing groups",
-          "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration."
+          "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration.",
+          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups."
         }
       },
       "ATTRIBUTES": {
@@ -664,7 +665,8 @@
     "GROUPS": {
       "TITLE": "Member groups",
       "ADD": "Add",
-      "REMOVE": "Remove"
+      "REMOVE": "Remove",
+      "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups."
     },
     "APPLICATIONS": {
       "TITLE": "Application",

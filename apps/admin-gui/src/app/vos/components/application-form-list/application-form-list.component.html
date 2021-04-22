@@ -150,28 +150,31 @@
             </div>
           </td>
         </ng-container>
+        <ng-container matColumnDef="managegroups">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let applicationFormItem" mat-cell>
+            <button
+              (click)="openManagingGroups(applicationFormItem)"
+              mat-icon-button
+              matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS' | translate}}"
+              *ngIf="applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' && !applicationFormItem.forDelete">
+              <mat-icon>supervised_user_circle</mat-icon>
+            </button>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="edit">
           <th *matHeaderCellDef mat-header-cell></th>
           <td *matCellDef="let applicationFormItem" mat-cell>
-            <div class="d-flex">
-              <button
-                (click)="openManagingGroups(applicationFormItem)"
-                mat-icon-button
-                matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS' | translate}}"
-                *ngIf="applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' && !applicationFormItem.forDelete">
-                <mat-icon>supervised_user_circle</mat-icon>
-              </button>
-              <button
-                (click)="edit(applicationFormItem)"
-                *ngIf="!applicationFormItem.forDelete"
-                class="ml-auto"
-                mat-icon-button
-                matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.EDIT' | translate}}">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <div *ngIf="applicationFormItem.forDelete" class="font-weight-bold">
-                {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MARK_DELETE' | translate}}
-              </div>
+            <button
+              (click)="edit(applicationFormItem)"
+              *ngIf="!applicationFormItem.forDelete"
+              class="ml-auto"
+              mat-icon-button
+              matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <div *ngIf="applicationFormItem.forDelete" class="font-weight-bold">
+              {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MARK_DELETE' | translate}}
             </div>
           </td>
         </ng-container>

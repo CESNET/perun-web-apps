@@ -39,7 +39,7 @@ export class ApplicationFormListComponent implements OnChanges {
   theme: string;
 
   @Input()
-  displayedColumns: string[] = ['drag', 'shortname', 'type', 'preview', 'edit', 'delete'];
+  displayedColumns: string[] = ['drag', 'shortname', 'type', 'preview', 'managegroups', 'edit', 'delete'];
 
   @Output()
   applicationFormItemsChange = new EventEmitter<ApplicationFormItem[]>();

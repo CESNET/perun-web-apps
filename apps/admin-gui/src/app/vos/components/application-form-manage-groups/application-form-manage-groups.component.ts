@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -9,6 +9,7 @@ import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGroupToRegistrationComponent } from '../../../shared/components/dialogs/add-group-to-registration/add-group-to-registration.component';
 import { UniversalRemoveItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { GroupsListComponent } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'app-application-form-manage-groups',
@@ -31,7 +32,9 @@ export class ApplicationFormManageGroupsComponent implements OnInit {
   tableId = TABLE_APPLICATION_FORM_ITEM_MANAGE_GROUP;
   filterValue = '';
   addAuth: boolean;
-  removeAuth: boolean;
+
+  @ViewChild('list', {})
+  list: GroupsListComponent;
 
   ngOnInit(): void {
     this.loading = true;
@@ -95,9 +98,5 @@ export class ApplicationFormManageGroupsComponent implements OnInit {
   private setAuthRights() {
     const vo = {id: this.voId, beanName: 'Vo'};
     this.addAuth = this.authResolver.isAuthorized('addGroupsToAutoRegistration_List<Group>_policy', [vo]);
-
-    if(this.groups.length !== 0){
-      this.removeAuth = this.authResolver.isAuthorized('deleteGroupsFromAutoRegistration_List<Group>_policy', [vo, this.groups[0]]);
-    }
   }
 }
