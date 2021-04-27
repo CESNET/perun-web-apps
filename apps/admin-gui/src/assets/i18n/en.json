@@ -351,7 +351,7 @@
           "RADIO": "Radio (single selection)",
           "TIMEZONE": "Selection of timezone",
           "AUTO_SUBMIT_BUTTON": "Submit button with auto-submit",
-          "EMBEDDED_GROUP_APPLICATION": "Checkbox with groups"
+          "EMBEDDED_GROUP_APPLICATION": "Groups for embedded applications"
         },
         "HIDDEN": {
           "ALWAYS": "Always",
@@ -395,7 +395,7 @@
           "TITLE": "Manage groups for registration",
           "ADD": "Add",
           "REMOVE": "Remove",
-          "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and by that make a new applications to these groups.",
+          "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and for these selected groups, there will be applications submitted automatically.",
           "FILTER": "Filter",
           "REMOVE_GROUP_DIALOG_TITLE": "Confirm removing groups",
           "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration.",
