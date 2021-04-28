@@ -18,6 +18,7 @@ import {
 import {
   ApplicationForm,
   ApplicationFormItem,
+  AttributesManagerService,
   Group,
   GroupsManagerService,
   RegistrarManagerService
@@ -45,7 +46,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     private apiRequest: ApiRequestConfigurationService,
     private router: Router,
     private guiAuthResolver: GuiAuthResolver,
-    private groupsManager: GroupsManagerService) {
+    private groupsManager: GroupsManagerService,
+    private attributesManager: AttributesManagerService) {
   }
 
   loading = false;
@@ -58,6 +60,9 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   group: Group;
   editAuth = false;
   createEmptyForm = false;
+  voHasEmbeddedGroupApplication: object
+  autoRegistrationEnabled: boolean;
+  changeAutoRegistration: boolean;
 
   // This counter is used to generate ids for newly added items. This fake ids are used in backend
   // to recognize new items in other items' dependencies
@@ -76,8 +81,12 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
           this.applicationForm = form;
           this.registrarManager.getFormItemsForGroup(this.groupId).subscribe(formItems => {
             this.applicationFormItems = formItems;
-            this.setAuth();
-            this.loading = false;
+            this.attributesManager.getGroupAttributeByName(this.groupId, "urn:perun:group:attribute-def:virt:autoRegistrationEnabled").subscribe(attr => {
+              this.voHasEmbeddedGroupApplication = attr.value;
+              this.autoRegistrationEnabled = !!attr.value;
+              this.setAuth();
+              this.loading = false;
+            });
           }, () => this.loading = false);
         }, error => {
           if (error.error.name === 'FormNotExistsException') {
@@ -95,6 +104,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   setAuth() {
     this.editAuth = this.guiAuthResolver.isAuthorized('group-updateFormItems_ApplicationForm_List<ApplicationFormItem>_policy', [this.group]);
     this.createEmptyForm = this.guiAuthResolver.isAuthorized('createApplicationFormInGroup_Group_policy', [this.group]);
+    this.changeAutoRegistration = this.guiAuthResolver.isAuthorized('addGroupsToAutoRegistration_List<Group>_policy', [this.group]);
   }
 
   add() {
@@ -212,5 +222,25 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   clear() {
     this.applicationFormItems = [];
     this.itemsChanged = true;
+  }
+
+  updateAutoRegistration() {
+    if (this.autoRegistrationEnabled) {
+      this.groupsManager.deleteGroupsFromAutoRegistration([this.group.id]).subscribe(() => {
+        this.autoRegistrationEnabled = !this.autoRegistrationEnabled;
+        this.translate.get('VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_SETTINGS_SUCCESS')
+          .subscribe(successMessage => {
+            this.notificator.showSuccess(successMessage);
+          });
+      });
+    } else {
+      this.groupsManager.addGroupsToAutoRegistration([this.group.id]).subscribe(() => {
+        this.autoRegistrationEnabled = !this.autoRegistrationEnabled;
+        this.translate.get('VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_SETTINGS_SUCCESS')
+          .subscribe(successMessage => {
+            this.notificator.showSuccess(successMessage);
+          });
+      });
+    }
   }
 }
