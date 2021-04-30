@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
@@ -25,6 +25,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '@perun-web-apps/perun/services';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-group-settings-application-form',
@@ -50,6 +51,9 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     private attributesManager: AttributesManagerService) {
   }
 
+  @ViewChild('autoRegToggle')
+  autoRegToggle: MatSlideToggle;
+
   loading = false;
   applicationForm: ApplicationForm;
   applicationFormItems: ApplicationFormItem[] = [];
@@ -60,7 +64,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   group: Group;
   editAuth = false;
   createEmptyForm = false;
-  voHasEmbeddedGroupApplication: object
+  voHasEmbeddedGroupApplication = false;
   autoRegistrationEnabled: boolean;
   changeAutoRegistration: boolean;
 
@@ -82,7 +86,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
           this.registrarManager.getFormItemsForGroup(this.groupId).subscribe(formItems => {
             this.applicationFormItems = formItems;
             this.attributesManager.getGroupAttributeByName(this.groupId, "urn:perun:group:attribute-def:virt:autoRegistrationEnabled").subscribe(attr => {
-              this.voHasEmbeddedGroupApplication = attr.value;
+              this.voHasEmbeddedGroupApplication = attr.value !== null;
               this.autoRegistrationEnabled = !!attr.value;
               this.setAuth();
               this.loading = false;
@@ -225,6 +229,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   }
 
   updateAutoRegistration() {
+    this.autoRegToggle.setDisabledState(true);
     if (this.autoRegistrationEnabled) {
       this.groupsManager.deleteGroupsFromAutoRegistration([this.group.id]).subscribe(() => {
         this.autoRegistrationEnabled = !this.autoRegistrationEnabled;
@@ -232,7 +237,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
           .subscribe(successMessage => {
             this.notificator.showSuccess(successMessage);
           });
-      });
+        this.autoRegToggle.setDisabledState(false)
+      }, () => this.autoRegToggle.setDisabledState(false));
     } else {
       this.groupsManager.addGroupsToAutoRegistration([this.group.id]).subscribe(() => {
         this.autoRegistrationEnabled = !this.autoRegistrationEnabled;
@@ -240,7 +246,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
           .subscribe(successMessage => {
             this.notificator.showSuccess(successMessage);
           });
-      });
+        this.autoRegToggle.setDisabledState(false)
+      }, () => this.autoRegToggle.setDisabledState(false));
     }
   }
 }

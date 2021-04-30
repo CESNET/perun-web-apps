@@ -24,11 +24,12 @@
         {{applicationForm.automaticApprovalEmbedded ?
         ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
       </div>
-      <div *ngIf="voHasEmbeddedGroupApplication !== null">
+      <div *ngIf="voHasEmbeddedGroupApplication">
         <mat-slide-toggle (change)="updateAutoRegistration()"
                           [disabled]="!changeAutoRegistration"
                           [ngModel]="autoRegistrationEnabled"
-                          color="primary">
+                          color="primary"
+                          #autoRegToggle>
           {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ALLOW_EMBEDDED' | translate}}
         </mat-slide-toggle>
       </div>
