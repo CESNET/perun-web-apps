@@ -2457,7 +2457,11 @@
           "SUBMIT_BUTTON": "Submit"
         },
         "MEMBER_TREEVIEW_DIALOG": {
-          "TITLE": "Member tree view",
+          "TITLE": "Indirect member’s origin ",
+          "INFO": "Member is coming to this group through the following group hierarchy.",
+          "DIRECT": "(Direct membership)",
+          "INCLUDE": "(Included group)",
+          "FILTER": "Search by name",
           "CLOSE": "Close"
         }
       },
