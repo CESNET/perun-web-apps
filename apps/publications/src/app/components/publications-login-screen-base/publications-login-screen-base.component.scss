@@ -1,0 +1,54 @@
+.login-nav {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  height: 64px;
+  max-height: 64px;
+}
+
+#footer {
+  position: relative;
+  height: 200px;
+  bottom: 0;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    height: 450px;
+  }
+}
+
+#content-wrap {
+  @media (min-width: 600px) {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  padding-bottom: 25px;
+  padding-top: 10px;
+  margin: 10px;
+}
+
+.router-icon-scale{
+  transform: scale(0.75);
+  margin-top: 0.3rem;
+}
+
+.router-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  outline: 0;
+}
+
+.header-container {
+  height: 64px !important;
+  display: flex;
+  flex-direction: row;
+}
+
+#content-inner {
+  position: relative;
+  overflow-x: hidden;
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+}
+

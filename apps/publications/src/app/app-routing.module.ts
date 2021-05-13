@@ -8,12 +8,17 @@ import { CategoriesPageComponent } from './pages/categories-page/categories-page
 import { PublicationSystemsPageComponent } from './pages/publication-systems-page/publication-systems-page.component';
 import { AuthorDetailComponent } from './pages/author-detail/author-detail.component';
 import { PublicationDetailComponent } from './pages/publication-detail/publication-detail.component';
+import { PublicationsLoginScreenBaseComponent } from './components/publications-login-screen-base/publications-login-screen-base.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo:'all-publications',
     pathMatch:'full'
+  },
+  {
+    path: 'login',
+    component: PublicationsLoginScreenBaseComponent
   },
   {
     path: 'all-publications',

@@ -37,6 +37,8 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
 import { PublicationDetailComponent } from './pages/publication-detail/publication-detail.component';
 import { PublicationDetailListComponent } from './components/publication-detail-list/publication-detail-list.component';
 import { ThanksListComponent } from './components/thanks-list/thanks-list.component';
+import { PerunLoginModule } from '@perun-web-apps/perun/login';
+import { PublicationsLoginScreenBaseComponent } from './components/publications-login-screen-base/publications-login-screen-base.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -85,7 +87,8 @@ const loadConfigs = (appConfig: PublicationsConfigService) => {
     PublicationFilterComponent,
     PublicationDetailComponent,
     PublicationDetailListComponent,
-    ThanksListComponent
+    ThanksListComponent,
+    PublicationsLoginScreenBaseComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +106,8 @@ const loadConfigs = (appConfig: PublicationsConfigService) => {
     HttpClientModule,
     AppRoutingModule,
     UiAlertsModule,
-    PerunPipesModule
+    PerunPipesModule,
+    PerunLoginModule
   ],
   providers: [
     CustomIconService,
