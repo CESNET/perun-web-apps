@@ -83,13 +83,6 @@ export class AuthService {
     this.manager.events.addUserLoaded(user => {
       this.user = user;
     });
-
-    this.manager.events.addAccessTokenExpired(() => {
-      const config = getDefaultDialogConfig();
-      config.width = '450px';
-
-      this.dialog.open(SessionExpirationDialogComponent, config);
-    });
   }
 
   verifyAuth(): Promise<boolean> {

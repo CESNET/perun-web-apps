@@ -19,7 +19,9 @@
   </mat-sidenav-container>
 </div>
 <div *ngIf="isLoginScreenShow">
-  <perun-web-apps-publications-login-screen-base>
-  </perun-web-apps-publications-login-screen-base>
+  <perun-web-apps-login-screen-base [headerColorConfigLabel]="'header_bg_color'"
+                                    [application]="'publications'"
+                                    [headerTitle]="'HEADER.TITLE' | translate">
+  </perun-web-apps-login-screen-base>
 </div>
 
