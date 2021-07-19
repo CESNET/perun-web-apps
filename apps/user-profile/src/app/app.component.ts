@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
   sideMenuBgColor = this.store.get('theme', 'sidemenu_bg_color');
   contentBackgroundColor = this.store.get('theme', 'content_bg_color');
-  footerHeight = 180;
   isLoginScreenShown: boolean;
 
   ngOnInit(): void {
@@ -46,9 +45,5 @@ export class AppComponent implements OnInit {
 
   isMobile(): boolean {
     return window.innerWidth <= AppComponent.minWidth;
-  }
-
-  getContentHeight() {
-    return 'calc(100vh - 64px - 40px - ' + this.footerHeight + 'px)';
   }
 }
