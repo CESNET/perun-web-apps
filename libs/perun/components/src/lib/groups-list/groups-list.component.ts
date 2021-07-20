@@ -47,7 +47,7 @@ export class GroupsListComponent implements OnInit, AfterViewInit, OnChanges {
 
   displayButtons = window.innerWidth > 800;
 
-  @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
+  @ViewChild(MatSort, { static: true }) set matSo rt(ms: MatSort) {
     this.sort = ms;
     this.setDataSource();
   }
