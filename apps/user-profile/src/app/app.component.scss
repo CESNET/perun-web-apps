@@ -4,6 +4,12 @@
   min-height: calc(100vh - 64px);
 }
 
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 a{
   text-decoration: none;
   color: black;

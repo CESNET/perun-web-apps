@@ -14,7 +14,6 @@ export class AppComponent implements OnInit{
 
   public static minWidth = 992;
   sidebarMode: 'over' | 'push' | 'side' = 'side';
-  footerHeight = 200;
   isLoginScreenShow: boolean;
 
   sideMenuBgColor = this.store.get('theme', 'sidemenu_bg_color');
@@ -31,9 +30,5 @@ export class AppComponent implements OnInit{
 
   isMobile(): boolean {
     return window.innerWidth <= AppComponent.minWidth;
-  }
-
-  getContentHeight() {
-    return 'calc(100vh - 84px - ' + this.footerHeight + 'px)';
   }
 }

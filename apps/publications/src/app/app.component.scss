@@ -1,12 +1,7 @@
 #footer {
-  position: relative;
-  height: 200px;
+  position: absolute;
   bottom: 0;
   width: 100%;
-
-  @media (max-width: 768px) {
-    height: 450px;
-  }
 }
 
 #content-wrap {
@@ -23,7 +18,7 @@
   position: relative;
   overflow-x: hidden;
   padding-top: 64px;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 128px);
 }
 
 #nav-menu {
