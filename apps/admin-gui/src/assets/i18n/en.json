@@ -175,9 +175,11 @@
       "ALREADY_DELETED": "Task was already deleted"
     },
     "ALLOWED_USERS": {
-      "TITLE": "Allowed users",
-      "FILTER": "Filter allowed users",
-      "NO_USERS": "No users assigned."
+      "TITLE": "Assigned users",
+      "FILTER": "Search by name or email",
+      "FILTER_ALLOWED": "Show only allowed users",
+      "FILTER_ALLOWED_MSG": "Only users with correctly set attributes are shown. Their data is propagated to facility.",
+      "FILTER_ASSIGNED_MSG": "All assigned users are shown. Data of some users may not be propagated to facility due to invalid user attributes."
     },
     "TASK_RESULTS": {
       "TITLE": "Task results",
@@ -295,7 +297,7 @@
     "MEMBERS": {
       "TITLE": "Members",
       "ADD_MEMBER": "Add",
-      "ADD_MEMBER_DISABLED": "You cannot add members manually into this Vo.",
+      "ADD_MEMBER_DISABLED": "You cannot add members manually into this organization.",
       "REMOVE_MEMBERS": "Remove",
       "SEARCH_DESCRIPTION": "Search by name, login, email or UUID",
       "FILTER_STATUS": "Filter by Status",
@@ -584,7 +586,7 @@
       "TITLE": "Members",
       "ACTIONS_DISABLED": "Actions with members are disabled, because this group is filled with members from external source.",
       "ADD_MEMBER": "Add",
-      "ADD_MEMBER_DISABLED": "You cannot add members manually into this group.",
+      "ADD_MEMBER_DISABLED": "Manual adding of members is blocked for this group.",
       "REMOVE_MEMBERS": "Remove",
       "SEARCH_DESCRIPTION": "Search by name, login, email or UUID",
       "LIST_ALL": "List all members",
@@ -812,7 +814,7 @@
       "BLACKLIST": "Blacklist",
       "SECURITY_TEAMS": "Security teams",
       "SERVICES_STATUS": "Services status",
-      "ALLOWED_USERS": "Allowed users"
+      "ALLOWED_USERS": "Assigned users"
     },
     "RESOURCE": {
       "OVERVIEW": "Overview",
@@ -862,7 +864,8 @@
       "SETTINGS": "Advanced settings",
       "ORGANIZATIONS": "Organizations",
       "SERVICES": "Services",
-      "OWNERS": "Owners"
+      "OWNERS": "Owners",
+      "AUDIT_LOG": "Audit log"
     },
     "VISUALIZER": {
       "ATTR_DEPENDENCIES": "Modules dependencies",
@@ -879,7 +882,7 @@
       "TITLE": "User - ",
       "ROLES": "Roles",
       "GUI_CONFIG": "Gui configuration",
-      "SERVICE_IDENTITIES": "Service Identities",
+      "SERVICE_IDENTITIES": "Service Accounts",
       "IDENTITIES": "Identities",
       "PASSWORD_RESET": "Password reset",
       "FACILITIES": "Facilities",
@@ -1978,7 +1981,7 @@
       "TITLE": "Create service account",
       "CREATE": "Create",
       "CANCEL": "Cancel",
-      "CREATE_IDENTITY": "Create service identity",
+      "CREATE_IDENTITY": "Create service account",
       "NAME": "Account name",
       "EMAIL": "Email",
       "NAMESPACE": "Namespace",
@@ -2007,6 +2010,13 @@
       "SET_CREDENTIALS": "Set credentials",
       "PASSWORD_RANDOM": "Set password later",
       "ENTER_PASSWORD": "Set password now"
+    },
+    "AUDIT_MESSAGE_DETAIL": {
+      "TITLE": "Audit message detail",
+      "CLOSE": "Close",
+      "NAME": "Event name",
+      "MESSAGE": "Message",
+      "ADDITIONAL_INFO": "Additional info"
     }
   },
   "MEMBERS_LIST": {
@@ -2029,7 +2039,8 @@
     "ORGANIZATION": "Organization or Ext source",
     "EMAIL": "Email",
     "LOGINS": "Logins",
-    "ALREADY_MEMBER": "Already member"
+    "ALREADY_MEMBER": "Already member",
+    "ADDING_BLOCKED": "Manual adding of users outside of organization is blocked."
   },
   "MANAGERS_LIST": {
     "ID": "User ID",
@@ -2039,6 +2050,14 @@
     "LOGINS": "Logins",
     "PERSON": "Person",
     "SERVICE": "Service"
+  },
+  "AUDIT_MESSAGES_LIST": {
+    "ID": "Message ID",
+    "TIMESTAMP": "Created at",
+    "EVENT_NAME": "Event name",
+    "ACTOR": "Actor",
+    "VIEW_DETAIL": "View details",
+    "MESSAGE": "Message"
   },
   "ADMIN_USER": {
     "ENTITY": "User",
@@ -2124,6 +2143,9 @@
       "CREATE": "Create service",
       "DELETE": "Delete",
       "FILTER": "Filter"
+    },
+    "AUDIT_LOG": {
+      "TITLE": "Audit log"
     }
   },
   "USER_DETAIL": {
@@ -2198,10 +2220,10 @@
         "SUCCESS_SAVE": "Attributes saved successfully"
       },
       "SERVICE_IDENTITIES": {
-        "TITLE": "Service identities",
+        "TITLE": "Service accounts",
         "CREATE": "Add",
         "DELETE": "Remove",
-        "NO_IDENTITIES": "No service identities assigned."
+        "NO_IDENTITIES": "No service accounts assigned."
       },
       "GUI_CONFIG": {
         "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
@@ -2423,6 +2445,11 @@
           "SELECT_PACKAGE": "Select service package",
           "FIND_PACKAGE": "Find service package...",
           "NO_PACKAGE_FOUND": "No matching service package found"
+        },
+        "SERVICE_SEARCH_SELECT": {
+          "SELECT_SERVICE": "Select service",
+          "FIND_SERVICE": "Find service...",
+          "NO_SERVICE_FOUND": "No matching service found"
         },
         "RESOURCES_LIST": {
           "TITLE": "Resources",

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
+  AuditMessagesManagerService,
   MemberGroupStatus,
   MembersManagerService,
-  MembersOrderColumn,
+  MembersOrderColumn, PaginatedAuditMessages,
   PaginatedRichMembers, PaginatedRichUsers,
   SortingOrder, UsersManagerService, UsersOrderColumn, VoMemberStatuses
 } from '@perun-web-apps/perun/openapi';
@@ -14,7 +15,8 @@ import { Observable } from 'rxjs';
 export class DynamicPaginatingService {
 
   constructor(private membersService: MembersManagerService,
-              private usersService: UsersManagerService) { }
+              private usersService: UsersManagerService,
+              private auditMessagesManagerService: AuditMessagesManagerService) { }
 
   getMembers(voId: number,
              attrNames: string[],
@@ -46,7 +48,12 @@ export class DynamicPaginatingService {
            pageSize: number,
            sortColumn: UsersOrderColumn,
            searchString: string,
-           withoutVo: boolean): Observable<PaginatedRichUsers> {
+           withoutVo: boolean,
+           facilityId: number,
+           voId: number,
+           resourceId: number,
+           serviceId: number,
+           onlyAllowed: boolean): Observable<PaginatedRichUsers> {
     return this.usersService.getUsersPage({
       attrNames: attrNames,
       query: {
@@ -55,7 +62,24 @@ export class DynamicPaginatingService {
         order: order,
         sortColumn: sortColumn,
         searchString: searchString,
-        withoutVo: withoutVo
+        withoutVo: withoutVo,
+        facilityId: facilityId,
+        voId: voId,
+        resourceId: resourceId,
+        serviceId: serviceId,
+        onlyAllowed: onlyAllowed
+      }
+    });
+  }
+
+  getAuditMessages(order: SortingOrder,
+           pageNumber: number,
+           pageSize: number): Observable<PaginatedAuditMessages> {
+    return this.auditMessagesManagerService.getMessagesPage({
+      query: {
+        offset: pageSize*pageNumber,
+        pageSize: pageSize,
+        order: order
       }
     });
   }

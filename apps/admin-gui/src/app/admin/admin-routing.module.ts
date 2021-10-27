@@ -19,11 +19,7 @@ import {AdminUserDetailPageComponent} from './pages/admin-user-detail-page/admin
 import {UserOverviewComponent} from '../users/pages/user-detail-page/user-overview/user-overview.component';
 import {UserOrganizationsComponent} from '../users/pages/user-detail-page/user-organizations/user-organizations.component';
 import {UserGroupsComponent} from '../users/pages/user-detail-page/user-groups/user-groups.component';
-import {UserSettingsComponent} from '../users/pages/user-detail-page/user-settings/user-settings.component';
 import {UserAttributesComponent} from '../users/pages/user-detail-page/user-attributes/user-attributes.component';
-import {
-  UserSettingsOverviewComponent
-} from '../users/pages/user-detail-page/user-settings/user-settings-overview/user-settings-overview.component';
 import { AdminExtSourcesComponent } from './pages/admin-page/admin-ext-sources/admin-ext-sources.component';
 import { UserRolesComponent } from '../users/pages/user-detail-page/user-settings/user-roles/user-roles.component';
 import { UserSettingsServiceIdentitiesComponent } from '../users/pages/user-detail-page/user-settings/user-settings-service-identities/user-settings-service-identities.component';
@@ -39,6 +35,7 @@ import { ServiceDestinationsComponent } from './pages/admin-page/admin-services/
 import { AdminOwnersComponent } from './pages/admin-page/admin-owners/admin-owners.component';
 import { UserFacilitiesComponent } from '../users/pages/user-detail-page/user-facilities/user-facilities.component';
 import { UserAccountsComponent } from '../users/pages/user-detail-page/user-accounts/user-accounts.component';
+import { AdminAuditLogComponent } from './pages/admin-page/admin-audit-log/admin-audit-log.component';
 
 const routes: Routes = [
   {
@@ -69,6 +66,11 @@ const routes: Routes = [
         path: 'services',
         component: AdminServicesComponent,
         data: {animation: 'AdminServicesPage'}
+      },
+      {
+        path: 'audit_log',
+        component: AdminAuditLogComponent,
+        data: {animation: 'AdminAuditLogPage'}
       },
       {
         path: 'visualizer',
@@ -158,26 +160,26 @@ const routes: Routes = [
         data: {animation: 'UserRolesPage'}
       },
       {
-        path: 'settings',
-        component: UserSettingsComponent,
-        children: [
-          {
-            path: '',
-            component: UserSettingsOverviewComponent,
-            data: {animation: 'UserSettingsOverviewPage'}
-          },
-          {
-            path: 'service-identities',
-            component: UserSettingsServiceIdentitiesComponent,
-            data: {animation: 'UserServiceIdentities'}
-          },
-          {
-            path: 'associated-users',
-            component: UserSettingsAssociatedUsersComponent,
-            data: {animation: 'AssociatedUsersPage'}
-          }
-        ]
+        path: 'service-identities',
+        component: UserSettingsServiceIdentitiesComponent,
+        data: {animation: 'UserServiceIdentities'}
+      },
+      {
+        path: 'associated-users',
+        component: UserSettingsAssociatedUsersComponent,
+        data: {animation: 'AssociatedUsersPage'}
       }
+      // {
+      //   path: 'settings',
+      //   component: UserSettingsComponent,
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: UserSettingsOverviewComponent,
+      //       data: {animation: 'UserSettingsOverviewPage'}
+      //     }
+      //   ]
+      // }
     ]
   },
   {

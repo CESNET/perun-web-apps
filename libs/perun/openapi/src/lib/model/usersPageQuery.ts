@@ -20,5 +20,10 @@ export interface UsersPageQuery {
     sortColumn: UsersOrderColumn;
     searchString?: string;
     withoutVo?: boolean;
+    facilityId?: number;
+    voId?: number;
+    serviceId?: number;
+    resourceId?: number;
+    onlyAllowed?: boolean;
 }
 

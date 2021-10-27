@@ -28,6 +28,7 @@ export class AdminUserDetailPageComponent implements OnInit {
   path: string;
   regex: string;
   loading = false;
+  svgIcon = 'perun-user-dark';
 
   ngOnInit() {
     this.loading = true;
@@ -39,6 +40,9 @@ export class AdminUserDetailPageComponent implements OnInit {
 
       this.usersService.getUserById(userId).subscribe(user => {
         this.user = user;
+        if(this.user.serviceUser) {
+          this.svgIcon = 'perun-service-identity';
+        }
 
         const userItem = this.sideMenuItemService.parseUser(user, this.path, this.regex);
         this.sideMenuService.setAdminItems([userItem]);
