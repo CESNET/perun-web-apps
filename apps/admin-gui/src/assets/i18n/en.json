@@ -1819,6 +1819,7 @@
       "OK": "Ok",
       "CREATE": "Create",
       "LOGIN": "Login",
+      "PASSWORD": "Password",
       "EMAIL": "Email",
       "SUCCESS": "Sponsored user created",
       "EMAIL_ERROR": "Email is not valid",
