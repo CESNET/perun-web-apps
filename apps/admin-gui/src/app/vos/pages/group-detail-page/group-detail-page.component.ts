@@ -92,7 +92,7 @@ export class GroupDetailPageComponent implements OnInit {
   }
 
   isSynchronized() {
-    return this.group.attributes.some(att =>
+    return this.group.groupAttributes.some(att =>
       att.friendlyName === "synchronizationEnabled" && att.value !== null && att.value.toString() === "true");
   }
 

@@ -7,6 +7,6 @@ export interface GroupFlatNode {
   level: number;
   id: number;
   voId: number;
-  attributes: Attribute[];
+  groupAttributes: Attribute[];
   beanName: string;
 }

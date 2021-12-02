@@ -9,7 +9,7 @@ export class TreeGroup implements Group {
   shortName: string;
   description: string;
   beanName: string;
-  attributes: Attribute[];
+  groupAttributes: Attribute[];
 
   constructor(group: RichGroup) {
     this.id = group.id;
@@ -18,7 +18,7 @@ export class TreeGroup implements Group {
     this.voId = group.voId;
     this.shortName = group.shortName;
     this.description = group.description;
-    this.attributes = group.attributes;
+    this.groupAttributes = group.groupAttributes;
     this.beanName = group.beanName;
   }
 

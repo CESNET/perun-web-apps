@@ -145,8 +145,8 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
   private filterAssignableGroups(groups: RichGroup[]) {
     const assignableGroups = [];
     for (const grp of groups) {
-      if (!(this.hasAttributeEnabled(grp.attributes, 'synchronizationEnabled') ||
-        this.hasAttributeEnabled(grp.attributes, 'blockManualMemberAdding')) &&
+      if (!(this.hasAttributeEnabled(grp.groupAttributes, 'synchronizationEnabled')
+          || this.hasAttributeEnabled(grp.groupAttributes, 'blockManualMemberAdding')) &&
         this.guiAuthResolver.isAuthorized('addMembers_Group_List<Member>_policy', [grp])) {
         assignableGroups.push(grp);
       }

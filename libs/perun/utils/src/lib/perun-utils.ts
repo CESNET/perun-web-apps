@@ -622,7 +622,7 @@ export function parseOrganization(richMember: RichMember): string {
 }
 
 export function getGroupExpiration(group: RichGroup): string{
-  const attribute = group.attributes.find(att => att.baseFriendlyName === 'groupMembershipExpiration');
+  const attribute = group.groupAttributes.find(att => att.baseFriendlyName === 'groupMembershipExpiration');
   if(attribute && attribute.value){
     return attribute.value as unknown as string;
   }

@@ -123,12 +123,12 @@ export class GroupSyncDetailDialogComponent implements OnInit {
     ]).subscribe(richGroup => {
       this.group = richGroup;
 
-      this.syncEnabled = <string><unknown>getAttribute(this.group.attributes, Urns.GROUP_SYNC_ENABLED).value;
-      this.lastSyncState = <string><unknown>getAttribute(this.group.attributes, Urns.GROUP_LAST_SYNC_STATE).value;
-      this.lastSyncTime = <string><unknown>getAttribute(this.group.attributes, Urns.GROUP_LAST_SYNC_TIMESTAMP).value;
-      this.structSyncEnabled = <boolean><unknown>getAttribute(this.group.attributes, Urns.GROUP_STRUCTURE_SYNC_ENABLED).value;
-      this.lastStructSyncState = <string><unknown>getAttribute(this.group.attributes, Urns.GROUP_LAST_STRUCTURE_SYNC_STATE).value;
-      this.lastStructSyncTime = <string><unknown>getAttribute(this.group.attributes, Urns.GROUP_LAST_STRUCTURE_SYNC_TIMESTAMP).value;
+      this.syncEnabled = <string><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_SYNC_ENABLED).value;
+      this.lastSyncState = <string><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_LAST_SYNC_STATE).value;
+      this.lastSyncTime = <string><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_LAST_SYNC_TIMESTAMP).value;
+      this.structSyncEnabled = <boolean><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_STRUCTURE_SYNC_ENABLED).value;
+      this.lastStructSyncState = <string><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_LAST_STRUCTURE_SYNC_STATE).value;
+      this.lastStructSyncTime = <string><unknown>getAttribute(this.group.groupAttributes, Urns.GROUP_LAST_STRUCTURE_SYNC_TIMESTAMP).value;
 
       if (this.syncEnabled !== null && this.syncEnabled === 'true') {
         this.type = 'BASIC';

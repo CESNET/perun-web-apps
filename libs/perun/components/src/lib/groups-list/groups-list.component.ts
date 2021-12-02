@@ -321,8 +321,8 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   }
 
   isSynchronized(grp: GroupWithStatus) {
-    if (grp.attributes){
-      return grp.attributes.some(att =>
+    if (grp.groupAttributes){
+      return grp.groupAttributes.some(att =>
         att.friendlyName === "synchronizationEnabled" && att.value !== null && att.value.toString() === "true");
     }
     return false;
@@ -358,7 +358,7 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   }
 
   changeExpiration(group: GroupWithStatus) {
-    const expirationAtt = group.attributes.find(att => att.baseFriendlyName === 'groupMembershipExpiration');
+    const expirationAtt = group.groupAttributes.find(att => att.baseFriendlyName === 'groupMembershipExpiration');
     const config = getDefaultDialogConfig();
     config.width = '400px';
     config.data = {
@@ -382,6 +382,6 @@ export class GroupsListComponent implements AfterViewInit, OnChanges {
   }
 
   getStatusAttribute(grp: RichGroup) {
-    return grp.attributes.find(att => att.baseFriendlyName === 'groupStatus').value.toString();
+    return grp.groupAttributes.find(att => att.baseFriendlyName === 'groupStatus').value.toString();
   }
 }
