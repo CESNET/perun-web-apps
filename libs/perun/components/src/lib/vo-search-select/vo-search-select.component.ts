@@ -7,18 +7,11 @@ import { Vo } from '@perun-web-apps/perun/openapi';
   styleUrls: ['./vo-search-select.component.css'],
 })
 export class VoSearchSelectComponent {
-  constructor() {}
+  @Input() vo: Vo;
+  @Input() vos: Vo[];
+  @Output() voSelected = new EventEmitter<Vo>();
 
-  @Input()
-  vo: Vo;
-
-  @Input()
-  vos: Vo[];
-
-  @Output()
-  voSelected = new EventEmitter<Vo>();
-
-  nameFunction = (vo: Vo) => vo.name;
-  shortNameFunction = (vo: Vo) => vo.shortName;
-  searchFunction = (vo: Vo) => vo.name + vo.shortName + vo.id;
+  nameFunction = (vo: Vo): string => vo.name;
+  shortNameFunction = (vo: Vo): string => vo.shortName;
+  searchFunction = (vo: Vo): string => vo.name + vo.shortName + String(vo.id);
 }

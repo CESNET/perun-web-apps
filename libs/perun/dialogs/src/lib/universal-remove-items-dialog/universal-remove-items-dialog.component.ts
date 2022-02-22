@@ -15,26 +15,26 @@ export interface DeleteItemsDialogData {
   styleUrls: ['./universal-remove-items-dialog.component.scss'],
 })
 export class UniversalRemoveItemsDialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<UniversalRemoveItemsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DeleteItemsDialogData
-  ) {}
-
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<string>;
   theme: string;
   loading = false;
 
-  ngOnInit() {
+  constructor(
+    public dialogRef: MatDialogRef<UniversalRemoveItemsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteItemsDialogData
+  ) {}
+
+  ngOnInit(): void {
     this.theme = this.data.theme;
     this.dataSource = new MatTableDataSource<string>(this.data.items);
   }
 
-  onCancel() {
+  onCancel(): void {
     this.dialogRef.close(false);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.dialogRef.close(true);
   }
 }

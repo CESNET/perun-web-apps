@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -29,11 +30,11 @@ export class ApiInterceptor implements HttpInterceptor {
     private initAuthService: InitAuthService
   ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const apiUrl = this.store.get('api_url');
+  intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
+    const apiUrl: string = this.store.get('api_url') as string;
     // check if the request is trying to access localization file, if so
     // disable cache
-    if (req.url.indexOf('i18n') !== -1) {
+    if (req.url.includes('i18n')) {
       req = req.clone({
         setHeaders: {
           'Cache-control': 'no-cache, must-revalidate',
@@ -42,7 +43,7 @@ export class ApiInterceptor implements HttpInterceptor {
     }
     if (
       apiUrl !== undefined &&
-      req.url.toString().indexOf(apiUrl) !== -1 &&
+      req.url.toString().includes(apiUrl) &&
       !this.store.skipOidc() &&
       !this.authService.isLoggedIn() &&
       !this.initAuthService.isServiceAccess()
@@ -54,7 +55,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
       dialogRef.afterClosed().subscribe(() => {
         sessionStorage.setItem('auth:redirect', location.pathname);
-        sessionStorage.setItem('auth:queryParams', location.search.substr(1));
+        sessionStorage.setItem('auth:queryParams', location.search.substring(1));
         this.authService.startAuthentication();
       });
     }
@@ -88,12 +89,12 @@ export class ApiInterceptor implements HttpInterceptor {
       tap(
         (x) => {
           if (x instanceof HttpResponse && shouldReloadPrincipal) {
-            this.initAuthService.loadPrincipal();
+            void this.initAuthService.loadPrincipal();
           }
         },
-        (err) => {
+        (err: HttpErrorResponse) => {
           // Handle this err
-          const errRpc = this.formatErrors(err, req);
+          const errRpc: RPCError = this.formatErrors(err, req);
           if (errRpc === undefined) {
             return throwError(err);
           }
@@ -108,23 +109,26 @@ export class ApiInterceptor implements HttpInterceptor {
   }
 
   private isCallToPerunApi(url: string): boolean {
-    return url.startsWith(this.store.get('api_url'));
+    return url.startsWith(this.store.get('api_url') as string);
   }
 
-  private formatErrors(error: any, req: HttpRequest<any>) {
-    let rpcError;
+  private formatErrors<T>(error: HttpErrorResponse, req: HttpRequest<T>): RPCError {
+    let rpcError: RPCError;
     console.error(error);
-    if (error.error.errorId) {
-      rpcError = error.error;
-    } else if (error.errorId) {
-      rpcError = JSON.parse(error.error) as RPCError;
+    const innerError: RPCError = error.error as RPCError;
+    if (innerError.errorId) {
+      rpcError = innerError;
     }
+    // FIXME not sure if this peace of code is actually needed
+    // } else if (error.errorId) {
+    //   rpcError = JSON.parse(error.error) as RPCError;
+    // }
     if (rpcError === undefined) {
       return undefined;
     }
     rpcError.urlWithParams = req.urlWithParams;
     rpcError.call = req.url;
-    rpcError.payload = req.body;
+    rpcError.payload = req.body as unknown as object;
     return rpcError;
   }
 }
