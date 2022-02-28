@@ -97,7 +97,6 @@ import { RemoveGroupFromResourceDialogComponent } from './components/dialogs/rem
 import { AssignGroupToResourceDialogComponent } from './components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
 import { CreateResourceDialogComponent } from './components/dialogs/create-resource-dialog/create-resource-dialog.component';
 import { ExtSourceTypePipe } from './pipes/ext-source-type.pipe';
-// @ts-ignore
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
 import { MemberStatusTooltipPipe, PerunPipesModule } from '@perun-web-apps/perun/pipes';
@@ -169,6 +168,7 @@ import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespac
 import { AuditMessagesListComponent } from './components/audit-messages-list/audit-messages-list.component';
 import { AuditMessageDetailDialogComponent } from './components/dialogs/audit-message-detail-dialog/audit-message-detail-dialog.component';
 import { ParseEventNamePipe } from './pipes/parse-event-name.pipe';
+import { MemberTypePipe } from './pipes/member-type.pipe';
 
 @NgModule({
   imports: [
@@ -430,6 +430,7 @@ import { ParseEventNamePipe } from './pipes/parse-event-name.pipe';
     AuditMessagesListComponent,
     AuditMessageDetailDialogComponent,
     ParseEventNamePipe,
+    MemberTypePipe,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe],
 })

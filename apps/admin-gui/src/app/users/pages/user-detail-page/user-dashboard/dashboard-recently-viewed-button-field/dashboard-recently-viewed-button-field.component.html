@@ -8,10 +8,10 @@
   <div *ngFor="let item of items" class="item-itself-container" mat-ripple>
     <a
       class="{{item.style}} item-itself"
-      [routerLink]="item.url"
       [perunWebAppsMiddleClickRouterLink]="[item.url]"
-      queryParamsHandling="merge"
-      matTooltip="{{item.tooltip}}">
+      [routerLink]="item.url"
+      matTooltip="{{item.tooltip}}"
+      queryParamsHandling="merge">
       <span class="item-type">{{item.type}}</span>
       <mat-icon [svgIcon]="item.cssIcon" class="item-pic perun-icon"></mat-icon>
       <p class="truncate">{{item.label}}</p>

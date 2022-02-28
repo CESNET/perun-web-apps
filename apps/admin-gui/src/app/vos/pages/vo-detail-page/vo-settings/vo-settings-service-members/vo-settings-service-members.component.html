@@ -18,9 +18,9 @@
 </perun-web-apps-immediate-filter>
 <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
 <perun-web-apps-members-list
-  [tableId]="tableId"
+  [filter]="searchString"
   *ngIf="!loading"
   [displayedColumns]="['checkbox','id', 'type', 'fullName', 'status']"
   [selection]="selection"
-  [filter]="searchString"
-  [members]="members"></perun-web-apps-members-list>
+  [members]="members"
+  [tableId]="tableId"></perun-web-apps-members-list>

@@ -3,32 +3,32 @@
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <button
     *ngIf="addAuth"
-    mat-flat-button
+    (click)="createResource()"
     color="accent"
     class="mr-2 action-button"
-    (click)="createResource()">
+    mat-flat-button>
     {{'FACILITY_DETAIL.RESOURCES.CREATE' | translate}}
   </button>
   <button
     *ngIf="removeAuth"
-    mat-flat-button
+    (click)="removeResource()"
     color="warn"
-    class="mr-2"
     [disabled]="selected.selected.length === 0"
-    (click)="removeResource()">
+    class="mr-2"
+    mat-flat-button>
     {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
   </button>
   <perun-web-apps-immediate-filter
-    [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"
-    (filter)="applyFilter($event)"></perun-web-apps-immediate-filter>
-  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+    (filter)="applyFilter($event)"
+    [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"></perun-web-apps-immediate-filter>
+  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
   <perun-web-apps-resources-list
-    [tableId]="tableId"
+    [disableRouting]="!routeAuth"
     *ngIf="!loading"
     [filterValue]="filterValue"
     [resources]="resources"
     [selection]="selected"
-    [disableRouting]="!routeAuth"
-    [displayedColumns]="displayedColumns">
+    [displayedColumns]="displayedColumns"
+    [tableId]="tableId">
   </perun-web-apps-resources-list>
 </div>

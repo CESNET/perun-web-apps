@@ -21,6 +21,12 @@ import { SponsorExistingMemberDialogComponent } from '../../../../../shared/comp
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Role } from '@perun-web-apps/perun/models';
 
+interface AuthPrivilege {
+  readAuth: boolean;
+  manageAuth: boolean;
+  modes: string[];
+}
+
 @Component({
   selector: 'app-vo-settings-sponsored-members',
   templateUrl: './vo-settings-sponsored-members.component.html',
@@ -28,8 +34,27 @@ import { Role } from '@perun-web-apps/perun/models';
 })
 export class VoSettingsSponsoredMembersComponent implements OnInit {
   static id = 'VoSponsoredMembersComponent';
-
   @HostBinding('class.router-component') true;
+  members: MemberWithSponsors[] = [];
+  createAuth: boolean;
+  generateAuth: boolean;
+  setSponsorshipAuth: boolean;
+  routeAuth: boolean;
+  findSponsorsAuth: boolean;
+  voSponsors: RichUser[] = [];
+  selection = new SelectionModel<MemberWithSponsors>(true, []);
+  searchString = '';
+  loading = false;
+  tableId = TABLE_SPONSORED_MEMBERS;
+  private vo: Vo;
+  //TODO uncomment when we need those parameters
+  private attrNames: string[] = [
+    // Urns.USER_DEF_ORGANIZATION,
+    //Urns.USER_DEF_PREFERRED_MAIL,
+    //Urns.MEMBER_DEF_ORGANIZATION,
+    //Urns.MEMBER_DEF_MAIL,
+    //Urns.MEMBER_DEF_EXPIRATION
+  ];
 
   constructor(
     private membersManager: MembersManagerService,
@@ -40,38 +65,13 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     private entityStorageService: EntityStorageService
   ) {}
 
-  vo: Vo;
-  members: MemberWithSponsors[] = [];
-
-  createAuth: boolean;
-  generateAuth: boolean;
-  setSponsorshipAuth: boolean;
-  routeAuth: boolean;
-  findSponsorsAuth: boolean;
-
-  voSponsors: RichUser[] = [];
-
-  //TODO uncomment when we need those parameters
-  private attrNames = [
-    //Urns.USER_DEF_ORGANIZATION,
-    //Urns.USER_DEF_PREFERRED_MAIL,
-    //Urns.MEMBER_DEF_ORGANIZATION,
-    //Urns.MEMBER_DEF_MAIL,
-    //Urns.MEMBER_DEF_EXPIRATION
-  ];
-
-  selection = new SelectionModel<MemberWithSponsors>(true, []);
-  searchString = '';
-  loading = false;
-  tableId = TABLE_SPONSORED_MEMBERS;
-
   ngOnInit(): void {
     this.loading = true;
     this.vo = this.entityStorageService.getEntity();
     this.setAuthRights();
 
     const availableRoles = ['SPONSOR'];
-    const availableRolesPrivileges = new Map<string, any>();
+    const availableRolesPrivileges = new Map<string, AuthPrivilege>();
 
     this.authResolver.setRolesAuthorization(availableRoles, this.vo, availableRolesPrivileges);
     this.findSponsorsAuth = availableRolesPrivileges.get(availableRoles[0]).readAuth;
@@ -90,7 +90,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     }
   }
 
-  setAuthRights() {
+  setAuthRights(): void {
     this.createAuth = this.authResolver.isAuthorized(
       'createSponsoredMember_Vo_String_Map<String_String>_String_User_LocalDate_policy',
       [this.vo, this.storeService.getPerunPrincipal().user]
@@ -134,7 +134,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     });
   }
 
-  onGenerate() {
+  onGenerate(): void {
     const config = getDefaultDialogConfig();
     config.width = '750px';
     config.data = {
@@ -155,7 +155,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     });
   }
 
-  onSponsorExistingMember() {
+  onSponsorExistingMember(): void {
     const config = getDefaultDialogConfig();
     config.width = '650px';
     config.data = {
@@ -176,7 +176,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     });
   }
 
-  refresh() {
+  refresh(): void {
     this.loading = true;
     this.membersManager
       .getSponsoredMembersAndTheirSponsors(this.vo.id, this.attrNames)
@@ -188,7 +188,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
       });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.searchString = filterValue;
   }
 }

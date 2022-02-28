@@ -38,7 +38,11 @@ export class VosListComponent implements OnChanges {
     this.sort = ms;
   }
 
-  static getDataForColumn(data: Vo, column: string, otherThis: VosListComponent): string {
+  getDataForColumnFun = (data: Vo, column: string): string => {
+    return VosListComponent.getDataForColumn(data, column, this.recentIds);
+  };
+
+  static getDataForColumn(data: Vo, column: string, recentIds: number[]): string {
     switch (column) {
       case 'id':
         return data.id.toString();
@@ -47,9 +51,9 @@ export class VosListComponent implements OnChanges {
       case 'name':
         return data.name;
       case 'recent':
-        if (otherThis.recentIds) {
-          if (otherThis.recentIds.includes(data.id)) {
-            return '#'.repeat(otherThis.recentIds.indexOf(data.id));
+        if (recentIds) {
+          if (recentIds.includes(data.id)) {
+            return '#'.repeat(recentIds.indexOf(data.id));
           }
         }
         return data['name'];
@@ -70,8 +74,7 @@ export class VosListComponent implements OnChanges {
       getDataForExport(
         this.dataSource.filteredData,
         this.displayedColumns,
-        VosListComponent.getDataForColumn,
-        this
+        this.getDataForColumnFun
       ),
       format
     );
@@ -87,11 +90,10 @@ export class VosListComponent implements OnChanges {
           data,
           filter,
           this.displayedColumns,
-          VosListComponent.getDataForColumn,
-          this
+          this.getDataForColumnFun
         );
       this.dataSource.sortData = (data: Vo[], sort: MatSort): Vo[] =>
-        customDataSourceSort(data, sort, VosListComponent.getDataForColumn, this);
+        customDataSourceSort(data, sort, this.getDataForColumnFun);
     }
     this.dataSource.filter = this.filterValue;
     this.dataSource.data = this.vos;

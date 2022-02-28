@@ -4,8 +4,10 @@ import { AuthCallbackComponent } from './core/components/auth-callback/auth-call
 import { UserDashboardComponent } from './users/pages/user-detail-page/user-dashboard/user-dashboard.component';
 import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
 import { RedirectPageComponent } from '@perun-web-apps/perun/components';
-import { LoginScreenComponent } from '@perun-web-apps/perun/login';
-import { LoginScreenServiceAccessComponent } from '@perun-web-apps/perun/login';
+import {
+  LoginScreenComponent,
+  LoginScreenServiceAccessComponent,
+} from '@perun-web-apps/perun/login';
 
 const routes: Routes = [
   {

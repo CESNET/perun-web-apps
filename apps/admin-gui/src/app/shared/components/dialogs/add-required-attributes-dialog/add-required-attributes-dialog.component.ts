@@ -20,6 +20,13 @@ export interface AddRequiredAttributesDialogData {
   styleUrls: ['./add-required-attributes-dialog.component.scss'],
 })
 export class AddRequiredAttributesDialogComponent implements OnInit {
+  theme: string;
+  attrDefinitions: AttributeDefinition[] = [];
+  selection = new SelectionModel<AttributeDefinition>(true, []);
+  filterValue = '';
+  loading = false;
+  private serviceId: number;
+
   constructor(
     private dialogRef: MatDialogRef<AddRequiredAttributesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddRequiredAttributesDialogData,
@@ -28,15 +35,6 @@ export class AddRequiredAttributesDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: TranslateService
   ) {}
-
-  theme: string;
-  serviceId: number;
-
-  attrDefinitions: AttributeDefinition[] = [];
-  selection = new SelectionModel<AttributeDefinition>(true, []);
-
-  filterValue = '';
-  loading = false;
 
   ngOnInit(): void {
     this.loading = true;
@@ -48,14 +46,14 @@ export class AddRequiredAttributesDialogComponent implements OnInit {
     });
   }
 
-  onAdd() {
+  onAdd(): void {
     this.loading = true;
     const attrDefinitionsIds = this.selection.selected.map((attrDef) => attrDef.id);
 
     this.serviceManager.addRequiredAttributes(this.serviceId, attrDefinitionsIds).subscribe(
       () => {
         this.notificator.showSuccess(
-          this.translate.instant('DIALOGS.ADD_REQUIRED_ATTRIBUTES.SUCCESS')
+          this.translate.instant('DIALOGS.ADD_REQUIRED_ATTRIBUTES.SUCCESS') as string
         );
         this.dialogRef.close(true);
         this.loading = false;
@@ -64,11 +62,11 @@ export class AddRequiredAttributesDialogComponent implements OnInit {
     );
   }
 
-  onCancel() {
+  onCancel(): void {
     this.dialogRef.close(false);
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
   }
 }

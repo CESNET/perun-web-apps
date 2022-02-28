@@ -4,21 +4,21 @@
   <h1 class="page-title d-flex">
     <mat-icon
       [ngStyle]="{'color':'black'}"
-      svgIcon="perun-facility-black"
-      class="perun-icon icon-scale">
+      class="perun-icon icon-scale"
+      svgIcon="perun-facility-black">
     </mat-icon>
     {{'FACILITY_MANAGEMENT.TITLE' | translate}}
   </h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button mat-flat-button class="action-button" (click)="onCreate()" class="mr-2" color="accent">
+  <button (click)="onCreate()" class="action-button" class="mr-2" color="accent" mat-flat-button>
     {{'FACILITY_MANAGEMENT.CREATE' | translate}}
   </button>
   <button
-    mat-flat-button
-    class="mr-2"
     [disabled]="selection.selected.length === 0"
+    class="mr-2"
+    color="warn"
     (click)="onDelete()"
-    color="warn">
+    mat-flat-button>
     {{'FACILITY_MANAGEMENT.DELETE' | translate}}
   </button>
   <perun-web-apps-immediate-filter
@@ -26,13 +26,13 @@
     (filter)="applyFilter($event)"
     [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'">
   </perun-web-apps-immediate-filter>
-  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
   <perun-web-apps-facilities-list
-    [tableId]="tableId"
-    *ngIf="!loading"
-    [selection]="selection"
     [filterValue]="filterValue"
+    *ngIf="!loading"
+    [recentIds]="recentIds"
+    [selection]="selection"
     [facilities]="facilities"
-    [recentIds]="recentIds">
+    [tableId]="tableId">
   </perun-web-apps-facilities-list>
 </div>

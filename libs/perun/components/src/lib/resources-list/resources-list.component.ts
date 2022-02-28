@@ -67,11 +67,11 @@ export class ResourcesListComponent implements OnInit, OnChanges {
     this.sort = ms;
   }
 
-  static getDataForColumn(
-    data: ResourceWithStatus,
-    column: string,
-    otherThis: ResourcesListComponent
-  ): string {
+  getDataForColumnFun = (data: ResourceWithStatus, column: string): string => {
+    return ResourcesListComponent.getDataForColumn(data, column, this.recentIds);
+  };
+
+  static getDataForColumn(data: ResourceWithStatus, column: string, recentIds: number[]): string {
     switch (column) {
       case 'id':
         return data.id.toString();
@@ -84,9 +84,9 @@ export class ResourcesListComponent implements OnInit, OnChanges {
       case 'description':
         return data.description;
       case 'recent':
-        if (otherThis.recentIds) {
-          if (otherThis.recentIds.includes(data.id)) {
-            return '#'.repeat(otherThis.recentIds.indexOf(data.id));
+        if (recentIds) {
+          if (recentIds.includes(data.id)) {
+            return '#'.repeat(recentIds.indexOf(data.id));
           }
         }
         return data['name'];
@@ -127,8 +127,7 @@ export class ResourcesListComponent implements OnInit, OnChanges {
       getDataForExport(
         this.dataSource.filteredData,
         this.displayedColumns,
-        ResourcesListComponent.getDataForColumn,
-        this
+        this.getDataForColumnFun
       ),
       format
     );
@@ -144,12 +143,11 @@ export class ResourcesListComponent implements OnInit, OnChanges {
           data,
           filter,
           this.displayedColumns,
-          ResourcesListComponent.getDataForColumn,
-          this,
+          this.getDataForColumnFun,
           true
         );
       this.dataSource.sortData = (data: RichResource[], sort: MatSort): RichResource[] =>
-        customDataSourceSort(data, sort, ResourcesListComponent.getDataForColumn, this);
+        customDataSourceSort(data, sort, this.getDataForColumnFun);
     }
     this.dataSource.filter = this.filterValue;
     this.dataSource.data = this.resources;

@@ -1,18 +1,18 @@
 <div class="{{theme}}">
   <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <div *ngIf="!loading" mat-dialog-content class="dialog-container">
+  <div *ngIf="!loading" class="dialog-container" mat-dialog-content>
     <perun-web-apps-vo-search-select
-      class="long-input"
+      (voSelected)="selectedVo = $event"
       [vos]="vos"
-      (voSelected)="selectedVo = $event">
+      class="long-input">
     </perun-web-apps-vo-search-select>
 
     <mat-form-field>
       <input
         matInput
-        required
+        [formControl]="nameCtrl"
         placeholder="{{'DIALOGS.CREATE_RESOURCE.NAME' | translate}}"
-        [formControl]="nameCtrl" />
+        required />
       <mat-error>
         {{'DIALOGS.CREATE_RESOURCE.INCORRECT_NAME' | translate}}
       </mat-error>
@@ -20,8 +20,8 @@
     <mat-form-field>
       <input
         matInput
-        placeholder="{{'DIALOGS.CREATE_RESOURCE.DESCRIPTION' | translate}}"
-        [formControl]="descriptionCtrl" />
+        [formControl]="descriptionCtrl"
+        placeholder="{{'DIALOGS.CREATE_RESOURCE.DESCRIPTION' | translate}}" />
       <mat-error>
         {{'DIALOGS.CREATE_RESOURCE.FILL_DESCRIPTION' | translate}}
       </mat-error>
@@ -29,15 +29,15 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-flat-button class="ml-auto" (click)="onCancel()">
+    <button (click)="onCancel()" class="ml-auto" mat-flat-button>
       {{'DIALOGS.CREATE_RESOURCE.CANCEL' | translate}}
     </button>
     <button
-      mat-flat-button
+      (click)="onSubmit()"
       class="ml-2"
       [disabled]="nameCtrl.invalid || descriptionCtrl.invalid || selectedVo === null || loading"
       color="accent"
-      (click)="onSubmit()">
+      mat-flat-button>
       {{'DIALOGS.CREATE_RESOURCE.CREATE' | translate}}
     </button>
   </div>

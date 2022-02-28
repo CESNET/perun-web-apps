@@ -1,8 +1,8 @@
 <h1 class="page-subtitle">{{'ADMIN.USERS.TITLE' | translate}}</h1>
 <perun-web-apps-debounce-filter
-  class="mt-2 search-field"
+  (filter)="onSearchByString($event)"
   [placeholder]="'ADMIN.USERS.SEARCH_PLACEHOLDER'"
-  (filter)="onSearchByString($event)">
+  class="mt-2 search-field">
 </perun-web-apps-debounce-filter>
 <mat-checkbox (change)="findUsersWithoutVO()" [checked]="usersWithoutVo" color="primary">
   {{'ADMIN.USERS.USERS_WITHOUT_VO' | translate}}
@@ -10,8 +10,8 @@
 <perun-web-apps-users-dynamic-list
   [disableRouting]="false"
   [searchString]="searchString"
-  [withoutVo]="usersWithoutVo"
+  [attrNames]="attributes"
   [displayedColumns]="['user', 'id', 'name', 'email', 'logins', 'organization']"
   [tableId]="tableId"
-  [attrNames]="attributes">
+  [withoutVo]="usersWithoutVo">
 </perun-web-apps-users-dynamic-list>

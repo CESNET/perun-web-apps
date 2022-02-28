@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeIn } from '@perun-web-apps/perun/animations';
 import { InputUpdateService, Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SideMenuService } from '../../../../../core/services/common/side-menu.service';
 import { SideMenuItemService } from '../../../../../shared/side-menu/side-menu-item.service';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -22,6 +22,10 @@ import { TranslateService } from '@ngx-translate/core';
   animations: [fadeIn],
 })
 export class ServiceDetailPageComponent implements OnInit {
+  service: Service;
+  loading = false;
+  private serviceId: number;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -35,33 +39,15 @@ export class ServiceDetailPageComponent implements OnInit {
     private entityStorageService: EntityStorageService
   ) {}
 
-  service: Service;
-  serviceId: number;
-  loading = false;
-
   ngOnInit(): void {
     this.loading = true;
-    this.route.params.subscribe((params) => {
-      this.serviceId = params['serviceId'];
+    this.route.params.subscribe((params: Params) => {
+      this.serviceId = params['serviceId'] as number;
       this.refresh();
     });
   }
 
-  refresh() {
-    this.serviceManager.getServiceById(this.serviceId).subscribe(
-      (service) => {
-        this.service = service;
-        this.entityStorageService.setEntity({ id: service.id, beanName: service.beanName });
-
-        const serviceItems = this.sideMenuItemService.parseService(this.service);
-        this.sideMenuService.setAdminItems([serviceItems]);
-        this.loading = false;
-      },
-      () => (this.loading = false)
-    );
-  }
-
-  editService() {
+  editService(): void {
     const config = getDefaultDialogConfig();
     config.width = '600px';
     config.data = {
@@ -78,7 +64,7 @@ export class ServiceDetailPageComponent implements OnInit {
     });
   }
 
-  removeService() {
+  removeService(): void {
     const config = getDefaultDialogConfig();
     config.width = '600px';
     config.data = {
@@ -88,13 +74,13 @@ export class ServiceDetailPageComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteServiceDialogComponent, config);
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.router.navigate(['/admin/services']);
+      if (result !== undefined) {
+        void this.router.navigate(['/admin/services']);
       }
     });
   }
 
-  changeServiceStatus() {
+  changeServiceStatus(): void {
     this.loading = true;
     const inputService: InputUpdateService = {
       service: {
@@ -111,9 +97,23 @@ export class ServiceDetailPageComponent implements OnInit {
     this.serviceManager.updateService(inputService).subscribe(
       () => {
         this.notificator.showSuccess(
-          this.translate.instant('SERVICE_DETAIL.STATUS_CHANGE_SUCCESS')
+          this.translate.instant('SERVICE_DETAIL.STATUS_CHANGE_SUCCESS') as string
         );
         this.refresh();
+      },
+      () => (this.loading = false)
+    );
+  }
+
+  private refresh(): void {
+    this.serviceManager.getServiceById(this.serviceId).subscribe(
+      (service) => {
+        this.service = service;
+        this.entityStorageService.setEntity({ id: service.id, beanName: service.beanName });
+
+        const serviceItems = this.sideMenuItemService.parseService(this.service);
+        this.sideMenuService.setAdminItems([serviceItems]);
+        this.loading = false;
       },
       () => (this.loading = false)
     );
