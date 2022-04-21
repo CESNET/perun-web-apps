@@ -28,27 +28,27 @@ export class SettingsAuthenticationComponent implements OnInit {
   ) {
     translate
       .get('AUTHENTICATION.DELETE_IMG_DIALOG_TITLE')
-      .subscribe((res) => (this.removeDialogTitle = res));
+      .subscribe((res: string) => (this.removeDialogTitle = res));
     translate
       .get('AUTHENTICATION.DELETE_IMG_DIALOG_DESC')
-      .subscribe((res) => (this.removeDialogDescription = res));
+      .subscribe((res: string) => (this.removeDialogDescription = res));
   }
 
   ngOnInit(): void {
     this.translate.onLangChange.subscribe(() => {
       this.translate
         .get('AUTHENTICATION.DELETE_IMG_DIALOG_TITLE')
-        .subscribe((res) => (this.removeDialogTitle = res));
+        .subscribe((res: string) => (this.removeDialogTitle = res));
       this.translate
         .get('AUTHENTICATION.DELETE_IMG_DIALOG_DESC')
-        .subscribe((res) => (this.removeDialogDescription = res));
-      this.mfaUrl = this.store.get('mfa', 'url_' + this.translate.currentLang);
+        .subscribe((res: string) => (this.removeDialogDescription = res));
+      this.mfaUrl = this.store.get('mfa', 'url_' + this.translate.currentLang) as string;
     });
-    this.mfaUrl = this.store.get('mfa', 'url_' + this.translate.currentLang);
+    this.mfaUrl = this.store.get('mfa', 'url_' + this.translate.currentLang) as string;
     this.loadImage();
   }
 
-  onAddImg() {
+  onAddImg(): void {
     const config = getDefaultDialogConfig();
     config.width = '500px';
     config.data = { theme: 'user-theme', attribute: this.imgAtt };
@@ -70,7 +70,7 @@ export class SettingsAuthenticationComponent implements OnInit {
   //   return canvas.toDataURL('image/png');
   // }
 
-  onDeleteImg() {
+  onDeleteImg(): void {
     const config = getDefaultDialogConfig();
     config.width = '600px';
     config.data = {
@@ -90,9 +90,9 @@ export class SettingsAuthenticationComponent implements OnInit {
     });
   }
 
-  private loadImage() {
-    const imgAttributeName = this.store.get('mfa', 'security_image_attribute');
-    this.displayImageBlock = this.store.get('mfa', 'enable_security_image');
+  private loadImage(): void {
+    const imgAttributeName = this.store.get('mfa', 'security_image_attribute') as string;
+    this.displayImageBlock = this.store.get('mfa', 'enable_security_image') as boolean;
     this.attributesManagerService
       .getUserAttributeByName(this.store.getPerunPrincipal().userId, imgAttributeName)
       .subscribe((attr) => {
