@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserDontExistDialogComponent } from '@perun-web-apps/general';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { MfaHandlerService } from './mfa-handler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +24,9 @@ export class InitAuthService {
     private authResolver: GuiAuthResolver,
     private authzService: AuthzResolverService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private oauthService: OAuthService,
+    private mfaHandlerService: MfaHandlerService
   ) {}
 
   setLoginScreen(shown: boolean): void {
@@ -46,6 +50,10 @@ export class InitAuthService {
    * start authentication.
    */
   verifyAuth(): Promise<boolean> {
+    // if this application is opened just for MFA, then log out from single factor
+    // and force multi factor authentication
+    this.mfaHandlerService.mfaWindowForceLogout();
+
     if (sessionStorage.getItem('baPrincipal')) {
       this.serviceAccess = true;
       if (location.pathname === '/service-access') {
@@ -118,7 +126,9 @@ export class InitAuthService {
         resolve();
       });
     } else if (this.storeService.get('auto_auth_redirect')) {
-      localStorage.setItem('routeAuthGuard', window.location.pathname);
+      if (!sessionStorage.getItem('mfaProcessed')) {
+        localStorage.setItem('routeAuthGuard', window.location.pathname);
+      }
       return (
         this.startAuth()
           // start a promise that will never resolve, so the app loading won't finish in case

@@ -14,6 +14,9 @@
     "oauth_response_type": "code",
     "oauth_offline_access_consent_prompt": true
   },
+  "mfa": {
+    "url_en": "https://mfa.id.muni.cz/"
+  },
   "skip_oidc": false,
   "auto_auth_redirect": true,
   "is_devel": false,
