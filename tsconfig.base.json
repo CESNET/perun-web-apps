@@ -46,5 +46,5 @@
       "@perun-web-apps/ui/material": ["libs/ui/material/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["tmp"]
 }
