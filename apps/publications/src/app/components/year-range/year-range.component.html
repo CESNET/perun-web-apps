@@ -1,4 +1,4 @@
-<mat-form-field class="year-field mr-2" (click)="sdp.open()">
+<mat-form-field class="year-field me-2" (click)="sdp.open()">
   <mat-label>{{'PUBLICATION_FILTER.START_YEAR' | translate}}</mat-label>
   <input
     matInput
@@ -7,7 +7,7 @@
     [formControl]="startYear"
     class="disable"
     readonly />
-  <mat-datepicker-toggle matSuffix [for]="sdp"></mat-datepicker-toggle>
+  <mat-datepicker-toggle matIconSuffix [for]="sdp"></mat-datepicker-toggle>
   <mat-datepicker
     #sdp
     startView="multi-year"
@@ -16,7 +16,7 @@
   </mat-datepicker>
 </mat-form-field>
 
-<mat-form-field class="year-field mr-2" (click)="edp.open()">
+<mat-form-field class="year-field me-2" (click)="edp.open()">
   <mat-label>{{'PUBLICATION_FILTER.END_YEAR' | translate}}</mat-label>
   <input
     matInput

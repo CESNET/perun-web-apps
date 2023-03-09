@@ -253,7 +253,8 @@
     },
     "ASSIGNED_MEMBERS": {
       "TITLE": "Assigned members",
-      "FILTER": "Filter members"
+      "FILTER": "Filter members",
+      "FILTER_CONSENT_STATUS": "Filter by consent"
     },
     "TAGS": {
       "TITLE": "Assigned tags",
@@ -320,6 +321,7 @@
         "TITLE": "Resource tags",
         "TAG_ID": "Id",
         "TAG_NAME": "Tag name",
+        "CHANGE_TAG_NAME": "Change tag name",
         "CREATE_BUTTON": "Create",
         "DELETE_BUTTON": "Delete",
         "EDIT_BUTTON": "Edit",
@@ -1640,8 +1642,7 @@
       "CANCEL": "Cancel",
       "CREATE": "Create",
       "SUCCESS": "Resource successfully created",
-      "INCORRECT_NAME": "Name cannot be empty and can contain only characters a-z, A-Z, numbers, spaces, dots, '_' and '-'",
-      "FILL_DESCRIPTION": "Description cannot be empty"
+      "INCORRECT_NAME": "Name cannot be empty and can contain only characters a-z, A-Z, numbers, spaces, dots, '_' and '-'"
     },
     "ADD_EXT_SOURCES": {
       "TITLE": "Add external sources",
@@ -2035,7 +2036,8 @@
       "SPONSORSHIP_LABEL": "Sponsorship",
       "USER_TITLE": "User name",
       "NAMESPACE_TITLE": "Namespace details",
-      "SPONSORSHIP_TITLE": "Sponsorship options"
+      "SPONSORSHIP_TITLE": "Sponsorship options",
+      "NO_NAMESPACE_SELECTED": "Select namespace first"
     },
     "GENERATE_SPONSORED_MEMBERS": {
       "TITLE": "Generate sponsored members",
@@ -2082,8 +2084,8 @@
       "TITLE": "Edit sponsors of sponsored member",
       "EXPIRATION": "Sponsorship expiration",
       "TABLE_ID": "Id",
-      "TABLE_NAME": "name",
-      "TABLE_EXPIRATION": "expiration",
+      "TABLE_NAME": "Name",
+      "TABLE_EXPIRATION": "Expiration",
       "CANCEL": "Close",
       "SUBMIT": "Submit",
       "REMOVE_SPONSOR_DISABLED": "You are not authorized to remove sponsor",
@@ -2153,6 +2155,7 @@
       "CONTACT": "Contact",
       "FILL_CONTACT": "Contact cannot be empty",
       "CONTACT_FORMAT": "Invalid format, e.g. mail@domain.com",
+      "TYPE_LABEL": "Type",
       "TYPE1": "Administrative",
       "TYPE2": "Technical",
       "CANCEL": "Cancel",
@@ -2512,7 +2515,9 @@
       "SHOW_RECENTLY_VIEWED": "Show Recently viewed",
       "SHOW_ROLES": "Show roles",
       "MAIL_CHANGE_SUCCESS": "Preferred mail has been changed",
-      "ANONYMIZED": "User anonymized"
+      "ANONYMIZED": "User anonymized",
+      "DIRECT_ROLES": "User based",
+      "AUTHORIZED_GROUP_BASED_ROLES": "Group based"
     },
     "OVERVIEW": {
       "GENERAL_SETTINGS": "General settings"
@@ -2691,7 +2696,8 @@
         "TECHNICAL_OWNERS": "Technical owners",
         "DESTINATIONS": "Destinations",
         "HOSTS": "Hosts",
-        "NO_FACILITIES_WARNING": "No facilities found"
+        "NO_FACILITIES_WARNING": "No facilities found",
+        "AUTHZ_GROUP": "Role acquired through"
       },
       "CONSENT_HUBS_LIST": {
         "ID": "Id",
@@ -2845,7 +2851,8 @@
           "CREATE_RELATION_AUTH_TOOLTIP": "You don't have permission to create relation with this group.",
           "SYNCHRONIZED_GROUP": "Group is filled with members from an external source",
           "INDIRECT_GROUP": "This group is assigned as a part of a groups tree.",
-          "MULTIPLE_ASSIGNMENTS": "This group is assigned manually and also as a part of a groups tree. You can remove only manual assignment."
+          "MULTIPLE_ASSIGNMENTS": "This group is assigned manually and also as a part of a groups tree. You can remove only manual assignment.",
+          "AUTHZ_GROUP": "Role acquired through"
         },
         "GROUP_MENU": {
           "MOVE": "Move group",
@@ -2860,7 +2867,8 @@
         "VOS_LIST": {
           "ID": "Id",
           "NAME": "Name",
-          "SHORTNAME": "Short name"
+          "SHORTNAME": "Short name",
+          "AUTHZ_GROUP": "Role acquired through"
         },
         "VO_SEARCH_SELECT": {
           "SELECT_VO": "Select organization",
@@ -2891,7 +2899,8 @@
           "TABLE_RESOURCE_DESCRIPTION": "Description",
           "TABLE_GROUP_RESOURCE_STATUS": "Status",
           "NO_RESOURCES_WARNING": "No resources assigned.",
-          "INDIRECT_RESOURCE": "This resource is assigned indirectly."
+          "INDIRECT_RESOURCE": "This resource is assigned indirectly.",
+          "AUTHZ_GROUP": "Role acquired through"
         },
         "RESOURCE_SEARCH_SELECT": {
           "SELECT_RESOURCE": "Select resource",
@@ -2933,6 +2942,7 @@
         "ATTRIBUTE_VALUE_LIST": {
           "EDIT_DIALOG": {
             "TITLE": "Edit attribute value",
+            "VALUE_LABEL": "Attribute value",
             "SUBMIT_BUTTON": "Submit",
             "CANCEL_BUTTON": "Cancel"
           },

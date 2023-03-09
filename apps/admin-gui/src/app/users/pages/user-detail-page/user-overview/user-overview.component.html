@@ -1,25 +1,25 @@
 <div *ngIf="inMyProfile" class="align-cards">
-  <mat-card class="mat-elevation-z3">
+  <mat-card appearance="outlined" class="mat-elevation-z3">
     <mat-card-header>
       <mat-card-title>
         <h1 class="page-subtitle">{{'USER_DETAIL.OVERVIEW.GENERAL_SETTINGS' | translate}}</h1>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <table [dataSource]="mailDataSource" class="w-100" mat-table>
+      <table [dataSource]="mailDataSource" mat-table>
         <ng-container matColumnDef="name">
           <th *matHeaderCellDef mat-header-cell></th>
-          <td *matCellDef="let attribute" class="font-weight-bold" mat-cell>
-            {{attribute.displayName}}:
-          </td>
+          <td *matCellDef="let attribute" class="fw-bold" mat-cell>{{attribute.displayName}}:</td>
         </ng-container>
         <ng-container matColumnDef="value">
           <th *matHeaderCellDef mat-header-cell></th>
           <td *matCellDef="let attribute" mat-cell>
-            {{attribute.value}}
-            <button (click)="changeEmail()" class="ml-3" mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
+            <div class="d-flex align-items-center">
+              {{attribute.value}}
+              <button (click)="changeEmail()" class="ms-3" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
           </td>
         </ng-container>
 

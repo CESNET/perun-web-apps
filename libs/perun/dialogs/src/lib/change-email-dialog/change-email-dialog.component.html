@@ -6,13 +6,8 @@
     >{{pendingEmailsMessage}}</perun-web-apps-alert
   >
   <mat-form-field class="w-100">
-    <label class="w-100">
-      <input
-        matInput
-        required
-        placeholder="{{'DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|customTranslate | translate}}"
-        [formControl]="emailControl" />
-    </label>
+    <mat-label>{{'DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|customTranslate | translate}}</mat-label>
+    <input matInput required [formControl]="emailControl" />
     <mat-error
       *ngIf="emailControl.invalid"
       >{{'DIALOGS.CHANGE_EMAIL.EMAIL_ERROR'|customTranslate | translate}}</mat-error
@@ -20,13 +15,13 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-flat-button class="ml-auto" (click)="onCancel()">
+  <button mat-flat-button class="ms-auto" (click)="onCancel()">
     {{'DIALOGS.CHANGE_EMAIL.CANCEL'|customTranslate | translate}}
   </button>
   <button
     (click)="onSubmit()"
     [disabled]="!emailControl.valid"
-    class="ml-2"
+    class="ms-2"
     color="accent"
     mat-flat-button>
     {{'DIALOGS.CHANGE_EMAIL.CHANGE'|customTranslate | translate}}

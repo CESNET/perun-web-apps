@@ -3,7 +3,7 @@
 
   <div mat-dialog-content>
     <div class="inline-dialog-items">
-      <mat-form-field class="mr-2">
+      <mat-form-field class="me-2">
         <mat-label>{{'SHARED.COMPONENTS.MANAGERS_PAGE.SELECT_ROLE' | translate}}</mat-label>
         <mat-select [(value)]="selectedRole">
           <mat-option *ngFor="let role of availableRoles" [value]="role.roleName">
@@ -12,11 +12,11 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="mr-2 w-100">
+      <mat-form-field class="me-2 w-100">
+        <mat-label>{{'DIALOGS.ADD_MANAGERS.DESCRIPTION' | translate}}</mat-label>
         <input
           matInput
           autocomplete="false"
-          placeholder="{{'DIALOGS.ADD_MANAGERS.DESCRIPTION' | translate}}"
           data-cy="search-manager-input"
           perunWebAppsAutoFocus
           (keyup.enter)="onSearchByString()"
@@ -28,7 +28,7 @@
     </div>
     <button
       (click)="onSearchByString()"
-      class="ml-auto"
+      class="ms-auto"
       color="accent"
       data-cy="search-manager-button"
       [disabled]="loading"
@@ -36,15 +36,12 @@
       {{'DIALOGS.ADD_MANAGERS.SEARCH' | translate}}
     </button>
 
-    <div class="overflow-hidden">
-      <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
-    </div>
-    <div class="mt-3" *ngIf="users !== null && !loading">
-      <perun-web-apps-alert *ngIf="users.length === 0 && firstSearchDone" alert_type="warn">
-        {{'DIALOGS.ADD_MANAGERS.NO_USERS_FOUND' | translate}}
-      </perun-web-apps-alert>
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative mt-3" *ngIf="firstSearchDone">
       <app-users-list
-        *ngIf="users.length !== 0"
+        *perunWebAppsLoader="loading; indicator: spinner"
         [disableRouting]="true"
         [selection]="selection"
         [displayedColumns]="['select', 'id', 'name', 'email', 'logins', 'organization']"
@@ -55,12 +52,12 @@
   </div>
 
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+    <button (click)="onCancel()" class="ms-auto" mat-flat-button>
       {{'DIALOGS.ADD_MANAGERS.CANCEL' | translate}}
     </button>
     <button
       (click)="onSubmit()"
-      class="ml-2"
+      class="ms-2"
       color="accent"
       data-cy="add-manager-button-dialog"
       [disabled]="selection.selected.length === 0 || selectedRole === undefined || loading"

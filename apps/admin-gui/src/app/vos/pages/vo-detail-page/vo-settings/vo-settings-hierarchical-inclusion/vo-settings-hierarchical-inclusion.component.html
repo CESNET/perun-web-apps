@@ -1,7 +1,12 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.TITLE' | translate}}</h1>
 <div class="display-flex">
   <perun-web-apps-refresh-button (click)="loadAllowedGroups()"></perun-web-apps-refresh-button>
-  <button (click)="addGroupsInclusion()" mat-flat-button class="mr-2 action-button" color="accent">
+  <button
+    [disabled]="!selectedParentVo"
+    (click)="addGroupsInclusion()"
+    mat-flat-button
+    class="me-2 action-button"
+    color="accent">
     {{'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.ADD' | translate}}
   </button>
   <button
@@ -9,24 +14,29 @@
     (click)="removeGroupsInclusion()"
     mat-flat-button
     color="warn"
-    class="mr-2">
+    class="me-2">
     {{'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.REMOVE' | translate}}
   </button>
   <div class="vo-search-select">
     <perun-web-apps-vo-search-select
       *ngIf="parentVos.length > 0"
       [vos]="parentVos"
-      (voSelected)="voSelected($event)">
+      (voSelected)="voSelected($event)"
+      [disableAutoSelect]="true">
     </perun-web-apps-vo-search-select>
   </div>
 </div>
-<perun-web-apps-groups-list
-  *ngIf="!loading"
-  [tableId]="tableId"
-  [groups]="allowedGroups"
-  [selection]="selected"
-  [displayedColumns]="['select', 'id', 'name', 'description']"
-  [noGroupsAlert]="'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.NO_GROUPS_ALLOWED_ALERT'"
-  theme="vo-theme">
-</perun-web-apps-groups-list>
-<mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative">
+  <perun-web-apps-groups-list
+    *perunWebAppsLoader="loading; indicator: spinner"
+    [tableId]="tableId"
+    [groups]="allowedGroups"
+    [selection]="selected"
+    [displayedColumns]="['select', 'id', 'name', 'description']"
+    [noGroupsAlert]="'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.NO_GROUPS_ALLOWED_ALERT'"
+    theme="vo-theme">
+  </perun-web-apps-groups-list>
+</div>

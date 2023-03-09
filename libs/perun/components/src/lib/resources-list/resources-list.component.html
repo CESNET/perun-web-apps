@@ -76,6 +76,23 @@
           {{resource.name}}
         </td>
       </ng-container>
+      <ng-container matColumnDef="authzGroup">
+        <th mat-header-cell *matHeaderCellDef>
+          {{'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.AUTHZ_GROUP' | translate}}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let resource"
+          (mouseenter)="disabledRouting = true"
+          (mouseleave)="disabledRouting = disableRouting"
+          style="cursor: default">
+          <perun-web-apps-authorized-groups-cell
+            [groups]="resourceWithAuthzGroupPairs.get(resource.id)"
+            [disableRouting]="disableRouting"
+            [authzVoNames]="authzVoNames">
+          </perun-web-apps-authorized-groups-cell>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="vo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_VO_NAME' | translate}}
@@ -137,8 +154,8 @@
         *matRowDef="let resource; columns: displayedColumns;"
         [class.cursor-pointer]="!disableRouting"
         [class.disable-outline]="disabledRouting"
-        [perunWebAppsMiddleClickRouterLink]="[disabledRouting ? null : (resource | getResourceRoute: routingVo)]"
-        [routerLink]="disabledRouting ? null : (resource | getResourceRoute: routingVo)"
+        [perunWebAppsMiddleClickRouterLink]="(disabledRouting || disableRouting) ? null : [(resource | getResourceRoute: routingVo)]"
+        [routerLink]="(disabledRouting || disableRouting) ? null : (resource | getResourceRoute: routingVo)"
         class="dark-hover-list-item"
         mat-row></tr>
     </table>

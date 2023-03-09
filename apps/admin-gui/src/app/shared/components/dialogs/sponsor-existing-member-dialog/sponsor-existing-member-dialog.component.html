@@ -1,16 +1,14 @@
 <div class="{{theme}}">
   <h1 mat-dialog-title>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.TITLE' | translate}}</h1>
   <div mat-dialog-content>
-    <mat-form-field class="mr-2 search-field adjust-width" *ngIf="!serviceMemberId">
-      <label>
-        <input
-          data-cy="sponsor-search-input"
-          [formControl]="searchCtrl"
-          autocomplete="false"
-          matInput
-          (keyup.enter)="onSearchByString()"
-          placeholder="{{'DIALOGS.SPONSOR_EXISTING_MEMBER.DESCRIPTION' | translate}}" />
-      </label>
+    <mat-form-field class="me-2 search-field adjust-width" *ngIf="!serviceMemberId">
+      <mat-label>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.DESCRIPTION' | translate}}</mat-label>
+      <input
+        data-cy="sponsor-search-input"
+        [formControl]="searchCtrl"
+        autocomplete="false"
+        matInput
+        (keyup.enter)="onSearchByString()" />
       <mat-error>
         {{'DIALOGS.SPONSOR_EXISTING_MEMBER.EMPTY_SEARCH_MESSAGE' | translate}}
       </mat-error>
@@ -20,25 +18,28 @@
       *ngIf="!serviceMemberId"
       data-cy="sponsor-search-button"
       (click)="onSearchByString()"
-      class="ml-auto"
+      class="ms-auto"
       color="accent"
       [disabled]="loading"
       mat-flat-button>
       {{'DIALOGS.SPONSOR_EXISTING_MEMBER.SEARCH' | translate}}
     </button>
 
-    <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-
-    <perun-web-apps-members-list
-      [disableRouting]="true"
-      *ngIf="firstSearchDone"
-      [hidden]="loading"
-      [disableStatusChange]="true"
-      [members]="members"
-      [selection]="selection"
-      [displayedColumns]="displayedColumns"
-      [tableId]="tableId">
-    </perun-web-apps-members-list>
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative" *ngIf="firstSearchDone">
+      <perun-web-apps-members-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [disableRouting]="true"
+        [hidden]="loading"
+        [disableStatusChange]="true"
+        [members]="members"
+        [selection]="selection"
+        [displayedColumns]="displayedColumns"
+        [tableId]="tableId">
+      </perun-web-apps-members-list>
+    </div>
 
     <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
       {{'DIALOGS.SPONSOR_EXISTING_MEMBER.BEGIN_SEARCH' | translate}}
@@ -60,13 +61,13 @@
   </div>
 
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+    <button (click)="onCancel()" class="ms-auto" mat-flat-button>
       {{'DIALOGS.SPONSOR_EXISTING_MEMBER.CANCEL' | translate}}
     </button>
     <button
       data-cy="sponsor-member-button"
       (click)="onSubmit()"
-      class="ml-2"
+      class="ms-2"
       color="accent"
       [disabled]="loading || selection.selected.length === 0 || (sponsorType === 'other' && !selectedSponsor)"
       mat-flat-button>

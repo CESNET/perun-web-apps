@@ -1,8 +1,8 @@
-<mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
+<mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
 <div *ngIf="!loading">
   <div class="member-cards">
     <div class="align-cards">
-      <mat-card class="mat-elevation-z3">
+      <mat-card appearance="outlined" class="mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>
             <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.PERSONAL' | translate}}</h1>
@@ -12,7 +12,7 @@
           <table [dataSource]="dataSource" mat-table>
             <ng-container matColumnDef="attName">
               <th *matHeaderCellDef mat-header-cell></th>
-              <td *matCellDef="let attribute" class="font-weight-bold" mat-cell>
+              <td *matCellDef="let attribute" class="fw-bold" mat-cell>
                 <span *ngIf="attributes.get(attribute)[0] !== null">
                   {{attributes.get(attribute)[0]}}:
                 </span>
@@ -33,18 +33,21 @@
       </mat-card>
     </div>
     <div class="align-cards">
-      <mat-card class="mat-elevation-z3 membership-card">
-        <perun-web-apps-member-overview-membership [member]="member" [voId]="vo.id">
+      <mat-card appearance="outlined" class="mat-elevation-z3 membership-card">
+        <perun-web-apps-member-overview-membership
+          class="column-center"
+          [member]="member"
+          [voId]="vo.id">
         </perun-web-apps-member-overview-membership>
       </mat-card>
-      <mat-card class="mat-elevation-z3 membership-card mt-4">
+      <mat-card appearance="outlined" class="mat-elevation-z3 membership-card mt-4">
         <perun-web-apps-member-overview-groups
           [member]="member"
           [voId]="vo.id"></perun-web-apps-member-overview-groups>
       </mat-card>
     </div>
     <div class="align-cards">
-      <mat-card *ngIf="pwdResetAuth" class="mat-elevation-z3">
+      <mat-card appearance="outlined" *ngIf="pwdResetAuth" class="mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>
             <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.RESET_PASSWORD' | translate}}</h1>
@@ -66,7 +69,7 @@
         </mat-card-content>
       </mat-card>
       <div *ngIf="member.sponsored">
-        <mat-card class="mat-elevation-z3 mt-4">
+        <mat-card appearance="outlined" class="mat-elevation-z3 mt-4">
           <mat-card-header>
             <mat-card-title>
               <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.SPONSORSHIP' | translate}}</h1>
@@ -78,7 +81,7 @@
           <mat-card-content *ngIf="sponsors.length !== 0">
             <h6 class="d-flex">
               {{'MEMBER_DETAIL.OVERVIEW.SPONSORS' | translate}}:
-              <button (click)="changeSponsors()" class="ml-auto mt-n2" mat-icon-button>
+              <button (click)="changeSponsors()" class="ms-auto mt-n2" mat-icon-button>
                 <mat-icon>edit</mat-icon>
               </button>
             </h6>

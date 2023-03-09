@@ -1,11 +1,11 @@
 <div class="user-theme">
   <h1 class="page-subtitle d-flex">
     <span>
-      <mat-icon class="add-icon mr-1">add_box</mat-icon>
+      <mat-icon class="add-icon me-1">add_box</mat-icon>
       {{'CREATE_SINGLE_PUBLICATION.TITLE' | translate}}
     </span>
   </h1>
-  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
+  <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
   <mat-horizontal-stepper #stepper *ngIf="!loading" (selectionChange)="stepChanged($event)">
     <mat-step [stepControl]="publicationControl">
       <ng-template
@@ -21,11 +21,8 @@
             {{'CREATE_SINGLE_PUBLICATION.ADD_MYSELF' | translate}}
           </mat-checkbox>
           <mat-form-field>
-            <input
-              matInput
-              formControlName="title"
-              required
-              placeholder="{{'CREATE_SINGLE_PUBLICATION.SET_TITLE' | translate}}" />
+            <mat-label>{{'CREATE_SINGLE_PUBLICATION.SET_TITLE' | translate}}</mat-label>
+            <input matInput formControlName="title" required />
             <mat-error *ngIf="publicationControl.hasError('required', 'title')">
               {{'CREATE_SINGLE_PUBLICATION.REQUIRED_ERROR' | translate}}
             </mat-error>
@@ -54,10 +51,8 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select
-              placeholder="{{'CREATE_SINGLE_PUBLICATION.CATEGORY' | translate}}"
-              required
-              formControlName="category">
+            <mat-label>{{'CREATE_SINGLE_PUBLICATION.CATEGORY' | translate}}</mat-label>
+            <mat-select required formControlName="category">
               <mat-option *ngFor="let cat of categories" [value]="cat">
                 {{cat.name}}
               </mat-option>
@@ -68,25 +63,17 @@
           </mat-form-field>
 
           <mat-form-field>
-            <input
-              matInput
-              formControlName="isbn"
-              placeholder="{{'CREATE_SINGLE_PUBLICATION.ISBN' | translate}}" />
+            <mat-label>{{'CREATE_SINGLE_PUBLICATION.ISBN' | translate}}</mat-label>
+            <input matInput formControlName="isbn" />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              formControlName="doi"
-              placeholder="{{'CREATE_SINGLE_PUBLICATION.DOI' | translate}}" />
+            <mat-label>{{'CREATE_SINGLE_PUBLICATION.DOI' | translate}}</mat-label>
+            <input matInput formControlName="doi" />
           </mat-form-field>
 
           <mat-form-field>
-            <textarea
-              matInput
-              formControlName="cite"
-              required
-              placeholder="{{'CREATE_SINGLE_PUBLICATION.CITE' | translate}}">
-            </textarea>
+            <mat-label>{{'CREATE_SINGLE_PUBLICATION.CITE' | translate}}</mat-label>
+            <textarea matInput formControlName="cite" required> </textarea>
             <mat-error *ngIf="publicationControl.hasError('required', 'cite')">
               {{'CREATE_SINGLE_PUBLICATION.REQUIRED_ERROR' | translate}}
             </mat-error>
@@ -96,7 +83,7 @@
       <div class="actions">
         <button
           [disabled]="publicationControl.invalid"
-          class="ml-auto mr-2"
+          class="ms-auto me-2"
           mat-flat-button
           color="accent"
           matStepperNext>
@@ -114,8 +101,8 @@
         </h5>
 
         <div *ngIf="innerLoading" class="flex-container">
-          <mat-spinner class="ml-auto mr-auto"></mat-spinner>
-          <h5 class="ml-auto mr-auto mt-1 font-weight-bold">
+          <mat-spinner class="ms-auto me-auto"></mat-spinner>
+          <h5 class="ms-auto me-auto mt-1 fw-bold">
             {{'CREATE_SINGLE_PUBLICATION.CHECK_PERFORM' | translate}}
           </h5>
         </div>
@@ -125,27 +112,30 @@
           class="w-100"
           alert_type="warn">
           <div class="flex-container">
-            <span class="font-weight-bold">
+            <span class="fw-bold">
               {{'CREATE_SINGLE_PUBLICATION.SIMILAR_FOUND' | translate}}.
               {{'CREATE_SINGLE_PUBLICATION.CHECK_BELOW' | translate}}.
             </span>
-            <span class="mt-2 ml-3">
+            <span class="mt-2 ms-3">
               <mat-icon class="dot-icon">fiber_manual_record</mat-icon>
               {{'CREATE_SINGLE_PUBLICATION.IS_BELOW' | translate}}
             </span>
-            <span class="ml-3">
+            <span class="ms-3">
               <mat-icon class="dot-icon">fiber_manual_record</mat-icon>
               {{'CREATE_SINGLE_PUBLICATION.NOT_BELOW' | translate}}
             </span>
           </div>
         </perun-web-apps-alert>
 
-        <mat-tab-group *ngIf="!innerLoading && !duplicateCheck" #similarPublicationTabs>
+        <mat-tab-group
+          *ngIf="!innerLoading && !duplicateCheck"
+          #similarPublicationTabs
+          mat-stretch-tabs="false">
           <mat-tab>
             <ng-template matTabLabel>{{'CREATE_SINGLE_PUBLICATION.CHECK' | translate}}</ng-template>
             <ng-template matTabContent>
               <div class="flex-container mb-2">
-                <mat-spinner *ngIf="innerLoading" class="ml-auto mr-auto"></mat-spinner>
+                <mat-spinner *ngIf="innerLoading" class="ms-auto me-auto"></mat-spinner>
                 <perun-web-apps-publications-list
                   *ngIf="!innerLoading"
                   [displayedColumns]="['id', 'lock', 'title', 'reportedBy', 'year', 'category', 'thankedTo', 'cite']"
@@ -175,8 +165,8 @@
         </mat-tab-group>
 
         <div *ngIf="!innerLoading && duplicateCheck" class="flex-container">
-          <mat-icon class="ml-auto mr-auto passed-icon">check_circle</mat-icon>
-          <h5 class="ml-auto mr-auto font-weight-bold">
+          <mat-icon class="ms-auto me-auto passed-icon">check_circle</mat-icon>
+          <h5 class="ms-auto me-auto fw-bold">
             {{'CREATE_SINGLE_PUBLICATION.NO_SIMILAR' | translate}}
           </h5>
         </div>
@@ -184,16 +174,16 @@
 
       <div *ngIf="!innerLoading" class="actions">
         <button
-          class="ml-2"
+          class="ms-2"
           mat-flat-button
           (click)="redirect(['create-publication'])"
           type="button">
           {{'CREATE_SINGLE_PUBLICATION.CANCEL' | translate}}
         </button>
-        <button class="ml-auto" mat-flat-button type="button" matStepperPrevious>
+        <button class="ms-auto" mat-flat-button type="button" matStepperPrevious>
           {{'CREATE_SINGLE_PUBLICATION.PREV' | translate}}
         </button>
-        <button class="ml-2" mat-flat-button color="accent" type="button" matStepperNext>
+        <button class="ms-2" mat-flat-button color="accent" type="button" matStepperNext>
           {{'CREATE_SINGLE_PUBLICATION.CREATE' | translate}}
         </button>
       </div>
@@ -206,7 +196,7 @@
       <h5 class="mt-2">
         {{'CREATE_SINGLE_PUBLICATION.ADD_AUTHORS' | translate}}
       </h5>
-      <mat-spinner *ngIf="innerLoading" class="ml-auto mr-auto"></mat-spinner>
+      <mat-spinner *ngIf="innerLoading" class="ms-auto me-auto"></mat-spinner>
 
       <div *ngIf="!innerLoading">
         <perun-web-apps-alert
@@ -223,7 +213,7 @@
       </div>
 
       <div *ngIf="!innerLoading" class="actions">
-        <button class="ml-auto" mat-flat-button color="accent" matStepperNext>
+        <button class="ms-auto" mat-flat-button color="accent" matStepperNext>
           {{'CREATE_SINGLE_PUBLICATION.NEXT' | translate}}
         </button>
       </div>
@@ -242,14 +232,14 @@
         [publication]="publication"
         [selection]="thanksSelection">
       </perun-web-apps-add-thanks>
-      <mat-spinner *ngIf="innerLoading" class="ml-auto mr-auto"></mat-spinner>
+      <mat-spinner *ngIf="innerLoading" class="ms-auto me-auto"></mat-spinner>
 
       <div class="actions">
-        <button class="ml-auto" mat-flat-button matStepperPrevious>
+        <button class="ms-auto" mat-flat-button matStepperPrevious>
           {{'CREATE_SINGLE_PUBLICATION.PREV' | translate}}
         </button>
         <button
-          class="ml-2"
+          class="ms-2"
           (click)="showDialogAndRedirect(['all-publications'], this.publication.id)"
           mat-flat-button
           color="accent">

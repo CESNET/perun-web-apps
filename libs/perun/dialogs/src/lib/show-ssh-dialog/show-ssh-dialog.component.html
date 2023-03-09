@@ -1,9 +1,9 @@
-<div class="user-theme">
+<div class="user-theme" mat-dialog-content>
   <textarea matInput cdkTextareaAutosize readonly class="w-100 display-fix">{{sshKey}}</textarea>
 </div>
 
 <mat-dialog-actions>
-  <button mat-flat-button color="warn" class="ml-auto" (click)="onClose()">
+  <button mat-flat-button color="warn" class="ms-auto" (click)="onClose()">
     {{'DIALOGS.SHOW_SSH.CLOSE' | customTranslate | translate}}
   </button>
 </mat-dialog-actions>

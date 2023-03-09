@@ -3,6 +3,11 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 
+// IMPORTANT
+// Changes to the styles should be made in the _styles.scss file.
+// Changes to the styles.scss would result in the styles being overwritten
+// during the build process and the changes would be lost.
+
 @function mat-color-from-palette($palette, $hue: default, $opacity: null) {
   @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
     @return mat-color-from-palette($palette, default, $hue);
@@ -26,9 +31,8 @@
 
 // Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Include the common styles for Angular Material.
+@include mat.all-component-typographies();
 @include mat.core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -41,11 +45,22 @@ $perun-accent: mat.define-palette(mat.$green-palette, 600);
 $perun-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn);
+$perun-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $perun-primary,
+      accent: $perun-accent,
+      warn: $perun-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+mat.$theme-ignore-duplication-warnings: true;
 @include mat.all-component-themes($perun-theme);
 
 :root {
@@ -140,9 +155,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
   $vo-primary: mat.define-palette($vo-dynamic-colors, 500);
   $vo-accent: mat.define-palette(mat.$green-palette, 600);
 
-  $vo-theme: mat.define-light-theme($vo-primary, $vo-accent);
+  $vo-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $vo-primary,
+        accent: $vo-accent,
+      ),
+    )
+  );
 
-  @include mat.all-component-themes($vo-theme);
+  @include mat.all-component-colors($vo-theme);
 }
 
 //.facility-theme {
@@ -189,10 +211,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $facility-primary: mat.define-palette($facility-dynamic-colors, 500);
   $facility-accent: mat.define-palette(mat.$green-palette, 600);
+  $facility-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $facility-primary,
+        accent: $facility-accent,
+      ),
+    )
+  );
 
-  $facility-theme: mat.define-light-theme($facility-primary, $facility-accent);
-
-  @include mat.all-component-themes($facility-theme);
+  @include mat.all-component-colors($facility-theme);
 }
 
 //.resource-theme {
@@ -239,10 +267,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $resource-primary: mat.define-palette($resource-dynamic-colors, 500);
   $resource-accent: mat.define-palette(mat.$green-palette, 600);
+  $resource-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $resource-primary,
+        accent: $resource-accent,
+      ),
+    )
+  );
 
-  $resource-theme: mat.define-light-theme($resource-primary, $resource-accent);
-
-  @include mat.all-component-themes($resource-theme);
+  @include mat.all-component-colors($resource-theme);
 }
 
 //.group-theme {
@@ -289,10 +323,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $group-primary: mat.define-palette($group-dynamic-colors, 500);
   $group-accent: mat.define-palette(mat.$green-palette, 600);
+  $group-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $group-primary,
+        accent: $group-accent,
+      ),
+    )
+  );
 
-  $group-theme: mat.define-light-theme($group-primary, $group-accent);
-
-  @include mat.all-component-themes($group-theme);
+  @include mat.all-component-colors($group-theme);
 }
 
 //.member-theme {
@@ -339,10 +379,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $member-primary: mat.define-palette($member-dynamic-colors, 500);
   $member-accent: mat.define-palette(mat.$green-palette, 600);
+  $member-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $member-primary,
+        accent: $member-accent,
+      ),
+    )
+  );
 
-  $member-theme: mat.define-light-theme($member-primary, $member-accent);
-
-  @include mat.all-component-themes($member-theme);
+  @include mat.all-component-colors($member-theme);
 }
 
 //.admin-theme {
@@ -389,10 +435,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $admin-primary: mat.define-palette($admin-dynamic-colors, 500);
   $admin-accent: mat.define-palette(mat.$green-palette, 600);
+  $admin-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $admin-primary,
+        accent: $admin-accent,
+      ),
+    )
+  );
 
-  $admin-theme: mat.define-light-theme($admin-primary, $admin-accent);
-
-  @include mat.all-component-themes($admin-theme);
+  @include mat.all-component-colors($admin-theme);
 }
 
 //.user-theme {
@@ -439,10 +491,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $user-primary: mat.define-palette($user-dynamic-colors, 500);
   $user-accent: mat.define-palette(mat.$green-palette, 600);
+  $user-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $user-primary,
+        accent: $user-accent,
+      ),
+    )
+  );
 
-  $user-theme: mat.define-light-theme($user-primary, $user-accent);
-
-  @include mat.all-component-themes($user-theme);
+  @include mat.all-component-colors($user-theme);
 }
 
 .service-theme {
@@ -481,10 +539,16 @@ $perun-theme: mat.define-light-theme($perun-primary, $perun-accent, $perun-warn)
 
   $service-primary: mat.define-palette($service-dynamic-colors, 500);
   $service-accent: mat.define-palette(mat.$green-palette, 600);
+  $service-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $service-primary,
+        accent: $service-accent,
+      ),
+    )
+  );
 
-  $service-theme: mat.define-light-theme($service-primary, $service-accent);
-
-  @include mat.all-component-themes($service-theme);
+  @include mat.all-component-colors($service-theme);
 }
 
 body {
@@ -720,20 +784,8 @@ button:focus {
   color: #d32f2f;
 }
 
-// might be useful
-.main-progress-bar {
-  z-index: 999999;
-
-  .mat-progress-bar-fill::after {
-    background-color: #0081cb !important;
-  }
-
-  .mat-progress-bar-buffer {
-    background-color: #2c2c2c;
-  }
-}
-
 .tab-padding-top {
+  /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.*/
   .mat-tab-body-content {
     padding-top: 2rem;
   }
@@ -761,31 +813,6 @@ textarea.cdk-textarea-autosize-measuring {
 
 .base-item-color-activated {
   background-color: #62727b;
-}
-
-.white-color-input {
-  color: #ffffff !important;
-
-  .mat-form-field-label {
-    color: #ffffff !important;
-  }
-
-  .mat-focused {
-    color: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-
-  input {
-    caret-color: #ffffff !important;
-  }
-
-  .mat-form-field-underline {
-    background-color: #ffffff !important;
-  }
-
-  .mat-form-field-ripple {
-    background-color: #ffffff !important;
-  }
 }
 
 .dialog-container {
@@ -816,7 +843,7 @@ textarea.cdk-textarea-autosize-measuring {
   flex-direction: column;
   margin-left: 2rem;
   margin-bottom: 2rem;
-  //d-flex flex-column ml-5 pb-4
+  //d-flex flex-column ms-5 pb-4
 }
 
 .page-subtitle {
@@ -1286,7 +1313,7 @@ textarea.cdk-textarea-autosize-measuring {
 // HACKS
 
 // Dont show horizontal scroll at menu items
-.mat-tab-body-content {
+.mat-mdc-tab-body-content {
   overflow: hidden !important;
 }
 
@@ -1297,15 +1324,15 @@ textarea.cdk-textarea-autosize-measuring {
 }
 
 // sharp design
-.mat-stroked-button {
+.mat-mdc-outlined-button {
   border-radius: 0 !important;
 }
 
-.mat-flat-button {
+.mat-mdc-unelevated-button {
   border-radius: 0 !important;
 }
 
-.mat-button {
+.mat-mdc-button {
   border-radius: 0 !important;
 }
 
@@ -1345,7 +1372,7 @@ textarea.cdk-textarea-autosize-measuring {
 }
 
 //specific style for dialog without any border
-.noBorderDialog .mat-dialog-container {
+.noBorderDialog .mat-mdc-dialog-container {
   padding: 0 !important;
 }
 
@@ -1389,7 +1416,7 @@ textarea.cdk-textarea-autosize-measuring {
 }
 
 th,
-td.mat-cell {
+td.mat-mdc-cell {
   padding: 0.25rem !important;
 }
 
@@ -1408,7 +1435,7 @@ td.mat-cell {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.15);
-  z-index: 1;
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1534,18 +1561,18 @@ td.mat-cell {
 }
 
 //font size of tooltip
-.mat-tooltip {
+.mat-mdc-tooltip {
   font-size: 14px !important;
   word-wrap: break-word !important;
 }
 
-.mat-tab-label {
+.mdc-tab__text-label {
   font-size: 16px !important;
   color: black !important;
   opacity: 1 !important;
 }
 
-.mat-tab-icon {
+.mdc-tab__icon {
   font-size: 16px !important;
 }
 
@@ -1563,10 +1590,92 @@ td.mat-cell {
   vertical-align: middle !important;
 }
 
-.align-checkbox mat-checkbox {
-  margin-top: 7px !important;
-}
+//.align-checkbox mat-checkbox {
+//  margin-top: 7px !important;
+//}
 
 mat-icon {
   overflow: inherit !important;
+}
+
+/*************************************
+******** Customization of MDC ********
+*************************************/
+
+// Custom MDC form field
+.mdc-text-field {
+  background-color: transparent !important;
+  margin-top: 5px !important;
+}
+label:not(.mdc-floating-label--float-above) {
+  padding-top: 16px !important;
+  width: 100%;
+}
+.mat-form-field-appearance-outline {
+  label:not(.mdc-floating-label--float-above) {
+    padding-top: 0 !important;
+  }
+}
+.mdc-floating-label--float-above {
+  width: 133.33% !important;
+}
+mat-form-field mat-icon {
+  padding: 0 !important;
+}
+
+// Custom MDC form field in table - for attributes
+table .mdc-text-field {
+  margin-top: 0 !important;
+}
+table .mat-mdc-form-field-infix {
+  min-height: 35px !important;
+  padding-top: 7px !important;
+  padding-bottom: 0 !important;
+}
+
+// Custom MDC outlined form field in table - for attributes
+table .mdc-notched-outline__leading,
+table .mdc-notched-outline__trailing {
+  border: 0 !important;
+}
+table .mdc-text-field--outlined {
+  padding-left: 0 !important;
+}
+
+// Proper mat icon inside button
+.mat-mdc-outlined-button > .mat-icon,
+.mat-mdc-unelevated-button > .mat-icon {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+  font-size: 1.5rem !important;
+}
+
+// angular 15 button fixes
+
+.mdc-button {
+  border-radius: 0 !important;
+  white-space: nowrap !important;
+  letter-spacing: normal;
+}
+
+.align-elements {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mat-mdc-checkbox label,
+.mat-mdc-radio-button label,
+.mat-mdc-slide-toggle label {
+  padding-top: 0 !important;
+}
+
+.mat-mdc-tab-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.mdc-data-table__cell {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
 }

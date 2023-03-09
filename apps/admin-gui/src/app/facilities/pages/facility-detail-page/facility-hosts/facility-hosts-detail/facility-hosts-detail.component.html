@@ -3,12 +3,12 @@
     {{'FACILITY_DETAIL.HOSTS.HOSTS_DETAIL.TITLE' | translate}} {{host.hostname}}
   </h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button (click)="addAttribute()" class="mr-2" color="accent" mat-flat-button>
+  <button (click)="addAttribute()" class="me-2" color="accent" mat-flat-button>
     {{'FACILITY_DETAIL.HOSTS.HOSTS_DETAIL.ADD' | translate}}
   </button>
   <button
     (click)="onSave()"
-    class="mr-2"
+    class="me-2"
     color="accent"
     [disabled]="selected.selected.length === 0"
     mat-flat-button>
@@ -21,12 +21,16 @@
     mat-flat-button>
     {{'FACILITY_DETAIL.HOSTS.HOSTS_DETAIL.REMOVE' | translate}}
   </button>
-  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <perun-web-apps-attributes-list
-    [selection]="selected"
-    #list
-    *ngIf="!loading"
-    [attributes]="attributes"
-    [tableId]="tableId">
-  </perun-web-apps-attributes-list>
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative">
+    <perun-web-apps-attributes-list
+      [selection]="selected"
+      #list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [attributes]="attributes"
+      [tableId]="tableId">
+    </perun-web-apps-attributes-list>
+  </div>
 </div>

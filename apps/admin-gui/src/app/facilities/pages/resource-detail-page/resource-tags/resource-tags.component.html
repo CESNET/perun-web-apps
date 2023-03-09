@@ -3,7 +3,7 @@
 <button
   *ngIf="createAuth"
   (click)="create()"
-  class="mr-2 action-button"
+  class="me-2 action-button"
   color="accent"
   mat-flat-button>
   {{'VO_DETAIL.RESOURCES.TAGS.CREATE_BUTTON' | translate}}
@@ -12,7 +12,7 @@
 <button
   *ngIf="addAuth"
   (click)="addTag()"
-  class="mr-2 action-button"
+  class="me-2 action-button"
   color="accent"
   mat-flat-button>
   {{'RESOURCE_DETAIL.TAGS.ADD_BUTTON' | translate}}
@@ -21,7 +21,7 @@
 <button
   *ngIf="removeAuth"
   (click)="removeTags()"
-  class="mr-2"
+  class="me-2"
   color="warn"
   [disabled]="selection.selected.length === 0"
   mat-flat-button>
@@ -32,14 +32,17 @@
   [placeholder]="'RESOURCE_DETAIL.TAGS.SEARCH'">
 </perun-web-apps-immediate-filter>
 
-<mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-
-<app-resources-tags-list
-  *ngIf="!loading"
-  [displayedColumns]="displayedColumns"
-  [entity]="'resource'"
-  [resourceTags]="resourceTags"
-  [filterValue]="filterValue"
-  [selection]="selection"
-  [tableId]="tableId">
-</app-resources-tags-list>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative">
+  <app-resources-tags-list
+    *perunWebAppsLoader="loading; indicator: spinner"
+    [displayedColumns]="displayedColumns"
+    [entity]="'resource'"
+    [resourceTags]="resourceTags"
+    [filterValue]="filterValue"
+    [selection]="selection"
+    [tableId]="tableId">
+  </app-resources-tags-list>
+</div>

@@ -1,5 +1,5 @@
 <h1 class="page-title">{{'USER_DETAIL.ACCOUNTS.TITLE' | translate}}</h1>
-<mat-spinner class="ml-auto mr-auto" *ngIf="initLoading"></mat-spinner>
+<mat-spinner class="ms-auto me-auto" *ngIf="initLoading"></mat-spinner>
 <div class="d-flex">
   <perun-web-apps-vo-search-select
     *ngIf="!(initLoading || vos.length === 0)"
@@ -8,16 +8,16 @@
     (voSelected)="loadMember($event)">
   </perun-web-apps-vo-search-select>
 </div>
-<mat-tab-group *ngIf="!(initLoading || vos.length === 0)">
+<mat-tab-group *ngIf="!(initLoading || vos.length === 0)" mat-stretch-tabs="false">
   <mat-tab>
     <ng-template matTabLabel>
       {{'USER_DETAIL.ACCOUNTS.STATUS' | translate}}
     </ng-template>
     <ng-template matTabContent>
-      <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
+      <mat-spinner class="ms-auto me-auto" *ngIf="loading"></mat-spinner>
       <div *ngIf="!loading">
         <div class="mt-4 mb-4">
-          <span class="subtitle mr-2">{{'USER_DETAIL.ACCOUNTS.MEMBER' | translate}}:</span>
+          <span class="subtitle me-2">{{'USER_DETAIL.ACCOUNTS.MEMBER' | translate}}:</span>
           <a
             class="member-link"
             [perunWebAppsMiddleClickRouterLink]="['/organizations', selectedVo.id.toString(), 'members', member.id.toString()]"
@@ -26,7 +26,7 @@
             >{{member.id}}
           </a>
         </div>
-        <mat-card class="mat-elevation-z3 membership-card">
+        <mat-card appearance="outlined" class="mat-elevation-z3 membership-card">
           <perun-web-apps-member-overview-membership [member]="member" [voId]="selectedVo.id">
           </perun-web-apps-member-overview-membership>
         </mat-card>
@@ -34,7 +34,7 @@
         <perun-web-apps-groups-list
           *ngIf="!loading"
           [groups]="groups"
-          [memberId]="member.id"
+          [memberId]="member?.id"
           [memberGroupStatus]="member.groupStatus"
           (refreshTable)="loadMember(selectedVo)"
           [displayedColumns]="['id', 'recent', 'name', 'description', 'expiration', 'groupStatus']">

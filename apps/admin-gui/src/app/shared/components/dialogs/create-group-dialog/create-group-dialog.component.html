@@ -1,31 +1,21 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<div class="{{theme}}">
-  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <div *ngIf="!loading">
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{title}}</h1>
     <div class="dialog-container" mat-dialog-content>
       <mat-form-field>
-        <label class="w-100">
-          <input
-            [formControl]="nameControl"
-            matInput
-            placeholder="{{'DIALOGS.CREATE_GROUP.NAME' | translate}}"
-            data-cy="group-name"
-            required />
-        </label>
+        <mat-label>{{'DIALOGS.CREATE_GROUP.NAME' | translate}}</mat-label>
+        <input [formControl]="nameControl" matInput data-cy="group-name" required />
         <mat-error>
           {{invalidNameMessage.length ? invalidNameMessage : ('DIALOGS.CREATE_GROUP.FILL_VALUE' | translate)}}
         </mat-error>
       </mat-form-field>
       <mat-form-field class="mt-4">
-        <label class="w-100">
-          <textarea
-            [formControl]="descriptionControl"
-            mat-autosize
-            matInput
-            data-cy="group-description"
-            placeholder="{{'DIALOGS.CREATE_GROUP.DESCRIPTION' | translate}}">
-          </textarea>
-        </label>
+        <mat-label>{{'DIALOGS.CREATE_GROUP.DESCRIPTION' | translate}}</mat-label>
+        <textarea [formControl]="descriptionControl" matInput data-cy="group-description">
+        </textarea>
       </mat-form-field>
       <mat-checkbox
         *ngIf="isNotSubGroup"
@@ -43,13 +33,13 @@
       </perun-web-apps-group-search-select>
     </div>
     <div mat-dialog-actions>
-      <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+      <button (click)="onCancel()" class="ms-auto" mat-flat-button>
         {{'DIALOGS.CREATE_GROUP.CANCEL' | translate}}
       </button>
       <button
         (click)="onSubmit()"
         [disabled]="nameControl.invalid || descriptionControl.invalid || (asSubgroup && selectedParent === null) || loading"
-        class="ml-2"
+        class="ms-2"
         color="accent"
         data-cy="create-group-button-dialog"
         mat-flat-button>

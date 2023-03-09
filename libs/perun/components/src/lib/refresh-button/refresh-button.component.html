@@ -1,12 +1,12 @@
 <button
   (click)="onClickbutton($event)"
   [disabled]="disabled"
-  class="mr-2"
+  class="me-2"
   mat-stroked-button
   data-cy="refresh-button"
   matTooltip="{{'SHARED_LIB.PERUN.REFRESH_BUTTON' | translate}}">
   <mat-icon
-    class="center-icon perun-icon"
+    class="ms-auto perun-icon d-inline-flex align-items-center"
     svgIcon="{{!disabled ? 'perun-refresh-enabled': 'perun-refresh-disabled'}}">
   </mat-icon>
 </button>

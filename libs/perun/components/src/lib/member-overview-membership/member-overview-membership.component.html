@@ -5,25 +5,25 @@
     </h1>
   </mat-card-title>
 </mat-card-header>
-<h1 *ngIf="openedInDialog" class="mat-dialog-title">
+<h1 *ngIf="openedInDialog" mat-dialog-title>
   {{'MEMBER_DETAIL.OVERVIEW.ORGANIZATION_MEMBERSHIP' | translate}}
 </h1>
 <mat-card-content>
-  <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
+  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
   <div *ngIf="!loading">
     <table
       [dataSource]="voMembershipDataSource"
-      [class]="openedInDialog ? 'mr-auto' : 'ml-auto mr-auto'"
+      [class]="openedInDialog ? 'me-auto' : 'ms-auto me-auto'"
       mat-table>
       <ng-container matColumnDef="attName">
         <th *matHeaderCellDef mat-header-cell></th>
-        <td *matCellDef="let attribute" class="font-weight-bold" mat-cell>{{attribute}}:</td>
+        <td *matCellDef="let attribute" class="fw-bold" mat-cell>{{attribute}}:</td>
       </ng-container>
       <ng-container matColumnDef="attValue">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let attribute" class="column-center" mat-cell>
-          <div *ngIf="attribute === 'Status'">
-            <i class="material-icons vert-center mr-1 {{(member | memberStatusIconColor)}}">
+          <div class="d-flex align-items-center" *ngIf="attribute === 'Status'">
+            <i class="material-icons vert-center me-1 {{(member | memberStatusIconColor)}}">
               {{member.status | memberStatusIcon}}
             </i>
             <b class="vert-top">
@@ -36,7 +36,7 @@
               <mat-icon>edit</mat-icon>
             </button>
           </div>
-          <div *ngIf="attribute === 'Expiration'">
+          <div class="d-flex align-items-center" *ngIf="attribute === 'Expiration'">
             <i class="column-center">
               {{voExpiration | parseDate}}
             </i>

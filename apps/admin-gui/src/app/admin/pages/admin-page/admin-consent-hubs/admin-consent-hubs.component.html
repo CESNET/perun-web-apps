@@ -12,7 +12,7 @@
       (click)="evaluateConsents()"
       [disabled]="!globalForceConsents || selection.selected.length === 0"
       color="accent"
-      class="action-button mr-2"
+      class="action-button me-2"
       mat-flat-button>
       {{'ADMIN.CONSENT_HUBS.EVALUATE_CONSENTS' | translate}}
     </button>
@@ -22,12 +22,16 @@
     (filter)="applyFilter($event)">
   </perun-web-apps-immediate-filter>
 
-  <mat-spinner class="ml-auto mr-auto" *ngIf="loading"></mat-spinner>
-  <app-perun-web-apps-consent-hubs-list
-    *ngIf="!loading"
-    [consentHubs]="consentHubs"
-    [selection]="selection"
-    [filterValue]="filterValue"
-    [tableId]="tableId">
-  </app-perun-web-apps-consent-hubs-list>
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative">
+    <app-perun-web-apps-consent-hubs-list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [consentHubs]="consentHubs"
+      [selection]="selection"
+      [filterValue]="filterValue"
+      [tableId]="tableId">
+    </app-perun-web-apps-consent-hubs-list>
+  </div>
 </div>

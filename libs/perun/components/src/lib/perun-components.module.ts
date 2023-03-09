@@ -8,6 +8,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -117,6 +118,7 @@ import { MemberOverviewGroupsComponent } from './member-overview-groups/member-o
 import { DeselectButtonComponent } from './deselect-button/deselect-button.component';
 import { AuditLogSearchSelectComponent } from './audit-log-search-select/audit-log-search-select.component';
 import { ApplicationStateSelectorComponent } from './application-state-selector/application-state-selector.component';
+import { AuthorizedGroupsCellComponent } from './authorized-groups-cell/authorized-groups-cell.component';
 
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
@@ -163,6 +165,8 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     MatPaginatorModule,
     MatProgressSpinnerModule,
     UiAlertsModule,
+    UiLoadersModule,
+    LoaderDirective,
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
@@ -247,7 +251,6 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     AttributeRightsTabGroupComponent,
     AttributeUniqueToggleComponent,
     AttributeCriticalOperationsTogglesComponent,
-    LoaderDirective,
     MailingListsComponent,
     DataQuotasComponent,
     SettingsSSHKeysComponent,
@@ -266,6 +269,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     DeselectButtonComponent,
     AuditLogSearchSelectComponent,
     ApplicationStateSelectorComponent,
+    AuthorizedGroupsCellComponent,
   ],
   exports: [
     VosListComponent,
@@ -323,7 +327,6 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     AttributeRightsTabGroupComponent,
     AttributeUniqueToggleComponent,
     AttributeCriticalOperationsTogglesComponent,
-    LoaderDirective,
     MailingListsComponent,
     DataQuotasComponent,
     SettingsSSHKeysComponent,
@@ -342,6 +345,8 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     DeselectButtonComponent,
     AuditLogSearchSelectComponent,
     ApplicationStateSelectorComponent,
+    LoaderDirective,
+    AuthorizedGroupsCellComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

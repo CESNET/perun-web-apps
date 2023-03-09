@@ -4,7 +4,7 @@
   <button
     *ngIf="addAuth"
     (click)="onAdd()"
-    class="mr-2 action-button"
+    class="me-2 action-button"
     color="accent"
     mat-flat-button>
     {{'GROUP_DETAIL.SETTINGS.EXT_SOURCES.ADD' | translate}}
@@ -13,7 +13,7 @@
     *ngIf="removeAuth"
     (click)="onRemove()"
     [disabled]="selection.selected.length === 0"
-    class="mr-2"
+    class="me-2"
     color="warn"
     mat-flat-button>
     {{'GROUP_DETAIL.SETTINGS.EXT_SOURCES.REMOVE' | translate}}
@@ -21,13 +21,17 @@
   <perun-web-apps-immediate-filter
     (filter)="applyFilter($event)"
     [placeholder]="'GROUP_DETAIL.SETTINGS.EXT_SOURCES.FILTER'"></perun-web-apps-immediate-filter>
-  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <app-ext-sources-list
-    [extSources]="extSources"
-    *ngIf="!loading"
-    [selection]="selection"
-    [displayedColumns]="displayedColumns"
-    [filterValue]="filterValue"
-    [tableId]="tableId">
-  </app-ext-sources-list>
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative">
+    <app-ext-sources-list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [extSources]="extSources"
+      [selection]="selection"
+      [displayedColumns]="displayedColumns"
+      [filterValue]="filterValue"
+      [tableId]="tableId">
+    </app-ext-sources-list>
+  </div>
 </div>

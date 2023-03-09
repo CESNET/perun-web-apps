@@ -2,27 +2,29 @@
   <h1 mat-dialog-title>{{'RESOURCE_DETAIL.TAGS.ADD_TAGS' | translate}}</h1>
 
   <div mat-dialog-content>
-    <div class="overflow-hidden">
-      <mat-spinner *ngIf="loading" class="mr-auto ml-auto"></mat-spinner>
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative">
+      <app-resources-tags-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [selection]="selection"
+        [displayedColumns]="displayedColumns"
+        [entity]="'resource'"
+        [filterValue]="filterValue"
+        [resourceTags]="resourceTags"
+        [tableId]="tableId">
+      </app-resources-tags-list>
     </div>
-    <app-resources-tags-list
-      *ngIf="!loading"
-      [selection]="selection"
-      [displayedColumns]="displayedColumns"
-      [entity]="'resource'"
-      [filterValue]="filterValue"
-      [resourceTags]="resourceTags"
-      [tableId]="tableId">
-    </app-resources-tags-list>
   </div>
 
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+    <button (click)="onCancel()" class="ms-auto" mat-flat-button>
       {{'RESOURCE_DETAIL.TAGS.CANCEL' | translate}}
     </button>
     <button
       (click)="onSubmit(selection.selected)"
-      class="ml-2"
+      class="ms-2"
       color="accent"
       [disabled]="loading || resourceTags.length === 0"
       mat-flat-button>

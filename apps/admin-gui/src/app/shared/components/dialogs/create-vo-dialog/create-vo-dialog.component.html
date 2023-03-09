@@ -1,33 +1,27 @@
-<div class="{{theme}}">
-  <h1 mat-dialog-title>{{"DIALOGS.CREATE_VO.TITLE" | translate}}</h1>
-  <mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
-  <div *ngIf="!loading">
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{"DIALOGS.CREATE_VO.TITLE" | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
       <mat-form-field>
-        <input
-          matInput
-          [formControl]="fullNameCtrl"
-          placeholder="{{'DIALOGS.CREATE_VO.FULL_NAME' | translate}}"
-          data-cy="vo-name-input"
-          required />
+        <mat-label>{{'DIALOGS.CREATE_VO.FULL_NAME' | translate}}</mat-label>
+        <input matInput [formControl]="fullNameCtrl" data-cy="vo-name-input" required />
         <mat-error>
           {{'DIALOGS.CREATE_VO.FILL_FULL_NAME' | translate}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          [formControl]="shortNameCtrl"
-          placeholder="{{'DIALOGS.CREATE_VO.SHORT_NAME' | translate}}"
-          data-cy="vo-shortname-input"
-          required />
+        <mat-label>{{'DIALOGS.CREATE_VO.SHORT_NAME' | translate}}</mat-label>
+        <input matInput [formControl]="shortNameCtrl" data-cy="vo-shortname-input" required />
         <mat-error>
           {{'DIALOGS.CREATE_VO.FILL_SHORT_NAME' | translate}}
         </mat-error>
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
-      <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+      <button (click)="onCancel()" class="ms-auto" mat-flat-button>
         {{'DIALOGS.CREATE_VO.CANCEL' | translate}}
       </button>
       <div
@@ -36,7 +30,7 @@
         matTooltipPosition="above">
         <button
           (click)="onSubmit()"
-          class="ml-2"
+          class="ms-2"
           color="accent"
           data-cy="create-vo-button"
           [disabled]="shortNameCtrl.invalid || fullNameCtrl.invalid"

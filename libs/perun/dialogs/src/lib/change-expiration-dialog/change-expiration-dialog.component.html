@@ -42,7 +42,9 @@
         {{'DIALOGS.CHANGE_EXPIRATION.GROUP_RULES'|translate}}
       </mat-radio-button>
       <mat-radio-button value="never">
-        {{'DIALOGS.CHANGE_EXPIRATION.EXPIRATION_NEVER'|translate}}
+        <span class="cursor-pointer">
+          {{'DIALOGS.CHANGE_EXPIRATION.EXPIRATION_NEVER'|translate}}
+        </span>
       </mat-radio-button>
     </mat-radio-group>
     <perun-web-apps-alert
@@ -52,7 +54,7 @@
     >
   </div>
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ml-auto" mat-flat-button>
+    <button (click)="onCancel()" class="ms-auto" mat-flat-button>
       {{backButton ?
       ('DIALOGS.CHANGE_EXPIRATION.BACK' | translate) :
       ('DIALOGS.CHANGE_EXPIRATION.CANCEL' | translate)}}
@@ -60,7 +62,7 @@
     <button
       (click)="onChange()"
       [disabled]="expirationControl.invalid"
-      class="ml-2"
+      class="ms-2"
       color="accent"
       mat-flat-button>
       {{'DIALOGS.CHANGE_EXPIRATION.SAVE' | translate}}
