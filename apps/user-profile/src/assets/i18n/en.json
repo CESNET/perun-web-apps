@@ -139,6 +139,7 @@
     "MFA": "Multi-factor authentication",
     "MFA_TOGGLE": "Turn on multi-factor authentication for all services",
     "MFA_DISABLED": "You need to have at least one active MFA token.",
+    "MFA_ERROR": "An error occurred while verifying MFA availability, please try again later.",
     "MFA_SAVE": "Save settings",
     "NEW_IMG": "New image",
     "DELETE_IMG": "Delete image",
@@ -520,8 +521,6 @@
         "SSH_KEYS": {
           "SSH_KEYS_TITLE": "SSH keys",
           "SSH_KEYS_DESCRIPTION": "List of your ssh keys.",
-          "ADMIN_SSH_KEYS_TITLE": "Admin SSH keys",
-          "ADMIN_SSH_KEYS_DESCRIPTION": "List of your ssh keys for root access.",
           "NEW_KEY": "Add new key",
           "COPY_TOOLTIP": "Copy to clipboard",
           "REMOVE_TOOLTIP": "Remove",
