@@ -139,6 +139,7 @@
     "MFA": "Vícefázové ověření",
     "MFA_TOGGLE": "Zapnout vícefázové ověření pro všechny služby",
     "MFA_DISABLED": "Potřebujete mít alespoň jeden aktivní MFA token.",
+    "MFA_ERROR": "Při ověřování dostupnosti MFA došlo k chybě, prosím opakujte akci později.",
     "MFA_SAVE": "Uložit nastavení",
     "NEW_IMG": "Nový obrázek",
     "DELETE_IMG": "Vymazat obrázek",
@@ -458,8 +459,6 @@
         "SSH_KEYS": {
           "SSH_KEYS_TITLE": "SSH klíče",
           "SSH_KEYS_DESCRIPTION": "Zde je seznam Vašich SSH klíčů.",
-          "ADMIN_SSH_KEYS_TITLE": "Seznam vašich administratorských SSH klíčů",
-          "ADMIN_SSH_KEYS_DESCRIPTION": "Zde je seznam Vašich SSH klíčů, které jsou používány pro přístup na účet root.",
           "COPY_TOOLTIP": "Zkopírovat klíč",
           "REMOVE_TOOLTIP": "Odstranit",
           "NEW_KEY": "Nový klíč",
