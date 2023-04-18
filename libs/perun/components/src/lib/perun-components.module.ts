@@ -118,6 +118,9 @@ import { ShowSshDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { ShowNotificationHistoryDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { ApplicationStateSelectorComponent } from './application-state-selector/application-state-selector.component';
 import { AuthorizedGroupsCellComponent } from './authorized-groups-cell/authorized-groups-cell.component';
+import { StringSearchSelectComponent } from './string-search-select/string-search-select.component';
+import { BlockedLoginsDynamicListComponent } from './blocked-logins-dynamic-list/blocked-logins-dynamic-list.component';
+import { NamespaceSearchSelectComponent } from './namespace-search-select/namespace-search-select.component';
 
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
@@ -264,10 +267,13 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     AuditLogSearchSelectComponent,
     ApplicationStateSelectorComponent,
     AuthorizedGroupsCellComponent,
+    StringSearchSelectComponent,
     AddSshDialogComponent,
     RemoveStringValueDialogComponent,
     ShowSshDialogComponent,
     ShowNotificationHistoryDialogComponent,
+    BlockedLoginsDynamicListComponent,
+    NamespaceSearchSelectComponent,
   ],
   exports: [
     VosListComponent,
@@ -340,10 +346,13 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ApplicationStateSelectorComponent,
     LoaderDirective,
     AuthorizedGroupsCellComponent,
+    StringSearchSelectComponent,
     AddSshDialogComponent,
     RemoveStringValueDialogComponent,
     ShowSshDialogComponent,
     ShowNotificationHistoryDialogComponent,
+    BlockedLoginsDynamicListComponent,
+    NamespaceSearchSelectComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

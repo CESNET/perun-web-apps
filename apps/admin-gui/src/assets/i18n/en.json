@@ -534,6 +534,7 @@
       "SPONSORED_MEMBERS": {
         "TITLE": "Sponsored members",
         "CREATE": "Create",
+        "COPY": "Copy sponsored members",
         "CREATE_ONE": "Create sponsored member",
         "GENERATE": "Generate sponsored members",
         "FILTER": "Filter by name or Id",
@@ -786,8 +787,7 @@
     "MODIFIED_AT": "Modified at",
     "USER": "User",
     "CREATED_BY": "Created by",
-    "VO_NAME": "Organization name",
-    "CONFIGURE": "Configure applications view"
+    "VO_NAME": "Organization name"
   },
   "MEMBER_DETAIL": {
     "ENTITY": "Member",
@@ -987,7 +987,8 @@
       "OWNERS": "Owners",
       "AUDIT_LOG": "Audit log",
       "CONSENT_HUBS": "Consent hubs",
-      "SEARCHER": "Searcher"
+      "SEARCHER": "Searcher",
+      "BLOCKED_LOGINS": "Blocked logins"
     },
     "VISUALIZER": {
       "ATTR_DEPENDENCIES": "Modules dependencies",
@@ -1264,13 +1265,16 @@
     },
     "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
       "TITLE": "Change applications view preferences",
-      "DEFAULT_TEXT": "The default setting of the columns is: 'createdAt', 'type', 'state', 'createdBy', 'modifiedBy' ",
+      "DESCRIPTION": "Search for column name",
       "FILTER_COLUMNS": "Displayed columns",
+      "VO_SETTINGS": "Organization configuration",
       "WARN": "Changes to displayed columns will be saved for everyone that views applications in this organization/group!",
       "CANCEL": "Cancel",
       "CONFIRM": "Confirm",
-      "DEFAULT": "Reset default settings",
-      "SUCCESS": "Displayed columns were successfully updated"
+      "DEFAULT": "Default configuration",
+      "SUCCESS": "Displayed columns were successfully updated",
+      "SET_TO": "Set to...",
+      "SET_TO_DEFAULT": "Set to default"
     },
     "UPDATE_APPLICATION_FORM": {
       "TITLE": "Change application form settings",
@@ -2027,9 +2031,11 @@
       "EXPIRE_NEVER": "Never expire",
       "EXPIRATION_ERROR": "The date has to be in format yyyy-mm-dd",
       "SELECT_SPONSOR": "Choose sponsor for created user",
+      "SELECT_SPONSOR_COPY": "Select target sponsor",
       "SELECT_SELF": "Make myself sponsor",
       "SELECT_OTHER": "Select other sponsor from this organization",
       "SELECT_SELF_DISABLED": "You must be sponsor in this organization",
+      "SELECT_SELF_DISABLED_COPY": "You cannot copy to yourself",
       "SELECT_OTHER_DISABLED": "You don't have permission to select other sponsor",
       "NEXT": "Next",
       "BACK": "Back",
@@ -2151,6 +2157,17 @@
       "BEGIN_SEARCH": "Search for members you would like to sponsor",
       "SUCCESS": "Members successfully sponsored"
     },
+    "COPY_SPONSORED_MEMBERS": {
+      "TITLE": "Copy sponsored members",
+      "CANCEL": "Cancel",
+      "SPONSOR": "Copy",
+      "SPONSORED_MEMBERS": "Select sponsored members to copy",
+      "SPONSORED_MEMBERS_INFO": "Members already sponsored by the target sponsor will not be affected.",
+      "SPONSOR_FROM": "Select source sponsor",
+      "EXPIRATION": "Sponsorship expiration",
+      "EXP_INFO": "The expiration of the original sponsorship will be set if no new date is selected.",
+      "SUCCESS": "Members successfully sponsored"
+    },
     "ADD_OWNER": {
       "TITLE": "Create owner",
       "NAME": "Name",
@@ -2191,6 +2208,11 @@
       "VO_RELATION": "User's membership in all organizations",
       "GROUP_RELATION": "User's membership in all groups",
       "SUCCESS_NOTIFICATION": "User was successfully anonymized"
+    },
+    "DELETE_USER": {
+      "VO_RELATION": "User's membership in all organizations",
+      "GROUP_RELATION": "User's membership in all groups",
+      "SUCCESS_NOTIFICATION": "User was successfully deleted"
     },
     "CHANGE_VO_EXPIRATION": {
       "TITLE": "Change member expiration"
@@ -2326,6 +2348,26 @@
       "UPDATE": "Update",
       "CANCEL": "Cancel",
       "SUCCESS": "Ban was successfully updated"
+    },
+    "UNBLOCK_LOGINS": {
+      "TITLE": "Confirm unblocking",
+      "DESCRIPTION": "The following logins will be unblocked globally, or in the namespace they were initially blocked.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "UNBLOCK": "Unblock"
+    },
+    "BLOCK_LOGINS": {
+      "TITLE": "Block logins",
+      "DESCRIPTION": "Logins can be blocked globally or within the specified namespace. Blocked login can not be reused.",
+      "BLOCK": "Block",
+      "PLACEHOLDER": "example1\nexample2",
+      "FIND_PLACEHOLDER": "Find namespace",
+      "INSERT_HERE": "Here insert logins",
+      "LOGINS_ERROR": "This line cannot be empty",
+      "GLOBAL": "Globally",
+      "SPECIFIC": "For specific namespace",
+      "NAMESPACE": "Namespace",
+      "NAMESPACE_ERROR": "Namespace cannot be empty"
     }
   },
   "MEMBERS_LIST": {
@@ -2373,6 +2415,11 @@
     "ACTOR": "Actor",
     "VIEW_DETAIL": "View details",
     "MESSAGE": "Message"
+  },
+  "BLOCKED_LOGINS_LIST": {
+    "ID": "Id",
+    "LOGIN": "Login",
+    "NAMESPACE": "Namespace"
   },
   "ADMIN_USER": {
     "ENTITY": "User",
@@ -2479,6 +2526,15 @@
       "TAB_MEMBERS": "Members",
       "TAB_FACILITIES": "Facilities",
       "TAB_RESOURCES": "Resources"
+    },
+    "BLOCKED_LOGINS": {
+      "TITLE": "Blocked logins",
+      "SEARCH_PLACEHOLDER": "Search by login",
+      "BLOCK": "Block",
+      "UNBLOCK": "Unblock",
+      "FILTER_NAMESPACE": "Filter by namespace",
+      "UNBLOCK_SUCCESS": "Logins were successfully unblocked",
+      "BLOCK_SUCCESS": "Logins were successfully blocked"
     }
   },
   "USER_DETAIL": {
@@ -2677,6 +2733,7 @@
         "EMAIL": "Email",
         "LOGIN": "Login",
         "SPONSORS": "Sponsors",
+        "EXPIRATION": "Expiration",
         "NO_SPONSORED_MEMBERS_WARNING": "No sponsored members found",
         "PASSWORD_RESET": "Reset password"
       },
@@ -2877,6 +2934,11 @@
           "SELECT_VO": "Select organization",
           "FIND_VO": "Find organization...",
           "NO_VO_FOUND": "No matching organization found"
+        },
+        "NAMESPACE_SEARCH_SELECT": {
+          "SELECT_NAMESPACE": "Select namespace",
+          "FIND_NAMESPACE": "Blocked in...",
+          "NO_NAMESPACE_FOUND": "No matching namespace found"
         },
         "SERVICE_PACKAGE_SEARCH_SELECT": {
           "SELECT_PACKAGE": "Select service package",
@@ -3292,7 +3354,8 @@
         "NO_MEMBERS": "No members found",
         "NO_USERS": "No users found.",
         "NO_FACILITIES": "No facilities found.",
-        "NO_AUDIT_MESSAGES": "No audit messages found."
+        "NO_AUDIT_MESSAGES": "No audit messages found.",
+        "NO_BLOCKED_LOGINS": "No blocked logins found."
       }
     }
   }

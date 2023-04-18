@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { DeleteDialogResult } from '../delete-entity-dialog/delete-entity-dialog.component';
 
 export interface AnonymizeUserDialogComponentData {
@@ -29,14 +28,14 @@ export class AnonymizeUserDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: AnonymizeUserDialogComponentData,
     private notificator: NotificatorService,
     private usersService: UsersManagerService,
-    private translate: TranslateService
+    private translate: PerunTranslateService
   ) {}
 
   ngOnInit(): void {
     this.theme = this.data.theme;
     this.dataSource = new MatTableDataSource<User>([this.data.user]);
-    this.relations.push(this.translate.instant('DIALOGS.ANONYMIZE_USER.GROUP_RELATION') as string);
-    this.relations.push(this.translate.instant('DIALOGS.ANONYMIZE_USER.VO_RELATION') as string);
+    this.relations.push(this.translate.instant('DIALOGS.ANONYMIZE_USER.GROUP_RELATION'));
+    this.relations.push(this.translate.instant('DIALOGS.ANONYMIZE_USER.VO_RELATION'));
   }
 
   onCancel(): void {
@@ -45,16 +44,16 @@ export class AnonymizeUserDialogComponent implements OnInit {
 
   anonymizeUser(): void {
     this.loading = true;
-    this.usersService.anonymizeUser(this.data.user.id, this.force).subscribe(
-      () => {
+    this.usersService.anonymizeUser(this.data.user.id, this.force).subscribe({
+      next: () => {
         this.notificator.showSuccess(
-          this.translate.instant('DIALOGS.ANONYMIZE_USER.SUCCESS_NOTIFICATION') as string
+          this.translate.instant('DIALOGS.ANONYMIZE_USER.SUCCESS_NOTIFICATION')
         );
         this.loading = false;
         this.dialogRef.close(true);
       },
-      () => (this.loading = false)
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   onSubmit(result: DeleteDialogResult): void {
