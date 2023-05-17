@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+describe('Resource management with role Resource self service', () => {
   const dbVoName = 'test-e2e-vo-from-db-6';
   const dbResourceName = 'test-e2e-resource-from-db-4';
 
@@ -11,19 +11,14 @@ context('Actions', () => {
 
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_RESOURCE_SELF_SERVICE')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "resourceSelfService"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_RESOURCE_SELF_SERVICE'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_RESOURCE_SELF_SERVICE'));
-      cy.visit('service-access');
-    }
+    cy.login('RESOURCE_SELF_SERVICE', 'resourceSelfService');
   });
 
   beforeEach(() => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
       .get(`[data-cy=${dbVoName}]`)
       .click()
@@ -31,7 +26,7 @@ context('Actions', () => {
       .click()
       .get(`[data-cy=resource-list]`)
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
       .get(`[data-cy=${dbResourceName}]`)
       .click()

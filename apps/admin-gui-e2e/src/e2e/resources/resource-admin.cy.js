@@ -1,4 +1,6 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+describe('Resource management with role Resource admin', () => {
   const dbVoName = 'test-e2e-vo-from-db-3';
   const dbResourceName = 'test-e2e-resource-from-db-2';
 
@@ -12,19 +14,14 @@ context('Actions', () => {
   const dbGroupToRemove = 'test-e2e-group-from-db-1';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_RESOURCE_MANAGER')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "resourceManager"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_RESOURCE_MANAGER'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_RESOURCE_MANAGER'));
-      cy.visit('service-access');
-    }
+    cy.login('RESOURCE_MANAGER', 'resourceManager');
   });
 
   beforeEach(() => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
       .get(`[data-cy=${dbVoName}]`)
       .click()
@@ -32,7 +29,7 @@ context('Actions', () => {
       .click()
       .get(`[data-cy=resource-list]`)
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
       .get(`[data-cy=${dbResourceName}]`)
       .click();
@@ -52,7 +49,7 @@ context('Actions', () => {
       .wait('@getAttributes')
 
       // check that attribute was added
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type('user settings name', {force: true})
       .get(`[data-cy=${dbAttributeToAdd}-value]`)
       .should('exist');
@@ -61,7 +58,7 @@ context('Actions', () => {
   it('test delete attribute', () => {
     cy.get('[data-cy=attributes]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type('user settings description', {force: true})
       .get(`[data-cy=${dbAttributeToDelete}-checkbox]`)
       .click()

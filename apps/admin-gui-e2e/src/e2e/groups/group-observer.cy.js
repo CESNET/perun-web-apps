@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+describe('Group management with role Group observer', () => {
   const dbGroupName = 'g-o-test-group';
   const dbGroupMember = 'g-o-testgroupmember';
   const dbGroupAdmin = 'g-o-testgroupadmin';
@@ -9,19 +9,14 @@ context('Actions', () => {
   const dbExtsource = 'internal';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_GROUP_OBSERVER')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "groupObserver"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_GROUP_OBSERVER'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_GROUP_OBSERVER'));
-      cy.visit('service-access');
-    }
+    cy.login('GROUP_OBSERVER', 'groupObserver');
   });
 
   beforeEach(() => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName)
       .get(`[data-cy=${dbVoName}]`)
       .click()
@@ -61,7 +56,7 @@ context('Actions', () => {
       .click()
       .get('[data-cy=external-sources]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbExtsource, {force: true})
       .get(`[data-cy=${dbExtsource}-name-td]`)
       .should('exist')

@@ -1,4 +1,6 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+describe('Facility management with role Facility admin', () => {
   const dbFacilityName1 = 'test-e2e-facility-from-db';
   const dbFacilityName2 = 'test-e2e-facility-from-db-2';
   const dbVoName = 'test-e2e-vo-from-db-for-facility';
@@ -10,12 +12,7 @@ context('Actions', () => {
   const removeManagerUser = 'test3';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_FACILITY_MANAGER')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "facilityManager"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_FACILITY_MANAGER'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_FACILITY_MANAGER'));
-      cy.visit('service-access');
-    }
+    cy.login('FACILITY_MANAGER', 'facilityManager');
   });
 
   beforeEach(() => {
@@ -40,7 +37,7 @@ context('Actions', () => {
       .as('getEnrichedFacilities')
       .wait('@getEnrichedFacilities')
       // assert that the facility was created
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type('test-e2e-facility', {force: true})
       .get('[data-cy=test-e2e-facility-checkbox]')
       .should('exist');
@@ -50,7 +47,7 @@ context('Actions', () => {
     cy.intercept('**/facilitiesManager/getEnrichedFacilities')
       .as('getEnrichedFacilities')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName1, {force: true})
       .get(`[data-cy=${dbFacilityName1}-checkbox]`)
       .click()
@@ -69,7 +66,7 @@ context('Actions', () => {
       .intercept('**/vosManager/getAllVos')
       .as('getAllVos')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()
@@ -92,7 +89,7 @@ context('Actions', () => {
       .intercept('**/facilitiesManager/getAssignedRichResources?**')
       .as('getAssignedResources')
       .wait('@getAssignedResources')
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type('test-e2e-resource', {force: true})
       .get('[data-cy=test-e2e-resource-checkbox]')
       .should('exist');
@@ -104,14 +101,14 @@ context('Actions', () => {
       .intercept('**/facilitiesManager/getAssignedRichResources?**')
       .as('getAssignedResources')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()
       .get('[data-cy=resources]')
       .click()
       .wait('@getAssignedResources')
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
       .get(`[data-cy=${dbResourceName}-checkbox]`)
       .click()
@@ -128,7 +125,7 @@ context('Actions', () => {
     cy.intercept('**/facilitiesManager/getEnrichedFacilities')
       .as('getEnrichedFacilities')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()
@@ -137,7 +134,7 @@ context('Actions', () => {
       .get('[data-cy=add-attributes]')
       .click()
       .get('.mat-mdc-dialog-container')
-      .find('[data-cy=unfocused-filter]') // finds the data-cy attribute inside the dialog container
+      .find('[data-cy=filter-input]') // finds the data-cy attribute inside the dialog container
       .type('Login namespace', {force: true})
       .get(`[data-cy=${addedAttribute}-value]`)
       .type('einfra', {force: true})
@@ -147,7 +144,7 @@ context('Actions', () => {
       .as('getAttributes')
       .wait('@getAttributes')
       // assert that attribute exists
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(addedAttribute, {force: true})
       .get(`[data-cy=${addedAttribute}-value]`)
       .should('exist');
@@ -157,13 +154,13 @@ context('Actions', () => {
     cy.intercept('**/facilitiesManager/getEnrichedFacilities')
       .as('getEnrichedFacilities')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()
       .get('[data-cy=attributes]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(deleteAttribute, {force: true})
       .get(`[data-cy=${deleteAttribute}-checkbox]`)
       .click()
@@ -185,7 +182,7 @@ context('Actions', () => {
       .intercept('**/usersManager/findRichUsersWithAttributes?**')
       .as('findRichUsers')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()
@@ -216,7 +213,7 @@ context('Actions', () => {
     cy.intercept('**/facilitiesManager/getEnrichedFacilities')
       .as('getEnrichedFacilities')
       // .wait('@getEnrichedFacilities')
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbFacilityName2, {force: true})
       .get(`[data-cy=${dbFacilityName2}]`)
       .click()

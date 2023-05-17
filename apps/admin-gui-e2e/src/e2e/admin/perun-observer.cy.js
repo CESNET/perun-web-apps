@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+describe('Perun admin management with role Perun observer', () => {
   const dbServiceName = 'perun_observer_test';
 
   // the same data from perun admin tests
@@ -13,12 +13,7 @@ context('Actions', () => {
   const dbOwnerName = 'DbOwnerTest';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_PERUN_OBSERVER')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "perunObserver"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_PERUN_OBSERVER'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_PERUN_OBSERVER'));
-      cy.visit('service-access');
-    }
+    cy.login('PERUN_OBSERVER', 'perunObserver');
   });
 
   beforeEach(() => {
@@ -30,7 +25,7 @@ context('Actions', () => {
   it('test attribute detail', () => {
     cy.get('[data-cy=attribute-definitions]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbAttrFriendlyName, {force: true})
       .get(`[data-cy=${dbAttrFriendlyName.toLowerCase()}-friendly-name]`)
       .click()
@@ -55,7 +50,7 @@ context('Actions', () => {
   it('test list owners', () => {
     cy.get('[data-cy=owners]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbOwnerName, {force: true})
       .get(`[data-cy=${dbOwnerName}]`)
       .should('exist');
@@ -64,7 +59,7 @@ context('Actions', () => {
   it('test service detail', () => {
     cy.get('[data-cy=services]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbServiceName, {force: true})
       .get(`[data-cy=${dbServiceName.toLowerCase()}-name-td]`)
       .click()
@@ -75,7 +70,7 @@ context('Actions', () => {
   it('test list ext sources', () => {
     cy.get('[data-cy=external-sources]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbExtSourceName, {force: true})
       .get(`[data-cy=${dbExtSourceName.toLowerCase()}-name-td]`)
       .should('exist');
@@ -96,7 +91,7 @@ context('Actions', () => {
   it('test list consent hubs', () => {
     cy.get('[data-cy=consent-hubs]')
       .click()
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbConsentHubName, {force: true})
       .get(`[data-cy=${dbConsentHubName.toLowerCase()}-name-td]`)
       .should('exist');

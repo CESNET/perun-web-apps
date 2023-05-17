@@ -1,4 +1,6 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+describe('VO management with role VO observer', () => {
   const dbVoName = "vo-observer-vo-from-db";
   const dbGroupName = "vo-observer-group-from-db";
   const dbMemberName = "vo-observer-user3";
@@ -7,36 +9,18 @@ context('Actions', () => {
   const dbApplicationItemTextFieldName = 'input-test';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_VO_OBSERVER')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "voObserver"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_VO_OBSERVER'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_VO_OBSERVER'));
-      cy.visit('service-access');
-    }
+    cy.login('VO_OBSERVER', 'voObserver');
   });
 
   beforeEach(() => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
       .get(`[data-cy=${dbVoName}]`)
       .click()
   });
-
-  it('test view application form', () => {
-    cy.get('[data-cy=advanced-settings]')
-      .click()
-      .intercept('**/registrarManager/getFormItems/vo**').as('getFormItems')
-      .get('[data-cy=application-form]')
-      .click()
-      .wait('@getFormItems')
-
-      // form item should be visible
-      .get(`[data-cy=${dbApplicationItemTextFieldName}-shortname-td]`)
-      .should('exist');
-  })
 
   it('test view applications', () => {
     cy.intercept('**/registrarManager/getApplicationsPage**').as("getApplicationsPage")
@@ -46,21 +30,6 @@ context('Actions', () => {
 
       // the application was created by user 'perun' during Docker build
       .get(`[data-cy=perun-createdBy]`)
-      .should('exist')
-  })
-
-  it ('test view Ext Sources', () => {
-    cy.intercept('**/extSourcesManager/getVoExtSources**').as('getVoExtSources')
-      .get('[data-cy=advanced-settings]')
-      .click()
-      .get('[data-cy=external-sources]')
-      .click()
-      .wait('@getVoExtSources')
-      .get('[data-cy=unfocused-filter]')
-      .type('internal', {force: true})
-
-      // the vo external source was set to INTERNAL in the db (id 1)
-      .get('[data-cy=internal-name-td]')
       .should('exist')
   })
 
@@ -97,17 +66,45 @@ context('Actions', () => {
       .should('exist')
   })
 
-  it('view vo managers', () => {
-    cy.intercept('**/authzResolver/getRichAdmins**').as('getRichAdmins')
-      .get('[data-cy=advanced-settings]')
-      .click()
-      .get('[data-cy=managers]')
-      .click()
-      .wait('@getRichAdmins')
+  context('Advanced settings', () => {
+    beforeEach(() => {
+      cy.get('[data-cy=advanced-settings]')
+        .click()
+    })
 
-      // the first name of the admin should be visible
-      .get(`[data-cy=${dbAdminName}-firstName-td]`)
-      .should('exist')
+    it('view vo managers', () => {
+      cy.intercept('**/authzResolver/getRichAdmins**').as('getRichAdmins')
+        .get('[data-cy=managers]')
+        .click()
+        .wait('@getRichAdmins')
+
+        // the first name of the admin should be visible
+        .get(`[data-cy=${dbAdminName}-firstName-td]`)
+        .should('exist')
+    })
+
+    it('test view application form', () => {
+      cy.intercept('**/registrarManager/getFormItems/vo**').as('getFormItems')
+        .get('[data-cy=application-form]')
+        .click()
+        .wait('@getFormItems')
+
+        // form item should be visible
+        .get(`[data-cy=${dbApplicationItemTextFieldName}-shortname-td]`)
+        .should('exist');
+    })
+
+    it ('test view Ext Sources', () => {
+      cy.intercept('**/extSourcesManager/getVoExtSources**').as('getVoExtSources')
+        .get('[data-cy=external-sources]')
+        .click()
+        .wait('@getVoExtSources')
+        .get('[data-cy=filter-input]')
+        .type('internal', {force: true})
+
+        // the vo external source was set to INTERNAL in the db (id 1)
+        .get('[data-cy=internal-name-td]')
+        .should('exist')
+    })
   })
-
 })

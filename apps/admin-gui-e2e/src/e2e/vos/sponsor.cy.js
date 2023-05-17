@@ -1,4 +1,6 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+describe('VO management with role Sponsor', () => {
   const dbVoName = 'test-e2e-vo-from-db-7';
   const dbMemberToSponsor = 'MemberToSponsor';
   const dbSponsoredMember = 'SponsoredMember';
@@ -18,12 +20,7 @@ context('Actions', () => {
   const csvMembersToSponsor = csvMemberFirstName + ";" + csvMemberLastName + ";" + csvMemberEmail + ";" + csvMemberLogin;
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_SPONSOR')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "sponsor"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_SPONSOR'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_SPONSOR'));
-      cy.visit('service-access');
-    }
+    cy.login('SPONSOR', 'sponsor');
   });
 
   beforeEach(() => {
@@ -31,7 +28,7 @@ context('Actions', () => {
       .visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
       .get(`[data-cy=${dbVoName}]`)
       .click()
@@ -41,7 +38,7 @@ context('Actions', () => {
   })
 
   it ('test list member sponsors', () => {
-      cy.get('[data-cy=unfocused-filter]')
+      cy.get('[data-cy=filter-input]')
         .type(dbSponsoredMember, {force: true})
         .get(`[data-cy=${dbSponsoredMember}-edit-sponsors-button]`)
         .click()
@@ -67,7 +64,7 @@ context('Actions', () => {
       .wait('@getSponsoredMembers')
 
       // assert that sponsored member exists
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbMemberToSponsor, {force: true})
       .get(`[data-cy=${dbMemberToSponsor}-name]`)
       .should('exist')
@@ -111,7 +108,7 @@ context('Actions', () => {
       .wait('@getSponsoredMembers')
 
       // assert that sponsored member exists
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(newSponsoredMemberFirstName, {force: true})
       .get(`[data-cy=${newSponsoredMemberFirstName}-name]`)
       .should('exist')
@@ -145,14 +142,14 @@ context('Actions', () => {
       .wait('@getSponsoredMembers')
 
       // assert that sponsored member exists
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(csvMemberFirstName, {force: true})
       .get(`[data-cy=${csvMemberFirstName}-name]`)
       .should('exist')
   })
 
   it ('test remove sponsor from sponsored member', () => {
-    cy.get('[data-cy=unfocused-filter]')
+    cy.get('[data-cy=filter-input]')
       .type(dbMemberToUnsponsor, {force: true})
       .get(`[data-cy=${dbMemberToUnsponsor}-edit-sponsors-button]`)
       .click()
@@ -171,7 +168,7 @@ context('Actions', () => {
 
   it ('test send password reset email', () => {
     cy.intercept('**/membersManager/sendPasswordResetLinkEmail**').as('sendPasswordResetLinkEmail')
-      .get('[data-cy=unfocused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbSponsoredMember, {force: true})
       .get(`[data-cy=${dbSponsoredMember}-reset-passwd-button]`)
       .click()

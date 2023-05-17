@@ -1,21 +1,18 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+describe('Group management with role Top group creator', () => {
   const dbVoName = 'test-e2e-vo-from-db-4';
   const groupName = 'test';
 
   before(() => {
-    if (Cypress.env('BA_USERNAME_TOP_GROUP_CREATOR')) {
-      sessionStorage.setItem('baPrincipal', '{"name": "topGroupCreator"}');
-      sessionStorage.setItem('basicUsername', Cypress.env('BA_USERNAME_TOP_GROUP_CREATOR'));
-      sessionStorage.setItem('basicPassword', Cypress.env('BA_PASSWORD_TOP_GROUP_CREATOR'));
-      cy.visit('service-access');
-    }
+    cy.login('TOP_GROUP_CREATOR', 'topGroupCreator');
   });
 
   beforeEach(() => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=auto-focused-filter]')
+      .get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
       .get(`[data-cy=${dbVoName}]`)
       .click()
