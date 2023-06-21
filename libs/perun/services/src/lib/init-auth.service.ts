@@ -10,7 +10,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Params, Router } from '@angular/router';
 import { OAuthInfoEvent, OAuthService } from 'angular-oauth2-oidc';
 import { filter } from 'rxjs/operators';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timer } from 'rxjs';
 import { MfaHandlerService } from './mfa-handler.service';
 
 @Injectable({
@@ -172,7 +172,7 @@ export class InitAuthService {
       sessionStorage.setItem('auth:queryParams', queryParams);
       return Promise.resolve();
     } else if (this.storeService.getProperty('auto_auth_redirect')) {
-      if (!sessionStorage.getItem('mfaProcessed')) {
+      if (!localStorage.getItem('mfaProcessed')) {
         localStorage.setItem('routeAuthGuard', window.location.pathname);
       }
       return (
@@ -188,6 +188,14 @@ export class InitAuthService {
         queryParamsHandling: 'merge',
       });
     }
+  }
+
+  invalidateServiceAccess(): void {
+    // Has to be promise, bc. of ExpressionChangedAfterItHasBeenCheckedError
+    timer(0).subscribe(() => {
+      this.serviceAccess = false;
+      this.setLoginScreen(true);
+    });
   }
 
   private setLoginScreen(shown: boolean): void {

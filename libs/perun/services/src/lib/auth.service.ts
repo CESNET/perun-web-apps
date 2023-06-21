@@ -12,6 +12,7 @@ import { OidcClient } from '@perun-web-apps/perun/models';
 })
 export class AuthService {
   filterShortname: string;
+  logoutProcess: boolean;
   private router: Router;
 
   constructor(
@@ -44,14 +45,36 @@ export class AuthService {
       sessionStorage.removeItem('basicUsername');
       sessionStorage.removeItem('basicPassword');
       sessionStorage.setItem('baLogout', 'true');
+      sessionStorage.setItem('baAfterLogout', 'true');
       void this.router.navigate(['/service-access'], { queryParamsHandling: 'preserve' });
     } else {
+      this.logoutProcess = true;
       this.oauthService.logOut();
+
+      const postLogoutUrl = this.store.getProperty('oidc_client').oauth_post_logout_redirect_uri;
+      if (!postLogoutUrl) {
+        // redirect to the login page if there is no postLogoutUrl
+        void this.router.navigate(['/login'], { queryParamsHandling: 'preserve' });
+      } else if (this.store.getProperty('proxy_logout')) {
+        // redirect to the logout loading page if postLogoutUrl exist and logout should be handled by proxy
+        void this.router.navigate(['/logout'], { queryParamsHandling: 'preserve' });
+      } else {
+        // directly redirect if postLogoutUrl exist and logout should be handled locally (not by proxy)
+        window.open(postLogoutUrl, '_self');
+      }
     }
   }
 
   isLoggedIn(): boolean {
     return this.oauthService.hasValidAccessToken();
+  }
+
+  isLogoutProcess(): boolean {
+    return this.logoutProcess;
+  }
+
+  setLogoutProcess(logoutProcess: boolean): void {
+    this.logoutProcess = logoutProcess;
   }
 
   getAuthorizationHeaderValue(): string {
@@ -88,10 +111,11 @@ export class AuthService {
     ) {
       customQueryParams['prompt'] = 'consent';
     }
-    if (sessionStorage.getItem('mfa_route') || sessionStorage.getItem('mfaProcessed')) {
+    if (sessionStorage.getItem('mfa_route') || localStorage.getItem('mfaProcessed')) {
       customQueryParams['acr_values'] = 'https://refeds.org/profile/mfa';
     }
-    if (sessionStorage.getItem('mfa_route')) {
+    if (sessionStorage.getItem('mfa_route') || localStorage.getItem('mfaTimeout')) {
+      // mfaTimeout = force new authentication if mfaTimeoutError is thrown by Perun
       if (customQueryParams['prompt']) {
         customQueryParams['prompt'] += ' login';
       } else {

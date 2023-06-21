@@ -51,7 +51,8 @@ export class ApiInterceptor implements HttpInterceptor {
       apiUrl !== undefined &&
       this.isCallToPerunApi(req.url) &&
       !this.isLoggedIn() &&
-      !this.dialogRefSessionExpiration
+      !this.dialogRefSessionExpiration &&
+      !localStorage.getItem('mfaRequired')
     ) {
       const config = getDefaultDialogConfig();
       config.width = '450px';
@@ -125,8 +126,12 @@ export class ApiInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         const e = err.error as RPCError;
         // catch MFA required error and start MFA logic
-        if (e.type === 'MfaPrivilegeException' || e.type === 'MfaRolePrivilegeException') {
-          return this.mfaHandlerService.openMfaWindow(e.type === 'MfaRolePrivilegeException').pipe(
+        if (
+          e.type === 'MfaPrivilegeException' ||
+          e.type === 'MfaRolePrivilegeException' ||
+          e.type === 'MfaTimeoutException'
+        ) {
+          return this.mfaHandlerService.openMfaWindow(e.type).pipe(
             switchMap((verified) => {
               if (verified) {
                 if (e.type === 'MfaRolePrivilegeException') {

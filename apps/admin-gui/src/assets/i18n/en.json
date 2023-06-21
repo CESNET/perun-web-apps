@@ -1645,6 +1645,7 @@
       "SUCCESS": "Selected services were removed from the resource"
     },
     "CREATE_RESOURCE": {
+      "TITLE": "Create resource",
       "NAME": "Name",
       "DESCRIPTION": "Description",
       "CANCEL": "Cancel",
@@ -2883,7 +2884,8 @@
     "PERUN": {
       "LOGIN": {
         "SIGN_IN": "Sign in",
-        "TEXT": "You must sign in to continue."
+        "TEXT": "You must sign in to continue.",
+        "LOGOUT_INFO": "You have been successfully logged out."
       },
       "LOGIN_SERVICE_ACCESS": {
         "LABEL": "Sign in",
