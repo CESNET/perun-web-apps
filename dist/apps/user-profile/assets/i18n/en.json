@@ -95,7 +95,6 @@
     "NAME": "Name",
     "DESCRIPTION": "Description",
     "EXPIRATION": "Expiration",
-    "NO_MEMBERSHIPS": "No results match current filter",
     "EXTEND": "Extend"
   },
   "SAMBA_PASSWORD": {
@@ -243,7 +242,8 @@
     "PERUN": {
       "LOGIN": {
         "SIGN_IN": "Sign in",
-        "TEXT": "You must sign in to continue."
+        "TEXT": "You must sign in to continue.",
+        "LOGOUT_INFO": "You have been successfully logged out."
       },
       "LOGIN_SERVICE_ACCESS": {
         "LABEL": "Sign in",
