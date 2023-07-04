@@ -1444,6 +1444,30 @@ td.mat-mdc-cell {
   justify-content: center;
 }
 
+.status-change {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+
+  // Using ::before to create a pseudo-element serving as circular background
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    padding-bottom: 150%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
 #preloader {
   position: fixed;
   top: 0;
@@ -1684,6 +1708,10 @@ table .mdc-text-field--outlined {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
+.mat-mdc-tab.mdc-tab--active {
+  background-color: #e8e4e4;
+}
+
 .mdc-data-table__cell {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
@@ -1693,4 +1721,9 @@ table .mdc-text-field--outlined {
   position: sticky !important;
   top: 0;
   z-index: 100;
+  font-weight: bold !important;
+}
+
+.mb-25 {
+  margin-bottom: 0.75rem;
 }

@@ -14,7 +14,8 @@ import { StoreService } from './store.service';
 export type MfaExceptionType =
   | 'MfaPrivilegeException'
   | 'MfaRolePrivilegeException'
-  | 'MfaTimeoutException';
+  | 'MfaTimeoutException'
+  | 'MfaRoleTimeoutException';
 
 @Injectable({
   providedIn: 'root',
@@ -42,14 +43,19 @@ export class MfaHandlerService {
     const configVerify = getDefaultDialogConfig();
     configVerify.width = '450px';
     configVerify.data = {
-      mfaRoleException: mfaExceptionType === 'MfaRolePrivilegeException',
+      mfaRoleException:
+        mfaExceptionType === 'MfaRolePrivilegeException' ||
+        mfaExceptionType === 'MfaRoleTimeoutException',
     };
     const dialogVerifyRef = this.dialog.open(MfaRequiredDialogComponent, configVerify);
     let verificationSkipped = false;
 
     dialogVerifyRef.afterClosed().subscribe((result) => {
       if (result) {
-        if (mfaExceptionType === 'MfaTimeoutException') {
+        if (
+          mfaExceptionType === 'MfaTimeoutException' ||
+          mfaExceptionType === 'MfaRoleTimeoutException'
+        ) {
           localStorage.setItem('mfaTimeout', 'true');
         }
 

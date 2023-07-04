@@ -55,13 +55,15 @@
     <div>
       <br />
       <h6>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.EXPIRATION' | translate}}</h6>
-      <perun-web-apps-expiration-select [minDate]="minDate" (datePicker)="setExpiration($event)">
+      <perun-web-apps-expiration-select
+        [minDate]="minDate"
+        (expirationSelected)="setExpiration($event)">
       </perun-web-apps-expiration-select>
     </div>
   </div>
 
   <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ms-auto" mat-flat-button>
+    <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
       {{'DIALOGS.SPONSOR_EXISTING_MEMBER.CANCEL' | translate}}
     </button>
     <button

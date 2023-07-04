@@ -9,6 +9,7 @@ export interface OidcClient {
   user_info_endpoint_url: string;
   filters: Record<string, string>;
   oauth_offline_access_consent_prompt: boolean;
+  oauth_acr_value: string;
 }
 
 interface PerunTheme {
@@ -118,7 +119,6 @@ interface ProfileMFA {
   api_url: string;
   enable_security_image: boolean;
   enable_security_text: boolean;
-  enable_detail_settings: boolean;
   security_image_attribute: string;
   security_text_attribute: string;
   enforce_mfa_attribute: string;

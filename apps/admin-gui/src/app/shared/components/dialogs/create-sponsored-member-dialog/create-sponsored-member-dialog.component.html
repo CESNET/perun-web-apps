@@ -141,7 +141,7 @@
             <h6 class="mt-4">{{'DIALOGS.CREATE_SPONSORED_MEMBER.EXPIRATION' | translate}}</h6>
             <perun-web-apps-expiration-select
               [minDate]="minDate"
-              (datePicker)="setExpiration($event)"
+              (expirationSelected)="setExpiration($event)"
               class="mt-2">
             </perun-web-apps-expiration-select>
           </div>
@@ -190,14 +190,14 @@
     </div>
 
     <div *ngIf="!successfullyCreated && stepper !== undefined" mat-dialog-actions>
-      <button (click)="onCancel()" mat-flat-button>
+      <button (click)="onCancel()" mat-stroked-button>
         {{'DIALOGS.CREATE_SPONSORED_MEMBER.CANCEL' | translate}}
       </button>
       <button
         (click)="stepperPrevious()"
         *ngIf="stepper !== undefined && stepper.selectedIndex !== 0"
         class="ms-auto"
-        mat-flat-button>
+        mat-stroked-button>
         {{'DIALOGS.CREATE_SPONSORED_MEMBER.BACK' | translate}}
       </button>
       <button
