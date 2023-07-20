@@ -65,6 +65,8 @@ export class MfaHandlerService {
         sessionStorage.setItem('oldAccessToken', this.oauthService.getAccessToken());
         sessionStorage.setItem('oldRefreshToken', this.oauthService.getRefreshToken());
 
+        // set 'mfaWindow' property to session
+        localStorage.setItem('mfaWindow', 'true');
         newWindow = this.setupMfaWindow();
 
         if (newWindow) {
@@ -103,6 +105,8 @@ export class MfaHandlerService {
             localStorage.setItem('access_token', sessionStorage.getItem('oldAccessToken'));
             localStorage.setItem('refresh_token', sessionStorage.getItem('oldRefreshToken'));
           }
+          // remove 'mfaWindow' property
+          localStorage.removeItem('mfaWindow');
           return observer.next(true);
         }
         if (verificationSkipped) {
@@ -155,8 +159,8 @@ export class MfaHandlerService {
 
   private setupMfaWindow(): Window {
     const url = location.pathname + location.search;
-    const width = 600;
-    const height = 600;
+    const width = Math.max(window.screen.width * 0.6, 1100);
+    const height = Math.max(window.screen.height * 0.8, 800);
     const topmostWindow = window.top;
 
     const top = topmostWindow.outerHeight / 2 + topmostWindow.screenY - height / 2;
