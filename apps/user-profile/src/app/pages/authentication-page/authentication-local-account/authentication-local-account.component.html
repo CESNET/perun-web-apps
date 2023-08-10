@@ -1,0 +1,12 @@
+<h1 class="page-subtitle">{{'LOCAL_ACCOUNT.TITLE' | customTranslate | translate}}</h1>
+<div class="page-subtitle">
+  {{'LOCAL_ACCOUNT.DESC' | customTranslate | translate}}
+</div>
+<div *ngIf="{exists: loginExists$ | async} as login">
+  <button *ngIf="login.exists" mat-flat-button color="accent" (click)="openPwdReset()">
+    {{'LOCAL_ACCOUNT.CHANGE_PWD' | customTranslate | translate}}
+  </button>
+  <button *ngIf="!login.exists" mat-flat-button color="accent" (click)="activateAccount()">
+    {{'LOCAL_ACCOUNT.ACTIVATE' | customTranslate | translate}}
+  </button>
+</div>

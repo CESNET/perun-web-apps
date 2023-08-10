@@ -61,6 +61,8 @@ import { TransformMemberStatusPipe } from './transform-member-status.pipe';
 import { ApplicationColumnSelectLabelPipe } from './application-column-select-label.pipe';
 import { SelectedSponsorPipe } from './selected-sponsor.pipe';
 import { GlobalNamespacePipe } from './global-namespace.pipe';
+import { LastSuccessfulPropagationPipe } from './last-successful-propagation.pipe';
+import { ActiveSideMenuItemPipe } from './active-side-menu-item.pipe';
 
 @NgModule({
   declarations: [
@@ -126,6 +128,8 @@ import { GlobalNamespacePipe } from './global-namespace.pipe';
     TransformMemberStatusPipe,
     ApplicationColumnSelectLabelPipe,
     GlobalNamespacePipe,
+    LastSuccessfulPropagationPipe,
+    ActiveSideMenuItemPipe,
   ],
   exports: [
     ResourceTagsToStringPipe,
@@ -190,6 +194,8 @@ import { GlobalNamespacePipe } from './global-namespace.pipe';
     TransformMemberStatusPipe,
     ApplicationColumnSelectLabelPipe,
     GlobalNamespacePipe,
+    LastSuccessfulPropagationPipe,
+    ActiveSideMenuItemPipe,
   ],
   imports: [CommonModule],
 })

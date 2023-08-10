@@ -1,5 +1,5 @@
 <div *ngIf="inMyProfile" class="align-cards">
-  <mat-card appearance="outlined" class="mat-elevation-z3">
+  <mat-card appearance="outlined" class="card mat-elevation-z3">
     <mat-card-header>
       <mat-card-title>
         <h1 class="page-subtitle">{{'USER_DETAIL.OVERVIEW.GENERAL_SETTINGS' | translate}}</h1>
@@ -16,7 +16,11 @@
           <td *matCellDef="let attribute" mat-cell>
             <div class="d-flex align-items-center">
               {{attribute.value}}
-              <button (click)="changeEmail()" class="ms-3" mat-icon-button>
+              <button
+                (click)="changeEmail()"
+                class="ms-3"
+                mat-icon-button
+                matTooltip="{{'USER_DETAIL.OVERVIEW.CHANGE_EMAIL' | translate}}">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>
@@ -29,6 +33,8 @@
   </mat-card>
 </div>
 
-<perun-web-apps-menu-buttons-field
-  [items]="navItems"
-  [size]="'small'"></perun-web-apps-menu-buttons-field>
+<perun-web-apps-menu-buttons-field [items]="items"></perun-web-apps-menu-buttons-field>
+<perun-web-apps-expandable-tiles
+  [items]="settingsItems"
+  [title]="'MENU_ITEMS.USER.SETTINGS'"
+  [sectionId]="'settings'"></perun-web-apps-expandable-tiles>
