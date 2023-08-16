@@ -12,17 +12,14 @@
     "PRIVACY": "Soukromí",
     "CONSENTS": "Souhlasy",
     "CONSENT_REQUEST": "Žádost o souhlas",
+    "AUTHENTICATION": "Autentizace",
     "SETTINGS": "Nastavení"
   },
   "SETTINGS": {
-    "ALTERNATIVE_PASSWORDS": "Alternativní hesla",
     "DATA_QUOTAS": "Kvóty dat",
     "MAILING_LISTS": "Vyřazení ze seznamu adresátů",
     "PREFERRED_SHELLS": "Preferované shelly",
     "PREFERRED_UNIX_GROUP_NAMES": "Preferovaná jména Unixových skupin",
-    "SAMBA_PASSWORD": "Heslo pro službu SAMBA",
-    "SSH_KEYS": "SSH klíče",
-    "PASSWORD_RESET": "Změna hesla",
     "AUTHENTICATION": "Autentizace",
     "LOCAL_ACCOUNT": "Lokální účet"
   },
@@ -154,7 +151,14 @@
     "SAVE_IMG_SUCCESS": "Bezpečnostní obrázek byl změněn.",
     "REMOVE_IMG_SUCCESS": "Bezpečnostní obrázek byl odebrán.",
     "SAVE_TEXT_SUCCESS": "Bezpečnostní text byl změněn.",
-    "REMOVE_TEXT_SUCCESS": "Bezpečnostní text byl odebrán."
+    "REMOVE_TEXT_SUCCESS": "Bezpečnostní text byl odebrán.",
+    "SAMBA_PASSWORD": "Heslo pro službu SAMBA",
+    "LOCAL_ACCOUNT": "Lokální účet",
+    "ANTI_PHISHING": "Anti-phishingová ochrana",
+    "ACCOUNT_ACTIVATION": "Aktivace účtu",
+    "SSH_KEYS": "SSH klíče",
+    "PASSWORD_RESET": "Změna hesla",
+    "ALTERNATIVE_PASSWORDS": "Alternativní hesla"
   },
   "LOCAL_ACCOUNT": {
     "TITLE": "Lokální účet",
@@ -309,11 +313,24 @@
         "USER_DONT_EXIST": {
           "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje."
         },
+        "USER_NOT_ALLOWED": {
+          "TITLE": "Přístup není povolen",
+          "MESSAGE": "Servisní účty (Service account) nemají povolen přístup k této aplikaci.",
+          "REDIRECT": "Přesměrovaní na přihlášení"
+        },
         "TABLE_OPTIONS": {
           "EXPORT_TO_FILE": "Exportovat do souboru",
-          "ALL_DATA": "Všechna data",
+          "EXPORT_TITLE": "Exportovat tabulku",
+          "BUTTON_EXPORT": "Export",
+          "BUTTON_CLOSE": "Zrušit",
+          "SELECT_FORMAT": "Zvolte formát výstupu",
+          "EXPORT_OPTIONS": "Možnosti exportu",
           "DISPLAYED_DATA": "Zobrazená data",
-          "EXPORT_LOADING": "Probíhá exportování dat..."
+          "ALL_DATA": "Všechna data",
+          "ERROR_FORMAT":"Formát exportu není zvolen",
+          "ERROR_OPTION": "Není vybrána možnost exportu",
+          "EXPORT_LOADING": "Probíhá exportování dat...",
+          "MORE": "Více"
         },
         "NOTIFICATOR": {
           "NOTIFICATION": {
@@ -411,6 +428,15 @@
           "OLD_PASSWORD": "Staré heslo",
           "FIELD_EMPTY": "Tohle políčko musí být vyplněné.",
           "SUCCESS": "Heslo bylo úspěšně změněno"
+        },
+        "RESET_PASSWORD_DIALOG": {
+          "LOGIN": "Jméno",
+          "NAMESPACE": "Namespace",
+          "TITLE": "Resetovat heslo",
+          "CANCEL": "Zrušit",
+          "CHANGE": "Potvrdit",
+          "FIELD_EMPTY": "Tohle políčko musí být vyplněné.",
+          "SUCCESS": "Heslo bylo úspěšně resetováno"
         },
         "PASSWORD_FORM_FIELD": {
           "PASSWORD": "Nové heslo",
