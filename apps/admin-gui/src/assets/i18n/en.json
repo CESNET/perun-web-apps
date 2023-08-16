@@ -832,7 +832,9 @@
       "TITLE": "Member groups",
       "ADD": "Add",
       "REMOVE": "Remove",
-      "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups."
+      "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
+      "LIST_VIEW": "List view",
+      "TREE_VIEW": "Tree view"
     },
     "APPLICATIONS": {
       "TITLE": "Application",
@@ -3104,10 +3106,22 @@
         "USER_DONT_EXIST": {
           "TITLE": "The requested user (by Id or external identity) doesn't exist."
         },
+        "USER_NOT_ALLOWED": {
+          "TITLE": "Access not allowed",
+          "MESSAGE": "Service accounts are not allowed to access this application.",
+          "REDIRECT": "Redirect to login page"
+        },
         "TABLE_OPTIONS": {
           "EXPORT_TO_FILE": "Export to file",
-          "ALL_DATA": "All data",
+          "EXPORT_TITLE": "Export table",
+          "BUTTON_EXPORT": "Export",
+          "BUTTON_CLOSE": "Close",
+          "SELECT_FORMAT": "Select format",
+          "EXPORT_OPTIONS": "Export options",
           "DISPLAYED_DATA": "Displayed data",
+          "ALL_DATA": "All data",
+          "ERROR_FORMAT":"Export format is not selected",
+          "ERROR_OPTION": "Export option is not selected",
           "EXPORT_LOADING": "Exporting data...",
           "MORE": "More"
         },
@@ -3160,6 +3174,15 @@
           "OLD_PASSWORD": "Old password",
           "FIELD_EMPTY": "This field cannot be empty",
           "SUCCESS": "Password has been changed successfully,"
+        },
+        "RESET_PASSWORD_DIALOG": {
+          "LOGIN": "Login",
+          "NAMESPACE": "Namespace",
+          "TITLE": "Reset password",
+          "CANCEL": "Cancel",
+          "CHANGE": "Confirm",
+          "FIELD_EMPTY": "This field cannot be empty",
+          "SUCCESS": "Password has been reset successfully,"
         },
         "PASSWORD_FORM_FIELD": {
           "PASSWORD": "Password",
