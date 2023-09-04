@@ -73,6 +73,8 @@ import { VoSettingsBansComponent } from './pages/vo-detail-page/vo-settings/vo-s
 import { MemberBansComponent } from './pages/member-detail-page/member-bans/member-bans.component';
 import { VoSettingsManageEmbeddedGroupsComponent } from './pages/vo-detail-page/vo-settings/vo-settings-manage-embedded-groups/vo-settings-manage-embedded-groups.component';
 import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -84,6 +86,8 @@ import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail
     PerunSharedComponentsModule,
     PerunPipesModule,
     PerunUtilsModule,
+    MatCheckboxModule,
+    MatSortModule,
   ],
   exports: [],
   declarations: [

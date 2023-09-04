@@ -26,6 +26,53 @@
     </button>
   </span>
 </div>
+
+<div>
+  <span [matTooltip]="!canApprove ? tooltipMessages.approve : ''">
+    <button
+      color="accent"
+      *ngIf="approveAuth"
+      class="me-2"
+      mat-flat-button
+      (click)="onApproveClicked()"
+      [disabled]="!canApprove">
+      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
+    </button>
+  </span>
+  <span [matTooltip]="!canReject ? tooltipMessages.reject : ''">
+    <button
+      color="warn"
+      *ngIf="rejectAuth"
+      class="me-2"
+      mat-flat-button
+      (click)="onRejectClicked()"
+      [disabled]="!canReject">
+      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
+    </button>
+  </span>
+  <span [matTooltip]="!canDelete ? tooltipMessages.delete : ''">
+    <button
+      color="warn"
+      *ngIf="deleteAuth"
+      class="me-2"
+      mat-flat-button
+      (click)="onDeleteClicked()"
+      [disabled]="!canDelete">
+      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
+    </button>
+  </span>
+  <span [matTooltip]="!canSendNotification ? tooltipMessages.sendNotifications : ''">
+    <button
+      class="me-2"
+      *ngIf="resendAuth"
+      mat-stroked-button
+      (click)="onResendClicked()"
+      [disabled]="!canSendNotification">
+      <i class="material-icons"> mail_outline </i>
+      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
+    </button>
+  </span>
+</div>
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
@@ -33,6 +80,7 @@
   <app-applications-dynamic-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
     (loading$)="loading$ = $event"
+    (selectedApplications)="onSelectedApplicationsChange($event)"
     [tableId]="showAllDetails ? detailTableId : tableId"
     [searchString]="filterValue"
     [displayedColumns]="currentColumns"

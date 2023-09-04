@@ -49,6 +49,8 @@ import { RequestChangeDataQuotaDialogComponent } from './request-change-data-quo
 import { ExpirationSelectComponent } from './expiration-select/expiration-select.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
+import { ApplicationsBulkOperationDialogComponent } from './applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -75,6 +77,7 @@ import { PasswordResetDialogComponent } from './password-reset-dialog/password-r
     MatSelectModule,
     PerunNamespacePasswordFormModule,
     UiMaterialModule,
+    MatSortModule,
   ],
   declarations: [
     BugReportDialogComponent,
@@ -105,6 +108,7 @@ import { PasswordResetDialogComponent } from './password-reset-dialog/password-r
     ExpirationSelectComponent,
     DeleteUserDialogComponent,
     PasswordResetDialogComponent,
+    ApplicationsBulkOperationDialogComponent,
   ],
   exports: [
     ChangeExpirationDialogComponent,
@@ -131,6 +135,7 @@ import { PasswordResetDialogComponent } from './password-reset-dialog/password-r
     ExpirationSelectComponent,
     DeleteUserDialogComponent,
     PasswordResetDialogComponent,
+    ApplicationsBulkOperationDialogComponent,
   ],
 })
 export class PerunDialogsModule {}
