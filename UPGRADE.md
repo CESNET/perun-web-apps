@@ -1,5 +1,26 @@
 Upgrade notes
 
+## [13.4.0](https://github.com/CESNET/perun-web-apps/compare/v13.3.1...v13.4.0) (2023-09-04)
+
+
+* **admin:** added support for new role ([a4579db](https://github.com/CESNET/perun-web-apps/commit/a4579db9d2f2ca115400658940c0dd24e8e7acfd))
+* **admin:** align input in create relation dialog ([a242a6a](https://github.com/CESNET/perun-web-apps/commit/a242a6a26b376e6d786478c68e5d3bfea51e81c5))
+* **admin:** buttons authz on member pages ([bfbe9a2](https://github.com/CESNET/perun-web-apps/commit/bfbe9a2b0eca2b814af336ced2b21107ca09b76d))
+* **admin:** check disabled and hidden dependencies for application items ([b30ce1e](https://github.com/CESNET/perun-web-apps/commit/b30ce1e36d770e6ce2436a6c42486717f5ea0267))
+* **admin:** customizable items per page in dashboard tables ([f2c656c](https://github.com/CESNET/perun-web-apps/commit/f2c656ccbd80d48e9846169bfcdc9ec1a7d23c65))
+* **admin:** disable member invitation ([3d95de8](https://github.com/CESNET/perun-web-apps/commit/3d95de83a3cf16ebbf2adee1638e3613c31149dd))
+* **admin:** expand section ([fb8d9cd](https://github.com/CESNET/perun-web-apps/commit/fb8d9cd6fc4799a398d5b3d032af074c43bf7ea6))
+* **admin:** hide empty expandable sections ([729d9ed](https://github.com/CESNET/perun-web-apps/commit/729d9ed9f6cac95510809cd606fa8ffda01257ad))
+* **admin:** indirect membership ([2fbd165](https://github.com/CESNET/perun-web-apps/commit/2fbd16532df954982c5a5a56a7d632d02db1c2f0))
+* **admin:** key 'resources' duplicated in localStorage ([d27a0e2](https://github.com/CESNET/perun-web-apps/commit/d27a0e2e310070f05cf4dedd7827f38b423521e4))
+* **admin:** missaligned icons in action-buttons ([8682866](https://github.com/CESNET/perun-web-apps/commit/8682866e0f05ae447a2428c76c1153bf7f5044d3))
+* **admin:** modify user without role message ([aa73beb](https://github.com/CESNET/perun-web-apps/commit/aa73beb654bcee36d8967ab175961373682042f7))
+* **admin:** notifications sending enabled control changed to toggle ([1eea89f](https://github.com/CESNET/perun-web-apps/commit/1eea89f1cdc400e97e07a397fed77780780fd5c6))
+* **admin:** remove outer border at manageable entities ([5fe6804](https://github.com/CESNET/perun-web-apps/commit/5fe6804c2ea56e43e933fb5a79b6f18b9e6f0028))
+* do not filter attributes with empy value ([93fdcbd](https://github.com/CESNET/perun-web-apps/commit/93fdcbd3916e9f8d62db9a19e496703d433ab839))
+* open application in the new tab ([6fc47a5](https://github.com/CESNET/perun-web-apps/commit/6fc47a5ea1701379f229064f3db522f038a8a92a))
+* **profile:** navigation working properly in mailing lists settings ([1df1e65](https://github.com/CESNET/perun-web-apps/commit/1df1e65d9164aa38da0f041636643b3a1e01bd8e))
+
 ## [13.3.1](https://github.com/CESNET/perun-web-apps/compare/v13.3.0...v13.3.1) (2023-09-04)
 
 ## [13.3.0](https://github.com/CESNET/perun-web-apps/compare/v13.2.0...v13.3.0) (2023-08-16)
