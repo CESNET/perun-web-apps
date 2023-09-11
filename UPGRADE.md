@@ -1,5 +1,23 @@
 Upgrade notes
 
+## [14.0.0](https://github.com/CESNET/perun-web-apps/compare/v13.4.0...v14.0.0) (2023-09-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **profile:** The consolidator_base_url config property needs
+to be changed to consolidator_url and include the complete url.
+
+### Features
+
+* close session expired dialog in all tabs ([316df47](https://github.com/CESNET/perun-web-apps/commit/316df4762ff6d2c0fdb3b94e8f743ea12c9c387c))
+* **profile:** consolidator config uses full url ([0df39c2](https://github.com/CESNET/perun-web-apps/commit/0df39c2d5e7e269bc801587a058470d4c2360131))
+
+
+### Bug Fixes
+
+* initialize colors from instance config ([21ef021](https://github.com/CESNET/perun-web-apps/commit/21ef02165455bfef3e84331648d9dc5bc9f15a88))
+
 ## [13.4.0](https://github.com/CESNET/perun-web-apps/compare/v13.3.1...v13.4.0) (2023-09-04)
 
 
