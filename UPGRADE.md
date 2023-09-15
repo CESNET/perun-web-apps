@@ -1,5 +1,16 @@
 Upgrade notes
 
+## [14.0.1](https://github.com/CESNET/perun-web-apps/compare/v14.0.0...v14.0.1) (2023-09-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **profile:** Added new config option "consolidator_url_cert" in order to support different URLs for consolidator with federated and certificate authentication.
+
+### Bug Fixes
+
+* **profile:** support adding both fed and cert identity types ([f9b66c0](https://github.com/CESNET/perun-web-apps/commit/f9b66c0fa4db940769ae440c37aba43aa9ff4f71))
+
 ## [14.0.0](https://github.com/CESNET/perun-web-apps/compare/v13.4.0...v14.0.0) (2023-09-11)
 
 
