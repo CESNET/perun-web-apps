@@ -1,5 +1,21 @@
 Upgrade notes
 
+## [14.1.0](https://github.com/CESNET/perun-web-apps/compare/v14.0.1...v14.1.0) (2023-09-27)
+
+
+### Features
+
+* **admin:** add bulk operations to applications overview ([391f340](https://github.com/CESNET/perun-web-apps/commit/391f3405f174956de61d5f0e6cbb267ac4591d56))
+* **admin:** display also indirect managers ([48f433e](https://github.com/CESNET/perun-web-apps/commit/48f433ea94eedcd26af986a663a30203d80e7024))
+* **admin:** jump onto specific page ([8f95c33](https://github.com/CESNET/perun-web-apps/commit/8f95c336c10ffb6d501529111876375e9ac5f224))
+* **profile:** allow filtering by name and sorting on profile groups page ([1b9bba7](https://github.com/CESNET/perun-web-apps/commit/1b9bba766cb255c4fa88bd89178db64d9d1967b8))
+
+
+### Bug Fixes
+
+* **lib:** align items in attribute value list to the left ([fa4680e](https://github.com/CESNET/perun-web-apps/commit/fa4680e22eec278d2353cd5302af9b8989a1398f))
+* revert initializing colors during runtime ([cfa074a](https://github.com/CESNET/perun-web-apps/commit/cfa074a528952219b7106942e33013c1b51b5f7e))
+
 ## [14.0.1](https://github.com/CESNET/perun-web-apps/compare/v14.0.0...v14.0.1) (2023-09-15)
 
 
