@@ -1,5 +1,17 @@
 Upgrade notes
 
+## [14.2.0](https://github.com/CESNET/perun-web-apps/compare/v14.1.0...v14.2.0) (2023-09-29)
+
+
+### Features
+
+* **admin:** change GUI to incorporate moduleClassNames ([8353592](https://github.com/CESNET/perun-web-apps/commit/8353592b1da03cf703834a7f61b88a8e722a987c))
+
+
+### Bug Fixes
+
+* **admin:** entity text color ([dcfbdcd](https://github.com/CESNET/perun-web-apps/commit/dcfbdcd67be1ccc6e0dca0b2934b47c86c02548a))
+
 ## [14.1.0](https://github.com/CESNET/perun-web-apps/compare/v14.0.1...v14.1.0) (2023-09-27)
 
 
