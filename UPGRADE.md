@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [14.2.1](https://github.com/CESNET/perun-web-apps/compare/v14.2.0...v14.2.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* **admin:** use renamed html tag for application dynamic list ([58ee258](https://github.com/CESNET/perun-web-apps/commit/58ee25866429ffa9210c64421993a79b64589203))
+
 ## [14.2.0](https://github.com/CESNET/perun-web-apps/compare/v14.1.0...v14.2.0) (2023-09-29)
 
 
