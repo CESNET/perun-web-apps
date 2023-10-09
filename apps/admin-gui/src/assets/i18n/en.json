@@ -694,6 +694,7 @@
         "REJECTED_BY": "Rejected by",
         "DATE": "Date",
         "VERIFY": "Verify",
+        "VERIFY_EMAIL_DISABLED_TOOLTIP": "You don't have permission to verify user's e-mail address",
         "DELETE_APPLICATION_TITLE": "Delete application",
         "DELETE_APPLICATION_DESCRIPTION": "Application with following Id will be deleted.",
         "DELETE_MESSAGE": "Application was deleted",

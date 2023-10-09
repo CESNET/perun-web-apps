@@ -7,14 +7,20 @@
 <mat-spinner *ngIf="loading" class="ms-auto me-auto"> </mat-spinner>
 
 <div *ngIf="!loading">
-  <button
-    (click)="verifyApplication()"
-    color="accent"
-    *ngIf="this.application.state === 'NEW' && verifyAuth"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
-  </button>
+  <span
+    [matTooltipDisabled]="verifyAuth"
+    [matTooltipPosition]="'above'"
+    matTooltip="{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY_EMAIL_DISABLED_TOOLTIP' | translate}}">
+    <button
+      (click)="verifyApplication()"
+      color="accent"
+      *ngIf="this.application.state === 'NEW'"
+      [disabled]="!verifyAuth"
+      class="me-2"
+      mat-flat-button>
+      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
+    </button>
+  </span>
   <button
     (click)="approveApplication()"
     color="accent"
