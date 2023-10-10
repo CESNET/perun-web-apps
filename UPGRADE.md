@@ -1,5 +1,31 @@
 Upgrade notes
 
+## [14.3.0](https://github.com/CESNET/perun-web-apps/compare/v14.2.1...v14.3.0) (2023-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** Removed 'Organizations', 'Groups', 'Resources' and 'Facilities' from the admin version of the User section. Refer admins to 'Accounts' and new 'Assignments' page for info on entities
+
+### Features
+
+* **admin:** attribute definition detail redesign ([dadb546](https://github.com/CESNET/perun-web-apps/commit/dadb546c6374677b23b87f710dc35e00f4034773))
+* **admin:** change GUI to incorporate moduleClassNames ([c7fad76](https://github.com/CESNET/perun-web-apps/commit/c7fad76e9971d3788060f18447f8488f26971b2f))
+* **admin:** update User section Perun Admin menu ([fad1186](https://github.com/CESNET/perun-web-apps/commit/fad11862371440042c7e3b7f40564ce1e12657ca))
+* **profile:** mfa categories uses namespace as key ([c670091](https://github.com/CESNET/perun-web-apps/commit/c670091be4cd0022ed78f1a6600b12613927641e))
+
+
+### Bug Fixes
+
+* **admin:** change usage of send/sent in en.json ([6d77db3](https://github.com/CESNET/perun-web-apps/commit/6d77db395f736b3ebc8cd8e97bcb7c6adf030a21))
+* **admin:** display groups on recently viewed dashboard ([68ac514](https://github.com/CESNET/perun-web-apps/commit/68ac5143b2f72b1dba6cf3040bcd1f75522b88a6))
+* **admin:** edit variable for sidemenu submenu active text color ([fb7ff10](https://github.com/CESNET/perun-web-apps/commit/fb7ff10e92c971bbee303221cdca83578e2760b9))
+* **admin:** entity text color ([000d882](https://github.com/CESNET/perun-web-apps/commit/000d8824073c89b17f553abfbca77202ce7f7e33))
+* **admin:** fix application form page spinners ([44910d0](https://github.com/CESNET/perun-web-apps/commit/44910d084cba59979fe40402e2a579d018ad3d47))
+* **admin:** group membership manager can set group status/expiration ([a6d1b3a](https://github.com/CESNET/perun-web-apps/commit/a6d1b3a6755a773001f7e9e8acbd0b3d08b61e28))
+* **admin:** use renamed html tag for application dynamic list ([1d1a359](https://github.com/CESNET/perun-web-apps/commit/1d1a359021fbca207025b965d669e1b77ed4ee1f))
+* **lib:** hide logout alert ([aacc183](https://github.com/CESNET/perun-web-apps/commit/aacc183067f157381389364071c0ee34beaaf69c))
+
 ## [14.2.1](https://github.com/CESNET/perun-web-apps/compare/v14.2.0...v14.2.1) (2023-10-05)
 
 
