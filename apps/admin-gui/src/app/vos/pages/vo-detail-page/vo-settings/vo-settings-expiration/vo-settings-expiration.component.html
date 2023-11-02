@@ -1,5 +1,10 @@
-<app-expiration-settings
-  *ngIf="expirationAttribute !== undefined"
-  (saveAttribute)="saveExpirationAttribute($event)"
-  [expirationAttribute]="expirationAttribute">
-</app-expiration-settings>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative">
+  <app-expiration-settings
+    *perunWebAppsLoader="loading; indicator: spinner"
+    (saveAttribute)="saveExpirationAttribute($event)"
+    [expirationAttribute]="expirationAttribute">
+  </app-expiration-settings>
+</div>

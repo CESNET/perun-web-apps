@@ -41,7 +41,7 @@ export class ManagersPageComponent implements OnInit {
   @Input() displayedGroupColumns = ['select', 'id', 'vo', 'name', 'description'];
 
   groups: Group[] = [];
-  managers: RichUser[] = null;
+  managers: RichUser[] = [];
   managers$: Observable<Array<RichUser>> = null;
   selectionUsers = new SelectionModel<RichUser>(true, []);
   selectionGroups = new SelectionModel<Group>(true, []);

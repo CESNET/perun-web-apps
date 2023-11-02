@@ -20,6 +20,7 @@ export class GroupSettingsExpirationComponent implements OnInit {
   successMessage: string;
   errorMessage: string;
   group: Group;
+  loading = false;
 
   constructor(
     private attributesManager: AttributesManagerService,
@@ -37,11 +38,13 @@ export class GroupSettingsExpirationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.group = this.entityStorageService.getEntity();
     this.loadSettings();
   }
 
   saveExpirationAttribute(attribute: Attribute): void {
+    this.loading = true;
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
 
@@ -51,16 +54,22 @@ export class GroupSettingsExpirationComponent implements OnInit {
         next: () => {
           this.loadSettings();
           this.notificator.showSuccess(this.successMessage);
+          this.loading = false;
         },
-        error: (error: RPCError) => this.notificator.showRPCError(error, this.errorMessage),
+        error: (error: RPCError) => {
+          this.notificator.showRPCError(error, this.errorMessage);
+          this.loading = false;
+        },
       });
   }
 
   private loadSettings(): void {
+    this.loading = true;
     this.attributesManager
       .getGroupAttributeByName(this.group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
       .subscribe((attr) => {
         this.expirationAttribute = attr;
+        this.loading = false;
       });
   }
 }
