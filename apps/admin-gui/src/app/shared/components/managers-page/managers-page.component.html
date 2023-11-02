@@ -55,7 +55,7 @@
       <ng-template #spinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-      <div class="position-relative" *ngIf="managers">
+      <div class="position-relative">
         <app-users-list
           *perunWebAppsLoader="loading; indicator: spinner"
           [disableSelf]="disableSelf"
@@ -111,7 +111,7 @@
       <ng-template #spinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-      <div class="position-relative" *ngIf="groups">
+      <div class="position-relative">
         <perun-web-apps-groups-list
           *perunWebAppsLoader="loading; indicator: spinner"
           [disableMembers]="false"

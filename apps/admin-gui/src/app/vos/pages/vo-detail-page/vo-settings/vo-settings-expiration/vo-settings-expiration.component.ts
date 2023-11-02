@@ -20,6 +20,7 @@ export class VoSettingsExpirationComponent implements OnInit {
   @HostBinding('class.router-component') true;
 
   expirationAttribute: Attribute;
+  loading = false;
 
   private successMessage: string;
   private errorMessage: string;
@@ -42,11 +43,13 @@ export class VoSettingsExpirationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.vo = this.entityStorageService.getEntity();
     this.loadSettings();
   }
 
   saveExpirationAttribute(attribute: Attribute): void {
+    this.loading = true;
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
 
@@ -54,18 +57,22 @@ export class VoSettingsExpirationComponent implements OnInit {
       next: () => {
         this.loadSettings();
         this.notificator.showSuccess(this.successMessage);
+        this.loading = false;
       },
       error: (error: RPCError) => {
         this.notificator.showRPCError(error, this.errorMessage);
+        this.loading = false;
       },
     });
   }
 
   private loadSettings(): void {
+    this.loading = true;
     this.attributesManager
       .getVoAttributeByName(this.vo.id, Urns.VO_DEF_EXPIRATION_RULES)
       .subscribe((attr) => {
         this.expirationAttribute = attr;
+        this.loading = false;
       });
   }
 }
