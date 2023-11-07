@@ -1,5 +1,27 @@
 Upgrade notes
 
+## [14.4.0](https://github.com/CESNET/perun-web-apps/compare/v14.3.1...v14.4.0) (2023-11-07)
+
+
+### Features
+
+* added type to dialog config ([760f8df](https://github.com/CESNET/perun-web-apps/commit/760f8df5213545920329d6720116b6de079c8e04))
+* **admin:** color of block destinations ([5ff7566](https://github.com/CESNET/perun-web-apps/commit/5ff7566be7678e407bec780d110e1e9f3e019a66))
+* **admin:** filter groups by role ([a4f529b](https://github.com/CESNET/perun-web-apps/commit/a4f529b9aee17b0385a33bc82a316a7f085e5bea))
+* merge configs on initialization ([962926a](https://github.com/CESNET/perun-web-apps/commit/962926af83da27d6044e094c29fcc699bb7515a8))
+
+
+### Bug Fixes
+
+* **admin:** bulk application approve/reject error handling ([76a23b7](https://github.com/CESNET/perun-web-apps/commit/76a23b738349748b1b08b1a7b0f65f1988e14a0e))
+* **admin:** correctly display group action buttons on a tree view ([589744e](https://github.com/CESNET/perun-web-apps/commit/589744e3790cfd14fb722e511879ff6ecccbc8eb))
+* **admin:** disable force propagation button ([eca6a76](https://github.com/CESNET/perun-web-apps/commit/eca6a76b07d1a73f2cca2ba132bcc029db518269))
+* **admin:** disable to add new form item during the data loading ([307fde6](https://github.com/CESNET/perun-web-apps/commit/307fde6eea6d63c1d837e507fc7d43998c64e6de))
+* **admin:** edit attribute definition ([248b065](https://github.com/CESNET/perun-web-apps/commit/248b065e9bc9383a71f80b2b6ef5e95331542250))
+* **admin:** fix ExpressionChangedAfterItHasBeenCheckedError on applications page ([aecd28a](https://github.com/CESNET/perun-web-apps/commit/aecd28ae41e343d4ff2d1dc7f388f716a0524aad))
+* **admin:** privilege exception not thrown on member detail ([b561227](https://github.com/CESNET/perun-web-apps/commit/b561227da20c93bdd338ea20732307600fb6338a))
+* **admin:** rename role assignment types ([49d77dd](https://github.com/CESNET/perun-web-apps/commit/49d77ddb2ed8151dece065ffebb01c9fb6a5115e))
+
 ## [14.3.1](https://github.com/CESNET/perun-web-apps/compare/v14.3.0...v14.3.1) (2023-11-07)
 
 
