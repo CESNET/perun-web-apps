@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [14.3.1](https://github.com/CESNET/perun-web-apps/compare/v14.3.0...v14.3.1) (2023-11-07)
+
+
+### Bug Fixes
+
+* **admin:** bulk application approve/reject error handling ([17a5da9](https://github.com/CESNET/perun-web-apps/commit/17a5da973613f04f5e62f0be1eb2ba710eb16380))
+
 ## [14.3.0](https://github.com/CESNET/perun-web-apps/compare/v14.2.1...v14.3.0) (2023-10-10)
 
 
