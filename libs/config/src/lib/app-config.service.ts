@@ -56,12 +56,12 @@ export class AppConfigService {
     private storeService: StoreService,
     private authzSevice: AuthzResolverService,
     private titleService: Title,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
   ) {}
 
   initializeColors(
     entityColorConfigs: EntityColorConfig[],
-    colorConfigs: ColorConfig[]
+    colorConfigs: ColorConfig[],
   ): Promise<void> {
     return new Promise<void>((resolve) => {
       colorConfigs.forEach((cc) => {
@@ -128,20 +128,20 @@ export class AppConfigService {
         .get('/assets/config/instanceConfig.json', {
           headers: this.getNoCacheHeaders(),
         })
-        .subscribe(
-          (config: PerunConfig) => {
-            this.storeService.setInstanceConfig(config);
+        .subscribe({
+          next: (config: PerunConfig) => {
+            this.storeService.mergeConfig(config);
             const branding = document.location.hostname;
             if (config?.['brandings']?.[branding]) {
-              this.storeService.setBanding(branding);
+              this.storeService.mergeConfig(config?.['brandings']?.[branding]);
             }
             resolve();
           },
-          () => {
+          error: () => {
             // console.log('instance config not detected');
             resolve();
-          }
-        );
+          },
+        });
     });
   }
 
@@ -196,7 +196,7 @@ export class AppConfigService {
           this.storeService.setAppsConfig(appsConfig);
           resolve();
         },
-        (error) => reject(error)
+        (error) => reject(error),
       );
     });
   }

@@ -48,6 +48,7 @@ export class MemberOverviewComponent implements OnInit {
   loading = false;
   pwdResetAuth: boolean;
   isSponsor = false;
+  canReadSponsors = false;
   isPerunAdmin = false;
   sponsorButtonEnabled = false;
 
@@ -60,7 +61,7 @@ export class MemberOverviewComponent implements OnInit {
     public authResolver: GuiAuthResolver,
     private storeService: StoreService,
     private routePolicyService: RoutePolicyService,
-    private findSponsors: FindSponsorsService
+    private findSponsors: FindSponsorsService,
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +80,7 @@ export class MemberOverviewComponent implements OnInit {
         this.attributesManager.getLogins(member.userId).subscribe({
           next: (logins) => {
             this.logins = logins.filter((login) =>
-              this.attUrns.includes(login.friendlyNameParameter)
+              this.attUrns.includes(login.friendlyNameParameter),
             );
             this.member = member;
 
@@ -92,16 +93,15 @@ export class MemberOverviewComponent implements OnInit {
             };
             this.pwdResetAuth = this.authResolver.isAuthorized(
               'sendPasswordResetLinkEmail_Member_String_String_String_String_policy',
-              [this.vo, this.member]
+              [this.vo, this.member],
             );
             this.isPerunAdmin = this.authResolver.isPerunAdmin();
             this.isSponsor = this.authResolver.principalHasRole(Role.SPONSOR, 'Vo', this.vo.id);
-            if (
-              this.member.sponsored &&
-              this.authResolver.isAuthorized('getSponsorsForMember_Member_List<String>_policy', [
-                this.member,
-              ])
-            ) {
+            this.canReadSponsors = this.authResolver.isAuthorized(
+              'getSponsorsForMember_Member_List<String>_policy',
+              [this.member],
+            );
+            if (this.member.sponsored && this.canReadSponsors) {
               this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
                 this.sponsors = sponsors;
                 this.sponsorsDataSource = new MatTableDataSource<Sponsor>(this.sponsors);
@@ -157,7 +157,7 @@ export class MemberOverviewComponent implements OnInit {
       theme: 'member-theme',
       member: this.member,
       sponsors: this.voSponsors.filter(
-        (s) => !this.sponsors.map((sponsor) => sponsor.user.id).includes(s.id)
+        (s) => !this.sponsors.map((sponsor) => sponsor.user.id).includes(s.id),
       ),
     };
 
@@ -255,10 +255,10 @@ export class MemberOverviewComponent implements OnInit {
     this.membersService.getRichMemberWithAttributes(this.member.id).subscribe({
       next: (member) => {
         this.member = member;
-        this.findSponsors.getSponsors(member.voId).subscribe((sponsors) => {
-          this.voSponsors = sponsors;
-        });
-        if (member.sponsored) {
+        if (member.sponsored && this.canReadSponsors) {
+          this.findSponsors.getSponsors(member.voId).subscribe((sponsors) => {
+            this.voSponsors = sponsors;
+          });
           this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
             this.sponsors = sponsors;
             this.sponsorsDataSource.data = this.sponsors;

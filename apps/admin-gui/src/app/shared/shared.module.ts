@@ -148,7 +148,6 @@ import { StatisticsCardComponent } from './components/statistics-card/statistics
 import { ApplicationFormItemDisabledPipe } from './pipes/application-form-item-disabled.pipe';
 import { ApplicationFormItemHiddenPipe } from './pipes/application-form-item-hidden.pipe';
 import { MatListModule } from '@angular/material/list';
-import { EditApplicationFormItemLineComponent } from './components/dialogs/edit-application-form-item-dialog/edit-application-form-item-line/edit-application-form-item-line.component';
 import { AddGroupToRegistrationComponent } from './components/dialogs/add-group-to-registration/add-group-to-registration.component';
 import { OneEntityAttributePageComponent } from './components/one-entity-attribute-page/one-entity-attribute-page.component';
 import { PerunUtilsModule } from '@perun-web-apps/perun/utils';
@@ -192,6 +191,7 @@ import { AddGroupToVoRegistrationComponent } from './components/dialogs/add-grou
 import { AddGroupToGroupRegistrationComponent } from './components/dialogs/add-group-to-group-registration/add-group-to-group-registration.component';
 import { ApplicationActionsComponent } from './components/application-actions/application-actions.component';
 import { ApplicationsBulkOperationDialogComponent } from './components/dialogs/applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
+import { GroupRolesFilterComponent } from './components/group-roles-filter/group-roles-filter.component';
 
 @NgModule({
   imports: [
@@ -324,6 +324,7 @@ import { ApplicationsBulkOperationDialogComponent } from './components/dialogs/a
     AddVoBanDialogComponent,
     ApplicationActionsComponent,
     ApplicationsBulkOperationDialogComponent,
+    GroupRolesFilterComponent,
   ],
   declarations: [
     SideMenuComponent,
@@ -437,7 +438,6 @@ import { ApplicationsBulkOperationDialogComponent } from './components/dialogs/a
     StatisticsCardComponent,
     ApplicationFormItemDisabledPipe,
     ApplicationFormItemHiddenPipe,
-    EditApplicationFormItemLineComponent,
     AddGroupToRegistrationComponent,
     OneEntityAttributePageComponent,
     AddResourceTagToResourceDialogComponent,
@@ -476,6 +476,7 @@ import { ApplicationsBulkOperationDialogComponent } from './components/dialogs/a
     AddGroupToGroupRegistrationComponent,
     ApplicationActionsComponent,
     ApplicationsBulkOperationDialogComponent,
+    GroupRolesFilterComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })

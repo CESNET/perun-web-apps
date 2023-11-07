@@ -5,7 +5,10 @@ import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.se
 import { AttributesManagerService, User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
-import { EditUserDialogComponent } from '../../../shared/components/dialogs/edit-user-dialog/edit-user-dialog.component';
+import {
+  EditUserDialogComponent,
+  EditUserDialogData,
+} from '../../../shared/components/dialogs/edit-user-dialog/edit-user-dialog.component';
 import {
   EntityStorageService,
   GuiAuthResolver,
@@ -13,7 +16,9 @@ import {
 } from '@perun-web-apps/perun/services';
 import {
   AnonymizeUserDialogComponent,
+  AnonymizeUserDialogComponentData,
   DeleteUserDialogComponent,
+  DeleteUserDialogComponentData,
 } from '@perun-web-apps/perun/dialogs';
 import { ComponentType } from '@angular/cdk/overlay';
 
@@ -41,7 +46,7 @@ export class AdminUserDetailPageComponent implements OnInit {
     public authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private router: Router,
-    private store: StoreService
+    private store: StoreService,
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +81,7 @@ export class AdminUserDetailPageComponent implements OnInit {
   }
 
   editUser(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<EditUserDialogData>();
     config.width = '450px';
     config.data = {
       theme: 'admin-theme',
@@ -110,9 +115,11 @@ export class AdminUserDetailPageComponent implements OnInit {
   }
 
   private openDialog(
-    dialogComponent: ComponentType<AnonymizeUserDialogComponent | DeleteUserDialogComponent>
+    dialogComponent: ComponentType<AnonymizeUserDialogComponent | DeleteUserDialogComponent>,
   ): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<
+      AnonymizeUserDialogComponentData | DeleteUserDialogComponentData
+    >();
     config.width = '550px';
     config.data = {
       theme: 'admin-theme',

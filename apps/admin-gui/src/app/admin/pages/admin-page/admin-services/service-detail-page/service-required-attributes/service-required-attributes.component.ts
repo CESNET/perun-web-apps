@@ -8,8 +8,14 @@ import {
 import { TABLE_REQUIRED_ATTRIBUTES } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { AddRequiredAttributesDialogComponent } from '../../../../../../shared/components/dialogs/add-required-attributes-dialog/add-required-attributes-dialog.component';
-import { RemoveRequiredAttributesDialogComponent } from '../../../../../../shared/components/dialogs/remove-required-attributes-dialog/remove-required-attributes-dialog.component';
+import {
+  AddRequiredAttributesDialogComponent,
+  AddRequiredAttributesDialogData,
+} from '../../../../../../shared/components/dialogs/add-required-attributes-dialog/add-required-attributes-dialog.component';
+import {
+  RemoveRequiredAttributesDialogComponent,
+  RemoveRequiredAttributesDialogData,
+} from '../../../../../../shared/components/dialogs/remove-required-attributes-dialog/remove-required-attributes-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Component({
@@ -29,7 +35,7 @@ export class ServiceRequiredAttributesComponent implements OnInit {
     private attributeManager: AttributesManagerService,
     private dialog: MatDialog,
     public authResolver: GuiAuthResolver,
-    private entityStorageService: EntityStorageService
+    private entityStorageService: EntityStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +54,7 @@ export class ServiceRequiredAttributesComponent implements OnInit {
   }
 
   onAdd(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<AddRequiredAttributesDialogData>();
     config.width = '950px';
     config.data = {
       serviceId: this.service.id,
@@ -65,7 +71,7 @@ export class ServiceRequiredAttributesComponent implements OnInit {
   }
 
   onRemove(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<RemoveRequiredAttributesDialogData>();
     config.width = '650px';
     config.data = {
       serviceId: this.service.id,

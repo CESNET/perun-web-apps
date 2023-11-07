@@ -16,7 +16,7 @@ import { TABLE_ENTITYLESS_ATTRIBUTE_KEYS } from '@perun-web-apps/config/table-co
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 export interface EditAttributeDefinitionDialogData {
   attDef: AttributeDefinition;
@@ -41,12 +41,20 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
   finalReadGlobal: boolean;
   finalWriteOperations: boolean;
   finalWriteGlobal: boolean;
-  attributeControl: UntypedFormGroup = this.formBuilder.group({
+  attributeControl = this.formBuilder.group({
     name: [this.attDef.displayName, Validators.required],
     description: [this.attDef.description, Validators.required],
   });
   urn = `${this.attDef.namespace}:${this.attDef.friendlyName}`;
   collections$ = new BehaviorSubject<AttributePolicyCollection[]>([]);
+  emptyCollections: AttributePolicyCollection[] = [
+    {
+      id: -1,
+      attributeId: this.data.attDef.id,
+      action: AttributeAction.READ,
+      policies: [],
+    },
+  ];
   services$: Observable<Service[]> = this.serviceService
     .getServicesByAttributeDefinition(this.attDef.id)
     .pipe(startWith([]));
@@ -59,8 +67,8 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
     private clipboard: Clipboard,
     private attributesManager: AttributesManagerService,
     private serviceService: ServicesManagerService,
-    private formBuilder: UntypedFormBuilder,
-    private attributeRightsService: AttributeRightsService
+    private formBuilder: FormBuilder,
+    private attributeRightsService: AttributeRightsService,
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +93,12 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
         switchMap(() => of(this.collections$.getValue())),
         this.attributeRightsService.filterNullInPolicy(),
         switchMap((collections) =>
-          this.attributesManager.setAttributePolicyCollections({ policyCollections: collections })
+          // If list of collections is empty then pass empty collection with attribute definition ID for which all existing policies should be removed.
+          this.attributesManager.setAttributePolicyCollections(
+            collections.length > 0
+              ? { policyCollections: collections }
+              : { policyCollections: this.emptyCollections },
+          ),
         ),
         switchMap(() =>
           this.attributeRightsService.updateAttributeAction(
@@ -94,8 +107,8 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
             this.finalReadGlobal,
             this.initReadGlobal,
             this.attDef.id,
-            AttributeAction.READ
-          )
+            AttributeAction.READ,
+          ),
         ),
         switchMap(() =>
           this.attributeRightsService.updateAttributeAction(
@@ -104,14 +117,14 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
             this.finalWriteGlobal,
             this.initWriteGlobal,
             this.attDef.id,
-            AttributeAction.WRITE
-          )
-        )
+            AttributeAction.WRITE,
+          ),
+        ),
       )
       .subscribe({
         next: () => {
           this.notificator.showSuccess(
-            this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SUCCESS') as string
+            this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SUCCESS') as string,
           );
           this.dialogRef.close(true);
         },
@@ -139,11 +152,11 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
     const success = this.clipboard.copy(this.urn);
     if (success) {
       this.notificator.showSuccess(
-        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPIED') as string
+        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPIED') as string,
       );
     } else {
       this.notificator.showError(
-        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FAILED') as string
+        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FAILED') as string,
       );
     }
   }
@@ -157,17 +170,17 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
     const success = this.clipboard.copy(JSON.stringify(data));
     if (success) {
       this.notificator.showSuccess(
-        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPIED') as string
+        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPIED') as string,
       );
     } else {
       this.notificator.showError(
-        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FAILED') as string
+        this.translate.instant('DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FAILED') as string,
       );
     }
   }
 
   private updateAttribute(): void {
-    this.attDef.displayName = this.attributeControl.get('name').value as string;
-    this.attDef.description = this.attributeControl.get('description').value as string;
+    this.attDef.displayName = this.attributeControl.value.name;
+    this.attDef.description = this.attributeControl.value.description;
   }
 }

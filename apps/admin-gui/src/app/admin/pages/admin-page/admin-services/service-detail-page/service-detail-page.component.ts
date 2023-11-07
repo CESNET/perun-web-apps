@@ -10,15 +10,24 @@ import { SideMenuService } from '../../../../../core/services/common/side-menu.s
 import { SideMenuItemService } from '../../../../../shared/side-menu/side-menu-item.service';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateEditServiceDialogComponent } from '../../../../../shared/components/dialogs/create-edit-service-dialog/create-edit-service-dialog.component';
+import {
+  CreateEditServiceDialogComponent,
+  CreateServiceDialogData,
+} from '../../../../../shared/components/dialogs/create-edit-service-dialog/create-edit-service-dialog.component';
 import {
   EntityStorageService,
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { DeleteServiceDialogComponent } from '../../../../../shared/components/dialogs/delete-service-dialog/delete-service-dialog.component';
+import {
+  DeleteServiceDialogComponent,
+  DeleteServiceDialogData,
+} from '../../../../../shared/components/dialogs/delete-service-dialog/delete-service-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
+import {
+  UniversalConfirmationItemsDialogComponent,
+  UniversalConfirmationItemsDialogData,
+} from '@perun-web-apps/perun/dialogs';
 
 @Component({
   selector: 'app-service-detail-page',
@@ -42,7 +51,7 @@ export class ServiceDetailPageComponent implements OnInit {
     public authResolver: GuiAuthResolver,
     private translate: TranslateService,
     private notificator: NotificatorService,
-    private entityStorageService: EntityStorageService
+    private entityStorageService: EntityStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +64,7 @@ export class ServiceDetailPageComponent implements OnInit {
   }
 
   editService(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<CreateServiceDialogData>();
     config.width = '600px';
     config.data = {
       theme: 'service-theme',
@@ -72,7 +81,7 @@ export class ServiceDetailPageComponent implements OnInit {
   }
 
   removeService(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<DeleteServiceDialogData>();
     config.width = '600px';
     config.data = {
       theme: 'service-theme',
@@ -92,10 +101,10 @@ export class ServiceDetailPageComponent implements OnInit {
     this.serviceManager.updateService({ service: this.service }).subscribe(
       () => {
         this.notificator.showSuccess(
-          this.translate.instant('SERVICE_DETAIL.STATUS_CHANGE_SUCCESS') as string
+          this.translate.instant('SERVICE_DETAIL.STATUS_CHANGE_SUCCESS') as string,
         );
       },
-      () => (this.service.enabled = !this.service.enabled)
+      () => (this.service.enabled = !this.service.enabled),
     );
   }
 
@@ -104,15 +113,15 @@ export class ServiceDetailPageComponent implements OnInit {
     this.serviceManager.updateService({ service: this.service }).subscribe(
       () => {
         this.notificator.showSuccess(
-          this.translate.instant('SERVICE_DETAIL.PROPAGATION_CHANGE_SUCCESS') as string
+          this.translate.instant('SERVICE_DETAIL.PROPAGATION_CHANGE_SUCCESS') as string,
         );
       },
-      () => (this.service.useExpiredMembers = !this.service.useExpiredMembers)
+      () => (this.service.useExpiredMembers = !this.service.useExpiredMembers),
     );
   }
 
   evaluateConsents(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<UniversalConfirmationItemsDialogData>();
     config.width = '500px';
     config.data = {
       title: this.translate.instant('SERVICE_DETAIL.CONFIRM_DIALOG_TITLE') as string,
@@ -131,8 +140,8 @@ export class ServiceDetailPageComponent implements OnInit {
           .evaluateConsentsForService(this.service.id)
           .subscribe(() =>
             this.notificator.showSuccess(
-              this.translate.instant('SERVICE_DETAIL.EVALUATION_FINISH') as string
-            )
+              this.translate.instant('SERVICE_DETAIL.EVALUATION_FINISH') as string,
+            ),
           );
       }
     });
@@ -147,7 +156,7 @@ export class ServiceDetailPageComponent implements OnInit {
         this.sideMenuService.setAdminItems([serviceItems]);
         this.loading = false;
       },
-      () => (this.loading = false)
+      () => (this.loading = false),
     );
   }
 }

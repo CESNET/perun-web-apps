@@ -39,6 +39,7 @@ export class FacilityServiceStatusComponent implements OnInit {
   disableAllowButton = true;
   disableBlockButton = true;
   disableRemoveButton = true;
+  disableForcePropagationButton = false;
   taskIsNull: boolean;
   taskId: number;
 
@@ -57,7 +58,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     private facilityManager: FacilitiesManagerService,
     private resourcesManager: ResourcesManagerService,
     private dialog: MatDialog,
-    private entityStorageService: EntityStorageService
+    private entityStorageService: EntityStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +73,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.servicesManager.forceServicePropagationBulk(serviceIds, this.facility.id).subscribe({
       next: () => {
         this.notificator.showInstantSuccess(
-          'FACILITY_DETAIL.SERVICES_STATUS.SUCCESS_FORCE_PROPAGATION'
+          'FACILITY_DETAIL.SERVICES_STATUS.SUCCESS_FORCE_PROPAGATION',
         );
         this.loading = false;
       },
@@ -87,7 +88,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.servicesManager.unblockServicesOnFacility(serviceIds, this.facility.id).subscribe({
       next: () => {
         this.notificator.showInstantSuccess('FACILITY_DETAIL.SERVICES_STATUS.SUCCESS_ALLOW');
-        this.loading = false;
+        this.refreshTable();
       },
       error: () => {
         this.loading = false;
@@ -100,7 +101,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.servicesManager.blockServicesOnFacility(serviceIds, this.facility.id).subscribe({
       next: () => {
         this.notificator.showInstantSuccess('FACILITY_DETAIL.SERVICES_STATUS.SUCCESS_BLOCK');
-        this.loading = false;
+        this.refreshTable();
       },
       error: () => {
         this.loading = false;
@@ -129,7 +130,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.facilityManager
       .getAssignedResourcesByAssignedServiceForFacility(
         this.selected.selected[0].facility.id,
-        this.selected.selected[0].service.id
+        this.selected.selected[0].service.id,
       )
       .subscribe({
         next: (resources) => {
@@ -191,15 +192,15 @@ export class FacilityServiceStatusComponent implements OnInit {
   setAuthRights(): void {
     this.propagationAuth = this.authResolver.isAuthorized(
       'forceServicePropagation_Facility_Service_policy',
-      [this.facility]
+      [this.facility],
     );
     this.blockAuth = this.authResolver.isAuthorized(
       'blockServiceOnFacility_Service_Facility_policy',
-      [this.facility]
+      [this.facility],
     );
     this.allowAuth = this.authResolver.isAuthorized(
       'unblockServiceOnFacility_Service_Facility_policy',
-      [this.facility]
+      [this.facility],
     );
     this.deleteAuth = this.authResolver.isAuthorized('deleteTask_Task_policy', [this.facility]);
     this.routeAuth = this.authResolver.isAuthorized('getTaskResultsByTask_int_policy', [
@@ -215,6 +216,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.disableBlockButton = true;
     this.disableAllowButton = true;
     this.disableRemoveButton = this.selected.selected.length !== 1;
+    this.disableForcePropagationButton = false;
 
     if (!this.disableRemoveButton) {
       this.taskIsNull = this.selected.selected[0].task === null;
@@ -223,6 +225,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     for (const ss of this.selected.selected) {
       if (ss.blockedOnFacility) {
         this.disableAllowButton = false;
+        this.disableForcePropagationButton = true;
       } else {
         this.disableBlockButton = false;
       }

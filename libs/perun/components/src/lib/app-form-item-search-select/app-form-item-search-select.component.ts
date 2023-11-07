@@ -12,13 +12,15 @@ export const NO_FORM_ITEM: ApplicationFormItem = {};
 export class AppFormItemSearchSelectComponent {
   @Input() items: ApplicationFormItem[];
   @Input() item: ApplicationFormItem = null;
+  @Input() label: string;
+  @Input() hint = '';
   @Output() itemSelected = new EventEmitter<ApplicationFormItem>();
   constructor(private translate: TranslateService) {}
 
   nameFunction = (item: ApplicationFormItem): string => {
     if (item === NO_FORM_ITEM) {
       return this.translate.instant(
-        'SHARED_LIB.PERUN.COMPONENTS.APP_FORM_ITEM_SEARCH_SELECT.NO_ITEM'
+        'SHARED_LIB.PERUN.COMPONENTS.APP_FORM_ITEM_SEARCH_SELECT.NO_ITEM',
       ) as string;
     }
     return item.shortname;
@@ -29,7 +31,7 @@ export class AppFormItemSearchSelectComponent {
     }
     if (item.id < 0) {
       return this.translate.instant(
-        'SHARED_LIB.PERUN.COMPONENTS.APP_FORM_ITEM_SEARCH_SELECT.NEW_ITEM'
+        'SHARED_LIB.PERUN.COMPONENTS.APP_FORM_ITEM_SEARCH_SELECT.NEW_ITEM',
       ) as string;
     }
     return '#' + String(item.id);

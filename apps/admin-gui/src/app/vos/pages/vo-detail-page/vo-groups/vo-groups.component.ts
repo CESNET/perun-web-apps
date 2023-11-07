@@ -11,10 +11,12 @@ import {
 } from '@perun-web-apps/perun/utils';
 import {
   Group,
+  GroupAdminRoles,
   GroupsManagerService,
   GroupsOrderColumn,
   PaginatedRichGroups,
   RichGroup,
+  RoleAssignmentType,
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode, GroupWithStatus, PageQuery } from '@perun-web-apps/perun/models';
@@ -50,8 +52,10 @@ export class VoGroupsComponent implements OnInit {
           offset: pageQuery.offset,
           searchString: pageQuery.searchString,
           sortColumn: pageQuery.sortColumn as GroupsOrderColumn,
+          roles: this.selectedRoles,
+          types: this.selectedRoleTypes,
         },
-      })
+      }),
     ),
     // 'Tapping' is generally a last resort
     tap((page) => {
@@ -60,7 +64,7 @@ export class VoGroupsComponent implements OnInit {
       this.selected.clear();
       setTimeout(() => this.loadingSubject$.next(false), 200);
     }),
-    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 })
+    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
   );
 
   showGroupList = false;
@@ -68,13 +72,14 @@ export class VoGroupsComponent implements OnInit {
   loadingSubject$ = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
-    this.nextPage.pipe(map((): boolean => true))
+    this.nextPage.pipe(map((): boolean => true)),
   );
   filtering = false;
   filterValue = '';
   tableId = TABLE_VO_GROUPS;
   displayedColumns = ['select', 'id', 'name', 'description', 'menu'];
-
+  selectedRoles: GroupAdminRoles[] = [];
+  selectedRoleTypes: RoleAssignmentType[] = [];
   createAuth: boolean;
   routeAuth: boolean;
   removeAuth$: Observable<boolean> = this.selected.changed.pipe(
@@ -82,10 +87,10 @@ export class VoGroupsComponent implements OnInit {
       change.source.selected.reduce(
         (acc, grp) =>
           acc && this.authResolver.isAuthorized('deleteGroup_Group_boolean_policy', [this.vo, grp]),
-        true
-      )
+        true,
+      ),
     ),
-    startWith(true)
+    startWith(true),
   );
 
   private attrNames = [
@@ -102,7 +107,7 @@ export class VoGroupsComponent implements OnInit {
     private groupService: GroupsManagerService,
     public authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
-    private groupUtils: GroupUtilsService
+    private groupUtils: GroupUtilsService,
   ) {}
 
   onCreateGroup(): void {
@@ -188,7 +193,12 @@ export class VoGroupsComponent implements OnInit {
 
   loadAllGroups(): void {
     this.groupService
-      .getAllRichGroupsWithAttributesByNames(this.vo.id, this.attrNames)
+      .getAllRichGroupsWithAttributesByNames(
+        this.vo.id,
+        this.attrNames,
+        this.selectedRoles,
+        this.selectedRoleTypes,
+      )
       .subscribe((groups) => {
         this.groups = groups;
         this.selected.clear();
@@ -200,6 +210,16 @@ export class VoGroupsComponent implements OnInit {
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
     this.filtering = filterValue !== '';
+  }
+
+  applyRoles(roles: GroupAdminRoles[]): void {
+    this.selectedRoles = roles;
+    this.refresh();
+  }
+
+  applyRoleTypes(types: RoleAssignmentType[]): void {
+    this.selectedRoleTypes = types;
+    this.refresh();
   }
 
   refresh(): void {
@@ -227,13 +247,15 @@ export class VoGroupsComponent implements OnInit {
           offset: 0,
           searchString: query.searchString,
           sortColumn: query.sortColumn as GroupsOrderColumn,
+          roles: this.selectedRoles,
+          types: this.selectedRoleTypes,
         },
       })
       .subscribe({
         next: (paginatedGroups) => {
           downloadData(
             getDataForExport(paginatedGroups.data, this.displayedColumns, getDataForCol),
-            a.format
+            a.format,
           );
         },
       });

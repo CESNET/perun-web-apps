@@ -10,7 +10,10 @@ import {
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { RemoveDestinationDialogComponent } from '../../../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
+import {
+  RemoveDestinationDialogComponent,
+  RemoveDestinationDialogData,
+} from '../../../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
 
 @Component({
   selector: 'app-service-destinations',
@@ -31,7 +34,7 @@ export class ServiceDestinationsComponent implements OnInit {
     private translate: PerunTranslateService,
     private dialog: MatDialog,
     public authResolver: GuiAuthResolver,
-    private entityStorageService: EntityStorageService
+    private entityStorageService: EntityStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class ServiceDestinationsComponent implements OnInit {
   }
 
   onRemove(): void {
-    const config = getDefaultDialogConfig();
+    const config = getDefaultDialogConfig<RemoveDestinationDialogData>();
     config.width = '500px';
     config.data = {
       destinations: this.selection.selected,
@@ -87,7 +90,7 @@ export class ServiceDestinationsComponent implements OnInit {
     this.serviceManager.blockServicesOnDestinations({ richDestinations: destinations }).subscribe({
       next: () => {
         this.notificator.showSuccess(
-          this.translate.instant('SERVICE_DETAIL.DESTINATIONS.BLOCK_SUCCESS')
+          this.translate.instant('SERVICE_DETAIL.DESTINATIONS.BLOCK_SUCCESS'),
         );
         this.refreshTable();
       },
@@ -101,7 +104,7 @@ export class ServiceDestinationsComponent implements OnInit {
       .subscribe({
         next: () => {
           this.notificator.showSuccess(
-            this.translate.instant('SERVICE_DETAIL.DESTINATIONS.ALLOW_SUCCESS')
+            this.translate.instant('SERVICE_DETAIL.DESTINATIONS.ALLOW_SUCCESS'),
           );
           this.refreshTable();
         },

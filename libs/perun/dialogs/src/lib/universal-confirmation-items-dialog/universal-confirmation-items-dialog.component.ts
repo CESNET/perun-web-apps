@@ -7,7 +7,7 @@ export interface UniversalConfirmationItemsDialogData {
   title: string;
   description: string;
   items: string[];
-  alert: string;
+  alert?: string;
   type: 'remove' | 'confirmation';
   showAsk: boolean;
 }
@@ -24,7 +24,7 @@ export class UniversalConfirmationItemsDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UniversalConfirmationItemsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UniversalConfirmationItemsDialogData
+    @Inject(MAT_DIALOG_DATA) public data: UniversalConfirmationItemsDialogData,
   ) {}
 
   ngOnInit(): void {

@@ -28,11 +28,12 @@ export class SelectionItemSearchSelectComponent implements OnInit {
   @Input() selectedAttribute: string;
   @Input() type: ItemType;
   @Input() asGroup = false;
-  @Input() warning: string;
+  @Input() hint: string;
   @Output() itemSelected = new EventEmitter<SelectionItem>();
 
   items: SelectionItem[] = [];
   item: SelectionItem;
+  label = 'SHARED_LIB.PERUN.COMPONENTS.SELECTION_ITEM_SEARCH_SELECT.SELECT_ITEM';
 
   constructor(private translateService: TranslateService) {}
 
@@ -45,6 +46,7 @@ export class SelectionItemSearchSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLabel();
     if (this.type === ItemType.FEDERATION) {
       this.getFederationAttributes();
       this.getFederationAttribute();
@@ -75,7 +77,7 @@ export class SelectionItemSearchSelectComponent implements OnInit {
           ' / ' +
           SelectionItemSearchSelectComponent.getDefinition(attribute) +
           ')',
-        attribute.namespace + ':' + attribute.friendlyName
+        attribute.namespace + ':' + attribute.friendlyName,
       );
       if (item.value === this.selectedAttribute) {
         this.item = item;
@@ -109,7 +111,7 @@ export class SelectionItemSearchSelectComponent implements OnInit {
         this.translateService
           .get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.CUSTOM_VALUE')
           .subscribe((custom: string) => {
-            this.items.push(new SelectionItem(custom, 'custom'));
+            this.items.push(new SelectionItem(custom, ''));
             this.items.push(new SelectionItem('Display name', 'displayName'));
             this.items.push(new SelectionItem('Common name', 'cn'));
             this.items.push(new SelectionItem('Mail', 'mail'));
@@ -121,16 +123,30 @@ export class SelectionItemSearchSelectComponent implements OnInit {
             this.items.push(new SelectionItem('IdP Category', 'md_entityCategory'));
             this.items.push(new SelectionItem('IdP Affiliation', 'affiliation'));
             this.items.push(
-              new SelectionItem('EduPersonScopedAffiliation', 'eduPersonScopedAffiliation')
+              new SelectionItem('EduPersonScopedAffiliation', 'eduPersonScopedAffiliation'),
             );
             this.items.push(
-              new SelectionItem('Forwarded Affiliation from Proxy', 'forwardedScopedAffiliation')
+              new SelectionItem('Forwarded Affiliation from Proxy', 'forwardedScopedAffiliation'),
             );
             this.items.push(new SelectionItem('schacHomeOrganization', 'schacHomeOrganization'));
             this.items.push(new SelectionItem('Login', 'uid'));
             this.items.push(new SelectionItem('Alternative login name', 'alternativeLoginName'));
           });
       });
+  }
+
+  getLabel(): void {
+    switch (this.type) {
+      case ItemType.DESTINATION:
+        this.label = 'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DESTINATION_ATTRIBUTE';
+        break;
+      case ItemType.FEDERATION:
+        this.label = 'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE';
+        break;
+      case ItemType.SOURCE:
+        this.label = 'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SOURCE_ATTRIBUTE';
+        break;
+    }
   }
 
   getFederationAttribute(): void {

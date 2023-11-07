@@ -19,5 +19,5 @@ export interface ApplicationForm {
   automaticApproval?: boolean;
   automaticApprovalExtension?: boolean;
   automaticApprovalEmbedded?: boolean;
-  moduleClassNames?: string[];
+  moduleClassNames?: Array<string>;
 }

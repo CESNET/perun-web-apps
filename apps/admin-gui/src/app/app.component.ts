@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     private initAuth: InitAuthService,
     private authService: AuthService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
     this.cache.init();
     this.getScreenSize();
@@ -178,7 +178,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         const recentVersion: string = result['version'] as string;
         if (recentVersion) {
           if (this.version && recentVersion !== 'SNAPSHOT' && this.version !== recentVersion) {
-            const config = getDefaultDialogConfig();
+            const config = getDefaultDialogConfig<never>();
             this.dialog.open(NewVersionDialogComponent, config);
           } else {
             this.version = recentVersion;

@@ -347,7 +347,7 @@
       "TITLE_SUBGROUPS": "Subgroups",
       "LIST_VIEW": "List view",
       "TREE_VIEW": "Tree view",
-      "FILTER": "Filter",
+      "FILTER": "Search by name, id, description",
       "NO_GROUPS": "No groups found",
       "GROUP_SYNCED": "Synchronized",
       "GROUP_NOT_SYNCED": "Not synchronized",
@@ -899,7 +899,8 @@
       "REMOVE": "Remove",
       "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
       "LIST_VIEW": "List view",
-      "TREE_VIEW": "Tree view"
+      "TREE_VIEW": "Tree view",
+      "FILTER": "Search by name, id, description"
     },
     "APPLICATIONS": {
       "TITLE": "Application",
@@ -1429,7 +1430,8 @@
       "DISPLAY_ON_APPLICATION": "Display on application",
       "INITIAL": "Initial",
       "EXTENSION": "Extension",
-      "DISPLAY_ON_APPLICATION_DESCRIPTION": "Define on which application types is this item displayed.",
+      "DISPLAY_ON_APPLICATION_INITIAL": "This item will be displayed on INITIAL applications",
+      "DISPLAY_ON_APPLICATION_EXTENSION": "This item will be displayed on EXTENSION applications",
       "CONTENT": "Content",
       "CONTENT_DESCRIPTION": "HTML formatted content of form item. It spans through all columns to full form width.",
       "LABEL": "Label",
@@ -1454,6 +1456,10 @@
       "NO_SELECTED_ITEM": "No item selected (empty value)",
       "CUSTOM_VALUE": " -- custom value -- ",
       "OPTIONS": "Options",
+      "USER_ACTION": "User action",
+      "ATTRIBUTES": "Attributes",
+      "INTERACTIVITY": "Interactivity",
+      "VALIDATION": "Validation",
       "OPTIONS_DESCRIPTION": "Define possible options for selection in SELECTIONBOX, COMBOBOX, CHECKBOX, RADIO widgets. Empty options are not used.",
       "ADD_OPTION": "Add option",
       "REMOVE_OPTION": "Remove",
@@ -2909,6 +2915,10 @@
         "LOGIN_SHORT": "Login is too short",
         "LOGIN_DISABLED": "To enter the login, you need to select a namespace first",
         "LOGIN_DISABLED_FOR_NAMESPACE": "Logins in this namespace are generated automatically."
+      },
+      "GROUP_ROLES_FILTER": {
+        "FILTER_ROLES": "Filter by role",
+        "FILTER_ROLE_TYPES": "Filter by role assigment"
       }
     },
     "IDENTITY_DETAIL": {
