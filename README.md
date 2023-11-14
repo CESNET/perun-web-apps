@@ -1,3 +1,5 @@
+[![Perun](https://webcentrum.muni.cz/media/3153530/perun.svg)](https://perun-aai.org)
+
 # PerunWebApps
 
 This repository contains Perun web applications.
