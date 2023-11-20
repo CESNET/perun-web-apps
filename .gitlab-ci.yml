@@ -14,6 +14,8 @@ e2e_tests:
 .test-npm:
   image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/node:16-bullseye
   stage: test
+  tags:
+    - k8s
   before_script:
     - npm ci
     - node ./color-migration.js
