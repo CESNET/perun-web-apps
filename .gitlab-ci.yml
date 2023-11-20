@@ -21,7 +21,7 @@ e2e_tests:
     - npm ci
     - node ./color-migration.js
   variables:
-    CYPRESS_CACHE_FOLDER: /app/.cache/Cypress
+    CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress
 
 test-build:
   extends: .test-npm
