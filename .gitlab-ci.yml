@@ -12,7 +12,7 @@ e2e_tests:
     - if: '($CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_REF_NAME == "production") && $CI_PIPELINE_SOURCE != "schedule"'
 
 .test-npm:
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/node:16-bullseye
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11
   stage: test
   tags:
     - k8s
