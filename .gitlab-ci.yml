@@ -17,8 +17,11 @@ e2e_tests:
   tags:
     - k8s
   before_script:
+    - mkdir -p $CYPRESS_CACHE_FOLDER
     - npm ci
     - node ./color-migration.js
+  variables:
+    CYPRESS_CACHE_FOLDER: /app/.cache/Cypress
 
 test-build:
   extends: .test-npm
