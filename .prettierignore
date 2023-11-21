@@ -50,6 +50,5 @@ Thumbs.db
 # Config files
 .editorconfig
 .gitignore
-.prettierrc
 
 /.nx/cache
