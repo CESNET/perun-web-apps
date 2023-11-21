@@ -15,8 +15,9 @@
     <button
       (click)="onSyncDetail()"
       [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
+      class="align-middle"
       mat-icon-button>
-      <mat-icon class="{{group | groupSyncIconColor}}">
+      <mat-icon class="{{group | groupSyncIconColor}} align-top">
         {{group | groupSyncIcon}}
       </mat-icon>
     </button>
@@ -56,8 +57,9 @@
       *ngIf="syncAuth"
       (click)="onSyncDetail()"
       [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
+      class="align-middle"
       mat-menu-item>
-      <mat-icon class="{{group | groupSyncIconColor}}">
+      <mat-icon class="{{group | groupSyncIconColor}} align-top">
         {{group | groupSyncIcon}}
       </mat-icon>
       <span>{{group | groupSyncToolTip | translate}}</span>

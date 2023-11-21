@@ -51,19 +51,18 @@
           >, {{'GROUP_DETAIL.DESCRIPTION' | translate}}: {{group.description}}
           <span *ngIf="syncEnabled">
             , {{'GROUP_DETAIL.SYNCHRONIZATION' | translate}}:
-            <span
+            <button
+              (click)="onSyncDetail()"
+              *ngIf="syncAuth"
+              [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
               [matTooltipPosition]="'above'"
-              [matTooltip]="group | groupSyncToolTip | translate">
-              <button
-                (click)="onSyncDetail()"
-                *ngIf="syncAuth"
-                [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
-                mat-icon-button>
-                <mat-icon class="{{group | groupSyncIconColor}}">
-                  {{group | groupSyncIcon}}
-                </mat-icon>
-              </button>
-            </span>
+              [matTooltip]="group | groupSyncToolTip | translate"
+              class="align-middle"
+              mat-icon-button>
+              <mat-icon class="{{group | groupSyncIconColor}} align-top">
+                {{group | groupSyncIcon}}
+              </mat-icon>
+            </button>
           </span>
           <p *ngIf="parentGroup">
             {{'GROUP_DETAIL.SUBGROUP_INFO' | translate}}
