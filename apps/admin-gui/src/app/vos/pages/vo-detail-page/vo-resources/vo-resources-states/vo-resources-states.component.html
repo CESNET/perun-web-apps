@@ -1,6 +1,7 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.RESOURCES.STATES.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
 <mat-tab-group
+  class="mt-3"
   (selectedIndexChange)="selectedIndex = $event"
   [selectedIndex]="selectedIndex"
   animationDuration="0ms"
@@ -8,7 +9,7 @@
   <mat-tab>
     <ng-template mat-tab-label>
       {{'VO_DETAIL.RESOURCES.STATES.ERROR_RESOURCES' | translate}}
-      <span class="badge badge-danger ms-1">{{errorPropagation.length}}</span>
+      <span class="badge bg-danger ms-2">{{errorPropagation.length}}</span>
     </ng-template>
     <ng-template matTabContent>
       <perun-web-apps-alert *ngIf=" !loading && errorPropagation.length === 0" alert_type="warn">
@@ -21,7 +22,7 @@
   <mat-tab>
     <ng-template mat-tab-label>
       {{'VO_DETAIL.RESOURCES.STATES.OK_RESOURCES' | translate}}
-      <span class="badge badge-success ms-1">{{okPropagation.length}}</span>
+      <span class="badge bg-success ms-2">{{okPropagation.length}}</span>
     </ng-template>
 
     <ng-template matTabContent>
