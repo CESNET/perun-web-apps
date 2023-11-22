@@ -2,14 +2,10 @@ include:
   - project: perun/common
     file: /templates/.gitlab-ci-template.yml
 
-e2e_tests:
-  variables:
-    GUI_COMMIT_HASH: ${CI_COMMIT_SHA}
-  trigger:
-    project: perun/perun-idm/e2e-perun
-    strategy: depend
-  rules:
-    - if: '($CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_REF_NAME == "production") && $CI_PIPELINE_SOURCE != "schedule"'
+variables:
+  RPC_VERSION: v31.0.0 # TODO: update using renovate
+  FF_NETWORK_PER_BUILD: 1
+  # for debugging only: CI_DEBUG_SERVICES: "true"
 
 .test-npm:
   image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11
@@ -19,7 +15,6 @@ e2e_tests:
   before_script:
     - mkdir -p $CYPRESS_CACHE_FOLDER
     - npm ci
-    - node ./color-migration.js
   variables:
     CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress
   rules:
@@ -28,6 +23,7 @@ e2e_tests:
 test-build:
   extends: .test-npm
   script:
+    - node ./color-migration.js
     - npm run build
 
 prettier:
@@ -39,3 +35,74 @@ test-eslint:
   extends: .test-npm
   script:
     - npm run lint
+
+e2e_docker-build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  tags: # TODO: run on k8s-root
+    - docker
+    - privileged
+  parallel:
+    matrix:
+      - IMAGE:
+          - rpc
+          - apache
+          - postgresql
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$CI_DEPENDENCY_PROXY_SERVER\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+  script:
+    - >-
+      /kaniko/executor
+      --context "$CI_PROJECT_DIR/e2e/docker-$IMAGE"
+      --dockerfile "$CI_PROJECT_DIR/e2e/docker-$IMAGE/Dockerfile"
+      --build-arg RPC_VERSION="$RPC_VERSION"
+      --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX="$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX"
+      --destination "$CI_REGISTRY_IMAGE/$IMAGE:$RPC_VERSION"
+
+# inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
+e2e_tests:
+  extends: .test-npm
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  tags: # TODO: run on k8s or k8s-root
+    - docker
+    - privileged
+  resource_group: containers_on_runner # prevent running multiple e2e jobs at the same time
+  script:
+    # TODO: replace "sleep 90" with "npx wait-on http://perun-api/non/rpc/json/configManager/getPerunOidcConfig"
+    - sleep 90
+    - cp e2e/instanceConfig.json apps/admin-gui/src/assets/config/instanceConfig.json
+    - npm run build -- --prod
+    - npm run start-dev-admin-gui &
+    - npx wait-on $CYPRESS_baseUrl
+    - cd apps/admin-gui-e2e
+    - cp tsconfig.cypress.json tsconfig.json
+    - npx cypress run --reporter junit
+  artifacts:
+    when: always
+    paths:
+      - dist/cypress/apps/admin-gui-e2e/videos
+      - dist/cypress/apps/admin-gui-e2e/screenshots
+    expire_in: 30 days
+    reports:
+      junit:
+        - apps/admin-gui-e2e/test-results.xml
+  services:
+    - name: $CI_REGISTRY_IMAGE/postgresql:$RPC_VERSION
+      alias: db
+      variables:
+        POSTGRES_USER: perun
+        POSTGRES_PASSWORD: test
+        POSTGRES_DB: perun
+    - name: $CI_REGISTRY_IMAGE/rpc:$RPC_VERSION
+      alias: perun-rpc
+    - name: $CI_REGISTRY_IMAGE/apache:$RPC_VERSION
+      alias: perun-api
+  variables:
+    CYPRESS_baseUrl: http://localhost:4200
+    CI: 1
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
+      when: manual
