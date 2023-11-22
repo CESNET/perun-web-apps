@@ -1,0 +1,8 @@
+brands:
+  - name: default
+    new_apps:
+      admin: "http://localhost"
+      profile: "http://localhost"
+      pwd_reset: "http://localhost"
+      publications: "http://localhost"
+    old_gui_domain: "http://localhost"
