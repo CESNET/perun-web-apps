@@ -1,28 +1,32 @@
 ARG RPC_VERSION="v31.0.0"
+ARG CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=""
 
-FROM registry.gitlab.ics.muni.cz/perun/perun_docker/perun_rpc:$RPC_VERSION
+#FROM registry.gitlab.ics.muni.cz/perun/perun_docker/perun_rpc:$RPC_VERSION
+FROM ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX:+/}bitnami/tomcat:9.0.82
 
-COPY --chown=perun:root --chmod=777 etc/perun/* /etc/perun/
-COPY --chown=perun:perun --chmod=777 entrypoint.sh /opt/entrypoint.sh
+ARG RPC_VERSION
+
+ENV TOMCAT_INSTALL_DEFAULT_WEBAPPS=no
+ENV ALLOW_EMPTY_PASSWORD=yes
+ENV CATALINA_OPTS="-XshowSettings:vm -Dspring.profiles.active=production -DApplicationName=PerunRPC"
 
 USER root
 
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends postgresql-client && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/log/perun && \
-    mkdir -p /home/perun && \
-    chown 961:961 /home/perun /var/log/perun && \
-    DATE=`date +%Y-%m-%d` && \
-    ln -s /dev/stdout /opt/tomcat/logs/catalina.$DATE.log && \
-    ln -s /dev/stdout /opt/tomcat/logs/localhost.$DATE.log && \
-    ln -s /dev/stdout /opt/tomcat/logs/manager.$DATE.log && \
-    ln -s /dev/stdout /opt/tomcat/logs/host-manager.$DATE.log && \
-    chmod a+rx /opt/entrypoint.sh
+RUN install_packages postgresql-client ca-certificates libnet-ldap-perl libnet-dns-perl libtry-tiny-perl libswitch-perl libstring-random-perl heimdal-clients openssh-client wget
 
-USER perun
+RUN cd /opt/bitnami/tomcat/webapps && \
+    wget -O perun-rpc.war https://github.com/CESNET/perun/releases/download/$RPC_VERSION/perun-rpc.war && \
+    chmod a+rwx perun-rpc.war && \
+    chown 1001:1001 perun-rpc.war && \
+    mkdir /var/log/perun && \
+    chown 1001:1001 /var/log/perun
 
-WORKDIR /opt/tomcat
+USER 1001
+
+COPY --chown=1001:1001 --chmod=777 etc/perun/* /etc/perun/
+COPY --chown=1001:1001 --chmod=777 server.xml /opt/bitnami/tomcat/conf/server.xml
+COPY --chown=1001:1001 --chmod=777 entrypoint.sh /opt/entrypoint.sh
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
+
+EXPOSE 8009
