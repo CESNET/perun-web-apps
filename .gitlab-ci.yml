@@ -71,8 +71,7 @@ e2e_tests:
     - privileged
   resource_group: containers_on_runner # prevent running multiple e2e jobs at the same time
   script:
-    # TODO: replace "sleep 90" with "npx wait-on http://perun-api/non/rpc/json/configManager/getPerunOidcConfig"
-    - sleep 90
+    - npx wait-on http://perun-api/non/rpc/
     - cp e2e/instanceConfig.json apps/admin-gui/src/assets/config/instanceConfig.json
     - npm run build -- --prod
     - npm run start-dev-admin-gui &
