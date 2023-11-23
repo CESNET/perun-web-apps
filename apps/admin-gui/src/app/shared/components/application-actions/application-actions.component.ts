@@ -150,6 +150,7 @@ export class ApplicationActionsComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
+        this.loading$ = of(true);
         this.registrarService
           .approveApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
@@ -183,6 +184,7 @@ export class ApplicationActionsComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
+        this.loading$ = of(true);
         this.registrarService
           .rejectApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
@@ -216,12 +218,16 @@ export class ApplicationActionsComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
+        this.loading$ = of(true);
         this.registrarService
           .deleteApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
             next: () => {
               this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.DELETE');
               this.refreshTable();
+            },
+            error: () => {
+              this.loading$ = of(false);
             },
           });
       }
@@ -239,6 +245,7 @@ export class ApplicationActionsComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((resendForm: { type: MailType; reason: string }) => {
       if (resendForm) {
+        this.loading$ = of(true);
         this.registrarService
           .sendMessages({
             ids: this.selectedApplications.map((app) => app.id),
@@ -249,6 +256,9 @@ export class ApplicationActionsComponent implements OnInit {
             next: () => {
               this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.RESEND');
               this.refreshTable();
+            },
+            error: () => {
+              this.loading$ = of(false);
             },
           });
       }

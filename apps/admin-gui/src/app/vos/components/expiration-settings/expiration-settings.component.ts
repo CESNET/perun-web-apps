@@ -77,20 +77,18 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     const loaPeriods = new Map();
     this.loas.forEach((loa) => loaPeriods.set(loa, ''));
-
-    this.initialConfiguration = this.unParseAttrValue(
-      this.expirationAttribute.value as ExpirationAttrValue,
-    );
-    this.currentConfiguration = this.unParseAttrValue(
-      this.expirationAttribute.value as ExpirationAttrValue,
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.expirationAttribute) {
+    if (changes.expirationAttribute && this.expirationAttribute) {
       this.initialConfiguration = this.unParseAttrValue(
         this.expirationAttribute.value as ExpirationAttrValue,
       );
+      if (!this.currentConfiguration) {
+        this.currentConfiguration = this.unParseAttrValue(
+          this.expirationAttribute.value as ExpirationAttrValue,
+        );
+      }
     }
   }
 

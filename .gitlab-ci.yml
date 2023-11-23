@@ -1,6 +1,41 @@
+include:
+  - project: perun/common
+    file: /templates/.gitlab-ci-template.yml
+
 e2e_tests:
   variables:
     GUI_COMMIT_HASH: ${CI_COMMIT_SHA}
   trigger:
-    project: Perun/e2e-perun
+    project: perun/perun-idm/e2e-perun
     strategy: depend
+  rules:
+    - if: '($CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_REF_NAME == "production") && $CI_PIPELINE_SOURCE != "schedule"'
+
+.test-npm:
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11
+  stage: test
+  tags:
+    - k8s
+  before_script:
+    - mkdir -p $CYPRESS_CACHE_FOLDER
+    - npm ci
+    - node ./color-migration.js
+  variables:
+    CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress
+  rules:
+    - if: "$CI_PIPELINE_SOURCE != 'schedule'"
+
+test-build:
+  extends: .test-npm
+  script:
+    - npm run build
+
+prettier:
+  extends: .test-npm
+  script:
+    - npm run format:check
+
+test-eslint:
+  extends: .test-npm
+  script:
+    - npm run lint
