@@ -2,28 +2,64 @@ include:
   - project: perun/common
     file: /templates/.gitlab-ci-template.yml
 
+default:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm
+      - node_modules
+      - .cache/Cypress
+    unprotect: true
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11@sha256:4cdb2bec7f1ffddff76845e5de83a9fa12c49194ced4dee2235f5f6ec81b7034
+
 variables:
-  CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress # needed also for semantic release
+  CI: 1
+  CYPRESS_baseUrl: http://localhost:4200
+  CYPRESS_CACHE_FOLDER: "${CI_PROJECT_DIR}/.cache/Cypress" # needed also for semantic release
+  CYPRESS_CRASH_REPORTS: 0
+  CYPRESS_COMMERCIAL_RECOMMENDATIONS: 0
+  CYPRESS_PORT: 8082
+  XDG_CACHE_HOME: "/tmp/xdgcachehome/"
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
   RPC_VERSION: v31.0.0 # TODO: update using renovate
-  FF_NETWORK_PER_BUILD: 1
+  FF_NETWORK_PER_BUILD: "true"
   # for debugging only: CI_DEBUG_SERVICES: "true"
 
 .test-npm:
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11@sha256:4cdb2bec7f1ffddff76845e5de83a9fa12c49194ced4dee2235f5f6ec81b7034
   stage: test
   tags:
     - k8s
   before_script:
     - mkdir -p $CYPRESS_CACHE_FOLDER
-    - npm ci
   rules:
     - if: "$CI_PIPELINE_SOURCE != 'schedule'"
 
-test-build:
+npm_ci:
   extends: .test-npm
+  stage: .pre
   script:
-    - node ./color-migration.js
-    - npm run build
+    - npm ci --prefer-offline
+  artifacts:
+    when: always
+    paths:
+      - apps/admin-gui
+    expire_in: 30 days
+
+test_build:
+  extends: .test-npm
+  needs: [npm_ci]
+  stage: build
+  script:
+    - cp e2e/instanceConfig.json apps/admin-gui/src/assets/config/instanceConfig.json
+    - npm run build -- --prod --progress=false
+  artifacts:
+    when: always
+    paths:
+      - dist/apps/admin-gui
+      - apps/admin-gui
+    expire_in: 30 days
 
 # run on production branch instead of main
 semantic-release:
@@ -32,58 +68,63 @@ semantic-release:
 
 # run local version instead of global
 prettier:
+  needs: [npm_ci]
   extends: .test-npm
   script:
     - npm run format:check
 
-test-eslint:
+eslint:
+  needs: [npm_ci]
   extends: .test-npm
   script:
     - npm run lint
 
-e2e_docker-build:
+e2e_docker_build:
   stage: build
+  needs: []
   image:
-    name: gcr.io/kaniko-project/executor:debug@sha256:b6a520e10252cfbb1898cac88d05f4c7c838cf615d1a588ec63a0d415db6c4c0
-    entrypoint: [""]
-  tags: # TODO: run on k8s-root
-    - docker
-    - privileged
+    name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/kaniko:latest
+  tags:
+    - k8s-root
   parallel:
     matrix:
       - IMAGE:
           - rpc
-          - apache
           - postgresql
   before_script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$CI_DEPENDENCY_PROXY_SERVER\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
   script:
     - >-
+      if crane manifest $CI_REGISTRY_IMAGE/$IMAGE:$RPC_VERSION-k8s; then echo "$IMAGE:$RPC_VERSION-k8s already exists, skipping build"; exit 0; fi
+    - >-
       /kaniko/executor
       --context "$CI_PROJECT_DIR/e2e/docker-$IMAGE"
       --dockerfile "$CI_PROJECT_DIR/e2e/docker-$IMAGE/Dockerfile"
       --build-arg RPC_VERSION="$RPC_VERSION"
       --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX="$CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX"
-      --destination "$CI_REGISTRY_IMAGE/$IMAGE:$RPC_VERSION"
+      --destination "$CI_REGISTRY_IMAGE/$IMAGE:$RPC_VERSION-k8s"
 
 # inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
 e2e_tests:
   extends: .test-npm
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1@sha256:79fbc9e855d539a6de6a371b52424bfac9c30ac737c53ecfc5ae15b11b0e0480
-  tags: # TODO: run on k8s or k8s-root
-    - docker
-    - privileged
-  resource_group: containers_on_runner # prevent running multiple e2e jobs at the same time
+  needs:
+    - test_build
+    - e2e_docker_build
+  image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/cypress:latest
+  tags:
+    - k8s-3s
+  resource_group: e2e-tests # prevent running multiple e2e jobs at the same time
   script:
-    - npx wait-on http://perun-api/non/rpc/
-    - cp e2e/instanceConfig.json apps/admin-gui/src/assets/config/instanceConfig.json
-    - npm run build -- --prod
-    - npm run start-dev-admin-gui &
+    - mkdir $XDG_CACHE_HOME
+    - npx wait-on http-get://localhost:8080/non/rpc/
+    - npm run start-dev-admin-gui -- --prod --watch=false --live-reload=false &
     - npx wait-on $CYPRESS_baseUrl
     - cd apps/admin-gui-e2e
     - cp tsconfig.cypress.json tsconfig.json
-    - npx cypress run --reporter junit
+    - npx cypress info
+    - npx cypress verify
+    - npx cypress run --reporter junit --headless --browser chrome
   artifacts:
     when: always
     paths:
@@ -94,19 +135,20 @@ e2e_tests:
       junit:
         - apps/admin-gui-e2e/test-results.xml
   services:
-    - name: $CI_REGISTRY_IMAGE/postgresql:$RPC_VERSION
+    - name: $CI_REGISTRY_IMAGE/postgresql:$RPC_VERSION-k8s
       alias: db
       variables:
-        POSTGRES_USER: perun
-        POSTGRES_PASSWORD: test
-        POSTGRES_DB: perun
-    - name: $CI_REGISTRY_IMAGE/rpc:$RPC_VERSION
+        POSTGRESQL_USERNAME: perun
+        POSTGRESQL_PASSWORD: test
+        POSTGRESQL_DATABASE: perun
+        HEALTHCHECK_TCP_PORT: "5432"
+    - name: $CI_REGISTRY_IMAGE/rpc:$RPC_VERSION-k8s
       alias: perun-rpc
-    - name: $CI_REGISTRY_IMAGE/apache:$RPC_VERSION
-      alias: perun-api
-  variables:
-    CYPRESS_baseUrl: http://localhost:4200
-    CI: 1
+      variables:
+        HEALTHCHECK_TCP_PORT: "8009"
+    - name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest
+      variables:
+        HEALTHCHECK_TCP_PORT: "8080"
   rules:
     # run on main branch automatically
     - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'

@@ -1,13 +1,10 @@
 ARG RPC_VERSION="v31.0.0"
 ARG CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=""
 
-FROM ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX:+/}postgres:13-alpine@sha256:d0fee67085a82b72d5b660d75dc82c60cef5fe5ee0ff652cc4cc64aa9da57cb4
+FROM ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX:+/}bitnami/postgresql:16-debian-11
 
 ARG RPC_VERSION
 
-COPY 1-init.sql 3-init.sql /docker-entrypoint-initdb.d/
+COPY --chown=1001:1001 --chmod=777 1-init.sql 3-init.sql /docker-entrypoint-initdb.d/
 
-ADD https://gitlab.ics.muni.cz/perun/perun-idm/perun/-/raw/$RPC_VERSION/perun-db/postgres.sql /docker-entrypoint-initdb.d/2-init.sql
-
-# --chmod is not supported by kaniko
-RUN chmod a+r /docker-entrypoint-initdb.d/2-init.sql
+ADD --chown=1001:1001 --chmod=777 https://gitlab.ics.muni.cz/perun/perun-idm/perun/-/raw/$RPC_VERSION/perun-db/postgres.sql /docker-entrypoint-initdb.d/2-init.sql
