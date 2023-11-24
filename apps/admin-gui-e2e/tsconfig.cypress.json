@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["es5", "dom"],
+        "types": ["cypress", "node"]
+    },
+    "include": ["**/*.ts"],
+    "references": [
+        {
+            "path": "./tsconfig.e2e.json"
+        }
+    ]
+}
