@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [15.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v14.4.0...v15.0.0) (2023-11-24)
+
+
+### Bug Fixes
+
+* **admin:** added missing loading indicator for application actions ([82ebf42](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/82ebf42dae6be17ca719069034a6b37d9f3b4c4d))
+* **admin:** alignemnt of the sync icon ([badc9ed](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/badc9ed5d9e1dba000cda2cd478b94e89efcbafe))
+* **admin:** display initial loading on managers and mempership pages in vo settings ([5fe86ee](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5fe86ee63b56dc9ef44717a0bce7d638d7e58710))
+* **admin:** fix resources state page ([2a096aa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2a096aa4d0cdfc12730cb3b367155af8f0f9c30f))
+* change references from GitHub to GitLab ([8372335](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/837233503fced58eb88e6defd64ac02ce3a4e66b))
+* empty commit to trigger first GitLab release ([b0d1dbf](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b0d1dbf0328aa77b25e255af5c543582e9e29c3e))
+* **profile:** dynamically translate breadcrumbs ([9a3d3b4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9a3d3b42ac56933a0ba0fa3a95412a39eaedaff2))
+* **profile:** removed unused calls ([3bc2260](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3bc22605be9c76526b6615ae79b40dc02420d653))
+
 ## [14.4.0](https://github.com/CESNET/perun-web-apps/compare/v14.3.1...v14.4.0) (2023-11-07)
 
 
