@@ -3,6 +3,7 @@ include:
     file: /templates/.gitlab-ci-template.yml
 
 variables:
+  CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress # needed also for semantic release
   RPC_VERSION: v31.0.0 # TODO: update using renovate
   FF_NETWORK_PER_BUILD: 1
   # for debugging only: CI_DEBUG_SERVICES: "true"
@@ -15,8 +16,6 @@ variables:
   before_script:
     - mkdir -p $CYPRESS_CACHE_FOLDER
     - npm ci
-  variables:
-    CYPRESS_CACHE_FOLDER: /tmp/.cache/Cypress
   rules:
     - if: "$CI_PIPELINE_SOURCE != 'schedule'"
 
