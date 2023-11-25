@@ -26,6 +26,12 @@ test-build:
     - node ./color-migration.js
     - npm run build
 
+# run on production branch instead of main
+semantic-release:
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "production" && $CI_PIPELINE_SOURCE != "schedule"'
+
+# run local version instead of global
 prettier:
   extends: .test-npm
   script:
