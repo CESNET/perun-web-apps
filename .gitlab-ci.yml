@@ -9,7 +9,7 @@ variables:
   # for debugging only: CI_DEBUG_SERVICES: "true"
 
 .test-npm:
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11@sha256:4cdb2bec7f1ffddff76845e5de83a9fa12c49194ced4dee2235f5f6ec81b7034
   stage: test
   tags:
     - k8s
@@ -44,7 +44,7 @@ test-eslint:
 e2e_docker-build:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor:debug
+    name: gcr.io/kaniko-project/executor:debug@sha256:b6a520e10252cfbb1898cac88d05f4c7c838cf615d1a588ec63a0d415db6c4c0
     entrypoint: [""]
   tags: # TODO: run on k8s-root
     - docker
@@ -70,7 +70,7 @@ e2e_docker-build:
 # inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
 e2e_tests:
   extends: .test-npm
-  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1@sha256:79fbc9e855d539a6de6a371b52424bfac9c30ac737c53ecfc5ae15b11b0e0480
   tags: # TODO: run on k8s or k8s-root
     - docker
     - privileged
