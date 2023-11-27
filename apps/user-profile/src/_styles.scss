@@ -116,6 +116,10 @@ button {
   letter-spacing: normal;
 }
 
+.mdc-icon-button {
+  border-radius: 50% !important;
+}
+
 .action-button::after {
   content: '\2026';
 }
