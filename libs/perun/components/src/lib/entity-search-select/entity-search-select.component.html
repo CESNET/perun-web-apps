@@ -11,6 +11,10 @@
       <mat-select-trigger *ngIf="multiple">
         {{multipleSelectedText()}}
       </mat-select-trigger>
+      <mat-select-trigger *ngIf="!multiple && entitiesCtrl?.value">
+        {{mainTextFunction(entitiesCtrl?.value)}}
+        <span class="text-muted">{{secondaryTextFunction(entitiesCtrl?.value)}}</span>
+      </mat-select-trigger>
       <mat-option>
         <ngx-mat-select-search
           data-cy="find-input"
