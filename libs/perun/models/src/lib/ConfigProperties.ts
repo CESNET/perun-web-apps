@@ -122,6 +122,7 @@ interface ProfileMFA {
   security_image_attribute: string;
   security_text_attribute: string;
   mfa_instance: string;
+  auth_validity: number;
   url_en: string;
   url_cs: string;
 }
