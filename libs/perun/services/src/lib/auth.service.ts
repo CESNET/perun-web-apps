@@ -129,10 +129,10 @@ export class AuthService {
     ) {
       customQueryParams['prompt'] = 'consent';
     }
-    if (sessionStorage.getItem('mfa_route') || localStorage.getItem('mfaProcessed')) {
+    if (localStorage.getItem('mfaProcessed')) {
       customQueryParams['acr_values'] = 'https://refeds.org/profile/mfa';
     }
-    if (sessionStorage.getItem('mfa_route') || localStorage.getItem('mfaTimeout')) {
+    if (localStorage.getItem('mfaTimeout')) {
       // mfaTimeout = force new authentication if mfaTimeoutError is thrown by Perun
       if (customQueryParams['prompt']) {
         customQueryParams['prompt'] += ' login';

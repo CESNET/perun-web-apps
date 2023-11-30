@@ -80,6 +80,7 @@
     "security_image_attribute": "urn:perun:user:attribute-def:def:securityImage:mu",
     "security_text_attribute": "urn:perun:user:attribute-def:def:securityText:mu",
     "mfa_instance": "mu",
+    "auth_validity": 900,
     "url_en": "https://mfa.aai.muni.cz/",
     "url_cs": "https://mfa.aai.muni.cz/"
   },
