@@ -21,6 +21,7 @@ export class VoSettingsManageEmbeddedGroupsComponent implements OnInit {
   selected = new SelectionModel<Group>(true, []);
   embeddedFormItemId: number;
   addAuth: boolean;
+  manageEmbeddedGroupsItemSaved = false;
   removeAuth$: Observable<boolean> = this.selected.changed.pipe(
     map((change) => {
       return change.source.selected.reduce(
@@ -50,10 +51,15 @@ export class VoSettingsManageEmbeddedGroupsComponent implements OnInit {
     this.vo = this.entityStorageService.getEntity();
     this.registrarManager.getFormItemsForVo(this.vo.id).subscribe({
       next: (formItems) => {
-        this.embeddedFormItemId = formItems.filter(
+        const embeddedFormItems = formItems.filter(
           (item) => item.type === Type.EMBEDDED_GROUP_APPLICATION,
-        )[0].id;
-        this.loadGroups();
+        );
+        if (embeddedFormItems.length > 0) {
+          this.embeddedFormItemId = embeddedFormItems[0].id;
+          this.manageEmbeddedGroupsItemSaved = true;
+          this.loadGroups();
+        }
+        this.loading = false;
       },
       error: () => (this.loading = false),
     });

@@ -395,6 +395,7 @@
         "PREVIEW": "Preview",
         "EDIT": "Edit",
         "MANAGE_GROUPS": "Manage groups",
+        "MANAGE_GROUPS_DISABLED": "Save the form with this item to manage the groups",
         "DELETE": "Delete",
         "MODULE_NAMES": "Module names",
         "APPLICATION_TYPE": "Approval style",
@@ -490,12 +491,14 @@
         "MANAGE_GROUPS_PAGE": {
           "TITLE": "Manage groups for registration",
           "ADD": "Add",
+          "ADD_PERMISSION_HINT": "You don't have permission to add groups.",
           "REMOVE": "Remove",
           "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and for these selected groups, there will be applications submitted automatically.",
           "FILTER": "Filter",
           "REMOVE_GROUP_DIALOG_TITLE": "Confirm removing groups",
           "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration.",
-          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups."
+          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
+          "NO_EMBEDDED_GROUPS": "No 'Groups for embedded applications' item found in the application form. Try saving the form with the item included."
         }
       },
       "ATTRIBUTES": {

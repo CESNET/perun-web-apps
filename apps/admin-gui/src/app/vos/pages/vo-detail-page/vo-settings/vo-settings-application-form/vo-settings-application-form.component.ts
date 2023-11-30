@@ -36,6 +36,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   editAuth: boolean;
   displayedColumns: string[] = [];
   refreshApplicationForm = false;
+  embeddedGroupsItemSaved = false;
   private vo: Vo;
 
   // This counter is used to generate ids for newly added items. This fake ids are used in backend
@@ -62,6 +63,8 @@ export class VoSettingsApplicationFormComponent implements OnInit {
       this.applicationForm = form;
       this.registrarManager.getFormItemsForVo(this.vo.id).subscribe((formItems) => {
         this.applicationFormItems = formItems;
+        this.embeddedGroupsItemSaved =
+          formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
         this.loadingHeader = false;
         this.loadingTable = false;
       });
@@ -150,6 +153,8 @@ export class VoSettingsApplicationFormComponent implements OnInit {
     this.registrarManager.getFormItemsForVo(this.vo.id).subscribe((formItems) => {
       this.applicationFormItems = formItems;
       this.itemsChanged = false;
+      this.embeddedGroupsItemSaved =
+        formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
       this.setAuthRights();
       this.refreshApplicationForm = false;
       this.loadingTable = false;

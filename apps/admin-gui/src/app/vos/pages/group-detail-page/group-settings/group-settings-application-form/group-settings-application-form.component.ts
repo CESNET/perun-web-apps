@@ -45,6 +45,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   createEmptyForm = false;
   autoRegistrationEnabled: boolean;
   refreshApplicationForm = false;
+  embeddedGroupsItemSaved = false;
   // to recognize new items in other items' dependencies
   private idCounter = -1;
 
@@ -75,6 +76,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
         this.registrarManager.getFormItemsForGroup(this.group.id).subscribe(
           (formItems) => {
             this.applicationFormItems = formItems;
+            this.embeddedGroupsItemSaved =
+              formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
             this.attributesManager
               .getGroupAttributeByName(
                 this.group.id,
@@ -207,6 +210,8 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     this.registrarManager.getFormItemsForGroup(this.group.id).subscribe({
       next: (formItems) => {
         this.applicationFormItems = formItems;
+        this.embeddedGroupsItemSaved =
+          formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
         this.itemsChanged = false;
         this.refreshApplicationForm = false;
         this.loadingTable = false;

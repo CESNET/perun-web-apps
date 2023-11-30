@@ -28,6 +28,8 @@ export class ApplicationFormListComponent implements OnInit, OnChanges {
   @Input()
   applicationFormItems: ApplicationFormItem[] = [];
   @Input()
+  embeddedGroupsItemSaved = false;
+  @Input()
   theme: string;
   @Input()
   displayedColumns: string[] = [

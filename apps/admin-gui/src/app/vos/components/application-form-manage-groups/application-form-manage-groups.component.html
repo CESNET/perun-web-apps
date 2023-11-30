@@ -2,14 +2,26 @@
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}} -
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.TITLE' | translate}}
 </h1>
+
 <perun-web-apps-alert alert_type="info">
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.HELP' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-refresh-button (refresh)="refreshEvent.emit()"></perun-web-apps-refresh-button>
-<button (click)="addEvent.emit()" *ngIf="addAuth" class="me-2" color="accent" mat-flat-button>
-  {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.ADD' | translate}}
-</button>
+<perun-web-apps-refresh-button
+  [disabled]="!manageEmbeddedGroupsItemSaved"
+  (refresh)="refreshEvent.emit()"></perun-web-apps-refresh-button>
+<span
+  [matTooltipDisabled]="addAuth || !manageEmbeddedGroupsItemSaved"
+  matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.ADD_PERMISSION_HINT' | translate}}">
+  <button
+    (click)="addEvent.emit()"
+    [disabled]="!addAuth || !manageEmbeddedGroupsItemSaved"
+    class="me-2"
+    color="accent"
+    mat-flat-button>
+    {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.ADD' | translate}}
+  </button>
+</span>
 <span
   *ngIf="{ removeAuth: removeAuth$ | async } as auth"
   [matTooltipDisabled]="selected.selected.length === 0 || auth.removeAuth"
@@ -17,7 +29,7 @@
   <button
     (click)="removeGroups()"
     color="warn"
-    [disabled]="selected.selected.length === 0 || !auth.removeAuth"
+    [disabled]="selected.selected.length === 0 || !auth.removeAuth || !manageEmbeddedGroupsItemSaved"
     class="me-2"
     mat-flat-button>
     {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.REMOVE' | translate}}
@@ -27,18 +39,24 @@
   (filter)="this.filterValue = $event"
   [placeholder]="'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.FILTER'">
 </perun-web-apps-debounce-filter>
-<ng-template #spinner>
-  <perun-web-apps-loading-table></perun-web-apps-loading-table>
-</ng-template>
-<div class="position-relative">
-  <perun-web-apps-groups-list
-    *perunWebAppsLoader="loading; indicator: spinner"
-    [displayedColumns]="['select', 'id', 'name', 'description']"
-    [disableRouting]="true"
-    [groups]="this.groups"
-    [filter]="filterValue"
-    [selection]="selected"
-    [tableId]="tableId"
-    theme="vo-theme">
-  </perun-web-apps-groups-list>
+<div *ngIf="manageEmbeddedGroupsItemSaved">
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative">
+    <perun-web-apps-groups-list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [displayedColumns]="['select', 'id', 'name', 'description']"
+      [disableRouting]="true"
+      [groups]="this.groups"
+      [filter]="filterValue"
+      [selection]="selected"
+      [tableId]="tableId"
+      theme="vo-theme">
+    </perun-web-apps-groups-list>
+  </div>
 </div>
+
+<perun-web-apps-alert alert_type="error" *ngIf="!manageEmbeddedGroupsItemSaved && !loading">
+  {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.NO_EMBEDDED_GROUPS' | translate}}
+</perun-web-apps-alert>
