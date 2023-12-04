@@ -26,8 +26,8 @@ export class PerunFooterComponent implements OnInit {
   containsLogos = false;
   headersTextColor: string = this.storeService.getProperty('theme').footer_headers_text_color;
   linksTextColor: string = this.storeService.getProperty('theme').footer_links_text_color;
-  githubRepository: string = this.storeService.getProperty('footer').github_releases;
-  githubBackendRepository: string = this.storeService.getProperty('footer').github_backend_releases;
+  gitlabRepository: string = this.storeService.getProperty('footer').gitlab_releases;
+  gitlabBackendRepository: string = this.storeService.getProperty('footer').gitlab_backend_releases;
   bgColor: string = this.storeService.getProperty('theme').footer_bg_color;
   version = '';
   backendVersion = 'N/A';
