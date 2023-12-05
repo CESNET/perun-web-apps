@@ -64,7 +64,7 @@ e2e_docker-build:
       --context "$CI_PROJECT_DIR/e2e/docker-$IMAGE"
       --dockerfile "$CI_PROJECT_DIR/e2e/docker-$IMAGE/Dockerfile"
       --build-arg RPC_VERSION="$RPC_VERSION"
-      --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX="$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX"
+      --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX="$CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX"
       --destination "$CI_REGISTRY_IMAGE/$IMAGE:$RPC_VERSION"
 
 # inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
