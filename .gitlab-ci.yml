@@ -122,8 +122,6 @@ e2e_tests:
     - npx wait-on $CYPRESS_baseUrl
     - cd apps/admin-gui-e2e
     - cp tsconfig.cypress.json tsconfig.json
-    - npx cypress info
-    - npx cypress verify
     - npx cypress run --reporter junit --headless --browser chrome
   artifacts:
     when: always
