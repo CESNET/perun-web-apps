@@ -16,6 +16,7 @@ import {
   TABLE_SEARCHER_USERS,
 } from '@perun-web-apps/config/table-config';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-admin-searcher',
@@ -38,6 +39,7 @@ export class AdminSearcherComponent implements OnInit {
     private attributesManager: AttributesManagerService,
     private searcher: SearcherService,
     private voService: VosManagerService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +47,13 @@ export class AdminSearcherComponent implements OnInit {
     this.attributesManager.getAllAttributeDefinitions().subscribe((attrDefs) => {
       this.allAttrDefinitions = attrDefs;
       this.loading = false;
+    });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refresh();
+      }
     });
   }
 
@@ -136,5 +145,28 @@ export class AdminSearcherComponent implements OnInit {
         this.entities = resources as ResourceWithStatus[];
         this.loadingEntityData = false;
       });
+  }
+
+  refresh(): void {
+    if (!this.searchInput) {
+      return;
+    }
+
+    switch (this.tableId) {
+      case TABLE_SEARCHER_USERS:
+        this.getUsers(this.searchInput);
+        break;
+      case TABLE_SEARCHER_MEMBERS:
+        this.getMembers(this.searchInput);
+        break;
+      case TABLE_SEARCHER_FACILITIES:
+        this.getFacilities(this.searchInput);
+        break;
+      case TABLE_SEARCHER_RESOURCES:
+        this.getResources(this.searchInput);
+        break;
+      default:
+        break;
+    }
   }
 }

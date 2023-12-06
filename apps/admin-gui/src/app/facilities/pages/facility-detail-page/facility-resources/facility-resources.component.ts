@@ -13,6 +13,7 @@ import { CreateResourceDialogComponent } from '../../../../shared/components/dia
 import { TABLE_FACILITY_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-facility-resources',
@@ -50,6 +51,7 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +63,13 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
       this.refreshTable();
     });
     this.loadResourcesForFacility();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   ngAfterViewInit(): void {

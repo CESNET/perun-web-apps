@@ -13,6 +13,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { ResourcesListComponent } from '@perun-web-apps/perun/components';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-resources',
@@ -43,12 +44,20 @@ export class GroupResourcesComponent implements OnInit {
     private dialog: MatDialog,
     private guiAuthResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.group = this.entityStorageService.getEntity();
     this.setAuthorization();
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   setAuthorization(): void {

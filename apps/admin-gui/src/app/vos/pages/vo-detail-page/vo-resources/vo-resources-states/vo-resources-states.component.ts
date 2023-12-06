@@ -1,6 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { ResourceState, TasksManagerService, Vo } from '@perun-web-apps/perun/openapi';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-resources-states',
@@ -21,12 +22,20 @@ export class VoResourcesStatesComponent implements OnInit {
   constructor(
     private taskService: TasksManagerService,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.vo = this.entityStorageService.getEntity();
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   refreshTable(): void {

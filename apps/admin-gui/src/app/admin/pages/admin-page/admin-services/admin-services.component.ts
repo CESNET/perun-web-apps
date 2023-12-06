@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEditServiceDialogComponent } from '../../../../shared/components/dialogs/create-edit-service-dialog/create-edit-service-dialog.component';
 import { DeleteServiceDialogComponent } from '../../../../shared/components/dialogs/delete-service-dialog/delete-service-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-admin-services',
@@ -26,10 +27,18 @@ export class AdminServicesComponent implements OnInit {
     private serviceManager: ServicesManagerService,
     private dialog: MatDialog,
     public authResolver: GuiAuthResolver,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   createService(): void {

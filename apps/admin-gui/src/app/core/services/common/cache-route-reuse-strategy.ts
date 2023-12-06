@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  createUrlTreeFromSnapshot,
+  DetachedRouteHandle,
+  RouteReuseStrategy,
+  UrlSerializer,
+} from '@angular/router';
 import { VoMembersComponent } from '../../../vos/pages/vo-detail-page/vo-members/vo-members.component';
 import { VoGroupsComponent } from '../../../vos/pages/vo-detail-page/vo-groups/vo-groups.component';
 import { VoApplicationsComponent } from '../../../vos/pages/vo-detail-page/vo-applications/vo-applications.component';
@@ -60,6 +66,8 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
 
   private isUserNavigatingBack = false;
 
+  constructor(private urlSerializer: UrlSerializer) {}
+
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;
   }
@@ -74,6 +82,10 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     if (!this.handlers.has(key)) return null;
 
     return this.handlers.get(key).routeHandle;
+  }
+
+  isRouteCached(routeUrl: string): boolean {
+    return this.handlers.has(routeUrl);
   }
 
   /**
@@ -142,7 +154,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
    * @param route snapshot of activated route
    */
   private getKey(route: ActivatedRouteSnapshot): string {
-    return route.pathFromRoot.map((r) => r.url.map((segment) => segment.toString())).join('/');
+    return this.urlSerializer.serialize(createUrlTreeFromSnapshot(route, ['.']));
   }
 
   private getCurrentTimestamp(): number {

@@ -13,6 +13,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CreateVoDialogComponent } from '../../../shared/components/dialogs/create-vo-dialog/create-vo-dialog.component';
 import { TABLE_VO_SELECT } from '@perun-web-apps/config/table-config';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-select-page',
@@ -42,6 +43,7 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
     private dialog: MatDialog,
     private notificator: NotificatorService,
     private apiRequest: ApiRequestConfigurationService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,13 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
       ? ['checkbox', 'id', 'hierarchy', 'recent', 'shortName', 'name']
       : ['id', 'recent', 'hierarchy', 'shortName', 'name'];
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   ngAfterViewChecked(): void {
