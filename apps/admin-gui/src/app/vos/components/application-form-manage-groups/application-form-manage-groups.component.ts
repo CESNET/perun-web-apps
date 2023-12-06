@@ -18,6 +18,7 @@ export class ApplicationFormManageGroupsComponent {
   @Input() selected = new SelectionModel<Group>(true, []);
   @Input() addAuth: boolean;
   @Input() removeAuth$: Observable<boolean>;
+  @Input() manageEmbeddedGroupsItemSaved = true;
 
   @Output() refreshEvent: EventEmitter<void> = new EventEmitter<void>();
   @Output() addEvent: EventEmitter<void> = new EventEmitter<void>();

@@ -225,13 +225,19 @@
         <ng-container matColumnDef="managegroups">
           <th *matHeaderCellDef mat-header-cell></th>
           <td *matCellDef="let applicationFormItem" mat-cell>
-            <button
-              (click)="openManagingGroups()"
-              mat-icon-button
-              *ngIf="applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' && !applicationFormItem.forDelete"
-              matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS' | translate}}">
-              <mat-icon>supervised_user_circle</mat-icon>
-            </button>
+            <span
+              class="d-inline-block"
+              matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_DISABLED' | translate}}"
+              [matTooltipDisabled]="embeddedGroupsItemSaved">
+              <button
+                (click)="openManagingGroups()"
+                [disabled]="!embeddedGroupsItemSaved"
+                mat-icon-button
+                *ngIf="applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' && !applicationFormItem.forDelete"
+                matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS' | translate}}">
+                <mat-icon>supervised_user_circle</mat-icon>
+              </button>
+            </span>
           </td>
         </ng-container>
         <ng-container matColumnDef="edit">
