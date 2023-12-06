@@ -159,6 +159,7 @@ export class SelectionItemSearchSelectComponent implements OnInit {
     // get correct custom value
     this.item = this.items[1];
     this.item.value = this.selectedAttribute;
+    this.itemSelected.emit(this.item);
   }
 
   sortAttributes(attributes: SelectionItem[]): void {

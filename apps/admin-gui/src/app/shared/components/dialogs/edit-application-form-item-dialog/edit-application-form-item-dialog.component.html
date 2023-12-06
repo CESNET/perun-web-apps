@@ -102,7 +102,9 @@
                 </perun-web-apps-selection-item-search-select>
                 <div *ngIf="federationAttributeDN === ' -- custom value -- '" class="w-100">
                   <mat-form-field class="w-100">
-                    <mat-label>Custom federation attribute value</mat-label>
+                    <mat-label
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
+                    >
                     <input [(ngModel)]="applicationFormItem.federationAttribute" matInput />
                   </mat-form-field>
                 </div>

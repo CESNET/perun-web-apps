@@ -1454,6 +1454,7 @@
       "DEPENDENCY_ERROR_MESSAGE": "You can't delete this item because it is a {{dependency}} dependency for item {{shortname}}",
       "FEDERATION_ATTRIBUTE": "Federation attribute",
       "FEDERATION_ATTRIBUTE_DESCRIPTION": "Select federation attribute to get pre-filed value from.",
+      "FEDERATION_ATTRIBUTE_VALUE": "Custom federation attribute value",
       "REQUIRED": "Required",
       "REQUIRED_DESCRIPTION": "If checked, the user can`t submit an empty value (doesn't apply to non-editable fields).",
       "NO_SELECTED_ITEM": "No item selected (empty value)",
