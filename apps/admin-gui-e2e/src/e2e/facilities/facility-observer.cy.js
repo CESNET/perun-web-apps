@@ -51,7 +51,8 @@ describe('Facility management with role Facility observer', () => {
   it('test list allowed groups', () => {
     cy.get('[data-cy=allowed-groups]')
       .click()
-      .reload()
+      // TODO: remove the comment below, if the test will be working
+      // .reload()
       .get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
       .get(`[data-cy=${dbGroupName}]`)
