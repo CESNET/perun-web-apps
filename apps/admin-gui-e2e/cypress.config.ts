@@ -14,6 +14,7 @@ export default defineConfig({
     testIsolation: false, // true means local/session storage and cookies are cleared before each test - it causes log out
     experimentalRunAllSpecs: true,
     experimentalMemoryManagement: true,
+    defaultCommandTimeout: 10000, // default value is 4000ms, but it was not sufficient in our CI
     env: {
       BA_USERNAME: 'perun',
       BA_PASSWORD: 'test',
