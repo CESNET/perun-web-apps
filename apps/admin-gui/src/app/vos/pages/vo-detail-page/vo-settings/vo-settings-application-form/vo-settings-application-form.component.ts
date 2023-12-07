@@ -19,6 +19,7 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-settings-application-form',
@@ -52,6 +53,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private voService: VosManagerService,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,13 @@ export class VoSettingsApplicationFormComponent implements OnInit {
         this.loadingHeader = false;
         this.loadingTable = false;
       });
+    });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.updateFormItems();
+      }
     });
   }
 

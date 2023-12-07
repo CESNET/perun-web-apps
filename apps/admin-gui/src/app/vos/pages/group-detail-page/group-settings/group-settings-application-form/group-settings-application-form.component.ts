@@ -22,6 +22,7 @@ import {
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-settings-application-form',
@@ -61,6 +62,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     private guiAuthResolver: GuiAuthResolver,
     private attributesManager: AttributesManagerService,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -105,6 +107,13 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
         }
       },
     );
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.updateFormItems();
+      }
+    });
   }
 
   setAuth(): void {

@@ -1,6 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, RoleService } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-roles',
@@ -20,11 +21,19 @@ export class GroupRolesComponent implements OnInit {
     private authzResolverService: AuthzResolverService,
     private entityStorageService: EntityStorageService,
     private roleService: RoleService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.groupId = this.entityStorageService.getEntity().id;
     this.getData();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.getData();
+      }
+    });
   }
 
   getData(): void {

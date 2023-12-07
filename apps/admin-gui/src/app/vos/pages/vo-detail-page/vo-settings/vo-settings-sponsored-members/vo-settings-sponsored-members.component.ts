@@ -21,6 +21,7 @@ import {
 import { SponsorExistingMemberDialogComponent } from '../../../../../shared/components/dialogs/sponsor-existing-member-dialog/sponsor-existing-member-dialog.component';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { CopySponsoredMembersDialogComponent } from '../../../../../shared/components/dialogs/copy-sponsored-members-dialog/copy-sponsored-members-dialog.component';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-settings-sponsored-members',
@@ -52,6 +53,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     private authzResolver: AuthzResolverService,
     private entityStorageService: EntityStorageService,
     private findSponsors: FindSponsorsService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +71,13 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     } else {
       this.refresh();
     }
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refresh();
+      }
+    });
   }
 
   setAuthRights(): void {

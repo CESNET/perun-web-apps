@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateFacilityDialogComponent } from '../../../shared/components/dialogs/create-facility-dialog/create-facility-dialog.component';
 import { DeleteFacilityDialogComponent } from '../../../shared/components/dialogs/delete-facility-dialog/delete-facility-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-facility-select-page',
@@ -33,12 +34,20 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
     private sideMenuService: SideMenuService,
     private guiAuthResolver: GuiAuthResolver,
     private dialog: MatDialog,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.createAuth = this.guiAuthResolver.isAuthorized('createFacility_Facility_policy', []);
     this.deleteAuth = this.guiAuthResolver.isFacilityAdmin();
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   ngAfterViewChecked(): void {

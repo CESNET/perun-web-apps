@@ -25,6 +25,7 @@ import { RPCError } from '@perun-web-apps/perun/models';
 import { VoAddMemberDialogComponent } from '../../../components/vo-add-member-dialog/vo-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
 import { Observable, of } from 'rxjs';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-members',
@@ -71,6 +72,7 @@ export class VoMembersComponent implements OnInit {
     private apiRequest: ApiRequestConfigurationService,
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +89,13 @@ export class VoMembersComponent implements OnInit {
     }
 
     void this.isManualAddingBlocked(this.vo.id);
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   setAuthRights(): void {

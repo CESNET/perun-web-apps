@@ -27,6 +27,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { GroupUtilsService } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-groups',
@@ -108,6 +109,7 @@ export class VoGroupsComponent implements OnInit {
     public authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private groupUtils: GroupUtilsService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   onCreateGroup(): void {
@@ -139,6 +141,13 @@ export class VoGroupsComponent implements OnInit {
       const value = this.toggle.checked ? 'list' : 'tree';
       localStorage.setItem('preferedValue', value);
       this.refresh();
+    });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refresh();
+      }
     });
   }
 

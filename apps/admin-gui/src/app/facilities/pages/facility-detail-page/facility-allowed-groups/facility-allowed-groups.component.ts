@@ -2,6 +2,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { TABLE_FACILITY_ALLOWED_GROUPS } from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-facility-allowed-groups',
@@ -35,6 +36,7 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     private facilityManager: FacilitiesManagerService,
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,13 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     this.facilityManager.getAllowedVos(this.facility.id).subscribe((vos) => {
       this.vos = vos;
       this.refreshTable();
+    });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
     });
   }
 
@@ -57,13 +66,13 @@ export class FacilityAllowedGroupsComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.groups = [];
-    this.facilityManager.getAllowedGroups(this.facility.id).subscribe((group) => {
-      this.groups = this.groups.concat(group);
+    this.facilityManager.getAllowedGroups(this.facility.id).subscribe((groups) => {
+      this.groups = groups;
       this.groupsToShow = this.groups;
-      this.setAuthRights(group);
+      this.setAuthRights(groups);
       this.loading = false;
     });
-    if (this.vos.length === 0) {
+    if (this.vos && this.vos.length === 0) {
       this.loading = false;
     }
   }
