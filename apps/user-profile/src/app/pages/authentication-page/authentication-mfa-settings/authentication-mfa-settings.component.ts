@@ -5,10 +5,7 @@
    @typescript-eslint/no-unsafe-assignment */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { AuthService, MfaApiService, StoreService } from '@perun-web-apps/perun/services';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { HttpClient } from '@angular/common/http';
+import { MfaApiService, StoreService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MfaSettings } from '@perun-web-apps/perun/models';
@@ -36,6 +33,7 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
 
   mfaUrl = '';
   settings: MfaSettings;
+  cachedSettings: MfaSettings;
 
   // need these because can't call Object.keys in template
   allCategoriesKeys: string[] = [];
@@ -43,16 +41,13 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private attributesManagerService: AttributesManagerService,
     private store: StoreService,
-    private oauthService: OAuthService,
-    private authService: AuthService,
-    private httpClient: HttpClient,
     private mfaApiService: MfaApiService,
   ) {}
 
   ngOnInit(): void {
     this.loadingMfa = true;
+    this.cachedSettings = this.mfaApiService.getCachedSettings();
     const mfa = this.store.getProperty('mfa');
     this.translate.onLangChange.subscribe(() => {
       this.mfaUrl = this.translate.currentLang === 'en' ? mfa.url_en : mfa.url_cs;
@@ -65,7 +60,7 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
         this.mfaAvailable = isAvailable;
         if (this.mfaAvailable) {
           this.loadingCategories = true;
-          this.loadMfa();
+          this.loadSettings();
         } else {
           this.loadingMfa = false;
         }
@@ -79,48 +74,32 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
   }
 
   /**
-   * If mfa_route has value in the session storage, it means that application was reloaded
-   * and now the application should finish some PUT action which requires valid id token
+   * Load setting from the backend or restore it from the cache
+   *
+   * Restore settings from cache just for the use case when MFA window for the step-up is closed manually
+   * - then clear the cache to avoid caching out of this scope (like after routing etc.)
    */
-  loadMfa(): void {
-    const mfaRoute = sessionStorage.getItem('mfa_route');
-    if (mfaRoute) {
-      const enforceMfa = sessionStorage.getItem('enforce_mfa');
-      // This should propagate unfinished PUT action
-      if (enforceMfa) {
-        const body = JSON.stringify({ all: enforceMfa === 'true' });
-        sessionStorage.setItem('settings_mfa', body);
-      }
-      const settingsMfa = sessionStorage.getItem('settings_mfa');
-      if (settingsMfa) {
-        this.mfaApiService.updateDetailSettings().subscribe({
-          next: () => {
-            this.loadSettings();
-            return;
-          },
-          error: () => {
-            this.loadingMfa = false;
-            this.loadingCategories = false;
-          },
-        });
-      }
-    }
-    this.loadSettings();
-  }
-
   loadSettings(): void {
-    this.mfaApiService.getSettings().subscribe({
-      next: (settings) => {
-        this.settings = settings;
-        this.setSelections();
-        this.loadingCategories = false;
-        this.loadingMfa = false;
-      },
-      error: () => {
-        this.loadingMfa = false;
-        this.loadingCategories = false;
-      },
-    });
+    if (this.cachedSettings) {
+      this.settings = this.cachedSettings;
+      this.setSelections();
+      this.unchangedSettings = false;
+      this.loadingCategories = false;
+      this.loadingMfa = false;
+    } else {
+      this.mfaApiService.getSettings().subscribe({
+        next: (settings) => {
+          this.settings = settings;
+          this.setSelections();
+          this.loadingCategories = false;
+          this.loadingMfa = false;
+        },
+        error: () => {
+          this.loadingMfa = false;
+          this.loadingCategories = false;
+        },
+      });
+    }
   }
 
   setSelections(): void {
@@ -203,19 +182,19 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
 
   /**
    * This method fires logic for setting new values of settings
+   * After the error clear the cached settings
    */
-  saveSettings(enforceFirstMfa = false): void {
+  saveSettings(): void {
     this.loadingMfa = true;
-    // enforce all only if all rps + categories are truly checked (checkbox isn't indeterminate)
-    const newEnforce = this.enforceMfa && !this.checkbox.indeterminate;
-    sessionStorage.setItem('enforce_mfa', newEnforce.toString());
     this.saveDetailSettings();
-    this.mfaApiService.saveSettings(enforceFirstMfa).subscribe({
+    this.mfaApiService.saveSettings().subscribe({
       next: () => {
         this.unchangedSettings = true;
         this.loadingMfa = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error(err);
+        this.mfaApiService.clearCachedSettings();
         this.loadingMfa = false;
       },
     });
@@ -238,6 +217,8 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
    * This method creates request body for new settings according to toggles
    */
   saveDetailSettings(): void {
+    // enforce all only if all rps + categories are truly checked (checkbox isn't indeterminate)
+    this.settings.allEnforced = this.enforceMfa && !this.checkbox.indeterminate;
     this.settings.includedCategories = this.categorySelection.selected;
     this.settings.excludedRps = [];
     for (const category of this.settings.includedCategories) {
@@ -252,7 +233,7 @@ export class AuthenticationMfaSettingsComponent implements OnInit {
     this.mfaApiService.saveDetailSettings(this.settings);
   }
 
-  redirectToMfa(): void {
+  redirectToMfaTokensPage(): void {
     window.open(this.mfaUrl, '_blank');
   }
 }

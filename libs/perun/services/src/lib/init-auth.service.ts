@@ -272,11 +272,6 @@ export class InitAuthService {
   }
 
   private redirectToOriginDestination(): Promise<boolean> {
-    const mfaRoute = sessionStorage.getItem('mfa_route');
-    if (mfaRoute) {
-      return this.router.navigate([mfaRoute], { replaceUrl: true, queryParamsHandling: 'merge' });
-    }
-
     let redirectUrl = sessionStorage.getItem('auth:redirect');
     if (!redirectUrl || redirectUrl === '/login') {
       redirectUrl = '/';
