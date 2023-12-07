@@ -1,0 +1,33 @@
+services:
+  db:
+    build: ./e2e/docker-postgresql/.
+    # or image: registry.gitlab.ics.muni.cz:443/perun/perun-idm/perun-web-apps/postgresql:v31.0.0-k8s
+    environment:
+      POSTGRESQL_USERNAME: perun
+      POSTGRESQL_PASSWORD: test
+      POSTGRESQL_DATABASE: perun
+      RPC_VERSION: &rpc_version v31.0.0 # TODO: update using renovate
+    networks:
+      - e2e-net
+  perun-rpc:
+    build: ./e2e/docker-rpc/.
+    # or image: registry.gitlab.ics.muni.cz:443/perun/perun-idm/perun-web-apps/rpc:v31.0.0-k8s
+    environment:
+      RPC_VERSION: *rpc_version
+    depends_on:
+      - db
+    networks:
+      - e2e-net
+    hostname: perun-rpc
+  perun-apache:
+    image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest
+    depends_on:
+      - perun-rpc
+    ports:
+      - "8080:8080"
+    hostname: perun-api
+    networks:
+      - e2e-net
+
+networks:
+  e2e-net:
