@@ -11,7 +11,7 @@ import { openClose } from '@perun-web-apps/perun/animations';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 export class ExpirationAttrValue {
-  period: string;
+  period?: string;
   doNotExtendLoa?: string;
   doNotAllowLoa?: string;
   gracePeriod?: string;
@@ -20,6 +20,7 @@ export class ExpirationAttrValue {
 
 export interface ExpirationConfiguration {
   enabled: boolean;
+  periodEnabled: boolean;
   periodType: 'static' | 'dynamic';
   periodStatic: string;
   periodDynamic: string;
@@ -84,11 +85,9 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       this.initialConfiguration = this.unParseAttrValue(
         this.expirationAttribute.value as ExpirationAttrValue,
       );
-      if (!this.currentConfiguration) {
-        this.currentConfiguration = this.unParseAttrValue(
-          this.expirationAttribute.value as ExpirationAttrValue,
-        );
-      }
+      this.currentConfiguration = this.unParseAttrValue(
+        this.expirationAttribute.value as ExpirationAttrValue,
+      );
     }
   }
 
@@ -124,6 +123,9 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   }
 
   parsePeriod(config: ExpirationConfiguration): string {
+    if (!config.periodEnabled) {
+      return null;
+    }
     switch (config.periodType) {
       case 'dynamic':
         return this.parseDynamicPeriod(config);
@@ -140,6 +142,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
 
     return {
       enabled: false,
+      periodEnabled: false,
       periodType: null,
       periodStatic: '',
       periodDynamic: '',
@@ -168,6 +171,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     if (value == null) {
       return config;
     }
+    config.enabled = true;
 
     if (value.period !== undefined && value.period.length > 0) {
       config = this.setPeriodValues(value, config);
@@ -196,7 +200,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     value: ExpirationAttrValue,
     config: ExpirationConfiguration,
   ): ExpirationConfiguration {
-    config.enabled = true;
+    config.periodEnabled = true;
     if (value.period.startsWith('+')) {
       config.periodType = 'dynamic';
 
@@ -327,7 +331,12 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   }
 
   private parseGracePeriod(config: ExpirationConfiguration): string {
-    if (!config.gracePeriodEnabled) {
+    if (
+      !config.gracePeriodEnabled ||
+      config.gracePeriod === null ||
+      config.gracePeriod.length === 0 ||
+      config.gracePeriodUnit === null
+    ) {
       return null;
     }
 
@@ -377,9 +386,11 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     const gracePeriod = this.parseGracePeriod(config);
     const specialLoaPeriod = this.parseSpecialLoaPeriod(config);
 
-    const value: ExpirationAttrValue = {
-      period: period,
-    };
+    const value: ExpirationAttrValue = {};
+
+    if (period !== null) {
+      value.period = period;
+    }
 
     if (dontExtendLoad !== null) {
       value.doNotExtendLoa = dontExtendLoad;
