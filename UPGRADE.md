@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [15.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.0.0...v15.0.1) (2023-12-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **profile:** New property `auth_validity` for user-profile under the mfa has been created.
+This property defines for how long MFA will not be required since the last valid MFA (only for MFA settings).
+
+(cherry picked from commit f3fbcaf1e8dedb1c1fef480cb295ec74cff4a275)
+
+### Bug Fixes
+
+* **profile:** fix the setting of MFA and move the whole logic to step-up ([4a0ee58](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4a0ee58477fdebb727cc53fab0dd3944831ce71d))
+
 ## [15.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v14.4.0...v15.0.0) (2023-11-24)
 
 
