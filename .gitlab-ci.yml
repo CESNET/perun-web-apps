@@ -33,6 +33,7 @@ variables:
     - k8s
   before_script:
     - mkdir -p $CYPRESS_CACHE_FOLDER
+    - npm ci --prefer-offline
   rules:
     - if: "$CI_PIPELINE_SOURCE != 'schedule'"
 
@@ -40,7 +41,7 @@ npm_ci:
   extends: .test-npm
   stage: .pre
   script:
-    - npm ci --prefer-offline
+    - 'echo "Already done"'
   artifacts:
     when: always
     paths:
