@@ -130,7 +130,7 @@ e2e_tests:
     - e2e_docker_build
   image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/cypress:latest
   tags:
-    - k8s-3s
+    - k8s-3s-hpc
   resource_group: e2e-tests # prevent running multiple e2e jobs at the same time
   script:
     - mkdir $XDG_CACHE_HOME
