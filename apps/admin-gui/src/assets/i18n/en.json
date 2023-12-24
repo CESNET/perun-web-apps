@@ -116,6 +116,7 @@
   "FACILITY_DETAIL": {
     "ENTITY": "Facility",
     "DESCRIPTION": "Description",
+    "UUID": "UUID",
     "BACK": "Back",
     "EDIT": "Edit",
     "DELETE": "Delete",
@@ -297,6 +298,7 @@
   "VO_DETAIL": {
     "ENTITY": "Organization",
     "SHORT_NAME": "Short name",
+    "UUID": "UUID",
     "MEMBER_VOS": "Member organizations",
     "PARENT_VOS": "Member of organizations",
     "BACK": "Back",
