@@ -159,7 +159,7 @@
         </ng-container>
 
         <ng-container
-          *ngFor="let i = index; let col of data.fedColumnsFriendly;"
+          *ngFor="let col of data.fedColumnsFriendly; let i = index"
           matColumnDef="{{col}}">
           <th *matHeaderCellDef mat-header-cell>{{data.fedColumnsDisplay[i]}}</th>
           <td *matCellDef="let application" mat-cell>

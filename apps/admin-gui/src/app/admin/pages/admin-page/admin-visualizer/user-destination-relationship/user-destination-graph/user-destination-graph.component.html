@@ -6,7 +6,7 @@
 </div>
 
 <ng-template #elseBlock>
-  <div *ngIf="isConnected; else elseBlock">
+  <div *ngIf="isConnected; else innerElseBlock">
     {{'ADMIN.VISUALIZER.USER_DESTINATION.FOUND_1' | translate}}
     <strong>{{user.firstName}} {{user.lastName}}</strong>
     {{'ADMIN.VISUALIZER.USER_DESTINATION.FOUND_2' | translate}}
@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <ng-template #elseBlock>
+  <ng-template #innerElseBlock>
     {{'ADMIN.VISUALIZER.USER_DESTINATION.NOT_FOUND_1' | translate}}
     <strong>{{user.firstName}} {{user.lastName}}</strong>
     {{'ADMIN.VISUALIZER.USER_DESTINATION.NOT_FOUND_2' | translate}}
