@@ -35,6 +35,8 @@ import { ApplicationFormItemData } from '../model/applicationFormItemData';
 // @ts-ignore
 import { ApplicationMail } from '../model/applicationMail';
 // @ts-ignore
+import { ApplicationOperationResult } from '../model/applicationOperationResult';
+// @ts-ignore
 import { EnrichedIdentity } from '../model/enrichedIdentity';
 // @ts-ignore
 import { Group } from '../model/group';
@@ -883,21 +885,21 @@ export class RegistrarManagerService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
+  ): Observable<Array<ApplicationOperationResult>>;
   public approveApplications(
     ids: Array<number>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<Array<ApplicationOperationResult>>>;
   public approveApplications(
     ids: Array<number>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<Array<ApplicationOperationResult>>>;
   public approveApplications(
     ids: Array<number>,
     useNon: boolean = false,
@@ -972,7 +974,7 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<any>(requestUrl, null, {
+    return this.httpClient.post<Array<ApplicationOperationResult>>(requestUrl, null, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -3099,21 +3101,21 @@ export class RegistrarManagerService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
+  ): Observable<Array<ApplicationOperationResult>>;
   public deleteApplications(
     ids: Array<number>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<Array<ApplicationOperationResult>>>;
   public deleteApplications(
     ids: Array<number>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<Array<ApplicationOperationResult>>>;
   public deleteApplications(
     ids: Array<number>,
     useNon: boolean = false,
@@ -3188,7 +3190,7 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<any>(requestUrl, null, {
+    return this.httpClient.post<Array<ApplicationOperationResult>>(requestUrl, null, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -6237,7 +6239,7 @@ export class RegistrarManagerService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
+  ): Observable<Array<ApplicationOperationResult>>;
   public rejectApplications(
     ids: Array<number>,
     reason?: string,
@@ -6245,7 +6247,7 @@ export class RegistrarManagerService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<Array<ApplicationOperationResult>>>;
   public rejectApplications(
     ids: Array<number>,
     reason?: string,
@@ -6253,7 +6255,7 @@ export class RegistrarManagerService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<Array<ApplicationOperationResult>>>;
   public rejectApplications(
     ids: Array<number>,
     reason?: string,
@@ -6336,7 +6338,7 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<any>(requestUrl, null, {
+    return this.httpClient.post<Array<ApplicationOperationResult>>(requestUrl, null, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,

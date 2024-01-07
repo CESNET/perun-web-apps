@@ -7,6 +7,7 @@ export * from './applicationForm';
 export * from './applicationFormItem';
 export * from './applicationFormItemData';
 export * from './applicationMail';
+export * from './applicationOperationResult';
 export * from './applicationsOrderColumn';
 export * from './applicationsPageQuery';
 export * from './assignedGroup';

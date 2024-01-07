@@ -6,6 +6,7 @@ import { ChangeExpirationDialogComponent } from './change-expiration-dialog/chan
 import { EditFacilityResourceGroupVoDialogComponent } from './edit-facility-resource-group-vo-dialog/edit-facility-resource-group-vo-dialog.component';
 import { GroupSyncDetailDialogComponent } from './group-sync-detail-dialog/group-sync-detail-dialog.component';
 import { NotificationDialogComponent } from './notification-dialog/notification-dialog.component';
+import { ExceptionDetailDialogComponent } from './exception-detail-dialog/exception-detail-dialog.component';
 import { RemoveUserExtSourceDialogComponent } from './remove-user-ext-source-dialog/remove-user-ext-source-dialog.component';
 import { ShowValueDialogComponent } from './show-value-dialog/show-value-dialog.component';
 import { EditAttributeDialogComponent } from './edit-attribute-dialog/edit-attribute-dialog.component';
@@ -85,6 +86,7 @@ import { MatSortModule } from '@angular/material/sort';
     EditFacilityResourceGroupVoDialogComponent,
     GroupSyncDetailDialogComponent,
     NotificationDialogComponent,
+    ExceptionDetailDialogComponent,
     RemoveUserExtSourceDialogComponent,
     ShowValueDialogComponent,
     EditAttributeDialogComponent,
@@ -109,11 +111,13 @@ import { MatSortModule } from '@angular/material/sort';
     PasswordResetDialogComponent,
   ],
   exports: [
+    BugReportDialogComponent,
     ChangeExpirationDialogComponent,
     ChangeMemberStatusDialogComponent,
     EditFacilityResourceGroupVoDialogComponent,
     GroupSyncDetailDialogComponent,
     NotificationDialogComponent,
+    ExceptionDetailDialogComponent,
     RemoveUserExtSourceDialogComponent,
     ShowValueDialogComponent,
     EditAttributeDialogComponent,
