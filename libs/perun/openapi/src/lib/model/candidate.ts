@@ -16,4 +16,5 @@ export interface Candidate extends User {
   userExtSource?: UserExtSource;
   additionalUserExtSources?: Array<UserExtSource>;
   attributes?: { [key: string]: string };
+  expectedSyncGroupStatus?: string;
 }
