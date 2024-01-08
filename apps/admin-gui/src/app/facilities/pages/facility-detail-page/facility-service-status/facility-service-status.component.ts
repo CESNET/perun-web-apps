@@ -213,8 +213,8 @@ export class FacilityServiceStatusComponent implements OnInit {
   }
 
   selectionChanged(): void {
-    this.disableBlockButton = true;
-    this.disableAllowButton = true;
+    this.disableBlockButton = false;
+    this.disableAllowButton = false;
     this.disableRemoveButton = this.selected.selected.length !== 1;
     this.disableForcePropagationButton = false;
 
@@ -224,10 +224,10 @@ export class FacilityServiceStatusComponent implements OnInit {
 
     for (const ss of this.selected.selected) {
       if (ss.blockedOnFacility) {
-        this.disableAllowButton = false;
+        this.disableBlockButton = true;
         this.disableForcePropagationButton = true;
       } else {
-        this.disableBlockButton = false;
+        this.disableAllowButton = true;
       }
     }
   }
