@@ -13,12 +13,12 @@
       <perun-web-apps-debounce-filter
         (filter)="applyFilter($event)"
         [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'"></perun-web-apps-debounce-filter>
-      <ng-template #spinner>
+      <ng-template #tableSpinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
       <div class="position-relative">
         <perun-web-apps-groups-list
-          *perunWebAppsLoader="loading; indicator: spinner"
+          *perunWebAppsLoader="loading; indicator: tableSpinner"
           [groupsToDisableCheckbox]="groupsToDisable"
           [disableGroups]="true"
           [groups]="groups"

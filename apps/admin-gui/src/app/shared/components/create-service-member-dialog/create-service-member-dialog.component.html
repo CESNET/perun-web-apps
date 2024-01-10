@@ -127,12 +127,12 @@
             mat-flat-button>
             {{'DIALOGS.CREATE_SERVICE_MEMBER.ADD_USER' | translate}}
           </button>
-          <ng-template #spinner>
+          <ng-template #tableSpinner>
             <perun-web-apps-loading-table></perun-web-apps-loading-table>
           </ng-template>
           <div class="position-relative" *ngIf="firstSearchDone">
             <perun-web-apps-members-list
-              *perunWebAppsLoader="loading; indicator: spinner"
+              *perunWebAppsLoader="loading; indicator: tableSpinner"
               [disableRouting]="true"
               [displayedColumns]="['checkbox', 'id', 'fullName']"
               [members]="members"

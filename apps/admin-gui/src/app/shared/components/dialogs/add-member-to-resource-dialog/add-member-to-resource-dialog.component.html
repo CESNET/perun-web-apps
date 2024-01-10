@@ -49,12 +49,12 @@
             matStepLabel
             >{{'DIALOGS.ADD_MEMBER_TO_RESOURCE.ADD_GROUP' | translate}}</ng-template
           >
-          <ng-template #spinner>
+          <ng-template #tableSpinner>
             <perun-web-apps-loading-table></perun-web-apps-loading-table>
           </ng-template>
           <div class="position-relative">
             <perun-web-apps-groups-list
-              *perunWebAppsLoader="processing; indicator: spinner"
+              *perunWebAppsLoader="processing; indicator: tableSpinner"
               [disableGroups]="true"
               [disableHeadCheckbox]="true"
               [disableRouting]="true"

@@ -138,13 +138,13 @@
         <td *matCellDef="let application" mat-cell>{{application.fedInfo}}</td>
       </ng-container>
 
-      <ng-container *ngFor="let i = index; let col of fedColumnsFriendly;" matColumnDef="{{col}}">
+      <ng-container *ngFor="let col of fedColumnsFriendly; let i = index" matColumnDef="{{col}}">
         <th *matHeaderCellDef mat-header-cell>{{fedColumnsDisplay[i]}}</th>
         <td *matCellDef="let application" mat-cell>
           {{getFedValue(application.fedInfo, col)}}
         </td>
       </ng-container>
-      <ng-container *ngFor="let i = index; let col of parsedColumns;" matColumnDef="{{col}}">
+      <ng-container *ngFor="let col of parsedColumns; let i = index" matColumnDef="{{col}}">
         <th *matHeaderCellDef mat-header-cell>{{col}}</th>
         <td *matCellDef="let application" mat-cell>
           {{getValue(application.formData, col)}}
