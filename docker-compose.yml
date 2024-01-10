@@ -20,7 +20,7 @@ services:
       - e2e-net
     hostname: perun-rpc
   perun-apache:
-    image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest
+    image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest@sha256:29760232dad16545c16386b5a92541c39239a697b84f6fbe7335a6862145c3a6
     depends_on:
       - perun-rpc
     ports:

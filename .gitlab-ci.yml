@@ -85,7 +85,7 @@ e2e_docker_build:
   stage: build
   needs: []
   image:
-    name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/kaniko:latest
+    name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/kaniko:latest@sha256:7ccb41b87372d27c952e4f41e49102e05d851be164eb4cae4553570ebbedd63c
   tags:
     - k8s-root
   parallel:
@@ -129,7 +129,7 @@ e2e_tests:
   needs:
     - test_build
     - e2e_docker_build
-  image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/cypress:latest
+  image: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/cypress:latest@sha256:e2621611bdc8b8e7968e91c19c8afd03aa2e2256ce44533751f45923695954f4
   tags:
     - k8s-3s-hpc
   script:
@@ -161,7 +161,7 @@ e2e_tests:
       alias: perun-rpc
       variables:
         HEALTHCHECK_TCP_PORT: "8009"
-    - name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest
+    - name: registry.gitlab.ics.muni.cz:443/perun-proxy-aai/containers/ci-tools/perun-apache:latest@sha256:29760232dad16545c16386b5a92541c39239a697b84f6fbe7335a6862145c3a6
       variables:
         HEALTHCHECK_TCP_PORT: "8080"
   rules:
