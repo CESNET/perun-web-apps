@@ -1441,6 +1441,7 @@
       "CONTENT_DESCRIPTION": "HTML formatted content of form item. It spans through all columns to full form width.",
       "LABEL": "Label",
       "LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback.",
+      "CHECKBOX_LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback. Checkbox labels also allow <a> elements with 'href' and 'target' attributes.",
       "LABEL_BUTTON_DESCRIPTION": "Label displayed on submit button.",
       "HELP": "Help",
       "HELP_DESCRIPTION": "Help text displayed to a user along with input widget.",

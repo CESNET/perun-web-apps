@@ -134,7 +134,8 @@
             <div *ngIf="applicationFormItem.type === 'CHECKBOX'">
               <form>
                 <div *ngFor="let item of getLocalizedOptions(applicationFormItem)">
-                  <input type="checkbox" /> {{item}}
+                  <input type="checkbox" />
+                  <span [innerHTML]="item"></span>
                 </div>
               </form>
             </div>

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
 // import { addHook, removed, sanitize } from 'dompurify';
+import { PerunTranslateService } from './perun-translate.service';
+import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { ApiRequestConfigurationService } from './api-request-configuration.service';
+import { Observable, of, timer } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { RPCError } from '@perun-web-apps/perun/models';
 
 export interface EscapeOutput {
   escapedHtml: string;
@@ -39,6 +45,11 @@ interface HtmlEscapedMessage {
   providedIn: 'root',
 })
 export class HtmlEscapeService {
+  constructor(
+    private translate: PerunTranslateService,
+    private registrarManager: RegistrarManagerService,
+    private apiRequestConfiguration: ApiRequestConfigurationService,
+  ) {}
   escapeDangerousHtml(html: string): EscapeOutput {
     return {
       escapedHtml: html,
@@ -226,6 +237,22 @@ export class HtmlEscapeService {
       message = message.slice(0, -2) + '.';
     }
     return message;
+  }
+
+  checkboxValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors> | null => {
+      return timer(500).pipe(
+        switchMap(() => {
+          this.apiRequestConfiguration.dontHandleErrorForNext();
+          return this.registrarManager.checkCheckboxHtml(String(control.value));
+        }),
+        map(() => null),
+        catchError((err: RPCError) => {
+          const rpcErr = err.message.substring(err.message.indexOf(':') + 1);
+          return of({ invalidHtmlContent: rpcErr }) as Observable<ValidationErrors>;
+        }),
+      ) as Observable<ValidationErrors>;
+    };
   }
 
   htmlContentValidator(): ValidatorFn {
