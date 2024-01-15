@@ -85,8 +85,8 @@ export interface FooterColumn {
 interface Footer {
   columns: FooterColumn[];
   copyright_items: CopyrightItem[];
-  github_releases?: string;
-  github_backend_releases?: string;
+  gitlab_releases?: string;
+  gitlab_backend_releases?: string;
 }
 
 interface DocumentTitle {

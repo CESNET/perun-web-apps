@@ -11,7 +11,7 @@
         [disableAutoSelect]="true"
         [users]="voSponsorsSource">
       </perun-web-apps-user-search-select>
-      <ng-template #spinner>
+      <ng-template #tableSpinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
       <div class="position-relative" *ngIf="sourceSponsorSelected">
@@ -24,7 +24,7 @@
           [placeholder]="'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.FILTER'">
         </perun-web-apps-debounce-filter>
         <app-sponsored-members-list
-          *perunWebAppsLoader="tableLoading; indicator: spinner"
+          *perunWebAppsLoader="tableLoading; indicator: tableSpinner"
           [disableRouting]="true"
           [sponsoredMembers]="filteredSponsoredMembers"
           [selection]="selection"

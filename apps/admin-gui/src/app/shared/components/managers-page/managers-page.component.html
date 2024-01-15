@@ -3,6 +3,9 @@
 </h1>
 
 <mat-tab-group (selectedTabChange)="tabChanged($event)" mat-stretch-tabs="false">
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
   <mat-tab>
     <ng-template matTabLabel>
       {{'SHARED.COMPONENTS.MANAGERS_PAGE.USER' | translate}}
@@ -52,9 +55,6 @@
         {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_INDIRECT_ADMINS' | translate}}
       </mat-checkbox>
 
-      <ng-template #spinner>
-        <perun-web-apps-loading-table></perun-web-apps-loading-table>
-      </ng-template>
       <div class="position-relative">
         <app-users-list
           *perunWebAppsLoader="loading; indicator: spinner"
@@ -108,9 +108,6 @@
         </mat-select>
       </mat-form-field>
 
-      <ng-template #spinner>
-        <perun-web-apps-loading-table></perun-web-apps-loading-table>
-      </ng-template>
       <div class="position-relative">
         <perun-web-apps-groups-list
           *perunWebAppsLoader="loading; indicator: spinner"

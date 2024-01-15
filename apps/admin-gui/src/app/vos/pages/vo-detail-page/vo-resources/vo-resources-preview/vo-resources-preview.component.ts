@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TABLE_VO_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-resources-preview',
@@ -31,6 +32,7 @@ export class VoResourcesPreviewComponent implements OnInit {
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class VoResourcesPreviewComponent implements OnInit {
     this.vo = this.entityStorageService.getEntity();
     this.setAuthRights();
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   setAuthRights(): void {

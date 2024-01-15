@@ -21,6 +21,7 @@ import {
 import { Urns } from '@perun-web-apps/perun/urns';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-facility-allowed-users',
@@ -78,6 +79,7 @@ export class FacilityAllowedUsersComponent implements OnInit {
     private consentService: ConsentsManagerService,
     private translate: PerunTranslateService,
     private cd: ChangeDetectorRef,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,13 @@ export class FacilityAllowedUsersComponent implements OnInit {
     this.routeAuth = this.authResolver.isPerunAdminOrObserver();
     this.changeFilter();
     this.refreshPage();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshPage();
+      }
+    });
   }
 
   changeFilter(): void {

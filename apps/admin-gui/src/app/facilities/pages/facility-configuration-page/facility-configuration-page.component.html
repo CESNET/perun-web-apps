@@ -3,6 +3,9 @@
     {{'FACILITY_CONFIGURATION.TITLE' | translate}}
   </div>
   <mat-stepper #stepper (selectionChange)="navigationStep($event)" [linear]="true">
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
     <mat-step>
       <ng-template matStepLabel>{{'FACILITY_CONFIGURATION.OWNERS' | translate}}</ng-template>
       <ng-template matStepContent>
@@ -90,9 +93,6 @@
             class="service-search-select">
           </perun-web-apps-service-search-select>
         </div>
-        <ng-template #spinner>
-          <perun-web-apps-loading-table></perun-web-apps-loading-table>
-        </ng-template>
         <div class="position-relative">
           <perun-web-apps-attributes-list
             *perunWebAppsLoader="processing; indicator: spinner"
@@ -145,9 +145,6 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.OWNERS' | translate}}</h1>
-            <ng-template #spinner>
-              <perun-web-apps-loading-table></perun-web-apps-loading-table>
-            </ng-template>
             <div class="position-relative">
               <perun-web-apps-owners-list
                 *perunWebAppsLoader="processing; indicator: spinner"
@@ -164,9 +161,6 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.HOSTS' | translate}}</h1>
-            <ng-template #spinner>
-              <perun-web-apps-loading-table></perun-web-apps-loading-table>
-            </ng-template>
             <div class="position-relative">
               <app-hosts-list
                 *perunWebAppsLoader="processing; indicator: spinner"
@@ -217,9 +211,6 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.DESTINATION' | translate}}</h1>
-            <ng-template #spinner>
-              <perun-web-apps-loading-table></perun-web-apps-loading-table>
-            </ng-template>
             <div class="position-relative">
               <app-perun-web-apps-destination-list
                 *perunWebAppsLoader="processing; indicator: spinner"

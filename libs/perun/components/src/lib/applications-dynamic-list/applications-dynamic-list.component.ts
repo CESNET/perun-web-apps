@@ -65,6 +65,7 @@ export class ApplicationsDynamicListComponent implements OnInit, OnChanges, Afte
   @Input() fedAttrs: AttributeDefinition[] = [];
   @Input() fedAttrNames: string[] = [];
   @Input() refreshTable = false;
+  @Input() updateTable: boolean;
   @Output() loading$: EventEmitter<Observable<boolean>> = new EventEmitter<Observable<boolean>>();
   @Output() selectedApplications = new EventEmitter<Application[]>();
 

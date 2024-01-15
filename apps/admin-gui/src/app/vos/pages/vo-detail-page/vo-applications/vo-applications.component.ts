@@ -20,6 +20,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ApplicationsListColumnsChangeDialogComponent } from '../../../../shared/components/dialogs/applications-list-columns-change-dialog/applications-list-columns-change-dialog.component';
 import { Observable } from 'rxjs';
 import { AppAction } from '../../../../shared/components/application-actions/application-actions.component';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-vo-applications',
@@ -46,6 +47,8 @@ export class VoApplicationsComponent implements OnInit {
   fedAttrs: AttributeDefinition[] = [];
   viewPreferences$: Observable<Attribute>;
 
+  updateTable = false;
+
   constructor(
     private registrarManager: RegistrarManagerService,
     private entityStorageService: EntityStorageService,
@@ -54,6 +57,7 @@ export class VoApplicationsComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private translate: PerunTranslateService,
     private authResolver: GuiAuthResolver,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +76,14 @@ export class VoApplicationsComponent implements OnInit {
           );
         });
       });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.updateTable = !this.updateTable;
+        this.cd.detectChanges();
+      }
+    });
   }
 
   setColumns(): void {

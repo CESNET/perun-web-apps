@@ -53,10 +53,10 @@
               {{'VO_DETAIL.RESOURCES.STATES.TABLE_SCHEDULED' | translate}}
             </th>
             <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.schedule; else notYet">
+              <div *ngIf="task.schedule; else notScheduledYet">
                 {{task.schedule | date:'d.M.y H:mm:ss'}}
               </div>
-              <ng-template #notYet class="font-italic">
+              <ng-template #notScheduledYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
               </ng-template>
             </td>
@@ -67,10 +67,10 @@
               {{'VO_DETAIL.RESOURCES.STATES.TABLE_STARTED' | translate}}
             </th>
             <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.startTime; else notYet">
+              <div *ngIf="task.startTime; else notStartedYet">
                 {{task.schedule | date:'d.M.y H:mm:ss'}}
               </div>
-              <ng-template #notYet class="font-italic">
+              <ng-template #notStartedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
               </ng-template>
             </td>
@@ -81,10 +81,10 @@
               {{'VO_DETAIL.RESOURCES.STATES.TABLE_ENDED' | translate}}
             </th>
             <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.endTime; else notYet">
+              <div *ngIf="task.endTime; else notEndedYet">
                 {{task.schedule | date:'d.M.y H:mm:ss'}}
               </div>
-              <ng-template #notYet class="font-italic">
+              <ng-template #notEndedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
               </ng-template>
             </td>

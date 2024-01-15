@@ -28,6 +28,7 @@ import { GroupAddMemberDialogComponent } from '../../../components/group-add-mem
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
 import { CopyMembersDialogComponent } from '../../../../shared/components/dialogs/copy-members-dialog/copy-members-dialog-component';
 import { Observable, of } from 'rxjs';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-members',
@@ -100,6 +101,7 @@ export class GroupMembersComponent implements OnInit {
     private notificator: NotificatorService,
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +121,13 @@ export class GroupMembersComponent implements OnInit {
     }
     void this.isManualAddingBlocked(this.group.voId).then(() => this.loadPage(this.group.id));
     this.isCopyMembersDisabled();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   loadPage(groupId: number): void {

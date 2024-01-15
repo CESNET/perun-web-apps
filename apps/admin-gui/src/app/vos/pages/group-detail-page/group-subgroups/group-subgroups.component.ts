@@ -18,6 +18,7 @@ import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-subgroups',
@@ -60,6 +61,7 @@ export class GroupSubgroupsComponent implements OnInit {
     private groupService: GroupsManagerService,
     private guiAuthResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   onCreateGroup(): void {
@@ -91,6 +93,13 @@ export class GroupSubgroupsComponent implements OnInit {
     this.group = this.entityStorageService.getEntity();
     this.setAuthRights();
     this.refreshTable();
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   setAuthRights(): void {

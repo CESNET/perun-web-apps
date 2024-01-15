@@ -21,6 +21,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { GroupsListComponent } from '@perun-web-apps/perun/components';
 import { GroupWithStatus } from '@perun-web-apps/perun/models';
+import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-member-groups',
@@ -66,6 +67,7 @@ export class MemberGroupsComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private memberService: MembersManagerService,
     private entityService: EntityStorageService,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +92,13 @@ export class MemberGroupsComponent implements OnInit {
         localStorage.setItem('preferedValue', value);
         this.refreshTable();
       });
+    });
+
+    // Refresh cached data
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
     });
   }
 

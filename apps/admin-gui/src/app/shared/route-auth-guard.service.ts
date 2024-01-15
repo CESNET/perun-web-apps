@@ -139,6 +139,19 @@ export class RouteAuthGuardService {
     }
   }
 
+  /**
+   * This method is implemented just for the '/facilities' route
+   *
+   * @param _childRoute
+   * @param state
+   */
+  canActivate(
+    _childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.canActivateChild(_childRoute, state);
+  }
+
   finalizeCanActivateChild(authPair: AuthPair): boolean | UrlTree {
     const isAuthorized: boolean = this.routePolicyService.canNavigate(
       authPair.key,

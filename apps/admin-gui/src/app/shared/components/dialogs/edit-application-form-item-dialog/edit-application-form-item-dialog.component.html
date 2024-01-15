@@ -102,7 +102,9 @@
                 </perun-web-apps-selection-item-search-select>
                 <div *ngIf="federationAttributeDN === ' -- custom value -- '" class="w-100">
                   <mat-form-field class="w-100">
-                    <mat-label>Custom federation attribute value</mat-label>
+                    <mat-label
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
+                    >
                     <input [(ngModel)]="applicationFormItem.federationAttribute" matInput />
                   </mat-form-field>
                 </div>
@@ -199,13 +201,36 @@
           <div
             *ngIf="isApplicationFormItemOfType(['TEXTFIELD', 'VALIDATED_EMAIL', 'USERNAME', 'PASSWORD', 'RADIO', 'TEXTAREA',
                                                       'COMBOBOX', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])">
-            <mat-form-field subscriptSizing="dynamic" class="w-100">
+            <mat-form-field
+              *ngIf="!isApplicationFormItemOfType(['CHECKBOX'])"
+              subscriptSizing="dynamic"
+              class="w-100">
               <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label>
               <textarea formControlName="{{lang}}-plain-label" matInput></textarea>
               <mat-hint
                 >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL_DESCRIPTION' | translate}}</mat-hint
               >
             </mat-form-field>
+
+            <div *ngIf="isApplicationFormItemOfType(['CHECKBOX'])">
+              <mat-form-field subscriptSizing="dynamic" class="w-100">
+                <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label>
+                <textarea formControlName="{{lang}}-html-label" matInput></textarea>
+                <mat-spinner
+                  *ngIf="inputFormGroup.controls[lang + '-html-label']?.pending"
+                  matSuffix
+                  [diameter]="18"
+                  class="input-spinner"></mat-spinner>
+                <mat-hint
+                  *ngIf="!inputFormGroup.controls[lang + '-html-label']?.pending"
+                  >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CHECKBOX_LABEL_DESCRIPTION' | translate}}</mat-hint
+                >
+                <mat-error *ngIf="inputFormGroup.controls[lang + '-html-label']?.invalid">
+                  {{inputFormGroup.controls[lang + '-html-label'].errors?.invalidHtmlContent}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
             <mat-form-field subscriptSizing="dynamic" class="w-100">
               <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HELP' | translate}}</mat-label>
               <textarea formControlName="{{lang}}-plain-help" matInput></textarea>
@@ -251,24 +276,40 @@
               </button>
             </div>
             <div class="d-flex flex-column justify-content-center">
-              <div
-                *ngFor="let option of options[lang]"
-                class="d-flex flex-row justify-content-center align-items-center">
-                <mat-form-field class="mx-4">
-                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label>
-                  <input [(ngModel)]="option[0]" [ngModelOptions]="{standalone: true}" matInput />
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label>
-                  <input [(ngModel)]="option[1]" [ngModelOptions]="{standalone: true}" matInput />
-                </mat-form-field>
-                <button
-                  (click)="removeOption(option, lang)"
-                  color="warn"
-                  mat-icon-button
-                  matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
-                  <mat-icon>remove_circle</mat-icon>
-                </button>
+              <div *ngFor="let option of options[lang]" class="mb-2">
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                  <mat-form-field class="mx-4" subscriptSizing="dynamic">
+                    <mat-label
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label
+                    >
+                    <input [(ngModel)]="option[0]" [ngModelOptions]="{standalone: true}" matInput />
+                  </mat-form-field>
+                  <mat-form-field subscriptSizing="dynamic">
+                    <mat-label
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
+                    >
+                    <input [formControl]="option[1]" matInput />
+                    <mat-spinner
+                      *ngIf="option[1].pending"
+                      matSuffix
+                      [diameter]="18"
+                      class="input-spinner"></mat-spinner>
+                  </mat-form-field>
+                  <button
+                    (click)="removeOption(option, lang)"
+                    color="warn"
+                    mat-icon-button
+                    matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+                </div>
+                <div>
+                  <mat-error
+                    class="ms-5 mt-1"
+                    *ngIf="option[1].invalid"
+                    >{{option[1].errors?.invalidHtmlContent}}</mat-error
+                  >
+                </div>
               </div>
             </div>
 
@@ -292,7 +333,7 @@
           (applicationFormItem.disabled !== 'ALWAYS' && applicationFormItem.hidden !== 'ALWAYS')"
         matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON_DISABLED_TOOLTIP' | translate}}">
         <div
-          [matTooltipDisabled]="!inputFormGroup.invalid"
+          [matTooltipDisabled]="!inputFormGroup.invalid && !optionsFormArray.invalid"
           [matTooltipPosition]="'above'"
           matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HTML_INVALID_TAGS' | translate}}">
           <button
@@ -300,7 +341,8 @@
             class="ms-2 mt-auto"
             color="accent"
             data-cy="edit-form-item-button-dialog"
-            [disabled]="inputFormGroup.invalid || loading || (applicationFormItem.required &&
+            [disabled]="inputFormGroup.invalid || inputFormGroup.pending || loading || optionsFormArray.invalid
+             || optionsFormArray.pending || (applicationFormItem.required &&
                     applicationFormItem.perunSourceAttribute === '' &&
                     applicationFormItem.federationAttribute === '' &&
                     (applicationFormItem.disabled === 'ALWAYS' || applicationFormItem.hidden === 'ALWAYS'))"

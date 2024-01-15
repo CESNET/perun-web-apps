@@ -39,14 +39,7 @@ const routes: Routes = [
   {
     path: '',
     component: FacilitySelectPageComponent,
-    canActivateChild: [RouteAuthGuardService],
-    children: [
-      {
-        path: '',
-        component: FacilitySelectPageComponent,
-        data: { animation: 'FacilitySelectPage' },
-      },
-    ],
+    canActivate: [RouteAuthGuardService],
   },
   {
     path: ':facilityId',

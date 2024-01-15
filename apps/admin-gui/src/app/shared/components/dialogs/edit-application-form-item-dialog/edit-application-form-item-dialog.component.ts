@@ -17,7 +17,7 @@ import {
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 export interface EditApplicationFormItemDialogComponentData {
   theme: string;
@@ -38,13 +38,14 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
   destinationAttributes: AttributeDefinition[];
   federationAttributeDN = '';
   itemType = ItemType;
-  options: { [key: string]: [string, string][] };
+  options: { [key: string]: [string, FormControl<string>][] };
   theme: string;
   loading = true;
   hiddenValues: HiddenEnum[] = ['NEVER', 'ALWAYS', 'IF_EMPTY', 'IF_PREFILLED'];
   disabledValues: DisabledEnum[] = ['NEVER', 'ALWAYS', 'IF_EMPTY', 'IF_PREFILLED'];
   possibleDependencyItems: ApplicationFormItem[] = [];
   inputFormGroup: FormGroup<Record<string, FormControl<string>>> = null;
+  optionsFormArray: FormArray<FormControl<string>> = new FormArray<FormControl<string>>([]);
 
   typesWithUpdatable: Type[] = [
     'VALIDATED_EMAIL',
@@ -116,6 +117,7 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
     this.possibleDependencyItems = this.getPossibleDepItems();
     this.applicationFormItem = createNewApplicationFormItem(this.languages);
     this.copy(this.data.applicationFormItem, this.applicationFormItem);
+    this.getOptions();
     this.prepareFormControls();
     this.loading = true;
     this.attributesManager.getAllAttributeDefinitions().subscribe({
@@ -148,7 +150,6 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
     if (this.applicationFormItem.perunSourceAttribute === null) {
       this.applicationFormItem.perunSourceAttribute = '';
     }
-    this.getOptions();
   }
 
   loadWarning(itemType: ItemType): void {
@@ -201,9 +202,16 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
           this.inputFormGroup.get(`${lang}-html-label`).value,
         ).escapedHtml;
       } else {
-        this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
-          `${lang}-plain-label`,
-        ).value;
+        if (this.applicationFormItem.type === 'CHECKBOX') {
+          // checkbox also allows html labels, but still has error/help message
+          this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
+            `${lang}-html-label`,
+          ).value;
+        } else {
+          this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
+            `${lang}-plain-label`,
+          ).value;
+        }
         this.applicationFormItem.i18n[lang].errorMessage = this.inputFormGroup.get(
           `${lang}-plain-error-message`,
         ).value;
@@ -228,22 +236,32 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
   }
 
   addOption(lang: string): void {
-    this.options[lang].push(['', '']);
+    const control = new FormControl<string>('', [], [this.escapeService.checkboxValidator()]);
+    control.markAsTouched();
+    this.optionsFormArray.push(control);
+    this.options[lang].push(['', control]);
   }
 
-  removeOption(option: [string, string], lang: string): void {
+  removeOption(option: [string, FormControl<string>], lang: string): void {
     this.options[lang] = this.options[lang].filter(
-      (opt) => !(opt[0] === option[0] && opt[1] === option[1]),
+      (opt) => !(opt[0] === option[0] && opt[1].value === option[1].value),
     );
+
+    // update form array
+    let controls: FormControl<string>[] = [];
+    for (const language of this.languages) {
+      controls = controls.concat(this.options[language].map((opt) => opt[1]));
+    }
+    this.optionsFormArray = new FormArray<FormControl<string>>(controls);
   }
 
   sortOptionsAZ(lang: string): void {
     this.options[lang] = this.options[lang].sort((n1, n2) => {
-      if (n1[1] > n2[1]) {
+      if (n1[1].value > n2[1].value) {
         return 1;
       }
 
-      if (n1[1] < n2[1]) {
+      if (n1[1].value < n2[1].value) {
         return -1;
       }
 
@@ -253,11 +271,11 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
 
   sortOptionsZA(lang: string): void {
     this.options[lang] = this.options[lang].sort((n1, n2) => {
-      if (n1[1] > n2[1]) {
+      if (n1[1].value > n2[1].value) {
         return -1;
       }
 
-      if (n1[1] < n2[1]) {
+      if (n1[1].value < n2[1].value) {
         return 1;
       }
 
@@ -312,25 +330,33 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
           [this.escapeService.htmlContentValidator()],
         );
         formGroupFields[`${lang}-html-label`].markAsTouched();
-      } else {
-        // Plain
-        formGroupFields[`${lang}-plain-error-message`] = new FormControl(
-          this.applicationFormItem.i18n[lang].errorMessage,
-          [],
-        );
-        formGroupFields[`${lang}-plain-help`] = new FormControl(
-          this.applicationFormItem.i18n[lang].help,
-          [],
-        );
-        formGroupFields[`${lang}-plain-label`] = new FormControl(
+      }
+      if (this.applicationFormItem.type === 'CHECKBOX') {
+        formGroupFields[`${lang}-html-label`] = new FormControl(
           this.applicationFormItem.i18n[lang].label,
           [],
+          [this.escapeService.checkboxValidator()],
         );
-
-        formGroupFields[`${lang}-plain-label`].markAsTouched();
-        formGroupFields[`${lang}-plain-error-message`].markAsTouched();
-        formGroupFields[`${lang}-plain-help`].markAsTouched();
+        formGroupFields[`${lang}-html-label`].markAsTouched();
       }
+
+      // Plain
+      formGroupFields[`${lang}-plain-error-message`] = new FormControl(
+        this.applicationFormItem.i18n[lang].errorMessage,
+        [],
+      );
+      formGroupFields[`${lang}-plain-help`] = new FormControl(
+        this.applicationFormItem.i18n[lang].help,
+        [],
+      );
+      formGroupFields[`${lang}-plain-label`] = new FormControl(
+        this.applicationFormItem.i18n[lang].label,
+        [],
+      );
+
+      formGroupFields[`${lang}-plain-label`].markAsTouched();
+      formGroupFields[`${lang}-plain-error-message`].markAsTouched();
+      formGroupFields[`${lang}-plain-help`].markAsTouched();
     }
     this.inputFormGroup = new FormGroup(formGroupFields);
   }
@@ -343,7 +369,14 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
         const temp = this.applicationFormItem.i18n[lang].options.split('|');
         for (const item of temp) {
           const line = item.split('#');
-          this.options[lang].push([line[0], line[1]]);
+          const control = new FormControl<string>(
+            line[1],
+            [],
+            [this.escapeService.checkboxValidator()],
+          );
+          control.markAsTouched();
+          this.optionsFormArray.push(control);
+          this.options[lang].push([line[0], control]);
         }
       }
     }
@@ -361,11 +394,11 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
     let options = '';
     if (this.options[lang] ?? false) {
       for (const item of this.options[lang]) {
-        if (item[0] !== '' && item[1] !== '') {
+        if (item[0] !== '' && item[1].value !== '') {
           if (options === '') {
-            options = item[0] + '#' + item[1];
+            options = item[0] + '#' + item[1].value;
           } else {
-            options = options + '|' + item[0] + '#' + item[1];
+            options = options + '|' + item[0] + '#' + item[1].value;
           }
         }
       }

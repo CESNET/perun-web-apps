@@ -48,6 +48,7 @@ export class ApplicationActionsComponent implements OnInit {
   @Input() tableId: string;
   @Input() detailTableId: string;
   @Input() fedAttrs: AttributeDefinition[];
+  @Input() updateTable: boolean;
   @Output() changeView = new EventEmitter<void>();
 
   loading$: Observable<boolean>;
