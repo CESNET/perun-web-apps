@@ -91,7 +91,7 @@
         "url": "https://www.cerit-sc.cz/"
       }
     ],
-    "github_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/releases"
+    "gitlab_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/releases"
   },
   "theme": {
     "content_bg_color": "",

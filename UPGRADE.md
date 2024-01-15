@@ -1,5 +1,31 @@
 Upgrade notes
 
+## [15.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.0.1...v15.1.0) (2024-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **profile:** New property `auth_validity` for user-profile under the mfa has been created.
+This property defines for how long MFA will not be required since the last valid MFA (only for MFA settings).
+
+### Features
+
+* **admin:** added uuid to facility/vo detail ([711a253](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/711a25318ba851ca0633c4da6e1a8e8dfabd8997))
+* **admin:** allow html in checkbox form items ([cddfd26](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/cddfd2605527e517b08fc991830e50f2083ba5b3))
+
+
+### Bug Fixes
+
+* **admin:** disable services status operation buttons ([1660e46](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/1660e46ea93c11847caa60a9a8b5b1ad5ad23591))
+* **admin:** fed attribute custom value not displayed until clicking ([956128b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/956128b71fea88079650793b63b1a2e78c4bb08a))
+* **admin:** fix service user filter to use attribute instead of string search ([51e02dc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/51e02dc64ec3cd9eebea9313c3361e631970e69c))
+* **admin:** forbid managing embedded groups if item not saved ([cbb9ef6](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/cbb9ef6cadc0c8705edd9bf70f9a2e4ca5fdb8cc))
+* **admin:** membership page fixes ([ad649cc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ad649cc333af8879652929c8e49168099ad2892e))
+* **admin:** refresh cached data ([24625b7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/24625b7a20ecb074f6fc423e11b6a7d6453e0552))
+* **lib:** fix secondary text display in entity search select ([9c096e3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9c096e3e2cc5c69ed9f63841dbb0efe5279ec203))
+* **lib:** ripple overflowing icon buttons ([190f7ec](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/190f7eccc9b4b5be954499fbf40998dec8747269))
+* **profile:** fix the setting of MFA and move the whole logic to step-up ([f3fbcaf](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f3fbcaf1e8dedb1c1fef480cb295ec74cff4a275))
+
 ## [15.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.0.0...v15.0.1) (2023-12-11)
 
 

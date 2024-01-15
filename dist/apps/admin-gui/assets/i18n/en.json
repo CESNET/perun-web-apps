@@ -116,6 +116,7 @@
   "FACILITY_DETAIL": {
     "ENTITY": "Facility",
     "DESCRIPTION": "Description",
+    "UUID": "UUID",
     "BACK": "Back",
     "EDIT": "Edit",
     "DELETE": "Delete",
@@ -297,6 +298,7 @@
   "VO_DETAIL": {
     "ENTITY": "Organization",
     "SHORT_NAME": "Short name",
+    "UUID": "UUID",
     "MEMBER_VOS": "Member organizations",
     "PARENT_VOS": "Member of organizations",
     "BACK": "Back",
@@ -395,6 +397,7 @@
         "PREVIEW": "Preview",
         "EDIT": "Edit",
         "MANAGE_GROUPS": "Manage groups",
+        "MANAGE_GROUPS_DISABLED": "Save the form with this item to manage the groups",
         "DELETE": "Delete",
         "MODULE_NAMES": "Module names",
         "APPLICATION_TYPE": "Approval style",
@@ -490,12 +493,14 @@
         "MANAGE_GROUPS_PAGE": {
           "TITLE": "Manage groups for registration",
           "ADD": "Add",
+          "ADD_PERMISSION_HINT": "You don't have permission to add groups.",
           "REMOVE": "Remove",
           "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and for these selected groups, there will be applications submitted automatically.",
           "FILTER": "Filter",
           "REMOVE_GROUP_DIALOG_TITLE": "Confirm removing groups",
           "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration.",
-          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups."
+          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
+          "NO_EMBEDDED_GROUPS": "No 'Groups for embedded applications' item found in the application form. Try saving the form with the item included."
         }
       },
       "ATTRIBUTES": {
@@ -1436,6 +1441,7 @@
       "CONTENT_DESCRIPTION": "HTML formatted content of form item. It spans through all columns to full form width.",
       "LABEL": "Label",
       "LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback.",
+      "CHECKBOX_LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback. Checkbox labels also allow <a> elements with 'href' and 'target' attributes.",
       "LABEL_BUTTON_DESCRIPTION": "Label displayed on submit button.",
       "HELP": "Help",
       "HELP_DESCRIPTION": "Help text displayed to a user along with input widget.",
@@ -1451,6 +1457,7 @@
       "DEPENDENCY_ERROR_MESSAGE": "You can't delete this item because it is a {{dependency}} dependency for item {{shortname}}",
       "FEDERATION_ATTRIBUTE": "Federation attribute",
       "FEDERATION_ATTRIBUTE_DESCRIPTION": "Select federation attribute to get pre-filed value from.",
+      "FEDERATION_ATTRIBUTE_VALUE": "Custom federation attribute value",
       "REQUIRED": "Required",
       "REQUIRED_DESCRIPTION": "If checked, the user can`t submit an empty value (doesn't apply to non-editable fields).",
       "NO_SELECTED_ITEM": "No item selected (empty value)",

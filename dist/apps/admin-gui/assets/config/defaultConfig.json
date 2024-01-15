@@ -116,8 +116,8 @@
         "url": "https://www.cerit-sc.cz/"
       }
     ],
-    "github_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/releases",
-    "github_backend_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun/-/releases"
+    "gitlab_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/releases",
+    "gitlab_backend_releases": "https://gitlab.ics.muni.cz/perun/perun-idm/perun/-/releases"
   },
   "log_out_enabled": true,
   "profile_label_en": "Profile",
