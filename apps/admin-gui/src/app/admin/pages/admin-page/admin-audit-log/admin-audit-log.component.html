@@ -10,7 +10,7 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative w-100">
+  <div class="position-relative w-100 table-min-height">
     <app-audit-messages-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
       (loading$)="loading$ = $event"

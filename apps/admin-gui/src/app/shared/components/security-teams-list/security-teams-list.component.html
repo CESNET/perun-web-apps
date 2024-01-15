@@ -74,6 +74,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="securityTeams.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && securityTeams.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.SECURITY_TEAMS_LIST.NO_SECURITY_TEAMS_WARNING' | translate}}
 </perun-web-apps-alert>

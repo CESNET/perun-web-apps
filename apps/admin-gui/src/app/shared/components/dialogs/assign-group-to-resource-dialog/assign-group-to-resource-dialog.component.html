@@ -16,6 +16,7 @@
             placeholder="{{'DIALOGS.ASSIGN_GROUP_TO_RESOURCE.FILTER_DESCRIPTION' | translate}}">
           </perun-web-apps-debounce-filter>
           <perun-web-apps-groups-list
+            [loading]="loading"
             [disableMembers]="false"
             [groups]="unAssignedGroups"
             [selection]="selection"

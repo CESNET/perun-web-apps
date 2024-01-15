@@ -9,37 +9,41 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <span *ngIf="primaryObject === 'Vo'" class="position-relative">
+  <div *ngIf="primaryObject === 'Vo'" class="position-relative table-min-height">
     <perun-web-apps-vos-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [displayedColumns]="['id', 'recent', 'shortName', 'name']"
       [recentIds]="this.recentIds"
       [vos]="this.objects">
     </perun-web-apps-vos-list>
-  </span>
-  <span *ngIf="primaryObject === 'Group'" class="position-relative">
+  </div>
+  <div *ngIf="primaryObject === 'Group'" class="position-relative table-min-height">
     <perun-web-apps-groups-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [displayedColumns]="['id', 'recent', 'vo', 'name', 'description']"
       [groups]="this.objects"
       [recentIds]="recentIds">
     </perun-web-apps-groups-list>
-  </span>
-  <span *ngIf="primaryObject === 'Resource'" class="position-relative">
+  </div>
+  <div *ngIf="primaryObject === 'Resource'" class="position-relative table-min-height">
     <perun-web-apps-resources-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [displayedColumns]="['id', 'recent', 'name', 'vo', 'facility']"
       [resources]="this.objects"
       [recentIds]="recentIds"
       [routingVo]="true">
     </perun-web-apps-resources-list>
-  </span>
-  <span *ngIf="primaryObject === 'Facility'" class="position-relative">
+  </div>
+  <div *ngIf="primaryObject === 'Facility'" class="position-relative table-min-height">
     <perun-web-apps-facilities-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [displayedColumns]="['id', 'recent', 'name', 'description']"
       [facilities]="this.objects"
       [recentIds]="recentIds">
     </perun-web-apps-facilities-list>
-  </span>
+  </div>
 </div>

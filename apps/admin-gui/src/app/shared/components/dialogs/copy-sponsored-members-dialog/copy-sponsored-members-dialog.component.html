@@ -25,6 +25,7 @@
         </perun-web-apps-debounce-filter>
         <app-sponsored-members-list
           *perunWebAppsLoader="tableLoading; indicator: tableSpinner"
+          [tableLoading]="tableLoading"
           [disableRouting]="true"
           [sponsoredMembers]="filteredSponsoredMembers"
           [selection]="selection"

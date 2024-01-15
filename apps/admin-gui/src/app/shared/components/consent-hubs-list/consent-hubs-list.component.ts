@@ -29,6 +29,7 @@ export class ConsentHubsListComponent implements OnChanges {
   @Input() displayedColumns: string[] = ['select', 'id', 'name', 'enforceConsents', 'facilities'];
   @Input() tableId: string;
   @Input() selection = new SelectionModel<ConsentHub>(true, []);
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<ConsentHub>;
   exporting = false;

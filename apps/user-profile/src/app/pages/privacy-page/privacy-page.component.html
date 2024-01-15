@@ -12,9 +12,10 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-        <div class="position-relative">
+        <div class="position-relative table-min-height">
           <perun-web-apps-attributes-list
             *perunWebAppsLoader="innerLoading; indicator: spinner"
+            [loading]="innerLoading"
             [attributes]="attributes"
             [readonly]="true"
             [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
@@ -29,9 +30,10 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-        <div class="position-relative">
+        <div class="position-relative table-min-height">
           <perun-web-apps-attributes-list
             *perunWebAppsLoader="innerLoading; indicator: spinner"
+            [loading]="innerLoading"
             [attributes]="attributes"
             [readonly]="true"
             [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>

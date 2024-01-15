@@ -40,6 +40,8 @@ export class ServicesListComponent implements AfterViewInit, OnChanges {
   selection = new SelectionModel<Service>(true, []);
   @Input()
   disableRouting = false;
+  @Input()
+  loading: boolean;
   @Output()
   selectionChanged: EventEmitter<void> = new EventEmitter<void>();
   dataSource: MatTableDataSource<Service>;

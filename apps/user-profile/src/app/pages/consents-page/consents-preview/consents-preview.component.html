@@ -13,6 +13,7 @@
     </perun-web-apps-debounce-filter>
 
     <perun-web-apps-consents-list
+      [loading]="loading"
       [consents]="unsignedConsents"
       [filterValue]="filterValueUnsigned"
       [tableId]="'TABLE_USER_CONSENTS'"
@@ -34,6 +35,7 @@
       (filter)="applyFilterSigned($event)">
     </perun-web-apps-debounce-filter>
     <perun-web-apps-consents-list
+      [loading]="loading"
       [consents]="signedConsents"
       [tableId]="'TABLE_USER_CONSENTS'"
       [filterValue]="filterValueSigned"

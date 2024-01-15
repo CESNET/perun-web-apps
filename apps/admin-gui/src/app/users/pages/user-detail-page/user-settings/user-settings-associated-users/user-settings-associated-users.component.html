@@ -15,9 +15,10 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-users-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [noUsersFoundLabel]="'USER_DETAIL.SETTINGS.ASSOCIATED_USERS.NO_ASSOCIATED_USERS' | translate"
       [disableRouting]="disableRouting"
       [displayedColumns]="displayedColumns"

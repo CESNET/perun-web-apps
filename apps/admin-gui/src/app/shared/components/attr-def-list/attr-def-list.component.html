@@ -101,7 +101,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="definitions.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && definitions.length === 0" alert_type="warn">
   {{'ADMIN.ATTRIBUTES.NO_ATTRIBUTES' | translate}}
 </perun-web-apps-alert>
 

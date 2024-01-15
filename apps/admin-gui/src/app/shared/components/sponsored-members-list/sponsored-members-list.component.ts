@@ -39,6 +39,8 @@ export class SponsoredMembersListComponent implements OnChanges {
   displayedColumns: string[] = ['id', 'name', 'email', 'logins', 'sponsors', 'menu'];
 
   @Input()
+  tableLoading: boolean;
+  @Input()
   disableRouting = false;
   @Input()
   tableId: string;

@@ -136,6 +136,6 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="publications.length === 0 && allowAlert" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && publications.length === 0 && allowAlert" alert_type="warn">
   {{'PUBLICATIONS_LIST.NO_PUBLICATIONS_FOUND' | translate}}
 </perun-web-apps-alert>

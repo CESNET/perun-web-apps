@@ -3,9 +3,10 @@
 </h1>
 
 <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
-<div class="position-relative">
+<div class="position-relative table-min-height">
   <perun-web-apps-ban-on-entity-list
     *perunWebAppsLoader="loading; indicator: spinner"
+    [loading]="loading"
     [bans]="bans"
     [updatePolicy]="'updateBan_BanOnVo_policy'"
     [displayedColumns]="displayedColumns"

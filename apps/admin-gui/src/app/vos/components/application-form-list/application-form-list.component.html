@@ -295,6 +295,6 @@
   </div>
 </div>
 
-<perun-web-apps-alert *ngIf="this.applicationFormItems.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && this.applicationFormItems.length === 0" alert_type="warn">
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NO_APPLICATION_FORM' | translate}}
 </perun-web-apps-alert>

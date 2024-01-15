@@ -43,6 +43,8 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   tableId: string;
   @Input()
   theme: string;
+  @Input()
+  loading: boolean;
   @Output()
   selectionChange = new EventEmitter<SelectionModel<ApplicationMail>>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;

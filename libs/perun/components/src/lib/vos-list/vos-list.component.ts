@@ -30,6 +30,7 @@ export class VosListComponent implements OnChanges {
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() tableId: string;
   @Input() enableMasterCheckbox = false;
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<Vo | EnrichedVo>;

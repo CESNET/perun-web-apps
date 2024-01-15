@@ -69,6 +69,7 @@ export class MembersListComponent implements OnChanges, AfterViewInit {
   @Input() tableId: string;
   @Input() disableRouting = false;
   @Input() filter = '';
+  @Input() loading: boolean;
   @Output() updateTable = new EventEmitter<boolean>();
 
   dataSource: MatTableDataSource<MemberWithConsentStatus>;

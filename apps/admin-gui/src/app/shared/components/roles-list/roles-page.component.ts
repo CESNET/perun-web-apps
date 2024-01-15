@@ -127,19 +127,21 @@ export class RolesPageComponent implements OnInit {
   );
 
   members: Observable<RichMember[]> = this.selectedRole.pipe(
-    switchMap((role) =>
-      this.membersService.getRichMembersByIds(this.roles.get(role.roleName).get('Member')),
-    ),
+    switchMap((role) => {
+      this.loading = true;
+      return this.membersService.getRichMembersByIds(this.roles.get(role.roleName).get('Member'));
+    }),
     tap(() => (this.loading = false)),
     startWith([]),
   );
 
   users: Observable<RichUser[]> = this.selectedRole.pipe(
-    switchMap((role) =>
-      this.usersService.getRichUsersByIds(
+    switchMap((role) => {
+      this.loading = true;
+      return this.usersService.getRichUsersByIds(
         [this.entityId].concat(this.roles.get(role.roleName).get('User')),
-      ),
-    ),
+      );
+    }),
     tap(() => (this.loading = false)),
     startWith([]),
   );
@@ -376,7 +378,6 @@ export class RolesPageComponent implements OnInit {
     // reload roles after a small delay to ensure that principal was reloaded
     setTimeout(() => {
       this.reload.emit();
-      this.outerLoading = false;
     }, 500);
   }
 

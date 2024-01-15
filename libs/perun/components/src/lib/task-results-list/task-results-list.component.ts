@@ -25,6 +25,7 @@ export class TaskResultsListComponent implements AfterViewInit, OnChanges {
   @Input() selection = new SelectionModel<TaskResult>(true, []);
   @Input() filterValue: string;
   @Input() tableId: string;
+  @Input() loading: boolean;
   @Input() displayedColumns: string[] = [
     'select',
     'id',

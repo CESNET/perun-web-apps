@@ -94,6 +94,6 @@
   </cdk-virtual-scroll-viewport>
 </div>
 
-<perun-web-apps-alert *ngIf="filteredGroups.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && filteredGroups.length === 0" alert_type="warn">
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>

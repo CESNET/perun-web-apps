@@ -14,6 +14,7 @@
         {{'DIALOGS.REMOVE_DESTINATIONS.ASK' | translate}}
       </div>
       <app-perun-web-apps-destination-list
+        [loading]="loading"
         [destinations]="destinations"
         [displayedColumns]="displayedColumns">
       </app-perun-web-apps-destination-list>

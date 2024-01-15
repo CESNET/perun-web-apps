@@ -43,10 +43,11 @@
   <label class="slide-label" (click)="labelToggle()"
     >{{'VO_DETAIL.GROUPS.LIST_VIEW' | translate}}
   </label>
-  <div class="mt-3 position-relative">
+  <div class="mt-3 position-relative table-min-height">
     <div *ngIf="!showGroupList">
       <perun-web-apps-groups-tree
         *perunWebAppsLoader="loading$ | async; indicator: spinner"
+        [loading]="loading$ | async"
         (moveGroup)="onMoveGroup($event)"
         (refreshTable)="refresh()"
         [displayedColumns]="['nameWithId', 'description', 'menu']"
@@ -62,6 +63,7 @@
     <div *ngIf="showGroupList">
       <perun-web-apps-groups-list
         *perunWebAppsLoader="loading$ | async; indicator: spinner"
+        [loading]="loading$ | async"
         (groupMoved)="onMoveGroup($event)"
         (queryChanged)="nextPage.next($event)"
         (refreshTable)="refresh()"

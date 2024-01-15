@@ -18,6 +18,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   userId = this.store.getPerunPrincipal().userId;
   groupNames: Map<string, string[]> = new Map<string, string[]>();
   groupNameAttributes: Attribute[] = [];
+  loading = false;
 
   selectionList: SelectionModel<string>[] = [];
 
@@ -75,6 +76,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   }
 
   getAttribute(namespace: string): void {
+    this.loading = true;
     this.attributesManagerService
       .getUserAttributeByName(
         this.userId,
@@ -84,6 +86,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
         const value = (names?.value as string[]) ?? [];
         this.groupNames.set(namespace, value);
         this.groupNameAttributes.push(names);
+        this.loading = false;
       });
   }
 

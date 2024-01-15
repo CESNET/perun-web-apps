@@ -41,9 +41,10 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_VOS_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <perun-web-apps-vos-list
                 *perunWebAppsLoader="loading; indicator: spinner"
+                [loading]="loading"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'name', 'shortName'] : (editable ? ['checkbox', 'id', 'name', 'shortName'] : ['id', 'name', 'shortName', 'authzGroup'])"
                 [vos]="vos | async"
                 [selection]="selection"
@@ -59,9 +60,10 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_GROUPS_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <perun-web-apps-groups-list
                 *perunWebAppsLoader="loading; indicator: spinner"
+                [loading]="loading"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'vo', 'name', 'description'] : (editable ? ['select', 'id', 'vo', 'name', 'description'] : ['id', 'vo', 'name', 'description', 'authzGroup'])"
                 [groups]="groups | async"
                 [selection]="selection"
@@ -76,7 +78,7 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_RESOURCES_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <perun-web-apps-resources-list
                 *perunWebAppsLoader="loading; indicator: spinner"
                 [resources]="resources | async"
@@ -84,6 +86,7 @@
                 [routingVo]="true"
                 [selection]="selection"
                 [authzVoNames]="voNames"
+                [loading]="loading"
                 [resourceWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('resource')">
               </perun-web-apps-resources-list>
             </div>
@@ -94,9 +97,10 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_FACILITIES_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <perun-web-apps-facilities-list
                 *perunWebAppsLoader="loading; indicator: spinner"
+                [loading]="loading"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'name', 'description'] : (editable ? ['select', 'id', 'name', 'description'] : ['id', 'name', 'description', 'authzGroup'])"
                 [facilities]="facilities | async"
                 [selection]="selectedFacilities"
@@ -110,9 +114,10 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_MEMBERS_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <perun-web-apps-members-list
                 *perunWebAppsLoader="loading; indicator: spinner"
+                [loading]="loading"
                 [displayedColumns]="['id', 'fullName', 'sponsored']"
                 [members]="members | async">
               </perun-web-apps-members-list>
@@ -122,9 +127,10 @@
             <div *ngIf="showDescription">
               {{('ROLES.' + role.roleName + '_USERS_' + entityType) | translate}}
             </div>
-            <div class="position-relative">
+            <div class="position-relative table-min-height">
               <app-users-list
                 *perunWebAppsLoader="loading; indicator: spinner"
+                [loading]="loading"
                 [displayedColumns]="['user', 'id', 'name']"
                 [disableRouting]="true"
                 [users]="users | async">

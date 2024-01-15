@@ -9,8 +9,9 @@
   (filter)="memberFilter($event)"
   [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'">
 </perun-web-apps-debounce-filter>
-<div class="position-relative">
+<div class="position-relative table-min-height">
   <perun-web-apps-groups-list
+    [loading]="memberRefresh"
     *perunWebAppsLoader="memberRefresh; indicator: spinner"
     [disableMembers]="false"
     [groups]="membersGroups"
@@ -29,9 +30,10 @@
     (filter)="adminFilter($event)"
     [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'">
   </perun-web-apps-debounce-filter>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-groups-list
       *perunWebAppsLoader="adminRefresh; indicator: spinner"
+      [loading]="adminRefresh"
       [disableMembers]="false"
       [groups]="adminsGroups"
       [displayedColumns]="['id', 'vo', 'name', 'description']"

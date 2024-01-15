@@ -69,6 +69,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="hosts.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && hosts.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.HOSTS_LIST.NO_HOST_WARNING' | translate}}
 </perun-web-apps-alert>

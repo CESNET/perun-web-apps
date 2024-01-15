@@ -48,6 +48,7 @@ export class ResourcesListComponent implements OnChanges {
   @Input() groupId: number = null;
   @Input() resourcesToDisableCheckbox: Set<number> = new Set<number>();
   @Input() tableId: string;
+  @Input() loading: boolean;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter<void>();
   @Output() allSelected = new EventEmitter();
 

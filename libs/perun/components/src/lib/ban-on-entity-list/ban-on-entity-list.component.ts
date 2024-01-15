@@ -49,6 +49,7 @@ export class BanOnEntityListComponent {
   @Input() tableId: string;
   @Input() updatePolicy: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  @Input() loading: boolean;
   @Input() columns: BanOnEntityListColumn[] = [
     'select',
     'banId',

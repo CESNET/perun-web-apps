@@ -45,10 +45,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-perun-web-apps-destination-list
       [filterValue]="filterValue"
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [selection]="selected"
       [destinations]="destinations"
       [services]="configServicesIds"

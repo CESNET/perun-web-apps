@@ -35,6 +35,7 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   @Input() extSourceNameHeader: string;
   @Input() loginHeader: string;
   @Input() disableRouting: boolean;
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;

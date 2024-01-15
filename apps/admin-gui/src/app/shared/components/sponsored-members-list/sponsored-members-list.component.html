@@ -139,6 +139,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="sponsoredMembers.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!tableLoading && sponsoredMembers.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.NO_SPONSORED_MEMBERS_WARNING' | translate}}
 </perun-web-apps-alert>

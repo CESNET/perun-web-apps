@@ -14,6 +14,7 @@ export class StringListComponent implements OnChanges, AfterViewInit {
   @Input() selection = new SelectionModel<string>(false, []);
   @Input() alertText = '';
   @Input() headerColumnText = '';
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   displayedColumns: string[] = ['select', 'value'];
   dataSource: MatTableDataSource<string>;

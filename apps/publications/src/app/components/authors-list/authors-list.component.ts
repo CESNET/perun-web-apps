@@ -37,6 +37,7 @@ export class AuthorsListComponent implements AfterViewInit, OnChanges {
   @Input() reloadTable: boolean;
   @Input() selection = new SelectionModel<Author>(true, []);
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<Author>;
   private sort: MatSort;

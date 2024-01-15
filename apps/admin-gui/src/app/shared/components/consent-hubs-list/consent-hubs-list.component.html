@@ -86,7 +86,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="consentHubs.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && consentHubs.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.NO_CONSENT_HUBS' | translate}}
 </perun-web-apps-alert>
 

@@ -10,6 +10,7 @@
         placeholder="{{'DIALOGS.ADD_GROUP_TO_REGISTRATION.FILTER_DESCRIPTION' | translate}}">
       </perun-web-apps-debounce-filter>
       <perun-web-apps-groups-list
+        [loading]="loading"
         [disableMembers]="true"
         [groups]="unAssignedGroups"
         [selection]="selection"

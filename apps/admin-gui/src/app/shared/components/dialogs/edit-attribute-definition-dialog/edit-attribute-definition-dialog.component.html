@@ -73,6 +73,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <app-services-list
+              [loading]="loading"
               [disableRouting]="true"
               [displayedColumns]="['id', 'name', 'enabled', 'script']"
               [services]="this.services$ | async">

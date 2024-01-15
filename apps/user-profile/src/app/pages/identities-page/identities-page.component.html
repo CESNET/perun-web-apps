@@ -11,9 +11,10 @@
     mat-flat-button>
     {{'IDENTITIES.REMOVE' | customTranslate | translate}}
   </button>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-user-ext-sources-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [userExtSources]="idpExtSources"
       [selection]="idpSelection"
       [displayedColumns]="displayedColumnsIdp"
@@ -34,9 +35,10 @@
       mat-flat-button>
       {{'IDENTITIES.REMOVE' | customTranslate | translate}}
     </button>
-    <div class="position-relative">
+    <div class="position-relative table-min-height">
       <perun-web-apps-user-ext-sources-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         [userExtSources]="certExtSources"
         [selection]="certSelection"
         [extSourceNameHeader]="extSourceNameCert"
@@ -55,9 +57,10 @@
       info_outline
     </mat-icon>
   </h1>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-user-ext-sources-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [userExtSources]="otherExtSources"
       [selection]="otherSelection"
       [extSourceNameHeader]="extSourceNameOther"

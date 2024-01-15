@@ -18,11 +18,14 @@
       </ng-template>
       <ng-template matTabContent>
         <p class="mt-4 subtitle">{{'USER_DETAIL.ASSIGNMENTS.RESOURCES' | translate}}</p>
-        <perun-web-apps-resources-list
-          *perunWebAppsLoader="loading; indicator: spinner1"
-          [resources]="resources"
-          [displayedColumns]="['id', 'name', 'vo', 'description']">
-        </perun-web-apps-resources-list>
+        <div class="position-relative table-min-height">
+          <perun-web-apps-resources-list
+            *perunWebAppsLoader="loading; indicator: spinner1"
+            [loading]="loading"
+            [resources]="resources"
+            [displayedColumns]="['id', 'name', 'vo', 'description']">
+          </perun-web-apps-resources-list>
+        </div>
       </ng-template>
     </mat-tab>
     <mat-tab>

@@ -10,6 +10,7 @@
         [placeholder]="'DIALOGS.ADD_MEMBER_GROUP.FILTER'">
       </perun-web-apps-debounce-filter>
       <perun-web-apps-groups-list
+        [loading]="loading"
         [disableGroups]="true"
         [disableMembers]="true"
         [displayedColumns]="['select', 'id', 'name', 'description']"

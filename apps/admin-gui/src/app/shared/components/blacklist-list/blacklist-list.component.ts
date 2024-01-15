@@ -28,6 +28,8 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
   filterValue: string;
   @Input()
   tableId: string;
+  @Input()
+  loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'userId', 'name', 'reason'];

@@ -26,10 +26,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-owners-list
       [selection]="selected"
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [filterValue]="filterValue"
       [owners]="owners"
       [tableId]="tableId"></perun-web-apps-owners-list>
