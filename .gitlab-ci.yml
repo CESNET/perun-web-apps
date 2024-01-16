@@ -22,26 +22,16 @@ variables:
   CYPRESS_COMMERCIAL_RECOMMENDATIONS: 0
   CYPRESS_PORT: 8082
   XDG_CACHE_HOME: "/tmp/xdgcachehome/"
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
   RPC_VERSION: v31.0.0 # TODO: update using renovate
   FF_NETWORK_PER_BUILD: "true"
   # for debugging only: CI_DEBUG_SERVICES: "true"
 
-.test-npm:
-  stage: test
-  tags:
-    - k8s
+.npm:
   before_script:
     - mkdir -p $CYPRESS_CACHE_FOLDER
     - npm ci --prefer-offline
-  rules:
-    - if: "$CI_PIPELINE_SOURCE != 'schedule'"
 
 npm_ci:
-  extends: .test-npm
-  stage: .pre
-  script:
-    - 'echo "Already done"'
   artifacts:
     when: always
     paths:
@@ -49,7 +39,7 @@ npm_ci:
     expire_in: 30 days
 
 test_build:
-  extends: .test-npm
+  extends: .npm
   needs: [npm_ci]
   stage: build
   script:
@@ -68,16 +58,10 @@ semantic-release:
     - if: '$CI_COMMIT_REF_NAME == "production" && $CI_PIPELINE_SOURCE != "schedule"'
     - if: '$CI_COMMIT_REF_NAME =~ /^[0-9]+(\.([0-9]+|x))?\.x$/ && $CI_PIPELINE_SOURCE != "schedule"'
 
-# run local version instead of global
-prettier:
-  needs: [npm_ci]
-  extends: .test-npm
-  script:
-    - npm run format:check
-
 eslint:
   needs: [npm_ci]
-  extends: .test-npm
+  extends: .npm
+  stage: test
   script:
     - npm run lint
 
@@ -125,7 +109,8 @@ e2e_docker_build:
 
 # inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
 e2e_tests:
-  extends: .test-npm
+  extends: .npm
+  stage: test
   needs:
     - test_build
     - e2e_docker_build
