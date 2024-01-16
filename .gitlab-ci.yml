@@ -15,6 +15,8 @@ default:
   image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/bitnami/node:20-debian-11@sha256:4cdb2bec7f1ffddff76845e5de83a9fa12c49194ced4dee2235f5f6ec81b7034
 
 variables:
+  # release from production branch instead of main
+  RELEASE_FROM_PRODUCTION: 1
   CI: 1
   CYPRESS_baseUrl: http://localhost:4200
   CYPRESS_CACHE_FOLDER: "${CI_PROJECT_DIR}/.cache/Cypress" # needed also for semantic release
@@ -51,12 +53,6 @@ test_build:
       - dist/apps/admin-gui
       - apps/admin-gui
     expire_in: 30 days
-
-# use same rules as in .releaserc.json
-semantic-release:
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "production" && $CI_PIPELINE_SOURCE != "schedule"'
-    - if: '$CI_COMMIT_REF_NAME =~ /^[0-9]+(\.([0-9]+|x))?\.x$/ && $CI_PIPELINE_SOURCE != "schedule"'
 
 eslint:
   needs: [npm_ci]
