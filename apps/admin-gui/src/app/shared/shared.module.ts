@@ -172,8 +172,8 @@ import { ChooseSponsorComponent } from './components/choose-sponsor/choose-spons
 import { AddRoleDialogComponent } from './components/dialogs/add-role-dialog/add-role-dialog.component';
 import { AddUserRoleDialogComponent } from './components/dialogs/add-role-dialog/add-user-role-dialog/add-user-role-dialog.component';
 import { AddGroupRoleDialogComponent } from './components/dialogs/add-role-dialog/add-group-role-dialog/add-group-role-dialog.component';
-import { AssignGroupsSponsoredMembersComponent } from './components/assign-groups-sponsored-members/assign-groups-sponsored-members-component';
 import { BulkInviteMembersDialogComponent } from './components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
+import { AssignGroupsSponsoredMembersComponent } from './components/assign-groups-sponsored-members/assign-groups-sponsored-members-component';
 import { AddVoBanDialogComponent } from './components/dialogs/add-vo-ban-dialog/add-vo-ban-dialog.component';
 import { AddBanDialogComponent } from './components/dialogs/add-ban-dialog/add-ban-dialog.component';
 import { AddResourceBanDialogComponent } from './components/dialogs/add-resource-ban-dialog/add-resource-ban-dialog.component';
