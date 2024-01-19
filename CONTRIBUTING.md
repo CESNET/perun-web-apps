@@ -1,12 +1,10 @@
-# Contributing to PerunWebApps
-
-👋 Welcome to our open-source project!
-
-We're thrilled that you're considering contributing. Before you dive in, please take a moment to review these guidelines to ensure a smooth and collaborative experience for everyone involved.
+# Contributing to Perun AAI
 
 ## Table of Contents
 
-[Commit rules](#commit-rules)
+[General guidelines](#general-guidelines)
+
+[Commit Message Guidelines](#commit-message-guidelines)
 
 [End-to-end tests](#end-to-end-tests)
 
@@ -22,15 +20,35 @@ We're thrilled that you're considering contributing. Before you dive in, please 
   * [Test data](#test-data)
   * [Debugging](#debugging)
 
-## Commit rules
+## General guidelines
 
-This repository uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/). To construct a proper commit message, run:
+See general guidelines for [contributing to Perun AAI](https://gitlab.ics.muni.cz/perun/common/-/blob/main/CONTRIBUTING.md).
 
-```sh
-npx cz
-```
+Additional rules are outlined in this document.
 
-instead of `git commit`.
+## Commit Message Guidelines
+
+Use the name of the app as the scope of the commit message where applicable:
+
+- admin
+- profile
+- pwdreset
+- consolidator
+- linker
+- publications
+- openapi
+- lib
+- npm
+
+### Breaking Changes
+
+Use `BREAKING CHANGE:`
+
+- for new required configuration
+  - new value is required in instanceConfig
+  - a property was renamed in instanceConfig
+- when functionality is removed
+  - e.g. a dialog was removed and some action is no longer possible
 
 ## End-to-end tests
 
