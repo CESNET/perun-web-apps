@@ -29,6 +29,8 @@ import { BulkInviteMembersDialogComponent } from '../../../../shared/components/
 import { CopyMembersDialogComponent } from '../../../../shared/components/dialogs/copy-members-dialog/copy-members-dialog-component';
 import { Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { concatMap } from 'rxjs/operators';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-group-members',
@@ -60,6 +62,8 @@ export class GroupMembersComponent implements OnInit {
   removeAuth: boolean;
   inviteAuth: boolean;
   inviteDisabled = true;
+  invitationLink: string;
+  copyInvitationDisabled = true;
   copyAuth: boolean;
   copyDisabled = false;
   blockManualMemberAdding: boolean;
@@ -102,6 +106,7 @@ export class GroupMembersComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
+    private clipboard: Clipboard,
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +122,11 @@ export class GroupMembersComponent implements OnInit {
         .isInvitationEnabled(this.group.voId, this.group.id)
         .subscribe((enabled) => {
           this.inviteDisabled = !enabled;
+        });
+      this.registrarService
+        .isLinkInvitationEnabled(this.group.voId, this.group.id)
+        .subscribe((enabled) => {
+          this.copyInvitationDisabled = !enabled;
         });
     }
     void this.isManualAddingBlocked(this.group.voId).then(() => this.loadPage(this.group.id));
@@ -218,6 +228,22 @@ export class GroupMembersComponent implements OnInit {
     config.data = { voId: this.group.voId, groupId: this.group.id, theme: 'group-theme' };
 
     this.dialog.open(BulkInviteMembersDialogComponent, config);
+  }
+
+  copyInvitationLink(): void {
+    const invitationLink$ = !this.invitationLink
+      ? this.registrarService.buildInviteURL(this.group.voId, this.group.id).pipe(
+          concatMap((createdUrl: string) => {
+            this.invitationLink = createdUrl;
+            return of(this.invitationLink);
+          }),
+        )
+      : of(this.invitationLink);
+
+    invitationLink$.subscribe((link) => {
+      this.clipboard.copy(link);
+      this.notificator.showSuccess('GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_SUCCESS');
+    });
   }
 
   onCopyMembers(): void {

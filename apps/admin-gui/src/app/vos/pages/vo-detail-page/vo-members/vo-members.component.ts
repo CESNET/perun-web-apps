@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Clipboard } from '@angular/cdk/clipboard';
 import {
   ApiRequestConfigurationService,
   EntityStorageService,
@@ -26,6 +27,7 @@ import { VoAddMemberDialogComponent } from '../../../components/vo-add-member-di
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
 import { Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vo-members',
@@ -61,6 +63,8 @@ export class VoMembersComponent implements OnInit {
   inviteDisabled = true;
   routeAuth: boolean;
   blockManualMemberAdding: boolean;
+  invitationLink: string;
+  copyInvitationDisabled = true;
 
   constructor(
     private registrarService: RegistrarManagerService,
@@ -73,6 +77,7 @@ export class VoMembersComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
+    private clipboard: Clipboard,
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +90,9 @@ export class VoMembersComponent implements OnInit {
     if (this.inviteAuth) {
       this.registrarService.isInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
         this.inviteDisabled = !enabled;
+      });
+      this.registrarService.isLinkInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
+        this.copyInvitationDisabled = !enabled;
       });
     }
 
@@ -177,6 +185,22 @@ export class VoMembersComponent implements OnInit {
     config.data = { voId: this.vo.id, theme: 'vo-theme' };
 
     this.dialog.open(BulkInviteMembersDialogComponent, config);
+  }
+
+  copyInvitationLink(): void {
+    const invitationLink$ = !this.invitationLink
+      ? this.registrarService.buildInviteURL(this.vo.id).pipe(
+          concatMap((createdUrl: string) => {
+            this.invitationLink = createdUrl;
+            return of(this.invitationLink);
+          }),
+        )
+      : of(this.invitationLink);
+
+    invitationLink$.subscribe((link) => {
+      this.clipboard.copy(link);
+      this.notificator.showSuccess('VO_DETAIL.MEMBERS.COPY_INVITATION_LINK_SUCCESS');
+    });
   }
 
   displaySelectedStatuses(): string {
