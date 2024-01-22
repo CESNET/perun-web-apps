@@ -259,6 +259,9 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
   }
 
   getStepperNextConditions(): boolean {
+    if (this.functionalityNotSupported) {
+      return true;
+    }
     switch (this.stepper.selectedIndex) {
       case 0:
         return this.userControl.invalid;
