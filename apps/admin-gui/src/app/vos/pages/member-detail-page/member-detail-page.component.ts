@@ -24,6 +24,7 @@ export class MemberDetailPageComponent implements OnInit {
   fullName = '';
   isAuthorized = false;
   loading = false;
+  svgIcon = 'perun-user-dark';
 
   constructor(
     private sideMenuItemService: SideMenuItemService,
@@ -49,6 +50,9 @@ export class MemberDetailPageComponent implements OnInit {
           this.membersService.getRichMemberWithAttributes(memberId).subscribe(
             (member) => {
               this.member = member;
+              this.svgIcon = this.member.user.serviceUser
+                ? 'perun-service-identity'
+                : 'perun-user-dark';
               this.entityService.setEntity({
                 id: member.id,
                 beanName: member.beanName,
