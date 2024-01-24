@@ -1,4 +1,4 @@
-ARG RPC_VERSION="v31.0.0"
+ARG RPC_VERSION="v33.2.0"
 ARG CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=""
 
 #FROM registry.gitlab.ics.muni.cz/perun/perun_docker/perun_rpc:$RPC_VERSION
@@ -15,7 +15,7 @@ USER root
 RUN install_packages postgresql-client ca-certificates libnet-ldap-perl libnet-dns-perl libtry-tiny-perl libswitch-perl libstring-random-perl heimdal-clients openssh-client wget
 
 RUN cd /opt/bitnami/tomcat/webapps && \
-    wget -O perun-rpc.war https://github.com/CESNET/perun/releases/download/$RPC_VERSION/perun-rpc.war && \
+    wget -O perun-rpc.war https://gitlab.ics.muni.cz/api/v4/projects/perun%2Fperun-idm%2Fperun/packages/generic/release/${RPC_VERSION:1}/perun-rpc.war && \
     chmod a+rwx perun-rpc.war && \
     chown 1001:1001 perun-rpc.war && \
     mkdir /var/log/perun && \
