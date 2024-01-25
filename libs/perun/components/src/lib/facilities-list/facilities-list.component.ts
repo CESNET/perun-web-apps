@@ -39,6 +39,7 @@ export class FacilitiesListComponent implements OnChanges {
   @Input() selection: SelectionModel<EnrichedFacility>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() disableRouting = false;
+  @Input() enableMasterCheckbox = false;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<EnrichedFacility>;

@@ -12,6 +12,7 @@
         [showDescription]="this.showDescription"
         [entityType]="this.entityType"
         [editable]="true"
+        [(currentlyOpenPanel)]="this.userBasedOpenPanel"
         (reload)="getData()"
         (startLoading)="outerLoading = true;">
       </app-perun-web-apps-roles-page>
@@ -31,6 +32,7 @@
         [entityType]="this.entityType"
         [editable]="false"
         [complementaryObjectsWithAuthzGroups]="this.rolesComplementaryObjectsWithAuthzGroups"
+        [(currentlyOpenPanel)]="this.groupBasedOpenPanel"
         (reload)="getData()"
         (startLoading)="outerLoading = true;">
       </app-perun-web-apps-roles-page>

@@ -53,8 +53,10 @@ export class RolesPageComponent implements OnInit {
   @Input() entityId: number;
   @Input() entityType: 'SELF' | 'USER' | 'GROUP';
   @Input() editable = true;
+  @Input() currentlyOpenPanel: string | null = null;
   @Output() reload = new EventEmitter<void>();
   @Output() startLoading = new EventEmitter<void>();
+  @Output() currentlyOpenPanelChange = new EventEmitter<string | null>();
 
   selection = new SelectionModel<PerunBean>(true, []);
   selectedFacilities = new SelectionModel<EnrichedFacility>(true, []);
@@ -261,6 +263,18 @@ export class RolesPageComponent implements OnInit {
     });
   }
 
+  onPanelOpen(panel: string): void {
+    this.currentlyOpenPanel = panel;
+    this.currentlyOpenPanelChange.emit(panel);
+  }
+
+  onPanelClosed(panel: string): void {
+    if (this.currentlyOpenPanel === panel) {
+      this.currentlyOpenPanel = null;
+      this.currentlyOpenPanelChange.emit(null);
+    }
+  }
+
   private getItems(): string[] {
     if (!this.selectedRole.getValue().primaryObject) {
       return [];
@@ -295,6 +309,7 @@ export class RolesPageComponent implements OnInit {
         },
         error: () => {
           this.selection.clear();
+          this.selectedFacilities.clear();
           this.outerLoading = false;
         },
       });
@@ -342,7 +357,9 @@ export class RolesPageComponent implements OnInit {
         },
         error: () => {
           this.selection.clear();
+          this.selectedFacilities.clear();
           this.outerLoading = false;
+          this.refresh();
         },
       });
   }
@@ -355,6 +372,7 @@ export class RolesPageComponent implements OnInit {
 
   private refresh(): void {
     this.selection.clear();
+    this.selectedFacilities.clear();
     // reload roles after a small delay to ensure that principal was reloaded
     setTimeout(() => {
       this.reload.emit();

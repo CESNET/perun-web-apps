@@ -11,8 +11,9 @@
   <mat-accordion *ngIf="!outerLoading && roles.size > 0">
     <mat-expansion-panel
       *ngFor="let role of allRules"
-      (opened)="selectedRole.next(role)"
-      (closed)="selection.clear()"
+      [expanded]="this.currentlyOpenPanel === role.roleName"
+      (closed)="selection.clear(); selectedFacilities.clear(); onPanelClosed(role.roleName)"
+      (opened)="selectedRole.next(role); onPanelOpen(role.roleName)"
       #panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -36,26 +37,31 @@
           </button>
         </span>
         <div *ngIf="panel.expanded" class="position-relative">
-          <div *perunWebAppsLoader="loading; indicator: spinner">
-            <div *ngIf="role.primaryObject === 'Vo' || role.roleName === 'MEMBERSHIP'" class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_VOS_' + entityType) | translate}}
-              </div>
+          <div *ngIf="role.primaryObject === 'Vo' || role.roleName === 'MEMBERSHIP'" class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_VOS_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <perun-web-apps-vos-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'name', 'shortName'] : (editable ? ['checkbox', 'id', 'name', 'shortName'] : ['id', 'name', 'shortName', 'authzGroup'])"
                 [vos]="vos | async"
                 [selection]="selection"
                 [authzVoNames]="voNames"
-                [voWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('vo')">
+                [voWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('vo')"
+                [enableMasterCheckbox]="true">
               </perun-web-apps-vos-list>
             </div>
-            <div
-              *ngIf="role.primaryObject === 'Group' || role.roleName === 'MEMBERSHIP' "
-              class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_GROUPS_' + entityType) | translate}}
-              </div>
+          </div>
+          <div
+            *ngIf="role.primaryObject === 'Group' || role.roleName === 'MEMBERSHIP' "
+            class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_GROUPS_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <perun-web-apps-groups-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'vo', 'name', 'description'] : (editable ? ['select', 'id', 'vo', 'name', 'description'] : ['id', 'vo', 'name', 'description', 'authzGroup'])"
                 [groups]="groups | async"
                 [selection]="selection"
@@ -63,13 +69,16 @@
                 [groupWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('group')">
               </perun-web-apps-groups-list>
             </div>
-            <div
-              *ngIf="role.primaryObject === 'Resource' || role.roleName === 'MEMBERSHIP'"
-              class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_RESOURCES_' + entityType) | translate}}
-              </div>
+          </div>
+          <div
+            *ngIf="role.primaryObject === 'Resource' || role.roleName === 'MEMBERSHIP'"
+            class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_RESOURCES_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <perun-web-apps-resources-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [resources]="resources | async"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'name', 'vo', 'facility', 'description'] : (editable ? ['select', 'id', 'name', 'vo', 'facility', 'description'] : ['id', 'name', 'vo', 'facility', 'description', 'authzGroup'])"
                 [routingVo]="true"
@@ -78,34 +87,44 @@
                 [resourceWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('resource')">
               </perun-web-apps-resources-list>
             </div>
-            <div
-              *ngIf="role.primaryObject === 'Facility' || role.roleName === 'MEMBERSHIP'"
-              class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_FACILITIES_' + entityType) | translate}}
-              </div>
+          </div>
+          <div
+            *ngIf="role.primaryObject === 'Facility' || role.roleName === 'MEMBERSHIP'"
+            class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_FACILITIES_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <perun-web-apps-facilities-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['id', 'name', 'description'] : (editable ? ['select', 'id', 'name', 'description'] : ['id', 'name', 'description', 'authzGroup'])"
                 [facilities]="facilities | async"
                 [selection]="selectedFacilities"
                 [authzVoNames]="voNames"
-                [facilityWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('facility')">
+                [facilityWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('facility')"
+                [enableMasterCheckbox]="true">
               </perun-web-apps-facilities-list>
             </div>
-            <div *ngIf="role.roleName === 'SPONSORSHIP'" class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_MEMBERS_' + entityType) | translate}}
-              </div>
+          </div>
+          <div *ngIf="role.roleName === 'SPONSORSHIP'" class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_MEMBERS_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <perun-web-apps-members-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [displayedColumns]="['id', 'fullName', 'sponsored']"
                 [members]="members | async">
               </perun-web-apps-members-list>
             </div>
-            <div *ngIf="role.roleName === 'SELF'" class="mb-3">
-              <div *ngIf="showDescription">
-                {{('ROLES.' + role.roleName + '_USERS_' + entityType) | translate}}
-              </div>
+          </div>
+          <div *ngIf="role.roleName === 'SELF'" class="mb-3">
+            <div *ngIf="showDescription">
+              {{('ROLES.' + role.roleName + '_USERS_' + entityType) | translate}}
+            </div>
+            <div class="position-relative">
               <app-users-list
+                *perunWebAppsLoader="loading; indicator: spinner"
                 [displayedColumns]="['user', 'id', 'name']"
                 [disableRouting]="true"
                 [users]="users | async">
