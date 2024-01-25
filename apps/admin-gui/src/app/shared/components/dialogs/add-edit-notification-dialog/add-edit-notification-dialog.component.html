@@ -156,6 +156,11 @@
                             (focus)="isTextFocused = false"
                             matInput />
                         </div>
+                        <mat-spinner
+                          *ngIf="format === 'html' && inputFormGroup.controls[lang + '-html-subject']?.pending"
+                          matSuffix
+                          [diameter]="18"
+                          class="input-spinner" />
                         <mat-error *ngIf="inputFormGroup.controls[lang + '-html-subject']?.invalid">
                           {{inputFormGroup.controls[lang + '-html-subject'].errors?.invalidHtmlContent}}
                         </mat-error>
@@ -182,6 +187,11 @@
                           rows="17">
                         </textarea>
                       </div>
+                      <mat-spinner
+                        *ngIf="format === 'html' && inputFormGroup.controls[lang + '-html-text']?.pending"
+                        matSuffix
+                        [diameter]="18"
+                        class="input-spinner" />
                       <mat-error *ngIf="inputFormGroup.controls[lang + '-html-text']?.invalid">
                         {{inputFormGroup.controls[lang + '-html-text'].errors?.invalidHtmlContent}}
                       </mat-error>
@@ -210,7 +220,7 @@
         *ngIf="data.createMailNotification"
         class="ms-2"
         color="accent"
-        [disabled]="invalidNotification || inputFormGroup.invalid"
+        [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending"
         mat-flat-button>
         {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
       </button>
@@ -221,13 +231,13 @@
         <div
           [matTooltipDisabled]="!inputFormGroup.invalid"
           [matTooltipPosition]="'above'"
-          matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_HTML_TAGS' | translate}}">
+          matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_HTML_CONTENT' | translate}}">
           <button
             (click)="save()"
             *ngIf="!data.createMailNotification"
             class="ms-2"
             color="accent"
-            [disabled]="!editAuth || inputFormGroup.invalid"
+            [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending"
             mat-flat-button>
             {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
           </button>

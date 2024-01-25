@@ -189,9 +189,14 @@
                 formControlName="{{lang}}-html-label"
                 [cdkTextareaAutosize]="true"
                 matInput></textarea>
-              <mat-hint
-                >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION' | translate}}</mat-hint
-              >
+              <mat-spinner
+                *ngIf="inputFormGroup.controls[lang + '-html-label']?.pending"
+                matSuffix
+                [diameter]="18"
+                class="input-spinner" />
+              <mat-hint *ngIf="!inputFormGroup.controls[lang + '-html-label']?.pending">
+                {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION' | translate}}
+              </mat-hint>
               <mat-error *ngIf="inputFormGroup.controls[lang + '-html-label']?.invalid">
                 {{inputFormGroup.controls[lang + '-html-label'].errors?.invalidHtmlContent}}
               </mat-error>
@@ -335,7 +340,7 @@
         <div
           [matTooltipDisabled]="!inputFormGroup.invalid && !optionsFormArray.invalid"
           [matTooltipPosition]="'above'"
-          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HTML_INVALID_TAGS' | translate}}">
+          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INVALID_HTML_CONTENT' | translate}}">
           <button
             mat-flat-button
             class="ms-2 mt-auto"

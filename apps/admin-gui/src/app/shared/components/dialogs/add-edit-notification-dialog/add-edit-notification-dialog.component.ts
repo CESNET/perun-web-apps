@@ -1,5 +1,5 @@
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { openClose, tagsOpenClose } from '@perun-web-apps/perun/animations';
 import {
@@ -45,6 +45,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
     private groupsService: GroupsManagerService,
     private store: StoreService,
     private inputEscape: HtmlEscapeService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -87,16 +88,28 @@ export class AddEditNotificationDialogComponent implements OnInit {
       // Html
       formGroupFields[`${lang}-html-subject`] = new FormControl(
         this.applicationMail.htmlMessage[lang].subject,
-        [this.inputEscape.htmlContentValidator()],
+        [],
       );
       formGroupFields[`${lang}-html-text`] = new FormControl(
         this.applicationMail.htmlMessage[lang].text,
-        [this.inputEscape.htmlContentValidator()],
+        [],
       );
       formGroupFields[`${lang}-html-subject`].markAsTouched();
       formGroupFields[`${lang}-html-text`].markAsTouched();
     }
     this.inputFormGroup = new FormGroup(formGroupFields);
+    for (const lang of this.languages) {
+      this.inputFormGroup
+        .get(`${lang}-html-subject`)
+        .setAsyncValidators([
+          this.inputEscape.htmlInputValidator(this.inputFormGroup?.status, this.cd),
+        ]);
+      this.inputFormGroup
+        .get(`${lang}-html-text`)
+        .setAsyncValidators([
+          this.inputEscape.htmlInputValidator(this.inputFormGroup?.status, this.cd),
+        ]);
+    }
   }
 
   cancel(): void {
@@ -109,7 +122,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.validateNotification();
+    this.prepareNotification();
     if (this.data.groupId) {
       this.registrarService
         .addApplicationMailForGroup({
@@ -139,7 +152,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
 
   save(): void {
     this.loading = true;
-    this.validateNotification();
+    this.prepareNotification();
     this.registrarService.updateApplicationMail({ mail: this.applicationMail }).subscribe({
       next: () => {
         this.dialogRef.close(true);
@@ -180,19 +193,17 @@ export class AddEditNotificationDialogComponent implements OnInit {
     this.invalidNotification = false;
   }
 
-  validateNotification(): void {
-    // Validate notification
+  /**
+   * Update application mail with content from FormControl
+   */
+  private prepareNotification(): void {
     for (const lang of this.languages) {
-      let escaped = this.inputEscape.escapeDangerousHtml(
-        this.inputFormGroup.get(`${lang}-html-subject`).value,
-      );
-      this.applicationMail.htmlMessage[lang].subject = escaped.escapedHtml;
-      escaped = this.inputEscape.escapeDangerousHtml(
-        this.inputFormGroup.get(`${lang}-html-text`).value,
-      );
-      this.applicationMail.htmlMessage[lang].text = escaped.escapedHtml;
-
-      // Update application with content from FormControl
+      this.applicationMail.htmlMessage[lang].subject = this.inputFormGroup.get(
+        `${lang}-html-subject`,
+      ).value;
+      this.applicationMail.htmlMessage[lang].text = this.inputFormGroup.get(
+        `${lang}-html-text`,
+      ).value;
       this.applicationMail.message[lang].subject = this.inputFormGroup.get(
         `${lang}-plain-subject`,
       ).value;

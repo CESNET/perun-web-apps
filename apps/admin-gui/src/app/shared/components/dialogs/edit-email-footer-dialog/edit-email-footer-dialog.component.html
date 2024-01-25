@@ -20,16 +20,21 @@
             </textarea>
             <textarea *ngIf="format === 'html'" [formControl]="htmlInput" matInput rows="5">
             </textarea>
+            <mat-spinner
+              *ngIf="format === 'html' && htmlInput.pending"
+              matSuffix
+              [diameter]="18"
+              class="input-spinner" />
             <mat-error *ngIf="htmlInput.invalid && format==='html'">
               {{htmlInput.errors.invalidHtmlContent}}
             </mat-error>
+            <mat-hint *ngIf="format === 'plain'">
+              {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
+            </mat-hint>
+            <mat-hint *ngIf="format === 'html' && !htmlInput.pending">
+              {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
+            </mat-hint>
           </mat-form-field>
-          <div class="mt-2 font-italic text-muted" *ngIf="format === 'plain'">
-            {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
-          </div>
-          <div class="mt-2 font-italic text-muted" *ngIf="format === 'html'">
-            {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION_HTML' | translate}}
-          </div>
         </mat-tab>
       </mat-tab-group>
     </div>
@@ -48,7 +53,7 @@
           matTooltip="{{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.INVALID_TAGS' | translate}}">
           <button
             (click)="submit()"
-            [disabled]="loading || !plainEdithAuth || htmlInput.invalid"
+            [disabled]="loading || !plainEdithAuth || htmlInput.invalid || htmlInput.pending"
             class="ms-2"
             color="accent"
             mat-flat-button>
