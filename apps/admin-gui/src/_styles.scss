@@ -110,6 +110,16 @@ mat.$theme-ignore-duplication-warnings: true;
   }
 }
 
+// CHECK THIS AFTER UPGRADE TO ANGULAR 17
+// This is a workaround for the issue with the mat-mdc-row hover effect
+.mat-mdc-row {
+  transition: 150ms;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
 /*************************************
 *********** Facility theme ***********
 *************************************/

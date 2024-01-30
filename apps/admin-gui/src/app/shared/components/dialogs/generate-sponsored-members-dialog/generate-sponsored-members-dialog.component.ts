@@ -161,6 +161,9 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
   }
 
   getStepperNextConditions(): boolean {
+    if (this.functionalityNotSupported) {
+      return true;
+    }
     switch (this.stepper.selectedIndex) {
       case 0:
         return this.usersInfoFormGroup.invalid;

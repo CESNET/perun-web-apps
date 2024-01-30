@@ -5,6 +5,9 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.TITLE' | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
+      <perun-web-apps-alert alert_type="error" *ngIf="this.functionalityNotSupported">
+        {{'DIALOGS.CREATE_SPONSORED_MEMBER.FUNCTIONALITY_NOT_SUPPORTED' | translate}}
+      </perun-web-apps-alert>
       <mat-stepper
         #stepper
         *ngIf='state === "user-input" && namespaceRules.length !== 0'
@@ -14,9 +17,6 @@
             matStepLabel
             >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_LABEL' | translate}}</ng-template
           >
-          <perun-web-apps-alert alert_type="error" *ngIf="this.functionalityNotSupported">
-            {{'DIALOGS.CREATE_SPONSORED_MEMBER.FUNCTIONALITY_NOT_SUPPORTED' | translate}}
-          </perun-web-apps-alert>
           <h5 class="mt-2">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_INFO' | translate}}</h5>
           <form [formGroup]="usersInfoFormGroup" class="flex-container mt-2">
             <mat-form-field>
@@ -138,7 +138,7 @@
       </div>
     </div>
     <div
-      *ngIf="stepper !== undefined && state !== 'results'"
+      *ngIf="functionalityNotSupported || stepper !== undefined && state !== 'results'"
       mat-dialog-actions
       class="justify-content-end">
       <div>

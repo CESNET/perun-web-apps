@@ -38,6 +38,22 @@
         </button>
       </mat-menu>
     </span>
+    <span
+      [matTooltipDisabled]="!copyInvitationDisabled"
+      [matTooltipPosition]="'above'"
+      matTooltip="{{'VO_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate}}">
+      <button
+        *ngIf="inviteAuth"
+        (click)="copyInvitationLink()"
+        [disabled]="copyInvitationDisabled"
+        class="me-2"
+        mat-stroked-button>
+        <mat-icon>file_copy</mat-icon>
+        <span class="ms-1">
+          {{'VO_DETAIL.MEMBERS.COPY_INVITATION_LINK' | translate}}
+        </span>
+      </button>
+    </span>
     <button
       *ngIf="removeAuth"
       (click)="onRemoveMembers()"

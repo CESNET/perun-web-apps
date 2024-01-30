@@ -52,6 +52,22 @@
     </mat-menu>
   </span>
   <span
+    [matTooltipDisabled]="!copyInvitationDisabled"
+    [matTooltipPosition]="'above'"
+    matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate}}">
+    <button
+      *ngIf="inviteAuth"
+      (click)="copyInvitationLink()"
+      [disabled]="(group | groupMembersActionButtonDisabled) || copyInvitationDisabled"
+      class="me-2"
+      mat-stroked-button>
+      <mat-icon>file_copy</mat-icon>
+      <span class="ms-1">
+        {{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK' | translate}}
+      </span>
+    </button>
+  </span>
+  <span
     [matTooltipDisabled]="!copyDisabled"
     [matTooltipPosition]="'above'"
     matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_MEMBERS_DISABLED' | translate}}">
