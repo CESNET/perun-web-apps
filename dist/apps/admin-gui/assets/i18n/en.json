@@ -368,7 +368,10 @@
       "INVITE": "Invite",
       "INVITE_ONE": "Invite member",
       "INVITE_BULK": "Invite multiple members",
-      "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist."
+      "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist.",
+      "COPY_INVITATION_LINK": "Copy invitation link",
+      "COPY_INVITATION_LINK_SUCCESS": "Invitation link has been copied successfully",
+      "COPY_INVITATION_LINK_DISABLED": "Application form is not setup correctly."
     },
     "OVERVIEW": {
       "INVITE_MEMBER": "Invite member",
@@ -758,6 +761,9 @@
       "INVITE_ONE": "Invite member",
       "INVITE_BULK": "Invite multiple members",
       "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist.",
+      "COPY_INVITATION_LINK": "Copy invitation link",
+      "COPY_INVITATION_LINK_SUCCESS": "Invitation link has been copied successfully",
+      "COPY_INVITATION_LINK_DISABLED": "Application form is not setup correctly.",
       "SYNCHRONIZED": "Action is disabled on this group, group is filled with members from external source.",
       "FILTER_STATUS": "Filter by organizations status",
       "FILTER_GROUP_STATUS": "Filter by group status",

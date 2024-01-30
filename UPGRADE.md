@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [15.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.1.0...v15.2.0) (2024-01-30)
+
+
+### Features
+
+* **admin:** enable to copy invitation link on the Members page ([5c79e13](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5c79e13188eaa9f1d51ee2c081f6158dd819dcfd))
+
+
+### Bug Fixes
+
+* **admin:** dead end sponsored member dialogs ([c3d9d83](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c3d9d8358155202b05cf89b73dabe4589e8834cd))
+* **admin:** hover in mdc-tables ([60577e1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/60577e1d70f783de01b16f46f24425f940f4430f))
+* **admin:** show correct icon for service accounts on member detail page ([171a403](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/171a403a125d3cca4348742e8925a544a162b498))
+
 ## [15.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.0.1...v15.1.0) (2024-01-15)
 
 
