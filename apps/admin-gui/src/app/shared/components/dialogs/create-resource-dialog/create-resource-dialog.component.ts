@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ResourcesManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface CreateResourceDialogData {
   theme: string;
@@ -16,8 +17,8 @@ export interface CreateResourceDialogData {
   styleUrls: ['./create-resource-dialog.component.scss'],
 })
 export class CreateResourceDialogComponent implements OnInit {
-  nameCtrl: UntypedFormControl;
-  descriptionCtrl: UntypedFormControl;
+  nameCtrl: FormControl<string>;
+  descriptionCtrl: FormControl<string>;
   vos: Vo[] = [];
 
   theme: string;
@@ -41,19 +42,20 @@ export class CreateResourceDialogComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.theme = this.data.theme;
-    this.voService.getAllVos().subscribe(
-      (vos) => {
+    this.voService.getAllVos().subscribe({
+      next: (vos) => {
         this.vos = vos;
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
 
-    this.nameCtrl = new UntypedFormControl(null, [
+    this.nameCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern('.*[\\S]+.*'),
+      spaceNameValidator(),
     ]);
-    this.descriptionCtrl = new UntypedFormControl('');
+    this.descriptionCtrl = new FormControl('');
   }
 
   onSubmit(): void {
@@ -62,17 +64,17 @@ export class CreateResourceDialogComponent implements OnInit {
       .createResource(
         this.selectedVo.id,
         this.data.facilityId,
-        this.nameCtrl.value as string,
-        this.descriptionCtrl.value as string,
+        this.nameCtrl.value,
+        this.descriptionCtrl.value,
       )
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.notificator.showSuccess(this.successMessage);
           this.loading = false;
           this.dialogRef.close(true);
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
   }
 
   onCancel(): void {

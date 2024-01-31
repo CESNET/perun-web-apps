@@ -3,7 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface CreateGroupDialogData {
   parentGroup: Group;
@@ -23,8 +24,8 @@ export class CreateGroupDialogComponent implements OnInit {
   isNotSubGroup: boolean;
   asSubgroup = false;
   invalidNameMessage = this.store.getProperty('group_name_error_message');
-  nameControl: UntypedFormControl;
-  descriptionControl: UntypedFormControl;
+  nameControl: FormControl<string>;
+  descriptionControl: FormControl<string>;
   selectedParent: Group;
   voGroups: Group[] = [];
   title: string;
@@ -64,12 +65,13 @@ export class CreateGroupDialogComponent implements OnInit {
     this.theme = this.data.theme;
     this.invalidNameMessage =
       this.invalidNameMessage && this.secondaryRegex ? this.invalidNameMessage : '';
-    this.nameControl = new UntypedFormControl('', [
+    this.nameControl = new FormControl('', [
       Validators.required,
       Validators.pattern(this.secondaryRegex ? this.secondaryRegex : ''),
       Validators.pattern('.*[\\S]+.*'),
+      spaceNameValidator(),
     ]);
-    this.descriptionControl = new UntypedFormControl('');
+    this.descriptionControl = new FormControl('');
     this.selectedParent = null;
   }
 
@@ -83,33 +85,33 @@ export class CreateGroupDialogComponent implements OnInit {
       this.groupService
         .createGroupWithVoNameDescription(
           this.data.voId,
-          this.nameControl.value as string,
-          this.descriptionControl.value as string,
+          this.nameControl.value,
+          this.descriptionControl.value,
         )
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.notificator.showSuccess(this.successMessage);
             this.loading = false;
             this.dialogRef.close(true);
           },
-          () => (this.loading = false),
-        );
+          error: () => (this.loading = false),
+        });
     } else {
       const parentGroupId = this.asSubgroup ? this.selectedParent.id : this.data.parentGroup.id;
       this.groupService
         .createGroupWithParentGroupNameDescription(
           parentGroupId,
-          this.nameControl.value as string,
-          this.descriptionControl.value as string,
+          this.nameControl.value,
+          this.descriptionControl.value,
         )
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.notificator.showSuccess(this.successSubGroupMessage);
             this.loading = false;
             this.dialogRef.close(true);
           },
-          () => (this.loading = false),
-        );
+          error: () => (this.loading = false),
+        });
     }
   }
 

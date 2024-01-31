@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { VosManagerService } from '@perun-web-apps/perun/openapi';
 import { Router } from '@angular/router';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface CreateVoDialogData {
   theme: string;
@@ -18,8 +19,8 @@ export interface CreateVoDialogData {
 export class CreateVoDialogComponent implements OnInit {
   loading: boolean;
   theme: string;
-  shortNameCtrl: UntypedFormControl;
-  fullNameCtrl: UntypedFormControl;
+  shortNameCtrl: FormControl<string>;
+  fullNameCtrl: FormControl<string>;
   private successMessage: string;
 
   constructor(
@@ -37,15 +38,17 @@ export class CreateVoDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.theme = this.data.theme;
-    this.shortNameCtrl = new UntypedFormControl(null, [
+    this.shortNameCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern('^[\\w.-]+$'),
       Validators.maxLength(33),
+      spaceNameValidator(),
     ]);
-    this.fullNameCtrl = new UntypedFormControl(null, [
+    this.fullNameCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern('.*[\\S]+.*'),
       Validators.maxLength(129),
+      spaceNameValidator(),
     ]);
   }
 
@@ -55,16 +58,14 @@ export class CreateVoDialogComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
-    this.voService
-      .createVoWithName(this.fullNameCtrl.value as string, this.shortNameCtrl.value as string)
-      .subscribe({
-        next: (vo) => {
-          this.notificator.showSuccess(this.successMessage);
-          this.loading = false;
-          void this.router.navigate(['/organizations', vo.id], { queryParamsHandling: 'preserve' });
-          this.dialogRef.close(true);
-        },
-        error: () => (this.loading = false),
-      });
+    this.voService.createVoWithName(this.fullNameCtrl.value, this.shortNameCtrl.value).subscribe({
+      next: (vo) => {
+        this.notificator.showSuccess(this.successMessage);
+        this.loading = false;
+        void this.router.navigate(['/organizations', vo.id], { queryParamsHandling: 'preserve' });
+        this.dialogRef.close(true);
+      },
+      error: () => (this.loading = false),
+    });
   }
 }
