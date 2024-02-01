@@ -1,0 +1,16 @@
+<mat-form-field class="w-100" subscriptSizing="dynamic">
+  <!-- Placeholder control for the workaround solution -->
+  <input *ngIf="beforeViewInit" matInput />
+  <ng-content></ng-content>
+  <mat-spinner
+    *ngIf="format === 'html' && inputFormControl?.pending"
+    matSuffix
+    [diameter]="18"
+    class="input-spinner" />
+  <mat-error *ngIf="inputFormControl.invalid">
+    {{inputFormControl.errors?.invalidHtmlContent}}
+  </mat-error>
+  <mat-hint class="warning-color" *ngIf="warningMessage !== '' && !inputFormControl?.pending">
+    {{warningMessage}}
+  </mat-hint>
+</mat-form-field>

@@ -15,26 +15,17 @@
               {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.FORMAT_' + format | uppercase | translate}}
             </span>
           </ng-template>
-          <mat-form-field class="w-100" subscriptSizing="dynamic">
-            <textarea *ngIf="format === 'plain'" [(ngModel)]="mailFooter" matInput rows="5">
-            </textarea>
-            <textarea *ngIf="format === 'html'" [formControl]="htmlInput" matInput rows="5">
-            </textarea>
-            <mat-spinner
-              *ngIf="format === 'html' && htmlInput.pending"
-              matSuffix
-              [diameter]="18"
-              class="input-spinner" />
-            <mat-error *ngIf="htmlInput.invalid && format==='html'">
-              {{htmlInput.errors.invalidHtmlContent}}
-            </mat-error>
-            <mat-hint *ngIf="format === 'plain'">
-              {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
-            </mat-hint>
-            <mat-hint *ngIf="format === 'html' && !htmlInput.pending">
+          <mat-form-field *ngIf="format === 'plain'" class="w-100" subscriptSizing="dynamic">
+            <textarea [(ngModel)]="mailFooter" matInput rows="5"> </textarea>
+            <mat-hint>
               {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
             </mat-hint>
           </mat-form-field>
+          <perun-web-apps-html-textarea-form-field
+            *ngIf="format === 'html'"
+            [inputFormControl]="htmlInput"
+            [hint]="'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION'"
+            [minRows]="5" />
         </mat-tab>
       </mat-tab-group>
     </div>

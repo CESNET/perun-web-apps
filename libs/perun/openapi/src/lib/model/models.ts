@@ -1,5 +1,6 @@
 export * from './actionType';
 export * from './addUserExtSourceInput';
+export * from './addUserExtSourceWithAttributesInput';
 export * from './appState';
 export * from './appType';
 export * from './application';

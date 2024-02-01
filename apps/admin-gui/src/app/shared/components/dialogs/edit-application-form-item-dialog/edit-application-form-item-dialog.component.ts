@@ -318,10 +318,9 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
         this.applicationFormItem.type === 'HTML_COMMENT' ||
         this.applicationFormItem.type === 'HEADING'
       ) {
+        // async validator is set in a separate component
         formGroupFields[`${lang}-html-label`] = new FormControl(
           this.applicationFormItem.i18n[lang].label,
-          [],
-          [this.escapeService.htmlInputValidator()],
         );
         formGroupFields[`${lang}-html-label`].markAsTouched();
       }

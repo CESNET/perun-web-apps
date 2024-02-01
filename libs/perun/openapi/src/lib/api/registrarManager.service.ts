@@ -1390,7 +1390,7 @@ export class RegistrarManagerService {
   }
 
   /**
-   * Checks whether input is valid html according to the rules in our custom html parser
+   * Checks whether input is valid html according to the rules in our custom html parser (returns warning message if the input will be autocompleted/changed during the sanitization)
    * @param html input html to check
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1402,21 +1402,21 @@ export class RegistrarManagerService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
+  ): Observable<string>;
   public checkHtmlInput(
     html: string,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<string>>;
   public checkHtmlInput(
     html: string,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<string>>;
   public checkHtmlInput(
     html: string,
     useNon: boolean = false,
@@ -1483,7 +1483,7 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<any>(requestUrl, {
+    return this.httpClient.get<string>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,

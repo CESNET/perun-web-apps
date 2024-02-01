@@ -143,37 +143,38 @@
                       <span class="fw-bold pe-2">
                         {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SUBJECT' | translate}}:
                       </span>
-                      <mat-form-field class="w-100" subscriptSizing="dynamic">
+                      <app-notification-content-wrapper
+                        [inputFormControl]="inputFormGroup.controls[lang + '-html-subject']"
+                        [format]="format"
+                        [cd]="cd">
                         <div #Input>
                           <input
                             *ngIf="format === 'plain'"
+                            class="mat-mdc-form-field-input-control mdc-text-field__input"
                             formControlName="{{lang}}-plain-subject"
                             (focus)="isTextFocused = false"
                             matInput />
                           <input
                             *ngIf="format === 'html'"
+                            class="mat-mdc-form-field-input-control mdc-text-field__input"
                             formControlName="{{lang}}-html-subject"
                             (focus)="isTextFocused = false"
                             matInput />
                         </div>
-                        <mat-spinner
-                          *ngIf="format === 'html' && inputFormGroup.controls[lang + '-html-subject']?.pending"
-                          matSuffix
-                          [diameter]="18"
-                          class="input-spinner" />
-                        <mat-error *ngIf="inputFormGroup.controls[lang + '-html-subject']?.invalid">
-                          {{inputFormGroup.controls[lang + '-html-subject'].errors?.invalidHtmlContent}}
-                        </mat-error>
-                      </mat-form-field>
+                      </app-notification-content-wrapper>
                     </div>
                     <div class="fw-bold">
                       {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
                     </div>
 
-                    <mat-form-field class="w-100" subscriptSizing="dynamic">
+                    <app-notification-content-wrapper
+                      [inputFormControl]="inputFormGroup.controls[lang + '-html-text']"
+                      [format]="format"
+                      [cd]="cd">
                       <div #Textarea>
                         <textarea
                           *ngIf="format === 'plain'"
+                          class="mat-mdc-form-field-textarea-control mat-mdc-form-field-input-control mdc-text-field__input"
                           matInput
                           formControlName="{{lang}}-plain-text"
                           (focus)="isTextFocused = true"
@@ -181,21 +182,14 @@
                         </textarea>
                         <textarea
                           *ngIf="format === 'html'"
+                          class="mat-mdc-form-field-textarea-control mat-mdc-form-field-input-control mdc-text-field__input"
                           formControlName="{{lang}}-html-text"
                           matInput
                           (focus)="isTextFocused = true"
                           rows="17">
                         </textarea>
                       </div>
-                      <mat-spinner
-                        *ngIf="format === 'html' && inputFormGroup.controls[lang + '-html-text']?.pending"
-                        matSuffix
-                        [diameter]="18"
-                        class="input-spinner" />
-                      <mat-error *ngIf="inputFormGroup.controls[lang + '-html-text']?.invalid">
-                        {{inputFormGroup.controls[lang + '-html-text'].errors?.invalidHtmlContent}}
-                      </mat-error>
-                    </mat-form-field>
+                    </app-notification-content-wrapper>
                   </div>
 
                   <mat-divider *ngIf="showTags" class="ms-3 me-3" vertical="true"></mat-divider>

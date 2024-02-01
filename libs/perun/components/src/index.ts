@@ -27,3 +27,4 @@ export * from './lib/change-member-status-or-expiration-dialog/change-member-sta
 export * from './lib/member-overview-membership/member-overview-membership.component';
 export * from './lib/debounce-filter/debounce-filter.component';
 export * from './lib/application-state-selector/application-state-selector.component';
+export * from './lib/html-textarea-form-field/html-textarea-form-field.component';

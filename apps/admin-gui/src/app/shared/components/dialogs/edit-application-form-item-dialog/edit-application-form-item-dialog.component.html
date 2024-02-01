@@ -183,24 +183,10 @@
           label="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LANGUAGE_'+lang | uppercase | translate}}"
           [formGroup]="inputFormGroup">
           <div *ngIf="isApplicationFormItemOfType(['HEADING', 'HTML_COMMENT'])">
-            <mat-form-field class="w-100" subscriptSizing="dynamic">
-              <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT' | translate}}</mat-label>
-              <textarea
-                formControlName="{{lang}}-html-label"
-                [cdkTextareaAutosize]="true"
-                matInput></textarea>
-              <mat-spinner
-                *ngIf="inputFormGroup.controls[lang + '-html-label']?.pending"
-                matSuffix
-                [diameter]="18"
-                class="input-spinner" />
-              <mat-hint *ngIf="!inputFormGroup.controls[lang + '-html-label']?.pending">
-                {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION' | translate}}
-              </mat-hint>
-              <mat-error *ngIf="inputFormGroup.controls[lang + '-html-label']?.invalid">
-                {{inputFormGroup.controls[lang + '-html-label'].errors?.invalidHtmlContent}}
-              </mat-error>
-            </mat-form-field>
+            <perun-web-apps-html-textarea-form-field
+              [inputFormControl]="inputFormGroup.controls[lang + '-html-label']"
+              [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT'"
+              [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION'" />
           </div>
 
           <div

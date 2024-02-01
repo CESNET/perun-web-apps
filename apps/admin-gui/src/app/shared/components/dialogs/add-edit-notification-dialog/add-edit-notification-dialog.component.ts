@@ -7,7 +7,7 @@ import {
   GroupsManagerService,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { GuiAuthResolver, StoreService, HtmlEscapeService } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 
 export interface ApplicationFormAddEditMailDialogData {
   theme: string;
@@ -44,8 +44,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private groupsService: GroupsManagerService,
     private store: StoreService,
-    private inputEscape: HtmlEscapeService,
-    private cd: ChangeDetectorRef,
+    public cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +84,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
         this.applicationMail.message[lang].text,
         [],
       );
-      // Html
+      // Html - async validators are set in a separate component
       formGroupFields[`${lang}-html-subject`] = new FormControl(
         this.applicationMail.htmlMessage[lang].subject,
         [],
@@ -98,18 +97,6 @@ export class AddEditNotificationDialogComponent implements OnInit {
       formGroupFields[`${lang}-html-text`].markAsTouched();
     }
     this.inputFormGroup = new FormGroup(formGroupFields);
-    for (const lang of this.languages) {
-      this.inputFormGroup
-        .get(`${lang}-html-subject`)
-        .setAsyncValidators([
-          this.inputEscape.htmlInputValidator(this.inputFormGroup?.status, this.cd),
-        ]);
-      this.inputFormGroup
-        .get(`${lang}-html-text`)
-        .setAsyncValidators([
-          this.inputEscape.htmlInputValidator(this.inputFormGroup?.status, this.cd),
-        ]);
-    }
   }
 
   cancel(): void {
