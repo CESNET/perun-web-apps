@@ -21,9 +21,10 @@
               {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
             </mat-hint>
           </mat-form-field>
-          <perun-web-apps-html-textarea-form-field
+          <perun-web-apps-html-content-form-field
             *ngIf="format === 'html'"
             [inputFormControl]="htmlInput"
+            [tagType]="'textarea'"
             [hint]="'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION'"
             [minRows]="5" />
         </mat-tab>

@@ -1,5 +1,5 @@
 import { FormGroup, FormControl } from '@angular/forms';
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { openClose, tagsOpenClose } from '@perun-web-apps/perun/animations';
 import {
@@ -36,6 +36,9 @@ export class AddEditNotificationDialogComponent implements OnInit {
   formats = ['plain', 'html'];
   htmlAuth: boolean;
   inputFormGroup: FormGroup<Record<string, FormControl<string>>> = null;
+  subjectId = 'perun-subject-input-id';
+  textareaId = 'perun-text-textarea-id';
+  cursorIndex = 0;
 
   constructor(
     private dialogRef: MatDialogRef<AddEditNotificationDialogComponent>,
@@ -46,6 +49,32 @@ export class AddEditNotificationDialogComponent implements OnInit {
     private store: StoreService,
     public cd: ChangeDetectorRef,
   ) {}
+
+  // this saves the last position of cursor in the subject/text to enable adding tags
+  @HostListener('document:selectionchange', ['$event'])
+  selectionChange(): void {
+    this.elementFocusChanged();
+  }
+
+  // Chrome browser with the selectionchange event detects all changes
+  // in the Firefox it doesn't work properly, so we need to detect also focusin event
+  @HostListener('document:focusin', ['$event'])
+  onFocus(): void {
+    this.elementFocusChanged();
+  }
+
+  elementFocusChanged(): void {
+    if (document.activeElement.id === this.subjectId) {
+      this.isTextFocused = false;
+      const input = document.activeElement as HTMLInputElement;
+      this.cursorIndex = input.selectionStart;
+    }
+    if (document.activeElement.id === this.textareaId) {
+      this.isTextFocused = true;
+      const textarea = document.activeElement as HTMLTextAreaElement;
+      this.cursorIndex = textarea.selectionStart;
+    }
+  }
 
   ngOnInit(): void {
     this.languages = this.store.getProperty('supported_languages');
@@ -148,23 +177,14 @@ export class AddEditNotificationDialogComponent implements OnInit {
     });
   }
 
-  addTag(
-    input: HTMLDivElement,
-    textarea: HTMLDivElement,
-    language: string,
-    tag: string,
-    format: string,
-  ): void {
-    const place: HTMLInputElement | HTMLTextAreaElement = this.isTextFocused
-      ? (textarea.children.item(0) as HTMLTextAreaElement)
-      : (input.children.item(0) as HTMLInputElement);
-    const position: number = place.selectionStart;
+  addTag(language: string, tag: string, format: string): void {
     const form = this.inputFormGroup.get(
       `${language}-${format}-${this.isTextFocused ? 'text' : 'subject'}`,
     );
     const curValue = form.value;
-    form.setValue(curValue.substring(0, position) + tag + curValue.substring(position));
-    place.focus();
+    form.setValue(
+      curValue.substring(0, this.cursorIndex) + tag + curValue.substring(this.cursorIndex),
+    );
   }
 
   notificationExist(): void {

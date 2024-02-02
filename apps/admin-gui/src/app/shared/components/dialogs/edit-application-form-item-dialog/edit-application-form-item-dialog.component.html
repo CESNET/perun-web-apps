@@ -183,8 +183,9 @@
           label="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LANGUAGE_'+lang | uppercase | translate}}"
           [formGroup]="inputFormGroup">
           <div *ngIf="isApplicationFormItemOfType(['HEADING', 'HTML_COMMENT'])">
-            <perun-web-apps-html-textarea-form-field
+            <perun-web-apps-html-content-form-field
               [inputFormControl]="inputFormGroup.controls[lang + '-html-label']"
+              [tagType]="'textarea'"
               [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT'"
               [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION'" />
           </div>
