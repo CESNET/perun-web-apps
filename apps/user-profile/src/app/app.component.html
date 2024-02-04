@@ -1,18 +1,30 @@
+<div
+  *ngIf="displayWarning"
+  class="beta-warning text-truncate"
+  matTooltipPosition="below"
+  matTooltip="{{ warningMessage }}">
+  <mat-icon>alert</mat-icon>
+  {{ warningMessage }}
+</div>
 <ng-template [ngIf]="!isLoginScreenShown && !isServiceAccess && isLoggedIn()">
-  <perun-web-apps-notificator></perun-web-apps-notificator>
+  <perun-web-apps-notificator [displayWarning]="displayWarning"></perun-web-apps-notificator>
   <div class="app-min-width">
     <perun-web-apps-header
       (sidenavToggle)="sidenav.toggle()"
-      [otherApp]="otherApp"></perun-web-apps-header>
-    <mat-sidenav-container autosize="true">
+      [ngStyle]="{'top': getNavMenuTop()}"
+      [otherApp]="otherApp"
+      class="nav-menu mat-elevation-z3"></perun-web-apps-header>
+    <mat-sidenav-container
+      autosize="true"
+      [ngStyle]="{'margin-top': getSideNavMarginTop(),'min-height': getSideNavMinHeight()}">
       <mat-sidenav
         #sidenav
         [mode]="sidebarMode"
+        [fixedTopGap]="getTopGap()"
         [ngStyle]="{'background': sideMenuBgColor}"
         [opened]="!isMobile()"
         class="side-menu-size"
-        fixedInViewport
-        fixedTopGap="64">
+        fixedInViewport>
         <perun-web-apps-side-menu
           [sideNav]="sidenav"
           class="overflow-hidden"></perun-web-apps-side-menu>
@@ -33,5 +45,6 @@
 <perun-web-apps-login-screen-base
   *ngIf="isLoginScreenShown || isServiceAccess || !isLoggedIn()"
   [application]="'user-profile'"
+  [displayWarning]="displayWarning"
   [headerTitle]="headerLabel">
 </perun-web-apps-login-screen-base>

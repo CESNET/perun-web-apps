@@ -1,4 +1,8 @@
-<div *ngIf="displayWarning" class="beta-warning">
+<div
+  *ngIf="displayWarning"
+  class="beta-warning text-truncate"
+  matTooltipPosition="below"
+  matTooltip="{{ warningMessage }}">
   <mat-icon>alert</mat-icon>
   {{ warningMessage }}
 </div>
@@ -46,5 +50,8 @@
 </ng-template>
 
 <ng-template [ngIf]="(isLoginScreenShow || isServiceAccess || !isLoggedIn()) && !isMfaWindowOpen">
-  <perun-web-apps-login-screen-base [application]="'admin-gui'"></perun-web-apps-login-screen-base>
+  <perun-web-apps-login-screen-base
+    [application]="'admin-gui'"
+    [headerTitle]="adminHeaderLabel"
+    [displayWarning]="displayWarning"></perun-web-apps-login-screen-base>
 </ng-template>

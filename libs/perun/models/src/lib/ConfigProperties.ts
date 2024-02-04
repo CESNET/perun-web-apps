@@ -165,6 +165,8 @@ export interface PerunConfig {
   logo?: string;
   theme?: PerunTheme;
   auto_service_access_redirect: boolean;
+  display_warning?: boolean;
+  warning_message?: string;
 
   // Admin gui specific
   // Required
@@ -177,8 +179,6 @@ export interface PerunConfig {
   member_profile_attributes_friendly_names?: string[];
   groupNameSecondaryRegex?: string;
   groupNameErrorMessage?: string;
-  display_warning?: boolean;
-  warning_message?: string;
   logo_padding?: string;
   group_name_error_message?: string;
   group_name_secondary_regex?: string;

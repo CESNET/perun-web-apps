@@ -10,6 +10,8 @@
   "supported_languages": [
     "en"
   ],
+  "display_warning": false,
+  "warning_message": "BETA version of new Perun GUI. It doesn’t contain all functionality. Please report any issues to support mail below.",
   "oidc_client": {
     "oauth_authority": "https://login.cesnet.cz/oidc/",
     "oauth_callback": "http://localhost:4200/api-callback",

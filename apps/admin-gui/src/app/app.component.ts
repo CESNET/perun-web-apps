@@ -49,6 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   displayWarning: boolean = this.store.getProperty('display_warning');
   warningMessage: string = this.store.getProperty('warning_message');
+  adminHeaderLabel = this.store.getProperty('header_label_en');
 
   // eslint-disable-next-line
   version: string = require('../../../../package.json').version;
