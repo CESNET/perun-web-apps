@@ -1,5 +1,5 @@
 <div
-  [ngStyle]="{'background': headerBackgroundColor, color: headerTextColor}"
+  [ngStyle]="{'background': headerBackgroundColor, color: headerTextColor, top: getNavMenuTop()}"
   id="login-nav"
   class="mat-elevation-z3">
   <div
@@ -26,11 +26,8 @@
 <div id="content">
   <div
     id="content-inner"
-    [ngStyle]="{
-           'min-height' : getContentInnerMinHeight(),
-           'background-color': contentBackgroundColor
-        }">
-    <div id="content-wrap">
+    [ngStyle]="{'background-color': contentBackgroundColor, 'margin-top': getContentMarginTop()}">
+    <div id="content-wrap" [ngStyle]="{'min-height' : getContentInnerMinHeight()}">
       <router-outlet></router-outlet>
     </div>
     <div id="footer">

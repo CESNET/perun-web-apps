@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoginScreenBaseComponent implements OnInit {
   @Input() application: string;
   @Input() headerTitle: string;
+  @Input() displayWarning: boolean;
   textColor: string;
   headerBackgroundColor: string;
   headerTextColor: string;
@@ -41,6 +42,18 @@ export class LoginScreenBaseComponent implements OnInit {
     // 210 for footer, 510 for footer on mobile
 
     const footerSpace = '0';
-    return 'calc((100vh - 64px) + ' + footerSpace + 'px)';
+    return (
+      (this.displayWarning ? 'calc((100vh - 112px) + ' : 'calc((100vh - 64px) + ') +
+      footerSpace +
+      'px)'
+    );
+  }
+
+  getContentMarginTop(): string {
+    return this.displayWarning ? '112px' : '64px';
+  }
+
+  getNavMenuTop(): string {
+    return this.displayWarning ? '48px' : '0px';
   }
 }
