@@ -36,6 +36,7 @@ model/applicationForm.ts
 model/applicationFormItem.ts
 model/applicationFormItemData.ts
 model/applicationMail.ts
+model/applicationOperationResult.ts
 model/applicationsOrderColumn.ts
 model/applicationsPageQuery.ts
 model/assignedGroup.ts

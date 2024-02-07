@@ -619,6 +619,7 @@
       "NO_APPLICATION_FOUND": "No applications matching search criteria found.",
       "SHOW_ALL_DETAILS": "Show more details",
       "SHOW_LESS_DETAILS": "Show less details",
+      "SHOW": "Show",
       "STATE": {
         "APPROVED": "Approved",
         "REJECTED": "Rejected",
@@ -677,16 +678,36 @@
         }
       },
       "SUCCESS": {
-        "APPROVE": "Applications were successfully approved.",
-        "REJECT": "Applications were successfully rejected.",
-        "DELETE": "Applications were successfully deleted.",
+        "APPROVE": "Successfully approved",
+        "APPROVE_LINK": "{{count}} applications",
+        "APPROVE_LINK_SINGULAR": "{{count}} application",
+        "APPROVE_NOTIFICATION": "Applications were successfully approved.",
+        "APPROVE_DESCRIPTION": "Following applications were successfully approved.",
+        "REJECT": "Successfully rejected",
+        "REJECT_LINK": "{{count}} applications",
+        "REJECT_LINK_SINGULAR": "{{count}} application",
+        "REJECT_NOTIFICATION": "Applications were successfully rejected.",
+        "REJECT_DESCRIPTION": "Following applications were successfully rejected.",
+        "DELETE": "Successfully deleted",
+        "DELETE_LINK": "{{count}} applications",
+        "DELETE_LINK_SINGULAR": "{{count}} application",
+        "DELETE_NOTIFICATION": "Applications were successfully deleted.",
+        "DELETE_DESCRIPTION": "Following applications were successfully deleted.",
         "RESEND": "Notifications for applications were re-sent."
       },
       "ERROR": {
-        "APPROVE": "Failed to approve some applications.",
-        "APPROVE_DESCRIPTION": "A problem occurred during approval: [{{error}}] and not all of the selected applications got approved. There may still be some of the selected applications that could possibly be approved.",
-        "REJECT": "Failed to reject some applications.",
-        "REJECT_DESCRIPTION": "A problem occurred during rejection: [{{error}}] and not all of the selected applications got rejected. There may still be some of the selected applications that could possibly be rejected."
+        "APPROVE": "Failed to approve {{count}} applications",
+        "APPROVE_SINGULAR": "Failed to approve {{count}} application",
+        "APPROVE_NOTIFICATION": "Failed to approve some applications.",
+        "APPROVE_DESCRIPTION": "Following applications could not be approved due to errors.<br>The errors are listed in the table below.",
+        "REJECT": "Failed to reject {{count}} applications",
+        "REJECT_SINGULAR": "Failed to reject {{count}} application",
+        "REJECT_NOTIFICATION": "Failed to reject some applications.",
+        "REJECT_DESCRIPTION": "Following applications could not be rejected due to errors.<br>The errors are listed in the table below.",
+        "DELETE": "Failed to delete {{count}} applications",
+        "DELETE_SINGULAR": "Failed to delete {{count}} application",
+        "DELETE_NOTIFICATION": "Failed to delete some applications.",
+        "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below."
       },
 
       "APPLICATION_DETAIL": {
@@ -875,7 +896,8 @@
     "MODIFIED_AT": "Modified at",
     "USER": "User",
     "CREATED_BY": "Created by",
-    "VO_NAME": "Organization name"
+    "VO_NAME": "Organization name",
+    "ERROR": "Error"
   },
   "MEMBER_DETAIL": {
     "ENTITY": "Member",
@@ -3261,8 +3283,10 @@
         },
         "BUG_REPORT": {
           "TITLE": "Report a bug",
+          "BULK_TITLE": "Report bugs",
           "SUBJECT": "Subject",
           "SUBJECT_VALUE": "Reported error: ",
+          "BULK_SUBJECT_VALUE": "Errors on bulk call: ",
           "SUBJECT_ERROR": "Subject cannot be empty.",
           "MESSAGE": "Message",
           "MESSAGE_PLACEHOLDER": "Please describe your problem and which of your actions lead to this problem.",

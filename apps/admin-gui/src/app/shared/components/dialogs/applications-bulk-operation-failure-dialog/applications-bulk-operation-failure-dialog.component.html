@@ -1,0 +1,72 @@
+<div class="{{data.theme}}">
+  <div *ngIf="!displaySuccess">
+    <div mat-dialog-title class="mb-2">
+      <h3 *ngIf="applicationFailures.length === 1; else elseFailBlock">
+        {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_SINGULAR' | translate: {count: applicationFailures.length} }}
+      </h3>
+      <ng-template #elseFailBlock>
+        <h3>
+          {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action | translate: {count: applicationFailures.length} }}
+        </h3>
+      </ng-template>
+      <div class="font-italic text-muted">
+        {{ 'VO_DETAIL.APPLICATION.SUCCESS.' + data.action | translate }}
+        <a
+          *ngIf="applicationSuccesses.length > 0; else elseSuccessBlock"
+          (click)="onSuccessFailSwitch()"
+          class="{{ this.data.theme === 'group-theme' ? 'application-group-link' : 'application-vo-link' }}">
+          {{
+          applicationSuccesses.length === 1 ?
+            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_LINK_SINGULAR' | translate : {count: applicationSuccesses.length}) :
+            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_LINK' | translate : {count: applicationSuccesses.length})
+          }}
+        </a>
+        <ng-template #elseSuccessBlock>
+          {{ 'VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_LINK' | translate : {count: applicationSuccesses.length} }}
+        </ng-template>
+      </div>
+    </div>
+
+    <div mat-dialog-content>
+      <perun-web-apps-alert alert_type="error">
+        <div
+          [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_DESCRIPTION' | translate"></div>
+      </perun-web-apps-alert>
+      <app-application-operation-error-list
+        [appErrorPairs]="applicationFailures"
+        [displayedColumns]="displayedColumns"
+        [theme]="data.theme">
+      </app-application-operation-error-list>
+    </div>
+
+    <div mat-dialog-actions class="mb-3 mx-2">
+      <button
+        color="primary"
+        class="me-2 align-content-start"
+        mat-flat-button
+        (click)="reportBugs()">
+        Report bugs
+      </button>
+      <button class="ms-auto me-2" mat-stroked-button (click)="onClose()">Close</button>
+    </div>
+  </div>
+
+  <div *ngIf="displaySuccess">
+    <div mat-dialog-content>
+      <perun-web-apps-alert alert_type="success">
+        <div
+          [innerHTML]="'VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_DESCRIPTION' | translate"></div>
+      </perun-web-apps-alert>
+      <app-application-operation-error-list
+        [appErrorPairs]="applicationSuccesses"
+        [displayedColumns]="displayedColumnsSuccess"
+        [theme]="data.theme">
+      </app-application-operation-error-list>
+    </div>
+    <div mat-dialog-actions>
+      <button class="ms-auto me-2 mb-3" mat-stroked-button (click)="onSuccessFailSwitch()">
+        Back
+      </button>
+    </div>
+  </div>
+</div>

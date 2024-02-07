@@ -171,6 +171,7 @@ export interface PerunConfig {
   config: string;
   user_deletion_forced?: boolean;
   // Optional
+  bulk_bug_report_max_items?: number;
   login_namespace_attributes?: string[];
   profile_label_en?: string;
   allow_empty_sponsor_namespace?: boolean;

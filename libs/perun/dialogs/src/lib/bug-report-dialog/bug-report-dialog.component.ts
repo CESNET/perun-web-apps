@@ -7,11 +7,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { RPCError } from '@perun-web-apps/perun/models';
-import { RTMessagesManagerService } from '@perun-web-apps/perun/openapi';
+import { PerunException, RTMessagesManagerService } from '@perun-web-apps/perun/openapi';
 declare let require: any;
 
 export interface BugReportData {
   error: RPCError;
+  bulkIdErrorPairs: [number, PerunException][];
+  bulkCall: string;
+  bulkMessage: string;
 }
 
 @Component({
@@ -24,6 +27,7 @@ export class BugReportDialogComponent implements OnInit {
   subject = '';
   methodRegexp = /(\w+\/\w+)$/g;
   loading = false;
+  bulkReport = false;
 
   constructor(
     public dialogRef: MatDialogRef<BugReportDialogComponent>,
@@ -35,6 +39,7 @@ export class BugReportDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.bulkReport = !!this.data?.bulkIdErrorPairs;
     if (this.data?.error?.errorId) {
       this.subject = ''.concat(
         this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.SUBJECT_VALUE') as string,
@@ -44,12 +49,24 @@ export class BugReportDialogComponent implements OnInit {
         ')',
       );
     }
+    if (this.bulkReport) {
+      this.subject = ''.concat(
+        this.translate.instant(
+          'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.BULK_SUBJECT_VALUE',
+        ) as string,
+        this.parseMethod(this.data.bulkCall),
+      );
+    }
   }
 
   sendBugReport(): void {
     this.loading = true;
     this.rtMessages
-      .sentMessageToRTWithQueue('perun', this.subject, this.getFullEmailBody())
+      .sentMessageToRTWithQueue(
+        'perun',
+        this.subject,
+        this.bulkReport ? this.getFullEmailBodyBulk() : this.getFullEmailBody(),
+      )
       .subscribe(
         (rtMessage) => {
           this.dialogRef.afterClosed().subscribe(() => {
@@ -103,6 +120,60 @@ export class BugReportDialogComponent implements OnInit {
       payload = payload.replace(re, '"password":"####"');
       text = text.concat('Payload:\n' + payload + '\n\n');
     }
+
+    text = text.concat(
+      'Sent from new Perun Gui, version: ',
+      require('../../../../../../package.json').version as string,
+    );
+    return text.split('\n').join('\n '); //add space after each new line
+  }
+
+  getFullEmailBodyBulk(): string {
+    const instance: string = this.storeService.getProperty('config');
+    let text =
+      this.message +
+      '\n' +
+      '------------------------\n' +
+      'Technical details:\n\n' +
+      this.data.bulkMessage +
+      '\n\n';
+
+    for (
+      let i = 0;
+      i <
+      Math.min(
+        this.data.bulkIdErrorPairs.length,
+        this.storeService.getProperty('bulk_bug_report_max_items'),
+      );
+      i++
+    ) {
+      text = text.concat(
+        this.data.bulkIdErrorPairs[i][0].toString() +
+          ': ' +
+          this.data.bulkIdErrorPairs[i][1].message +
+          '\n',
+      );
+    }
+    if (
+      this.storeService.getProperty('bulk_bug_report_max_items') < this.data.bulkIdErrorPairs.length
+    ) {
+      const numOfLeftOut =
+        this.data.bulkIdErrorPairs.length -
+        this.storeService.getProperty('bulk_bug_report_max_items');
+      text = text.concat(
+        '... and ',
+        numOfLeftOut.toString(),
+        numOfLeftOut > 1 ? ' others.\n' : ' other.\n',
+      );
+    }
+    text = text.concat(
+      '\nPerun instance: ',
+      instance,
+      '\n',
+      'Request:\n',
+      this.data.bulkCall,
+      '\n\n',
+    );
 
     text = text.concat(
       'Sent from new Perun Gui, version: ',

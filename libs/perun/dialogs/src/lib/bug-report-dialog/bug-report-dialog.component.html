@@ -3,7 +3,12 @@
 </ng-template>
 <div class="position-relative">
   <div *perunWebAppsLoader="loading; indicator: spinner">
-    <h1 mat-dialog-title>{{'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.TITLE' | translate}}</h1>
+    <h1 *ngIf="!bulkReport" mat-dialog-title>
+      {{'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.TITLE' | translate}}
+    </h1>
+    <h1 *ngIf="bulkReport" mat-dialog-title>
+      {{'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.BULK_TITLE' | translate}}
+    </h1>
     <div class="dialog-container" mat-dialog-content>
       <mat-form-field>
         <mat-label>{{'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.SUBJECT' | translate}}</mat-label>

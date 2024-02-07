@@ -20,7 +20,6 @@ export class NotificationComponent implements OnInit {
 
   alreadyPressed = false;
   alreadyClosed = false;
-  waiting = false;
 
   constructor(
     private dialog: MatDialog,
@@ -64,7 +63,7 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     void doAfterDelay(this.data.delay, () => {
-      if (!this.alreadyClosed && !this.waiting) {
+      if (!this.alreadyClosed) {
         this.closeSelf();
       }
     });

@@ -1,0 +1,16 @@
+<div class="{{ data.theme }}">
+  <h1 mat-dialog-title>{{data.error.name}}</h1>
+  <div mat-dialog-content>
+    {{data.error.message}}
+  </div>
+  <div mat-dialog-actions>
+    <div class="ms-auto">
+      <button (click)="onBugReport()" mat-flat-button color="primary">
+        {{'SHARED_LIB.PERUN.COMPONENTS.NOTIFICATOR.NOTIFICATION.DIALOG_BUG_REPORT' | translate}}
+      </button>
+      <button (click)="onClose()" autofocus class="ms-2" mat-stroked-button>
+        {{'SHARED_LIB.PERUN.COMPONENTS.NOTIFICATOR.NOTIFICATION.DIALOG_CLOSE' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
