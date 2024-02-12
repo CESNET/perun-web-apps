@@ -29,5 +29,4 @@ export * from './lib/show-ssh-dialog/show-ssh-dialog.component';
 export * from './lib/show-notification-history-dialog/show-notification-history-dialog.component';
 export * from './lib/delete-user-dialog/delete-user-dialog.component';
 export * from './lib/password-reset-dialog/password-reset-dialog.component';
-export * from './lib/exception-detail-dialog/exception-detail-dialog.component';
 export * from './lib/bug-report-dialog/bug-report-dialog.component';

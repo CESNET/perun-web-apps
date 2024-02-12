@@ -23,6 +23,7 @@ export class ApplicationsBulkOperationFailureDialogComponent implements OnInit {
   displaySuccess = false;
   displayedColumns: string[];
   displayedColumnsSuccess: string[];
+  selectedApplicationResults: [Application, PerunException][] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ApplicationsBulkOperationFailureDialogComponent>,
@@ -41,27 +42,30 @@ export class ApplicationsBulkOperationFailureDialogComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
-  onSuccessFailSwitch(): void {
-    this.displaySuccess = !this.displaySuccess;
+  onSelectedApplicationResultsChange(applicationResults: [Application, PerunException][]): void {
+    this.selectedApplicationResults = applicationResults;
   }
 
   reportBugs(): void {
     const config = getDefaultDialogConfig();
     config.width = '550px';
 
-    config.data = {
-      bulkIdErrorPairs: this.applicationFailures.map(([application, exception]) => [
-        application.id,
-        exception,
-      ]),
-      bulkCall: (this.applicationFailures[0][1] as RPCError).call,
-      bulkMessage:
-        'Failed to ' +
-        this.data.action.toLowerCase() +
-        ' ' +
-        this.applicationFailures.length.toString() +
-        ' applications with these errors:',
-    };
+    config.data =
+      this.selectedApplicationResults.length !== 1
+        ? {
+            bulkIdErrorPairs: this.selectedApplicationResults.map(([application, exception]) => [
+              application.id,
+              exception,
+            ]),
+            bulkCall: (this.applicationFailures[0][1] as RPCError).call,
+            bulkMessage:
+              'Failed to ' +
+              this.data.action.toLowerCase() +
+              ' ' +
+              this.selectedApplicationResults.length.toString() +
+              ' applications with these errors:',
+          }
+        : { error: this.selectedApplicationResults[0][1] };
     config.autoFocus = false;
 
     this.dialog.open(BugReportDialogComponent, config);
