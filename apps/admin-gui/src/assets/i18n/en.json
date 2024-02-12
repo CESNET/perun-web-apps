@@ -1152,6 +1152,7 @@
     }
   },
   "DIALOGS": {
+    "NAME_SPACE_ERROR": "Entity names cannot contain spaces at the beginning nor the end.",
     "GROUP_SYNC_DETAIL": {
       "TITLE": "Group synchronization detail",
       "FORCE": "Force synchronization",

@@ -23,7 +23,10 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.EDIT_FACILITY_RESOURCE_GROUP_VO.NAME' | translate}}:</mat-label>
         <input [formControl]="nameCtrl" matInput required />
-        <mat-error>
+        <mat-error *ngIf="nameCtrl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!nameCtrl.errors?.['spaceName']">
           {{invalidNameMessage.length ? invalidNameMessage : ('DIALOGS.EDIT_FACILITY_RESOURCE_GROUP_VO.FILL_NAME' | translate)}}
         </mat-error>
       </mat-form-field>

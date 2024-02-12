@@ -23,7 +23,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { formatDate } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
 import { saveAs } from 'file-saver';
-import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Urns } from '@perun-web-apps/perun/urns';
 
 export const TABLE_ITEMS_COUNT_OPTIONS = [5, 10, 25, 100, 1000];
@@ -874,4 +874,19 @@ export function containsExactlyInAnyOrder(array1: string[], array2: string[]): b
  */
 export function isRunningLocally(): boolean {
   return location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+}
+
+/**
+ * Validator that checks entity names for spaces at the start and end
+ */
+export function spaceNameValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value as string;
+    if (!value) {
+      // Return null if the control value is empty (no validation error)
+      return null;
+    }
+    // Return an error if the string has a space at the start or end
+    return value.trim() !== value ? { spaceName: true } : null;
+  };
 }

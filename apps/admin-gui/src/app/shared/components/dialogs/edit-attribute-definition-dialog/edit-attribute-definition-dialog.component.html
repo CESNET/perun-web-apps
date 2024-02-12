@@ -10,6 +10,9 @@
           <mat-form-field>
             <mat-label>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.DISPLAY_NAME' | translate}}</mat-label>
             <input matInput data-cy="display-name-input" formControlName="name" required />
+            <mat-error *ngIf="attributeControl.hasError('spaceName', 'name')">
+              {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+            </mat-error>
             <mat-error *ngIf="attributeControl.hasError('required', 'name')">
               {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
             </mat-error>

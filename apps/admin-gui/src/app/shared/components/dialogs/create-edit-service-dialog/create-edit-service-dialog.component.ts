@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface CreateServiceDialogData {
   theme: string;
@@ -23,13 +24,14 @@ export class CreateEditServiceDialogComponent implements OnInit {
   status = true;
   propagateExpiredMembers = true;
 
-  nameControl = new UntypedFormControl('', [
+  nameControl = new FormControl('', [
     Validators.required,
     Validators.pattern('^[a-zA-Z0-9_]+$'),
+    spaceNameValidator(),
   ]);
-  delayControl = new UntypedFormControl(10, [Validators.pattern('^[0-9]*$')]);
-  recurrenceControl = new UntypedFormControl(2, [Validators.pattern('^[0-9]*$')]);
-  pathControl = new UntypedFormControl('', [Validators.required]);
+  delayControl = new FormControl(10, [Validators.pattern('^[0-9]*$')]);
+  recurrenceControl = new FormControl(2, [Validators.pattern('^[0-9]*$')]);
+  pathControl = new FormControl('', [Validators.required]);
 
   asEdit = false;
   title: string;
@@ -69,27 +71,27 @@ export class CreateEditServiceDialogComponent implements OnInit {
     this.serviceManager
       .createServiceWithService({
         service: {
-          name: this.nameControl.value as string,
+          name: this.nameControl.value,
           description: this.description,
-          delay: this.delayControl.value as number,
-          recurrence: this.recurrenceControl.value as number,
+          delay: this.delayControl.value,
+          recurrence: this.recurrenceControl.value,
           enabled: this.status,
-          script: this.pathControl.value as string,
+          script: this.pathControl.value,
           useExpiredMembers: this.propagateExpiredMembers,
           id: 0,
           beanName: '',
         },
       })
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.notificator.showSuccess(
             this.translate.instant('DIALOGS.CREATE_EDIT_SERVICE.CREATE_SUCCESS') as string,
           );
           this.dialogRef.close(true);
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
   }
 
   onEdit(): void {
@@ -97,27 +99,27 @@ export class CreateEditServiceDialogComponent implements OnInit {
     this.serviceManager
       .updateService({
         service: {
-          name: this.nameControl.value as string,
+          name: this.nameControl.value,
           description: this.description,
-          delay: this.delayControl.value as number,
-          recurrence: this.recurrenceControl.value as number,
+          delay: this.delayControl.value,
+          recurrence: this.recurrenceControl.value,
           enabled: this.status,
-          script: this.pathControl.value as string,
+          script: this.pathControl.value,
           useExpiredMembers: this.propagateExpiredMembers,
           id: this.data.service.id,
           beanName: this.data.service.beanName,
         },
       })
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.notificator.showSuccess(
             this.translate.instant('DIALOGS.CREATE_EDIT_SERVICE.EDIT_SUCCESS') as string,
           );
           this.dialogRef.close(true);
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
   }
 
   onCancel(): void {
@@ -125,7 +127,7 @@ export class CreateEditServiceDialogComponent implements OnInit {
   }
 
   makePath(): void {
-    const path = './'.concat(this.nameControl.value as string);
+    const path = './'.concat(this.nameControl.value);
     this.pathControl.setValue(path);
   }
 }

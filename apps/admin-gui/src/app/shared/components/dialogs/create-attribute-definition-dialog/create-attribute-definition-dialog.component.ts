@@ -18,6 +18,7 @@ import {
   AttributeValueType,
 } from '@perun-web-apps/perun/models';
 import { DisableUniqueAttributePipe } from '@perun-web-apps/perun/pipes';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-create-attribute-definition-dialog',
@@ -28,8 +29,8 @@ import { DisableUniqueAttributePipe } from '@perun-web-apps/perun/pipes';
 export class CreateAttributeDefinitionDialogComponent {
   loading = false;
   attributeControl = this.formBuilder.group({
-    friendlyName: ['', Validators.required],
-    displayName: ['', Validators.required],
+    friendlyName: ['', [Validators.required, spaceNameValidator()]],
+    displayName: ['', [Validators.required, spaceNameValidator()]],
     description: ['', Validators.required],
     entity: ['', Validators.required],
     definitionType: ['', Validators.required],

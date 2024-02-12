@@ -8,7 +8,10 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_GROUP.NAME' | translate}}</mat-label>
         <input [formControl]="nameControl" matInput data-cy="group-name" required />
-        <mat-error>
+        <mat-error *ngIf="nameControl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!nameControl.errors?.['spaceName']">
           {{invalidNameMessage.length ? invalidNameMessage : ('DIALOGS.CREATE_GROUP.FILL_VALUE' | translate)}}
         </mat-error>
       </mat-form-field>

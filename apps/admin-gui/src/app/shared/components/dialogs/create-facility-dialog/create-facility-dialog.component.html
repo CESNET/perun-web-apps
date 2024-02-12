@@ -8,7 +8,13 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_FACILITY.NAME' | translate}}</mat-label>
         <input matInput required data-cy="facility-name-input" [formControl]="nameControl" />
-        <mat-error>{{"DIALOGS.CREATE_FACILITY.REQUIRE_NAME" | translate}}</mat-error>
+        <mat-error *ngIf="nameControl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error
+          *ngIf="!nameControl.errors?.['spaceName']"
+          >{{"DIALOGS.CREATE_FACILITY.REQUIRE_NAME" | translate}}</mat-error
+        >
       </mat-form-field>
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_FACILITY.DESCRIPTION' | translate}}</mat-label>

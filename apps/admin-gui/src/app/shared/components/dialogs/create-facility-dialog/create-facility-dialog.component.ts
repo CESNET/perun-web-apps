@@ -3,8 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FacilitiesManagerService, Facility } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface CreateFacilityDialogData {
   theme: string;
@@ -17,8 +18,8 @@ export interface CreateFacilityDialogData {
 })
 export class CreateFacilityDialogComponent implements OnInit {
   theme: string;
-  nameControl = new UntypedFormControl('', [Validators.required]);
-  descControl = new UntypedFormControl('');
+  nameControl = new FormControl('', [Validators.required, spaceNameValidator()]);
+  descControl = new FormControl('');
   facilities: Facility[];
   srcFacility: Facility = null;
   loading = false;
@@ -38,20 +39,20 @@ export class CreateFacilityDialogComponent implements OnInit {
     this.theme = this.data.theme;
 
     this.loading = true;
-    this.facilitiesManager.getAllFacilities().subscribe(
-      (facilities) => {
+    this.facilitiesManager.getAllFacilities().subscribe({
+      next: (facilities) => {
         this.facilities = facilities;
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   onCreate(configure: boolean): void {
     this.loading = true;
     this.configure = configure;
     this.facilitiesManager
-      .createFacility(this.nameControl.value as string, this.descControl.value as string)
+      .createFacility(this.nameControl.value, this.descControl.value)
       .subscribe({
         next: (facility) => {
           this.entityStorageService.setEntity({ id: facility.id, beanName: facility.beanName });
