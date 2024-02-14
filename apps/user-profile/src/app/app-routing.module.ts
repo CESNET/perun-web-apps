@@ -6,7 +6,7 @@ import { GroupsPageComponent } from './pages/groups-page/groups-page.component';
 import { ServicesPageComponent } from './pages/services-page/services-page.component';
 import { VosPageComponent } from './pages/vos-page/vos-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
-import { SettingsAlternativePasswordsComponent } from './pages/settings-page/settings-alternative-passwords/settings-alternative-passwords.component';
+import { AuthenticationAlternativePasswordsComponent } from './pages/authentication-page/authentication-alternative-passwords/authentication-alternative-passwords.component';
 import { SettingsOverviewComponent } from './pages/settings-page/settings-overview/settings-overview.component';
 import { SettingsPreferredShellsComponent } from './pages/settings-page/settings-preferred-shells/settings-preferred-shells.component';
 import { SettingsPreferredUnixGroupNamesComponent } from './pages/settings-page/settings-preferred-unix-group-names/settings-preferred-unix-group-names.component';
@@ -136,7 +136,7 @@ const routes: Routes = [
           },
           {
             path: 'altPasswords',
-            component: SettingsAlternativePasswordsComponent,
+            component: AuthenticationAlternativePasswordsComponent,
             data: { breadcrumb: 'AUTHENTICATION.ALTERNATIVE_PASSWORDS' },
           },
         ],

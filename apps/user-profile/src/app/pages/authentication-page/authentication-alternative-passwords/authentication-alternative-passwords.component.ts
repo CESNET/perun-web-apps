@@ -10,11 +10,11 @@ import { RemoveAltPasswordDialogComponent } from '../../../components/dialogs/re
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
-  selector: 'perun-web-apps-settings-alternative-passwords',
-  templateUrl: './settings-alternative-passwords.component.html',
-  styleUrls: ['./settings-alternative-passwords.component.scss'],
+  selector: 'perun-web-apps-authentication-alternative-passwords',
+  templateUrl: './authentication-alternative-passwords.component.html',
+  styleUrls: ['./authentication-alternative-passwords.component.scss'],
 })
-export class SettingsAlternativePasswordsComponent implements OnInit {
+export class AuthenticationAlternativePasswordsComponent implements OnInit {
   altPasswordCtrl = new UntypedFormControl(null, [Validators.required]);
   userId = this.store.getPerunPrincipal().userId;
   removeDialogTitle: string;
