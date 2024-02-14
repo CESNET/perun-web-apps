@@ -23,3 +23,29 @@
   padding-top: 10px;
   margin: 10px;
 }
+
+.beta-warning {
+  overflow: hidden;
+  height: 48px;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  background-color: rgb(255, 191, 197);
+  width: 100%;
+  color: #d32f2f;
+  text-align: center;
+  font-weight: 500;
+  padding: 6px;
+  line-height: 36px;
+  font-size: 1rem;
+}
+
+.nav-menu {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  max-height: 64px;
+}

@@ -30,7 +30,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   login: string;
   validToken: boolean;
   authWithoutToken = false;
-  contentHeight = 'calc(100vh - 84px)';
+  displayWarning: boolean = this.store.getProperty('display_warning');
+  warningMessage: string = this.store.getProperty('warning_message');
+  contentHeight = this.displayWarning ? 'calc(100vh - 132px)' : 'calc(100vh - 84px)';
   contentBackgroundColor = this.store.getProperty('theme').content_bg_color;
   isServiceAccess: boolean;
   showLoginScreen: boolean;
@@ -82,7 +84,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const footerHeight: string = this.footer?.nativeElement?.offsetHeight?.toString() ?? '0';
-    this.contentHeight = 'calc(100vh - 84px - ' + footerHeight + 'px)';
+    this.contentHeight =
+      (this.displayWarning ? 'calc(100vh - 132px - ' : 'calc(100vh - 84px - ') +
+      footerHeight +
+      'px)';
     this.changeDetector.detectChanges();
+  }
+
+  getNavMenuTop(): string {
+    return this.displayWarning ? '48px' : '0';
+  }
+
+  getSideNavMarginTop(): string {
+    return this.displayWarning ? '112px' : '64px';
   }
 }
