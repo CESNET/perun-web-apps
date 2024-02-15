@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Application, PerunException } from '@perun-web-apps/perun/openapi';
@@ -8,8 +16,9 @@ import {
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { ExceptionDetailDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-application-operation-error-list',
@@ -23,9 +32,12 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   displayedColumns: string[] = [];
   @Input()
   theme: string;
+  @Output()
+  selectedApplicationResults = new EventEmitter<[Application, PerunException][]>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<[Application, PerunException]>;
+  selection = new SelectionModel<[Application, PerunException]>(true, []);
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   clickable = true;
   private sort: MatSort;
@@ -84,6 +96,9 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
           column: string,
         ) => string,
       );
+    this.selection.changed.subscribe((change) => {
+      this.selectedApplicationResults.emit(change.source.selected);
+    });
   }
 
   ngAfterViewInit(): void {
@@ -92,10 +107,22 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
     }
   }
 
+  isAllSelected(): boolean {
+    return this.selection.selected.length === this.dataSource.data.length;
+  }
+
+  masterToggle(): void {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.dataSource.data.forEach((row) => this.selection.select(row));
+    }
+  }
+
   openExceptionDetail(exception: PerunException): void {
-    this.dialog.open(ExceptionDetailDialogComponent, {
+    this.dialog.open(NotificationDialogComponent, {
       width: '550px',
-      data: { error: exception, theme: this.theme },
+      data: { title: exception.name, description: exception.message, type: 'success' },
       autoFocus: false,
     });
   }

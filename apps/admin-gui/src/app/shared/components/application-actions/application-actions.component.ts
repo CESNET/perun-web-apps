@@ -82,8 +82,9 @@ export class ApplicationActionsComponent implements OnInit {
   prependColumns = ['checkbox', 'id'];
   groupPrependColumns = ['groupId', 'groupName'];
   simpleColumns: string[] = ['createdAt', 'type', 'state', 'createdBy', 'modifiedBy'];
-  bulkOperationFailureColumns = ['id', 'createdAt', 'createdBy', 'error'];
+  bulkOperationFailureColumns = ['checkbox', 'id', 'createdAt', 'createdBy', 'error'];
   bulkOperationFailureGroupColumns = [
+    'checkbox',
     'id',
     'groupId',
     'groupName',
