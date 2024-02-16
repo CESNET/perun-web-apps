@@ -24,7 +24,7 @@ variables:
   CYPRESS_COMMERCIAL_RECOMMENDATIONS: 0
   CYPRESS_PORT: 8082
   XDG_CACHE_HOME: "/tmp/xdgcachehome/"
-  RPC_VERSION: v33.2.0 # TODO: update using renovate
+  RPC_VERSION: v34.0.0 # TODO: update using renovate
   FF_NETWORK_PER_BUILD: "true"
   # for debugging only: CI_DEBUG_SERVICES: "true"
 

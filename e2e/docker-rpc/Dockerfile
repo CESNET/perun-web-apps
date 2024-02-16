@@ -1,4 +1,4 @@
-ARG RPC_VERSION="v33.2.0"
+ARG RPC_VERSION="v34.0.0"
 ARG CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=""
 
 #FROM registry.gitlab.ics.muni.cz/perun/perun_docker/perun_rpc:$RPC_VERSION
