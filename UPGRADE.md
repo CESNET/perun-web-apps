@@ -1,5 +1,26 @@
 Upgrade notes
 
+## [15.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.2.0...v15.3.0) (2024-02-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** new config propery bulk_bug_report_max_items specifying
+limit on displayed error messages in the bulk bug report
+
+### Features
+
+* **admin:** check for spaces at start and end of names ([2db25b2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2db25b2a1d5c0cad24beccccfc9ec523d47f9ef2))
+* **admin:** display warning label and app name also before login ([d96ad9c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d96ad9c795c164e183c474389130aa6b8ce048ac))
+* **admin:** partial success allowed on bulk operations with applications ([07c2c81](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/07c2c81581e0ba0dfe9cc82c66181f731796b2d0))
+* **pwdreset:** add warning message ([c18db95](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c18db95fb7ff70301b0b3f3c222e7c65168ad167))
+
+
+### Bug Fixes
+
+* **admin:** application bulk operation dialog ui fixes ([f9f9f2c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f9f9f2c9e3388dacc72f0994023d4b8d9b23b11a))
+* **admin:** fix notification dialog inputs keeping information upon cancel ([084d078](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/084d078b54978b19cc5b27f8efe4409b992923cd))
+
 ## [15.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.1.0...v15.2.0) (2024-01-30)
 
 
