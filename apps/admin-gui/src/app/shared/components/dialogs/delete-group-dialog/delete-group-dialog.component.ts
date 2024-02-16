@@ -36,8 +36,15 @@ export class DeleteGroupDialogComponent implements OnInit {
   ngOnInit(): void {
     this.theme = this.data.theme;
     this.dataSource = new MatTableDataSource<Group>(this.data.groups);
-    this.relations.push(this.translate.instant('DIALOGS.DELETE_GROUP.SUBGROUP_RELATION') as string);
-    this.relations.push(this.translate.instant('DIALOGS.DELETE_GROUP.MEMBER_RELATION') as string);
+    this.relations = [
+      'DIALOGS.DELETE_GROUP.SUBGROUP_RELATION',
+      'DIALOGS.DELETE_GROUP.MEMBER_RELATION',
+      'DIALOGS.DELETE_GROUP.RESOURCE_RELATION',
+      'DIALOGS.DELETE_GROUP.ROLE_RELATION',
+      'DIALOGS.DELETE_GROUP.OTHER_GROUP_RELATION',
+      'DIALOGS.DELETE_GROUP.ATTRIBUTE_RELATION',
+      'DIALOGS.DELETE_GROUP.SUBGROUP_OTHER_RELATION',
+    ].map((key) => this.translate.instant(key) as string);
   }
 
   onCancel(): void {
