@@ -29,6 +29,7 @@ git_push.sh
 index.ts
 model/actionType.ts
 model/addUserExtSourceInput.ts
+model/addUserExtSourceWithAttributesInput.ts
 model/appState.ts
 model/appType.ts
 model/application.ts

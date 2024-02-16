@@ -6,7 +6,7 @@ services:
       POSTGRESQL_USERNAME: perun
       POSTGRESQL_PASSWORD: test
       POSTGRESQL_DATABASE: perun
-      RPC_VERSION: &rpc_version v33.2.0 # TODO: update using renovate
+      RPC_VERSION: &rpc_version v34.0.0 # TODO: update using renovate
     networks:
       - e2e-net
   perun-rpc:

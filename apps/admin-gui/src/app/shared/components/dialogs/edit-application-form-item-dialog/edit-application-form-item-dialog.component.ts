@@ -193,25 +193,18 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
       this.disabledDependencyItem === NO_FORM_ITEM ? null : this.disabledDependencyItem.id;
 
     for (const lang of this.languages) {
-      // check if (forbidden) input should be escaped
       if (
         this.applicationFormItem.type === 'HTML_COMMENT' ||
-        this.applicationFormItem.type === 'HEADING'
+        this.applicationFormItem.type === 'HEADING' ||
+        this.applicationFormItem.type === 'CHECKBOX'
       ) {
-        this.applicationFormItem.i18n[lang].label = this.escapeService.escapeDangerousHtml(
-          this.inputFormGroup.get(`${lang}-html-label`).value,
-        ).escapedHtml;
+        this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
+          `${lang}-html-label`,
+        ).value;
       } else {
-        if (this.applicationFormItem.type === 'CHECKBOX') {
-          // checkbox also allows html labels, but still has error/help message
-          this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
-            `${lang}-html-label`,
-          ).value;
-        } else {
-          this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
-            `${lang}-plain-label`,
-          ).value;
-        }
+        this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
+          `${lang}-plain-label`,
+        ).value;
         this.applicationFormItem.i18n[lang].errorMessage = this.inputFormGroup.get(
           `${lang}-plain-error-message`,
         ).value;
@@ -325,9 +318,9 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
         this.applicationFormItem.type === 'HTML_COMMENT' ||
         this.applicationFormItem.type === 'HEADING'
       ) {
+        // async validator is set in a separate component
         formGroupFields[`${lang}-html-label`] = new FormControl(
           this.applicationFormItem.i18n[lang].label,
-          [this.escapeService.htmlContentValidator()],
         );
         formGroupFields[`${lang}-html-label`].markAsTouched();
       }

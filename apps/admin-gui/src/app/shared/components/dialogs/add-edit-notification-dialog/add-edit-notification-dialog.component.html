@@ -143,56 +143,53 @@
                       <span class="fw-bold pe-2">
                         {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SUBJECT' | translate}}:
                       </span>
-                      <mat-form-field class="w-100" subscriptSizing="dynamic">
-                        <div #Input>
-                          <input
-                            *ngIf="format === 'plain'"
-                            formControlName="{{lang}}-plain-subject"
-                            (focus)="isTextFocused = false"
-                            matInput />
-                          <input
-                            *ngIf="format === 'html'"
-                            formControlName="{{lang}}-html-subject"
-                            (focus)="isTextFocused = false"
-                            matInput />
-                        </div>
-                        <mat-error *ngIf="inputFormGroup.controls[lang + '-html-subject']?.invalid">
-                          {{inputFormGroup.controls[lang + '-html-subject'].errors?.invalidHtmlContent}}
-                        </mat-error>
+
+                      <mat-form-field
+                        *ngIf="format === 'plain'"
+                        class="w-100"
+                        subscriptSizing="dynamic">
+                        <input
+                          id="{{subjectId}}"
+                          formControlName="{{lang}}-plain-subject"
+                          (focus)="isTextFocused = false"
+                          matInput />
                       </mat-form-field>
+                      <perun-web-apps-html-content-form-field
+                        *ngIf="format === 'html'"
+                        [inputFormControl]="inputFormGroup.controls[lang + '-html-subject']"
+                        [tagType]="'input'"
+                        [tabId]="subjectId"
+                        [cd]="cd" />
                     </div>
                     <div class="fw-bold">
                       {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
                     </div>
 
-                    <mat-form-field class="w-100" subscriptSizing="dynamic">
-                      <div #Textarea>
-                        <textarea
-                          *ngIf="format === 'plain'"
-                          matInput
-                          formControlName="{{lang}}-plain-text"
-                          (focus)="isTextFocused = true"
-                          rows="17">
-                        </textarea>
-                        <textarea
-                          *ngIf="format === 'html'"
-                          formControlName="{{lang}}-html-text"
-                          matInput
-                          (focus)="isTextFocused = true"
-                          rows="17">
-                        </textarea>
-                      </div>
-                      <mat-error *ngIf="inputFormGroup.controls[lang + '-html-text']?.invalid">
-                        {{inputFormGroup.controls[lang + '-html-text'].errors?.invalidHtmlContent}}
-                      </mat-error>
+                    <mat-form-field
+                      *ngIf="format === 'plain'"
+                      class="w-100"
+                      subscriptSizing="dynamic">
+                      <textarea
+                        id="{{textareaId}}"
+                        matInput
+                        formControlName="{{lang}}-plain-text"
+                        (focus)="isTextFocused = true"
+                        rows="17">
+                      </textarea>
                     </mat-form-field>
+                    <perun-web-apps-html-content-form-field
+                      *ngIf="format === 'html'"
+                      [inputFormControl]="inputFormGroup.controls[lang + '-html-text']"
+                      [tagType]="'textarea'"
+                      [tabId]="textareaId"
+                      [cd]="cd"
+                      [minRows]="17" />
                   </div>
 
                   <mat-divider *ngIf="showTags" class="ms-3 me-3" vertical="true"></mat-divider>
 
                   <div [@tagsOpenClose]="showTags ? 'open' : 'closed'">
-                    <app-tag-bar (addedTag)="addTag(Input, Textarea, lang, $event, format)">
-                    </app-tag-bar>
+                    <app-tag-bar (addedTag)="addTag(lang, $event, format)"> </app-tag-bar>
                   </div>
                 </div>
               </mat-tab>
@@ -210,7 +207,7 @@
         *ngIf="data.createMailNotification"
         class="ms-2"
         color="accent"
-        [disabled]="invalidNotification || inputFormGroup.invalid"
+        [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending"
         mat-flat-button>
         {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
       </button>
@@ -221,13 +218,13 @@
         <div
           [matTooltipDisabled]="!inputFormGroup.invalid"
           [matTooltipPosition]="'above'"
-          matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_HTML_TAGS' | translate}}">
+          matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_HTML_CONTENT' | translate}}">
           <button
             (click)="save()"
             *ngIf="!data.createMailNotification"
             class="ms-2"
             color="accent"
-            [disabled]="!editAuth || inputFormGroup.invalid"
+            [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending"
             mat-flat-button>
             {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
           </button>

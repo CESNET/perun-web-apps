@@ -1514,7 +1514,7 @@
       "DISABLED_DESCRIPTION": "When the item should be disabled during the submission.",
       "DISABLED_DEPENDENCY": "Disabled dependency",
       "DISABLED_DEPENDENCY_DESCRIPTION": "Other form item, which is used to decide, if this one should be disabled.",
-      "HTML_INVALID_TAGS":"The HTML part of this form item contains invalid tags. Please remove them and try again."
+      "INVALID_HTML_CONTENT": "The HTML part of this form item contains invalid content."
     },
     "APPLICATION_FORM_DELETE_MAIL": {
       "TITLE": "Confirm delete action",
@@ -1564,7 +1564,7 @@
       "CREATE_BUTTON": "Create",
       "SAVE_BUTTON": "Save",
       "EDIT_HINT": "You don't have permission to edit notifications.",
-      "INVALID_HTML_TAGS": "The HTML part of notification contains invalid tags. Please remove them and try again.",
+      "INVALID_HTML_CONTENT": "The HTML part of notification contains invalid content.",
       "BASIC_SETTINGS": "Basic settings",
       "EMAIL_TYPE": "Email type",
       "EMAIL_TYPE_DESCRIPTION_CREATE": "Selected type of notification (action which triggers sending and who is notified).",

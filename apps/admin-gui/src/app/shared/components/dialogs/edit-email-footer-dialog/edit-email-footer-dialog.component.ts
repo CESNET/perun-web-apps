@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { HtmlEscapeService, NotificatorService } from '@perun-web-apps/perun/services';
+import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { FormControl } from '@angular/forms';
@@ -21,7 +21,8 @@ export class EditEmailFooterDialogComponent implements OnInit {
   mailFooter = '';
   theme: string;
   loading = false;
-  htmlInput = new FormControl('', [this.escapeInput.htmlContentValidator()]);
+  // async validator is set in a separate component
+  htmlInput = new FormControl('');
   plainEdithAuth: boolean;
   htmlEditAuth: boolean;
   formats = ['plain', 'html'];
@@ -33,7 +34,6 @@ export class EditEmailFooterDialogComponent implements OnInit {
     private attributesManager: AttributesManagerService,
     private translateService: TranslateService,
     private notificator: NotificatorService,
-    private escapeInput: HtmlEscapeService,
     @Inject(MAT_DIALOG_DATA) public data: ApplicationFormEmailFooterDialogData,
   ) {}
 
