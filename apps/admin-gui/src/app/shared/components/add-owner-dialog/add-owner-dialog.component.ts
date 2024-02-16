@@ -3,8 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { InputCreateOwner, OwnersManagerService } from '@perun-web-apps/perun/openapi';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { FormControl, Validators } from '@angular/forms';
+import { emailRegexString, spaceNameValidator } from '@perun-web-apps/perun/utils';
 import OwnerTypeEnum = InputCreateOwner.OwnerTypeEnum;
 
 @Component({
@@ -15,8 +15,8 @@ import OwnerTypeEnum = InputCreateOwner.OwnerTypeEnum;
 export class AddOwnerDialogComponent implements OnInit {
   successMessage: string;
   loading: boolean;
-  nameCtrl: UntypedFormControl;
-  contactCtrl: UntypedFormControl;
+  nameCtrl: FormControl<string>;
+  contactCtrl: FormControl<string>;
   type = '1';
 
   constructor(
@@ -31,11 +31,12 @@ export class AddOwnerDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nameCtrl = new UntypedFormControl(null, [
+    this.nameCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern('^[\\w.-]+( [\\w.-]+)*$'),
+      spaceNameValidator(),
     ]);
-    this.contactCtrl = new UntypedFormControl(null, [
+    this.contactCtrl = new FormControl('', [
       Validators.required,
       Validators.pattern(emailRegexString),
     ]);
@@ -49,17 +50,17 @@ export class AddOwnerDialogComponent implements OnInit {
     this.loading = true;
     this.ownersManagerService
       .createOwner({
-        name: this.nameCtrl.value as string,
-        contact: this.contactCtrl.value as string,
+        name: this.nameCtrl.value,
+        contact: this.contactCtrl.value,
         ownerType: Number(this.type) as OwnerTypeEnum,
       })
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.notificator.showSuccess(this.successMessage);
           this.loading = false;
           this.dialogRef.close(true);
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
   }
 }

@@ -109,6 +109,7 @@ import { MatSortModule } from '@angular/material/sort';
     PasswordResetDialogComponent,
   ],
   exports: [
+    BugReportDialogComponent,
     ChangeExpirationDialogComponent,
     ChangeMemberStatusDialogComponent,
     EditFacilityResourceGroupVoDialogComponent,

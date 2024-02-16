@@ -1,0 +1,44 @@
+<div class="{{data.theme}}">
+  <div mat-dialog-title class="mb-2">
+    <h3 *ngIf="applicationFailures.length === 1; else elseFailBlock">
+      {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_SINGULAR' | translate: {count: applicationFailures.length} }}
+    </h3>
+    <ng-template #elseFailBlock>
+      <h3>
+        {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action | translate: {count: applicationFailures.length} }}
+      </h3>
+    </ng-template>
+    <div class="font-italic text-muted">
+      {{
+          applicationSuccesses.length === 1 ?
+            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_SINGULAR' | translate : {count: applicationSuccesses.length}) :
+            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action | translate : {count: applicationSuccesses.length})
+      }}
+    </div>
+  </div>
+
+  <div mat-dialog-content>
+    <perun-web-apps-alert alert_type="error">
+      <div
+        [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_DESCRIPTION' | translate"></div>
+    </perun-web-apps-alert>
+    <app-application-operation-error-list
+      (selectedApplicationResults)="onSelectedApplicationResultsChange($event)"
+      [appErrorPairs]="applicationFailures"
+      [displayedColumns]="displayedColumns"
+      [theme]="data.theme">
+    </app-application-operation-error-list>
+  </div>
+
+  <div mat-dialog-actions class="mb-3 mx-2 flex-row">
+    <button
+      [disabled]="selectedApplicationResults.length === 0"
+      (click)="reportBugs()"
+      color="primary"
+      class="me-2 ms-auto"
+      mat-flat-button>
+      {{ 'SHARED_LIB.PERUN.COMPONENTS.BUG_REPORT.BULK_TITLE' | translate }}
+    </button>
+    <button class="ms-2" mat-stroked-button (click)="onClose()">Close</button>
+  </div>
+</div>

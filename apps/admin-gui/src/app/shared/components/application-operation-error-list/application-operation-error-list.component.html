@@ -1,0 +1,99 @@
+<div class="card mt-3">
+  <perun-web-apps-table-wrapper
+    [pageSizeOptions]="pageSizeOptions"
+    [dataLength]="dataSource.data.length">
+    <table
+      [dataSource]="dataSource"
+      class="w-100"
+      mat-table
+      matSort
+      matSortActive="createdAt"
+      matSortDirection="desc"
+      matSortDisableClear>
+      <ng-container
+        matColumnDef="checkbox"
+        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
+        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+          <mat-checkbox
+            (change)="$event ? masterToggle() : null"
+            *ngIf="selection.isMultipleSelection()"
+            [aria-label]="selected.all | masterCheckboxLabel | translate"
+            [checked]="selection.hasValue() && selected.all"
+            [indeterminate]="selection.hasValue() && !selected.all"
+            color="primary">
+          </mat-checkbox>
+        </th>
+        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+          <mat-checkbox
+            (change)="$event ? selection.toggle(row) : null"
+            (click)="$event.stopPropagation()"
+            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: ''}"
+            [checked]="selection.isSelected(row)"
+            color="primary">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'APPLICATIONS_LIST.ID' | translate}}
+        </th>
+        <td *matCellDef="let appErrorPair" mat-cell>
+          {{appErrorPair[0].id}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="groupId">
+        <th *matHeaderCellDef mat-header-cell>{{'APPLICATIONS_LIST.GROUP_ID' | translate}}</th>
+        <td *matCellDef="let appErrorPair" mat-cell>
+          {{appErrorPair[0].group ? appErrorPair[0].group.id : '' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="groupName">
+        <th *matHeaderCellDef mat-header-cell>{{'APPLICATIONS_LIST.GROUP_NAME' | translate}}</th>
+        <td *matCellDef="let appErrorPair" mat-cell>
+          {{appErrorPair[0].group ? appErrorPair[0].group.name : '' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'APPLICATIONS_LIST.CREATED_DATE' | translate}}
+        </th>
+        <td *matCellDef="let appErrorPair" mat-cell>
+          {{appErrorPair[0].createdAt | date: 'd.M.y'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'APPLICATIONS_LIST.CREATED_BY' | translate}}
+        </th>
+        <td
+          *matCellDef="let appErrorPair"
+          attr.data-cy="{{appErrorPair[0].createdBy}}-createdBy"
+          mat-cell>
+          {{appErrorPair[0].createdBy.slice(appErrorPair[0].createdBy.lastIndexOf('=') + 1, appErrorPair[0].createdBy.length)}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="error">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'APPLICATIONS_LIST.ERROR' | translate}}
+        </th>
+        <td *matCellDef="let appErrorPair" mat-cell>{{appErrorPair[1].name}}</td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <div *ngIf="clickable">
+        <tr
+          (click)="openExceptionDetail(appErrorPair[1])"
+          *matRowDef="let appErrorPair; columns: this.displayedColumns;"
+          class="cursor-pointer dark-hover-list-item"
+          mat-row></tr>
+      </div>
+      <div *ngIf="!clickable">
+        <tr
+          *matRowDef="let appErrorPair; columns: this.displayedColumns;"
+          class="dark-hover-list-item"
+          mat-row></tr>
+      </div>
+    </table>
+  </perun-web-apps-table-wrapper>
+</div>

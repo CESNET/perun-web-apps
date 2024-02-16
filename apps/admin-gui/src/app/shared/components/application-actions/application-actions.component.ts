@@ -2,12 +2,13 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { Observable, of } from 'rxjs';
 import {
   Application,
+  ApplicationOperationResult,
   AppState,
   Attribute,
   AttributeDefinition,
-  AttributesManagerService,
   Group,
   MailType,
+  PerunException,
   RegistrarManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
@@ -16,8 +17,8 @@ import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ApplicationsBulkOperationDialogComponent } from '../dialogs/applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { NotificationData, RPCError } from '@perun-web-apps/perun/models';
-import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { RPCError } from '@perun-web-apps/perun/models';
+import { ApplicationsBulkOperationFailureDialogComponent } from '../dialogs/applications-bulk-operation-failure-dialog/applications-bulk-operation-failure-dialog.component';
 
 export interface AppAction {
   approve: boolean;
@@ -81,6 +82,16 @@ export class ApplicationActionsComponent implements OnInit {
   prependColumns = ['checkbox', 'id'];
   groupPrependColumns = ['groupId', 'groupName'];
   simpleColumns: string[] = ['createdAt', 'type', 'state', 'createdBy', 'modifiedBy'];
+  bulkOperationFailureColumns = ['checkbox', 'id', 'createdAt', 'createdBy', 'error'];
+  bulkOperationFailureGroupColumns = [
+    'checkbox',
+    'id',
+    'groupId',
+    'groupName',
+    'createdAt',
+    'createdBy',
+    'error',
+  ];
   detailedColumns: string[] = [
     'createdAt',
     'type',
@@ -100,8 +111,13 @@ export class ApplicationActionsComponent implements OnInit {
 
   selectedApplications: Application[] = [];
 
+  callMap = new Map([
+    ['APPROVE', '/registrarManager/approveApplications'],
+    ['REJECT', '/registrarManager/rejectApplications'],
+    ['DELETE', '/registrarManager/deleteApplications'],
+  ]);
+
   constructor(
-    private attributeService: AttributesManagerService,
     private registrarService: RegistrarManagerService,
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
@@ -155,18 +171,22 @@ export class ApplicationActionsComponent implements OnInit {
         this.registrarService
           .approveApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
-            next: () => {
-              this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.APPROVE');
+            next: (approveApplicationsResult: [ApplicationOperationResult]) => {
+              if (approveApplicationsResult.some((result) => result.error !== null)) {
+                this.errorsInBulkOperation(
+                  approveApplicationsResult,
+                  this.selectedApplications,
+                  'APPROVE',
+                );
+              } else {
+                this.notificator.showInstantSuccess(
+                  'VO_DETAIL.APPLICATION.SUCCESS.APPROVE_NOTIFICATION',
+                );
+              }
               this.refreshTable();
             },
             error: (error: RPCError) => {
-              this.showErrorDialog(
-                'VO_DETAIL.APPLICATION.ERROR.APPROVE',
-                error,
-                this.translate.instant('VO_DETAIL.APPLICATION.ERROR.APPROVE_DESCRIPTION', {
-                  error: error.message,
-                }),
-              );
+              this.notificator.showRPCError(error);
               this.refreshTable();
             },
           });
@@ -189,18 +209,22 @@ export class ApplicationActionsComponent implements OnInit {
         this.registrarService
           .rejectApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
-            next: () => {
-              this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.REJECT');
+            next: (rejectApplicationsResult: [ApplicationOperationResult]) => {
+              if (rejectApplicationsResult.some((result) => result.error !== null)) {
+                this.errorsInBulkOperation(
+                  rejectApplicationsResult,
+                  this.selectedApplications,
+                  'REJECT',
+                );
+              } else {
+                this.notificator.showInstantSuccess(
+                  'VO_DETAIL.APPLICATION.SUCCESS.REJECT_NOTIFICATION',
+                );
+              }
               this.refreshTable();
             },
             error: (error: RPCError) => {
-              this.showErrorDialog(
-                'VO_DETAIL.APPLICATION.ERROR.REJECT',
-                error,
-                this.translate.instant('VO_DETAIL.APPLICATION.ERROR.REJECT_DESCRIPTION', {
-                  error: error.message,
-                }),
-              );
+              this.notificator.showRPCError(error);
               this.refreshTable();
             },
           });
@@ -223,12 +247,23 @@ export class ApplicationActionsComponent implements OnInit {
         this.registrarService
           .deleteApplications(this.selectedApplications.map((app) => app.id))
           .subscribe({
-            next: () => {
-              this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.DELETE');
+            next: (deleteApplicationsResult: [ApplicationOperationResult]) => {
+              if (deleteApplicationsResult.some((result) => result.error !== null)) {
+                this.errorsInBulkOperation(
+                  deleteApplicationsResult,
+                  this.selectedApplications,
+                  'DELETE',
+                );
+              } else {
+                this.notificator.showInstantSuccess(
+                  'VO_DETAIL.APPLICATION.SUCCESS.DELETE_NOTIFICATION',
+                );
+              }
               this.refreshTable();
             },
-            error: () => {
-              this.loading$ = of(false);
+            error: (error: RPCError) => {
+              this.notificator.showRPCError(error);
+              this.refreshTable();
             },
           });
       }
@@ -298,6 +333,49 @@ export class ApplicationActionsComponent implements OnInit {
     const state = this.getSelectedState();
     this.setCanPerform(state);
     this.setButtonsTooltips(state);
+  }
+
+  private errorsInBulkOperation(
+    bulkOperationsResult: [ApplicationOperationResult],
+    selectedApplications: Application[],
+    operation: string,
+  ): void {
+    const resultsMap = new Map<number, PerunException>();
+    bulkOperationsResult.forEach((res) => {
+      resultsMap.set(res.applicationId, res.error);
+    });
+    const appErrorPairs: [Application, PerunException][] = selectedApplications.map((app) => [
+      app,
+      this.addCallToException(resultsMap.get(app.id), this.callMap.get(operation)),
+    ]);
+    const groupAppIncluded = selectedApplications.some((app) => app.group !== null);
+    const config = getDefaultDialogConfig();
+    config.width = '1300px';
+    config.data = {
+      theme: this.theme,
+      action: operation,
+      applicationsResults: appErrorPairs,
+      displayedColumns: groupAppIncluded
+        ? this.bulkOperationFailureGroupColumns
+        : this.bulkOperationFailureColumns,
+    };
+    this.notificator.showInstantError(
+      'VO_DETAIL.APPLICATION.ERROR.' + operation + '_NOTIFICATION',
+      null,
+      '',
+      'VO_DETAIL.APPLICATION.SHOW',
+      () => this.dialog.open(ApplicationsBulkOperationFailureDialogComponent, config),
+    );
+  }
+
+  // Adds a call property to the PerunException so it can be used in the bug report FIXME better way?
+  private addCallToException(exception: PerunException, call: string): RPCError {
+    if (exception == null) {
+      return null;
+    }
+    const rpcException = exception as RPCError;
+    rpcException.call = call;
+    return rpcException;
   }
 
   private getSelectedState(): AppState {
@@ -405,38 +483,5 @@ export class ApplicationActionsComponent implements OnInit {
     const newDate = new Date();
     newDate.setDate(newDate.getDate() - 365);
     return newDate;
-  }
-
-  // FIXME: showErrorDialog() and createNotificationData() are part of a quickfix and to be remove after proper fix is made
-  private showErrorDialog(title: string, error: RPCError, description: string): void {
-    const notificationData: NotificationData = this.createNotificationData(
-      title,
-      error,
-      description,
-    );
-    this.dialog.open(NotificationDialogComponent, {
-      width: '550px',
-      data: notificationData,
-      autoFocus: false,
-    });
-  }
-
-  private createNotificationData(
-    title: string,
-    error?: RPCError,
-    description?: string,
-  ): NotificationData {
-    const notificationData: NotificationData = {
-      type: 'error',
-      error: error,
-      description: description,
-      title: this.translate.instant(title),
-      actionText: this.notificator.getDefaultActionMessage(),
-      delay: this.notificator.defaultErrorDelayMs,
-      icon: 'error_outline',
-      action: null,
-      timeStamp: `${new Date().getHours()}:${new Date().getMinutes()}`,
-    };
-    return notificationData;
   }
 }

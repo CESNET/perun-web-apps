@@ -133,8 +133,8 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
           });
         this.selection.clear();
         this.selectionChange.emit(this.selection);
-        this.update();
       }
+      this.update();
     });
   }
 
@@ -177,6 +177,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
     this.applicationMails = mails;
     this.dataSource = new MatTableDataSource<ApplicationMail>(this.applicationMails);
     this.setDataSource();
+    this.updateSelection();
   }
 
   private setDataSource(): void {
@@ -184,5 +185,18 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
     }
+  }
+
+  private updateSelection(): void {
+    const selected = this.selection.selected;
+    selected.forEach((selectedApplicationMail) => {
+      const found = this.applicationMails.find(
+        (applicationMail) => applicationMail.id === selectedApplicationMail.id,
+      );
+      if (found) {
+        this.selection.deselect(selectedApplicationMail);
+        this.selection.select(found);
+      }
+    });
   }
 }

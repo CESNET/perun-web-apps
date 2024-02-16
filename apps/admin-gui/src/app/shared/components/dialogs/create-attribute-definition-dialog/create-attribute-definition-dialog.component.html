@@ -13,6 +13,9 @@
             formControlName="friendlyName"
             data-cy="attribute-friendly-name-input"
             required />
+          <mat-error *ngIf="attributeControl.hasError('spaceName', 'friendlyName')">
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
           <mat-error *ngIf="attributeControl.hasError('required', 'friendlyName')">
             {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
           </mat-error>
@@ -24,6 +27,9 @@
             formControlName="displayName"
             data-cy="attribute-display-name-input"
             required />
+          <mat-error *ngIf="attributeControl.hasError('spaceName', 'displayName')">
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
           <mat-error *ngIf="attributeControl.hasError('required', 'displayName')">
             {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
           </mat-error>

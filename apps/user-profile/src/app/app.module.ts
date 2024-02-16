@@ -17,7 +17,7 @@ import { Configuration, ConfigurationParameters } from '@perun-web-apps/perun/op
 import { SettingsOverviewComponent } from './pages/settings-page/settings-overview/settings-overview.component';
 import { SettingsPreferredUnixGroupNamesComponent } from './pages/settings-page/settings-preferred-unix-group-names/settings-preferred-unix-group-names.component';
 import { SettingsPreferredShellsComponent } from './pages/settings-page/settings-preferred-shells/settings-preferred-shells.component';
-import { SettingsAlternativePasswordsComponent } from './pages/settings-page/settings-alternative-passwords/settings-alternative-passwords.component';
+import { AuthenticationAlternativePasswordsComponent } from './pages/authentication-page/authentication-alternative-passwords/authentication-alternative-passwords.component';
 import { AuthenticationSambaPasswordComponent } from './pages/authentication-page/authentication-samba-password/authentication-samba-password.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { CustomIconService, StoreService } from '@perun-web-apps/perun/services';
@@ -118,7 +118,7 @@ const loadConfigs: (appConfig: UserProfileConfigService) => () => Promise<void> 
     SettingsOverviewComponent,
     SettingsPreferredUnixGroupNamesComponent,
     SettingsPreferredShellsComponent,
-    SettingsAlternativePasswordsComponent,
+    AuthenticationAlternativePasswordsComponent,
     AuthenticationSambaPasswordComponent,
     SettingsMailingListsComponent,
     SettingsDataQuotasComponent,

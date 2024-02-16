@@ -31,9 +31,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   sidebarMode: 'over' | 'push' | 'side' = 'side';
   sideMenuBgColor = this.store.getProperty('theme').sidemenu_bg_color;
   contentBackgroundColor = this.store.getProperty('theme').content_bg_color;
+  displayWarning: boolean = this.store.getProperty('display_warning');
+  warningMessage: string = this.store.getProperty('warning_message');
   isLoginScreenShown: boolean;
   isServiceAccess: boolean;
-  contentHeight = 'calc(100vh - 84px)';
+  contentHeight = this.displayWarning ? 'calc(100vh - 112px)' : 'calc(100vh - 64px)';
   headerLabel = this.store.getProperty('header_label_en');
   otherApp = AppType.Admin;
 
@@ -85,6 +87,22 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
   }
 
+  getTopGap(): number {
+    return this.displayWarning ? 112 : 64;
+  }
+
+  getSideNavMarginTop(): string {
+    return this.displayWarning ? '112px' : '64px';
+  }
+
+  getSideNavMinHeight(): string {
+    return this.displayWarning ? 'calc(100vh - 112px)' : 'calc(100vh - 64px)';
+  }
+
+  getNavMenuTop(): string {
+    return this.displayWarning ? '48px' : '0';
+  }
+
   isMobile(): boolean {
     return window.innerWidth <= AppComponent.minWidth;
   }
@@ -95,7 +113,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const footerHeight: string = this.footer?.nativeElement?.offsetHeight?.toString() ?? '0';
-    this.contentHeight = 'calc(100vh - 84px - ' + footerHeight + 'px)';
+    this.contentHeight = this.displayWarning
+      ? 'calc(100vh - ' + footerHeight + 'px - 112px)'
+      : 'calc(100vh - ' + footerHeight + 'px - 64px)';
     this.changeDetector.detectChanges();
   }
 }

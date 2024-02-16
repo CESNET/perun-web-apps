@@ -17,6 +17,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
+import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 
 export interface EditAttributeDefinitionDialogData {
   attDef: AttributeDefinition;
@@ -42,7 +43,7 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
   finalWriteOperations: boolean;
   finalWriteGlobal: boolean;
   attributeControl = this.formBuilder.group({
-    name: [this.attDef.displayName, Validators.required],
+    name: [this.attDef.displayName, [Validators.required, spaceNameValidator()]],
     description: [this.attDef.description, Validators.required],
   });
   urn = `${this.attDef.namespace}:${this.attDef.friendlyName}`;

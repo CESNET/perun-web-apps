@@ -8,14 +8,20 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_VO.FULL_NAME' | translate}}</mat-label>
         <input matInput [formControl]="fullNameCtrl" data-cy="vo-name-input" required />
-        <mat-error>
+        <mat-error *ngIf="fullNameCtrl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!fullNameCtrl.errors?.['spaceName']">
           {{'DIALOGS.CREATE_VO.FILL_FULL_NAME' | translate}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_VO.SHORT_NAME' | translate}}</mat-label>
         <input matInput [formControl]="shortNameCtrl" data-cy="vo-shortname-input" required />
-        <mat-error>
+        <mat-error *ngIf="shortNameCtrl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!shortNameCtrl.errors?.['spaceName']">
           {{'DIALOGS.CREATE_VO.FILL_SHORT_NAME' | translate}}
         </mat-error>
       </mat-form-field>

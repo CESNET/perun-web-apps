@@ -165,20 +165,21 @@ export interface PerunConfig {
   logo?: string;
   theme?: PerunTheme;
   auto_service_access_redirect: boolean;
+  display_warning?: boolean;
+  warning_message?: string;
 
   // Admin gui specific
   // Required
   config: string;
   user_deletion_forced?: boolean;
   // Optional
+  bulk_bug_report_max_items?: number;
   login_namespace_attributes?: string[];
   profile_label_en?: string;
   allow_empty_sponsor_namespace?: boolean;
   member_profile_attributes_friendly_names?: string[];
   groupNameSecondaryRegex?: string;
   groupNameErrorMessage?: string;
-  display_warning?: boolean;
-  warning_message?: string;
   logo_padding?: string;
   group_name_error_message?: string;
   group_name_secondary_regex?: string;

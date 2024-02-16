@@ -5,10 +5,13 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{"DIALOGS.ADD_OWNER.TITLE" | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
-      <mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
         <mat-label>{{'DIALOGS.ADD_OWNER.NAME' | translate}}</mat-label>
         <input matInput [formControl]="nameCtrl" required />
-        <mat-error>
+        <mat-error *ngIf="nameCtrl.errors?.['spaceName']">
+          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!nameCtrl.errors?.['spaceName']">
           {{'DIALOGS.ADD_OWNER.FILL_NAME' | translate}}
         </mat-error>
       </mat-form-field>
