@@ -118,7 +118,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="users.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && users.length === 0" alert_type="warn">
   {{noUsersFoundLabel ? noUsersFoundLabel : 'SHARED_LIB.UI.ALERTS.NO_USERS' | translate}}
 </perun-web-apps-alert>
 

@@ -51,10 +51,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative mt-3">
+  <div class="position-relative mt-3 table-min-height">
     <div *perunWebAppsLoader="loading; indicator: spinner">
       <perun-web-apps-groups-tree
         *ngIf="!showGroupList"
+        [loading]="loading"
         [disableRouting]="!routeAuth"
         [expandAll]="filtering"
         [groups]="groups"
@@ -66,6 +67,7 @@
         [selection]="selected">
       </perun-web-apps-groups-tree>
       <perun-web-apps-groups-list
+        [loading]="loading"
         (groupMoved)="onMoveGroup($event)"
         (refreshTable)="refreshTable()"
         *ngIf="showGroupList"

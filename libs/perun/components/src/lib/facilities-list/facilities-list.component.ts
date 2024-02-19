@@ -21,6 +21,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
 })
 export class FacilitiesListComponent implements OnChanges {
   @Input() facilities: EnrichedFacility[];
+  @Input() loading: boolean;
   @Input() facilityWithAuthzGroupPairs: Map<number, Group[]>;
   @Input() authzVoNames: Map<number, string>;
   @Input() recentIds: number[];

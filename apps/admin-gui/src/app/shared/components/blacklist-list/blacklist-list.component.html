@@ -81,6 +81,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="bansOnFacilitiesWithUsers.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && bansOnFacilitiesWithUsers.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.BLACKLIST_LIST.NO_BANS_WARNING' | translate}}
 </perun-web-apps-alert>

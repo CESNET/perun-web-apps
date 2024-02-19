@@ -66,6 +66,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="thanks.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && thanks.length === 0" alert_type="warn">
   {{'THANKS_LIST.NO_THANKS' | translate}}
 </perun-web-apps-alert>

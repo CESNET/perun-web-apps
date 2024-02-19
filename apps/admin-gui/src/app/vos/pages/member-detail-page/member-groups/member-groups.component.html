@@ -43,10 +43,11 @@
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
-<div class="position-relative">
+<div class="position-relative table-min-height">
   <div *ngIf="!showGroupList">
     <perun-web-apps-groups-tree
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       (refreshTable)="refreshTable()"
       (changeExpiration)="changeExpiration($event)"
       [expandAll]="filtering"
@@ -62,6 +63,7 @@
     <perun-web-apps-groups-list
       #list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       (refreshTable)="refreshTable()"
       [displayedColumns]="['select', 'id', 'name', 'description', 'expiration', 'groupStatus']"
       [memberId]="member.id"

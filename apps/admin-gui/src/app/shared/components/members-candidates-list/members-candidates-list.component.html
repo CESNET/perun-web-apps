@@ -112,7 +112,7 @@
 </div>
 
 <perun-web-apps-alert
-  *ngIf="dataSource.data.length === 0 && members !== undefined"
+  *ngIf="!loading && dataSource.data.length === 0 && members !== undefined"
   alert_type="warn">
   {{'DIALOGS.ADD_MEMBERS.NO_USERS_FOUND' | translate}}
 </perun-web-apps-alert>

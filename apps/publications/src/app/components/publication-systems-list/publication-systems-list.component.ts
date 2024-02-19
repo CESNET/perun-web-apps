@@ -22,6 +22,7 @@ export class PublicationSystemsListComponent implements AfterViewInit, OnChanges
   @Input() tableId: string;
   @Input() displayedColumns: string[] = ['id', 'friendlyName', 'loginNamespace', 'url', 'type'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<PublicationSystem>;
   private sort: MatSort;

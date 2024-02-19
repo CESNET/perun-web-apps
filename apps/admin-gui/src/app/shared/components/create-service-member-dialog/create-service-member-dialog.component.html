@@ -130,9 +130,10 @@
           <ng-template #tableSpinner>
             <perun-web-apps-loading-table></perun-web-apps-loading-table>
           </ng-template>
-          <div class="position-relative" *ngIf="firstSearchDone">
+          <div class="position-relative table-min-height" *ngIf="firstSearchDone">
             <perun-web-apps-members-list
               *perunWebAppsLoader="loading; indicator: tableSpinner"
+              [loading]="loading"
               [disableRouting]="true"
               [displayedColumns]="['checkbox', 'id', 'fullName']"
               [members]="members"

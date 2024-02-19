@@ -60,10 +60,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-sponsored-members-list
       *perunWebAppsLoader="loading; indicator: spinner"
       (refreshTable)="refresh()"
+      [tableLoading]="loading"
       [disableRouting]="!routeAuth"
       [selection]="selection"
       [filterValue]="searchString"

@@ -68,7 +68,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="extSources.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && extSources.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.EXT_SOURCES_LIST.NO_EXT_SOURCES' | translate}}
 </perun-web-apps-alert>
 

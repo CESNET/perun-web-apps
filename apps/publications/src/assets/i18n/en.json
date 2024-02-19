@@ -549,6 +549,8 @@
     }
   },
   "NAV": {
-    "LOGOUT": "Log out"
+    "LOGOUT": "Log out",
+    "OTHER_APPLICATIONS": "Other applications",
+    "MENU": "Menu"
   }
 }

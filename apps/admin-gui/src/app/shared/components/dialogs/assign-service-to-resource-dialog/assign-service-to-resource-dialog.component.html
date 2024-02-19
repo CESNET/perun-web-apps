@@ -17,6 +17,7 @@
           </div>
 
           <app-services-list
+            [loading]="loading"
             [services]="unAssignedServices"
             [disableRouting]="true"
             [displayedColumns]="['select', 'id', 'name', 'enabled', 'description']"
@@ -38,6 +39,7 @@
 
           <app-services-list
             *ngIf="selectedPackage.id !== -1"
+            [loading]="loading"
             [disableRouting]="true"
             [services]="filteredServices"
             [displayedColumns]="['id', 'name', 'enabled', 'description']"

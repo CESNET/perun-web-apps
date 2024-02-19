@@ -17,6 +17,7 @@
             (filter)="voFilter = $event"
             [placeholder]="'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.FILTER_VOS'"></perun-web-apps-debounce-filter>
           <perun-web-apps-vos-list
+            [loading]="loading"
             [vos]="vos"
             [selection]="voSelection"
             [displayedColumns]="displayedColumns"

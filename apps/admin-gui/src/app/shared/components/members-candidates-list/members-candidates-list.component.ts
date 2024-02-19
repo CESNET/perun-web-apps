@@ -32,6 +32,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   @Input() selection: SelectionModel<MemberCandidate>;
   @Input() tableId: string;
   @Input() blockManualAdding = false;
+  @Input() loading: boolean;
   displayedColumns: string[] = [
     'checkbox',
     'status',

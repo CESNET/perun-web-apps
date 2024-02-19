@@ -25,9 +25,10 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-perun-web-apps-consent-hubs-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [consentHubs]="consentHubs"
       [selection]="selection"
       [filterValue]="filterValue"

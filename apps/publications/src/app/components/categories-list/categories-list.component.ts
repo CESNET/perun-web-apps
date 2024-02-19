@@ -36,6 +36,7 @@ export class CategoriesListComponent implements AfterViewInit, OnChanges {
   @Input() tableId: string;
   @Input() displayedColumns: string[] = ['select', 'id', 'name', 'rank'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  @Input() loading: boolean;
   @Output() refreshTable = new EventEmitter<void>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<Category>;

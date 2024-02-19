@@ -13,9 +13,10 @@
         [placeholder]="'USER_DETAIL.BANS.FILTER'"
         class="mt-2 search-field">
       </perun-web-apps-debounce-filter>
-      <div class="position-relative">
+      <div class="position-relative table-min-height">
         <perun-web-apps-ban-on-entity-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
           [bans]="voBans"
           [displayedColumns]="displayedColumns"
           [filter]="filter"
@@ -35,9 +36,10 @@
         [placeholder]="'USER_DETAIL.BANS.FILTER'"
         class="mt-2 search-field">
       </perun-web-apps-debounce-filter>
-      <div class="position-relative">
+      <div class="position-relative table-min-height">
         <perun-web-apps-ban-on-entity-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
           [bans]="resourceBans"
           [displayedColumns]="displayedColumns"
           [filter]="filter"
@@ -57,9 +59,10 @@
         [placeholder]="'USER_DETAIL.BANS.FILTER'"
         class="mt-2 search-field">
       </perun-web-apps-debounce-filter>
-      <div class="position-relative">
+      <div class="position-relative table-min-height">
         <perun-web-apps-ban-on-entity-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
           [bans]="facilityBans"
           [displayedColumns]="displayedColumns"
           [filter]="filter"

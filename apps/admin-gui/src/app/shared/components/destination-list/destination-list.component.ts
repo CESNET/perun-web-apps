@@ -33,6 +33,8 @@ export class DestinationListComponent implements AfterViewInit, OnChanges {
   displayedColumns: string[];
   @Input()
   services: Set<number>;
+  @Input()
+  loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<RichDestination>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;

@@ -18,9 +18,10 @@
         <ng-template #searchSpinner>
           <perun-web-apps-loading-table></perun-web-apps-loading-table>
         </ng-template>
-        <div class="position-relative mt-3">
+        <div class="position-relative mt-3 table-min-height">
           <app-members-candidates-list
             *perunWebAppsLoader="members === null; indicator: searchSpinner"
+            [loading]="members === null"
             [tableId]="tableId"
             [members]="members"
             [selection]="selection"

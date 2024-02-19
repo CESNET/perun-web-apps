@@ -135,6 +135,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="destinations.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && destinations.length === 0" alert_type="warn">
   {{'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_DESTINATIONS' | translate}}
 </perun-web-apps-alert>

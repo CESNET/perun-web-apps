@@ -48,6 +48,7 @@
       </div>
       <perun-web-apps-resources-list
         (allSelected)="disableCheckboxes($event)"
+        [loading]="loading"
         [displayedColumns]="displayedColumns"
         [disableRouting]="true"
         [resources]="resources"

@@ -43,6 +43,7 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
   @Input() filterValue: string;
   @Input() tableId: string;
   @Input() disableRouting = true;
+  @Input() loading: boolean;
   @Output() selectionChange: EventEmitter<() => void> = new EventEmitter<() => void>();
 
   dataSource: MatTableDataSource<ServiceState>;

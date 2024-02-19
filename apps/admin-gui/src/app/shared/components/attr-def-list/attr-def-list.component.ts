@@ -54,6 +54,7 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
   disableRouting = false;
   @Input() consentRequired = false;
   @Input() serviceEnabled = false;
+  @Input() loading: boolean;
 
   @Output()
   refreshEvent = new EventEmitter<void>();

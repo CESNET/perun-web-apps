@@ -24,10 +24,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-hosts-list
       [disableRouting]="!routeAuth || disableRouting"
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [filterValue]="filterValue"
       [hosts]="hosts"
       [selection]="selected"

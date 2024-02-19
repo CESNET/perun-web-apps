@@ -43,6 +43,7 @@ export class UsersListComponent implements OnChanges {
   @Input()
   disableSelf = false;
   @Input() directAdmins: number[] = null;
+  @Input() loading: boolean;
 
   svgIcon = 'perun-service-identity-black';
   dataSource: MatTableDataSource<RichUser>;

@@ -34,6 +34,8 @@ export class HostsListComponent implements AfterViewInit, OnChanges {
   disableRouting = false;
   @Input()
   displayedColumns: string[] = ['select', 'id', 'name'];
+  @Input()
+  loading: boolean;
   dataSource: MatTableDataSource<Host>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;

@@ -41,6 +41,7 @@ export class ConsentsListComponent implements AfterViewInit, OnChanges {
   @Input() consents: Consent[] = [];
   @Input() selection = new SelectionModel<Consent>(true, []);
   @Input() displayedColumns: string[] = ['select', 'status', 'name'];
+  @Input() loading: boolean;
   @Output() grantConsent: EventEmitter<number> = new EventEmitter<number>();
   @Output() rejectConsent: EventEmitter<number> = new EventEmitter<number>();
   expandedConsent: Consent | null;
