@@ -19,6 +19,8 @@ export class UserRolesComponent implements OnInit {
   outerLoading: boolean;
   showDescription = true;
   entityType: 'SELF' | 'USER';
+  userBasedOpenPanel: string | null = null;
+  groupBasedOpenPanel: string | null = null;
 
   constructor(
     private authzResolverService: AuthzResolverService,
