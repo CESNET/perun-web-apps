@@ -6,14 +6,14 @@ services:
       POSTGRESQL_PASSWORD: test
       POSTGRESQL_DATABASE: perun
       # renovate: datasource=gitlab-packages depName=perun/perun-idm/perun:release versioning=semver registryUrl=https://gitlab.ics.muni.cz
-      RPC_VERSION: v34.0.0
+      RPC_VERSION: "34.0.0"
     networks:
       - e2e-net
   perun-rpc:
     build: ./e2e/docker-rpc/.
     environment:
       # renovate: datasource=gitlab-packages depName=perun/perun-idm/perun:release versioning=semver registryUrl=https://gitlab.ics.muni.cz
-      RPC_VERSION: v34.0.0
+      RPC_VERSION: "34.0.0"
     depends_on:
       - db
     networks:
