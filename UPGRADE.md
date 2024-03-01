@@ -1,5 +1,24 @@
 Upgrade notes
 
+## [15.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.3.0...v15.4.0) (2024-03-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** Run of `color-migration.js` script is required.
+
+### Features
+
+* **admin:** extended warning list of deleted items on group deletion ([d29d4b9](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d29d4b9c420215c86e95c5ec019b0f3dcc19c1cc))
+* **admin:** use async html check for all places where we accept html input ([3c6afda](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3c6afda9ff23ae01841cfd76abf16486a7d12926))
+* new components for handling HTML inputs including the warning that the input will be changed ([117a31d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/117a31da69bfb3af7f70e01858f58dbb3bb29835))
+
+
+### Bug Fixes
+
+* **admin:** fix issues with roles page ([5f5dc0a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5f5dc0a2f04e2edef1bb8e2ba1669d9d2d2e5ec2))
+* **admin:** hide alert during data loading ([49d2ee1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/49d2ee18b5aaaa570bc38ea23aa601c96d7323ab))
+
 ## [15.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.2.0...v15.3.0) (2024-02-16)
 
 
