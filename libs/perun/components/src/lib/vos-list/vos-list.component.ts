@@ -29,6 +29,8 @@ export class VosListComponent implements OnChanges {
   @Input() disableRouting = false;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() tableId: string;
+  @Input() enableMasterCheckbox = false;
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<Vo | EnrichedVo>;
@@ -122,5 +124,21 @@ export class VosListComponent implements OnChanges {
     }
     this.dataSource.filter = this.filterValue;
     this.dataSource.data = this.vos;
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle(): void {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.dataSource.data.forEach((row: Vo) => this.selection.select(row));
+    }
   }
 }

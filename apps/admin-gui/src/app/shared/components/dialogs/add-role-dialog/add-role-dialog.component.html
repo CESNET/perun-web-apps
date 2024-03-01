@@ -15,6 +15,7 @@
         [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_OBJECTS_LIST.FILTER'"
         class="font-size-1rem"></perun-web-apps-debounce-filter>
       <perun-web-apps-vos-list
+        [loading]="loading"
         [filterValue]="filterValue"
         *ngIf="selectedRule?.primaryObject === 'Vo'"
         [vos]="vos | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
@@ -23,6 +24,7 @@
         [disableRouting]="true">
       </perun-web-apps-vos-list>
       <perun-web-apps-groups-list
+        [loading]="loading"
         *ngIf="selectedRule?.primaryObject === 'Group'"
         [groups]="groups | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
         [displayedColumns]="['select', 'id', 'vo', 'name', 'description']"
@@ -36,10 +38,12 @@
         [facilities]="facilities | extractFacility | manageableEntities: selectedRule | unassignedRole: roles : selectedRule | toEnrichedFacility"
         [displayedColumns]="['select', 'id', 'name', 'description']"
         [selection]="selectedFacilities"
+        [loading]="loading"
         [disableRouting]="true">
       </perun-web-apps-facilities-list>
       <perun-web-apps-resources-list
         [filterValue]="filterValue"
+        [loading]="loading"
         *ngIf="selectedRule?.primaryObject === 'Resource'"
         [resources]="resources | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
         [displayedColumns]="['select', 'id', 'name']"

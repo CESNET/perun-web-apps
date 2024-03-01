@@ -95,7 +95,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="resourceTags.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && resourceTags.length === 0" alert_type="warn">
   {{entity === 'vo' ? ('VO_DETAIL.RESOURCES.TAGS.NO_TAGS' | translate) : ('RESOURCE_DETAIL.TAGS.NO_TAGS' | translate)}}
 </perun-web-apps-alert>
 

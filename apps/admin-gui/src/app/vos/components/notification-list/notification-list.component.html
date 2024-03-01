@@ -95,6 +95,6 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="this.applicationMails.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && this.applicationMails.length === 0" alert_type="warn">
   {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.NO_EMAILS' | translate}}
 </perun-web-apps-alert>

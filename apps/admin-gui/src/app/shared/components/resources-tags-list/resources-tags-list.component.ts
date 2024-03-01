@@ -32,6 +32,8 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
   displayedColumns = ['select', 'id', 'name', 'edit'];
   @Input()
   entity: string;
+  @Input()
+  loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<ResourceTag>;

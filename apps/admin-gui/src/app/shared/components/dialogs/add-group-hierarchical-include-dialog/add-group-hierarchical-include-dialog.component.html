@@ -10,9 +10,10 @@
       [placeholder]="'DIALOGS.ADD_GROUPS_HIERARCHICAL_INCLUSION.SEARCH'"
       (filter)="applyFilter($event)">
     </perun-web-apps-debounce-filter>
-    <div class="position-relative">
+    <div class="position-relative table-min-height">
       <perun-web-apps-groups-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         [tableId]="tableId"
         [groups]="groups"
         [selection]="selected"

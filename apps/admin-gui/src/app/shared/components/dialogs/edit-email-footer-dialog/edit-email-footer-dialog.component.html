@@ -15,21 +15,18 @@
               {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.FORMAT_' + format | uppercase | translate}}
             </span>
           </ng-template>
-          <mat-form-field class="w-100" subscriptSizing="dynamic">
-            <textarea *ngIf="format === 'plain'" [(ngModel)]="mailFooter" matInput rows="5">
-            </textarea>
-            <textarea *ngIf="format === 'html'" [formControl]="htmlInput" matInput rows="5">
-            </textarea>
-            <mat-error *ngIf="htmlInput.invalid && format==='html'">
-              {{htmlInput.errors.invalidHtmlContent}}
-            </mat-error>
+          <mat-form-field *ngIf="format === 'plain'" class="w-100" subscriptSizing="dynamic">
+            <textarea [(ngModel)]="mailFooter" matInput rows="5"> </textarea>
+            <mat-hint>
+              {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
+            </mat-hint>
           </mat-form-field>
-          <div class="mt-2 font-italic text-muted" *ngIf="format === 'plain'">
-            {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION' | translate}}
-          </div>
-          <div class="mt-2 font-italic text-muted" *ngIf="format === 'html'">
-            {{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION_HTML' | translate}}
-          </div>
+          <perun-web-apps-html-content-form-field
+            *ngIf="format === 'html'"
+            [inputFormControl]="htmlInput"
+            [tagType]="'textarea'"
+            [hint]="'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.DESCRIPTION'"
+            [minRows]="5" />
         </mat-tab>
       </mat-tab-group>
     </div>
@@ -48,7 +45,7 @@
           matTooltip="{{'DIALOGS.NOTIFICATIONS_EDIT_FOOTER.INVALID_TAGS' | translate}}">
           <button
             (click)="submit()"
-            [disabled]="loading || !plainEdithAuth || htmlInput.invalid"
+            [disabled]="loading || !plainEdithAuth || htmlInput.invalid || htmlInput.pending"
             class="ms-2"
             color="accent"
             mat-flat-button>

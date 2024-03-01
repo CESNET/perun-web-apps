@@ -104,9 +104,10 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-application-form-list
       *perunWebAppsLoader="loadingTable; indicator: spinner"
+      [loading]="loadingTable"
       (applicationFormItemsChange)="changeItems()"
       [applicationForm]="applicationForm"
       [applicationFormItems]="applicationFormItems"

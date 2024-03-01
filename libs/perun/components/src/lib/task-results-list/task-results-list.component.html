@@ -131,6 +131,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="taskResults.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && taskResults.length === 0" alert_type="warn">
   {{'SHARED_LIB.PERUN.COMPONENTS.TASK_RESULTS_LIST.NO_RESULTS_WARNING' | translate}}
 </perun-web-apps-alert>

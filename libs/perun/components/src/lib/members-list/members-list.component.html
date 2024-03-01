@@ -163,6 +163,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="!members || members.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && (!members || members.length === 0)" alert_type="warn">
   {{'SHARED_LIB.UI.ALERTS.NO_MEMBERS' | translate}}
 </perun-web-apps-alert>

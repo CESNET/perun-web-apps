@@ -39,9 +39,10 @@
     <ng-template #spinner>
       <perun-web-apps-loading-table></perun-web-apps-loading-table>
     </ng-template>
-    <div *ngIf="firstSearchDone" class="position-relative mt-3">
+    <div *ngIf="firstSearchDone" class="position-relative mt-3 table-min-height">
       <perun-web-apps-groups-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         [disableMembers]="false"
         [disableRouting]="true"
         [displayedColumns]="['select', 'id', 'name', 'description']"

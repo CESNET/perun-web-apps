@@ -26,9 +26,10 @@
   <perun-web-apps-debounce-filter
     [placeholder]="'ORGANIZATIONS.FILTER'"
     (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-membership-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [members]="userMemberships"
       [selection]="selection"
       [filterValue]="filterValue"
@@ -41,9 +42,10 @@
   <perun-web-apps-debounce-filter
     [placeholder]="'ORGANIZATIONS.FILTER'"
     (filter)="applyAdminFilter($event)"></perun-web-apps-debounce-filter>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-membership-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [members]="adminMemberships"
       [filterValue]="adminFilterValue"
       [noMembershipFoundAlert]="'GROUPS.NO_GROUPS'"

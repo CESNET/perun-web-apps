@@ -14,7 +14,18 @@
       matSortDirection="asc"
       matSortDisableClear>
       <ng-container matColumnDef="checkbox">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox"></th>
+        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+          <span
+            *ngIf="enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length} as selected">
+            <mat-checkbox
+              (change)="masterToggle()"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              color="primary">
+            </mat-checkbox>
+          </span>
+        </th>
         <td *matCellDef="let vo" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
             (change)="$event ? selection.toggle(vo) : null"
@@ -97,6 +108,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="vos.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && vos.length === 0" alert_type="warn">
   {{'SHARED_LIB.UI.ALERTS.NO_ORGANIZATIONS' | translate}}
 </perun-web-apps-alert>

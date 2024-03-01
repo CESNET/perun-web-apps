@@ -29,6 +29,8 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
   displayedColumns: string[] = ['select', 'id', 'name', 'type'];
   @Input()
   tableId: string;
+  @Input()
+  loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<ExtSource>;
   exporting = false;

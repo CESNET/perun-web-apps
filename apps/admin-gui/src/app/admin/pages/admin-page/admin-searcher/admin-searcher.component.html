@@ -13,6 +13,7 @@
       </perun-web-apps-attribute-search-select>
       <app-users-list
         *ngIf="!loadingEntityData"
+        [loading]="loading"
         [tableId]="tableId"
         [displayedColumns]="['user', 'id', 'name']"
         [users]="entities">
@@ -40,6 +41,7 @@
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-members-list
         *ngIf="!loadingEntityData"
+        [loading]="loading"
         [tableId]="tableId"
         [displayedColumns]="['id', 'voId', 'userId', 'status']"
         [disableStatusChange]="true"
@@ -62,6 +64,7 @@
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-facilities-list
         *ngIf="!loadingEntityData"
+        [loading]="loading"
         [tableId]="tableId"
         [displayedColumns]="['id', 'name', 'description']"
         [facilities]="entities">
@@ -81,6 +84,7 @@
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-resources-list
         *ngIf="!loadingEntityData"
+        [loading]="loading"
         [tableId]="tableId"
         [displayedColumns]="['id', 'name', 'description', 'voId', 'facilityId']"
         [resources]="entities">

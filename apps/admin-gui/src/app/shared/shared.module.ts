@@ -194,6 +194,7 @@ import { ApplicationsBulkOperationDialogComponent } from './components/dialogs/a
 import { ApplicationsBulkOperationFailureDialogComponent } from './components/dialogs/applications-bulk-operation-failure-dialog/applications-bulk-operation-failure-dialog.component';
 import { ApplicationOperationErrorListComponent } from './components/application-operation-error-list/application-operation-error-list.component';
 import { GroupRolesFilterComponent } from './components/group-roles-filter/group-roles-filter.component';
+import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
 
 @NgModule({
   imports: [
@@ -246,6 +247,7 @@ import { GroupRolesFilterComponent } from './components/group-roles-filter/group
     PerunUtilsModule,
     PerunNamespacePasswordFormModule,
     PerunDialogsModule,
+    HtmlContentFormFieldComponent,
   ],
   exports: [
     NgxMatSelectSearchModule,

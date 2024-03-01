@@ -102,7 +102,7 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 <perun-web-apps-alert
-  *ngIf="this.services === undefined || this.services.length === 0"
+  *ngIf="!loading && (this.services === undefined || this.services.length === 0)"
   alert_type="warn">
   {{'SHARED.COMPONENTS.SERVICES_LIST.NO_SERVICES_WARNING' | translate}}
 </perun-web-apps-alert>

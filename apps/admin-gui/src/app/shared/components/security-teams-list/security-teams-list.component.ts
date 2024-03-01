@@ -30,6 +30,8 @@ export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
   tableId: string;
   @Input()
   displayedColumns: string[] = ['select', 'id', 'name', 'description'];
+  @Input()
+  loading: boolean;
   dataSource: MatTableDataSource<SecurityTeam>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;

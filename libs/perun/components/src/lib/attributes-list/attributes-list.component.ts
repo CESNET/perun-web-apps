@@ -41,6 +41,7 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   @Input() readonly = false;
   @Input() hiddenColumns: string[] = [];
   @Input() emptyListText = 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.EMPTY_SETTINGS';
+  @Input() loading: boolean;
   dataSource: MatTableDataSource<Attribute>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;

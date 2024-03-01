@@ -7,6 +7,7 @@
     <div mat-dialog-content class="dialog-container">
       {{'DIALOGS.REMOVE_PUBLICATION.WARNING' | translate}}
       <perun-web-apps-publications-list
+        [loading]="loading"
         [publications]="publications"
         [routerPath]="null"
         [displayedColumns]="['id', 'title', 'year']">

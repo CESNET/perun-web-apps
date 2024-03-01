@@ -25,6 +25,7 @@ export class ThanksListComponent implements AfterViewInit, OnChanges {
   @Input() displayedColumns = ['select', 'id', 'name', 'createdBy'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() selection = new SelectionModel<Owner>(true, []);
+  @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<ThanksForGUI>;
   private sort: MatSort;

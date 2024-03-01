@@ -18,6 +18,7 @@
           </perun-web-apps-debounce-filter>
           <perun-web-apps-resources-list
             #list
+            [loading]="loading"
             [filterValue]="filterValue"
             [groupToResource]="this.data.group"
             [disableRouting]="true"

@@ -22,9 +22,10 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <perun-web-apps-thanks-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [thanks]="publication.thanks"
       [filterValue]="filterValue"
       [tableId]="tableId"

@@ -19,10 +19,11 @@
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
-<div class="position-relative">
+<div class="position-relative table-min-height">
   <perun-web-apps-members-list
     [tableId]="tableId"
     *perunWebAppsLoader="loading; indicator: spinner"
+    [loading]="loading"
     [displayedColumns]="['checkbox','id', 'type', 'fullName', 'status']"
     [selection]="selection"
     [disableStatusChange]="true"

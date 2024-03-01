@@ -21,6 +21,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
 })
 export class FacilitiesListComponent implements OnChanges {
   @Input() facilities: EnrichedFacility[];
+  @Input() loading: boolean;
   @Input() facilityWithAuthzGroupPairs: Map<number, Group[]>;
   @Input() authzVoNames: Map<number, string>;
   @Input() recentIds: number[];
@@ -39,6 +40,7 @@ export class FacilitiesListComponent implements OnChanges {
   @Input() selection: SelectionModel<EnrichedFacility>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() disableRouting = false;
+  @Input() enableMasterCheckbox = false;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<EnrichedFacility>;

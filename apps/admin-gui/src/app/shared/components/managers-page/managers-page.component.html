@@ -55,9 +55,10 @@
         {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_INDIRECT_ADMINS' | translate}}
       </mat-checkbox>
 
-      <div class="position-relative">
+      <div class="position-relative table-min-height">
         <app-users-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
           [disableSelf]="disableSelf"
           [directAdmins]="directAdminsIds"
           [tableId]="tableId"
@@ -108,9 +109,10 @@
         </mat-select>
       </mat-form-field>
 
-      <div class="position-relative">
+      <div class="position-relative table-min-height">
         <perun-web-apps-groups-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
           [disableMembers]="false"
           [disableRouting]="disableRouting"
           [displayedColumns]="displayedGroupColumns"

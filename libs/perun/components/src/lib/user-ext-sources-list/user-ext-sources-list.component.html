@@ -93,6 +93,6 @@
   {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
 </perun-web-apps-alert>
 
-<perun-web-apps-alert *ngIf="userExtSources.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && userExtSources.length === 0" alert_type="warn">
   {{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.NO_IDENTITIES' | customTranslate | translate}}
 </perun-web-apps-alert>

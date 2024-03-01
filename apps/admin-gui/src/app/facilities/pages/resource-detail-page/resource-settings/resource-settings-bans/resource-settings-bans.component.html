@@ -20,9 +20,10 @@
   [placeholder]="'RESOURCE_DETAIL.SETTINGS.BANS.FILTER'"
   class="mt-2 search-field">
 </perun-web-apps-debounce-filter>
-<div class="position-relative">
+<div class="position-relative table-min-height">
   <perun-web-apps-ban-on-entity-list
     *perunWebAppsLoader="loading; indicator: spinner"
+    [loading]="loading"
     [bans]="bans"
     [selection]="selection"
     [displayedColumns]="displayedColumns"

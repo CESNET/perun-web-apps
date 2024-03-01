@@ -6,9 +6,10 @@
 
   <div class="mt-5">
     <h1 class="page-subtitle">{{'ORGANIZATIONS.IS_MEMBER' | customTranslate | translate}}</h1>
-    <div class="position-relative">
+    <div class="position-relative table-min-height">
       <perun-web-apps-membership-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         [members]="userMemberships"
         [filterValue]="filterValue"
         [noMembershipFoundAlert]="'ORGANIZATIONS.NO_VOS_ALERT'"
@@ -20,9 +21,10 @@
 
   <div class="mt-5">
     <h1 class="page-subtitle">{{'ORGANIZATIONS.IS_ADMIN' | customTranslate | translate}}</h1>
-    <div class="position-relative">
+    <div class="position-relative table-min-height">
       <perun-web-apps-membership-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         [members]="adminMemberships"
         [filterValue]="filterValue"
         [noMembershipFoundAlert]="'ORGANIZATIONS.NO_VOS_ALERT'"

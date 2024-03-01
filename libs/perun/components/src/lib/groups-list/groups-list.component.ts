@@ -57,6 +57,7 @@ export class GroupsListComponent {
   @Input() tableId: string;
   @Input() relation = false;
   @Input() noGroupsAlert = 'SHARED_LIB.UI.ALERTS.NO_GROUPS';
+  @Input() loading: boolean;
   @Output() groupMoved = new EventEmitter<GroupWithStatus>();
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();

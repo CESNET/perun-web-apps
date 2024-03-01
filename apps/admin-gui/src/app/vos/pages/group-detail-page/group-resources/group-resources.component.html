@@ -27,10 +27,11 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative" *ngIf="resources">
+  <div class="position-relative table-min-height" *ngIf="resources">
     <perun-web-apps-resources-list
       #list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       (refreshTable)="refreshTable()"
       [disableRouting]="!routingAuth"
       [filterValue]="filterValue"

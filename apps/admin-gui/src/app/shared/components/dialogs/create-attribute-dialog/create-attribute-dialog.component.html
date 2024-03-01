@@ -14,9 +14,10 @@
     <ng-template #spinner>
       <perun-web-apps-loading-table></perun-web-apps-loading-table>
     </ng-template>
-    <div class="position-relative">
+    <div class="position-relative table-min-height">
       <perun-web-apps-attributes-list
         *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
         #list
         [emptyListText]="'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.EMPTY_ATTRIBUTES'"
         [attributes]="attributes"

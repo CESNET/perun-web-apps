@@ -40,6 +40,9 @@ export class ApplicationsListComponent implements OnChanges, AfterViewInit {
   @Input()
   disableRouting = false;
 
+  @Input()
+  loading: boolean;
+
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<Application>;

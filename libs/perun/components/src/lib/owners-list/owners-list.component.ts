@@ -25,6 +25,7 @@ export class OwnersListComponent implements OnChanges, AfterViewInit {
   @Input() tableId: string;
   @Input() filterValue = '';
   @Input() displayedColumns: string[] = ['select', 'id', 'name', 'contact', 'type'];
+  @Input() loading: boolean;
 
   dataSource: MatTableDataSource<Owner>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;

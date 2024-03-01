@@ -91,7 +91,7 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="this.applications.length === 0" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && this.applications.length === 0" alert_type="warn">
   {{'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND' | translate}}
 </perun-web-apps-alert>
 

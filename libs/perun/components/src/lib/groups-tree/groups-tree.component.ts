@@ -46,6 +46,7 @@ export class GroupsTreeComponent implements OnChanges {
   @Input() hideCheckbox = false;
   @Input() vo: Vo;
   @Input() displayedColumns = ['nameWithId', 'description', 'menu', 'expiration', 'status'];
+  @Input() loading: boolean;
   @ViewChild('scrollViewport', { static: false }) scrollViewport: CdkVirtualScrollViewport;
 
   disabledRouting = false;

@@ -35,6 +35,7 @@
           </mat-card>
           <p class="mt-4 subtitle">{{'USER_DETAIL.ACCOUNTS.GROUPS' | translate}}</p>
           <perun-web-apps-groups-list
+            [loading]="loading"
             [groups]="groups"
             [memberId]="member?.id"
             [memberGroupStatus]="member.groupStatus"

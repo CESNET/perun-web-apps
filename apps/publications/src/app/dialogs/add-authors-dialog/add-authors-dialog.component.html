@@ -27,9 +27,10 @@
       <ng-template #searchSpinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-      <div class="position-relative" *ngIf="firstSearchDone">
+      <div class="position-relative table-min-height" *ngIf="firstSearchDone">
         <perun-web-apps-authors-list
           *perunWebAppsLoader="searchLoading; indicator: searchSpinner"
+          [loading]="searchLoading"
           [authors]="authors"
           [selection]="selection"
           [disableRouting]="true"

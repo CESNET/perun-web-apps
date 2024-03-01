@@ -41,9 +41,10 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-notification-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [disableSend]="!addAuth"
       [displayedColumns]="displayedColumns"
       (selectionChange)="changeSelection($event)"

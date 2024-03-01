@@ -45,6 +45,8 @@ export class ApplicationFormListComponent implements OnInit, OnChanges {
   ];
   @Input()
   refreshApplicationForm;
+  @Input()
+  loading: boolean;
   @Output()
   applicationFormItemsChange = new EventEmitter<ApplicationFormItem[]>();
   @ViewChild('table') table: MatTable<ApplicationFormItem>;

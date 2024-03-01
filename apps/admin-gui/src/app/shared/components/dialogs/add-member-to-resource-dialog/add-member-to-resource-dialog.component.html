@@ -52,9 +52,10 @@
           <ng-template #tableSpinner>
             <perun-web-apps-loading-table></perun-web-apps-loading-table>
           </ng-template>
-          <div class="position-relative">
+          <div class="position-relative table-min-height">
             <perun-web-apps-groups-list
               *perunWebAppsLoader="processing; indicator: tableSpinner"
+              [loading]="loading"
               [disableGroups]="true"
               [disableHeadCheckbox]="true"
               [disableRouting]="true"

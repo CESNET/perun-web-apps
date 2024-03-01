@@ -183,19 +183,11 @@
           label="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LANGUAGE_'+lang | uppercase | translate}}"
           [formGroup]="inputFormGroup">
           <div *ngIf="isApplicationFormItemOfType(['HEADING', 'HTML_COMMENT'])">
-            <mat-form-field class="w-100" subscriptSizing="dynamic">
-              <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT' | translate}}</mat-label>
-              <textarea
-                formControlName="{{lang}}-html-label"
-                [cdkTextareaAutosize]="true"
-                matInput></textarea>
-              <mat-hint
-                >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION' | translate}}</mat-hint
-              >
-              <mat-error *ngIf="inputFormGroup.controls[lang + '-html-label']?.invalid">
-                {{inputFormGroup.controls[lang + '-html-label'].errors?.invalidHtmlContent}}
-              </mat-error>
-            </mat-form-field>
+            <perun-web-apps-html-content-form-field
+              [inputFormControl]="inputFormGroup.controls[lang + '-html-label']"
+              [tagType]="'textarea'"
+              [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT'"
+              [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION'" />
           </div>
 
           <div
@@ -335,7 +327,7 @@
         <div
           [matTooltipDisabled]="!inputFormGroup.invalid && !optionsFormArray.invalid"
           [matTooltipPosition]="'above'"
-          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HTML_INVALID_TAGS' | translate}}">
+          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INVALID_HTML_CONTENT' | translate}}">
           <button
             mat-flat-button
             class="ms-2 mt-auto"

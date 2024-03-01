@@ -11,9 +11,10 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
 
-  <div class="position-relative">
+  <div class="position-relative table-min-height">
     <app-ext-sources-list
       *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
       [extSources]="extSources"
       [filterValue]="filterValue"
       [displayedColumns]="['id', 'name', 'type']"

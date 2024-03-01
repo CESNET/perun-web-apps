@@ -54,6 +54,7 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
   @Input() disabledRouting = false;
   @Input() openInTab = false;
   @Input() allowAlert = true;
+  @Input() loading: boolean;
   @Output() publicationSelector: EventEmitter<PublicationForGUI> =
     new EventEmitter<PublicationForGUI>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
