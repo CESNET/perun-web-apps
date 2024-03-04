@@ -12,7 +12,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MailChangeFailedDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
-import { AppType } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-perun-web-apps-user-dashboard',
@@ -23,7 +22,6 @@ export class UserDashboardComponent implements OnInit {
   @HostBinding('class.router-component') true;
   user: User;
   roles: { [key: string]: { [key: string]: Array<number> } } = {};
-  userProfileUrl = '';
   roleNames: string[];
   hasOnlyNoRightsRoles = false;
   rightSettingOpened = false;
@@ -44,7 +42,6 @@ export class UserDashboardComponent implements OnInit {
     'RESOURCEOBSERVER',
   ];
   mailSuccessMessage: string;
-  userProfileName: string;
 
   constructor(
     private userManager: UsersManagerService,
@@ -69,7 +66,6 @@ export class UserDashboardComponent implements OnInit {
 
     this.user = this.storeService.getPerunPrincipal().user;
     this.roles = this.storeService.getPerunPrincipal().roles;
-    this.getUserProfile();
     const allUserRoles = Object.keys(this.roles);
     this.hasOnlyNoRightsRoles = allUserRoles.every((role) => this.noRightsRoles.has(role));
     this.roleNames = this.allowedRoles.filter((value) => allUserRoles.includes(value));
@@ -134,10 +130,5 @@ export class UserDashboardComponent implements OnInit {
 
     const rolesToHide = JSON.parse(localStorage.getItem('rolesToHide')) as string[];
     this.rolesToHide = rolesToHide === null ? [] : rolesToHide;
-  }
-
-  private getUserProfile(): void {
-    this.userProfileUrl = this.otherApplicationService.getUrlForOtherApplication(AppType.Profile);
-    this.userProfileName = this.storeService.getProperty('profile_label_en');
   }
 }

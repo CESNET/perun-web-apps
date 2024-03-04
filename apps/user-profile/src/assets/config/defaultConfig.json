@@ -140,8 +140,14 @@
   "header_label_en": "Generic user profile",
   "header_label_cs": "Generický profil uživatele",
   "log_out_enabled": true,
-  "admin_gui_label_en": "IAM Administration",
-  "admin_gui_label_cs": "Správa IAM",
+  "other_apps": {
+    "en": {
+      "admin": "IAM Administration"
+    },
+    "cs": {
+      "admin": "Správa IAM"
+    }
+  },
   "link_to_admin_gui_by_roles": [
     "PERUNADMIN",
     "PERUNOBSERVER",
