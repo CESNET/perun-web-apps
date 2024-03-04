@@ -47,13 +47,12 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-checkbox
+      <mat-slide-toggle
         *ngIf="complementaryObject.beanName.includes('Group')"
         (change)="showIndirectAdmins = !showIndirectAdmins; refreshUsers()"
-        [checked]="showIndirectAdmins"
-        color="primary">
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_INDIRECT_ADMINS' | translate}}
-      </mat-checkbox>
+        [checked]="showIndirectAdmins">
+        {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_DERIVED_ADMINS' | translate}}
+      </mat-slide-toggle>
 
       <div class="position-relative table-min-height">
         <app-users-list
