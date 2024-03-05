@@ -13,9 +13,10 @@
   <div class="position-relative w-100 table-min-height">
     <app-audit-messages-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
-      (loading$)="loading$ = $event"
-      [refresh]="refresh"
-      [tableId]="tableId"
-      [selectedEvents]="selectedEvents"></app-audit-messages-list>
+      [loading]="loading$ | async"
+      (queryChanged)="nextPage.next($event)"
+      [displayedColumns]="displayedColumns"
+      [auditMessages]="messagesPage$ | async"
+      [tableId]="tableId"></app-audit-messages-list>
   </div>
 </div>

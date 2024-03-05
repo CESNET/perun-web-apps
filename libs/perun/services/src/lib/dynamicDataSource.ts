@@ -3,11 +3,9 @@ import {
   Application,
   ApplicationsOrderColumn,
   AppState,
-  AuditMessage,
   ConsentStatus,
   MemberGroupStatus,
   MembersOrderColumn,
-  PaginatedAuditMessages,
   PaginatedRichApplications,
   PaginatedRichMembers,
   PaginatedRichUsers,
@@ -292,61 +290,6 @@ export class DynamicDataSource<T> implements DataSource<T> {
             ...results.map((result) => (result as PaginatedBlockedLogins).data),
           );
           subscriber.next(mergedData as BlockedLogin[]);
-          subscriber.complete();
-        },
-        error: (error) => subscriber.error(error),
-      });
-    });
-  }
-
-  loadAuditMessages(
-    pageSize: number,
-    pageIndex: number,
-    sortOrder: SortingOrder,
-    selectedEvents: string[],
-  ): void {
-    this.loadingSubject.next(true);
-    this.latestQueryTime = Date.now();
-    const thisQueryTime = this.latestQueryTime;
-
-    this.dynamicPaginatingService
-      .getAuditMessages(sortOrder, pageIndex, pageSize, selectedEvents)
-      .pipe(
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false)),
-      )
-      .subscribe((paginatedAuditMessages) => {
-        if (this.latestQueryTime <= thisQueryTime) {
-          const data: AuditMessage[] = (paginatedAuditMessages as PaginatedAuditMessages).data;
-          this.allObjectCount = (paginatedAuditMessages as PaginatedAuditMessages).totalCount;
-          this.dataSubject.next(data as unknown as T[]);
-        }
-      });
-  }
-
-  getAllAuditMessages(
-    totalCount: number,
-    sortOrder: SortingOrder,
-    selectedEvents: string[],
-  ): Observable<AuditMessage[]> {
-    return new Observable((subscriber) => {
-      const requests = [];
-      for (let pageNumber = 0; pageNumber < Math.ceil(totalCount / this.step); pageNumber++) {
-        requests.push(
-          this.dynamicPaginatingService.getAuditMessages(
-            sortOrder,
-            pageNumber,
-            this.step,
-            selectedEvents,
-          ),
-        );
-      }
-      forkJoin(requests).subscribe({
-        next: (results) => {
-          const mergedData = [].concat(
-            ...results.map((result) => (result as PaginatedAuditMessages).data),
-          );
-          subscriber.next(mergedData as AuditMessage[]);
           subscriber.complete();
         },
         error: (error) => subscriber.error(error),
