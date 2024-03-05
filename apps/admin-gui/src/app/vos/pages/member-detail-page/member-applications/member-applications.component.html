@@ -16,15 +16,15 @@
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <perun-web-apps-applications-dynamic-list
+  <perun-web-apps-applications-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
-    (loading$)="loading$ = $event"
+    [loading]="loading$ | async"
     [tableId]="showAllDetails ? detailTableId : tableId"
-    [searchString]="filterValue"
     [member]="member"
     [displayedColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
-    [states]=""
-    [dateFrom]="dateFrom"
-    [refreshTable]="refresh">
-  </perun-web-apps-applications-dynamic-list>
+    [applications]="applicationsPage$ | async"
+    (queryChanged)="nextPage.next($event)"
+    (downloadAll)="downloadAll($event)"
+    [filter]="filterValue">
+  </perun-web-apps-applications-list>
 </div>

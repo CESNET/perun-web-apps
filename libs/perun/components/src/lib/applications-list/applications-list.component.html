@@ -1,8 +1,8 @@
-<div [hidden]="this.dataSource.allObjectCount === 0" class="card mt-2">
+<div [hidden]="dataSource.filteredData.length === 0" class="card mt-2">
   <perun-web-apps-table-wrapper
     (exportDisplayedData)="exportDisplayedData($event)"
     (exportAllData)="exportAllData($event)"
-    [dataLength]="dataSource.allObjectCount"
+    [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions"
     [tableId]="tableId">
     <table
@@ -127,7 +127,9 @@
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'APPLICATIONS_LIST.MODIFIED_BY' | translate}}
         </th>
-        <td *matCellDef="let application" mat-cell>{{getFriendlyName(application.modifiedBy)}}</td>
+        <td *matCellDef="let application" mat-cell>
+          {{application.modifiedBy | parseAppFriendlyName}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="modifiedAt">
         <th *matHeaderCellDef mat-header-cell>{{'APPLICATIONS_LIST.MODIFIED_AT' | translate}}</th>
@@ -141,13 +143,13 @@
       <ng-container *ngFor="let col of fedColumnsFriendly; let i = index" matColumnDef="{{col}}">
         <th *matHeaderCellDef mat-header-cell>{{fedColumnsDisplay[i]}}</th>
         <td *matCellDef="let application" mat-cell>
-          {{getFedValue(application.fedInfo, col)}}
+          {{application.fedInfo | parseFedInfo: col}}
         </td>
       </ng-container>
       <ng-container *ngFor="let col of parsedColumns; let i = index" matColumnDef="{{col}}">
         <th *matHeaderCellDef mat-header-cell>{{col}}</th>
         <td *matCellDef="let application" mat-cell>
-          {{getValue(application.formData, col)}}
+          {{application.formData | parseAppValue: col}}
         </td>
       </ng-container>
 
@@ -163,8 +165,6 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="((dataSource.loading$ | async) === false) && this.dataSource.allObjectCount === 0"
-  [alert_type]="'warn'">
-  {{'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND' | translate}}
+<perun-web-apps-alert *ngIf="!loading && dataSource.filteredData.length === 0" alert_type="warn">
+  {{noAppsAlert | translate}}
 </perun-web-apps-alert>
