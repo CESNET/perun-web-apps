@@ -118,7 +118,7 @@ import { ShowNotificationHistoryDialogComponent } from '@perun-web-apps/perun/di
 import { ApplicationStateSelectorComponent } from './application-state-selector/application-state-selector.component';
 import { AuthorizedGroupsCellComponent } from './authorized-groups-cell/authorized-groups-cell.component';
 import { StringSearchSelectComponent } from './string-search-select/string-search-select.component';
-import { BlockedLoginsDynamicListComponent } from './blocked-logins-dynamic-list/blocked-logins-dynamic-list.component';
+import { BlockedLoginsListComponent } from './blocked-logins-list/blocked-logins-list.component';
 import { NamespaceSearchSelectComponent } from './namespace-search-select/namespace-search-select.component';
 import { MembershipStatusSettingsComponent } from './membership-status-settings/membership-status-settings.component';
 import { ExpandableTilesComponent } from './expandable-tiles/expandable-tiles.component';
@@ -274,7 +274,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     RemoveStringValueDialogComponent,
     ShowSshDialogComponent,
     ShowNotificationHistoryDialogComponent,
-    BlockedLoginsDynamicListComponent,
+    BlockedLoginsListComponent,
     NamespaceSearchSelectComponent,
     MembershipStatusSettingsComponent,
     ExpandableTilesComponent,
@@ -356,7 +356,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     RemoveStringValueDialogComponent,
     ShowSshDialogComponent,
     ShowNotificationHistoryDialogComponent,
-    BlockedLoginsDynamicListComponent,
+    BlockedLoginsListComponent,
     NamespaceSearchSelectComponent,
     ExpandableTilesComponent,
     ApplicationsDynamicListComponent,
