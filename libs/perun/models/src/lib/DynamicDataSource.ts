@@ -106,7 +106,7 @@ export class DynamicDataSource<T> implements DataSource<T> {
   update(): void {
     // React to sort changes
     const sortChange: Observable<Sort> = this._sort.sortChange.pipe(
-      startWith({ active: 'NAME', direction: this._sort.direction }),
+      startWith({ active: this._sort.active, direction: this._sort.direction }),
     );
 
     // React to page changes
