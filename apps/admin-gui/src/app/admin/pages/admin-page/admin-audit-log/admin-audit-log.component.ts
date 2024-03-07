@@ -1,7 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TABLE_AUDIT_MESSAGES } from '@perun-web-apps/config/table-config';
-import { AuditMessagesManagerService } from '@perun-web-apps/perun/openapi';
-import { Observable, of } from 'rxjs';
+import {
+  AuditMessage,
+  AuditMessagesManagerService,
+  PaginatedAuditMessages,
+} from '@perun-web-apps/perun/openapi';
+import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
+import { PageQuery } from '@perun-web-apps/perun/models';
+import { map, startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-audit-log',
@@ -10,20 +16,40 @@ import { Observable, of } from 'rxjs';
 })
 export class AdminAuditLogComponent implements OnInit {
   tableId = TABLE_AUDIT_MESSAGES;
-  refresh = false;
-  loading$: Observable<boolean>;
 
+  displayedColumns = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
+  auditMessages: AuditMessage[];
   selectedEvents: string[] = [];
   eventOptions: string[] = [];
   eventOptionsForSearchSelect: string[] = [];
+  nextPage = new BehaviorSubject<PageQuery>({});
+  messagesPage$: Observable<PaginatedAuditMessages> = this.nextPage.pipe(
+    switchMap((pageQuery) =>
+      this.auditMessagesManagerService.getMessagesPage({
+        query: {
+          offset: pageQuery.offset,
+          pageSize: pageQuery.pageSize,
+          order: pageQuery.order,
+          selectedEvents: this.selectedEvents,
+        },
+      }),
+    ),
+    // 'Tapping' is generally a last resort
+    tap((page) => {
+      this.auditMessages = page.data;
+      setTimeout(() => this.loadingSubject$.next(false), 200);
+    }),
+    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
+  );
 
-  constructor(
-    private auditMessagesManagerService: AuditMessagesManagerService,
-    private cd: ChangeDetectorRef,
-  ) {}
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
+  constructor(private auditMessagesManagerService: AuditMessagesManagerService) {}
 
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.auditMessagesManagerService.findAllPossibleEvents().subscribe((res) => {
       this.eventOptions = res.sort();
       this.eventOptionsForSearchSelect = this.eventOptions;
@@ -31,8 +57,7 @@ export class AdminAuditLogComponent implements OnInit {
   }
 
   refreshTable(): void {
-    this.refresh = !this.refresh;
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   toggleEvent(events: string[]): void {
@@ -44,6 +69,6 @@ export class AdminAuditLogComponent implements OnInit {
     this.selectedEvents = [...this.selectedEvents];
     const otherEntities = this.eventOptions.filter((e) => !this.selectedEvents.includes(e));
     this.eventOptionsForSearchSelect = [...this.selectedEvents, ...otherEntities];
-    this.cd.detectChanges();
+    this.refreshTable();
   }
 }
