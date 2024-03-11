@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [15.4.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.0...v15.4.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* **admin:** show also indirect managers fix ([3391432](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3391432fa70df373fd0c17d82fa49706c422a1c0))
+
 ## [15.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.3.0...v15.4.0) (2024-03-01)
 
 
