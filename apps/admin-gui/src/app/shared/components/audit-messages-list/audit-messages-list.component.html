@@ -1,7 +1,7 @@
-<div [hidden]="this.dataSource.allObjectCount === 0" class="card mt-2">
+<div [hidden]="dataSource.filteredData.length === 0" class="card mt-2">
   <perun-web-apps-table-wrapper
     (exportDisplayedData)="exportDisplayedData($event)"
-    [dataLength]="dataSource.allObjectCount"
+    [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions"
     [tableId]="tableId"
     [allowExportAll]="false">
@@ -74,8 +74,6 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="((dataSource.loading$ | async) === false)  && this.dataSource.allObjectCount === 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_AUDIT_MESSAGES' | translate}}
+<perun-web-apps-alert *ngIf="!loading && dataSource.filteredData.length === 0" alert_type="warn">
+  {{noMessagesAlert | translate}}
 </perun-web-apps-alert>

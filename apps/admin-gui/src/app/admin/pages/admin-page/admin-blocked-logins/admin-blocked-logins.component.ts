@@ -1,15 +1,26 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { BlockedLogin } from '@perun-web-apps/perun/openapi';
+import {
+  BlockedLogin,
+  BlockedLoginsOrderColumn,
+  PaginatedBlockedLogins,
+  UsersManagerService,
+} from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { TABLE_ADMIN_BLOCKED_LOGINS } from '@perun-web-apps/config/table-config';
-import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UnblockLoginsDialogComponent } from '../../../../shared/components/dialogs/unblock-logins-dialog/unblock-logins-dialog.component';
 import { BlockLoginsDialogComponent } from '../../../../shared/components/dialogs/block-logins-dialog/block-logins-dialog.component';
 import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { FormControl } from '@angular/forms';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { PageQuery } from '@perun-web-apps/perun/models';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-perun-web-apps-admin-blocked-logins',
@@ -17,8 +28,6 @@ import { GuiAuthResolver } from '@perun-web-apps/perun/services';
   styleUrls: ['./admin-blocked-logins.component.scss'],
 })
 export class AdminBlockedLoginsComponent implements OnInit {
-  loading$: Observable<boolean>;
-  update = false;
   tableId = TABLE_ADMIN_BLOCKED_LOGINS;
   isAdmin = false;
 
@@ -31,17 +40,47 @@ export class AdminBlockedLoginsComponent implements OnInit {
   filterOptions: string[] = [];
   selectedNamespaces: string[] = [];
   namespaces = new FormControl();
+  displayedColumns = ['checkbox', 'login', 'namespace'];
+
+  blockedLogins: BlockedLogin[] = [];
+  nextPage = new BehaviorSubject<PageQuery>({});
+  blockedLoginsPage$: Observable<PaginatedBlockedLogins> = this.nextPage.pipe(
+    switchMap((pageQuery) =>
+      this.userManager.getBlockedLoginsPage({
+        query: {
+          order: pageQuery.order,
+          pageSize: pageQuery.pageSize,
+          offset: pageQuery.offset,
+          sortColumn: pageQuery.sortColumn as BlockedLoginsOrderColumn,
+          searchString: pageQuery.searchString,
+          namespaces: this.selectedNamespaces,
+        },
+      }),
+    ),
+    // 'Tapping' is generally a last resort
+    tap((page) => {
+      this.blockedLogins = page.data;
+      this.selection.clear();
+      setTimeout(() => this.loadingSubject$.next(false), 200);
+    }),
+    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
+  );
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   constructor(
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
     private attributesService: AttributesManagerService,
     public authResolver: GuiAuthResolver,
+    private userManager: UsersManagerService,
   ) {}
 
   refreshTable(): void {
-    this.update = !this.update;
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   onSearchByString(searchString: string): void {
@@ -50,7 +89,6 @@ export class AdminBlockedLoginsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.namespaces.setValue(this.selectedNamespaces);
     this.isAdmin = this.authResolver.isPerunAdmin();
 
@@ -72,9 +110,8 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((wereLoginsBlocked) => {
       if (wereLoginsBlocked) {
-        this.update = !this.update;
         this.selection.clear();
-        this.cd.detectChanges();
+        this.nextPage.next(this.nextPage.value);
       }
     });
   }
@@ -91,9 +128,8 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((wereLoginsUnblocked) => {
       if (wereLoginsUnblocked) {
-        this.update = !this.update;
         this.selection.clear();
-        this.cd.detectChanges();
+        this.nextPage.next(this.nextPage.value);
       }
     });
   }
@@ -109,6 +145,34 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
   refreshOnClosed(): void {
     this.selectedNamespaces = [...this.selectedNamespaces];
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
+  }
+
+  downloadAll(a: {
+    format: string;
+    length: number;
+    getDataForColumnFun: (data: BlockedLogin, column: string) => string;
+  }): void {
+    const query = this.nextPage.getValue();
+
+    this.userManager
+      .getBlockedLoginsPage({
+        query: {
+          order: query.order,
+          pageSize: a.length,
+          offset: 0,
+          sortColumn: query.sortColumn as BlockedLoginsOrderColumn,
+          searchString: query.searchString,
+          namespaces: this.selectedNamespaces,
+        },
+      })
+      .subscribe({
+        next: (paginatedGroups) => {
+          downloadData(
+            getDataForExport(paginatedGroups.data, this.displayedColumns, a.getDataForColumnFun),
+            a.format,
+          );
+        },
+      });
   }
 }

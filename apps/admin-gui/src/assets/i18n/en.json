@@ -2840,7 +2840,7 @@
         "REMOVE": "Remove",
         "SELECT_MODE": "Select mode",
         "SELECT_ROLE": "Select role",
-        "SHOW_INDIRECT_ADMINS": "Show also indirect managers",
+        "SHOW_DERIVED_ADMINS": "Show also derived managers",
         "USER": "Users",
         "GROUP": "Groups",
         "NO_MANAGERS": "This role has no managers.",

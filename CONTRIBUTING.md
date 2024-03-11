@@ -54,9 +54,9 @@ Use `BREAKING CHANGE:`
 
 Our E2E tests are developing in [Cypress](https://www.cypress.io/). Currently, just the admin-gui app is covered by E2E tests. On the other hand (thanks to [Nx](https://nx.dev/) generators and Nx recommendations for mono repo project architecture) we've established folders containing default configurations for E2E tests dedicated to each application (app name with the postfix `-e2e`), so we are ready to start developing E2E tests for all applications. E2E tests for admin-gui can be found [here](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/tree/main/apps/admin-gui-e2e).
 
-Alongside these application-specific folders, we maintain a shared folder [e2e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/tree/main/e2e?ref_type=heads) which contains testing `instanceConfig.json`, files for the PostgreSQL container, and files for the RPC container. The E2E tests require Apache as well. Prepared image is accessible [here](https://gitlab.ics.muni.cz/perun-proxy-aai/containers/ci-tools/-/tree/main/perun-apache).
+Alongside these application-specific folders, we maintain a shared folder [e2e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/tree/main/e2e?ref_type=heads) which contains testing `instanceConfig.json`, files for the PostgreSQL container, and files for the RPC container. The E2E tests require Apache as well. Prepared image is accessible [here](https://gitlab.ics.muni.cz/perun/ci/pipeline-components/-/tree/main/perun-apache).
 
-Running E2E tests locally requires these three containers. However, for CI execution, we additionally require a Cypress image, which is accessible [here](https://gitlab.ics.muni.cz/perun-proxy-aai/containers/ci-tools/-/tree/main/cypress).
+Running E2E tests locally requires these three containers. However, for CI execution, we additionally require a Cypress image, which is accessible [here](https://gitlab.ics.muni.cz/perun/ci/pipeline-components/-/tree/main/cypress).
 
 ### Tests execution
 
@@ -155,7 +155,7 @@ We aim not to test every individual use case during E2E testing. However, an err
 
 All SQL queries to set up test data and test environment are located in the `e2e/docker-postresql/3-init.sql` file. If creating a new test that requires initial data, the necessary data should be prepared here. Running `docker compose up` with correct SQL queries will display the message `database system is ready to accept connections` in the logs.
 
-When creating a new test user, ensure that credentials are added to the `cypress.config.json` file (mentioned earlier) and the MD5 hash of these credentials is also added to the Apache config file [perun.passwd](https://gitlab.ics.muni.cz/perun-proxy-aai/containers/ci-tools/-/blob/main/perun-apache/perun.passwd).
+When creating a new test user, ensure that credentials are added to the `cypress.config.json` file (mentioned earlier) and the MD5 hash of these credentials is also added to the Apache config file [perun.passwd](https://gitlab.ics.muni.cz/perun/ci/pipeline-components/-/blob/main/perun-apache/perun.passwd).
 
 ```sh
 # How to create hashed credentials

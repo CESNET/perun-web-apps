@@ -1,15 +1,8 @@
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AuditMessage, PaginatedAuditMessages } from '@perun-web-apps/perun/openapi';
 import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { AuditMessage } from '@perun-web-apps/perun/openapi';
-import {
+  customDataSourceFilterPredicate,
+  customDataSourceSort,
   downloadData,
   getDataForExport,
   getDefaultDialogConfig,
@@ -18,17 +11,13 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuditMessageDetailDialogComponent } from '../dialogs/audit-message-detail-dialog/audit-message-detail-dialog.component';
-import {
-  CustomMatPaginator,
-  DynamicDataSource,
-  DynamicPaginatingService,
-} from '@perun-web-apps/perun/services';
+import { CustomMatPaginator } from '@perun-web-apps/perun/services';
+import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { merge, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { Observable } from 'rxjs';
 import { formatDate } from '@angular/common';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-audit-messages-list',
@@ -41,9 +30,11 @@ import { formatDate } from '@angular/common';
     },
   ],
 })
-export class AuditMessagesListComponent implements OnInit, OnChanges, AfterViewInit {
+export class AuditMessagesListComponent {
   @Input() tableId: string;
   @Input() refresh: boolean;
+  @Input() loading: boolean;
+  @Input() noMessagesAlert = 'SHARED_LIB.UI.ALERTS.NO_AUDIT_MESSAGES';
   @Input() displayedColumns: string[] = [
     'id',
     'timestamp',
@@ -52,20 +43,34 @@ export class AuditMessagesListComponent implements OnInit, OnChanges, AfterViewI
     'event.message',
     'detail',
   ];
-  @Input() selectedEvents: string[];
   @Output() loading$: EventEmitter<Observable<boolean>> = new EventEmitter<Observable<boolean>>();
+  @Output() queryChanged = new EventEmitter<PageQuery>();
+  @Output() downloadAll = new EventEmitter<{ format: string; length: number }>();
 
-  @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
-  @ViewChild(MatSort) sort: MatSort;
-  pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  @ViewChild(TableWrapperComponent, { static: true }) tableWrapper: TableWrapperComponent;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
-  dataSource: DynamicDataSource<AuditMessage>;
+  dataSource: MatTableDataSource<AuditMessage> | DynamicDataSource<AuditMessage>;
 
-  constructor(
-    private dialog: MatDialog,
-    private dynamicPaginatingService: DynamicPaginatingService,
-    private tableConfigService: TableConfigService,
-  ) {}
+  constructor(private dialog: MatDialog) {}
+
+  @Input() set auditMessages(auditMessages: AuditMessage[] | PaginatedAuditMessages) {
+    // Initialize data source with first AuditMessage object passed
+    // One table instance can NOT alternate between paginated and not paginated messages
+    if (!this.dataSource) {
+      this.dataSourceInit(auditMessages);
+    }
+
+    // Set up data correctly on each change
+    const paginated = this.isPaginated(auditMessages);
+    if (isDynamicDataSource(this.dataSource) && paginated) {
+      this.dataSource.data = auditMessages.data;
+      this.dataSource.count = auditMessages.totalCount;
+    } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
+      this.dataSource.data = auditMessages;
+    }
+  }
 
   static getExportDataForColumn(data: AuditMessage, column: string): string {
     switch (column) {
@@ -84,42 +89,6 @@ export class AuditMessagesListComponent implements OnInit, OnChanges, AfterViewI
     }
   }
 
-  ngAfterViewInit(): void {
-    this.sort.sortChange.subscribe(() => (this.child.paginator.pageIndex = 0));
-
-    merge(this.sort.sortChange, this.child.paginator.page)
-      .pipe(tap(() => this.loadAuditMessagesPage()))
-      .subscribe();
-  }
-
-  ngOnInit(): void {
-    this.dataSource = new DynamicDataSource<AuditMessage>(this.dynamicPaginatingService, null);
-    this.dataSource.loadAuditMessages(
-      this.tableConfigService.getTablePageSize(this.tableId),
-      0,
-      'DESCENDING',
-      this.selectedEvents,
-    );
-    this.loading$.emit(this.dataSource.loading$);
-  }
-
-  ngOnChanges(): void {
-    if (this.dataSource) {
-      this.child.paginator.pageIndex = 0;
-      this.loadAuditMessagesPage();
-    }
-  }
-
-  loadAuditMessagesPage(): void {
-    const sortDirection = this.sort.direction === 'asc' ? 'ASCENDING' : 'DESCENDING';
-    this.dataSource.loadAuditMessages(
-      this.child.paginator.pageSize,
-      this.child.paginator.pageIndex,
-      sortDirection,
-      this.selectedEvents,
-    );
-  }
-
   viewDetails(auditMessage: AuditMessage): void {
     const config: MatDialogConfig = getDefaultDialogConfig();
     const tmp: string = JSON.parse(JSON.stringify(auditMessage)) as string;
@@ -132,13 +101,65 @@ export class AuditMessagesListComponent implements OnInit, OnChanges, AfterViewI
   }
 
   exportDisplayedData(format: string): void {
-    downloadData(
-      getDataForExport(
-        this.dataSource.getData(),
-        this.displayedColumns.filter((v) => v !== 'detail'),
-        AuditMessagesListComponent.getExportDataForColumn,
-      ),
-      format,
-    );
+    if (isDynamicDataSource(this.dataSource)) {
+      downloadData(
+        getDataForExport(
+          this.dataSource.data,
+          this.displayedColumns,
+          AuditMessagesListComponent.getExportDataForColumn,
+        ),
+        format,
+      );
+    } else {
+      const start = this.dataSource.paginator.pageIndex * this.dataSource.paginator.pageSize;
+      const end = start + this.dataSource.paginator.pageSize;
+      downloadData(
+        getDataForExport(
+          this.dataSource
+            .sortData(this.dataSource.filteredData, this.dataSource.sort)
+            .slice(start, end),
+          this.displayedColumns,
+          AuditMessagesListComponent.getExportDataForColumn,
+        ),
+        format,
+      );
+    }
+  }
+
+  isPaginated(data: AuditMessage[] | PaginatedAuditMessages): data is PaginatedAuditMessages {
+    return 'data' in data;
+  }
+
+  private dataSourceInit(auditMessages: AuditMessage[] | PaginatedAuditMessages): void {
+    const paginated = this.isPaginated(auditMessages);
+
+    // Create data source based on input type
+    this.dataSource = paginated
+      ? new DynamicDataSource(
+          auditMessages.data,
+          auditMessages.totalCount,
+          this.sort,
+          this.tableWrapper.paginator,
+        )
+      : new MatTableDataSource(auditMessages);
+
+    if (isDynamicDataSource(this.dataSource)) {
+      // Subscribe to data source changes and pass them to parent
+      this.dataSource.pageQuery$.subscribe((query) => this.queryChanged.emit(query));
+    } else {
+      // Initialize client-side data source
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.tableWrapper.paginator;
+      this.dataSource.filterPredicate = (data: AuditMessage, filter: string): boolean =>
+        customDataSourceFilterPredicate(
+          data,
+          filter,
+          this.displayedColumns,
+          AuditMessagesListComponent.getExportDataForColumn,
+          true,
+        );
+      this.dataSource.sortData = (data: AuditMessage[], sort: MatSort): AuditMessage[] =>
+        customDataSourceSort(data, sort, AuditMessagesListComponent.getExportDataForColumn);
+    }
   }
 }

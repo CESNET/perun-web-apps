@@ -7,7 +7,6 @@ import {
   MembersManagerService,
   MembersOrderColumn,
   PaginatedRichApplications,
-  PaginatedAuditMessages,
   PaginatedRichMembers,
   PaginatedRichUsers,
   RegistrarManagerService,
@@ -109,22 +108,6 @@ export class DynamicPaginatingService {
         sortColumn: sortColumn,
         namespaces: namespaces,
         searchString: searchString,
-      },
-    });
-  }
-
-  getAuditMessages(
-    order: SortingOrder,
-    pageNumber: number,
-    pageSize: number,
-    selectedEvents: string[],
-  ): Observable<PaginatedAuditMessages> {
-    return this.auditMessagesManagerService.getMessagesPage({
-      query: {
-        offset: pageSize * pageNumber,
-        pageSize: pageSize,
-        order: order,
-        selectedEvents: selectedEvents,
       },
     });
   }
