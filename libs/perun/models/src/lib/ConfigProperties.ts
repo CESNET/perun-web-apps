@@ -209,6 +209,7 @@ export interface PerunConfig {
 
   // Password reset specific
   // Optional
+  default_namespace?: string;
   password_help?: Record<string, string>;
   password_help_cs?: Record<string, string>;
   password_labels?: PasswordLabels;

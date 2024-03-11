@@ -58,6 +58,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.mode = parseQueryParams('mode', queryParams) === 'activation' ? 'activation' : 'reset';
     this.namespace = parseQueryParams('namespace', queryParams);
 
+    // If namespace not set, use default namespace
+    if (this.namespace.length === 0) {
+      this.namespace = this.store.getProperty('default_namespace');
+    }
+
     if (queryParams.includes('token')) {
       this.token = parseQueryParams('token', queryParams);
 
