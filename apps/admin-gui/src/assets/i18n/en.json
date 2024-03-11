@@ -1095,7 +1095,6 @@
       "TITLE": "Perun admin",
       "OVERVIEW": "Overview",
       "ATTRIBUTES": "Attribute definitions",
-      "VISUALIZER": "Visualizer",
       "USERS": "Users",
       "EXT_SOURCES": "External sources",
       "GROUPS": "Groups",
@@ -1107,10 +1106,6 @@
       "CONSENT_HUBS": "Consent hubs",
       "SEARCHER": "Searcher",
       "BLOCKED_LOGINS": "Blocked logins"
-    },
-    "VISUALIZER": {
-      "ATTR_DEPENDENCIES": "Modules dependencies",
-      "USER_DESTINATION": "User-destination relationship"
     },
     "USER": {
       "OVERVIEW": "Overview",
@@ -2614,44 +2609,6 @@
       "ADD": "Create",
       "DELETE": "Delete",
       "FILTER": "Filter"
-    },
-    "VISUALIZER": {
-      "ATTR_DEPENDENCIES": {
-        "TITLE": "Attribute modules dependencies",
-        "HINT": "You can use arrow keys to move the image."
-      },
-      "USER_DESTINATION": {
-        "TITLE": "User destination relationship",
-        "SELECT_USER": "Select User",
-        "SELECT_DESTINATION": "Select Destination",
-        "DESTINATION_EXAMPLE": "eg. documents.ics.muni.cz",
-        "SELECT_SERVICE": "Select Service",
-        "SUBMIT_BUTTON": "Find relationships",
-        "USER_HINT": "Type names with punctuation, case insensitive",
-        "USER_EXAMPLE": "eg. Jan Novák",
-        "SELECT_NO_SERVICE": "I don't want specify service",
-        "BUTTON_NEXT": "Next",
-        "BUTTON_BACK": "Previous",
-        "ERROR_NO_NAME": "Please fill name",
-        "ERROR_WRONG_NAME": "Given name not found",
-        "ERROR_NO_DESTINATION": "Please fill destination",
-        "ERROR_WRONG_DESTINATION": "Given destination not found",
-        "ERROR_NOT_CHOSEN_SERVICE": "Please choose service",
-        "FOUND_1": "Path was found between user",
-        "FOUND_2": "and destination",
-        "FOUND_3": "for service",
-        "NOT_FOUND_1": "For user",
-        "NOT_FOUND_2": "and destination",
-        "NOT_FOUND_3": "with dependency on service",
-        "NOT_FOUND_4": "weren't found any connection in database",
-        "USER": "User",
-        "GROUP": "Group",
-        "VO": "Organization",
-        "RESOURCE": "Resource",
-        "FACILITY": "Facility",
-        "SERVICE": "Service",
-        "DESTINATION": "Destination"
-      }
     },
     "EXT_SOURCES": {
       "TITLE": "External sources",

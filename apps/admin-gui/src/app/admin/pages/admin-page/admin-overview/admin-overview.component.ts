@@ -65,18 +65,4 @@ export class AdminOverviewComponent {
       style: 'admin-btn',
     },
   ];
-  visualizerItems: MenuItem[] = [
-    {
-      cssIcon: 'perun-module-dependencies',
-      url: `/admin/visualizer/attrDependencies`,
-      label: 'MENU_ITEMS.VISUALIZER.ATTR_DEPENDENCIES',
-      style: 'admin-btn',
-    },
-    {
-      cssIcon: 'perun-user-destination-relationship',
-      url: '/admin/visualizer/userDestinationRelationship',
-      label: 'MENU_ITEMS.VISUALIZER.USER_DESTINATION',
-      style: 'admin-btn',
-    },
-  ];
 }
