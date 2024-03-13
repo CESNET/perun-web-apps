@@ -27,3 +27,4 @@ export * from './lib/member-overview-membership/member-overview-membership.compo
 export * from './lib/debounce-filter/debounce-filter.component';
 export * from './lib/application-state-selector/application-state-selector.component';
 export * from './lib/html-content-form-field/html-content-form-field.component';
+export * from './lib/users-list/users-list.component';

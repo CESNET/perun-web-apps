@@ -16,15 +16,16 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
   <div class="position-relative table-min-height">
-    <app-users-list
+    <perun-web-apps-users-list
       *perunWebAppsLoader="loading; indicator: spinner"
       [loading]="loading"
       [noUsersFoundLabel]="'USER_DETAIL.SETTINGS.ASSOCIATED_USERS.NO_ASSOCIATED_USERS' | translate"
       [disableRouting]="disableRouting"
-      [displayedColumns]="displayedColumns"
+      [routeToAdmin]="true"
+      [displayColumns]="displayedColumns"
       [selection]="selection"
       [tableId]="tableId"
       [users]="associatedUsers">
-    </app-users-list>
+    </perun-web-apps-users-list>
   </div>
 </div>

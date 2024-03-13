@@ -22,6 +22,7 @@ import { ReloadEntityDetailService } from '../../../core/services/common/reload-
 import { AuthPrivilege } from '@perun-web-apps/perun/models';
 import { Observable } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
+import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'app-managers-page',
@@ -37,7 +38,14 @@ export class ManagersPageComponent implements OnInit {
   @Input() configMode = false;
   @Input() disableRouting = false;
   @Input() disableSelf = false;
-  @Input() displayedUserColumns = ['select', 'id', 'name', 'email', 'logins', 'organization'];
+  @Input() displayedUserColumns: userTableColumn[] = [
+    'select',
+    'id',
+    'name',
+    'email',
+    'logins',
+    'organization',
+  ];
   @Input() displayedGroupColumns = ['select', 'id', 'vo', 'name', 'description'];
 
   groups: Group[] = [];

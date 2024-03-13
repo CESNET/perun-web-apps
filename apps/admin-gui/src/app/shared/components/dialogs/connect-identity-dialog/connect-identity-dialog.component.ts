@@ -7,6 +7,7 @@ import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-conf
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { userTableColumn } from '@perun-web-apps/perun/components';
 
 export interface AddUserServiceIdentityData {
   userId: number;
@@ -28,7 +29,15 @@ export class ConnectIdentityDialogComponent implements OnInit {
   identities: RichUser[] = [];
   selection = new SelectionModel<RichUser>(false, []);
   firstSearchDone = false;
-  displayedColumns = ['select', 'id', 'user', 'name', 'email', 'logins', 'organization'];
+  displayedColumns: userTableColumn[] = [
+    'select',
+    'id',
+    'user',
+    'name',
+    'email',
+    'logins',
+    'organization',
+  ];
   tableId = TABLE_USER_SERVICE_IDENTITIES;
   searchCtrl: UntypedFormControl;
   private userId: number;

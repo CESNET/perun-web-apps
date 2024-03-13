@@ -1,5 +1,4 @@
 <app-add-ban-dialog
-  [loading]="loading"
   [disabled]="selection.selected.length === 0"
   [theme]="data.theme"
   [ban]="ban"
@@ -12,16 +11,19 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
   <div class="position-relative table-min-height">
-    <perun-web-apps-users-dynamic-list
+    <perun-web-apps-users-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
-      (loading$)="loading$ = $event"
-      [attrNames]="attrNames"
-      [selection]="selection"
-      [tableId]="tableId"
+      [loading]="loading$ | async"
+      (queryChanged)="nextPage.next($event)"
+      (downloadAll)="downloadAll($event)"
       [disableRouting]="true"
-      [displayedColumns]="displayedColumns"
-      [searchString]="filter"
-      [facilityId]="data.entityId">
-    </perun-web-apps-users-dynamic-list>
+      [routeToAdmin]="routeAuth"
+      [users]="usersPage$ | async"
+      [displayColumns]="displayedColumns"
+      [sortableColumns]="['id', 'name']"
+      [selection]="selection"
+      [filter]="searchString"
+      [facilityId]="data.entityId"
+      [tableId]="tableId" />
   </div>
 </app-add-ban-dialog>

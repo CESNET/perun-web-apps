@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
+import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-config';
@@ -9,6 +9,7 @@ import { ConnectIdentityDialogComponent } from '../../../../../shared/components
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { Subscription } from 'rxjs';
+import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'app-user-settings-service-identities',
@@ -17,11 +18,11 @@ import { Subscription } from 'rxjs';
 })
 export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy {
   loading = false;
-  selection = new SelectionModel<User>(false, []);
-  identities: User[] = [];
+  selection = new SelectionModel<RichUser>(false, []);
+  identities: RichUser[] = [];
   userId: number;
   tableId = TABLE_USER_SERVICE_IDENTITIES;
-  displayedColumns = ['select', 'id', 'user', 'name'];
+  displayedColumns: userTableColumn[] = ['select', 'id', 'user', 'name'];
   addIdentity: boolean;
   removeIdentity: boolean;
   routeToAdminSection = true;
@@ -61,7 +62,7 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
   refreshTable(): void {
     this.loading = true;
     this.userManager.getSpecificUsersByUser(this.userId).subscribe((identities) => {
-      this.identities = identities;
+      this.identities = identities as RichUser[];
       this.selection.clear();
       this.loading = false;
     });

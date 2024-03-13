@@ -70,7 +70,7 @@ describe('Group management with role Group observer', () => {
     it('test list managers', () => {
       cy.get('[data-cy=managers]')
         .click()
-      cy.get(`[data-cy=${dbGroupAdmin}-firstName-td]`)
+      cy.get(`[data-cy=${dbGroupAdmin}-td]`)
         .should('exist')
     });
 
