@@ -15,6 +15,9 @@
       "ACTIVATION_SUCCESS": "Account was successfully activated"
     }
   },
+  "NAV": {
+    "LOGOUT": "Log out"
+  },
   "SHARED_LIB": {
     "PERUN": {
       "COMPONENTS": {
@@ -36,7 +39,8 @@
           "MODAL_WARNING": "Please check your browser settings if no modal window is open."
         },
         "USER_DONT_EXIST": {
-          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+          "TITLE": "Requested user (by ID or external identity) doesn't exist.",
+          "LOGOUT": "Log out"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Access not allowed",
@@ -57,7 +61,8 @@
       },
       "LOGIN": {
         "SIGN_IN": "Sign in",
-        "TEXT": "You must sign in to continue."
+        "TEXT": "You must sign in to continue.",
+        "LOGOUT_INFO": "You have been successfully logged out."
       },
       "LOGIN_SERVICE_ACCESS": {
         "LABEL": "Sign in",

@@ -1,6 +1,8 @@
 <perun-web-apps-notificator></perun-web-apps-notificator>
-<div *ngIf="!isLoginScreenShow && !isServiceAccess && !isServiceLogin()">
-  <perun-web-apps-header (sidenavToggle)="sidenav.toggle()"></perun-web-apps-header>
+<div *ngIf="!isLoginScreenShow && !isServiceAccess && !isServiceLogin()" class="app-min-width">
+  <perun-web-apps-header
+    (sidenavToggle)="sidenav.toggle()"
+    [ngClass]="!principal ? 'header-index' : ''"></perun-web-apps-header>
   <mat-sidenav-container autosize="true">
     <mat-sidenav
       #sidenav

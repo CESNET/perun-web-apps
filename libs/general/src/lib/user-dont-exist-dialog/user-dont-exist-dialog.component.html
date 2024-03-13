@@ -1,3 +1,9 @@
 <h2 mat-dialog-content class="mt-2 mb-2">
   {{'SHARED_LIB.PERUN.COMPONENTS.USER_DONT_EXIST.TITLE' | translate}}
 </h2>
+<div mat-dialog-actions>
+  <button mat-raised-button class="d-block m-auto" color="primary" (click)="onLogOut()">
+    {{'SHARED_LIB.PERUN.COMPONENTS.USER_DONT_EXIST.LOGOUT' | translate}}
+    <mat-icon> logout </mat-icon>
+  </button>
+</div>

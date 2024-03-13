@@ -50,7 +50,7 @@ export class LoginScreenBaseComponent implements OnInit {
   }
 
   getContentMarginTop(): string {
-    return this.displayWarning ? '112px' : '64px';
+    return this.displayWarning ? '48px' : '0px';
   }
 
   getNavMenuTop(): string {

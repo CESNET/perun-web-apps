@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  AuthService,
   NotificationStorageService,
   OtherApplicationsService,
   StoreService,
@@ -21,12 +22,13 @@ export class PerunHeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter();
   @Input() showToggle = true;
   @Input() showLanguageMenu = false;
-  @Input() showHeaderMenu = true;
+  @Input() showOtherApps = true;
   @Input() showNotifications = false;
   @Input() disableLogo = false;
+  @Input() logoutEnabled: boolean = null;
+  @Input() showUserName = true;
 
   label = this.storeService.getProperty('header_label_en');
-  logoutEnabled = this.storeService.getProperty('log_out_enabled');
   principal = this.storeService.getPerunPrincipal();
 
   bgColor = this.storeService.getProperty('theme').nav_bg_color;
@@ -50,6 +52,7 @@ export class PerunHeaderComponent implements OnInit {
     private notificationStorageService: NotificationStorageService,
     private dialog: MatDialog,
     public route: ActivatedRoute,
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -70,14 +73,28 @@ export class PerunHeaderComponent implements OnInit {
 
     this.logo = this.sanitizer.bypassSecurityTrustHtml(this.storeService.getProperty('logo'));
 
-    this.isLinkToOtherAppActive();
+    if (this.logoutEnabled === null) {
+      this.logoutEnabled = this.storeService.getProperty('log_out_enabled');
+    }
+
+    if (this.showOtherApps) {
+      this.isLinkToOtherAppActive();
+    }
+
+    if (!this.principal) {
+      this.showNotifications = false;
+      this.showToggle = false;
+      this.showLanguageMenu = false;
+      this.showOtherApps = false;
+      this.showUserName = false;
+    }
   }
 
   isLinkToOtherAppActive(): void {
     if (this.otherApps.includes(AppType.Admin)) {
       this.linkRoles = this.storeService.getProperty('link_to_admin_gui_by_roles');
 
-      for (const roleKey in this.storeService.getPerunPrincipal().roles) {
+      for (const roleKey in this.storeService.getPerunPrincipal()?.roles ?? {}) {
         if (this.linkRoles.includes(roleKey)) {
           this.activeLink = true;
         }
@@ -111,5 +128,13 @@ export class PerunHeaderComponent implements OnInit {
 
   getNewNotificationsCount(): number {
     return this.notificationStorageService.newNotificationsCount;
+  }
+
+  redirectToUrl(url: string): void {
+    window.open(url, '_blank');
+  }
+
+  onLogOut(): void {
+    this.authService.logout();
   }
 }

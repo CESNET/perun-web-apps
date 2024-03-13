@@ -1,27 +1,8 @@
-<div
-  [ngStyle]="{'background': headerBackgroundColor, color: headerTextColor, top: getNavMenuTop()}"
-  id="login-nav"
-  class="mat-elevation-z3">
-  <div
-    *ngIf="application === 'admin-gui' ||
-              application === 'user-profile' ||
-              application === 'consolidator'"
-    class="mt-auto mb-auto">
-    <div [innerHTML]="logo" class="logo-container"></div>
-  </div>
-  <div *ngIf="application === 'publications'" class="display-flex-row">
-    <div [innerHTML]="logo" class="logo-container mt-auto mb-auto"></div>
-    <mat-icon
-      svgIcon="perun-publications-white"
-      class="mt-auto mb-auto router-icon ms-2 me-2"></mat-icon>
-  </div>
-  <p
-    *ngIf="!!headerTitle"
-    [ngStyle]="{'color': textColor}"
-    class="ms-3 mt-auto mb-auto page-subtitle">
-    {{headerTitle}}
-  </p>
-</div>
+<perun-web-apps-header
+  [showToggle]="false"
+  [showOtherApps]="false"
+  [logoutEnabled]="false"
+  [showUserName]="false" />
 
 <div id="content">
   <div

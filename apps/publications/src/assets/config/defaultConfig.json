@@ -45,6 +45,29 @@
     "TOPGROUPCREATOR"
   ],
   "auto_auth_redirect": true,
+
+  "other_apps": {
+    "en": {
+      "admin": "IAM Administration",
+      "profile": "Profile",
+      "pwdReset": "Password Reset"
+    }
+  },
+  "link_to_admin_gui_by_roles": [
+    "PERUNADMIN",
+    "PERUNOBSERVER",
+    "VOADMIN",
+    "VOOBSERVER",
+    "GROUPADMIN",
+    "GROUPOBSERVER",
+    "RESOURCEADMIN",
+    "RESOURCEOBSERVER",
+    "FACILITYADMIN",
+    "FACILITYOBSERVER",
+    "TRUSTEDFACILITYADMIN",
+    "SPONSOR",
+    "TOPGROUPCREATOR"
+  ],
   "footer": {
     "columns": [
       {

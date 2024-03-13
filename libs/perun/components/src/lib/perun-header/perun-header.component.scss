@@ -55,3 +55,9 @@
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   font-size: 80%;
 }
+
+@media (max-width: 991px) {
+  .no-left-padding {
+    padding-left: 0;
+  }
+}
