@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [15.4.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.1...v15.4.2) (2024-03-13)
+
+
+### Bug Fixes
+
+* group list sorting failed when paginated ([50adc7f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/50adc7fd030e98d1451d70981ecb86d72ddaae6b))
+
 ## [15.4.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.0...v15.4.1) (2024-03-11)
 
 
