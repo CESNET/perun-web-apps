@@ -1,5 +1,1 @@
-export type ExpandableSectionId =
-  | 'settings'
-  | 'resourcesExpandable'
-  | 'visualizer'
-  | 'authentication';
+export type ExpandableSectionId = 'settings' | 'resourcesExpandable' | 'authentication';
