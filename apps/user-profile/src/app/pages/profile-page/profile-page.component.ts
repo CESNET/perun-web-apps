@@ -113,6 +113,9 @@ export class ProfilePageComponent implements OnInit {
   getData(): void {
     this.authzResolverService.getPerunPrincipal().subscribe((principal) => {
       this.userId = principal.userId;
+      if (this.userId === -1) {
+        return;
+      }
 
       this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe((richUser) => {
         this.fullName = new UserFullNamePipe().transform(richUser);
