@@ -10,13 +10,12 @@
     [placeholder]="'DIALOGS.ADD_BAN.FILTER'">
   </perun-web-apps-debounce-filter>
   <perun-web-apps-members-list
-    [displayedColumns]="['checkbox', 'id', 'fullName']"
-    [selection]="selection"
-    [disableRouting]="true"
-    [allowCheckboxDisabled]="false"
-    [filter]="filter"
-    [members]="members"
     [loading]="loading"
-    [tableId]="tableId">
-  </perun-web-apps-members-list>
+    [displayedColumns]="['checkbox', 'id', 'fullName']"
+    [disableRouting]="true"
+    [disableCheckbox]="false"
+    [members]="members"
+    [selection]="selection"
+    [filter]="filter"
+    [tableId]="tableId" />
 </app-add-ban-dialog>

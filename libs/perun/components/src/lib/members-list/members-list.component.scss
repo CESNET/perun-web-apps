@@ -1,13 +1,16 @@
+.italic_font {
+  font-style: italic;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
 
-th,
-td {
-  padding: 0.25rem !important;
+.cursor-default {
+  cursor: default;
 }
 
-::ng-deep .status-tooltip {
+.status-tooltip {
   white-space: pre-line;
 }
 

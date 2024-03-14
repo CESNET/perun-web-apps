@@ -25,13 +25,12 @@
 </ng-template>
 <div class="position-relative table-min-height">
   <perun-web-apps-members-list
-    [displayedColumns]="columns"
-    (updateTable)="refreshTable()"
     *perunWebAppsLoader="loading; indicator: spinner"
     [loading]="loading"
+    (refreshTable)="refreshTable()"
+    [displayedColumns]="columns"
     [disableRouting]="!routeAuth"
-    [filter]="filterValue"
     [members]="members"
-    [tableId]="tableId">
-  </perun-web-apps-members-list>
+    [filter]="filterValue"
+    [tableId]="tableId" />
 </div>

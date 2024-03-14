@@ -135,19 +135,18 @@
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <perun-web-apps-members-dynamic-list
+  <perun-web-apps-members-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
-    (loading$)="loading$ = $event"
-    [attrNames]="memberAttrNames"
-    [groupId]="group.id"
-    [tableId]="tableId"
+    [loading]="loading$ | async"
+    (queryChanged)="nextPage.next($event)"
+    (refreshTable)="refreshTable()"
+    (downloadAll)="downloadAll($event)"
     [displayedColumns]="displayedColumns"
-    [searchString]="searchString"
-    [updateTable]="updateTable"
-    [selectedGroupStatuses]="selectedGroupStatuses"
-    [selectedStatuses]="selectedStatuses"
-    [selection]="selection"
+    [groupId]="group.id"
     [voId]="group.voId"
-    [isMembersGroup]="group.name === 'members'">
-  </perun-web-apps-members-dynamic-list>
+    [isMembersGroup]="group.name === 'members'"
+    [members]="membersPage$ | async"
+    [selection]="selection"
+    [filter]="searchString"
+    [tableId]="tableId" />
 </div>
