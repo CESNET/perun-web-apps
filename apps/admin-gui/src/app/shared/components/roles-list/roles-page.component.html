@@ -119,8 +119,7 @@
                 *perunWebAppsLoader="loading; indicator: spinner"
                 [loading]="loading"
                 [displayedColumns]="['id', 'fullName', 'sponsored']"
-                [members]="members | async">
-              </perun-web-apps-members-list>
+                [members]="members | async" />
             </div>
           </div>
           <div *ngIf="role.roleName === 'SELF'" class="mb-3">

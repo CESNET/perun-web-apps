@@ -4,6 +4,7 @@ import {
   ApiRequestConfigurationService,
   EntityStorageService,
   GuiAuthResolver,
+  MembersListService,
   NotificatorService,
   StoreService,
 } from '@perun-web-apps/perun/services';
@@ -14,6 +15,8 @@ import {
   AttributesManagerService,
   GroupsManagerService,
   MemberGroupStatus,
+  MembersManagerService,
+  PaginatedRichMembers,
   RegistrarManagerService,
   RichGroup,
   RichMember,
@@ -22,14 +25,14 @@ import {
 import { TABLE_GROUP_MEMBERS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig, isGroupSynchronized } from '@perun-web-apps/perun/utils';
 import { InviteMemberDialogComponent } from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
-import { UntypedFormControl } from '@angular/forms';
-import { RPCError } from '@perun-web-apps/perun/models';
+import { FormControl } from '@angular/forms';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { GroupAddMemberDialogComponent } from '../../../components/group-add-member-dialog/group-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
 import { CopyMembersDialogComponent } from '../../../../shared/components/dialogs/copy-members-dialog/copy-members-dialog-component';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
-import { concatMap } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
@@ -45,9 +48,8 @@ export class GroupMembersComponent implements OnInit {
   group: RichGroup;
   selection: SelectionModel<RichMember>;
   synchEnabled = false;
-  searchString: string;
+  searchString = '';
   updateTable = false;
-  loading$: Observable<boolean>;
   tableId = TABLE_GROUP_MEMBERS;
   memberAttrNames = [
     Urns.MEMBER_DEF_ORGANIZATION,
@@ -78,12 +80,20 @@ export class GroupMembersComponent implements OnInit {
     'email',
     'logins',
   ];
-  statuses = new UntypedFormControl();
+  statuses = new FormControl(['']);
   statusList = ['VALID', 'INVALID', 'EXPIRED', 'DISABLED'];
   selectedStatuses: VoMemberStatuses[] = ['VALID', 'INVALID'];
-  groupStatuses = new UntypedFormControl();
+  groupStatuses = new FormControl(['']);
   groupStatusList = ['VALID', 'EXPIRED'];
   selectedGroupStatuses: MemberGroupStatus[] = ['VALID'];
+  nextPage = new BehaviorSubject<PageQuery>({});
+  membersPage$: Observable<PaginatedRichMembers>;
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
+
   private groupAttrNames = [
     Urns.GROUP_SYNC_ENABLED,
     Urns.GROUP_LAST_SYNC_STATE,
@@ -107,28 +117,30 @@ export class GroupMembersComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
     private clipboard: Clipboard,
+    private membersService: MembersManagerService,
+    private membersListService: MembersListService,
   ) {}
 
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.selection = new SelectionModel<RichMember>(true, []);
     this.statuses.setValue(this.selectedStatuses);
     this.groupStatuses.setValue(this.selectedGroupStatuses);
     this.memberAttrNames = this.memberAttrNames.concat(this.storeService.getLoginAttributeNames());
     this.group = this.entityStorageService.getEntity();
+
+    this.membersPage$ = this.membersListService.nextPageHandler(
+      this.nextPage,
+      this.membersService,
+      this.group.voId,
+      this.memberAttrNames,
+      this.statuses,
+      this.group.id,
+      this.groupStatuses,
+      this.selection,
+      this.loadingSubject$,
+    );
+
     this.setAuthRights();
-    if (this.inviteAuth) {
-      this.registrarService
-        .isInvitationEnabled(this.group.voId, this.group.id)
-        .subscribe((enabled) => {
-          this.inviteDisabled = !enabled;
-        });
-      this.registrarService
-        .isLinkInvitationEnabled(this.group.voId, this.group.id)
-        .subscribe((enabled) => {
-          this.copyInvitationDisabled = !enabled;
-        });
-    }
     void this.isManualAddingBlocked(this.group.voId).then(() => this.loadPage(this.group.id));
     this.isCopyMembersDisabled();
 
@@ -167,12 +179,24 @@ export class GroupMembersComponent implements OnInit {
       'source-copyMembers_Group_List<Group>_List<Member>_boolean_policy',
       [this.group],
     );
+
+    if (this.inviteAuth) {
+      this.registrarService
+        .isInvitationEnabled(this.group.voId, this.group.id)
+        .subscribe((enabled) => {
+          this.inviteDisabled = !enabled;
+        });
+      this.registrarService
+        .isLinkInvitationEnabled(this.group.voId, this.group.id)
+        .subscribe((enabled) => {
+          this.copyInvitationDisabled = !enabled;
+        });
+    }
   }
 
   onSearchByString(filter: string): void {
     this.searchString = filter;
-    this.selection.clear();
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   onAddMember(): void {
@@ -269,7 +293,7 @@ export class GroupMembersComponent implements OnInit {
     if (this.selectedStatuses.length === this.statusList.length) {
       return 'ALL';
     }
-    const statuses: string[] = this.statuses.value as string[];
+    const statuses: string[] = this.statuses.value;
     if (statuses) {
       return `${statuses[0]}  ${
         statuses.length > 1
@@ -287,7 +311,7 @@ export class GroupMembersComponent implements OnInit {
     if (this.selectedGroupStatuses.length === this.groupStatusList.length) {
       return 'ALL';
     } else {
-      return `${(this.groupStatuses.value as string[])[0]}`;
+      return `${this.groupStatuses.value[0]}`;
     }
   }
 
@@ -324,21 +348,37 @@ export class GroupMembersComponent implements OnInit {
   }
 
   changeVoStatuses(): void {
-    this.selection.clear();
     this.selectedStatuses = this.statuses.value as VoMemberStatuses[];
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   changeGroupStatuses(): void {
-    this.selection.clear();
     this.selectedGroupStatuses = this.groupStatuses.value as MemberGroupStatus[];
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   refreshTable(): void {
-    this.selection.clear();
-    this.updateTable = !this.updateTable;
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
     this.isCopyMembersDisabled();
+  }
+
+  downloadAll(a: {
+    format: string;
+    length: number;
+    getDataForColumnFun: (data: RichMember, column: string) => string;
+  }): void {
+    this.membersListService.downloadAll(
+      a.format,
+      a.length,
+      a.getDataForColumnFun,
+      this.nextPage,
+      this.membersService,
+      this.group.voId,
+      this.memberAttrNames,
+      this.statuses,
+      this.group.id,
+      this.groupStatuses,
+      this.displayedColumns,
+    );
   }
 }

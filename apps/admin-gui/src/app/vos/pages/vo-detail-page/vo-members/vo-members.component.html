@@ -90,17 +90,17 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
   <div class="position-relative table-min-height">
-    <perun-web-apps-members-dynamic-list
+    <perun-web-apps-members-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
-      (loading$)="loading$ = $event"
-      [attrNames]="attrNames"
-      [selection]="selection"
-      [tableId]="tableId"
+      [loading]="loading$ | async"
+      (queryChanged)="nextPage.next($event)"
+      (refreshTable)="refreshTable()"
+      (downloadAll)="downloadAll($event)"
       [displayedColumns]="displayedColumns"
-      [updateTable]="updateTable"
-      [searchString]="searchString"
-      [selectedStatuses]="selectedStatuses"
-      [voId]="vo.id"
-      [isMembersGroup]="false"></perun-web-apps-members-dynamic-list>
+      [disableRouting]="!routeAuth"
+      [members]="membersPage$ | async"
+      [selection]="selection"
+      [filter]="searchString"
+      [tableId]="tableId" />
   </div>
 </div>

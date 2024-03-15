@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Clipboard } from '@angular/cdk/clipboard';
 import {
@@ -12,36 +12,37 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemoveMembersDialogComponent } from '../../../../shared/components/dialogs/remove-members-dialog/remove-members-dialog.component';
 import {
   AttributesManagerService,
+  MembersManagerService,
+  PaginatedRichMembers,
   RegistrarManagerService,
   RichMember,
   Vo,
   VoMemberStatuses,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { InviteMemberDialogComponent } from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
-import { RPCError } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { VoAddMemberDialogComponent } from '../../../components/vo-add-member-dialog/vo-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
-import { concatMap } from 'rxjs/operators';
+import { concatMap, map, tap } from 'rxjs/operators';
+import { MembersListService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'app-vo-members',
   templateUrl: './vo-members.component.html',
   styleUrls: ['./vo-members.component.scss'],
 })
-export class VoMembersComponent implements OnInit {
+export class VoMembersComponent implements OnInit, AfterViewInit {
   static id = 'VoMembersComponent';
 
   @HostBinding('class.router-component') true;
   vo: Vo;
-  members: RichMember[] = null;
   selection = new SelectionModel<RichMember>(true, []);
-  loading$: Observable<boolean>;
   attrNames = [
     Urns.MEMBER_DEF_ORGANIZATION,
     Urns.MEMBER_DEF_MAIL,
@@ -50,12 +51,12 @@ export class VoMembersComponent implements OnInit {
     Urns.MEMBER_DEF_EXPIRATION,
     Urns.MEMBER_LIFECYCLE_ALTERABLE,
   ];
-  statuses = new UntypedFormControl();
+  statuses = new FormControl(['']);
   statusList = ['VALID', 'INVALID', 'EXPIRED', 'DISABLED'];
   selectedStatuses: VoMemberStatuses[] = [];
   tableId = TABLE_VO_MEMBERS;
   displayedColumns = ['checkbox', 'id', 'fullName', 'status', 'organization', 'email', 'logins'];
-  searchString: string;
+  searchString = '';
   updateTable = false;
   addAuth: boolean;
   removeAuth: boolean;
@@ -65,6 +66,13 @@ export class VoMembersComponent implements OnInit {
   blockManualMemberAdding: boolean;
   invitationLink: string;
   copyInvitationDisabled = true;
+  nextPage = new BehaviorSubject<PageQuery>({});
+  membersPage$: Observable<PaginatedRichMembers>;
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   constructor(
     private registrarService: RegistrarManagerService,
@@ -78,23 +86,36 @@ export class VoMembersComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
     private clipboard: Clipboard,
+    private membersService: MembersManagerService,
+    private membersListService: MembersListService,
   ) {}
 
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
+  }
+
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.statuses.setValue(this.selectedStatuses);
     this.attrNames = this.attrNames.concat(this.storeService.getLoginAttributeNames());
 
     this.vo = this.entityStorageService.getEntity();
-    this.setAuthRights();
-    if (this.inviteAuth) {
-      this.registrarService.isInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
-        this.inviteDisabled = !enabled;
-      });
-      this.registrarService.isLinkInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
-        this.copyInvitationDisabled = !enabled;
-      });
-    }
+    this.membersPage$ = this.membersListService
+      .nextPageHandler(
+        this.nextPage,
+        this.membersService,
+        this.vo.id,
+        this.attrNames,
+        this.statuses,
+        null,
+        null,
+        this.selection,
+        this.loadingSubject$,
+      )
+      .pipe(
+        tap((members) => {
+          this.setAuthRights(members.data);
+        }),
+      );
 
     void this.isManualAddingBlocked(this.vo.id);
 
@@ -106,7 +127,7 @@ export class VoMembersComponent implements OnInit {
     });
   }
 
-  setAuthRights(): void {
+  setAuthRights(members: RichMember[]): void {
     this.addAuth =
       this.authzService.isAuthorized('createMember_Vo_User_List<Group>_policy', [this.vo]) &&
       this.authzService.isAuthorized('createMember_Vo_Candidate_List<Group>_policy', [this.vo]);
@@ -119,10 +140,10 @@ export class VoMembersComponent implements OnInit {
       ? this.displayedColumns
       : ['id', 'fullName', 'status', 'organization', 'email', 'logins'];
 
-    if (this.members !== null && this.members.length !== 0) {
+    if (members !== null && members.length !== 0) {
       this.routeAuth = this.authzService.isAuthorized('getMemberById_int_policy', [
         this.vo,
-        this.members[0],
+        members[0],
       ]);
     }
 
@@ -130,12 +151,20 @@ export class VoMembersComponent implements OnInit {
       'vo-sendInvitation_Vo_Group_String_String_String_policy',
       [this.vo],
     );
+
+    if (this.inviteAuth) {
+      this.registrarService.isInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
+        this.inviteDisabled = !enabled;
+      });
+      this.registrarService.isLinkInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
+        this.copyInvitationDisabled = !enabled;
+      });
+    }
   }
 
   onSearchByString(filter: string): void {
     this.searchString = filter;
-    this.selection.clear();
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   onAddMember(): void {
@@ -207,7 +236,7 @@ export class VoMembersComponent implements OnInit {
     if (this.selectedStatuses.length === this.statusList.length) {
       return 'ALL';
     }
-    const statuses: string[] = this.statuses.value as string[];
+    const statuses: string[] = this.statuses.value;
     if (statuses) {
       return `${statuses[0]}  ${
         statuses.length > 1
@@ -242,14 +271,31 @@ export class VoMembersComponent implements OnInit {
   }
 
   changeStatuses(): void {
-    this.selection.clear();
     this.selectedStatuses = this.statuses.value as VoMemberStatuses[];
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   refreshTable(): void {
-    this.selection.clear();
-    this.updateTable = !this.updateTable;
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
+  }
+
+  downloadAll(a: {
+    format: string;
+    length: number;
+    getDataForColumnFun: (data: RichMember, column: string) => string;
+  }): void {
+    this.membersListService.downloadAll(
+      a.format,
+      a.length,
+      a.getDataForColumnFun,
+      this.nextPage,
+      this.membersService,
+      this.vo.id,
+      this.attrNames,
+      this.statuses,
+      null,
+      null,
+      this.displayedColumns,
+    );
   }
 }

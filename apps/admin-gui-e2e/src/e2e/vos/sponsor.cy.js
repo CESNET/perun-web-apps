@@ -56,7 +56,7 @@ describe('VO management with role Sponsor', () => {
       .type(`${dbMemberToSponsor}`, {force: true})
       .get(`[data-cy=sponsor-search-button]`)
       .click()
-      .get(`[data-cy=${dbMemberToSponsor}-checkbox]`)
+      .get(`[data-cy=${dbMemberToSponsor.toLowerCase()}-checkbox]`)
       .click()
       .get('[data-cy=sponsor-member-button]')
       .click()

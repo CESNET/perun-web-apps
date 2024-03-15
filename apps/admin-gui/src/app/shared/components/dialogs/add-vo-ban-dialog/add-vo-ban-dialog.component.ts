@@ -1,12 +1,24 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
-import { BanOnVo, RichMember, VosManagerService } from '@perun-web-apps/perun/openapi';
+import {
+  BanOnVo,
+  MembersManagerService,
+  PaginatedRichMembers,
+  RichMember,
+  VosManagerService,
+} from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_BANS } from '@perun-web-apps/config/table-config';
-import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
+import {
+  MembersListService,
+  NotificatorService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { PageQuery } from '@perun-web-apps/perun/models';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-vo-ban-dialog',
@@ -23,7 +35,14 @@ export class AddVoBanDialogComponent implements OnInit {
   displayedColumns = ['checkbox', 'id', 'fullName', 'email', 'logins'];
   tableId = TABLE_BANS;
   filter = '';
-  loading$: Observable<boolean> = of(true);
+  voId: number;
+  nextPage = new BehaviorSubject<PageQuery>({});
+  membersPage$: Observable<PaginatedRichMembers>;
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: AddBanData<BanOnVo>,
@@ -31,9 +50,24 @@ export class AddVoBanDialogComponent implements OnInit {
     private store: StoreService,
     private voService: VosManagerService,
     private notificator: NotificatorService,
+    private membersService: MembersManagerService,
+    private membersListService: MembersListService,
   ) {}
 
   ngOnInit(): void {
+    this.voId = this.data.entityId;
+    this.membersPage$ = this.membersListService.nextPageHandler(
+      this.nextPage,
+      this.membersService,
+      this.voId,
+      this.attrNames,
+      null,
+      null,
+      null,
+      this.selection,
+      this.loadingSubject$,
+    );
+
     this.selection.changed.subscribe((change) => {
       this.ban = this.data.bans.find((ban) => ban.memberId === change.source.selected[0]?.id);
     });
@@ -53,7 +87,27 @@ export class AddVoBanDialogComponent implements OnInit {
 
   setFilter(filter: string): void {
     this.filter = filter;
-    this.selection.clear();
+    this.nextPage.next(this.nextPage.value);
+  }
+
+  downloadAll(a: {
+    format: string;
+    length: number;
+    getDataForColumnFun: (data: RichMember, column: string) => string;
+  }): void {
+    this.membersListService.downloadAll(
+      a.format,
+      a.length,
+      a.getDataForColumnFun,
+      this.nextPage,
+      this.membersService,
+      this.voId,
+      this.attrNames,
+      null,
+      null,
+      null,
+      this.displayedColumns,
+    );
   }
 
   private banMember(banForm: BanForm): void {

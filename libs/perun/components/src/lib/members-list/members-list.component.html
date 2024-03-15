@@ -1,11 +1,9 @@
-<div
-  [hidden]="!this.members || this.members.length === 0 || !dataSource || dataSource.filteredData.length === 0"
-  class="card mt-2">
+<div [hidden]="dataSource.filteredData.length === 0" class="card mt-2">
   <perun-web-apps-table-wrapper
     (exportDisplayedData)="exportDisplayedData($event)"
     (exportAllData)="exportAllData($event)"
-    [dataLength]="dataSource.filteredData.length"
     [tableId]="tableId"
+    [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions">
     <table
       [dataSource]="dataSource"
@@ -17,7 +15,7 @@
       matSortDisableClear>
       <ng-container
         matColumnDef="checkbox"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length :canBeSelected} as selected">
+        *ngIf="{all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected} as selected">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox">
           <mat-checkbox
             *ngIf="selection.isMultipleSelection()"
@@ -29,16 +27,19 @@
           </mat-checkbox>
         </th>
         <td *matCellDef="let member" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            attr.data-cy="{{member.user.firstName}}-checkbox"
-            (change)="$event ? selection.toggle(member) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(member) | checkboxLabel | translate: {name: member | userFullName}"
-            [checked]="selection.isSelected(member)"
-            [disabled]="allowCheckboxDisabled && member.membershipType !== 'DIRECT'"
-            [matTooltip]="allowCheckboxDisabled && member.membershipType !== 'DIRECT' ? ('MEMBERS_LIST.CHECKBOX_TOOLTIP' | translate):''"
-            color="primary">
-          </mat-checkbox>
+          <span
+            [matTooltipDisabled]="!(disableCheckbox && (member | memberStatusDisabled: groupId))"
+            [matTooltip]="(member | memberCheckboxLabel: groupId)">
+            <mat-checkbox
+              (change)="$event ? selection.toggle(member) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(member) | checkboxLabel | translate: {name: member.user | userFullName}"
+              [checked]="selection.isSelected(member)"
+              attr.data-cy="{{member.user.firstName | lowercase}}-checkbox"
+              [disabled]="disableCheckbox && (member | memberStatusDisabled: groupId)"
+              color="primary">
+            </mat-checkbox>
+          </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="id">
@@ -58,23 +59,30 @@
         <td *matCellDef="let member" mat-cell>{{member.userId}}</td>
       </ng-container>
       <ng-container matColumnDef="type">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'MEMBERS_LIST.TYPE' | translate}}
+        </th>
         <td *matCellDef="let member" mat-cell>
-          <mat-icon
-            (click)="viewMemberGroupTree(member)"
-            (mouseenter)="disableRouting = true"
-            (mouseleave)="disableRouting = disabledRouting"
-            *ngIf="member.membershipType !== 'DIRECT'"
-            [matTooltip]="'MEMBERS_LIST.INDIRECT_MEMBER' | translate"
-            >transfer_within_a_station</mat-icon
-          >
+          <span [matTooltip]="member.membershipType | memberTypeTooltip">
+            <button
+              (click)="viewMemberGroupTree($event, member)"
+              [disabled]="member.membershipType === 'DIRECT'"
+              mat-icon-button>
+              <mat-icon>{{member.membershipType | memberTypeIcon}}</mat-icon>
+            </button>
+          </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="fullName">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'MEMBERS_LIST.NAME' | translate}}
         </th>
-        <td *matCellDef="let member" mat-cell>{{member.user | userFullName}}</td>
+        <td
+          *matCellDef="let member"
+          mat-cell
+          attr.data-cy="{{member.user.firstName | lowercase}}-firstName-td">
+          {{member.user | userFullName}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -82,7 +90,8 @@
         </th>
         <td *matCellDef="let member" mat-cell>
           <i
-            (click)="changeStatus($event, member)"
+            (click)="openMembershipDialog($event, member)"
+            [class.cursor-default]="!expireVoAuth"
             class="material-icons status-change {{(member | memberStatusIconColor)}}"
             matTooltip="{{member | memberStatusTooltip: false}}"
             matTooltipClass="status-tooltip"
@@ -99,9 +108,10 @@
         </th>
         <td *matCellDef="let member" mat-cell>
           <i
-            (click)="changeStatus($event, member)"
-            class="material-icons status-change {{member.groupStatus | groupStatusIconColor}}"
-            matTooltip="{{member | memberStatusTooltip: true}}"
+            (click)="openMembershipDialog($event, member, groupId)"
+            [class.cursor-default]="!expireGroupAuth"
+            class="material-icons status-change {{member.groupStatus | groupStatusIconColor: member.membershipType === 'INDIRECT' : isMembersGroup}}"
+            matTooltip="{{member | memberStatusTooltip: true: isMembersGroup}}"
             matTooltipClass="status-tooltip"
             matTooltipPosition="left">
             <span>
@@ -134,20 +144,11 @@
         <th *matHeaderCellDef mat-header-cell>{{'MEMBERS_LIST.LOGINS' | translate}}</th>
         <td *matCellDef="let member" mat-cell>{{member | memberLogins}}</td>
       </ng-container>
-      <ng-container matColumnDef="consentStatus">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>
-          {{'CONSENTS.STATUS' | translate}}
-        </th>
-        <td mat-cell *matCellDef="let member">
-          <perun-web-apps-consent-status
-            [consentStatus]="member.consent"></perun-web-apps-consent-status>
-        </td>
-      </ng-container>
-
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr
         *matRowDef="let member; columns: displayedColumns;"
-        [class.cursor-pointer]="!disabledRouting"
+        [class.cursor-pointer]="!disableRouting"
+        [class.italic_font]="member.membershipType === 'INDIRECT'"
         [class.disable-outline]="disableRouting"
         [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : ['/organizations', member.voId, 'members', member.id]"
         [routerLink]="disableRouting ? null : ['/organizations', member.voId, 'members', member.id]"
@@ -157,12 +158,6 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="members && members.length !== 0 && dataSource.filteredData.length === 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
-
-<perun-web-apps-alert *ngIf="!loading && (!members || members.length === 0)" alert_type="warn">
+<perun-web-apps-alert *ngIf="!loading && dataSource.filteredData.length === 0" alert_type="warn">
   {{'SHARED_LIB.UI.ALERTS.NO_MEMBERS' | translate}}
 </perun-web-apps-alert>

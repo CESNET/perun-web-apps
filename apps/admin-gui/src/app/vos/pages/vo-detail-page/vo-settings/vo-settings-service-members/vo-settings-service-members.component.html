@@ -21,12 +21,12 @@
 </ng-template>
 <div class="position-relative table-min-height">
   <perun-web-apps-members-list
-    [tableId]="tableId"
     *perunWebAppsLoader="loading; indicator: spinner"
     [loading]="loading"
     [displayedColumns]="['checkbox','id', 'type', 'fullName', 'status']"
-    [selection]="selection"
     [disableStatusChange]="true"
+    [selection]="selection"
+    [members]="members"
     [filter]="searchString"
-    [members]="members"></perun-web-apps-members-list>
+    [tableId]="tableId" />
 </div>
