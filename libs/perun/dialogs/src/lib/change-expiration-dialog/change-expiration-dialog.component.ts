@@ -24,7 +24,7 @@ export class ChangeExpirationDialogComponent implements OnInit {
   }
 
   onChangeExpiration(): void {
-    this.expirationChanged.emit(this.newExpiration);
+    this.expirationChanged.emit(this.newExpiration ? this.newExpiration : this.currentExpiration);
   }
 
   onCancel(): void {
