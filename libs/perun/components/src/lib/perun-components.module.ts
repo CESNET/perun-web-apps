@@ -121,7 +121,7 @@ import { BlockedLoginsListComponent } from './blocked-logins-list/blocked-logins
 import { NamespaceSearchSelectComponent } from './namespace-search-select/namespace-search-select.component';
 import { MembershipStatusSettingsComponent } from './membership-status-settings/membership-status-settings.component';
 import { ExpandableTilesComponent } from './expandable-tiles/expandable-tiles.component';
-import { ApplicationsDynamicListComponent } from './applications-dynamic-list/applications-dynamic-list.component';
+import { ApplicationsListComponent } from './applications-list/applications-list.component';
 import { ApplicationTypeIconComponent } from './application-type-icon/application-type-icon.component';
 
 @Injectable()
@@ -277,7 +277,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     NamespaceSearchSelectComponent,
     MembershipStatusSettingsComponent,
     ExpandableTilesComponent,
-    ApplicationsDynamicListComponent,
+    ApplicationsListComponent,
     ApplicationTypeIconComponent,
   ],
   exports: [
@@ -358,7 +358,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     BlockedLoginsListComponent,
     NamespaceSearchSelectComponent,
     ExpandableTilesComponent,
-    ApplicationsDynamicListComponent,
+    ApplicationsListComponent,
     ApplicationTypeIconComponent,
   ],
   providers: [

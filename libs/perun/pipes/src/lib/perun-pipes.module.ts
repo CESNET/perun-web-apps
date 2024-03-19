@@ -69,6 +69,9 @@ import { ApplicationStatePipe } from './application-state.pipe';
 import { GroupRolePipe } from './group-role.pipe';
 import { GroupRoleTypePipe } from './group-role-type.pipe';
 import { SelectedRoleFilterValuesPipe } from './selected-role-filter-values.pipe';
+import { AppFedInfoParsePipe } from './app-fed-info-parse.pipe';
+import { AppValuePipe } from './app-value.pipe';
+import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
 
 @NgModule({
   declarations: [
@@ -142,6 +145,9 @@ import { SelectedRoleFilterValuesPipe } from './selected-role-filter-values.pipe
     GroupRolePipe,
     GroupRoleTypePipe,
     SelectedRoleFilterValuesPipe,
+    AppFedInfoParsePipe,
+    AppValuePipe,
+    AppFriendlyNamePipe,
   ],
   exports: [
     ResourceTagsToStringPipe,
@@ -214,6 +220,9 @@ import { SelectedRoleFilterValuesPipe } from './selected-role-filter-values.pipe
     GroupRolePipe,
     GroupRoleTypePipe,
     SelectedRoleFilterValuesPipe,
+    AppFedInfoParsePipe,
+    AppValuePipe,
+    AppFriendlyNamePipe,
   ],
   imports: [CommonModule],
 })
