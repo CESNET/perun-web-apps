@@ -24,7 +24,6 @@ export class PerunHeaderComponent implements OnInit {
   @Input() showHeaderMenu = true;
   @Input() showNotifications = false;
   @Input() disableLogo = false;
-  @Input() otherApp: AppType;
 
   label = this.storeService.getProperty('header_label_en');
   logoutEnabled = this.storeService.getProperty('log_out_enabled');
@@ -37,8 +36,9 @@ export class PerunHeaderComponent implements OnInit {
 
   logo: SafeHtml;
 
-  otherAppLabel: string;
-  otherAppUrl: string;
+  otherAppLabels: Record<string, string>;
+  otherApps: AppType[];
+  otherAppUrls: Record<string, string> = {};
   linkRoles: string[];
   activeLink = false;
 
@@ -53,13 +53,19 @@ export class PerunHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.otherAppLabel = this.getOtherAppLabel();
+    this.otherAppLabels = this.storeService.getProperty('other_apps')
+      ? this.storeService.getProperty('other_apps')['en'] || {}
+      : {};
+    this.otherApps = Object.keys(this.otherAppLabels).map((app) => app as AppType);
 
     this.translateService.onLangChange.subscribe((lang) => {
       this.label = this.storeService.getProperty(
         lang.lang === 'en' ? 'header_label_en' : 'header_label_cs',
       );
-      this.otherAppLabel = this.getOtherAppLabel(lang.lang);
+      this.otherAppLabels = this.storeService.getProperty('other_apps')
+        ? this.storeService.getProperty('other_apps')[lang.lang] || {}
+        : {};
+      this.otherApps = Object.keys(this.otherAppLabels).map((app) => app as AppType);
     });
 
     this.logo = this.sanitizer.bypassSecurityTrustHtml(this.storeService.getProperty('logo'));
@@ -67,17 +73,8 @@ export class PerunHeaderComponent implements OnInit {
     this.isLinkToOtherAppActive();
   }
 
-  getOtherAppLabel(currLang = 'en'): string {
-    if (this.otherApp === AppType.Profile) {
-      return this.storeService.getProperty('profile_label_en');
-    }
-    return this.storeService.getProperty(
-      currLang === 'en' ? 'admin_gui_label_en' : 'admin_gui_label_cs',
-    );
-  }
-
   isLinkToOtherAppActive(): void {
-    if (this.otherApp === AppType.Admin) {
+    if (this.otherApps.includes(AppType.Admin)) {
       this.linkRoles = this.storeService.getProperty('link_to_admin_gui_by_roles');
 
       for (const roleKey in this.storeService.getPerunPrincipal().roles) {
@@ -87,8 +84,10 @@ export class PerunHeaderComponent implements OnInit {
       }
     }
 
-    if (this.otherApp !== AppType.Admin || this.activeLink) {
-      this.otherAppUrl = this.otherApplicationService.getUrlForOtherApplication(this.otherApp);
+    if (!this.otherApps.includes(AppType.Admin) || this.activeLink) {
+      for (const key of this.otherApps) {
+        this.otherAppUrls[key] = this.otherApplicationService.getUrlForOtherApplication(key);
+      }
     }
   }
 
