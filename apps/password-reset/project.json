@@ -11,11 +11,11 @@
   "prefix": "perun-web-apps",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/apps/password-reset",
         "index": "apps/password-reset/src/index.html",
-        "main": "apps/password-reset/src/main.ts",
+        "browser": "apps/password-reset/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/password-reset/tsconfig.app.json",
         "aot": true,
@@ -46,8 +46,6 @@
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -66,8 +64,6 @@
           "sourceMap": true,
           "namedChunks": true,
           "extractLicenses": true,
-          "vendorChunk": true,
-          "buildOptimizer": false,
           "budgets": [
             {
               "type": "initial",
@@ -87,36 +83,32 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "password-reset:build"
+        "buildTarget": "password-reset:build"
       },
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
-          "browserTarget": "password-reset:build:production"
+          "buildTarget": "password-reset:build:production"
         },
         "development": {
-          "browserTarget": "password-reset:build:development"
+          "buildTarget": "password-reset:build:development"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "password-reset:build"
+        "buildTarget": "password-reset:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["apps/password-reset/src/**/*.ts", "apps/password-reset/src/**/*.html"]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/password-reset/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/password-reset/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/apps/password-reset"]
     }

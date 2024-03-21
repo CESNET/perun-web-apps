@@ -119,8 +119,8 @@ export function stringify(obj: object): string {
         a[k] instanceof Object
           ? (a[k] = removeNullUndefined(a[k] as object))
           : v == null || v === 'null' || (v as string).length === 0
-          ? a
-          : ((a[k] = v as string), a),
+            ? a
+            : ((a[k] = v as string), a),
       {},
     );
 

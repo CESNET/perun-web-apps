@@ -7,19 +7,12 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/config/table-config/src/**/*.ts",
-          "libs/config/table-config/src/**/*.html"
-        ]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/config/table-config/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/config/table-config/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/config/table-config"]
     }

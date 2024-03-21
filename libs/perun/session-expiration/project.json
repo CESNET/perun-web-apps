@@ -7,19 +7,12 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/perun/session-expiration/src/**/*.ts",
-          "libs/perun/session-expiration/src/**/*.html"
-        ]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/perun/session-expiration/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/perun/session-expiration/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/perun/session-expiration"]
     }

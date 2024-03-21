@@ -26,102 +26,102 @@ describe('Perun admin management with role Perun observer', () => {
   it('test attribute detail', () => {
     cy.get('[data-cy=attribute-definitions]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbAttrFriendlyName, {force: true})
-      .get(`[data-cy=${dbAttrFriendlyName.toLowerCase()}-friendly-name]`)
+    cy.get(`[data-cy=${dbAttrFriendlyName.toLowerCase()}-friendly-name]`)
       .click()
-      .get('[data-cy=display-name-input]')
+    cy.get('[data-cy=display-name-input]')
       .should('have.value', dbAttrFriendlyName);
   });
 
   it('test user detail', () => {
     cy.get('[data-cy=users]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type('perunobservertest1', {force: true})
-      .intercept('**/usersManager/getUsersPage')
+    cy.intercept('**/usersManager/getUsersPage')
       .as('getUsers')
       .wait('@getUsers')
       .get('[data-cy=perunobservertest1-td]')
       .click()
-      .get('[data-cy=user-name-link]')
+    cy.get('[data-cy=user-name-link]')
       .contains('PerunObserverTest1 PerunObserverTest1');
   });
 
   it('test list owners', () => {
     cy.get('[data-cy=owners]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbOwnerName, {force: true})
-      .get(`[data-cy=${dbOwnerName}]`)
+    cy.get(`[data-cy=${dbOwnerName}]`)
       .should('exist');
   });
 
   it('test service detail', () => {
     cy.get('[data-cy=services]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbServiceName, {force: true})
-      .get(`[data-cy=${dbServiceName.toLowerCase()}-name-td]`)
+    cy.get(`[data-cy=${dbServiceName.toLowerCase()}-name-td]`)
       .click()
-      .get(`[data-cy=service-name-link]`)
+    cy.get(`[data-cy=service-name-link]`)
       .contains(dbServiceName);
   });
 
   it('test list ext sources', () => {
     cy.get('[data-cy=external-sources]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbExtSourceName, {force: true})
-      .get(`[data-cy=${dbExtSourceName.toLowerCase()}-name-td]`)
+    cy.get(`[data-cy=${dbExtSourceName.toLowerCase()}-name-td]`)
       .should('exist');
   });
 
   it('test audit message detail', () => {
     cy.get('[data-cy=audit-log]')
       .click()
-      .get(`[data-cy=audit-message-detail-button]`)
+    cy.get(`[data-cy=audit-message-detail-button]`)
       .first()
       .click({force: true})
-      .get('#mat-tab-label-0-1') // click on Message tab
+    cy.get('#mat-tab-label-0-1') // click on Message tab
       .click()
-      .get(`[data-cy=audit-message-text]`)
+    cy.get(`[data-cy=audit-message-text]`)
       .should('not.be.empty');
   });
 
   it('test list consent hubs', () => {
     cy.get('[data-cy=consent-hubs]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbConsentHubName, {force: true})
-      .get(`[data-cy=${dbConsentHubName.toLowerCase()}-name-td]`)
+    cy.get(`[data-cy=${dbConsentHubName.toLowerCase()}-name-td]`)
       .should('exist');
   });
 
   it('test search attribute', () => {
     cy.get('[data-cy=searcher]')
       .click()
-      .get(`[data-cy=filter-input]`)
+    cy.get(`[data-cy=filter-input]`)
       .type(dbSearcherAttrValue, {force: true})
-      .get(`[data-cy=search-select-input]`)
+    cy.get(`[data-cy=search-select-input]`)
       .click()
-      .get('[data-cy=find-input] > div > div > input')
+    cy.get('[data-cy=find-input] > div > div > input')
       .type(dbSearcherAttrDisplayName, {force: true})
-      .get('mat-option')
+    cy.get('mat-option')
       .contains(dbSearcherAttrDisplayName)
       .click()
-      .get('[data-cy=searcher-search-button]')
+    cy.get('[data-cy=searcher-search-button]')
       .click()
-      .get(`[data-cy=${dbSearcherUserFirstName.toLowerCase()}-firstName-td]`)
+    cy.get(`[data-cy=${dbSearcherUserFirstName.toLowerCase()}-firstName-td]`)
       .should('exist');
   });
 
   it("test get blocked login", () => {
     cy.get('[data-cy=blocked-logins]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbBlockedLoginListOnly, {force: true})
-      .get(`[data-cy=${dbBlockedLoginListOnly}-checkbox]`)
+    cy.get(`[data-cy=${dbBlockedLoginListOnly}-checkbox]`)
       .should('exist');
   });
 });

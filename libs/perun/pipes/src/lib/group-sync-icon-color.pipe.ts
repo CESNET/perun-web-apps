@@ -8,12 +8,7 @@ import { RichGroup } from '@perun-web-apps/perun/openapi';
 })
 export class GroupSyncIconColorPipe implements PipeTransform {
   transform(richGroup: RichGroup): unknown {
-    if (
-      richGroup === undefined ||
-      richGroup === null ||
-      richGroup.attributes === undefined ||
-      richGroup.attributes === null
-    ) {
+    if (richGroup?.attributes === undefined || richGroup.attributes === null) {
       return 'VO_DETAIL.GROUPS.GROUP_NOT_SYNCED';
     }
     const normalSyncEnabled = getAttribute(richGroup.attributes, Urns.GROUP_SYNC_ENABLED);

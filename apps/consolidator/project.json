@@ -11,12 +11,12 @@
   "prefix": "perun-web-apps",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/consolidator",
         "index": "apps/consolidator/src/index.html",
-        "main": "apps/consolidator/src/main.ts",
+        "browser": "apps/consolidator/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/consolidator/tsconfig.app.json",
         "aot": true,
@@ -59,14 +59,10 @@
           "sourceMap": false,
           "namedChunks": false,
           "aot": true,
-          "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true
+          "extractLicenses": true
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": true,
           "sourceMap": true,
           "namedChunks": true,
@@ -88,14 +84,14 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "consolidator:build"
+        "buildTarget": "consolidator:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "consolidator:build:production"
+          "buildTarget": "consolidator:build:production"
         },
         "development": {
-          "browserTarget": "consolidator:build:development"
+          "buildTarget": "consolidator:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -103,21 +99,17 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "consolidator:build"
+        "buildTarget": "consolidator:build"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["apps/consolidator/src/**/*.ts", "apps/consolidator/src/**/*.html"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/consolidator"],
       "options": {
-        "jestConfig": "apps/consolidator/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/consolidator/jest.config.ts"
       }
     }
   }

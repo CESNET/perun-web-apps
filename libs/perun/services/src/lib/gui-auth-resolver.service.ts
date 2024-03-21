@@ -511,7 +511,7 @@ export class GuiAuthResolver {
         this.principalRoles.add(key as Role);
       }
       for (const [keyInner, valueInner] of Object.entries(value)) {
-        switch (key) {
+        switch (key as Role) {
           case Role.VOADMIN: {
             this.editableVos = valueInner;
             break;
