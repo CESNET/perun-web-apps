@@ -21,27 +21,27 @@ describe('Facility management with role Facility observer', () => {
     cy.visit('home')
       .get(`[data-cy=facilities-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbFacilityName)
-      .get(`[data-cy=${dbFacilityName}]`)
+    cy.get(`[data-cy=${dbFacilityName}]`)
       .click();
   });
 
   it('test list resources', () => {
     cy.get('[data-cy=resources]')
       .click({ force: true })
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
-      .get(`[data-cy=${dbResourceName}]`)
+    cy.get(`[data-cy=${dbResourceName}]`)
       .should('exist')
   });
 
   it('test list assigned users', () => {
     cy.get('[data-cy=assigned-users]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbUserFirstName, {force: true})
-      .intercept('**/usersManager/getUsersPage')
+    cy.intercept('**/usersManager/getUsersPage')
       .as('getUsers')
       .wait('@getUsers')
       .get(`[data-cy=${dbUserFirstName}-td]`)
@@ -53,31 +53,31 @@ describe('Facility management with role Facility observer', () => {
       .click()
       // TODO: remove the comment below, if the test will be working
       // .reload()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
-      .get(`[data-cy=${dbGroupName}]`)
+    cy.get(`[data-cy=${dbGroupName}]`)
       .should('exist')
   });
 
   it('test get service status detail', () => {
     cy.get('[data-cy=services-status]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbServiceName, {force: true})
-      .get(`[data-cy=${dbServiceName}]`)
+    cy.get(`[data-cy=${dbServiceName}]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbDestinationNameSearch, {force: true})
-      .get(`[data-cy=${dbDestinationName}]`)
+    cy.get(`[data-cy=${dbDestinationName}]`)
       .should('exist')
   });
 
   it('test list destinations', () => {
     cy.get('[data-cy=services-destinations]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type('hostname.cz', {force: true})
-      .get(`[data-cy=${dbDestinationName}]`)
+    cy.get(`[data-cy=${dbDestinationName}]`)
       .should('exist')
   });
 
@@ -85,16 +85,16 @@ describe('Facility management with role Facility observer', () => {
   it.skip('test get host detail', () => {
     cy.get('[data-cy=hosts]')
       .click()
-      .get(`[data-cy=${dbHostName}]`)
+    cy.get(`[data-cy=${dbHostName}]`)
       .should('exist')
   });
 
   it('test list attributes', () => {
     cy.get('[data-cy=attributes]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbAttributeName, {force: true})
-      .get(`[data-cy=${dbAttributeName}-friendlyName]`)
+    cy.get(`[data-cy=${dbAttributeName}-friendlyName]`)
       .should('exist')
   });
 
@@ -103,16 +103,16 @@ describe('Facility management with role Facility observer', () => {
     it('test list owners', () => {
       cy.get('[data-cy=owners]')
         .click()
-        .get('[data-cy=filter-input]')
+      cy.get('[data-cy=filter-input]')
         .type(dbOwnerName, {force: true})
-        .get(`[data-cy=${dbOwnerName}]`)
+      cy.get(`[data-cy=${dbOwnerName}]`)
         .should('exist')
     });
 
     it('test list managers', () => {
       cy.get('[data-cy=managers]')
         .click()
-        .get(`[data-cy=${dbManagerFirstName}-firstName-td]`)
+      cy.get(`[data-cy=${dbManagerFirstName}-firstName-td]`)
         .should('exist')
     });
   });

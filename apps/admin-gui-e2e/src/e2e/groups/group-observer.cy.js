@@ -16,40 +16,40 @@ describe('Group management with role Group observer', () => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbVoName)
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click()
-      .get(`[data-cy=groups]`)
+    cy.get(`[data-cy=groups]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
-      .get(`[data-cy=${dbGroupName}]`)
+    cy.get(`[data-cy=${dbGroupName}]`)
       .click();
   });
 
   it('test get member', () => {
     cy.get('[data-cy=members]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupMember, {force: true})
-      .intercept('**/membersManager/getMembersPage')
+    cy.intercept('**/membersManager/getMembersPage')
       .as('getMembers')
       .wait('@getMembers')
       .get(`[data-cy=${dbGroupMember}-firstName-td]`)
       .click()
-      .get('[data-cy=search-select-input]')
+    cy.get('[data-cy=search-select-input]')
       .should('exist')
   });
 
   it('test list vo members', () => {
     cy.get('[data-cy=vo-link]')
       .click({force: true})
-      .get('[data-cy=members]')
+    cy.get('[data-cy=members]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupMember, {force: true})
-      .intercept('**/membersManager/getMembersPage')
+    cy.intercept('**/membersManager/getMembersPage')
       .as('getMembers')
       .wait('@getMembers')
       .get(`[data-cy=${dbGroupMember}-firstName-td]`)
@@ -59,9 +59,9 @@ describe('Group management with role Group observer', () => {
   it('test list applications', () => {
     cy.get('[data-cy=applications]')
       .click()
-      .get(`[data-cy=${dbGroupName}-id-td]`)
+    cy.get(`[data-cy=${dbGroupName}-id-td]`)
       .click()
-      .get(`[data-cy=${dbExtsource}-application-extsource]`)
+    cy.get(`[data-cy=${dbExtsource}-application-extsource]`)
       .should('exist')
   });
 
@@ -70,23 +70,23 @@ describe('Group management with role Group observer', () => {
     it('test list managers', () => {
       cy.get('[data-cy=managers]')
         .click()
-        .get(`[data-cy=${dbGroupAdmin}-firstName-td]`)
+      cy.get(`[data-cy=${dbGroupAdmin}-firstName-td]`)
         .should('exist')
     });
 
     it('test list extsources', () => {
       cy.get('[data-cy=external-sources]')
         .click()
-        .get('[data-cy=filter-input]')
+      cy.get('[data-cy=filter-input]')
         .type(dbExtsource, {force: true})
-        .get(`[data-cy=${dbExtsource}-name-td]`)
+      cy.get(`[data-cy=${dbExtsource}-name-td]`)
         .should('exist')
     });
 
     it('test get application form', () => {
       cy.get('[data-cy=application-form]')
         .click()
-        .get(`[data-cy=${dbApplicationItemTextFieldName}-shortname-td]`)
+      cy.get(`[data-cy=${dbApplicationItemTextFieldName}-shortname-td]`)
         .should('exist')
     });
   });

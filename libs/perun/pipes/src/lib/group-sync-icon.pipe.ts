@@ -8,12 +8,7 @@ import { getAttribute } from '@perun-web-apps/perun/utils';
 })
 export class GroupSyncIconPipe implements PipeTransform {
   transform(richGroup: RichGroup): unknown {
-    if (
-      richGroup === undefined ||
-      richGroup === null ||
-      richGroup.attributes === undefined ||
-      richGroup.attributes === null
-    ) {
+    if (richGroup?.attributes === undefined || richGroup.attributes === null) {
       return '';
     }
     const normalSyncEnabled = getAttribute(richGroup.attributes, Urns.GROUP_SYNC_ENABLED);

@@ -18,17 +18,17 @@ describe('VO management with role Perun admin', () => {
       .as('deleteVo')
       .get('[data-cy=filter-input]')
       .type(`${dbVoName}`, {force: true})
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click({force: true}) // covered by toolbar (header)
-      .get('[data-cy=delete-vo]')
+    cy.get('[data-cy=delete-vo]')
       .click({force: true}) // covered by span
-      .get('[data-cy=force-delete]')
+    cy.get('[data-cy=force-delete]')
       .click()
-      .get('[data-cy=force-delete-control]')
+    cy.get('[data-cy=force-delete-control]')
       .type('DELETE', {force: true})
-      .get('[data-cy=force-delete-button]')
+    cy.get('[data-cy=force-delete-button]')
       .click()
-      .wait('@deleteVo')
+    cy.wait('@deleteVo')
 
       // assert that the delete action was successful
       .get('[data-cy=notification-message]')

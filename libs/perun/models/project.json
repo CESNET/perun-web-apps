@@ -7,16 +7,12 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["libs/perun/models/src/**/*.ts", "libs/perun/models/src/**/*.html"]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/perun/models/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/perun/models/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/perun/models"]
     }

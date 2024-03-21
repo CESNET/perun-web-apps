@@ -11,11 +11,11 @@
   "prefix": "perun-web-apps",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/apps/admin-gui",
         "index": "apps/admin-gui/src/index.html",
-        "main": "apps/admin-gui/src/main.ts",
+        "browser": "apps/admin-gui/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/admin-gui/tsconfig.app.json",
         "aot": true,
@@ -52,13 +52,11 @@
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
               "maximumWarning": "4mb",
-              "maximumError": "6mb"
+              "maximumError": "8mb"
             },
             {
               "type": "anyComponentStyle",
@@ -71,13 +69,11 @@
           "sourceMap": true,
           "namedChunks": true,
           "extractLicenses": true,
-          "vendorChunk": true,
-          "buildOptimizer": false,
           "budgets": [
             {
               "type": "initial",
               "maximumWarning": "2mb",
-              "maximumError": "6mb"
+              "maximumError": "8mb"
             },
             {
               "type": "anyComponentStyle",
@@ -92,36 +88,32 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "admin-gui:build"
+        "buildTarget": "admin-gui:build"
       },
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
-          "browserTarget": "admin-gui:build:production"
+          "buildTarget": "admin-gui:build:production"
         },
         "development": {
-          "browserTarget": "admin-gui:build:development"
+          "buildTarget": "admin-gui:build:development"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "admin-gui:build"
+        "buildTarget": "admin-gui:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["apps/admin-gui/src/**/*.ts", "apps/admin-gui/src/**/*.html"]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/admin-gui/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/admin-gui/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/apps/admin-gui"]
     }

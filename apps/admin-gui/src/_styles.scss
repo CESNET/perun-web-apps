@@ -110,8 +110,8 @@ mat.$theme-ignore-duplication-warnings: true;
   }
 }
 
-// CHECK THIS AFTER UPGRADE TO ANGULAR 17
 // This is a workaround for the issue with the mat-mdc-row hover effect
+// Still not working without this in Angular v17
 .mat-mdc-row {
   transition: 150ms;
 

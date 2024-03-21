@@ -12,6 +12,7 @@ const cypressJsonConfig = {
   supportFile: 'src/support/e2e.ts',
 };
 export default defineConfig({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   e2e: {
     ...nxE2EPreset(__filename),
     ...cypressJsonConfig,
