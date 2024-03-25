@@ -1462,7 +1462,7 @@ export class AttributesManagerService {
 
   /**
    * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted.
-   * @param format
+   * @param format format of the generated graph (DOT or TGF)
    * @param attrName Attribute name which dependencies will be found.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1590,7 +1590,7 @@ export class AttributesManagerService {
 
   /**
    * Generates text file describing dependencies between attribute modules. The format of text file can be specified by parameter. Modules that has no dependency relations are omitted.
-   * @param format
+   * @param format format of the generated graph (DOT or TGF)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -16788,7 +16788,7 @@ export class AttributesManagerService {
   /**
    * Marks the action on attribute as critical, which may require additional authentication of user performing that action on attribute.
    * @param attributeDefinition id of AttributeDefinition
-   * @param action
+   * @param action type of action to mark as critical
    * @param critical if action should be marked as critical
    * @param global if action should be globally critical (for all objects)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).

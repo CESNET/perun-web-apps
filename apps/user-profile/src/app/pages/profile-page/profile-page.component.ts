@@ -88,7 +88,7 @@ export class ProfilePageComponent implements OnInit {
     if (token && u) {
       this.apiRequestConfiguration.dontHandleErrorForNext();
       this.usersManagerService
-        .validatePreferredEmailChangeWithToken(token, Number.parseInt(u, 10))
+        .validatePreferredEmailChangeWithToken({ token: token, u: Number.parseInt(u, 10) })
         .subscribe({
           next: () => {
             this.notificator.showSuccess(this.successMessage);

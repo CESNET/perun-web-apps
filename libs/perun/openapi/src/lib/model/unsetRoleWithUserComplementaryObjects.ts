@@ -19,7 +19,7 @@ export interface UnsetRoleWithUserComplementaryObjects {
   /**
    * user id
    */
-  user?: number;
+  user: number;
   /**
    * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
    */

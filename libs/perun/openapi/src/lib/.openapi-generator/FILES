@@ -89,7 +89,6 @@ model/facilityPropagationState.ts
 model/facilityState.ts
 model/facilityWithAttributes.ts
 model/genDataNode.ts
-model/genMemberDataNode.ts
 model/graphDTO.ts
 model/graphFileFormat.ts
 model/group.ts
@@ -116,8 +115,10 @@ model/inputBlockServicesOnDestinations.ts
 model/inputChangeNonAuthzPasswordByToken.ts
 model/inputChangePasswordForLogin.ts
 model/inputChangePasswordForUser.ts
+model/inputCheckPasswordResetRequestByTokenIsValid.ts
 model/inputCheckPasswordStrength.ts
 model/inputConsolidate.ts
+model/inputConsolidateIdentityUsingToken.ts
 model/inputCopyResource.ts
 model/inputCreateAlternativePassword.ts
 model/inputCreateAttributeDefinition.ts
@@ -139,6 +140,7 @@ model/inputCreateSponsoredMemberFromCSV.ts
 model/inputCreateSponsoredMembers.ts
 model/inputCreateThanks.ts
 model/inputCreateVoWithVo.ts
+model/inputDeleteAlternativePassword.ts
 model/inputDeleteGroups.ts
 model/inputDeleteResourceTag.ts
 model/inputEntitylessAttribute.ts
@@ -226,6 +228,7 @@ model/inputUpdateService.ts
 model/inputUpdateServicesPackage.ts
 model/inputUpdateUser.ts
 model/inputUpdateVo.ts
+model/inputValidatePreferredEmailChange.ts
 model/itemTexts.ts
 model/mailText.ts
 model/mailType.ts
@@ -280,7 +283,6 @@ model/setRoleWithGroupComplementaryObject.ts
 model/setRoleWithGroupComplementaryObjects.ts
 model/setRoleWithUserComplementaryObject.ts
 model/setRoleWithUserComplementaryObjects.ts
-model/simpleAttribute.ts
 model/sortingOrder.ts
 model/sponsor.ts
 model/sponsoredUserData.ts

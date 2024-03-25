@@ -9,10 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Attribute } from './attribute';
-import { GenDataNode } from './genDataNode';
 
-export interface HashedGenData {
-  attributes?: { [key: string]: Array<Attribute> };
-  hierarchy?: { [key: string]: GenDataNode };
+/**
+ * input for validatePreferredEmailChange
+ */
+export interface InputValidatePreferredEmailChange {
+  token: string;
+  u: number;
 }
