@@ -149,7 +149,6 @@ export interface PerunConfig {
   api_url: string;
   oidc_client: OidcClient;
   proxy_logout: boolean;
-  pwd_reset_base_url: string;
   password_namespace_attributes: string[];
   // Optional
   auto_auth_redirect?: boolean;
@@ -178,9 +177,6 @@ export interface PerunConfig {
   login_namespace_attributes?: string[];
   allow_empty_sponsor_namespace?: boolean;
   member_profile_attributes_friendly_names?: string[];
-  groupNameSecondaryRegex?: string;
-  groupNameErrorMessage?: string;
-  logo_padding?: string;
   group_name_error_message?: string;
   group_name_secondary_regex?: string;
   link_to_admin_gui_by_roles?: string[];
