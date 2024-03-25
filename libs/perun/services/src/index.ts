@@ -29,3 +29,4 @@ export { ErrorTranslateService } from './lib/error-translate.service';
 export { RoleService } from './lib/role.service';
 export { HtmlEscapeService } from './lib/html-escape.service';
 export { ExpandedTilesStoreService } from './lib/expanded-tiles-store.service';
+export { MembersListService } from './lib/members-list.service';

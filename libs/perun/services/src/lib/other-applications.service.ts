@@ -64,19 +64,19 @@ export class OtherApplicationsService {
       url = brand.oldGuiDomain + '/fed';
 
       switch (appType) {
-        case 'admin':
+        case AppType.Admin:
           url += '/gui/';
           break;
-        case 'profile':
+        case AppType.Profile:
           url += '/profile/';
           break;
-        case 'pwdReset':
+        case AppType.PwdReset:
           url += `/pwd-reset/?login-namespace=${login}`;
           break;
       }
     } else {
       url = brand.newApps[appType];
-      if (appType === 'pwdReset') {
+      if (appType === AppType.PwdReset) {
         url += `?login-namespace=${login}`;
       }
     }

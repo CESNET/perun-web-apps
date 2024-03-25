@@ -69,7 +69,7 @@ export class GroupsPageComponent implements OnInit {
     this.adminMembershipsTemp = [];
     const allMemberIds = this.store.getPerunPrincipal().roles['SELF']['Member'];
     // finish when the user has no membership
-    if (allMemberIds === undefined || !allMemberIds.length) {
+    if (!allMemberIds?.length) {
       this.loading = false;
       this.initialLoading = false;
       return;

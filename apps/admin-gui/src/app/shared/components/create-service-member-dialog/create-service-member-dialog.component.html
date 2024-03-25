@@ -134,11 +134,11 @@
             <perun-web-apps-members-list
               *perunWebAppsLoader="loading; indicator: tableSpinner"
               [loading]="loading"
-              [disableRouting]="true"
               [displayedColumns]="['checkbox', 'id', 'fullName']"
+              [disableRouting]="true"
+              [selection]="selection"
               [members]="members"
-              [tableId]="tableId"
-              [selection]="selection"></perun-web-apps-members-list>
+              [tableId]="tableId" />
           </div>
           <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
             {{'DIALOGS.CREATE_SERVICE_MEMBER.SEARCH_INFO' | translate}}

@@ -11,11 +11,11 @@
   "prefix": "perun-web-apps",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/apps/user-profile",
         "index": "apps/user-profile/src/index.html",
-        "main": "apps/user-profile/src/main.ts",
+        "browser": "apps/user-profile/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/user-profile/tsconfig.app.json",
         "aot": true,
@@ -47,8 +47,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -67,8 +65,6 @@
           "sourceMap": true,
           "namedChunks": true,
           "extractLicenses": true,
-          "vendorChunk": true,
-          "buildOptimizer": false,
           "budgets": [
             {
               "type": "initial",
@@ -88,35 +84,33 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "user-profile:build"
+        "buildTarget": "user-profile:build"
       },
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
-          "browserTarget": "user-profile:build:production"
+          "buildTarget": "user-profile:build:production"
         },
         "development": {
-          "browserTarget": "user-profile:build:development"
+          "buildTarget": "user-profile:build:development"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "user-profile:build"
+        "buildTarget": "user-profile:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["apps/user-profile/src/**/*.ts", "apps/user-profile/src/**/*.html"]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/user-profile/jest.config.ts"
+        "jestConfig": "apps/user-profile/jest.config.ts",
+        "passWithNoTests": false
       },
       "outputs": ["{workspaceRoot}/coverage/apps/user-profile"]
     }

@@ -15,7 +15,7 @@ import {
 import { MatTableDataSource } from '@angular/material/table';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ChangeSponsorshipExpirationDialogComponent } from '@perun-web-apps/perun/dialogs';
-export interface EditMemberSponsorsDialogComponent {
+export interface EditMemberSponsorsDialogData {
   theme: string;
   sponsors: Sponsor[];
   member: Member;
@@ -39,7 +39,7 @@ export class EditMemberSponsorsDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<EditMemberSponsorsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: EditMemberSponsorsDialogComponent,
+    @Inject(MAT_DIALOG_DATA) private data: EditMemberSponsorsDialogData,
     private memberService: MembersManagerService,
     private userService: UsersManagerService,
     private notificator: NotificatorService,

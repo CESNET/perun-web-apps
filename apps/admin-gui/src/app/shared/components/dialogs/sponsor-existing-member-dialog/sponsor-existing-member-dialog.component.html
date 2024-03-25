@@ -32,14 +32,12 @@
       <perun-web-apps-members-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [disableRouting]="true"
-        [hidden]="loading"
-        [disableStatusChange]="true"
-        [members]="members"
-        [selection]="selection"
         [displayedColumns]="displayedColumns"
-        [tableId]="tableId">
-      </perun-web-apps-members-list>
+        [disableStatusChange]="true"
+        [disableRouting]="true"
+        [selection]="selection"
+        [members]="members"
+        [tableId]="tableId" />
     </div>
 
     <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">

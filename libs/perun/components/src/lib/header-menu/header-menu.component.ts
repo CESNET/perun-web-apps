@@ -17,14 +17,14 @@ export class HeaderMenuComponent {
   @Input()
   logoutEnabled: boolean;
   @Input()
-  url: string;
+  otherAppUrls: Record<string, string>;
   @Input()
-  label: string;
+  otherAppLabels: Record<string, string>;
 
   constructor(private authService: AuthService) {}
 
-  redirectToUrl(): void {
-    window.open(this.url, '_blank');
+  redirectToUrl(url: string): void {
+    window.open(url, '_blank');
   }
 
   onLogOut(): void {

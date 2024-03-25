@@ -18,17 +18,17 @@ describe('Resource management with role Resource self service', () => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click()
-      .get(`[data-cy=resource-list]`)
+    cy.get(`[data-cy=resource-list]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
-      .get(`[data-cy=${dbResourceName}]`)
+    cy.get(`[data-cy=${dbResourceName}]`)
       .click()
-      .get('[data-cy=assigned-groups]')
+    cy.get('[data-cy=assigned-groups]')
       .click();
   });
 
@@ -36,35 +36,35 @@ describe('Resource management with role Resource self service', () => {
     cy.get('[data-cy=add-group-button]')
       .should('have.attr', 'color', 'accent') // check if the button is enabled (due to the force click below)
       .click({ force: true })
-      .get(`[data-cy=${dbGroupToAssign}-checkbox]`)
+    cy.get(`[data-cy=${dbGroupToAssign}-checkbox]`)
       .click()
-      .get('[data-cy=next-button]')
+    cy.get('[data-cy=next-button]')
       .click()
-      .intercept('**/resourcesManager/getGroupAssignments**')
+    cy.intercept('**/resourcesManager/getGroupAssignments**')
       .as('getGroupAssignments')
       .get('[data-cy=assign-button]')
       .click()
-      .wait('@getGroupAssignments')
+    cy.wait('@getGroupAssignments')
 
       //  assert that group was added
       .get('[data-cy=filter-input]')
       .type(dbGroupToAssign, {force: true})
-      .get(`[data-cy=${dbGroupToAssign}-checkbox]`)
+    cy.get(`[data-cy=${dbGroupToAssign}-checkbox]`)
       .should('exist');
   });
 
   it('test remove group from resource', () => {
     cy.get('[data-cy=filter-input]')
       .type(dbGroupToRemove, {force: true})
-      .get(`[data-cy=${dbGroupToRemove}-checkbox]`)
+    cy.get(`[data-cy=${dbGroupToRemove}-checkbox]`)
       .click()
-      .get('[data-cy=remove-group-button]')
+    cy.get('[data-cy=remove-group-button]')
       .click()
-      .intercept('**/resourcesManager/getGroupAssignments**')
+    cy.intercept('**/resourcesManager/getGroupAssignments**')
       .as('getGroupAssignments')
       .get('[data-cy=delete-button]')
       .click()
-      .wait('@getGroupAssignments')
+    cy.wait('@getGroupAssignments')
 
       //  assert that group was removed
       .get(`[data-cy=${dbGroupToRemove}-checkbox]`)
@@ -74,13 +74,13 @@ describe('Resource management with role Resource self service', () => {
   it('test activate group resource assignment', () => {
     cy.get('[data-cy=filter-input]')
       .type(dbGroupToActivate, {force: true})
-      .get(`[data-cy=${dbGroupToActivate}-inactive]`)
+    cy.get(`[data-cy=${dbGroupToActivate}-inactive]`)
       .click()
-      .intercept('**/resourcesManager/activateGroupResourceAssignment**')
+    cy.intercept('**/resourcesManager/activateGroupResourceAssignment**')
       .as('activateGroupResourceAssignment')
       .get('[data-cy=change-status-button]')
       .click()
-      .wait('@activateGroupResourceAssignment')
+    cy.wait('@activateGroupResourceAssignment')
 
       //  assert that group is active
       .get(`[data-cy=${dbGroupToActivate}-active]`)
@@ -90,13 +90,13 @@ describe('Resource management with role Resource self service', () => {
   it('test deactivate group resource assignment', () => {
     cy.get('[data-cy=filter-input]')
       .type(dbGroupToDeactivate, {force: true})
-      .get(`[data-cy=${dbGroupToDeactivate}-active]`)
+    cy.get(`[data-cy=${dbGroupToDeactivate}-active]`)
       .click()
-      .intercept('**/resourcesManager/deactivateGroupResourceAssignment**')
+    cy.intercept('**/resourcesManager/deactivateGroupResourceAssignment**')
       .as('deactivateGroupResourceAssignment')
       .get('[data-cy=change-status-button]')
       .click()
-      .wait('@deactivateGroupResourceAssignment')
+    cy.wait('@deactivateGroupResourceAssignment')
 
       //  assert that group is inactive
       .get(`[data-cy=${dbGroupToDeactivate}-inactive]`)

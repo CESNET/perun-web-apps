@@ -12,16 +12,16 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
   <div class="position-relative table-min-height">
-    <perun-web-apps-members-dynamic-list
+    <perun-web-apps-members-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
-      (loading$)="loading$ = $event"
-      [attrNames]="attrNames"
-      [selection]="selection"
-      [tableId]="tableId"
-      [disableRouting]="true"
+      [loading]="loading$ | async"
+      (queryChanged)="nextPage.next($event)"
+      (downloadAll)="downloadAll($event)"
       [displayedColumns]="displayedColumns"
-      [searchString]="filter"
-      [voId]="data.entityId">
-    </perun-web-apps-members-dynamic-list>
+      [disableRouting]="true"
+      [members]="membersPage$ | async"
+      [selection]="selection"
+      [filter]="filter"
+      [tableId]="tableId" />
   </div>
 </app-add-ban-dialog>

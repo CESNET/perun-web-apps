@@ -18,28 +18,28 @@ describe('Resource management with role Resource observer', () => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click()
-      .get(`[data-cy=resource-list]`)
+    cy.get(`[data-cy=resource-list]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbResourceName, {force: true})
-      .get(`[data-cy=${dbResourceName}]`)
+    cy.get(`[data-cy=${dbResourceName}]`)
       .click();
   });
 
   it('view vo groups', () => {
     cy.get(`[data-cy=${dbVoName}]`)
       .click({force: true})
-      .get("[data-cy=groups]")
+    cy.get("[data-cy=groups]")
       .click()
 
       // group should be visible
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
-      .get(`[data-cy=${dbGroupName}]`)
+    cy.get(`[data-cy=${dbGroupName}]`)
       .should('exist')
   })
 
@@ -48,9 +48,9 @@ describe('Resource management with role Resource observer', () => {
       .click()
 
       // group should be visible
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
-      .get(`[data-cy=${dbGroupName}]`)
+    cy.get(`[data-cy=${dbGroupName}]`)
       .should('exist')
   })
 
@@ -59,7 +59,7 @@ describe('Resource management with role Resource observer', () => {
       .click()
 
       // resource admin should be visible
-      .get(`[data-cy=${dbResourceAdminName}-firstName-td]`)
+    cy.get(`[data-cy=${dbResourceAdminName}-firstName-td]`)
       .should('exist')
   })
 
@@ -69,18 +69,18 @@ describe('Resource management with role Resource observer', () => {
         .click()
 
         // group should be visible
-        .get(`[data-cy=${dbAssignedMemberName}]`)
+      cy.get(`[data-cy=${dbAssignedMemberName}]`)
         .should('exist')
     })
 
     it('view resources on facility', () => {
       cy.get(`[data-cy=${dbFacilityName}]`)
         .click()
-        .get('[data-cy=resources]')
+      cy.get('[data-cy=resources]')
         .click()
 
         // resource should be visible
-        .get(`[data-cy=${dbResourceName}]`)
+      cy.get(`[data-cy=${dbResourceName}]`)
         .should('exist')
     })
 
@@ -89,7 +89,7 @@ describe('Resource management with role Resource observer', () => {
         .click()
 
         // group should be visible
-        .get(`[data-cy=${dbServiceName}]`)
+      cy.get(`[data-cy=${dbServiceName}]`)
         .should('exist')
     })
   })

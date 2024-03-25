@@ -103,8 +103,8 @@ export class BanOnEntityListComponent {
     const target: Vo | Facility | Resource = this.isFacilityBan(data)
       ? data.facility
       : this.isResourceBan(data)
-      ? data.resource
-      : data.vo;
+        ? data.resource
+        : data.vo;
     const subject: RichUser | RichMember = this.isFacilityBan(data) ? data.user : data.member;
     const subjectUser: User = this.isFacilityBan(data) ? data.user : data.member.user;
     switch (column) {

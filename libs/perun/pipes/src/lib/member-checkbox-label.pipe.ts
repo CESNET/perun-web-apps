@@ -9,7 +9,7 @@ import { isMemberIndirectString } from '@perun-web-apps/perun/utils';
 export class MemberCheckboxLabelPipe implements PipeTransform {
   constructor(private translate: TranslateService) {}
 
-  transform(value: RichMember, groupId?: boolean): string {
+  transform(value: RichMember, groupId?: number): string {
     const indirect = isMemberIndirectString(value);
     if (indirect === 'INDIRECT') {
       return this.translate.instant('MEMBERS_LIST.CHECKBOX_TOOLTIP_INDIRECT') as string;

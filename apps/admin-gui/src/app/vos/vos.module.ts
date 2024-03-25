@@ -19,7 +19,6 @@ import { VoSettingsComponent } from './pages/vo-detail-page/vo-settings/vo-setti
 import { VoAttributesComponent } from './pages/vo-detail-page/vo-attributes/vo-attributes.component';
 import { VoSettingsOverviewComponent } from './pages/vo-detail-page/vo-settings/vo-settings-overview/vo-settings-overview.component';
 import { VoSettingsExpirationComponent } from './pages/vo-detail-page/vo-settings/vo-settings-expiration/vo-settings-expiration.component';
-import { ApplicationsListComponent } from './components/applications-list/applications-list.component';
 import { GroupApplicationsComponent } from './pages/group-detail-page/group-applications/group-applications.component';
 import { VoSettingsManagersComponent } from './pages/vo-detail-page/vo-settings/vo-settings-managers/vo-settings-managers.component';
 import { ApplicationDetailComponent } from './components/application-detail/application-detail.component';
@@ -87,7 +86,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatCheckboxModule,
     MatSortModule,
   ],
-  exports: [ApplicationsListComponent],
+  exports: [],
   declarations: [
     VoSelectPageComponent,
     VoDetailPageComponent,
@@ -106,7 +105,6 @@ import { MatSortModule } from '@angular/material/sort';
     VoAttributesComponent,
     VoSettingsOverviewComponent,
     VoSettingsExpirationComponent,
-    ApplicationsListComponent,
     GroupApplicationsComponent,
     VoSettingsManagersComponent,
     ApplicationDetailComponent,

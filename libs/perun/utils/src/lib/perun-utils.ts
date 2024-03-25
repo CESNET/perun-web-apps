@@ -772,16 +772,16 @@ export function compareFnName(a: ComparableEntity, b: ComparableEntity): 1 | 0 |
   return a.name.toLowerCase() > b.name.toLowerCase()
     ? 1
     : a.name.toLowerCase() === b.name.toLowerCase()
-    ? 0
-    : -1;
+      ? 0
+      : -1;
 }
 
 export function compareFnDisplayName(a: AttributeDefinition, b: AttributeDefinition): number {
   return a.displayName.toLowerCase() > b.displayName.toLowerCase()
     ? 1
     : a.displayName.toLowerCase() === b.displayName.toLowerCase()
-    ? 0
-    : -1;
+      ? 0
+      : -1;
 }
 
 type ComparablePerson = User & RichMember;
@@ -849,7 +849,7 @@ export function isMemberIndirect(member: RichMember): boolean {
   }
   const attr = member.memberAttributes?.find((obj) => obj.friendlyName === 'isLifecycleAlterable');
   if (attr) {
-    return !attr.value ?? false;
+    return !attr.value;
   }
   return false;
 }

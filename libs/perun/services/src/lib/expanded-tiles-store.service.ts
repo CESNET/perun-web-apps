@@ -14,12 +14,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ExpandedTilesStoreService {
   private sectionState: BehaviorSubject<Map<ExpandableSectionId, boolean>>;
   // Right now there is no check if all sections are initialized and needs to be kept manually updated
-  private sections: ExpandableSectionId[] = [
-    'settings',
-    'resourcesExpandable',
-    'visualizer',
-    'authentication',
-  ];
+  private sections: ExpandableSectionId[] = ['settings', 'resourcesExpandable', 'authentication'];
 
   constructor() {
     const states = new Map<ExpandableSectionId, boolean>();

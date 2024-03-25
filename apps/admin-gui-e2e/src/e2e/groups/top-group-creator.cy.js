@@ -12,11 +12,11 @@ describe('Group management with role Top group creator', () => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click()
-      .get(`[data-cy=groups]`)
+    cy.get(`[data-cy=groups]`)
       .click()
   })
 
@@ -24,18 +24,18 @@ describe('Group management with role Top group creator', () => {
     cy.intercept('**/groupsManager/createGroup/**').as('createGroup')
       .get('[data-cy=create-group-button]')
       .click()
-      .get('[data-cy=group-name]')
+    cy.get('[data-cy=group-name]')
       .type(groupName, {force: true})
-      .get('[data-cy=create-group-button-dialog]')
+    cy.get('[data-cy=create-group-button-dialog]')
       .click()
-      .wait('@createGroup')
+    cy.wait('@createGroup')
       .intercept('**/groupsManager/getAllRichGroupsWithAttributesByNames**').as('getRichGroups')
       .wait('@getRichGroups')
 
       // assert that top group was created
       .get('[data-cy=filter-input]')
       .type(groupName, {force: true})
-      .get(`[data-cy=${groupName}-checkbox]`)
+    cy.get(`[data-cy=${groupName}-checkbox]`)
       .should('exist');
   });
 

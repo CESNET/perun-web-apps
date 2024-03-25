@@ -16,9 +16,9 @@ describe('VO management with role VO observer', () => {
     cy.visit('home')
       .get(`[data-cy=access-item-button]`)
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbVoName, {force: true})
-      .get(`[data-cy=${dbVoName}]`)
+    cy.get(`[data-cy=${dbVoName}]`)
       .click()
   });
 
@@ -26,7 +26,7 @@ describe('VO management with role VO observer', () => {
     cy.intercept('**/registrarManager/getApplicationsPage**').as("getApplicationsPage")
       .get('[data-cy=applications]')
       .click()
-      .wait('@getApplicationsPage')
+    cy.wait('@getApplicationsPage')
 
       // the application was created by user 'perun' during Docker build
       .get(`[data-cy=perun-createdBy]`)
@@ -37,11 +37,11 @@ describe('VO management with role VO observer', () => {
     cy.intercept('**/groupsManager/getGroupById**').as('getGroupById')
       .get('[data-cy=groups]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbGroupName, {force: true})
-      .get(`[data-cy=${dbGroupName}]`)
+    cy.get(`[data-cy=${dbGroupName}]`)
       .click()
-      .wait('@getGroupById')
+    cy.wait('@getGroupById')
 
       // the group name on the group detail page should be visible
       .get(`[data-cy=${dbGroupName}-shortName]`)
@@ -52,14 +52,14 @@ describe('VO management with role VO observer', () => {
     cy.intercept('**/membersManager/getRichMemberWithAttributes**').as('getRichMemberWithAttributes')
       .get('[data-cy=members]')
       .click()
-      .get('[data-cy=filter-input]')
+    cy.get('[data-cy=filter-input]')
       .type(dbMemberName, {force: true})
-      .intercept('**/membersManager/getMembersPage')
+    cy.intercept('**/membersManager/getMembersPage')
       .as('getMembers')
       .wait('@getMembers')
       .get(`[data-cy=${dbMemberName}-firstName-td]`)
       .click()
-      .wait('@getRichMemberWithAttributes')
+    cy.wait('@getRichMemberWithAttributes')
 
       // the member name on the member detail page should be visible
       .get(`[data-cy=${dbMemberName}-firstName]`)
@@ -72,7 +72,7 @@ describe('VO management with role VO observer', () => {
       cy.intercept('**/authzResolver/getRichAdmins**').as('getRichAdmins')
         .get('[data-cy=managers]')
         .click()
-        .wait('@getRichAdmins')
+      cy.wait('@getRichAdmins')
 
         // the first name of the admin should be visible
         .get(`[data-cy=${dbAdminName}-firstName-td]`)
@@ -83,7 +83,7 @@ describe('VO management with role VO observer', () => {
       cy.intercept('**/registrarManager/getFormItems/vo**').as('getFormItems')
         .get('[data-cy=application-form]')
         .click()
-        .wait('@getFormItems')
+      cy.wait('@getFormItems')
 
         // form item should be visible
         .get(`[data-cy=${dbApplicationItemTextFieldName}-shortname-td]`)
@@ -94,12 +94,12 @@ describe('VO management with role VO observer', () => {
       cy.intercept('**/extSourcesManager/getVoExtSources**').as('getVoExtSources')
         .get('[data-cy=external-sources]')
         .click()
-        .wait('@getVoExtSources')
+      cy.wait('@getVoExtSources')
         .get('[data-cy=filter-input]')
         .type('internal', {force: true})
 
         // the vo external source was set to INTERNAL in the db (id 1)
-        .get('[data-cy=internal-name-td]')
+      cy.get('[data-cy=internal-name-td]')
         .should('exist')
     })
   })

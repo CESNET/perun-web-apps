@@ -42,13 +42,10 @@
       <perun-web-apps-members-list
         *ngIf="!loadingEntityData"
         [loading]="loading"
-        [tableId]="tableId"
+        (refreshTable)="getMembers(searchInput)"
         [displayedColumns]="['id', 'voId', 'userId', 'status']"
-        [disableStatusChange]="true"
-        [disableExpirationChange]="true"
-        (updateTable)="getMembers(searchInput)"
-        [members]="entities">
-      </perun-web-apps-members-list>
+        [members]="entities"
+        [tableId]="tableId" />
     </ng-template>
   </mat-tab>
   <mat-tab>

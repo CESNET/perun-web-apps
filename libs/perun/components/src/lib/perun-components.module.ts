@@ -54,7 +54,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { VoSearchSelectComponent } from './vo-search-select/vo-search-select.component';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { MembersListComponent } from './members-list/members-list.component';
 import { TaskResultsListComponent } from './task-results-list/task-results-list.component';
 import { GroupSearchSelectComponent } from './group-search-select/group-search-select.component';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
@@ -73,7 +72,7 @@ import { ReportIssueDialogComponent } from './report-issue-dialog/report-issue-d
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateGroupFormComponent } from './create-group-form/create-group-form.component';
 import { DebounceFilterComponent } from './debounce-filter/debounce-filter.component';
-import { MembersDynamicListComponent } from './members-dynamic-list/members-dynamic-list.component';
+import { MembersListComponent } from './members-list/members-list.component';
 import { AppFormItemSearchSelectComponent } from './app-form-item-search-select/app-form-item-search-select.component';
 import { OwnersListComponent } from './owners-list/owners-list.component';
 import { NotificatorComponent } from './notificator/notificator.component';
@@ -122,7 +121,7 @@ import { BlockedLoginsListComponent } from './blocked-logins-list/blocked-logins
 import { NamespaceSearchSelectComponent } from './namespace-search-select/namespace-search-select.component';
 import { MembershipStatusSettingsComponent } from './membership-status-settings/membership-status-settings.component';
 import { ExpandableTilesComponent } from './expandable-tiles/expandable-tiles.component';
-import { ApplicationsDynamicListComponent } from './applications-dynamic-list/applications-dynamic-list.component';
+import { ApplicationsListComponent } from './applications-list/applications-list.component';
 import { ApplicationTypeIconComponent } from './application-type-icon/application-type-icon.component';
 
 @Injectable()
@@ -233,7 +232,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ReportIssueDialogComponent,
     CreateGroupFormComponent,
     DebounceFilterComponent,
-    MembersDynamicListComponent,
+    MembersListComponent,
     AppFormItemSearchSelectComponent,
     OwnersListComponent,
     NotificatorComponent,
@@ -278,7 +277,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     NamespaceSearchSelectComponent,
     MembershipStatusSettingsComponent,
     ExpandableTilesComponent,
-    ApplicationsDynamicListComponent,
+    ApplicationsListComponent,
     ApplicationTypeIconComponent,
   ],
   exports: [
@@ -318,7 +317,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ReportIssueDialogComponent,
     CreateGroupFormComponent,
     DebounceFilterComponent,
-    MembersDynamicListComponent,
+    MembersListComponent,
     AppFormItemSearchSelectComponent,
     OwnersListComponent,
     NotificatorComponent,
@@ -359,7 +358,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     BlockedLoginsListComponent,
     NamespaceSearchSelectComponent,
     ExpandableTilesComponent,
-    ApplicationsDynamicListComponent,
+    ApplicationsListComponent,
     ApplicationTypeIconComponent,
   ],
   providers: [

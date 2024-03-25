@@ -215,24 +215,6 @@ export class SideMenuItemService {
           url: ['/admin/blocked_logins'],
           activatedRegex: '^/admin/blocked_logins',
         },
-        {
-          label: 'MENU_ITEMS.ADMIN.VISUALIZER',
-          url: ['/admin/visualizer'],
-          activatedRegex: '^/admin/visualizer$',
-          children: [
-            {
-              label: 'MENU_ITEMS.VISUALIZER.ATTR_DEPENDENCIES',
-              url: ['/admin/visualizer/attrDependencies'],
-              activatedRegex: '^/admin/visualizer/attrDependencies',
-            },
-            {
-              label: 'MENU_ITEMS.VISUALIZER.USER_DESTINATION',
-              url: ['/admin/visualizer/userDestinationRelationship'],
-              activatedRegex: '^/admin/visualizer/userDestinationRelationship',
-            },
-          ],
-          showChildren: 'visualizer',
-        },
       ],
     };
   }

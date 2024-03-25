@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
 import {
   Application,
   ApplicationOperationResult,
@@ -8,6 +8,7 @@ import {
   AttributeDefinition,
   Group,
   MailType,
+  PaginatedRichApplications,
   PerunException,
   RegistrarManagerService,
   Vo,
@@ -16,9 +17,20 @@ import { FormControl } from '@angular/forms';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ApplicationsBulkOperationDialogComponent } from '../dialogs/applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
-import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { RPCError } from '@perun-web-apps/perun/models';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { ApplicationsBulkOperationFailureDialogComponent } from '../dialogs/applications-bulk-operation-failure-dialog/applications-bulk-operation-failure-dialog.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
+import {
+  dateToString,
+  getExportDataForColumn,
+  getSortDataColumnQuery,
+} from '@perun-web-apps/perun/utils';
 
 export interface AppAction {
   approve: boolean;
@@ -52,7 +64,6 @@ export class ApplicationActionsComponent implements OnInit {
   @Input() updateTable: boolean;
   @Output() changeView = new EventEmitter<void>();
 
-  loading$: Observable<boolean>;
   refresh = false;
 
   tooltipMessages: AppActionTooltip = {
@@ -109,7 +120,42 @@ export class ApplicationActionsComponent implements OnInit {
   configuredColumns: string[] = [];
   configuredFedColumns: string[] = [];
 
-  selectedApplications: Application[] = [];
+  applications: Application[] = [];
+  nextPage = new BehaviorSubject<PageQuery>({});
+  applicationsPage$: Observable<PaginatedRichApplications> = this.nextPage.pipe(
+    switchMap((pageQuery) =>
+      this.registrarService.getApplicationsPage({
+        vo: this.group ? this.group.voId : this.vo.id,
+        query: {
+          pageSize: pageQuery.pageSize,
+          offset: pageQuery.offset,
+          order: pageQuery.order,
+          sortColumn: getSortDataColumnQuery(pageQuery.sortColumn),
+          searchString: pageQuery.searchString,
+          includeGroupApplications: this.showGroupApps,
+          getDetails: this.showAllDetails,
+          states: this.currentStates,
+          dateFrom: dateToString(this.startDate.value),
+          dateTo: dateToString(this.endDate.value),
+          groupId: this.group?.id,
+        },
+      }),
+    ),
+    // 'Tapping' is generally a last resort
+    tap((page) => {
+      this.applications = page.data;
+      this.selected.clear();
+      setTimeout(() => this.loadingSubject$.next(false), 200);
+    }),
+    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
+  );
+
+  selected = new SelectionModel<Application>(true, []);
+  loadingSubject$ = new BehaviorSubject(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   callMap = new Map([
     ['APPROVE', '/registrarManager/approveApplications'],
@@ -122,11 +168,9 @@ export class ApplicationActionsComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef,
   ) {}
 
   @Input() set viewPreferences(att: Attribute) {
-    this.loading$ = of(true);
     if ((att?.value as Array<string>)?.length > 0) {
       this.configuredColumns = att.value as Array<string>;
       this.configuredFedColumns = this.configuredColumns.filter((column) =>
@@ -141,19 +185,20 @@ export class ApplicationActionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.showGroupApps = !!this.group;
-    this.onSelectedApplicationsChange([]);
+    this.selected.changed.subscribe(() => this.onSelectedApplicationsChange());
+    this.onSelectedApplicationsChange();
+    this.startDate.valueChanges.subscribe(() => this.refreshTable());
+    this.endDate.valueChanges.subscribe(() => this.refreshTable());
   }
 
   refreshTable(): void {
-    this.refresh = !this.refresh;
-    this.cd.detectChanges();
+    this.nextPage.next(this.nextPage.value);
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
-    this.cd.detectChanges();
+    this.refreshTable();
   }
 
   onApprove(): void {
@@ -162,20 +207,20 @@ export class ApplicationActionsComponent implements OnInit {
       'VO_DETAIL.APPLICATION.DIALOG.APPROVE.DESCRIPTION',
       'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE',
       'APPROVE',
-      this.selectedApplications,
+      this.selected.selected,
       this.currentColumns,
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.loading$ = of(true);
+        this.loadingSubject$.next(true);
         this.registrarService
-          .approveApplications(this.selectedApplications.map((app) => app.id))
+          .approveApplications(this.selected.selected.map((app) => app.id))
           .subscribe({
             next: (approveApplicationsResult: [ApplicationOperationResult]) => {
               if (approveApplicationsResult.some((result) => result.error !== null)) {
                 this.errorsInBulkOperation(
                   approveApplicationsResult,
-                  this.selectedApplications,
+                  this.selected.selected,
                   'APPROVE',
                 );
               } else {
@@ -200,20 +245,20 @@ export class ApplicationActionsComponent implements OnInit {
       'VO_DETAIL.APPLICATION.DIALOG.REJECT.DESCRIPTION',
       'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT',
       'REJECT',
-      this.selectedApplications,
+      this.selected.selected,
       this.currentColumns,
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.loading$ = of(true);
+        this.loadingSubject$.next(true);
         this.registrarService
-          .rejectApplications(this.selectedApplications.map((app) => app.id))
+          .rejectApplications(this.selected.selected.map((app) => app.id))
           .subscribe({
             next: (rejectApplicationsResult: [ApplicationOperationResult]) => {
               if (rejectApplicationsResult.some((result) => result.error !== null)) {
                 this.errorsInBulkOperation(
                   rejectApplicationsResult,
-                  this.selectedApplications,
+                  this.selected.selected,
                   'REJECT',
                 );
               } else {
@@ -238,20 +283,20 @@ export class ApplicationActionsComponent implements OnInit {
       'VO_DETAIL.APPLICATION.DIALOG.DELETE.DESCRIPTION',
       'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE',
       'DELETE',
-      this.selectedApplications,
+      this.selected.selected,
       this.currentColumns,
     );
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.loading$ = of(true);
+        this.loadingSubject$.next(true);
         this.registrarService
-          .deleteApplications(this.selectedApplications.map((app) => app.id))
+          .deleteApplications(this.selected.selected.map((app) => app.id))
           .subscribe({
             next: (deleteApplicationsResult: [ApplicationOperationResult]) => {
               if (deleteApplicationsResult.some((result) => result.error !== null)) {
                 this.errorsInBulkOperation(
                   deleteApplicationsResult,
-                  this.selectedApplications,
+                  this.selected.selected,
                   'DELETE',
                 );
               } else {
@@ -276,15 +321,15 @@ export class ApplicationActionsComponent implements OnInit {
       'VO_DETAIL.APPLICATION.DIALOG.RESEND.DESCRIPTION',
       'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION',
       'RESEND',
-      this.selectedApplications,
+      this.selected.selected,
       this.currentColumns,
     );
     dialogRef.afterClosed().subscribe((resendForm: { type: MailType; reason: string }) => {
       if (resendForm) {
-        this.loading$ = of(true);
+        this.loadingSubject$.next(true);
         this.registrarService
           .sendMessages({
-            ids: this.selectedApplications.map((app) => app.id),
+            ids: this.selected.selected.map((app) => app.id),
             mailType: resendForm.type,
             reason: resendForm.reason,
           })
@@ -294,7 +339,7 @@ export class ApplicationActionsComponent implements OnInit {
               this.refreshTable();
             },
             error: () => {
-              this.loading$ = of(false);
+              this.loadingSubject$.next(false);
             },
           });
       }
@@ -303,7 +348,7 @@ export class ApplicationActionsComponent implements OnInit {
 
   statesChanged(states: AppState[]): void {
     this.currentStates = states;
-    this.cd.detectChanges();
+    this.refreshTable();
   }
 
   viewChanged(): void {
@@ -319,20 +364,49 @@ export class ApplicationActionsComponent implements OnInit {
         ? 'VO_DETAIL.APPLICATION.COLUMNS_TOOLTIP'
         : 'VO_DETAIL.APPLICATION.SET_COLUMN_SETTINGS',
     );
-    this.cd.detectChanges();
+    this.refreshTable();
   }
 
   toggleIncludeGroups(): void {
     this.showGroupApps = !this.showGroupApps;
     this.currentColumns = this.setColumns();
-    this.cd.detectChanges();
+    this.refreshTable();
   }
 
-  onSelectedApplicationsChange(applications: Application[]): void {
-    this.selectedApplications = applications;
+  onSelectedApplicationsChange(): void {
     const state = this.getSelectedState();
     this.setCanPerform(state);
     this.setButtonsTooltips(state);
+  }
+
+  downloadAll(a: { format: string; length: number }): void {
+    const query = this.nextPage.getValue();
+
+    this.registrarService
+      .getApplicationsPage({
+        vo: this.vo.id,
+        query: {
+          order: query.order,
+          pageSize: a.length,
+          offset: 0,
+          searchString: query.searchString,
+          sortColumn: getSortDataColumnQuery(query.sortColumn),
+          includeGroupApplications: this.showGroupApps,
+          getDetails: this.showAllDetails,
+          states: this.currentStates,
+          dateFrom: dateToString(this.startDate.value),
+          dateTo: dateToString(this.endDate.value),
+          groupId: this.group?.id,
+        },
+      })
+      .subscribe({
+        next: (paginatedGroups) => {
+          downloadData(
+            getDataForExport(paginatedGroups.data, this.currentColumns, getExportDataForColumn),
+            a.format,
+          );
+        },
+      });
   }
 
   private errorsInBulkOperation(
@@ -379,10 +453,10 @@ export class ApplicationActionsComponent implements OnInit {
   }
 
   private getSelectedState(): AppState {
-    if (this.selectedApplications.length === 0) return null;
+    if (this.selected.selected.length === 0) return null;
 
-    let state = this.selectedApplications[0].state;
-    for (const app of this.selectedApplications) {
+    let state = this.selected.selected[0].state;
+    for (const app of this.selected.selected) {
       if (app.state !== state) {
         state = null;
         break;
@@ -415,7 +489,7 @@ export class ApplicationActionsComponent implements OnInit {
       );
     } else {
       const tooltip = this.translate.instant(
-        this.selectedApplications.length
+        this.selected.selected.length
           ? 'VO_DETAIL.APPLICATION.TOOLTIPS.MULTIPLE_STATUSES_SELECTED'
           : 'VO_DETAIL.APPLICATION.TOOLTIPS.NO_APPLICATION_SELECTED',
       );
@@ -456,9 +530,7 @@ export class ApplicationActionsComponent implements OnInit {
       displayedColumns: columnsToDisplay,
       allowGroupMailType: !!this.group,
       fedColumnsFriendly: this.configuredFedColumns,
-      fedColumnsDisplay: this.configuredFedColumns.map(
-        (name) => this.fedAttrs.find((attr) => attr.friendlyName === name)?.displayName || '',
-      ),
+      fedAttrs: this.fedAttrs,
     };
 
     return this.dialog.open(ApplicationsBulkOperationDialogComponent, config);

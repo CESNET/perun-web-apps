@@ -147,7 +147,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
 
   onSponsorExistingMember(): void {
     const config = getDefaultDialogConfig();
-    config.width = '650px';
+    config.width = '750px';
     config.data = {
       voId: this.vo.id,
       theme: 'vo-theme',

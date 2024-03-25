@@ -7,16 +7,12 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["libs/ui/alerts/src/**/*.ts", "libs/ui/alerts/src/**/*.html"]
-      },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/ui/alerts/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/ui/alerts/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/ui/alerts"]
     }

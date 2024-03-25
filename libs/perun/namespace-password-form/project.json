@@ -9,18 +9,11 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/perun/namespace-password-form"],
       "options": {
-        "jestConfig": "libs/perun/namespace-password-form/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/perun/namespace-password-form/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/perun/namespace-password-form/src/**/*.ts",
-          "libs/perun/namespace-password-form/src/**/*.html"
-        ]
-      },
       "outputs": ["{options.outputFile}"]
     }
   },

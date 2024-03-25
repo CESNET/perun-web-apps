@@ -60,8 +60,8 @@
     <perun-web-apps-header-menu
       class="d-flex align-items-center"
       *ngIf="showHeaderMenu"
-      [url]="otherAppUrl"
-      [label]="otherAppLabel"
+      [otherAppUrls]="otherAppUrls"
+      [otherAppLabels]="otherAppLabels"
       [user]="principal.user"
       [logoutEnabled]="logoutEnabled"
       [iconColor]="iconColor"

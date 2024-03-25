@@ -167,6 +167,7 @@ export interface PerunConfig {
   auto_service_access_redirect: boolean;
   display_warning?: boolean;
   warning_message?: string;
+  other_apps?: Record<string, Record<string, string>>;
 
   // Admin gui specific
   // Required
@@ -175,7 +176,6 @@ export interface PerunConfig {
   // Optional
   bulk_bug_report_max_items?: number;
   login_namespace_attributes?: string[];
-  profile_label_en?: string;
   allow_empty_sponsor_namespace?: boolean;
   member_profile_attributes_friendly_names?: string[];
   groupNameSecondaryRegex?: string;
@@ -194,8 +194,6 @@ export interface PerunConfig {
   mfa: ProfileMFA;
   preferred_unix_group_names: string[];
   // Optional
-  admin_gui_label_en?: string;
-  admin_gui_label_cs?: string;
   local_account_namespace?: string;
   profile_page_attributes?: ProfileAttribute[];
   external_services?: ProfileExtService[];
@@ -209,6 +207,7 @@ export interface PerunConfig {
 
   // Password reset specific
   // Optional
+  default_namespace?: string;
   password_help?: Record<string, string>;
   password_help_cs?: Record<string, string>;
   password_labels?: PasswordLabels;
