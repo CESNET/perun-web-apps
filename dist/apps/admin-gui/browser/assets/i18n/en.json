@@ -1,0 +1,3562 @@
+{
+  "GENERAL": {
+    "PRINCIPAL_ERROR": {
+      "TITLE": "Server error",
+      "MESSAGE": "The server is not responding, because it is probably being restarted. Please, try it again later.",
+      "ACTION": "Refresh"
+    },
+    "PAGE_NOT_FOUND": {
+      "TITLE": "404: Page not found"
+    },
+    "PROXY_OVERLOAD_PREVENTION": {
+      "TITLE": "Page not found",
+      "MESSAGE": "The page you are trying to access is missing. If you wish to continue please click the button below that will redirect you to our home page.",
+      "ACTION": "Redirect"
+    },
+    "NOT_AUTHORIZED_PAGE": {
+      "TITLE": "Not authorized",
+      "DESC": "You are not authorized to access the page you were trying to reach.",
+      "REDIRECT": "Redirect Home"
+    }
+  },
+  "NAV": {
+    "LOGOUT": "Log out",
+    "PROFILE": "Profile",
+    "NOTIFICATIONS_TOOLTIP": "Recent notifications",
+    "OTHER_APPLICATIONS": "Other applications",
+    "MENU": "Menu"
+  },
+  "MAIN_MENU": {
+    "ACCESS": "Access management",
+    "FACILITIES": "Facilities management",
+    "ADMIN": "Perun admin",
+    "HOME": "Home",
+    "ACCESS_DESC": "Manage organizations, groups and members.",
+    "FACILITIES_DESC": "Manage facilities and resources.",
+    "ADMIN_DESC": "Manage attributes, users and do diagnostics.",
+    "PROFILE_DESC": "View information about you and your organizations and groups.",
+    "MY_PROFILE": "My profile"
+  },
+  "VO_MANAGEMENT": {
+    "TITLE": "Select organization",
+    "CREATE_VO": "New",
+    "REMOVE_VO": "Remove",
+    "FILTER_PLACEHOLDER": "Filter by name",
+    "SETTINGS": {
+      "EXPIRATION": {
+        "TITLE": "Membership expiration",
+        "DISABLED": "Disabled",
+        "ENABLED": "Enabled",
+        "PERIOD_LABEL": "Period",
+        "PERIOD_TYPE_STATIC": "Static",
+        "PERIOD_TYPE_DYNAMIC": "Dynamic",
+        "PERIOD_INPUT_STATIC": "Date",
+        "DP_HINT": "Date in format DD.MM.",
+        "AMOUNT_VALUE": "Amount",
+        "AMOUNT_TYPE": "Unit",
+        "DONT_ALLOW_LOA_LABEL": "Don't allow LOAs",
+        "DONT_ALLOW_LOA_SELECT": "Choose LOAs",
+        "DONT_EXTEND_LOA_LABEL": "Don't extend LOAs",
+        "DONT_EXTEND_LOA_SELECT": "Choose LOAs",
+        "GRACE_PERIOD_LABEL": "Grace period",
+        "GRACE_AMOUNT_VALUE": "Amount",
+        "GRACE_AMOUNT_TYPE": "Unit",
+        "LOA_PERIOD_LABEL": "Special period for loa",
+        "SAVE": "Save",
+        "SPECIAL_LOA_SELECT": "Choose loa",
+        "EXTEND_EXPIRED_MEMBERS_CHECKBOX": "Extend already expired members",
+        "PERMISSION_DENIED_HINT": "You don't have permission to change expiration settings"
+      }
+    }
+  },
+  "FACILITY_MANAGEMENT": {
+    "TITLE": "Select facility",
+    "FILTER_PLACEHOLDER": "Filter by name, Id, description, owner, host or destination",
+    "CREATE": "Create",
+    "DELETE": "Delete",
+    "DELETE_PERMISSION_HINT": "You don't have permission to delete selected facility"
+  },
+  "CONSENTS": {
+    "STATUS": "Consent status",
+    "STATUS_GRANTED": "Granted",
+    "STATUS_REVOKED": "Rejected",
+    "STATUS_UNSIGNED": "Pending",
+    "SELECTION_ALL": "All"
+  },
+  "FACILITY_CONFIGURATION": {
+    "TITLE": "Configure facility",
+    "OWNERS": "Owners",
+    "HOSTS": "Hosts",
+    "SERVICES": "Services",
+    "SERVICE_CONFIG": "Configure services",
+    "DESTINATION_CONFIG": "Configure destinations",
+    "DESTINATION": "Destinations",
+    "ATTS": "Attributes",
+    "MANAGERS": "Managers",
+    "SUMMARY": "Summary",
+    "CANCEL": "Cancel",
+    "NEXT": "Next",
+    "BACK": "Back",
+    "FINISH": "Finish",
+    "SERVICES_FILTER": "Filter",
+    "SAVE": "Save selected",
+    "REMOVE": "Remove selected",
+    "ATT_SAVED": "Attributes successfully saved",
+    "ATT_REMOVED": "Attributes successfully removed",
+    "SERVICES_INFO": "Facility can be preconfigured for selected services, but these services must be assigned to the particular resources. All saved configurations will remain unchanged even after service selection is changed.",
+    "ATT_INFO": "If facility will not have required attributes for some services, these services will be unable to assign to resource.",
+    "EMPTY_REQ_ATT": "Selected services have no required attributes.",
+    "SUMMARY_INFO": "Your facility was created and configured. Please <b>check</b> your configurations <b>and finish</b> this configuration guide. To access the services by the users you need to create resources and then configure the services on resource."
+  },
+  "USER_MANAGEMENT": {
+    "TITLE": "Users",
+    "INPUT_PLACEHOLDER": "Enter user's name, login or email...",
+    "NO_USERS_FOUND": "No users found."
+  },
+  "FACILITY_DETAIL": {
+    "ENTITY": "Facility",
+    "DESCRIPTION": "Description",
+    "UUID": "UUID",
+    "BACK": "Back",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "RESOURCES": {
+      "TITLE": "Resources",
+      "DELETE": "Remove selected",
+      "CREATE": "New",
+      "NO_RESOURCES_ALERT": "No resources found."
+    },
+    "SERVICE_CONFIG": {
+      "UNSELECTED": "-- Unselect --",
+      "TITLE": "Service configuration",
+      "SERVICE_SELECT": "Service",
+      "SERVICE_SELECT_NO_SERVICE": "-- No services are assigned. --",
+      "FAC_SELECT": "Facility",
+      "RES_SELECT": "Resource",
+      "GROUP_SELECT": "Group",
+      "VO_SELECT": "Organization",
+      "MEMBER_SELECT": "Member",
+      "GROUP_SELECT_DEFAULT": " -- Select resource first -- ",
+      "VO_SELECT_DEFAULT": " -- Select resource first -- ",
+      "MEMBER_SELECT_DEFAULT": " -- Select member first -- ",
+      "ALL_SERVICES": "Select from all services",
+      "NOT_SELECTED": "Show all set attributes",
+      "ALL": "Show required attributes for all services"
+    },
+    "ALLOWED_GROUPS": {
+      "SHOW_VOS_GROUPS": "Select organization",
+      "TABLE_GROUP_ID": "Id",
+      "TABLE_GROUP_NAME": "Name",
+      "ALL": "All",
+      "FILTER": "Filter by name, Id or description"
+    },
+    "SERVICES_DESTINATIONS": {
+      "TITLE": "Services Destinations",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "FILTER": "Filter",
+      "REMOVE_SUCCESS": "Destinations were successfully removed",
+      "ADD_SUCCESS": "Destinations were successfully added",
+      "ALLOW": "Allow",
+      "BLOCK": "Block",
+      "ALLOW_SUCCESS": "Service was successfully allowed on destination",
+      "BLOCK_SUCCESS": "Service was successfully blocked on destination",
+      "DESTINATIONS_INFO": "If facility has no destinations data will not be propagated."
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "BLACKLIST": {
+        "TITLE": "Blacklist",
+        "FILTER": "Filter"
+      },
+      "OWNERS": {
+        "TITLE": "Owners",
+        "ADD": "Add",
+        "DELETE": "Delete",
+        "NO_OWNERS": "This facility does not have any owners"
+      },
+      "BANS": {
+        "TITLE": "Bans",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by id, name or description"
+      }
+    },
+    "HOSTS": {
+      "TITLE": "Hosts",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "FILTER": "Filter",
+      "HOSTS_DETAIL": {
+        "TITLE": "Host detail - ",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "SAVE": "Save"
+      }
+    },
+    "SECURITY_TEAMS": {
+      "TITLE": "Security teams",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "FILTER": "Filter"
+    },
+    "SERVICES_STATUS": {
+      "TITLE": "Services status",
+      "FORCE_PROPAGATION": "Force propagation",
+      "ALLOW": "Allow",
+      "BLOCK": "Block",
+      "REMOVE": "Remove",
+      "REMOVE_TASK_RESULTS": "Task results",
+      "REMOVE_SERVICE_FROM_FACILITY": "Service from facility",
+      "SUCCESS_FORCE_PROPAGATION": "Service propagation forced",
+      "SUCCESS_ALLOW": "Services allowed",
+      "SUCCESS_BLOCK": "Services blocked",
+      "SUCCESS_DELETE": "Tasks deleted",
+      "ALREADY_DELETED": "Task was already deleted"
+    },
+    "ALLOWED_USERS": {
+      "TITLE": "Assigned users",
+      "FILTER": "Search by name or email",
+      "FILTER_ALLOWED": "Show only allowed users",
+      "FILTER_ALLOWED_MSG": "Only users with correctly set attributes are shown. Their data is propagated to the facility.",
+      "FILTER_ASSIGNED_MSG": "All assigned users are shown. Data of some users may not be propagated to the facility due to invalid user attributes."
+    },
+    "TASK_RESULTS": {
+      "TITLE": "Task results",
+      "REMOVE": "Remove",
+      "FILTER": "Filter by Id, destination, service or status"
+    }
+  },
+  "RESOURCE_DETAIL": {
+    "ENTITY": "Resource",
+    "DESCRIPTION": "Description",
+    "UUID": "UUID",
+    "VO": "Organization",
+    "FACILITY": "Facility",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "ASSIGNED_GROUPS": {
+      "TITLE": "Assigned groups",
+      "ADD_GROUP": "Assign groups",
+      "REMOVE_GROUP": "Remove groups",
+      "FILTER_GROUPS": "Filter groups",
+      "REMOVE_TOOLTIP": "You are not authorized to remove one or more of the selected groups."
+    },
+    "ASSIGNED_SERVICES": {
+      "TITLE": "Assigned services",
+      "ADD_SERVICE": "Add",
+      "REMOVE_SERVICE": "Remove services",
+      "FILTER_SERVICES": "Filter services",
+      "NO_SERVICES": "No services."
+    },
+    "ASSIGNED_MEMBERS": {
+      "TITLE": "Assigned members",
+      "FILTER": "Filter members",
+      "FILTER_CONSENT_STATUS": "Filter by consent"
+    },
+    "TAGS": {
+      "TITLE": "Assigned tags",
+      "ADD_BUTTON": "Add",
+      "REMOVE_BUTTON": "Remove",
+      "CANCEL": "Cancel",
+      "SEARCH": "Filter by Id or name",
+      "NO_TAGS": "No resource tags.",
+      "REMOVE_TAGS_DIALOG_TITLE": "Remove tags",
+      "REMOVE_TAGS_DIALOG_DESCRIPTION": "Following tags will be removed from the resource.",
+      "ADDED_SUCCESSFULLY": "Resource tags were added successfully.",
+      "REMOVED_SUCCESSFULLY": "Resource tags were removed successfully.",
+      "ADD_TAGS": "Add tags"
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "BANS": {
+        "TITLE": "Bans",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by id, name or description"
+      }
+    }
+  },
+  "VO_DETAIL": {
+    "ENTITY": "Organization",
+    "SHORT_NAME": "Short name",
+    "UUID": "UUID",
+    "MEMBER_VOS": "Member organizations",
+    "PARENT_VOS": "Member of organizations",
+    "BACK": "Back",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "RESOURCES": {
+      "LIST": {
+        "TITLE": "Resources",
+        "DELETE": "Remove selected",
+        "NO_RESOURCES_ALERT": "No resources found."
+      },
+      "STATES": {
+        "TITLE": "Resources state",
+        "ERROR_RESOURCES": "Resources with tasks in error state",
+        "FROM": "from",
+        "TASKS_WITH_ERROR_STATE": "tasks with error state",
+        "OK_RESOURCES": "Resources with tasks in Ok state",
+        "NO_TASKS": "No service configuration was propagated to this resource.",
+        "NOT_YET": "Not yet",
+        "NO_RESOURCES_IN_ERROR": "No resources with task in error state",
+        "NO_RESOURCES_IN_OK": "No resources with task in success state",
+        "TABLE_ID": "Id",
+        "TABLE_SERVICE": "Service",
+        "TABLE_STATUS": "Status",
+        "TABLE_SCHEDULED": "Scheduled",
+        "TABLE_STARTED": "Started",
+        "TABLE_ENDED": "Ended"
+      },
+      "TAGS": {
+        "TITLE": "Resource tags",
+        "TAG_ID": "Id",
+        "TAG_NAME": "Tag name",
+        "CHANGE_TAG_NAME": "Change tag name",
+        "CREATE_BUTTON": "Create",
+        "DELETE_BUTTON": "Delete",
+        "EDIT_BUTTON": "Edit",
+        "SAVE_BUTTON": "Save",
+        "SEARCH": "Filter by Id or name",
+        "DELETE_SUCCESS": "Resource tags were successfully deleted.",
+        "CREATE_SUCCESS": "Resource tag was successfully created.",
+        "NO_TAGS": "Organization has no resource tags defined."
+      }
+    },
+    "GROUPS": {
+      "TITLE": "Groups",
+      "CREATE_GROUP": "Create",
+      "DELETE_GROUP": "Delete",
+      "TITLE_SUBGROUPS": "Subgroups",
+      "LIST_VIEW": "List view",
+      "TREE_VIEW": "Tree view",
+      "FILTER": "Search by name, id, description",
+      "NO_GROUPS": "No groups found",
+      "GROUP_SYNCED": "Synchronized",
+      "GROUP_NOT_SYNCED": "Not synchronized",
+      "GROUP_SYNC_FAILED": "Last synchronization failed",
+      "GROUP_NOT_YET_SYNCED": "Not yet synced",
+      "GROUP_STRUCTURE_SYNCED": "Group structure synchronized",
+      "DELETE_PERMISSION_HINT": "You don't have permission to delete some of the selected groups."
+    },
+    "MEMBERS": {
+      "TITLE": "Members",
+      "ADD_MEMBER": "Add",
+      "ADD_MEMBER_DISABLED": "You cannot add members manually into this organization.",
+      "REMOVE_MEMBERS": "Remove",
+      "SEARCH_DESCRIPTION": "Search by name, login, email or UUID",
+      "FILTER_STATUS": "Filter by Status",
+      "INVITE": "Invite",
+      "INVITE_ONE": "Invite member",
+      "INVITE_BULK": "Invite multiple members",
+      "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist.",
+      "COPY_INVITATION_LINK": "Copy invitation link",
+      "COPY_INVITATION_LINK_SUCCESS": "Invitation link has been copied successfully",
+      "COPY_INVITATION_LINK_DISABLED": "Application form is not setup correctly."
+    },
+    "OVERVIEW": {
+      "INVITE_MEMBER": "Invite member",
+      "CREATE_SERVICE_MEMBER": "Create service member",
+      "ADD_MANAGER": "Add manager",
+      "CREATE_GROUP": "Create group",
+      "ADD_MEMBER": "Add member"
+    },
+    "SETTINGS": {
+      "EXPIRATION": {
+        "SUCCESS_MESSAGE": "Settings saved.",
+        "ERROR_MESSAGE": "Failed to save settings."
+      },
+      "APPLICATION_FORM": {
+        "TITLE": "Application form",
+        "DRAG_AND_DROP_INFO": "You can move the table items by dragging them with the handle on the left side.",
+        "ADD_BUTTON": "Add",
+        "COPY_VO_BUTTON": "Copy from Organization/Group",
+        "PREVIEW_BUTTON": "Preview",
+        "SETTINGS_BUTTON": "Change Settings",
+        "NO_APPLICATION_FORM": "Application form have no items.",
+        "SHORTNAME": "Short name",
+        "TYPE": "Type",
+        "DISABLED_HEADER": "Disabled",
+        "HIDDEN_HEADER": "Hidden",
+        "PREVIEW": "Preview",
+        "EDIT": "Edit",
+        "MANAGE_GROUPS": "Manage groups",
+        "MANAGE_GROUPS_DISABLED": "Save the form with this item to manage the groups",
+        "DELETE": "Delete",
+        "MODULE_NAMES": "Module names",
+        "APPLICATION_TYPE": "Approval style",
+        "MANUAL": "Manual",
+        "AUTOMATIC": "Automatic",
+        "CHANGE_SETTINGS_SUCCESS": "Settings were successfully changed",
+        "CHANGE_APPLICATION_FORM_ITEMS_SUCCESS": "Application form items were successfully changed",
+        "NOT_SELECTED": "Not selected",
+        "CLEAR_SELECTION": "Clear Selection",
+        "HIDDEN_VALUE": "Hidden",
+        "OTHER_VALUE": "-- other value --",
+        "SAVE_BUTTON": "Save Application Form",
+        "MARK_DELETE": "Marked for deletion",
+        "REVERT_DELETE": "Restore",
+        "CLEAR": "Clear form",
+        "CLEAR_TOOLTIP": "Removes all form items",
+        "DRAG": "Drag",
+        "TYPES": {
+          "HEADING": "Header",
+          "SUBMIT_BUTTON": "Submit button",
+          "HTML_COMMENT": "Custom HTML text",
+          "TEXTFIELD": "Input text field",
+          "VALIDATED_EMAIL": "Input text field for email",
+          "SELECTIONBOX": "Single value selection from list",
+          "USERNAME": "Input text field for username",
+          "PASSWORD": "Input text field for password",
+          "TEXTAREA": "Input text multi-line field",
+          "COMBOBOX": "Single value selection with opt. custom value",
+          "CHECKBOX": "Checkbox (multiple selection)",
+          "RADIO": "Radio (single selection)",
+          "TIMEZONE": "Selection of timezone",
+          "AUTO_SUBMIT_BUTTON": "Submit button with auto-submit",
+          "EMBEDDED_GROUP_APPLICATION": "Groups for embedded applications",
+          "LIST_INPUT_BOX": "List input field",
+          "MAP_INPUT_BOX": "Key - value input field"
+        },
+        "HIDDEN": {
+          "ALWAYS": "Always",
+          "NEVER": "Never",
+          "IF_PREFILLED": "If prefilled (self or other item, if dependency specified)",
+          "IF_EMPTY": "If empty (self or other item, if dependency specified)"
+        },
+        "DISABLED": {
+          "ALWAYS": "Always",
+          "NEVER": "Never",
+          "IF_PREFILLED": "If prefilled (self or other item)",
+          "IF_EMPTY": "If empty (self or other item)"
+        },
+        "WIDGET_DESCRIPTION": {
+          "HEADING": "Item is used to display customizable heading of the form. Can have any HTML content.",
+          "SUBMIT_BUTTON": "Button used to submit the form with a custom label. All other form items are checked on valid input before submission. If it fails, form will not be sent.",
+          "HTML_COMMENT": "Item is used to display custom HTML content anywhere on the form. Useful for explanation descriptions, dividing parts of form, etc.",
+          "TEXTFIELD": "Editable text field useful to gather short text input, e.g. name, phone.",
+          "VALIDATED_EMAIL": "Special text field to gather and verify user`s email address. Input is checked on email address format. If a user enters a new value, then a validation email will be sent. The application then can't be approved unless the provided email address is validated.",
+          "SELECTIONBOX": "Simple selection box with defined custom values that user can choose.",
+          "USERNAME": "Special text field to gather user`s login. It checks login availability on user input.",
+          "PASSWORD": "Two password fields to gather the user's new password. Input is never displayed. The user must type the same password in both fields.",
+          "TEXTAREA": "Editable text area useful to gather longer text input with linebreaks, e.g. comments, SSH key",
+          "COMBOBOX": "Selection box with defined custom values and one special option: \"--custom value--\", which allows users to input their text (as a simple text field).",
+          "CHECKBOX": "List of defined custom options with checkboxes. Selected values are gathered as a comma-separated string.",
+          "RADIO": "List of defined custom options with radio buttons. Single selection model. Value is stored as a string.",
+          "TIMEZONE": "Selection box with predefined values of UTC timezones.",
+          "AUTO_SUBMIT_BUTTON": "Button used to auto-submit the form with a custom label. All other form items are checked on valid input before submission. If validation fails (at least once) the user must submit the form manually. If it's OK, then the form is automatically submitted.",
+          "EMBEDDED_GROUP_APPLICATION": "The checkbox of real organization groups which the user can check and thus submit an application to these groups",
+          "LIST_INPUT_BOX": "Item is used to show list values",
+          "MAP_INPUT_BOX": "Item is used to show key - value pairs"
+        },
+        "DISABLED_HIDDEN_ICON": {
+          "IF_EMPTY": "If empty",
+          "IF_PREFILLED": "If prefilled",
+          "ALWAYS_DISABLED_HINT": "This item is always disabled",
+          "ALWAYS_HIDDEN_HINT": "This item is always hidden",
+          "DISABLED_IF_HINT": "This item is disabled if",
+          "HIDDEN_IF_HINT": "This item is hidden if",
+          "IS_EMPTY_HINT": "is empty",
+          "IS_PREFILLED_HINT": "is prefilled"
+        },
+        "PREVIEW_PAGE": {
+          "TITLE": "Application form preview",
+          "SWITCH_ENGLISH": "Switch to English",
+          "SWITCH_CZECH": "Switch to Czech",
+          "SWITCH_EXTENSION": "Switch to Extension",
+          "SWITCH_INITIAL": "Switch to Initial",
+          "DISABLED_HIDDEN_ICON": {
+            "ALWAYS_DISABLED": "Always disabled",
+            "ALWAYS_HIDDEN": "Always hidden",
+            "DISABLED_WHEN": "Disabled when",
+            "HIDDEN_WHEN": "Hidden when",
+            "IS_EMPTY": "is empty",
+            "IS_PREFILLED": "is prefilled"
+          }
+        },
+        "MANAGE_GROUPS_PAGE": {
+          "TITLE": "Manage groups for registration",
+          "ADD": "Add",
+          "ADD_PERMISSION_HINT": "You don't have permission to add groups.",
+          "REMOVE": "Remove",
+          "HELP": "On this page, you can set up a set of groups that will be displayed to users on an application to the organization. The user can select any set of these groups and for these selected groups, there will be applications submitted automatically.",
+          "FILTER": "Filter",
+          "REMOVE_GROUP_DIALOG_TITLE": "Confirm removing groups",
+          "REMOVE_GROUP_DIALOG_DESCRIPTION": "Following groups will be removed from the group list that is offered to users for registration.",
+          "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
+          "NO_EMBEDDED_GROUPS": "No 'Groups for embedded applications' item found in the application form. Try saving the form with the item included."
+        }
+      },
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "NOTIFICATIONS": {
+        "TITLE": "Email notifications",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "EMAIL_FOOTER": "E-mail footer",
+        "COPY_FROM_VO": "Copy from organization",
+        "TABLE_EMAIL_ID": "Id",
+        "TABLE_EMAIL_TYPE": "E-Mail type",
+        "TABLE_APPLICATION_TYPE": "Application type",
+        "TABLE_SENDING_ENABLED": "Sending enabled",
+        "TABLE_APPLICATION_TYPE_INITIAL": "Initial",
+        "TABLE_APPLICATION_TYPE_EXTENSION": "Extension",
+        "MAIL_TYPE_APP_CREATED_USER": "Created / user",
+        "MAIL_TYPE_APPROVABLE_GROUP_APP_USER": "Approvable / user",
+        "MAIL_TYPE_APP_CREATED_VO_ADMIN": "Created / manager",
+        "MAIL_TYPE_MAIL_VALIDATION": "Mail validation / user",
+        "MAIL_TYPE_APP_APPROVED_USER": "Approved / user",
+        "MAIL_TYPE_APP_REJECTED_USER": "Rejected / user",
+        "MAIL_TYPE_APP_ERROR_VO_ADMIN": "Error / manager",
+        "MAIL_TYPE_USER_INVITE": "Invitation / user",
+        "DELETE_SUCCESS": "Email notification deleted.",
+        "NO_EMAILS": "No mail notifications found.",
+        "EDIT_SUCCESS": "Email notification was successfully edited",
+        "ADD_SUCCESS": "Email notification was successfully added",
+        "DISABLED_HINT": "You don't have permission to change sending settings.",
+        "SENDING_ENABLE": "Sending of notification was successfully enabled.",
+        "SENDING_DISABLE": "Sending of notification was successfully disabled."
+      },
+      "EXT_SOURCES": {
+        "TITLE": "External sources",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by Id, name or type",
+        "SUCCESS_REMOVED": "External source successfully removed: "
+      },
+      "SPONSORED_MEMBERS": {
+        "TITLE": "Sponsored members",
+        "CREATE": "Create",
+        "COPY": "Copy sponsored members",
+        "CREATE_ONE": "Create sponsored member",
+        "GENERATE": "Generate sponsored members",
+        "FILTER": "Filter by name or Id",
+        "SPONSOR_EXISTING": "Sponsor existing member",
+        "NO_SPONSORS": "This organization has no members with the role SPONSOR"
+      },
+      "SERVICE_MEMBERS": {
+        "TITLE": "Service accounts",
+        "FILTER": "Filter by name or Id",
+        "CREATE": "Create",
+        "DELETE": "Remove"
+      },
+      "MEMBER_ORGANIZATIONS": {
+        "TITLE": "Member organizations",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by name",
+        "ADD_MEMBER_ORGANIZATION": {
+          "TITLE": "Add member organization",
+          "CANCEL": "Cancel",
+          "BACK": "Back",
+          "NEXT": "Next",
+          "ADD": "Add",
+          "SELECTION_STEP": "Select organization",
+          "FILTER_VOS": "Filter by name",
+          "CONFIRMATION_STEP": "Confirmation",
+          "CONFIRM": "Do you really want to add this organization as member?",
+          "WARNING": "Every member of this organization will become member of your organization",
+          "SUCCESS": "Member organization successfully added"
+        },
+        "REMOVE_MEMBER_ORGANIZATION": {
+          "TITLE": "Remove member organization",
+          "WARNING": "By removing this organization it's new members won't be imported to your organization.",
+          "SUCCESS": "Member organization successfully removed"
+        }
+      },
+      "HIERARCHICAL_INCLUSION": {
+        "TITLE": "Hierarchical inclusion",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "NO_GROUPS_ALLOWED_ALERT": "No groups are allowed for hierarchical include"
+      },
+      "BANS": {
+        "TITLE": "Bans",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by id, name or description"
+      }
+    },
+    "APPLICATION": {
+      "TITLE": "Application",
+      "FILTER": "Filter",
+      "SET_COLUMN_SETTINGS": "Configure column settings",
+      "SELECTION_ALL": "All",
+      "SELECTION_WFMV": "Waiting for mail verification",
+      "SELECTION_SUBMITTED": "Submitted",
+      "SELECTION_PENDING": "Pending",
+      "SELECTION_APPROVED": "Approved",
+      "SELECTION_REJECTED": "Rejected",
+      "SHOW_GROUP_APPLICATIONS": "Show group applications",
+      "COLUMNS_TOOLTIP": "Detailed application view cannot be customized.",
+      "NO_APPLICATION_FOUND": "No applications matching search criteria found.",
+      "SHOW_ALL_DETAILS": "Show more details",
+      "SHOW_LESS_DETAILS": "Show less details",
+      "SHOW": "Show",
+      "STATE": {
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected",
+        "NEW": "Waiting for mail verification",
+        "VERIFIED": "Submitted"
+      },
+      "TOOLTIPS": {
+        "MULTIPLE_STATUSES_SELECTED": "You have applications with different states selected.",
+        "NO_APPLICATION_SELECTED": "You have selected no applications.",
+        "APPROVE": {
+          "APPROVED": "The selected applications are already approved.",
+          "REJECTED": "You cannot approve applications with the REJECTED state.",
+          "NEW": "Approve",
+          "VERIFIED": "Approve"
+        },
+        "REJECT": {
+          "APPROVED": "You cannot reject applications with the APPROVED state.",
+          "REJECTED": "The selected applications are already rejected.",
+          "NEW": "Reject",
+          "VERIFIED": "Reject"
+        },
+        "DELETE": {
+          "APPROVED": "You cannot delete applications with the APPROVED state.",
+          "VERIFIED": "You cannot delete applications with the SUBMITTED state.",
+          "NEW": "Delete",
+          "REJECTED": "Delete"
+        },
+        "SEND_NOTIFICATION": {
+          "APPROVED": "Send mail verification",
+          "VERIFIED": "Send mail verification",
+          "NEW": "Send mail verification",
+          "REJECTED": "Send mail verification"
+        }
+      },
+      "DATE": {
+        "LABEL": "Enter a date range"
+      },
+      "DIALOG": {
+        "CONFIRM": "Confirm",
+        "CANCEL": "Cancel",
+        "APPROVE": {
+          "TITLE": "Approve applications",
+          "DESCRIPTION": "You are about to approve {{count}} selected application(s). Make sure you have confirmed identities of the applicant(s)."
+        },
+        "REJECT": {
+          "TITLE": "Reject applications",
+          "DESCRIPTION": "You are about to reject {{count}} selected application(s). Make sure you have confirmed identities of the applicant(s)."
+        },
+        "DELETE": {
+          "TITLE": "Delete applications",
+          "DESCRIPTION": "You are about to delete {{count}} selected application(s). Make sure you have confirmed identities of the applicant(s)."
+        },
+        "RESEND": {
+          "TITLE": "Re-send notifications",
+          "DESCRIPTION": "You are about to re-send notifications for {{count}} selected application(s). Make sure you have confirmed identities of the applicant(s)."
+        }
+      },
+      "SUCCESS": {
+        "APPROVE": "Successfully approved {{count}} applications",
+        "APPROVE_SINGULAR": "Successfully approved {{count}} application",
+        "APPROVE_NOTIFICATION": "Applications were successfully approved.",
+        "APPROVE_DESCRIPTION": "Following applications were successfully approved.",
+        "REJECT": "Successfully rejected {{count}} applications",
+        "REJECT_SINGULAR": "Successfully rejected {{count}} application",
+        "REJECT_NOTIFICATION": "Applications were successfully rejected.",
+        "REJECT_DESCRIPTION": "Following applications were successfully rejected.",
+        "DELETE": "Successfully deleted {{count}} applications",
+        "DELETE_SINGULAR": "Successfully deleted {{count}} application",
+        "DELETE_NOTIFICATION": "Applications were successfully deleted.",
+        "DELETE_DESCRIPTION": "Following applications were successfully deleted.",
+        "RESEND": "Notifications for applications were re-sent."
+      },
+      "ERROR": {
+        "APPROVE": "Failed to approve {{count}} applications",
+        "APPROVE_SINGULAR": "Failed to approve {{count}} application",
+        "APPROVE_NOTIFICATION": "Failed to approve some applications.",
+        "APPROVE_DESCRIPTION": "Following applications could not be approved due to errors.<br>The errors are listed in the table below.",
+        "REJECT": "Failed to reject {{count}} applications",
+        "REJECT_SINGULAR": "Failed to reject {{count}} application",
+        "REJECT_NOTIFICATION": "Failed to reject some applications.",
+        "REJECT_DESCRIPTION": "Following applications could not be rejected due to errors.<br>The errors are listed in the table below.",
+        "DELETE": "Failed to delete {{count}} applications",
+        "DELETE_SINGULAR": "Failed to delete {{count}} application",
+        "DELETE_NOTIFICATION": "Failed to delete some applications.",
+        "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below."
+      },
+
+      "APPLICATION_DETAIL": {
+        "TITLE": "Application detail",
+        "APPROVE": "Approve",
+        "REJECT": "Reject",
+        "SEND_NOTIFICATION": "Re-send notifications",
+        "DELETE": "Delete",
+        "TYPE": "Type",
+        "STATE": "State",
+        "SUBMITTED_BY": "Submitted by",
+        "EXT_SRC": "From External Source",
+        "LOA": "Level of Assurance",
+        "MAIL": "Preferred mail",
+        "APPLICATION_FOR_VO": "Application for Organization",
+        "APPLICATION_FOR_GROUP": "Application for Group",
+        "APPLICATION_IN_VO": "in Organization",
+        "APPROVED_BY": "Approved by",
+        "REJECTED_BY": "Rejected by",
+        "DATE": "Date",
+        "VERIFY": "Verify",
+        "DELETE_APPLICATION_TITLE": "Delete application",
+        "DELETE_APPLICATION_DESCRIPTION": "Application with following Id will be deleted.",
+        "DELETE_MESSAGE": "Application was deleted",
+        "APPROVE_MESSAGE": "Application was approved",
+        "VERIFY_MESSAGE": "Application was verified",
+        "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
+        "EDIT": "Edit"
+      }
+    },
+    "STATISTICS": {
+      "TITLE": "Statistics",
+      "MEMBERS_COUNT": "Members by status"
+    },
+    "RELATED_VOS": {
+      "MEMBER_VOS": "Member organizations",
+      "PARENT_VOS": "Member of organizations"
+    }
+  },
+  "GROUP_DETAIL": {
+    "ENTITY": "Group",
+    "VO_NAME": "Organization",
+    "DESCRIPTION": "Description",
+    "UUID": "UUID",
+    "SYNCHRONIZATION": "Synchronization",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "SUBGROUPS": {
+      "TITLE": "Subgroups",
+      "CREATE_GROUP": "Create subgroup",
+      "DELETE_GROUP": "Delete subgroup",
+      "NO_SUBGROUPS": "This group has no subgroups.",
+      "FILTER": "Filter",
+      "LIST_VIEW": "List view",
+      "TREE_VIEW": "Tree view",
+      "DELETE_PERMISSION_HINT": "You don't have permission to delete some of the selected subgroups."
+    },
+    "SUBGROUP_INFO": "This group is a subgroup of ",
+    "STATS_BY_GROUP_STATUS": "Members by group status",
+    "STATS_BY_VO_STATUS": "Members by organization status",
+    "MEMBERS": {
+      "TITLE": "Members",
+      "ACTIONS_DISABLED": "Actions with members are disabled, because this group is filled with members from external source.",
+      "ADD_MEMBER": "Add",
+      "ADD_MEMBER_DISABLED": "Manual adding of members is blocked for this group.",
+      "REMOVE_MEMBERS": "Remove",
+      "COPY_MEMBERS": "Copy",
+      "COPY_MEMBERS_DISABLED": "There aren't any direct members available to copy.",
+      "SEARCH_DESCRIPTION": "Search by name, login, email or UUID",
+      "LIST_ALL": "List all members",
+      "INVITE": "Invite",
+      "INVITE_ONE": "Invite member",
+      "INVITE_BULK": "Invite multiple members",
+      "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist.",
+      "COPY_INVITATION_LINK": "Copy invitation link",
+      "COPY_INVITATION_LINK_SUCCESS": "Invitation link has been copied successfully",
+      "COPY_INVITATION_LINK_DISABLED": "Application form is not setup correctly.",
+      "SYNCHRONIZED": "Action is disabled on this group, group is filled with members from external source.",
+      "FILTER_STATUS": "Filter by organizations status",
+      "FILTER_GROUP_STATUS": "Filter by group status",
+      "BUTTON_DISABLED_MEMBERS_GROUP": "Action is disabled on this group because it represents all members of the organization. To edit members of the organization go to organization members."
+    },
+    "RESOURCES": {
+      "TITLE": "Resources",
+      "DELETE": "Remove selected",
+      "ADD": "Assign resources",
+      "DELETE_PERMISSION_HINT": "You don't have permission to remove some of the selected resources.",
+      "NO_RESOURCES_WARNING": "Group has no resources assigned."
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "RESOURCE_ATTRIBUTES": {
+        "TITLE": "Resource attributes"
+      },
+      "EXPIRATION": {
+        "SUCCESS_MESSAGE": "Settings saved.",
+        "ERROR_MESSAGE": "Failed to save settings."
+      },
+      "MANAGERS": {
+        "TITLE": "Managers",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "SELECT_MODE": "Select mode",
+        "SELECT_ROLE": "Select role",
+        "USER": "User",
+        "GROUP": "Group",
+        "NO_MANAGERS": "This role has no managers.",
+        "NO_GROUP_MANAGERS": "This role has no group managers."
+      },
+      "APPLICATION_FORM": {
+        "TITLE": "Application form",
+        "MODULE_NAMES": "Module names",
+        "APPLICATION_TYPE": "Approval style",
+        "AUTOMATIC": "Automatic",
+        "MANUAL": "Manual",
+        "SETTINGS_BUTTON": "Change Settings",
+        "ADD_BUTTON": "Add",
+        "COPY_GROUP_BUTTON": "Copy from Organization/Group",
+        "PREVIEW_BUTTON": "Preview",
+        "DRAG_AND_DROP_INFO": "You can move with table items by dragging and dropping",
+        "NO_APPLICATION_FORM": "Application form doesn't exists",
+        "CREATE_APPLICATION_FORM": "Create empty form",
+        "CLEAR": "Clear form",
+        "CLEAR_TOOLTIP": "Removes all form items",
+        "CHANGE_SETTINGS_SUCCESS": "Application form settings successfully changed.",
+        "ALLOW_EMBEDDED": "This group is allowed for embedded applications"
+      },
+      "NOTIFICATIONS": {
+        "TITLE": "Email notifications",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "EMAIL_FOOTER": "E-mail footer",
+        "COPY_FROM_VO": "Copy from Organization/Group",
+        "NO_EMAILS": "No mail notifications found for this group.",
+        "ADD_SUCCESS": "Email notification was successfully added",
+        "DELETE_SUCCESS": "Email notification deleted.",
+        "NO_APPLICATION_FORM": "Application form doesn't exist",
+        "CREATE_APPLICATION_FORM": "Create application form"
+      },
+      "RELATIONS": {
+        "TITLE": "Relations",
+        "DELETE": "Remove",
+        "CREATE": "Add",
+        "FILTER": "Filter by name, Id or description",
+        "REVERSE_UNIONS": "Show reverse unions",
+        "DELETE_TOOLTIP": "You don't have permission to remove some of the selected relations."
+      },
+      "EXT_SOURCES": {
+        "TITLE": "External sources",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "FILTER": "Filter by Id, name or type",
+        "SUCCESS_REMOVED": "External source successfully removed: "
+      }
+    },
+    "STATISTICS": {
+      "TITLE": "Statistics",
+      "VO_STATUS_COUNT": "Members by organization status",
+      "GROUP_STATUS_COUNT": "Members by group status"
+    }
+  },
+  "APPLICATIONS_LIST": {
+    "ID": "Id",
+    "CREATED_DATE": "Created Date",
+    "TYPE": "Type",
+    "STATE": "State",
+    "GROUPS_SELECTION": "Groups applications",
+    "SUBMITTED_BY": "Submitted by",
+    "LOA": "LoA",
+    "GROUP_NAME": "Group name",
+    "MODIFIED_BY": "Modified by",
+    "VO_ID": "Organization Id",
+    "GROUP_ID": "Group Id",
+    "FEDINFO": "FedInfo",
+    "EXTSOURCENAME": "ExtSource name",
+    "EXTSOURCETYPE": "ExtSource type",
+    "MODIFIED_AT": "Modified at",
+    "USER": "User",
+    "CREATED_BY": "Created by",
+    "VO_NAME": "Organization name",
+    "ERROR": "Error"
+  },
+  "MEMBER_DETAIL": {
+    "ENTITY": "Member",
+    "USER_ID": "User Id",
+    "USER_LINK": "See user detail",
+    "OVERVIEW": {
+      "NEVER_EXPIRES": "never",
+      "ORGANIZATION_MEMBERSHIP": "Organization membership",
+      "GROUP_MEMBERSHIP": "Group membership",
+      "NO_GROUPS_FOUND": "No Groups found",
+      "STATUS": "Status:",
+      "EXPIRATION": "Expiration:",
+      "PERSONAL": "Personal information",
+      "SPONSORSHIP": "Sponsorship",
+      "SPONSORED_BY": "This member is sponsored",
+      "NOT_SPONSORED": "This member is not sponsored",
+      "SPONSORS": "Sponsors",
+      "RESET_PASSWORD": "Reset password",
+      "RESET_DISABLED": "Unsupported functionality for user's namespaces",
+      "SEND_REQUEST": "Send request",
+      "SPONSOR_NAME": "Sponsor name",
+      "EXPIRATION_TABLE": "Expiration",
+      "SPONSOR_MEMBER": "Sponsor this member",
+      "NO_SPONSORS": "This organisation has no available sponsors",
+      "EDIT_SPONSORS": "Edit sponsors",
+      "CHANGE_STATUS": "Change status",
+      "CHANGE_EXPIRATION": "Change expiration"
+    },
+    "GROUPS": {
+      "TITLE": "Member groups",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "REMOVE_PERMISSION_HINT": "You don't have permission to remove some of the selected groups.",
+      "LIST_VIEW": "List view",
+      "TREE_VIEW": "Tree view",
+      "FILTER": "Search by name, id, description"
+    },
+    "APPLICATIONS": {
+      "TITLE": "Application",
+      "SHOW_ALL_DETAILS": "Show more details",
+      "SHOW_LESS_DETAILS": "Show less details",
+      "FILTER": "Filter"
+    },
+    "RESOURCES": {
+      "TITLE": "Resources",
+      "FILTER": "Filter",
+      "ADD": "Add"
+    },
+    "BANS": {
+      "TITLE": "Bans"
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "RESOURCE_PAGE": {
+        "TITLE": "Resource Attributes",
+        "DELETE": "Remove",
+        "FILTER": "Filter resources by name",
+        "SAVE": "Save",
+        "CREATE": "Add",
+        "NO_FILTERED_ENTITY_MESSAGE": "No resources that match the filter found",
+        "NO_ENTITY_MESSAGE": "No assigned resources"
+      },
+      "USER_PAGE": {
+        "TITLE": "Facility Attributes",
+        "FILTER": "Filter facilities by name",
+        "NO_ENTITY_MESSAGE": "You have no assigned facilities",
+        "NO_FILTERED_ENTITY_MESSAGE": "No facilities that match the filter found"
+      },
+      "GROUP_PAGE": {
+        "TITLE": "Group attributes",
+        "FILTER": "Filter groups by name",
+        "NO_ENTITY_MESSAGE": "No assigned groups",
+        "NO_FILTERED_ENTITY_MESSAGE": "No groups that match the filter found"
+      }
+    }
+  },
+  "SERVICE_DETAIL": {
+    "ENTITY": "Service",
+    "EVALUATE_CONSENTS": "Evaluate consents",
+    "CONFIRM_DIALOG_TITLE": "Evaluate consents confirmation",
+    "CONFIRM_DIALOG_DESCRIPTION": "Are you sure you want to evaluate consents for this service?",
+    "EVALUATION_FINISH": "Consents evaluation completed",
+    "STATUS_CHANGE_SUCCESS": "Service status was successfully changed",
+    "PROPAGATION_CHANGE_SUCCESS": "Service propagation of expired members was successfully changed",
+    "DESCRIPTION": "Description",
+    "ENABLE": "Enable service",
+    "PROPAGATE": "Propagate expired members",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "REQUIRED_ATTRIBUTES": {
+      "TITLE": "Required attributes",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "FILTER": "Filter"
+    },
+    "DESTINATIONS": {
+      "TITLE": "Service destinations",
+      "FILTER": "Filter by Id, facility or destination",
+      "ALLOW": "Allow",
+      "BLOCK": "Block",
+      "REMOVE": "Remove",
+      "ALLOW_SUCCESS": "Service was successfully allowed on destination",
+      "BLOCK_SUCCESS": "Service was successfully blocked on destination"
+    }
+  },
+  "MENU_ITEMS": {
+    "VO": {
+      "OVERVIEW": "Overview",
+      "MEMBERS": "Members",
+      "GROUPS": "Groups",
+      "APPLICATIONS": "Applications",
+      "RESOURCES": "Resources",
+      "RESOURCE_PREVIEW": "Resource list",
+      "RESOURCE_STATES": "Resources state",
+      "RESOURCE_TAGS": "Resource tags",
+      "SETTINGS": "Advanced settings",
+      "ATTRIBUTES": "Attributes",
+      "EXPIRATION": "Membership",
+      "MANAGERS": "Managers",
+      "APPLICATION_FORM": "Application form",
+      "NOTIFICATIONS": "Notifications",
+      "EXTSOURCES": "External sources",
+      "SPONSORS": "Sponsors",
+      "SPONSORED_MEMBERS": "Sponsored members",
+      "SERVICE_MEMBERS": "Service accounts",
+      "STATISTICS": "Statistics",
+      "MEMBER_ORGANIZATIONS": "Member organizations",
+      "HIERARCHICAL_INCLUSION": "Hierarchical inclusion",
+      "BANS": "Bans"
+    },
+    "FACILITY": {
+      "OVERVIEW": "Overview",
+      "RESOURCES": "Resources",
+      "ALLOWED_GROUPS": "Allowed groups",
+      "SETTINGS": "Advanced settings",
+      "ATTRIBUTES": "Attributes",
+      "SERVICE_CONFIG": "Services configuration",
+      "OWNERS": "Owners",
+      "MANAGERS": "Managers",
+      "SERVICES_DESTINATIONS": "Services destinations",
+      "HOSTS": "Hosts",
+      "BLACKLIST": "Blacklist",
+      "SECURITY_TEAMS": "Security teams",
+      "SERVICES_STATUS": "Services status",
+      "ALLOWED_USERS": "Assigned users",
+      "BANS": "Bans"
+    },
+    "RESOURCE": {
+      "OVERVIEW": "Overview",
+      "ASSIGNED_GROUPS": "Assigned groups",
+      "SETTINGS": "Advanced settings",
+      "ATTRIBUTES": "Attributes",
+      "MANAGERS": "Managers",
+      "ASSIGNED_SERVICES": "Assigned services",
+      "ASSIGNED_MEMBERS": "Assigned members",
+      "RESOURCE_TAGS": "Assigned tags",
+      "BANS": "Bans"
+    },
+    "GROUP": {
+      "OVERVIEW": "Overview",
+      "MEMBERS": "Members",
+      "SUBGROUPS": "Subgroups",
+      "RESOURCES": "Resources",
+      "APPLICATIONS": "Applications",
+      "SETTINGS": "Advanced settings",
+      "ATTRIBUTES": "Attributes",
+      "RESOURCE_ATTRIBUTES": "Resource attributes",
+      "MANAGERS": "Managers",
+      "EXPIRATION": "Membership",
+      "APPLICATION_FORM": "Application form",
+      "NOTIFICATIONS": "Notifications",
+      "RELATIONS": "Relations",
+      "EXTSOURCES": "External sources",
+      "STATISTICS": "Statistics",
+      "ROLES": "Roles"
+    },
+    "MEMBER": {
+      "OVERVIEW": "Overview",
+      "GROUPS": "Groups",
+      "SETTINGS": "Advanced settings",
+      "ATTRIBUTES": "Attributes",
+      "RESOURCE_ATTRIBUTES": "Resource attributes",
+      "GROUP_ATTRIBUTES": "Group attributes",
+      "APPLICATIONS": "Applications",
+      "RESOURCES": "Resources",
+      "BANS": "Bans"
+    },
+    "ADMIN": {
+      "TITLE": "Perun admin",
+      "OVERVIEW": "Overview",
+      "ATTRIBUTES": "Attribute definitions",
+      "USERS": "Users",
+      "EXT_SOURCES": "External sources",
+      "GROUPS": "Groups",
+      "SETTINGS": "Advanced settings",
+      "ORGANIZATIONS": "Organizations",
+      "SERVICES": "Services",
+      "OWNERS": "Owners",
+      "AUDIT_LOG": "Audit log",
+      "CONSENT_HUBS": "Consent hubs",
+      "SEARCHER": "Searcher",
+      "BLOCKED_LOGINS": "Blocked logins"
+    },
+    "USER": {
+      "OVERVIEW": "Overview",
+      "GROUPS": "Groups",
+      "SETTINGS": "Advanced Settings",
+      "ORGANIZATIONS": "Organizations",
+      "DETAIL": "Detail",
+      "ATTRIBUTES": "Attributes",
+      "FACILITY_ATTRIBUTES": "Facility attributes",
+      "TITLE": "User - ",
+      "ROLES": "Roles",
+      "GUI_CONFIG": "Gui configuration",
+      "SERVICE_IDENTITIES": "Service Accounts",
+      "IDENTITIES": "Identities",
+      "PASSWORD_RESET": "Password reset",
+      "FACILITIES": "Facilities",
+      "RESOURCES": "Resources",
+      "ASSOCIATED_USERS": "Account managers",
+      "AUTHENTICATION": "Authentication",
+      "LOGINS": "Logins",
+      "CERTIFICATES": "Certificates",
+      "SSH_KEYS": "SSH Keys",
+      "ENTITY": "User",
+      "USER_TYPE": "User type",
+      "ACCOUNTS": "Accounts",
+      "ASSIGNMENTS": "Assignments",
+      "MAILING_LISTS": "Mailing lists opt-out",
+      "DATA_QUOTAS": "Data quotas",
+      "BANS": "Bans",
+      "EDIT": "Edit"
+    },
+    "SERVICE": {
+      "OVERVIEW": "Overview",
+      "REQUIRED_ATTRIBUTES": "Required attributes",
+      "DESTINATIONS": "Destinations"
+    }
+  },
+  "DIALOGS": {
+    "NAME_SPACE_ERROR": "Entity names cannot contain spaces at the beginning nor the end.",
+    "GROUP_SYNC_DETAIL": {
+      "TITLE": "Group synchronization detail",
+      "FORCE": "Force synchronization",
+      "FORCE_STRUCTURE": "Force subgroups synchronizations",
+      "FORCE_SUCCESS": "Synchronization forced",
+      "STRUCT_FORCE_SUCCESS": "Synchronizations for subgroups forced.",
+      "CANCEL": "Close",
+      "NORMAL_SYNC": "Basic synchronization",
+      "STRUCT_SYNC": "Structured synchronization",
+      "GROUP_NAME": "Group name",
+      "SYNCHRONIZATION": "Synchronization",
+      "LAST_SYNC_STATE": "Last synchronization state",
+      "LAST_SYNC_TIME": "Last synchronization time",
+      "SYNC_INTERVAL": "Group synchronization happens every",
+      "SYNC_INTERVAL_MINUTES": "{{interval}} minutes"
+    },
+    "IMPORT_ATTRIBUTE": {
+      "INFO": "To import an attribute, you have to paste the content, which you copied on the attribute definitions detail dialog.",
+      "HINT": "Paste the copied content here",
+      "TITLE": "Import attribute definition",
+      "CREATE": "Create attribute",
+      "CANCEL": "Cancel"
+    },
+    "MOVE_GROUP": {
+      "TITLE": "Move group - ",
+      "INFO": "The selected group will be moved (including all its sub-groups).",
+      "GROUP_SELECT": "Select a new parent group",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Move",
+      "NO_GROUP": "Move to the root",
+      "TO_GROUP": "Move under a group",
+      "ERROR": "Failed to move group",
+      "SUCCESS": "Group successfully moved",
+      "DISABLED_HINT": "You must select an existing group.",
+      "CANNOT_MOVE": "You don't have permission to move this group."
+    },
+    "CREATE_GROUP": {
+      "TITLE": "Create group",
+      "TITLE_SUB_GROUP": "Create subgroup for ",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "New group successfully created",
+      "SUCCESS_SUBGROUP": "New subgroup successfully created",
+      "FILL_VALUE": "Please fill this value.",
+      "AS_SUBGROUP": "As sub-group",
+      "PARENT_GROUP": "Parent group",
+      "INVALID_PARENT_GROUP": "Selecting parent group is required",
+      "INVALID_DESCRIPTION": "Description must contain at least 1 and less than 128 characters"
+    },
+    "CREATE_VO": {
+      "TITLE": "Create organization",
+      "FULL_NAME": "Full name:",
+      "SHORT_NAME": "Short name:",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "New organization was successfully created",
+      "TOOLTIP": "Short name and full name have to be filled and valid",
+      "FILL_FULL_NAME": "Length of a full name has to be between 1 to 128 characters",
+      "FILL_SHORT_NAME": "Length of a short name has to be between 1 to 32 characters, allowed characters are a-z, A-Z, 0-9, ., _, -"
+    },
+    "REMOVE_VO": {
+      "SUCCESS": "Organization was successfully removed",
+      "GROUP_RELATION": "Groups (including subgroups)",
+      "MEMBER_RELATION": "Members",
+      "RESOURCE_RELATION": "Resources"
+    },
+    "INVITE_MEMBER": {
+      "TITLE": "Invite member",
+      "DESCRIPTION_VO": "The person you are inviting will receive an email with a link to organizations application form. You can set up an email template in: (Organization) Settings -> Notifications.",
+      "DESCRIPTION_GROUP": "The person you are inviting will receive an email with a link to the groups application form. You can set up an email template in: (Group) Settings -> Notifications.",
+      "INVITE": "Invite",
+      "CANCEL": "Cancel",
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "LANGUAGE": "Language",
+      "LANGUAGE_ENGLISH": "English",
+      "LANGUAGE_CZECH": "Czech",
+      "EMAIL_ERROR": "Fill in an correct email!",
+      "SUCCESS": "Invite was sent to given email",
+      "NAME_ERROR": "Name cannot be empty"
+    },
+    "DELETE_ATTRIBUTES": {
+      "TITLE": "Confirm delete action",
+      "DESCRIPTION": "Following attributes will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Selected attributes were removed"
+    },
+    "DELETE_GROUP": {
+      "SUBGROUP_RELATION": "Subgroups",
+      "MEMBER_RELATION": "Group members",
+      "RESOURCE_RELATION": "Resource assignments",
+      "ROLE_RELATION": "Roles",
+      "OTHER_GROUP_RELATION": "Relations to other groups",
+      "ATTRIBUTE_RELATION": "Attributes",
+      "SUBGROUP_OTHER_RELATION": "All of the above for each subgroup",
+      "SUCCESS": "Selected groups were deleted"
+    },
+    "REMOVE_MEMBERS": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following members will be removed from the organization and their settings will be lost.\n\nYou can consider changing their status to \"DISABLED\", which will prevent them from accessing organization resources.",
+      "DESCRIPTION_GROUP": "Following members will be removed from the group. They will lose access to resources provided by this group.",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Selected members were deleted",
+      "SUCCESS_GROUP": "Selected members were removed",
+      "REMOVE": "Delete",
+      "REMOVE_GROUP": "Remove",
+      "CANCEL": "Cancel"
+    },
+    "REMOVE_RESOURCES": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following resources will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Selected resources were deleted"
+    },
+    "REMOVE_MANAGERS": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following managers will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Remove",
+      "SUCCESS": "Selected managers were removed",
+      "WARNING_REMOVE_YOURSELF": "You are removing yourself as manager - you will immediately lose the rights of the {{role}} role for this entity."
+    },
+    "ADD_MANAGERS": {
+      "TITLE": "Add manager",
+      "DESCRIPTION": "Search user by name, login or email",
+      "SEARCH": "Search",
+      "CANCEL": "Cancel",
+      "CREATE": "Add",
+      "SUCCESS": "Selected managers were added",
+      "COUNT": "Count",
+      "NO_USERS_FOUND": "No users found",
+      "EMPTY_SEARCH_MESSAGE": "The search field cannot be empty"
+    },
+    "ADD_MEMBERS": {
+      "TITLE": "Add member",
+      "DESCRIPTION": "Search user by name, login or email",
+      "SEARCH": "Search",
+      "CANCEL": "Cancel",
+      "CLOSE": "Close",
+      "CREATE": "Add",
+      "INVITE": "Invite",
+      "INVITE_IN_LANGUAGE": "Send invitation in",
+      "LANGUAGE": "language",
+      "SUCCESS_ADD": "Selected members were added",
+      "SUCCESS_INVITE": "Invites were sent to given users",
+      "NO_USERS_FOUND": "No users found",
+      "ADD_MEMBER_PERMISSION_TOOLTIP": "You don't have permission to add a member",
+      "EMPTY_SEARCH_MESSAGE": "The search field cannot be empty",
+      "FAILED_DESC": "Following users couldn't be added due to an error",
+      "NAME_COLUMN": "Name",
+      "ERROR_COLUMN": "Error",
+      "INVITE_MEMBER_DISABLED": "Invitation form does not exist"
+    },
+    "COPY_MEMBERS": {
+      "TITLE": "Copy members",
+      "DISABLED_COPY_SELECTION": "No members selected",
+      "COPY_SELECTION": "Copy selected members of this group",
+      "COPY_ALL": "Copy all direct members of this group",
+      "SELECT_GROUPS": "Select groups to which members will be copied",
+      "ATTRIBUTES_WARN": "Member-group attributes of the members will not be copied!",
+      "CANCEL": "Cancel",
+      "COPY": "Copy",
+      "SUCCESS": "Members were successfully copied.",
+      "ERROR": "There was an error copying members, the operation was cancelled and none of the members were copied."
+
+    },
+    "ADD_GROUPS": {
+      "TITLE": "Add group",
+      "SEARCH": "Search",
+      "CANCEL": "Cancel",
+      "CREATE": "Add",
+      "SUCCESS": "Selected groups were added",
+      "COUNT": "Count",
+      "NO_GROUPS_FOUND": "No groups found",
+      "SELECT_VO": "Select organization",
+      "FILTER_GROUPS": "Filter groups by Id, name or description"
+    },
+    "ADD_GROUPS_HIERARCHICAL_INCLUSION": {
+      "TITLE": "Allow groups for hierarchical inclusion",
+      "INFO": "Selected groups will be allowed for hierarchical inclusion. Parent organization {{parentVo}} will be able to include these groups (including group members).",
+      "SEARCH": "Search by id, name or description",
+      "NO_GROUPS_FOUND_ALERT": "No groups found.",
+      "CANCEL": "Cancel",
+      "ALLOW": "Allow",
+      "SUCCESS": "Groups were successfully allowed"
+    },
+    "REMOVE_GROUPS_HIERARCHICAL_INCLUSION": {
+      "TITLE": "Disallow groups for hierarchical inclusion",
+      "DESCRIPTION": "Selected groups will be disallowed for hierarchical inclusion.",
+      "ALERT": "Parent organization {{parentVo}} will NOT be able to include these groups.",
+      "SUCCESS": "Groups were successfully disallowed"
+    },
+    "REMOVE_GROUPS": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following groups will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Remove",
+      "SUCCESS": "Selected groups were removed"
+    },
+    "RE_SEND_NOTIFICATION": {
+      "TITLE": "Re-send notification",
+      "SEND": "Send",
+      "CANCEL": "Cancel",
+      "SELECT": "Select notification",
+      "REASON": "Reason",
+      "SUCCESS": "Notification was sent",
+      "NOTIFICATION_TYPE": {
+        "APP_CREATED_USER": "Created / user",
+        "APPROVABLE_GROUP_APP_USER": "Approvable / user",
+        "APP_CREATED_VO_ADMIN": "Created / manager",
+        "MAIL_VALIDATION": "Mail validation / user",
+        "APP_APPROVED_USER": "Approved / user",
+        "APP_REJECTED_USER": "Rejected / user",
+        "APP_ERROR_VO_ADMIN": "Error / manager"
+      }
+    },
+    "EDIT_ATTRIBUTES": {
+      "TITLE": "Confirm edit action",
+      "DESCRIPTION": "Following attributes will be edited.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "SUCCESS": "Selected attributes were edited"
+    },
+    "REJECT_APPLICATION": {
+      "TITLE": "Specify reason",
+      "TEXT": "Please specify the reason for rejection to let the user know why was application rejected.",
+      "SUBMIT": "Reject",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Application was rejected"
+    },
+    "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
+      "TITLE": "Change applications view preferences",
+      "DESCRIPTION": "Search for column name",
+      "FILTER_COLUMNS": "Displayed columns",
+      "VO_SETTINGS": "Organization configuration",
+      "WARN": "Changes to displayed columns will be saved for everyone that views applications in this organization/group!",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm",
+      "DEFAULT": "Default configuration",
+      "SUCCESS": "Displayed columns were successfully updated",
+      "SET_TO": "Set to...",
+      "SET_TO_DEFAULT": "Set to default"
+    },
+    "UPDATE_APPLICATION_FORM": {
+      "TITLE": "Change application form settings",
+      "MODULE_NAME": "Module name",
+      "INITIAL": "Initial",
+      "EXTENSION": "Extension",
+      "EMBEDDED": "Embedded",
+      "MANUAL": "Manual",
+      "AUTOMATIC": "Automatic",
+      "SUBMIT_BUTTON": "Submit",
+      "CANCEL_BUTTON": "Cancel",
+      "REMOVE_MODULE_TOOLTIP": "Remove module name",
+      "ADD_MODULE_TOOLTIP": "Add module name",
+      "COMMA_ERROR": "Commas are not allowed."
+    },
+    "DELETE_APPLICATION_FORM_ITEM": {
+      "TITLE": "Delete confirm",
+      "INFO_1": "Deleting of form items is NOT RECOMMENDED!",
+      "INFO_2": "You will lose access to data users submitted in older applications within this form item!",
+      "INFO_3": "Do you want to continue?",
+      "CANCEL_BUTTON": "Cancel",
+      "SUBMIT_BUTTON": "Delete"
+    },
+    "APPLICATION_FORM_COPY_ITEMS": {
+      "TITLE": "Copy form items from organization / group",
+      "SOURCE_VO": "Source organization",
+      "SOURCE_GROUP": "Source group",
+      "CANCEL_BUTTON": "Cancel",
+      "SUBMIT_BUTTON": "Submit",
+      "NO_GROUP_SELECTED": "Not selected",
+      "DESCRIPTION": "All form items from the selected group or organization will be added to yours.",
+      "ERROR_INVALID_VO": "Please choose organization from options",
+      "ERROR_NO_VO": "Please choose organization",
+      "ERROR_INVALID_GROUP": "Please choose group from options",
+      "ERROR_NO_GROUP": "Please choose group",
+      "SUCCESS": "Form items copied",
+      "PRIVILEGE": "You cannot copy the application form for this combination of organization and group",
+      "NO_FORM": "The selected entity has no form"
+    },
+    "APPLICATION_FORM_ADD_ITEM": {
+      "TITLE": "Add form item",
+      "CREATE": "Create",
+      "CANCEL": "Cancel",
+      "SHORT_NAME": "Short Name",
+      "INPUT_WIDGET": "Input widget",
+      "INSERT_AFTER": "Insert after",
+      "INSERT_TO_BEGINNING": "- insert to the beginning -",
+      "NO_SHORTNAME_ERROR": "Please fill the shortname",
+      "FILL_NAME": "Length of the name has to be between 1 to 128 characters"
+    },
+    "APPLICATION_FORM_EDIT_ITEM": {
+      "TITLE": "Edit form item",
+      "SHORT_NAME": "Short name",
+      "SHORT_NAME_DESCRIPTION": "Internal item identification (used as a fallback when you forgot to set \"Label\" for some language).",
+      "CANCEL_BUTTON": "Cancel",
+      "SUBMIT_BUTTON": "Submit",
+      "SUBMIT_BUTTON_DISABLED_TOOLTIP": "This item is required and hidden or disabled, but it has no prefilled value (Source and Federation attributes are empty)",
+      "BASIC_SETTINGS": "Basic settings",
+      "LANGUAGE_CS": "Language: cz",
+      "LANGUAGE_EN": "Language: en",
+      "INPUT_WIDGET": "Input widget",
+      "INPUT_WIDGET_DESCRIPTION": "Specify what input widget is used for this item.",
+      "DISPLAY_ON_APPLICATION": "Display on application",
+      "INITIAL": "Initial",
+      "EXTENSION": "Extension",
+      "DISPLAY_ON_APPLICATION_INITIAL": "This item will be displayed on INITIAL applications",
+      "DISPLAY_ON_APPLICATION_EXTENSION": "This item will be displayed on EXTENSION applications",
+      "CONTENT": "Content",
+      "CONTENT_DESCRIPTION": "HTML formatted content of form item. It spans through all columns to full form width.",
+      "LABEL": "Label",
+      "LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback.",
+      "CHECKBOX_LABEL_DESCRIPTION": "Label displayed to users to identify the item on the application form. If empty, \"Short name\" from basic settings is used as a fallback. Checkbox labels also allow <a> elements with 'href' and 'target' attributes.",
+      "LABEL_BUTTON_DESCRIPTION": "Label displayed on submit button.",
+      "HELP": "Help",
+      "HELP_DESCRIPTION": "Help text displayed to a user along with input widget.",
+      "ERROR": "Error",
+      "ERROR_DESCRIPTION": "Error message displayed to a user when when wrong value is entered.",
+      "REGEX": "Regular expression",
+      "REGEX_DESCRIPTION": "A regular expression is used for item value validation (before submitting by user).",
+      "SOURCE_ATTRIBUTE": "Source attribute",
+      "SOURCE_ATTRIBUTE_DESCRIPTION": "Select attribute, which will be used to pre-fill form value. You can select also organization attributes.",
+      "DESTINATION_ATTRIBUTE": "Destination attribute",
+      "DESTINATION_ATTRIBUTE_DESCRIPTION": "Select attribute, where will be submitted value stored after accepting user`s application.",
+      "DEPENDENCY_WARNING_MESSAGE": "Be careful when changing this attribute - this item is a {{dependency}} dependency for item {{shortname}}",
+      "DEPENDENCY_ERROR_MESSAGE": "You can't delete this item because it is a {{dependency}} dependency for item {{shortname}}",
+      "FEDERATION_ATTRIBUTE": "Federation attribute",
+      "FEDERATION_ATTRIBUTE_DESCRIPTION": "Select federation attribute to get pre-filed value from.",
+      "FEDERATION_ATTRIBUTE_VALUE": "Custom federation attribute value",
+      "REQUIRED": "Required",
+      "REQUIRED_DESCRIPTION": "If checked, the user can`t submit an empty value (doesn't apply to non-editable fields).",
+      "NO_SELECTED_ITEM": "No item selected (empty value)",
+      "CUSTOM_VALUE": " -- custom value -- ",
+      "OPTIONS": "Options",
+      "USER_ACTION": "User action",
+      "ATTRIBUTES": "Attributes",
+      "INTERACTIVITY": "Interactivity",
+      "VALIDATION": "Validation",
+      "OPTIONS_DESCRIPTION": "Define possible options for selection in SELECTIONBOX, COMBOBOX, CHECKBOX, RADIO widgets. Empty options are not used.",
+      "ADD_OPTION": "Add option",
+      "REMOVE_OPTION": "Remove",
+      "VALUE": "Value",
+      "SORT_BY_LABEL_AZ": "Sort by label(A-Z)",
+      "SORT_BY_LABEL_ZA": "Sort by label(Z-A)",
+      "UPDATABLE": "Updatable",
+      "UPDATABLE_DESCRIPTION": "If set, the user can edit this item after submission.",
+      "HIDDEN": "Hidden",
+      "HIDDEN_DESCRIPTION": "When the item should be hidden during the submission.",
+      "HIDDEN_DEPENDENCY": "Hidden dependency",
+      "HIDDEN_DEPENDENCY_DESCRIPTION": "Other form item, which is used to decide, if this one should be hidden.",
+      "DISABLED": "Disabled",
+      "DISABLED_DESCRIPTION": "When the item should be disabled during the submission.",
+      "DISABLED_DEPENDENCY": "Disabled dependency",
+      "DISABLED_DEPENDENCY_DESCRIPTION": "Other form item, which is used to decide, if this one should be disabled.",
+      "INVALID_HTML_CONTENT": "The HTML part of this form item contains invalid content."
+    },
+    "APPLICATION_FORM_DELETE_MAIL": {
+      "TITLE": "Confirm delete action",
+      "DESCRIPTION": "Following mail definitions will be removed and users won't receive them anymore.",
+      "CONFIRMATION": "Do you want to proceed?",
+      "SUBMIT": "Delete",
+      "CANCEL": "Cancel"
+    },
+    "CREATE_ATTRIBUTE": {
+      "SET_NEW": "Set new attributes",
+      "SAVE": "Save selected",
+      "CANCEL": "Cancel",
+      "SUCCESS_SAVE": "Attributes saved successfully",
+      "ERROR_EMPTY_VALUE": "You can't save an attribute with an empty value"
+    },
+    "CREATE_RESOURCE_TAG": {
+      "TITLE": "Create resource tag",
+      "NAME": "Tag name",
+      "CREATE": "Create",
+      "CANCEL": "Cancel",
+      "EMPTY_NAME": "Please fill name"
+    },
+    "DELETE_RESOURCE_TAG": {
+      "TITLE": "Confirm delete action",
+      "DESCRIPTION": "Following tags will be deleted and won't be used to tag organization resources.",
+      "ASK": "Do you want to proceed?",
+      "SUBMIT": "Delete",
+      "CANCEL": "Cancel"
+    },
+    "NOTIFICATIONS_EDIT_FOOTER": {
+      "TITLE": "Edit mail footer",
+      "FORMAT_HTML_NOT_AUTHORIZED": "You are not authorized to create HTML footer, so you can create just plain text footer.",
+      "FORMAT_HTML": "HTML",
+      "FORMAT_PLAIN": "Plain text",
+      "DESCRIPTION": "This text will be added as a footer for all email notifications. Plain text footer replaces {mailFooter} tag in mail definition.",
+      "DESCRIPTION_HTML": "This text will be added as a footer for all email notifications. HTML footer replaces {htmlMailFooter} tag in mail definition.",
+      "SUBMIT_BUTTON": "Save",
+      "CANCEL_BUTTON": "Cancel",
+      "SUCCESS": "Email footer was successfully edited.",
+      "HINT": "You don't have permission to edit email footer.",
+      "INVALID_TAGS": "The HTML footer contains invalid tags. Please remove them and try again."
+    },
+    "NOTIFICATIONS_ADD_EDIT_MAIL": {
+      "TITLE_CREATE": "Add email notification",
+      "TITLE_EDIT": "Edit notification",
+      "CANCEL_BUTTON": "Cancel",
+      "CREATE_BUTTON": "Create",
+      "SAVE_BUTTON": "Save",
+      "EDIT_HINT": "You don't have permission to edit notifications.",
+      "INVALID_HTML_CONTENT": "The HTML part of notification contains invalid content.",
+      "BASIC_SETTINGS": "Basic settings",
+      "EMAIL_TYPE": "Email type",
+      "EMAIL_TYPE_DESCRIPTION_CREATE": "Selected type of notification (action which triggers sending and who is notified).",
+      "EMAIL_TYPE_DESCRIPTION_EDIT": "Type of notification (action which triggers sending and who is notified).",
+      "APPLICATION_TYPE": "Application type",
+      "INITIAL": "Initial",
+      "EXTENSION": "Extension",
+      "APPLICATION_TYPE_DESCRIPTION_CREATE": "Select which application type will trigger sending.",
+      "APPLICATION_TYPE_DESCRIPTION_EDIT": "Application type which will trigger sending.",
+      "SENDING_ENABLED": "Sending enabled",
+      "SENDING_ENABLED_DESCRIPTION": "If checked, a notification will be sent. Un-check it to temporarily disable sending.",
+      "LANG_EN": "Language: en",
+      "LANG_CS": "Language: cz",
+      "FORMAT_INFO": "<ul><li>when the HTML notification is filled then this one will be sent to a user<ul><li>the plain text will be used as an alternative for the email clients that do not support HTML in email</ul></li></li><li>don't forget to change both (HTML + plain text) formats when updating some of the formats</li></ul> ",
+      "FORMAT_INFO_NOT_AUTHORIZED": "You are not authorized to create HTML notification, so you can create just plain text notification.",
+      "FORMAT_HTML": "HTML",
+      "FORMAT_PLAIN": "Plain text",
+      "AVAILABLE_TAGS": "Available tags",
+      "SUBJECT": "Subject",
+      "TEXT": "Text",
+      "SHOW_TAGS": "Show tags",
+      "HIDE_TAGS": "Hide tags",
+      "TAGS_DESCRIPTION": "Following tags can be used in mail's subject and text and are replaced by actual data on sending. Just choose the place where you want the tag and click on the tag button. When no data for the tag is found, it's replaced by whitespace.",
+      "APPLICATION_RELATED_SECTION": "Application related",
+      "USER_RELATED_SECTION": "User related",
+      "VALIDATION_LINKS_USERS_SECTION": "Validation links for users",
+      "APPLICATION_LINKS_USERS_SECTION": "Application GUI links for users",
+      "APPLICATION_LINKS_ADMINISTRATOR_SECTION": "Application GUI links for administrators",
+      "PERUN_LINKS_ADMINISTRATOR_SECTION": "Perun GUI links for administrators",
+      "USER_INVITATIONS_SECTION": "User invitations",
+      "APPID_DESCRIPTION": "application Id",
+      "ACTOR_DESCRIPTION": "user's login used when submitting application",
+      "EXTSOURCE_DESCRIPTION": "user's identity provider when submitting an application",
+      "VONAME_DESCRIPTION": "name of organization of application form",
+      "GROUPNAME_DESCRIPTION": "name of group, if application form is for group membership",
+      "MAILFOOTER_DESCRIPTION": "common mail footer defined by organization",
+      "HTMLMAILFOOTER_DESCRIPTION": "common mail HTML footer defined by organization",
+      "ERRORS_DESCRIPTION": "errors description, what happened while processing new application. Useful for organization administrators",
+      "CUSTOMMESSAGE_DESCRIPTION": "optional message passed by administrators when rejecting an application",
+      "AUTOAPPROVEERROR_DESCRIPTION": "error due to which automatic approval of application failed",
+      "FROMAPPITEMNAME_DESCRIPTION": "value of a form item in user's application. You MUST specify the itemName, e.g. {fromApp-mail} will print value of item with short name 'mail' from user's application.",
+      "FIRSTNAME_DESCRIPTION": "users first name taken from application form or Perun",
+      "LASTNAME_DESCRIPTION": "users last name taken from application form or Perun",
+      "DISPLAYNAME_DESCRIPTION": "users display name taken from application form or Perun",
+      "MAIL_DESCRIPTION": "users preferred mail from application form or Perun",
+      "PHONE_DESCRIPTION": "users phone from application form or Perun",
+      "LOGINNAMESPACE_DESCRIPTION": "user's login in selected namespace, taken from registration form or Perun. You MUST specify the namespace, e.g. {login-einfra} will print user's login in einfra namespace.",
+      "MEMBERSHIPEXPIRATION_DESCRIPTION": "membership expiration date decided after membership creation or extension",
+      "VALIDATION_LINKS_DESCRIPTION": "Works only for \"Mail validation / user \" mail type! Used to verify email address provided by users => verify application.",
+      "VALIDATIONLINK_DESCRIPTION": "link for email address verification. Please make sure you set \"Registrar URL\" setting of your organization/group. If you don't specify authorization in \"Registrar URL\", you can use following options:",
+      "VALIDATIONKRB_DESCRIPTION": "link for Kerberos authentication",
+      "VALIDATIONFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
+      "VALIDATIONCERT_DESCRIPTION": "link for personal certificate authentication",
+      "VALIDATIONNON_DESCRIPTION": "link without any authentication",
+      "REDIRECTURL_DESCRIPTION": "contains the URL parameter which was present during the application submission. If the application was initial, contains the value of the 'targetnew' URL parameter. If the application was extensional, contains the value of the 'targetexisting' parameter.",
+      "APPLICATION_LINKS_DESCRIPTION": "Used to navigate users to the list of theirs applications.",
+      "APPGUIURL_DESCRIPTION": "link to overview of submitted registrations for users. Please make sure you set \"Registrar URL\" setting of your organization/group. If you don't specify authorization in \"Registrar URL\", you can use following options:",
+      "APPGUIURLKRB_DESCRIPTION": "link for Kerberos authentication",
+      "APPGUIURLFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
+      "APPGUIURLCERT_DESCRIPTION": "link for personal certificate authentication",
+      "APPGUIURLNON_DESCRIPTION": "link without any authentication",
+      "APPLICATION_LINKS_ADMINISTRATOR_DESCRIPTION": "Used to navigate administrators to the registration detail, where they can check and approve or reject the application.",
+      "APPDETAILURL_DESCRIPTION": "link to registration detail in administrative GUI. Please make sure you set \"Registrar URL\" setting of your organization/group. If you don't specify authorization in \"Registrar URL\", you can use following options:",
+      "APPDETAILURLKRB_DESCRIPTION": "link for Kerberos authentication",
+      "APPDETAILURLFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
+      "APPDETAILURLCERT_DESCRIPTION": "link for personal certificate authentication",
+      "APPDETAILURLNEWGUI_DESCRIPTION": "link for new admin GUI",
+      "PERUN_LINKS_ADMINISTRATOR_DESCRIPTION": "Used to navigate administrators to the administrative GUI of Perun. Can be used for users to locate user detail too.",
+      "PERUNGUIURL_DESCRIPTION": "link to administrative GUI. Please make sure you set \"Registrar URL\" setting of your organization/group. If you don't specify authorization in \"Registrar URL\", you can use following options:",
+      "PERUNGUIURLKRB_DESCRIPTION": "link for Kerberos authentication",
+      "PERUNGUIURLFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
+      "PERUNGUIURLCERT_DESCRIPTION": "link for personal certificate authentication",
+      "PERUNGUINEWGUI_DESCRIPTION": "link for new admin GUI",
+      "USER_INVITATIONS_DESCRIPTION": "Following tags can be used on user invitation template",
+      "USER_INVITATIONS_VONAME_DESCRIPTION": "name of organization to invite user into",
+      "USER_INVITATIONS_GROUPNAME_DESCRIPTION": "name of Group to invite user into",
+      "USER_INVITATIONS_DISPLAYNAME_DESCRIPTION": "invited user's name",
+      "USER_INVITATIONS_MAILFOOTER_DESCRIPTION": "common mail footer defined by organization",
+      "USER_INVITATIONS_HTMLMAILFOOTER_DESCRIPTION": "common mail HTML footer defined by organization",
+      "INVITATIONLINK_DESCRIPTION": "link to registration form. Please make sure you set \"Registrar URL\" setting of your organization/group. If you don't specify authorization in \"Registrar URL\", you can use following options:",
+      "INVITATIONLINKKRB_DESCRIPTION": "link for Kerberos authentication",
+      "INVITATIONLINKFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
+      "INVITATIONLINKCERT_DESCRIPTION": "link for personal certificate authentication",
+      "INVITATIONLINKNON_DESCRIPTION": "link without any authentication",
+      "INVALID_NOTIFICATION": "Notification with selected type and selected application type already exist.",
+      "TAG_HINT": "Click to add tag"
+    },
+    "NOTIFICATIONS_COPY_MAILS": {
+      "TITLE": "Copy mail notifications from Organization/group",
+      "SOURCE_VO": "Source organization",
+      "SOURCE_GROUP": "Source group",
+      "CANCEL_BUTTON": "Cancel",
+      "SUBMIT_BUTTON": "Submit",
+      "NO_GROUP_SELECTED": "Not selected",
+      "DESCRIPTION": "All mail definitions will be added to yours.",
+      "ERROR_INVALID_VO": "Please choose organization from options",
+      "ERROR_NO_VO": "Please choose organization",
+      "ERROR_INVALID_GROUP": "Please choose Group from options",
+      "ERROR_NO_GROUP": "Please choose Group"
+    },
+    "IMPORT_ATTRIBUTE_DEFINITION": {
+      "SUCCESS": "Attribute imported."
+    },
+    "CREATE_ATTRIBUTE_DEFINITION": {
+      "TITLE": "Create Attribute Definition",
+      "FRIENDLY_NAME": "Friendly name",
+      "DISPLAY_NAME": "Display name",
+      "DESCRIPTION": "Description",
+      "ENTITY": "Entity",
+      "DEFINITION": "Definition",
+      "VALUE_TYPE": "Value Type",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Create",
+      "SUCCESS": "Attribute Definition successfully created",
+      "ERROR_FIELD_EMPTY": "This field can't be empty"
+    },
+    "DELETE_ATTRIBUTE_DEFINITION": {
+      "TITLE": "Confirm delete action",
+      "TEXT_LINE1": "Following attribute definitions will be removed.",
+      "TEXT_LINE2": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Delete",
+      "WARNING": "This action will also delete all assigned values",
+      "SUCCESS": "Selected attributes have been deleted successfully"
+    },
+    "NOTIFICATION_LIST": {
+      "TITLE": "Recent notifications",
+      "CANCEL": "Cancel",
+      "NO_NOTIFICATIONS_ALERT": "There are no recent notifications",
+      "CLEAR": "Clear notifications"
+    },
+    "CREATE_RELATION": {
+      "TITLE": "Create relation",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "Relation successfully created"
+    },
+    "REMOVE_RELATION": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following relations will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Remove",
+      "SUCCESS": "Selected relations were removed"
+    },
+    "CHANGE_STATUS": {
+      "TITLE": "Change status",
+      "CURRENT_STATUS": "Current status",
+      "VALID_DESCRIPTION": "Member is properly configured and has access to all provided resources.",
+      "INVALID_DESCRIPTION": "Member has configuration error and DOES NOT have access to provided resources. You can check what is wrong by changing the member's status to ACTIVE. If possible, the procedure will configure all necessary settings by itself.",
+      "EXPIRED_DESCRIPTION": "Member didn't extend membership and might NOT have access to all services.",
+      "DISABLED_DESCRIPTION": "Member was manually disabled and DOES NOT have access to provided resources.",
+      "NEW_STATUS": "New status",
+      "CHANGE_VALID_TO_INVALID": "Changing status to INCOMPLETE will <b>prevent the member from accessing all services.</b>\n\nINCOMPLETE members might not have the correct configuration (required by services) and have to be validated before accessing them.",
+      "CHANGE_VALID_TO_EXPIRED": "Changing status to EXPIRED <b>might prevent the member from accessing some of the services (based on provided service's rules).</b>\n\nEXPIRED status means, that member didn't extend his membership in the organization, but it's still possible for him to do so.",
+      "CHANGE_VALID_TO_DISABLED": "Changing status to DISABLED will <b>prevent the member from accessing all of the services. </b>\n\nDISABLED status means that the member is archived and is not allowed to any services.",
+      "CHANGE_NO_VALID_TO_VALID": "Changing status to ACTIVE <b>will trigger attribute validation</b>. \n\n<b>If successful</b>, the member will have access to all services. \n\n<b>If not</b>, see the displayed error message and do a manual configuration of invalid attributes.",
+      "CHANGE_NO_VALID_TO_INVALID": "INCOMPLETE status means there is a configuration error, which prevents the member from accessing provided services.",
+      "CHANGE_NO_VALID_TO_EXPIRED": "EXPIRED status means, that member didn't extend his membership in the organization, but it's still possible for him to do so.",
+      "CHANGE_NO_VALID_TO_DISABLED": "DISABLED status means that the member is archived and is not allowed to any services. Member can't enable/extend membership by himself.",
+      "SUCCESS": "Member status was changed",
+      "CANCEL": "Cancel",
+      "CLOSE": "Close",
+      "CHANGE_STATUS": "Change status",
+      "CHANGE_STATUS_WITH_EXPIRATION": "Change status and set expiration"
+    },
+    "REMOVE_GROUP_FROM_RESOURCE": {
+      "TITLE": "Confirm delete action",
+      "DESCRIPTION": "Following groups will be removed from the resource.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Selected groups were removed from the resource"
+    },
+    "ASSIGN_GROUP_TO_RESOURCE": {
+      "TITLE": "Assign group",
+      "FILTER_DESCRIPTION": "Find group",
+      "ADD_BUTTON": "Assign groups",
+      "CANCEL_BUTTON": "Cancel",
+      "SUCCESS_MESSAGE": "Selected groups were assigned to the resource",
+      "CONFIGURE_GROUPS": "Configure group(s) before assign",
+      "ADD_TOOLTIP": "You don't have privileges to perform this action for one or more groups.",
+      "ASYNC_OPT": "Add asynchronously",
+      "ASYNC_ON_HINT": "Selected group(s) assignment is executed asynchronously (switched to PROCESSING state and waiting for assignment to run in the background)",
+      "ASYNC_OFF_HINT": "Synchronous assignment is executed",
+      "ASYNC_OPT_DESCRIPTION": "If selected, group(s) assignment is executed asynchronously (switched to PROCESSING state and waiting for assignment to run in the background). Otherwise, a synchronous assignment is executed.",
+      "AS_ACTIVE": "Assign with active status",
+      "ACTIVE_ON_HINT": "Groups will be assigned to the resource with ACTIVE status",
+      "ACTIVE_OFF_HINT": "Group(s) will be assigned to the resource with INACTIVE status (if assigning with subgroups, subgroups will be assigned with ACTIVE status), members of INACTIVE group(s) will not be able to access services until activation.",
+      "AUTO_SUBGROUPS": "Assign with subgroups",
+      "AUTO_SUBGROUPS_OFF_HINT": "The resource will be assigned only to selected groups and will not propagate to their subgroups",
+      "AUTO_SUBGROUPS_ON_HINT": "All current and future <b>subgroups</b> will be assigned to this resource<br> In the case of 'members' groups this extends to <b>all groups of its organization</b>",
+      "GROUPS": "Choose groups",
+      "OPTIONS": "Set options",
+      "NEXT": "Next",
+      "BACK": "Back"
+    },
+    "ASSIGN_SERVICE_TO_RESOURCE": {
+      "TITLE": "Assign service",
+      "SELECT_PACKAGE": "Select service package",
+      "SELECT_SERVICE": "Select individual services",
+      "FILTER_DESCRIPTION": "Filter services",
+      "ADD_SERVICES": "Add individual services",
+      "ADD_PACKAGE": "Add service package",
+      "CANCEL_BUTTON": "Cancel",
+      "SERVICE_SUCCESS_MESSAGE": "Selected services were assigned to the resource",
+      "PACKAGE_SUCCESS_MESSAGE": "The selected service package was assigned to the resource"
+    },
+    "REMOVE_SERVICE_FROM_RESOURCE": {
+      "TITLE": "Confirm removal",
+      "DESCRIPTION": "Following services will be removed from the resource.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Selected services were removed from the resource"
+    },
+    "CREATE_RESOURCE": {
+      "TITLE": "Create resource",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CANCEL": "Cancel",
+      "CREATE": "Create",
+      "SUCCESS": "Resource successfully created",
+      "INCORRECT_NAME": "Name cannot be empty and can contain only characters a-z, A-Z, numbers, spaces, dots, '_' and '-'"
+    },
+    "ADD_EXT_SOURCES": {
+      "TITLE": "Add external sources",
+      "FILTER": "Filter by Id, name or type",
+      "CANCEL": "Cancel",
+      "ADD": "Add",
+      "SUCCESS_ADDED": "External sources were successfully added"
+    },
+    "REMOVE_EXT_SOURCES": {
+      "TITLE": "Remove external sources",
+      "DESCRIPTION": "Following external sources will be removed.",
+      "ASK": "Are you sure you want to proceed?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove",
+      "SUCCESS_REMOVED": "External sources were successfully removed"
+    },
+    "EDIT_ATTRIBUTE_DEFINITION": {
+      "TITLE": "Edit attribute definition",
+      "COPY_FOR_IMPORT": "Copy for import",
+      "COPIED": "Data copied to clipboard.",
+      "COPY": "Copy failed.",
+      "SUCCESS": "Attribute definition successfully edited",
+      "DISPLAY_NAME": "Display name",
+      "ERROR_FIELD_EMPTY": "This field can't be empty",
+      "DESCRIPTION": "Description",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Submit",
+      "SHOW_KEYS": "Show keys",
+      "SERVICES": "Dependent services",
+      "URN": "Full urn",
+      "URN_TOOLTIP": "Copy full urn"
+    },
+    "REMOVE_DESTINATIONS": {
+      "TITLE": "Remove destination from service",
+      "WARNING": "Removing the destination will stop propagation of the service's configuration for this destination/service.",
+      "DESCRIPTION": "Following destinations will be removed.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Remove",
+      "SUCCESS": "Destinations were successfully removed from service."
+    },
+    "ADD_SERVICE_DESTINATION": {
+      "TITLE": "Add destination",
+      "DESCRIPTION": "Please add destinations for service configuration delivery. New service configuration can be performed directly on the facility (dest. type HOST) or sent to URL or by an email.",
+      "SERVICE": "Service",
+      "SELECTION_ALL": "All",
+      "NO_SERVICE": "No service available",
+      "CHOOSE_SERVICE": "You must choose service",
+      "IS_SERVICES_ONLY_ON_FACILITY": "Show only services on facility",
+      "TYPE": "Type",
+      "HOST": "Host",
+      "REQUIRED_FIELD": "Destination value can't be empty.",
+      "INVALID_DESTINATION": "The specified value for the selected destination type is invalid.",
+      "USE_FACILITY_HOST": "Use names of all facility's hosts",
+      "PROPAGATION": "Propagation",
+      "PROPAGATION_TYPE_PARALLEL": "PARALLEL - Data for all destinations and one service are pushed in parallel.",
+      "PROPAGATION_TYPE_DUMMY": "DUMMY - Service provisioning data is generated by Perun, but not pushed to destination. Destinations can pull data by themselves.",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "ADD_GROUP_RESOURCES": {
+      "TITLE": "Assign resources",
+      "FILTER": "Filter by Id, name or description",
+      "CANCEL": "Cancel",
+      "ADD": "Assign resources",
+      "ADD_PERMISSION_TOOLTIP": "You don't have permission to assign some of the selected resources.",
+      "SUCCESS": "Resources successfully assigned",
+      "ASYNC_OPT": "Assign asynchronously",
+      "ASYNC_ON_HINT": "Selected resource(s) assignment is executed asynchronously (switched to PROCESSING state and waiting for assignment to run in the background)",
+      "ASYNC_OFF_HINT": "Synchronous assignment is executed",
+      "AS_ACTIVE": "Assign with active status",
+      "ACTIVE_ON_HINT": "Resources will be assigned to a group with ACTIVE status",
+      "ACTIVE_OFF_HINT": "Resources will be assigned to a group with INACTIVE status, members will not be able to access services until activation",
+      "AUTO_SUBGROUPS": "Assign with subgroups",
+      "AUTO_SUBGROUPS_OFF_HINT": "Resources will be assigned only to this group and will not propagate to its subgroups",
+      "AUTO_SUBGROUPS_ON_HINT": "All current and future <b>subgroups</b> will be assigned to selected resource(s)<br> In the case of 'members' groups, this extends to <b>all groups of this organization</b>",
+      "RESOURCES": "Choose resources",
+      "OPTIONS": "Set options",
+      "NEXT": "Next",
+      "BACK": "Back"
+    },
+    "ADD_GROUP_TO_REGISTRATION": {
+      "TITLE": "Assign group to registration",
+      "FILTER_DESCRIPTION": "Filter",
+      "CANCEL_BUTTON": "Cancel",
+      "ADD_BUTTON": "Assign groups"
+    },
+    "ADD_USER_EXT_SOURCE": {
+      "TITLE": "Add Identity",
+      "ADD": "Add",
+      "CANCEL": "Cancel",
+      "SUCCESS": "User identity has been added",
+      "LOGIN": "Login",
+      "EXT_SOURCE": "External source",
+      "EMPTY_LOGIN": "Login cannot be empty",
+      "EMPTY_EXT_SOURCE": "External source cannot be empty"
+    },
+    "ADD_HOST": {
+      "TITLE": "Add hosts",
+      "ADD": "Add",
+      "CANCEL": "Cancel",
+      "SUBTITLE": "Hostnames:",
+      "HINT": "Enter one host per line. You can use \"[x-y]\" in hostname to generate hosts with numbers from x to y. This replacer can be specified multiple times in one hostname to generate MxN combinations.",
+      "WARNING": "Please enter at least one hostname to add it to facility.",
+      "SUCCESS": "Added hosts.",
+      "EMPTY_MESSAGE": "Hostnames cannot be empty",
+      "INVALID_HOST": "Invalid host name: "
+    },
+    "REMOVE_HOST": {
+      "TITLE": "Confirm removal",
+      "WARNING": "Removing host(s) won't stop services propagation. For this please remove proper 'Services destinations'.",
+      "DESCRIPTION": "Following hosts will be removed from the facility.",
+      "CONFIRM": "Delete",
+      "CANCEL": "Cancel",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Removed hosts."
+    },
+    "ADD_OWNERS": {
+      "TITLE": "Add facility owners",
+      "FILTER": "Filter by Id, name, contact or type",
+      "CANCEL": "Cancel",
+      "ADD": "Add",
+      "SUCCESS": "Owners were successfully added"
+    },
+    "REMOVE_OWNERS": {
+      "TITLE": "Remove facility owners",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "DESCRIPTION": "Following facility owners will be removed.",
+      "ASK": "Are you sure you want to proceed?",
+      "SUCCESS": "Owners were successfully removed"
+    },
+    "CREATE_EDIT_SERVICE": {
+      "CREATE_TITLE": "Create service",
+      "EDIT_TITLE": "Edit service",
+      "CREATE": "Create",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
+      "NAME": "Name:",
+      "DESCRIPTION": "Description:",
+      "STATUS": "Status:",
+      "DELAY": "Delay:",
+      "RECURRENCE": "Recurrence:",
+      "PATH": "Script path:",
+      "STATUS_HINT": "Enabled/Disabled",
+      "EXPIRED_MEMBERS": "Expired members:",
+      "EXPIRED_MEMBERS_HINT": "Propagated/Not propagated",
+      "RESTRICTION_NAME": "Name cannot be empty and must contain only letters, digits and _",
+      "REQUIRE_PATH": "Script path cannot be empty",
+      "INVALID_DELAY": "Delay must be a number",
+      "INVALID_RECURRENCE": "Recurrence must be a number",
+      "CREATE_SUCCESS": "Created service",
+      "EDIT_SUCCESS": "Service was edited"
+    },
+    "DELETE_SERVICE": {
+      "DESTINATION_RELATION": "Destinations",
+      "MORE_INFORMATION": "Force delete also stops (de)provisioning of these services. You should first delete all relations to users/groups and after propagation, you can force delete these services.",
+      "SUCCESS": "Service deleted"
+    },
+    "ADD_MEMBER_TO_RESOURCE": {
+      "TITLE": "Add member to resource",
+      "CONTINUE": "Continue",
+      "CANCEL": "Cancel",
+      "BACK": "Back",
+      "SUBMIT": "Submit",
+      "FILTER": "Filter by facility",
+      "SELECTED": "Selected resource:",
+      "DESCRIPTION": "Description:",
+      "SERVICES": "Services on resource:",
+      "SUCCESS": "Member was added to resource",
+      "NO_GROUPS": "Resource has no groups assigned",
+      "ADD_GROUP": "Add group",
+      "SELECT_RESOURCE": "Select resource"
+    },
+    "CREATE_FACILITY": {
+      "TITLE": "Create facility",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "AS_COPY": "As copy of",
+      "CREATE": "Create",
+      "CREATE_AND_CONFIGURE": "Create & configure",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Created facility.",
+      "REQUIRE_NAME": "Facility name can't be empty.",
+      "NO_COPY": "--- No copy ---",
+      "HINT": "You can <b>Create & Configure</b> facility (configuration guide allows you to add owners, hosts, services, configure services or change managers. Changes are immediately saved) or just <b>Create</b> empty facility."
+    },
+    "DELETE_FACILITY": {
+      "SUCCESS": "Facility deleted.",
+      "RESOURCE_RELATION": "resources"
+    },
+    "ADD_MEMBER_GROUP": {
+      "TITLE": "Add groups",
+      "ADD": "Add",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Groups added",
+      "FILTER": "Filter"
+    },
+    "REMOVE_MEMBER_GROUP": {
+      "TITLE": "Remove groups",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove",
+      "DESCRIPTION": "Following groups will be removed.",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Groups were removed"
+    },
+    "ADD_REQUIRED_ATTRIBUTES": {
+      "TITLE": "Add required attributes",
+      "ADD": "Add",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Required attributes were added.",
+      "FILTER": "Filter",
+      "ACTIVE_WARN": "Service is active. Some attributes can only be added to disabled services. Preferably disable service before adding required attributes."
+    },
+    "REMOVE_REQUIRED_ATTRIBUTES": {
+      "TITLE": "Remove required attributes",
+      "DESCRIPTION": "Following items will be removed:",
+      "ASK": "Do you want to proceed?",
+      "REMOVE": "Remove",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Required attributes were removed."
+    },
+    "CHANGE_EXPIRATION": {
+      "CURRENT_EXPIRATION": "Current expiration: ",
+      "SELECT_NEW": "Select new expiration date.",
+      "DATE_LABEL": "Expire to a date",
+      "VO_RULES": "Set by Organization rules",
+      "GROUP_RULES": "Set by Group rules",
+      "EXPIRATION_NEVER": "Never expire",
+      "WRONG_FORMAT": "The date has to be in format yyyy-mm-dd",
+      "CANCEL": "Cancel",
+      "BACK": "Back",
+      "SAVE": "Save",
+      "SUCCESS": "Expiration successfully changed",
+      "SAVE_HINT": "You don't have permission to change the expiration date.",
+      "STATUS_CHANGE_INFO": "This action will result in changing the status to 'ACTIVE'."
+    },
+    "EDIT_GROUP": {
+      "SUCCESS": "Changes were successfully saved",
+      "TITLE": "Edit group",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    },
+    "CONNECT_IDENTITY": {
+      "TITLE_SERVICE": "Connect account",
+      "TITLE_USER": "Connect user",
+      "TITLE_SELF": "Connect account",
+      "CONNECT": "Connect",
+      "CANCEL": "Cancel",
+      "SEARCH": "Search",
+      "EMPTY_SEARCH_MESSAGE": "Search field cannot be empty",
+      "SEARCH_HINT": "Type in user's First name, Last name (or both), or Login or Email.",
+      "NO_IDENTITIES": "No users matching search criteria were found.",
+      "SUCCESS": "Identity has been connected."
+    },
+    "DISCONNECT_IDENTITY": {
+      "TITLE_SERVICE": "Disconnect service account",
+      "TITLE_USER": "Disconnect user",
+      "REMOVE": "Disconnect",
+      "CANCEL": "Cancel",
+      "DESCRIPTION_SERVICE": "Following users will be disconnected from service account.",
+      "DESCRIPTION_USER": "Following service accounts will be disconnected from the user.",
+      "DESCRIPTION_SELF": "Following service accounts will be disconnected from you.",
+      "WARNING_DISCONNECT_YOURSELF": "You will be disconnected from the service account - you will immediately lose rights to access and manage the account. If you want to move rights to another user, you should do it before disconnecting yourself.",
+      "WARNING_LAST_USER": "You want to disconnect the last identity from the service account - the account will be unattended.",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Identity has been disconnected."
+    },
+    "EDIT_FACILITY_RESOURCE_GROUP_VO": {
+      "EDIT_FACILITY": "Edit facility",
+      "EDIT_RESOURCE": "Edit resource",
+      "EDIT_VO": "Edit organization",
+      "EDIT_GROUP": "Edit group",
+      "SHORT_NAME": "Short name",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CANCEL_BUTTON": "Cancel",
+      "SUBMIT_BUTTON": "Submit",
+      "RESOURCE_SUCCESS": "Resource successfully updated",
+      "FACILITY_SUCCESS": "Facility successfully updated",
+      "GROUP_SUCCESS": "Group successfully updated",
+      "VO_SUCCESS": "Organization successfully updated",
+      "FILL_NAME": "Length of name has to be between 1 to 128 characters",
+      "FILL_DESCRIPTION": "This field has to contain between 1 to 128 characters"
+    },
+    "EDIT_USER": {
+      "DIALOG_TITLE": "Edit user",
+      "TITLE_BEFORE": "Title before name",
+      "TITLE_AFTER": "Title after name",
+      "FIRST_NAME": "First name",
+      "MIDDLE_NAME": "Middle name",
+      "LAST_NAME": "Last name",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "SUCCESS": "User successfully updated",
+      "ERROR_LAST_NAME": "Last name cannot be empty or longer than 128 characters",
+      "ERROR_FIRST_NAME": "First name cannot be empty or longer than 128 characters",
+      "ERROR_LENGTH": "Length of field has to be less than 128 characters"
+    },
+    "DELETE_TASK_RESULT": {
+      "TITLE": "Remove task results",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove",
+      "DESCRIPTION": "Following task results will be removed.",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Task results were successfully removed",
+      "RESULT_ID": "Id",
+      "DESTINATION": "Destination",
+      "TIME": "Time"
+    },
+    "REMOVE_SERVICE_FROM_FACILITY": {
+      "TITLE": "Remove service from facility",
+      "CHECKBOXES_DESCRIPTION": "You can also remove:",
+      "CHECKBOXES_DISABLED": "Enabled only for all resources",
+      "CHECKBOX_TASK_AND_TASK_RESULTS": "Task and task results",
+      "CHECKBOX_TASK_RESULTS": "Task results",
+      "CHECKBOX_DESTINATION": "Destination",
+      "DESCRIPTION": "Following resources will be affected.",
+      "ASK": "Do you want to proceed?",
+      "SUCCESS": "Service was successfully removed",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "DELETE_TASK": {
+      "TITLE": "This service is not assigned to any resource",
+      "DESCRIPTION": "You can delete task and task results.",
+      "SUCCESS": "Service was successfully deleted",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete"
+    },
+    "EDIT_APPLICATION_FORM_ITEM_DATA": {
+      "TITLE": "Edit item: ",
+      "INVALID_EMAIL": "Email is invalid",
+      "EMPTY_INPUT": "This field is required",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Submit",
+      "SUCCESS": "Application form item data edited successfully"
+    },
+    "CONFIGURE_APP_VIEW": {
+      "TITLE": "Configure applications view: ",
+      "DESCRIPTION": "You can configure which basic information will be shown in the application view. The settings can be reset later.",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "RESET": "Reset",
+      "SAVED": "Configuration successfully updated"
+    },
+    "CREATE_SPONSORED_MEMBER": {
+      "TITLE": "Create sponsored member",
+      "FIRST_NAME": "First name",
+      "LAST_NAME": "Last name",
+      "TITLE_BEFORE": "Title before",
+      "TITLE_AFTER": "Title after",
+      "NAMESPACE": "Namespace",
+      "CANCEL": "Cancel",
+      "OK": "Ok",
+      "CREATE": "Create",
+      "LOGIN": "Login",
+      "PASSWORD": "Password",
+      "EMAIL": "Email",
+      "SUCCESS": "Sponsored user created",
+      "EMAIL_ERROR": "Email is not valid",
+      "LENGTH_ERROR": "Empty value is not allowed",
+      "NAMESPACE_ERROR": "Selection of namespace is required",
+      "FUNCTIONALITY_NOT_SUPPORTED": "This functionality is not yet supported.",
+      "LOGIN_DISABLED": "Setting login is disabled for this namespace",
+      "PASSWORD_RESET_DISABLED": "Sending activation link is disabled for this namespace",
+      "PASSWORD_DISABLED": "Setting password is disabled for this namespace",
+      "SUCCESSFULLY_CREATED": "Sponsored member was successfully created",
+      "USER": "User",
+      "WAS_CREATED": "was successfully created",
+      "COPY_INFORMATION": "Please save this information. It will not be possible to access this information later.",
+      "WITH_ERRORS": "There was an error adding member to some of the groups.",
+      "PASSWORD_RESET": "Let the created user change his password via a given email address",
+      "PASSWORD_VIA_EMAIL": "User will choose his password via an email sent to the entered e-mail address",
+      "EXPIRATION": "Sponsorship expiration",
+      "EXPIRE_DATE": "Expire to a date",
+      "EXPIRE_NEVER": "Never expire",
+      "EXPIRATION_ERROR": "The date has to be in format yyyy-mm-dd",
+      "SELECT_SPONSOR": "Choose sponsor for created user",
+      "SELECT_SPONSOR_DEFAULT": "Choose sponsor",
+      "SELECT_SPONSOR_COPY": "Select target sponsor",
+      "SELECT_SELF": "Make myself sponsor",
+      "SELECT_OTHER": "Select other sponsor from this organization",
+      "SELECT_SELF_DISABLED": "You must be sponsor in this organization",
+      "SELECT_SELF_DISABLED_COPY": "You cannot copy to yourself",
+      "SELECT_OTHER_DISABLED": "You don't have permission to select other sponsor",
+      "NEXT": "Next",
+      "BACK": "Back",
+      "SUBMIT": "Submit",
+      "USER_LABEL": "User",
+      "NAMESPACE_LABEL": "Namespace",
+      "SPONSORSHIP_LABEL": "Sponsorship",
+      "USER_TITLE": "User name",
+      "NAMESPACE_TITLE": "Namespace details",
+      "SPONSORSHIP_TITLE": "Sponsorship options",
+      "NO_NAMESPACE_SELECTED": "Select namespace first"
+    },
+    "GENERATE_SPONSORED_MEMBERS": {
+      "TITLE": "Generate sponsored members",
+      "NAMESPACE": "Namespace",
+      "NAMESPACE_ERROR": "Selection of namespace is required",
+      "NAMES_ERROR": "This field cannot be empty",
+      "HINT": "Please insert a correctly formatted text to the field below. List and order of valid attributes is:",
+      "INSERT_HERE": "Here insert correctly formatted text",
+      "ERROR_FORMAT": "This line is not filled with all mandatory attributes",
+      "ERROR_EMAIL": "Email on this line is not valid",
+      "ERROR_LOGIN": "Login on this line must be filled",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Submit",
+      "SUCCESS": "Members successfully created",
+      "EMAIL": "Email",
+      "PASSWORD_MANAGEMENT": "Password management",
+      "PASSWORD_RESET": "Let created users change their passwords via given email addresses.",
+      "GENERATE_PASSWORD": "Generate random passwords",
+      "EXPIRATION": "Sponsorship expiration",
+      "GROUP_ASSIGMENT": "Group assigment",
+      "NO_ASSIGN": "Do not assign to any group",
+      "ASSIGN_TO_NEW": "Create a new group to be assigned to",
+      "ASSIGN_EXISTING": "Assign to existing groups",
+      "DISABLED_ASSIGN_NEW": "You don't have permission to create groups in this organization, or manual adding of members is disabled",
+      "DISABLED_ASSIGN_EXISTING": "You don't have permission to add members to any existing group in this organization, or manual adding of members is disabled",
+      "NEXT": "Next",
+      "BACK": "Back",
+      "USERS_INFO": "Users information",
+      "USERS_LABEL": "Users",
+      "PASSWORD_LABEL": "Password",
+      "EXPIRATION_LABEL": "Sponsorship",
+      "GROUPS_LABEL": "Group",
+      "CREATE_NEW_GROUP": "Create new group",
+      "SELECT_EXISTING_GROUPS": "Select from existing groups",
+      "DONT_ASSIGN_INFO": "Created users will become members of this organization, but won't be assigned to any additional groups. You will be able to change this manually later.",
+      "NO_NAMESPACE_PASSWORD_INFO": "Generated members will not have a password.",
+      "DOWNLOAD": "Download results",
+      "DOWNLOAD_PDF": "PDF",
+      "DOWNLOAD_CSV": "CSV",
+      "CLOSE": "Close",
+      "FINISHED_WITH_ERRORS": "Some of the members were not generated properly. See the results for more information."
+    },
+    "EDIT_MEMBER_SPONSORS": {
+      "TITLE": "Edit sponsors of sponsored member",
+      "EXPIRATION": "Sponsorship expiration",
+      "TABLE_ID": "Id",
+      "TABLE_NAME": "Name",
+      "TABLE_EXPIRATION": "Expiration",
+      "CANCEL": "Close",
+      "SUBMIT": "Submit",
+      "REMOVE_SPONSOR_DISABLED": "You are not authorized to remove sponsor",
+      "SUCCESS": "Sponsors successfully edited",
+      "CHANGE_EXPIRATION": "Change expiration",
+      "REMOVE_SPONSOR": "Remove sponsor"
+    },
+    "BULK_INVITE_MEMBERS": {
+      "TITLE": "Invite multiple members",
+      "INSERT_HERE": "Here insert correctly formatted text",
+      "DESCRIPTION_VO": "The people you are inviting will receive an email with a link to organization's application form. You can set up an email template in: (Organization) Settings -> Notifications.",
+      "DESCRIPTION_GROUP": "The people you are inviting will receive an email with a link to the group's application form. You can set up an email template in: (Group) Settings -> Notifications.",
+      "LANGUAGE": "Language",
+      "LANGUAGE_ENGLISH": "English",
+      "LANGUAGE_CZECH": "Czech",
+      "PLACEHOLDER": "'john@mail.cz;John' or 'john@mail.cz'",
+      "ERROR_FORMAT": "This line is not in the correct format",
+      "ERROR_EMAIL": "Email on this line is not valid",
+      "ERROR_NAME": "Name on this line must be filled",
+      "NAMES_ERROR": "This line cannot be empty",
+      "HINT": "Please insert a correctly formatted text to the field below. The format is following: <br> <b> email;name </b> or <b> email </b>",
+      "SUCCESS": "Members successfully invited.",
+      "FINISHED_WITH_ERRORS": "Invites to some of the members couldn't be sent. See the results for more information.",
+      "DOWNLOAD_CSV": "Download results.",
+      "CANCEL": "Cancel",
+      "INVITE": "Invite"
+    },
+    "PASSWORD_RESET_REQUEST": {
+      "TITLE": "Password reset request",
+      "LANGUAGE": "Language",
+      "NAMESPACE": "Namespace",
+      "EMAIL": "Email, where the request will be sent",
+      "LOGIN": "Login:",
+      "SEND": "Send",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Request has successfully been sent."
+    },
+    "CHANGE_EMAIL": {
+      "TITLE": "Change preferred email",
+      "INPUT_PLACEHOLDER": "New email",
+      "CANCEL": "Cancel",
+      "CHANGE": "Change",
+      "SUCCESS": "Request for changing preferred email has been sent. Please check your mailbox.",
+      "PENDING_MAILS_BEGIN": "Validation e-mail has been sent to ",
+      "PENDING_MAILS_END": ". Check your inbox and complete validation by clicking on the link in the received e-mail.",
+      "EMAIL_ERROR": "Email is not valid"
+    },
+    "NEW_VERSION": {
+      "TITLE": "New version is available!",
+      "DESCRIPTION": "A new version is available. Please, reload the page to apply the changes.",
+      "LATER": "Got it! I will reload later",
+      "RELOAD": "Reload"
+    },
+    "SPONSOR_EXISTING_MEMBER": {
+      "TITLE": "Sponsor existing member",
+      "CANCEL": "Cancel",
+      "SPONSOR": "Sponsor",
+      "SEARCH": "Search",
+      "DESCRIPTION": "Search by member name",
+      "EMPTY_SEARCH_MESSAGE": "Search field cannot be empty",
+      "EXPIRATION": "Sponsorship expiration",
+      "BEGIN_SEARCH": "Search for members you would like to sponsor",
+      "SUCCESS": "Members successfully sponsored",
+      "SELECT_SPONSOR": "Choose sponsor for user"
+    },
+    "SPONSOR_THIS_MEMBER": {
+      "TITLE": "Sponsor this member",
+      "EXPIRATION": "Sponsorship expiration",
+      "SUCCESS": "Member successfully sponsored",
+      "CANCEL": "Cancel",
+      "SPONSOR": "Sponsor",
+      "SELECT_SPONSOR": "Choose sponsor for this user"
+    },
+    "COPY_SPONSORED_MEMBERS": {
+      "TITLE": "Copy sponsored members",
+      "CANCEL": "Cancel",
+      "SPONSOR": "Copy",
+      "SPONSORED_MEMBERS": "Select sponsored members to copy",
+      "SPONSORED_MEMBERS_INFO": "Members already sponsored by the target sponsor will not be affected.",
+      "SPONSOR_FROM": "Select source sponsor",
+      "EXPIRATION": "Sponsorship expiration",
+      "EXP_INFO": "The expiration of the original sponsorship will be set if no new date is selected.",
+      "SUCCESS": "Members successfully sponsored"
+    },
+    "ADD_OWNER": {
+      "TITLE": "Create owner",
+      "NAME": "Name",
+      "FILL_NAME": "Name cannot be empty",
+      "CONTACT": "Contact",
+      "FILL_CONTACT": "Contact cannot be empty",
+      "CONTACT_FORMAT": "Invalid format, e.g. mail@domain.com",
+      "TYPE_LABEL": "Type",
+      "TYPE1": "Administrative",
+      "TYPE2": "Technical",
+      "CANCEL": "Cancel",
+      "TOOLTIP": "Please, fill name and contact",
+      "CREATE": "Create",
+      "SUCCESS": "Owner successfully created"
+    },
+    "DELETE_OWNER": {
+      "TITLE": "Delete owner",
+      "DESCRIPTION": "Selected owners will be deleted.",
+      "ASK": "Are you sure, you want to continue?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SUCCESS": "Owners successfully removed"
+    },
+    "DELETE_ENTITY": {
+      "BASIC": "Do you want to {{action}}",
+      "ONLY": "only this",
+      "OR": "or",
+      "RELATIONS": "with all relations",
+      "DELETE": "{{action}}",
+      "CANCEL": "Cancel",
+      "CONTROL": "Type \"{{action}}\" to confirm",
+      "ASK": "Are you sure you want to permanently {{action}} following",
+      "WARN": "This action will also delete all",
+      "TYPE_DELETE": "delete",
+      "TYPE_ANONYMIZE": "anonymize"
+    },
+    "ANONYMIZE_USER": {
+      "VO_RELATION": "User's membership in all organizations",
+      "GROUP_RELATION": "User's membership in all groups",
+      "SUCCESS_NOTIFICATION": "User was successfully anonymized"
+    },
+    "DELETE_USER": {
+      "VO_RELATION": "User's membership in all organizations",
+      "GROUP_RELATION": "User's membership in all groups",
+      "SUCCESS_NOTIFICATION": "User was successfully deleted"
+    },
+    "CHANGE_VO_EXPIRATION": {
+      "TITLE": "Change member expiration"
+    },
+    "CHANGE_GROUP_EXPIRATION": {
+      "TITLE": "Change member's group expiration"
+    },
+    "CHANGE_SPONSORSHIP_EXPIRATION": {
+      "TITLE": "Change sponsorship expiration"
+    },
+    "CREATE_SERVICE_MEMBER": {
+      "TITLE": "Create service account",
+      "CREATE": "Create",
+      "CANCEL": "Cancel",
+      "CREATE_IDENTITY": "Create service account",
+      "NAME": "Account name",
+      "EMAIL": "Email",
+      "SUBJECT_DN": "Subject DN",
+      "ISSUER_DN": "Issuer DN",
+      "ASSOCIATE_USERS": "Associate real users",
+      "ASSOCIATED_USERS": "To be associated:",
+      "SEARCH_PLACEHOLDER": "Search members by Id or name",
+      "SEARCH_INFO": "Search for members to be added:",
+      "SET_PASSWORD": "Set password",
+      "ADD_USER": "Add",
+      "SUCCESS_MEMBER": "The service account has been created successfully",
+      "SUCCESS_PWD": "Password has been set successfully",
+      "NEXT": "Next",
+      "NEXT_BUTTON_DISABLED_TOOLTIP": "Add selected members or unselect these members",
+      "BACK": "Back",
+      "PASSWORD_NOT_SUPPORTED": "The selected namespace does not support setting of the password.",
+      "EMAIL_INVALID": "Enter a valid email address",
+      "FIELD_EMPTY": "This field cannot be empty",
+      "MINIMAL_USERS": "At least 1 user has to be assigned.",
+      "SET_CREDENTIALS": "Set credentials",
+      "PASSWORD_RANDOM": "Set password later",
+      "ENTER_PASSWORD": "Set password now",
+      "SPONSOR": "Sponsor",
+      "MANAGE_LIFECYCLE_INFO": "Service account has by default the same lifecycle as a standard user account. You can manage this lifecycle by sponsoring this service account.",
+      "CREATE_AND_SPONSOR": "Create & sponsor",
+      "REMOVE": "Remove"
+    },
+    "SET_LOGIN": {
+      "TITLE": "Add login and password",
+      "SET_LOGIN": "Add",
+      "CANCEL": "Cancel",
+      "SUCCESS_LOGIN": "Login was successfully set",
+      "SUCCESS_PASSWORD": "Password was successfully set"
+    },
+    "AUDIT_MESSAGE_DETAIL": {
+      "TITLE": "Audit message detail",
+      "CLOSE": "Close",
+      "ACTOR": "Actor",
+      "CREATED_AT": "Created at",
+      "OBJECTS": "Objects",
+      "MESSAGE": "Message",
+      "COPY": "Copy"
+    },
+    "NO_SERVICE": {
+      "TITLE": "No service selected",
+      "INFO": "You didn't select any service. Do you wish to skip service configuration?",
+      "SKIP": "Skip",
+      "CANCEL": "Cancel"
+    },
+    "CONFIG_UNSAVED": {
+      "TITLE": "The configuration is not saved",
+      "INFO": "You didn't save the configuration. Do you want to save the configuration?",
+      "SKIP": "Save & Continue",
+      "CANCEL": "Cancel"
+    },
+    "CANCEL_CONFIG": {
+      "TITLE_INCOMPLETE": "Cancel incomplete facility configuration",
+      "TITLE_COMPLETE": "Cancel complete facility configuration",
+      "INFO_INCOMPLETE": "You want to close unfinished configuration guide. New <b>facility was already created</b> and all previously changed <b>configurations were saved</b>. Do you want to <b>keep facility</b> with incomplete configuration <b>or delete</b> it and start again?",
+      "INFO_COMPLETE": "You want to close unfinished configuration guide. New <b>facility was already created</b> and all previously changed <b>configurations were saved</b>. Do you want to <b>delete facility</b> anyway?",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete with all relations",
+      "KEEP": "Keep facility",
+      "SUCCESS": "Facility was successfully deleted"
+    },
+    "EDIT_ENFORCE_CONSENTS_FLAG": {
+      "DISABLE_TITLE": "Stop enforcing consents",
+      "ENFORCE_TITLE": "Enforce consents",
+      "DISABLE_DESCRIPTION": "You are about to stop enforcing user consent to data processing for the following consent hub:",
+      "ENFORCE_DESCRIPTION": "You are about to enforce user consent to data processing for the following consent hub:",
+      "DISABLE_BOLD_DESCRIPTION": "Note that users will not have to grant consent to data processing so they will be propagated to destination services without any consent.",
+      "ENFORCE_BOLD_DESCRIPTION": "Note that users will start to receive email notifications to grant consent to data processing. Those who do not do so will not be propagated to destination services.",
+      "CANCEL_BUTTON": "Cancel",
+      "DISABLE_BUTTON": "Stop enforcing",
+      "ENFORCE_BUTTON": "Enforce"
+    },
+    "ADD_SSH": {
+      "TITLE": "Add new ssh key",
+      "INPUT_PLACEHOLDER": "Begins with 'ssh-rsa', 'ssh-dss', 'sk-ssh-ed25519', 'sk-ecdsa', 'ssh-ed25519', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384' or 'ecdsa-sha2-nistp521'.",
+      "INVALID_TYPE": "Invalid value given. Your key should have one of the following types: \n\tssh-ed25519\n\tssh-ed25519-cert-v01@openssh.com\n\tsk-ssh-ed25519@openssh.com\n\tsk-ssh-ed25519-cert-v01@openssh.com\n\tssh-rsa\n\tssh-dss\n\tecdsa-sha2-nistp256\n\tecdsa-sha2-nistp384\n\tecdsa-sha2-nistp521\n\tsk-ecdsa-sha2-nistp256@openssh.com\n\tssh-rsa-cert-v01@openssh.com\n\tssh-dss-cert-v01@openssh.com\n\tecdsa-sha2-nistp256-cert-v01@openssh.com\n\tecdsa-sha2-nistp384-cert-v01@openssh.com\n\tecdsa-sha2-nistp521-cert-v01@openssh.com\n\tsk-ecdsa-sha2-nistp256-cert-v01@openssh.com",
+      "CANCEL": "Cancel",
+      "ADD": "Add"
+    },
+    "REMOVE_STRING_VALUE": {
+      "ASK": "Are you sure you want to continue?",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "SHOW_SSH": {
+      "CLOSE": "Cancel"
+    },
+    "ADD_ROLE": {
+      "TITLE": "Add role",
+      "ADD": "Add",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Role {{role}} was successfully added"
+    },
+    "ADD_BAN": {
+      "TITLE": "Add ban",
+      "ADD": "Add",
+      "UPDATE": "Update",
+      "FILTER" : "Search by name",
+      "SUCCESS_MEMBER": "Member was successfully banned",
+      "SUCCESS_USER": "User was successfully banned",
+      "CANCEL": "Cancel",
+      "NEXT": "Next",
+      "BACK": "Back",
+      "SELECTION": "Select",
+      "SPECIFICATION": "Specify",
+      "ALREADY_BANNED": "Ban already exists. Do you wish to update it?"
+    },
+    "REMOVE_BAN": {
+      "TITLE": "Remove ban",
+      "DESCRIPTION": "By removing the ban members will be unbanned",
+      "SUCCESS": "Ban was successfully removed"
+    },
+    "UPDATE_BAN": {
+      "TITLE": "Update ban",
+      "UPDATE": "Update",
+      "CANCEL": "Cancel",
+      "SUCCESS": "Ban was successfully updated"
+    },
+    "UNBLOCK_LOGINS": {
+      "TITLE": "Confirm unblocking",
+      "DESCRIPTION": "The following logins will be unblocked globally, or in the namespace they were initially blocked.",
+      "ASK": "Do you want to proceed?",
+      "CANCEL": "Cancel",
+      "UNBLOCK": "Unblock"
+    },
+    "BLOCK_LOGINS": {
+      "TITLE": "Block logins",
+      "DESCRIPTION": "Logins can be blocked globally or within the specified namespace. Blocked login can not be reused.",
+      "BLOCK": "Block",
+      "PLACEHOLDER": "example1\nexample2",
+      "FIND_PLACEHOLDER": "Find namespace",
+      "INSERT_HERE": "Here insert logins",
+      "LOGINS_ERROR": "This line cannot be empty",
+      "GLOBAL": "Globally",
+      "SPECIFIC": "For specific namespace",
+      "NAMESPACE": "Namespace",
+      "NAMESPACE_ERROR": "Namespace cannot be empty"
+    }
+  },
+  "MEMBERS_LIST": {
+    "ID": "Id",
+    "VO_ID": "Organization Id",
+    "USER_ID": "User Id",
+    "TYPE": "Type",
+    "NAME": "Name",
+    "STATUS": "Organization status",
+    "GROUP_STATUS": "Group status",
+    "ALREADY_SPONSORED": "Already \nsponsored",
+    "EMAIL": "Email",
+    "LOGINS": "Logins",
+    "ORGANIZATION": "Organization",
+    "NO_MEMBERS_ALERT": "No members present",
+    "NO_FILTER_RESULTS_ALERT": "No members are matching your query",
+    "INDIRECT_MEMBER": "Show indirect member origin",
+    "DIRECT_MEMBER": "Direct member",
+    "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied",
+    "CHECKBOX_TOOLTIP_UNALTERABLE": "Members from member organizations cannot be directly removed",
+    "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
+    "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
+    "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
+  },
+  "MEMBERS_CANDIDATES_LIST": {
+    "STATUS": "Status",
+    "NAME": "Name",
+    "ORGANIZATION": "Organization or Ext source",
+    "EMAIL": "Email",
+    "LOGINS": "Logins",
+    "ALREADY_MEMBER": "Already member",
+    "ADDING_BLOCKED": "Manual adding of users outside of the organization is blocked."
+  },
+  "MANAGERS_LIST": {
+    "ID": "Id",
+    "NAME": "Name",
+    "ORGANIZATION": "Organization",
+    "EMAIL": "Email",
+    "LOGINS": "Logins",
+    "PERSON": "Person",
+    "SERVICE": "Service",
+    "INDIRECT_DISABLED_TOOLTIP": "Indirect manager cannot be deleted"
+  },
+  "AUDIT_MESSAGES_LIST": {
+    "ID": "Id",
+    "TIMESTAMP": "Created at",
+    "EVENT_NAME": "Event name",
+    "ACTOR": "Actor",
+    "VIEW_DETAIL": "View details",
+    "MESSAGE": "Message"
+  },
+  "BLOCKED_LOGINS_LIST": {
+    "ID": "Id",
+    "LOGIN": "Login",
+    "NAMESPACE": "Namespace"
+  },
+  "ADMIN_USER": {
+    "ENTITY": "User",
+    "USER_TYPE": "User type",
+    "UUID": "UUID",
+    "EDIT": "Edit",
+    "ANONYMIZE": "Anonymize",
+    "DELETE": "Delete"
+  },
+  "ADMIN": {
+    "TITLE": "Perun admin",
+    "ATTRIBUTES": {
+      "TITLE": "Attribute definitions",
+      "TABLE_ATTR_ID": "Id",
+      "TABLE_ATTR_FRIENDLY_NAME": "Friendly name",
+      "TABLE_ATTR_DISPLAY_NAME": "Display name",
+      "TABLE_ATTR_ENTITY": "Entity",
+      "TABLE_ATTR_DEF": "Def",
+      "TABLE_ATTR_TYPE": "Type",
+      "TABLE_ATTR_UNIQUE": "Unique",
+      "CREATE": "New attribute definition",
+      "IMPORT": "Import",
+      "DELETE": "Delete",
+      "SEARCH": "Filter by Id, name, entity, definition, or type",
+      "NO_ATTRIBUTES": "There are no attributes available.",
+      "CONSENT_RELATED_DISABLED": "Attribute requires user's permission. It can only be added, when service is disabled."
+    },
+    "USERS": {
+      "TITLE": "Users",
+      "SEARCH_PLACEHOLDER": "Search by name, email, login or UUID",
+      "NO_USERS_FOUND": "No users found.",
+      "EMPTY_SEARCH": "Search field cannot be empty",
+      "USERS_WITHOUT_VO": "Search for users without organization"
+    },
+    "OWNERS": {
+      "TITLE": "Owners",
+      "ADD": "Create",
+      "DELETE": "Delete",
+      "FILTER": "Filter"
+    },
+    "EXT_SOURCES": {
+      "TITLE": "External sources",
+      "SEARCH": "Search by Id, Name or Type",
+      "LOAD": "Load configuration"
+    },
+    "SERVICES": {
+      "TITLE": "Services",
+      "CREATE": "Create service",
+      "DELETE": "Delete",
+      "FILTER": "Filter"
+    },
+    "AUDIT_LOG": {
+      "TITLE": "Audit log",
+      "SEARCH_DESCRIPTION": "Search by event name"
+    },
+    "CONSENT_HUBS": {
+      "TITLE": "Consent hubs",
+      "EVALUATE_CONSENTS": "Evaluate consents",
+      "CONFIRM_DIALOG_TITLE": "Evaluate consents confirmation",
+      "CONFIRM_DIALOG_DESCRIPTION": "Are you sure you want to evaluate consents for all selected consent hubs?",
+      "EVALUATION_FINISH": "Consents evaluation completed",
+      "SEARCH": "Search by Id, Name or Facilities",
+      "GLOBAL_DISABLED": "Global consent enforcing is disabled on this Perun instance, any following changes will have no effect.",
+      "TOOLTIP": "Global consent enforcing is disabled."
+    },
+    "SEARCHER": {
+      "TITLE": "Searcher",
+      "TAB_USERS": "User",
+      "TAB_MEMBERS": "Members",
+      "TAB_FACILITIES": "Facilities",
+      "TAB_RESOURCES": "Resources"
+    },
+    "BLOCKED_LOGINS": {
+      "TITLE": "Blocked logins",
+      "SEARCH_PLACEHOLDER": "Search by login",
+      "BLOCK": "Block",
+      "UNBLOCK": "Unblock",
+      "FILTER_NAMESPACE": "Filter by namespace",
+      "UNBLOCK_SUCCESS": "Logins were successfully unblocked",
+      "BLOCK_SUCCESS": "Logins were successfully blocked"
+    }
+  },
+  "USER_DETAIL": {
+    "DASHBOARD": {
+      "TITLE": "Welcome ",
+      "RECENTLY_VIEWED": "Recently viewed",
+      "NO_RECENTLY_VIEWED": "No recently viewed",
+      "NO_ASSIGNED_ROLES": "You currently do not have any assigned roles within the system. As a result, you do not have access to any specific functionalities or actions.",
+      "NO_ASSIGNED_ROLES_PROFILE": "If you believe this is an error or if you require access to specific features, see settings in My profile.",
+      "GO_TO_USER_PROFILE": "See My profile",
+      "MANAGEABLE_ENTITIES": "Manageable entities",
+      "CARD_TITLE_VOADMIN": "Manager in Organizations",
+      "ROLE_INFO_VOADMIN": "You can manage organizations that are listed below",
+      "CARD_TITLE_GROUPADMIN": "Manager in Groups",
+      "ROLE_INFO_GROUPADMIN": "You can manage groups that are listed below",
+      "CARD_TITLE_FACILITYADMIN": "Manager in Facilities",
+      "ROLE_INFO_FACILITYADMIN": "You can manage facilities that are listed below",
+      "CARD_TITLE_SPONSOR": "Sponsor in Organizations",
+      "ROLE_INFO_SPONSOR": "You can create sponsored members in organization that are listed below",
+      "CARD_TITLE_RESOURCEADMIN": "Manager in Resources",
+      "ROLE_INFO_RESOURCEADMIN": "You can manage resources that are listed below",
+      "CARD_TITLE_TOPGROUPCREATOR": "Group creator in Organizations",
+      "ROLE_INFO_TOPGROUPCREATOR": "You can create group in the organizations that are listed below",
+      "CARD_TITLE_VOOBSERVER": "Observer in Organizations",
+      "ROLE_INFO_VOOBSERVER": "You can observe organizations that are listed below",
+      "CARD_TITLE_GROUPOBSERVER": "Observer in Groups",
+      "ROLE_INFO_GROUPOBSERVER": "You can observe groups that are listed below",
+      "CARD_TITLE_FACILITYOBSERVER": "Observer in Facilities",
+      "ROLE_INFO_FACILITYOBSERVER": "You can observe facilities that are listed below",
+      "CARD_TITLE_RESOURCEOBSERVER": "Observer in Resources",
+      "ROLE_INFO_RESOURCEOBSERVER": "You can observe resources that are listed below",
+      "CARD_TITLE_GROUPMEMBERSHIPMANAGER": "Membership manager in Groups",
+      "ROLE_INFO_GROUPMEMBERSHIPMANAGER": "You can manage members in groups that are listed below",
+      "DASHBOARD_SETTINGS": "Dashboard Settings",
+      "SHOW_RECENTLY_VIEWED": "Show Recently viewed",
+      "SHOW_ROLES": "Show roles",
+      "MAIL_CHANGE_SUCCESS": "Preferred mail has been changed",
+      "ANONYMIZED": "User anonymized",
+      "DIRECT_ROLES": "User based",
+      "AUTHORIZED_GROUP_BASED_ROLES": "Group based"
+    },
+    "OVERVIEW": {
+      "GENERAL_SETTINGS": "General settings",
+      "CHANGE_EMAIL": "Change email"
+    },
+    "IDENTITIES": {
+      "TITLE": "Identities",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "FILTER_PLACEHOLDER": "Filter"
+    },
+    "FACILITIES": {
+      "TITLE": "Facilities",
+      "FILTER_PLACEHOLDER": "Filter by Id, name or description"
+    },
+    "RESOURCES": {
+      "TITLE": "Resources"
+    },
+    "ACCOUNTS": {
+      "TITLE": "Accounts",
+      "STATUS": "Status",
+      "GROUPS": "Member groups",
+      "MEMBER": "Member Id",
+      "MEMBER_ATT": "Member attributes",
+      "MEMBER_GROUP_ATT": "Member-Group attributes",
+      "MEMBER_RESOURCE_ATT": "Member-Resource attributes",
+      "NO_VOS": "User is not member of any organization."
+    },
+    "ASSIGNMENTS": {
+      "TITLE": "Assignments",
+      "OVERVIEW": "Overview",
+      "RESOURCES": "Resources",
+      "USER_FACILITY_ATT": "User-Facility attributes",
+      "MEMBER_RESOURCE_ATT": "Member-Resource attributes",
+      "NO_FACILITIES": "User is not assigned to any facilities."
+    },
+    "SETTINGS": {
+      "ATTRIBUTES": {
+        "TITLE": "Attributes",
+        "DELETE": "Remove selected",
+        "FILTER": "Filter by Id, name, value or description",
+        "SAVE": "Save selected",
+        "CREATE": "Add",
+        "CANCEL": "Cancel",
+        "SUCCESS_DELETE": "Attributes deleted successfully",
+        "SUCCESS_SAVE": "Attributes saved successfully"
+      },
+      "SERVICE_IDENTITIES": {
+        "TITLE": "Service accounts",
+        "CREATE": "Connect",
+        "DELETE": "Disconnect",
+        "NO_IDENTITIES": "No service accounts connected."
+      },
+      "GUI_CONFIG": {
+        "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
+        "TITLE": "Gui Configuration"
+      },
+      "ASSOCIATED_USERS": {
+        "TITLE": "Account managers",
+        "ADD": "Connect",
+        "REMOVE": "Disconnect",
+        "NO_ASSOCIATED_USERS": "No accounts connected."
+      },
+      "LOGINS": {
+        "TITLE": "Logins",
+        "ADD": "Add"
+      },
+      "CERTIFICATES": {
+        "TITLE": "Certificates",
+        "SAVE": "Save"
+      },
+      "FACILITY_ATTRIBUTES": {
+        "TITLE": "Facility attributes"
+      }
+    },
+    "BANS": {
+      "TITLE": "Bans",
+      "VO": "Organizations",
+      "RESOURCE": "Resources",
+      "FACILITY": "Facilities",
+      "FILTER": "Filter by name, id or description"
+    }
+  },
+  "ATTRIBUTE_PAGE": {
+    "CREATE": "Create",
+    "SAVE": "Save",
+    "DELETE": "Delete",
+    "FILTER": "Filter attributes by Id, name, value or description",
+    "FILTER_EMPTY": "Filter empty attributes"
+  },
+  "SHARED": {
+    "COMPONENTS": {
+      "RESOURCES_TAGS_LIST": {
+        "EDIT_SUCCESS": "Resource tag was successfully edited."
+      },
+      "USERS_LIST": {
+        "TABLE_SEARCH": "Filter by name or Id"
+      },
+      "REFRESH_BUTTON": {
+        "TOOLTIP": "Refresh"
+      },
+      "MANAGERS_PAGE": {
+        "TITLE": "Managers",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "SELECT_MODE": "Select mode",
+        "SELECT_ROLE": "Select role",
+        "SHOW_DERIVED_ADMINS": "Show also derived managers",
+        "USER": "Users",
+        "GROUP": "Groups",
+        "NO_MANAGERS": "This role has no managers.",
+        "NO_GROUP_MANAGERS": "This role has no group managers.",
+        "NO_AVAILABLE_ROLES": "This entity has no available manager roles or you don't have privileges to manage them"
+      },
+      "EXT_SOURCES_LIST": {
+        "ID": "Id",
+        "NAME": "Name",
+        "TYPE": "Type",
+        "NO_EXT_SOURCES": "No external sources",
+        "NO_FILTER_RESULTS": "No external sources are matching your query"
+      },
+      "SERVICES_LIST": {
+        "ID": "Id",
+        "NAME": "Name",
+        "ENABLED": "Enabled",
+        "SCRIPT": "Script",
+        "DESCRIPTION": "Description",
+        "NO_SERVICES_WARNING": "No services assigned.",
+        "DISABLED": "Disabled"
+      },
+      "ENTITYLESS_ATTRIBUTES_LIST": {
+        "CANCEL": "Back",
+        "SAVE": "Save",
+        "ADD": "Add",
+        "REMOVE": "Remove",
+        "KEY": "Key",
+        "VALUE": "Value",
+        "NO_KEYS_WARNING": "Use 'Add' button to add new Key-Attribute pair",
+        "SAVE_SUCCESS": "Attributes successfully saved",
+        "REMOVE_SUCCESS": "Attributes successfully removed"
+      },
+      "USER_DETAIL": {
+        "GROUPS": {
+          "YOU_ARE_MEMBER": "Groups where you are member",
+          "YOU_ARE_ADMIN": "Groups where you are admin",
+          "USER_IS_MEMBER": "Groups where user is member",
+          "USER_IS_ADMIN": "Groups where user is admin",
+          "FILTER": "Filter by name or Id"
+        }
+      },
+      "HOSTS_LIST": {
+        "TABLE_HOST_ID": "Id",
+        "TABLE_HOST_NAME": "Host name",
+        "NO_HOST_WARNING": "No hosts found"
+      },
+      "BLACKLIST_LIST": {
+        "USER_ID": "Id",
+        "NAME": "Name",
+        "REASON": "Reason",
+        "NO_BANS_WARNING": "No bans found"
+      },
+      "SECURITY_TEAMS_LIST": {
+        "ID": "Id",
+        "NAME": "name",
+        "DESCRIPTION": "description",
+        "NO_SECURITY_TEAMS_WARNING": "No security teams found"
+      },
+      "SPONSORED_MEMBERS_LIST": {
+        "ID": "Id",
+        "NAME": "Name",
+        "EMAIL": "Email",
+        "LOGIN": "Login",
+        "SPONSORS": "Sponsors",
+        "EXPIRATION": "Expiration",
+        "NO_SPONSORED_MEMBERS_WARNING": "No sponsored members found",
+        "PASSWORD_RESET": "Reset password",
+        "EDIT": "Edit"
+      },
+      "DESTINATIONS_LIST": {
+        "DESTINATION_ID": "Id",
+        "SERVICE": "Service",
+        "FACILITY": "Facility",
+        "DESTINATION": "Destination",
+        "TYPE": "Type",
+        "ALLOWED": "Allowed",
+        "BLOCKED": "Blocked",
+        "PROPAGATION_TYPE": "Propagation type",
+        "NO_DESTINATIONS": "No destinations found",
+        "WARN": "Destination is not properly configured. The service, to which it is connected is not in your service selection",
+        "LAST_SUCCESS": "Last successful propagation"
+      },
+      "FACILITIES_LIST": {
+        "ID": "Id",
+        "NAME": "Name",
+        "DESCRIPTION": "Description",
+        "TECHNICAL_OWNERS": "Technical owners",
+        "DESTINATIONS": "Destinations",
+        "HOSTS": "Hosts",
+        "NO_FACILITIES_WARNING": "No facilities found",
+        "AUTHZ_GROUP": "Role acquired through"
+      },
+      "CONSENT_HUBS_LIST": {
+        "ID": "Id",
+        "NAME": "Name",
+        "ENFORCE_CONSENTS": "Enforce consents",
+        "FACILITIES": "Facilities",
+        "NO_CONSENT_HUBS": "No consent hubs found",
+        "NO_FILTER_RESULTS": "No consent hubs are matching your query",
+        "CHANGE_ENFORCE_CONSENTS_SUCCESS": "Enforce consents flag was successfully updated"
+      },
+      "LOGIN_FOR_NAMESPACE": {
+        "NAMESPACE": "Namespace",
+        "LOGIN": "Login",
+        "FIELD_EMPTY": "This field cannot be empty",
+        "LOGIN_EXISTS": "Login already exists",
+        "LOGIN_FORMAT": "Login has to start with a letter and consist only of characters: a-z0-9_-",
+        "LOGIN_LONG": "Login is too long",
+        "LOGIN_SHORT": "Login is too short",
+        "LOGIN_DISABLED": "To enter the login, you need to select a namespace first",
+        "LOGIN_DISABLED_FOR_NAMESPACE": "Logins in this namespace are generated automatically."
+      },
+      "GROUP_ROLES_FILTER": {
+        "FILTER_ROLES": "Filter by role",
+        "FILTER_ROLE_TYPES": "Filter by role assigment"
+      }
+    },
+    "IDENTITY_DETAIL": {
+      "TITLE": "Identity detail",
+      "TYPE": "Type",
+      "LOGIN": "Login",
+      "LAST_ACCESS": "Last access",
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "SAVE": "Save"
+    }
+  },
+  "ROLES": {
+    "TITLE": "Roles",
+    "ADD": "Add role",
+    "REMOVE": "Remove role",
+    "REMOVE_DESC": "{{role}} role will be removed.",
+    "REMOVE_DESC_WITH_OBJECTS": "{{role}} role will be removed from {{count}} following objects:",
+    "REMOVE_SUCCESS": "Role {{ role}} was successfully removed",
+    "REMOVE_DISABLED_TOOLTIP": "You don't have permission to remove selected role",
+    "NO_ROLES": "No roles found",
+    "VOADMIN": "Organization admin",
+    "VOADMIN_VOS_SELF": "Organizations you are manager of",
+    "VOADMIN_VOS_USER": "Organizations user is manager of",
+    "VOADMIN_VOS_GROUP": "Organizations where group members are managers",
+    "VOOBSERVER": "Organization observer",
+    "VOOBSERVER_VOS_SELF": "Organizations you are observer of",
+    "VOOBSERVER_VOS_USER": "Organizations user is observer of",
+    "VOOBSERVER_VOS_GROUP": "Organizations where group members are observers",
+    "TOPGROUPCREATOR": "Top group creator",
+    "TOPGROUPCREATOR_VOS_SELF": "Organizations where you can create groups",
+    "TOPGROUPCREATOR_VOS_USER": "Organizations where user can create groups",
+    "TOPGROUPCREATOR_VOS_GROUP": "Organizations where group members can create groups",
+    "PERUN_ADMIN": "Perun admin",
+    "PERUN_OBSERVER": "Perun observer",
+    "SELF": "Self",
+    "SELF_USERS_SELF": "Identities linked to your Perun account",
+    "SELF_USERS_USER": "User's identities",
+    "MEMBERSHIP_VOS_SELF": "Organizations you are member of",
+    "MEMBERSHIP_VOS_USER": "Organizations where user is member",
+    "MEMBERSHIP_GROUPS_SELF": "Groups you are member of",
+    "MEMBERSHIP_GROUPS_USER": "Groups where user is member",
+    "MEMBERSHIP_RESOURCES_SELF": "Resources you are assigned to",
+    "MEMBERSHIP_RESOURCES_USER": "Resources user is assigned to",
+    "MEMBERSHIP_FACILITIES_SELF": "Facilities you are assigned to",
+    "MEMBERSHIP_FACILITIES_USER": "Facilities user is assigned to",
+    "FACILITYADMIN": "Facility admin",
+    "FACILITYADMIN_FACILITIES_SELF": "Facilities you are manager of",
+    "FACILITYADMIN_FACILITIES_USER": "Facilities user is manager of",
+    "FACILITYADMIN_FACILITIES_GROUP": "Facilities where group members are managers",
+    "FACILITYOBSERVER": "Facility observer",
+    "FACILITYOBSERVER_FACILITIES": "Facilities you are observer of",
+    "FACILITYOBSERVER_FACILITIES_SELF": "Facilities you are observer of",
+    "FACILITYOBSERVER_FACILITIES_USER": "Facilities user is observer of",
+    "FACILITYOBSERVER_FACILITIES_GROUP": "Facilities where group members are observers",
+    "TRUSTEDFACILITYADMIN": "Trusted facility admin",
+    "TRUSTEDFACILITYADMIN_VOS_SELF": "Virtual organizations you are trusted facility admin in",
+    "TRUSTEDFACILITYADMIN_VOS_USER": "Virtual organizations user is trusted facility admin in",
+    "TRUSTEDFACILITYADMIN_VOS_GROUP": "Virtual organizations where group members are trusted facility admins",
+    "GROUPOBSERVER": "Group observer",
+    "GROUPOBSERVER_GROUPS_SELF": "Groups you are observer of",
+    "GROUPOBSERVER_GROUPS_USER": "Groups where user is observer",
+    "GROUPOBSERVER_GROUPS_GROUP": "Groups where group members are observers",
+    "GROUPADMIN": "Group admin",
+    "GROUPADMIN_GROUPS_SELF": "Groups you are manager of",
+    "GROUPADMIN_GROUPS_USER": "Groups where user is manager",
+    "GROUPADMIN_GROUPS_GROUP": "Groups where group members are managers",
+    "GROUPMEMBERSHIPMANAGER": "Group membership manager",
+    "GROUPMEMBERSHIPMANAGER_GROUPS_SELF": "Groups you are manager of",
+    "GROUPMEMBERSHIPMANAGER_GROUPS_USER": "Groups where user is manager",
+    "GROUPMEMBERSHIPMANAGER_GROUPS_GROUP": "Groups where group members are managers",
+    "RESOURCEADMIN": "Resource admin",
+    "RESOURCEADMIN_RESOURCES_SELF": "Resources you are manager of",
+    "RESOURCEADMIN_RESOURCES_USER": "Resources where user is manager",
+    "RESOURCEADMIN_RESOURCES_GROUP": "Resources where group members are managers",
+    "SPONSOR": "Sponsor",
+    "SPONSOR_VOS_SELF": "Organizations where you are sponsor",
+    "SPONSOR_VOS_USER": "Organizations where user is sponsor",
+    "SPONSOR_VOS_GROUP": "Organizations where group members are sponsors",
+    "SPONSORSHIP": "Sponsorship",
+    "SPONSORSHIP_MEMBERS_SELF": "Members you are sponsor of",
+    "SPONSORSHIP_MEMBERS_USER": "Members user is sponsor of",
+    "RESOURCESELFSERVICE": "Resource self service",
+    "RESOURCESELFSERVICE_RESOURCES_SELF": "Resources you are manager of",
+    "RESOURCESELFSERVICE_RESOURCES_USER": "Resources where user is manager",
+    "RESOURCESELFSERVICE_RESOURCES_GROUP": "Resources where group members are managers",
+    "RESOURCEOBSERVER": "Resource observer",
+    "RESOURCEOBSERVER_RESOURCES_SELF": "Resources you are observer of",
+    "RESOURCEOBSERVER_RESOURCES_USER": "Resources where user is observer",
+    "RESOURCEOBSERVER_RESOURCES_GROUP": "Resources where group members are observers",
+    "SECURITYADMIN":  "Security admin",
+    "SERVICEUSER": "Service user",
+    "CABINETADMIN": "Cabinet admin",
+    "MEMBERSHIP": "Membership",
+    "AUDITCONSUMERADMIN": "Audit consumer admin",
+    "PERUNADMIN": "Perun admin",
+    "PERUNADMIN_SELF": "You have the role of perun admin",
+    "PERUNADMINBA": "Perun admin for BA accounts",
+    "PERUNADMINBA_SELF": "You have the role of perun admin for BA accounts",
+    "PERUNOBSERVER": "Perun observer",
+    "PERUNOBSERVER_SELF": "You have the role of perun observer"
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "LOGIN": {
+        "SIGN_IN": "Sign in",
+        "TEXT": "You must sign in to continue.",
+        "LOGOUT_INFO": "You have been successfully logged out."
+      },
+      "LOGIN_SERVICE_ACCESS": {
+        "LABEL": "Sign in",
+        "USERNAME": "Username:",
+        "USERNAME_ERROR": "Username cannot be empty",
+        "PASSWORD": "Password:",
+        "PASSWORD_ERROR": "Password cannot be empty",
+        "SIGN_IN": "Sign in",
+        "WRONG_LOGIN_OR_PASSWORD": "Wrong username or password. Please try it again."
+      },
+      "COMPONENTS": {
+        "UNIVERSAL_CONFIRMATION_DIALOG": {
+          "CANCEL_BUTTON": "Cancel",
+          "SUBMIT_BUTTON": "Ok"
+        },
+        "GROUPS_LIST": {
+          "TABLE_GROUP_ID": "Id",
+          "TABLE_VO_NAME": "Organization",
+          "TABLE_GROUP_NAME": "Name",
+          "TABLE_SEARCH": "Filter by name, description or Id",
+          "TABLE_GROUP_DESCRIPTION": "Description",
+          "TABLE_GROUP_EXPIRATION": "Expiration",
+          "TABLE_GROUP_STATUS": "Status",
+          "DISABLED_HINT": "You cannot add members to this group or the user is already member.",
+          "ALREADY_MEMBER_TOOLTIP": "User is already member of group",
+          "CREATE_RELATION_AUTH_TOOLTIP": "You don't have permission to create relation with this group.",
+          "SYNCHRONIZED_GROUP": "Group is filled with members from an external source",
+          "INDIRECT_GROUP": "This group is assigned as a part of a groups tree.",
+          "MULTIPLE_ASSIGNMENTS": "This group is assigned manually and also as a part of a groups tree. You can remove only manual assignment.",
+          "AUTHZ_GROUP": "Role acquired through",
+          "CHANGE_EXPIRATION": "Change expiration"
+        },
+        "GROUPS_TREE": {
+          "SHOW_MORE": "Show more",
+          "SHOW_LESS": "Show less"
+        },
+        "GROUP_MENU": {
+          "MOVE": "Move group",
+          "RENAME": "Update name/description",
+          "COPY": "Copy group name to clipboard",
+          "MORE": "More"
+        },
+        "GROUP_SEARCH_SELECT": {
+          "SELECT_GROUP": "Select group",
+          "FIND_GROUP": "Find group...",
+          "NO_GROUP_FOUND": "No matching group found"
+        },
+        "VOS_LIST": {
+          "ID": "Id",
+          "NAME": "Name",
+          "SHORTNAME": "Short name",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "VO_SEARCH_SELECT": {
+          "SELECT_VO": "Select organization",
+          "FIND_VO": "Find organization...",
+          "NO_VO_FOUND": "No matching organization found"
+        },
+        "NAMESPACE_SEARCH_SELECT": {
+          "SELECT_NAMESPACE": "Select namespace",
+          "FIND_NAMESPACE": "Blocked in...",
+          "NO_NAMESPACE_FOUND": "No matching namespace found"
+        },
+        "SERVICE_PACKAGE_SEARCH_SELECT": {
+          "SELECT_PACKAGE": "Select service package",
+          "FIND_PACKAGE": "Find service package...",
+          "NO_PACKAGE_FOUND": "No matching service package found"
+        },
+        "SERVICE_SEARCH_SELECT": {
+          "SELECT_SERVICE": "Select service",
+          "FIND_SERVICE": "Find service...",
+          "NO_SERVICE_FOUND": "No matching service found"
+        },
+        "RESOURCES_LIST": {
+          "TITLE": "Resources",
+          "DELETE": "Remove selected",
+          "TABLE_RESOURCE_ID": "Id",
+          "TABLE_RESOURCE_NAME": "Name",
+          "TABLE_VO_NAME": "Organization",
+          "TABLE_VO_ID": "Organization Id",
+          "TABLE_FACILITY_NAME": "Facility name",
+          "TABLE_FACILITY_ID": "Facility Id",
+          "TABLE_RESOURCE_TAGS": "Tags",
+          "TABLE_SEARCH": "Filter",
+          "TABLE_RESOURCE_DESCRIPTION": "Description",
+          "TABLE_GROUP_RESOURCE_STATUS": "Status",
+          "NO_RESOURCES_WARNING": "No resources assigned.",
+          "INDIRECT_RESOURCE": "This resource is assigned indirectly.",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "RESOURCE_SEARCH_SELECT": {
+          "SELECT_RESOURCE": "Select resource",
+          "FIND_RESOURCE": "Find resource...",
+          "NO_RESOURCE_FOUND": "No matching resource found"
+        },
+        "MEMBER_SEARCH_SELECT": {
+          "SELECT_MEMBER": "Select member",
+          "FIND_MEMBER": "Find member...",
+          "NO_MEMBER_FOUND": "No matching member found"
+        },
+        "FACILITY_SEARCH_SELECT": {
+          "SELECT_FACILITY": "Select facility",
+          "FIND_FACILITY": "Find facility...",
+          "NO_FACILITY_FOUND": "No matching facility found"
+        },
+        "APP_FORM_ITEM_SEARCH_SELECT": {
+          "SELECT_ITEM": "Select item",
+          "FIND_ITEM": "Find item...",
+          "NO_ITEM_FOUND": "No matching item found",
+          "NO_ITEM": "No item selected (empty value)",
+          "NEW_ITEM": "-- new item --"
+        },
+        "USER_SEARCH_SELECT": {
+          "SELECT_USER": "Select user",
+          "FIND_USER": "Find user...",
+          "NO_USER_FOUND": "No matching user found"
+        },
+        "ATTR_DEF_SEARCH_SELECT": {
+          "SELECT_ATTR_DEF": "Select attribute definition",
+          "FIND_ATTR_DEF": "Find attribute definition...",
+          "NO_ATTR_DEF_FOUND": "No matching attribute definition found",
+          "SEARCH_PLACEHOLDER": "Search by selected attribute",
+          "ADD_PARAMETER": "Add parameter",
+          "REMOVE_PARAMETER": "Remove",
+          "SEARCH_BUTTON": "Search",
+          "SEARCH_BUTTON_TOOLTIP": "Search string cannot be empty"
+        },
+        "OBJECT_LIST_VALUES": {
+          "LESS": "Show less",
+          "MORE": "Show more"
+        },
+        "AUTHORIZED_GROUPS_CELL": {
+          "LESS": "Show less",
+          "MORE": "Show more"
+        },
+        "ATTRIBUTE_VALUE_LIST": {
+          "EDIT_DIALOG": {
+            "TITLE": "Edit attribute value",
+            "VALUE_LABEL": "Attribute value",
+            "SUBMIT_BUTTON": "Submit",
+            "CANCEL_BUTTON": "Cancel"
+          },
+          "DELETE_DIALOG": {
+            "TITLE": "Delete attribute value",
+            "DESCRIPTION": "Do you really want to delete this attribute list value from list?",
+            "SUBMIT_BUTTON": "Delete",
+            "CANCEL_BUTTON": "Cancel"
+          },
+          "LESS": "Show less",
+          "MORE": "Show more"
+        },
+        "ATTRIBUTE_VALUE_STRING": {
+          "HINT": "This attribute value includes newlines. Please make sure this is intended!"
+        },
+        "ATTRIBUTE_VALUE_MAP": {
+          "ADD": "Add value",
+          "REMOVE": "Remove value",
+          "LESS": "Show less",
+          "MORE": "Show more"
+        },
+        "ATTRIBUTES_LIST": {
+          "FILTER": "Filter attributes by Id, name, value or description",
+          "ID": "Id",
+          "NAME": "Name",
+          "VALUE": "Value",
+          "DESCRIPTION": "Description",
+          "DISABLED_HINT": "You don't have permission to change this attribute.",
+          "EMPTY_ATTRIBUTES": "No attributes found.",
+          "EMPTY_SETTINGS": "No attributes found. Use 'Add' button to add new attribute.",
+          "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute"
+        },
+        "SELECTION_ITEM_SEARCH_SELECT": {
+          "SELECT_ITEM": "Select attribute",
+          "FIND_ITEM": "Find attribute...",
+          "NO_ITEM_FOUND": "No matching attribute found"
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "The requested user (by Id or external identity) doesn't exist."
+        },
+        "USER_NOT_ALLOWED": {
+          "TITLE": "Access not allowed",
+          "MESSAGE": "Service accounts are not allowed to access this application.",
+          "REDIRECT": "Redirect to login page"
+        },
+        "TABLE_OPTIONS": {
+          "EXPORT_TO_FILE": "Export to file",
+          "EXPORT_TITLE": "Export table",
+          "BUTTON_EXPORT": "Export",
+          "BUTTON_CLOSE": "Close",
+          "SELECT_FORMAT": "Select format",
+          "EXPORT_OPTIONS": "Export options",
+          "DISPLAYED_DATA": "Displayed data",
+          "ALL_DATA": "All data",
+          "ERROR_FORMAT":"Export format is not selected",
+          "ERROR_OPTION": "Export option is not selected",
+          "EXPORT_LOADING": "Exporting data...",
+          "MORE": "More"
+        },
+        "NOTIFICATOR": {
+          "NOTIFICATION": {
+            "DEFAULT_ACTION": "Show",
+            "DIALOG_CLOSE": "Close",
+            "DIALOG_BUG_REPORT": "Report a bug",
+            "DEFAULT_RPC_ERROR_MESSAGE": "An operation failed.",
+            "PRIVILEGE_EXCEPTION": "You are not authorized to perform this action",
+            "ROUTE_DENIED_ERROR": "Access denied",
+            "ROUTE_DENIED_DESC": "You are not authorized to access this page"
+          }
+        },
+        "USER_EXT_SOURCES_LIST": {
+          "MAIL": "Email",
+          "EXT_SOURCE_NAME": "Federated identity",
+          "LOGIN": "Login",
+          "LAST_ACCESS": "Last access",
+          "NO_IDENTITIES": "No external identities found",
+          "ID": "Id",
+          "CANNOT_BE_DELETED_TOOLTIP": "This identity is persistent, so it cannot be deleted",
+          "LOA": "Level of assurance"
+        },
+        "BUG_REPORT": {
+          "TITLE": "Report a bug",
+          "BULK_TITLE": "Report bugs",
+          "SUBJECT": "Subject",
+          "SUBJECT_VALUE": "Reported error: ",
+          "BULK_SUBJECT_VALUE": "Errors on bulk call: ",
+          "SUBJECT_ERROR": "Subject cannot be empty.",
+          "MESSAGE": "Message",
+          "MESSAGE_PLACEHOLDER": "Please describe your problem and which of your actions lead to this problem.",
+          "MESSAGE_ERROR": "Please tell us something about the problem.",
+          "CANCEL": "Cancel",
+          "SEND": "Send",
+          "SUCCESS1": "Ticket with Id: ",
+          "SUCCESS2": " was created."
+        },
+        "REMOVE_USER_EXT_SOURCE": {
+          "TITLE": "Remove user's identity",
+          "DESCRIPTION": "Following identity will be removed",
+          "ASK": "Are you sure you want to continue?",
+          "CANCEL": "Cancel",
+          "REMOVE": "Remove",
+          "SUCCESS": "User identity successfully removed"
+        },
+        "CHANGE_PASSWORD_DIALOG": {
+          "TITLE": "Change password",
+          "CANCEL": "Cancel",
+          "CHANGE": "Confirm",
+          "OLD_PASSWORD": "Old password",
+          "FIELD_EMPTY": "This field cannot be empty",
+          "SUCCESS": "Password has been changed successfully,"
+        },
+        "RESET_PASSWORD_DIALOG": {
+          "LOGIN": "Login",
+          "NAMESPACE": "Namespace",
+          "TITLE": "Reset password",
+          "CANCEL": "Cancel",
+          "CHANGE": "Confirm",
+          "FIELD_EMPTY": "This field cannot be empty",
+          "SUCCESS": "Password has been reset successfully,"
+        },
+        "PASSWORD_FORM_FIELD": {
+          "PASSWORD": "Password",
+          "PASSWORD_AGAIN": "Confirm password",
+          "BACKEND_ERROR": "Entered password doesn't meet the selected namespace's criteria",
+          "FIELD_EMPTY": "Empty value is not allowed",
+          "PWD_DONT_MATCH": "Passwords do not match",
+          "TOOLTIP_PASSWORD_VIA_EMAIL": "The user will choose his password via an email sent to the entered e-mail address",
+          "TOOLTIP_PASSWORD_DISABLED": "Setting the password is disabled for this namespace"
+        },
+        "PASSWORD_RESET": {
+          "TITLE": "Password reset",
+          "CHANGE_PASSWORD": "Change password",
+          "RESET_PASSWORD": "Reset password",
+          "NAMESPACE": "Namespace",
+          "LOGIN": "Login",
+          "NOT_SUPPORTED": "Password reset is not supported for your current namespaces"
+        },
+        "SHOW_VALUE": {
+          "CLOSE": "Close",
+          "COPY": "Copy to clipboard"
+        },
+        "SERVICES_STATUS_LIST": {
+          "TABLE_SEARCH": "Filter by service name, Id or state",
+          "TASK_ID": "Id",
+          "SERVICE_NAME": "Service",
+          "STATUS": "Status",
+          "BLOCKED": "Blocked",
+          "STARTED": "Started",
+          "ENDED": "Ended",
+          "NO_SERVICES_STATUS_WARNING": "No service configuration was propagated to this facility.",
+          "NO_DESTINATIONS_TOOLTIP": "No destinations are set.",
+          "NOT_YET": "NOT YET"
+        },
+        "TASK_RESULTS_LIST": {
+          "RESULT_ID": "Id",
+          "DESTINATION": "Destination",
+          "TYPE": "Type",
+          "SERVICE": "Service",
+          "STATUS": "Status",
+          "TIME": "Time",
+          "RETURN_CODE": "Return code",
+          "STANDARD_MESSAGE": "Standard message",
+          "ERROR_MESSAGE": "Error message",
+          "NO_RESULTS_WARNING": "No task results found"
+        },
+        "SESSION_EXPIRATION": {
+          "TITLE": "Session expiration",
+          "DESCRIPTION": "Your session has expired. Please sign in to continue.",
+          "SIGN_IN": "Proceed"
+        },
+        "RECENTLY_VIEWED_ICON": {
+          "RECENT": "Recently viewed"
+        },
+        "FOOTER": {
+          "ABOUT_PERUN": "About",
+          "HELP": "Help",
+          "PERUN_WEB": "Perun website",
+          "PERUN_TEAM": "Perun team",
+          "SUPPORT": "Support",
+          "USER_DOCUMENTATION": "Documentation",
+          "ADMINISTRATOR_DOCUMENTATION": "API Documentation",
+          "REPORT_ISSUE": "Report Issue",
+          "PRIVACY_POLICY": "Privacy Policy"
+        },
+        "REPORT_ISSUE": {
+          "TITLE": "Report an issue",
+          "SUBJECT": "Subject",
+          "SUBJECT_ERROR": "Subject cannot be empty.",
+          "MESSAGE": "Message",
+          "MESSAGE_PLACEHOLDER": "Please describe the issue",
+          "MESSAGE_HINT": "Please try to describe in detail the problem.",
+          "CANCEL": "Cancel",
+          "SEND": "Send",
+          "SUCCESS": "Issue report was sent and got ticket number: "
+        },
+        "UNIVERSAL_REMOVE_ITEMS_DIALOG": {
+          "ASK": "Do you want to proceed?",
+          "CANCEL_BUTTON": "Cancel",
+          "SUBMIT_BUTTON": "Submit",
+          "REMOVE_BUTTON": "Remove"
+        },
+        "MEMBER_TREEVIEW_DIALOG": {
+          "TITLE": "Indirect membership’s origin of {{name}}",
+          "INFO": "Member is coming to this group through the following group hierarchy.",
+          "DIRECT": "Direct membership",
+          "INCLUDE": "Included group",
+          "FILTER": "Search by group name",
+          "CLOSE": "Close",
+          "NO_PATHS": "No paths include the entered group name.",
+          "SHOW_MORE": "Show more",
+          "SHOW_LESS": "Show less"
+        },
+        "MFA_REQUIRED_DIALOG": {
+          "TITLE": "Step-up authentication required",
+          "INFO": "To perform this action you need to execute step-up authentication.",
+          "INFO_ROLE": "To log in you need to execute step-up authentication.",
+          "CANCEL": "Cancel",
+          "STEP_UP": "Step-up authentication"
+        },
+        "NO_MFA_TOKEN": {
+          "TITLE": "No MFA token",
+          "INFO": "You need to have at least one active MFA token. Please manage your MFA tokens.",
+          "CANCEL": "Cancel",
+          "MANAGE_TOKENS": "Manage tokens"
+        },
+        "FOCUS_ON_MFA_DIALOG": {
+          "MODAL": "Modal window is opened.",
+          "MODAL_WARNING": "Please check your browser settings if no modal window is open."
+        },
+        "OWNERS_LIST": {
+          "ID": "Id",
+          "NAME": "Name",
+          "CONTACT": "Contact",
+          "TYPE": "Type",
+          "NO_OWNERS": "No owners found.",
+          "NO_FILTER_OWNERS": "No owners match the given filter"
+        },
+        "MAIL_CHANGE_FAILED_DIALOG": {
+          "TITLE": "Preferred mail change failed",
+          "INFO": "Preferred email change request does not exist or is not valid anymore",
+          "CLOSE": "Close"
+        },
+        "GROUP_RESOURCE_STATUS": {
+          "ACTIVE": "Active",
+          "INACTIVE": "Inactive",
+          "FAILED": "Failed",
+          "PROCESSING": "Processing"
+        },
+        "CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG": {
+          "TITLE": "Change group resource assigment status",
+          "CANCEL": "Cancel",
+          "ACTIVATE": "Activate",
+          "DEACTIVATE": "Deactivate",
+          "ACTIVE": "Active",
+          "INACTIVE": "Inactive",
+          "CURRENT": "Current status",
+          "NEW": "New status",
+          "VALIDATE": "Validate attributes",
+          "SYNC": "Synchronously",
+          "ASYNC": "Asynchronously",
+          "SYNC_HINT": "Attributes will be validated synchronously. Validation will be processed immediately, it can take some time.",
+          "ASYNC_HINT": "Attributes will be validated asynchronously. Validation will be processed independently.",
+          "ACTIVE_HINT": "After validation of group members attributes, members can access the given resource.",
+          "INACTIVE_HINT": "With 'Inactive' status, group members can no longer access the given resource."
+        },
+        "ADVANCED_FILTER": {
+          "FILTERS": "Filters",
+          "CLEAR_FILTERS": "Clear filters"
+        },
+        "ATTRIBUTE_RIGHTS": {
+          "READ": "Read",
+          "WRITE": "Write",
+          "ROLE": "Select role",
+          "ENTITY": "Connect entity",
+          "AND": "AND",
+          "OR": "OR",
+          "REMOVE_COLLECTION": "Remove collection",
+          "REMOVE_RULE": "Remove rule",
+          "ADD_RULE": "Add rule",
+          "ADD_COLLECTION": "Add collection",
+          "INFO": "Create collections of multiple rules. Each rule must be fulfilled for the collection to be valid. User needs to suffice at least one collection to be eligible for given action."
+        },
+        "ATTRIBUTE_UNIQUE_CHECKBOX": {
+          "UNIQUE": "Unique",
+          "DISABLED_TOOLTIP": "Entityless, virtual or core attributes can NOT be UNIQUE",
+          "TOOLTIP": "The attribute value has to be UNIQUE"
+        },
+        "ATTRIBUTE_CRITICAL_OPERATIONS_CHECKBOX": {
+          "READ": "READ operations critical",
+          "WRITE": "WRITE operations critical",
+          "GLOBAL": "Critical for all objects",
+          "READ_TOOLTIP": "All READ operations for this attribute will require multi-factor authentication for objects that are marked as critical.",
+          "GLOBAL_READ_TOOLTIP": "All READ operations for this attribute will require multi-factor authentication",
+          "WRITE_TOOLTIP": "All WRITE operations for this attribute will require multi-factor authentication for objects that are marked as critical.",
+          "GLOBAL_WRITE_TOOLTIP": "All WRITE operations for this attribute will require multi-factor authentication"
+        },
+        "DATA_QUOTAS": {
+          "TITLE": "Data quotas",
+          "FILTER": "Filter data quotas by organization's name",
+          "QUOTA": "Data quota: ",
+          "CHANGE": "Change",
+          "QUOTA_INFO": "Quotas are using \"soft limit : hard limit\" notation and are bound to specific volume.",
+          "NO_QUOTAS": "No assigned data quotas"
+        },
+        "OPT_OUT_MAILING_LISTS": {
+          "TITLE": "Opt out mailing lists",
+          "FILTER": "Filter opt out mailing lists by organization's name",
+          "OPT_OUT_LABEL": "Exclude me from mailing list",
+          "NO_MAILING_LISTS_ALERT": "You have no mailing lists assigned under this virtual organization",
+          "SUBSCRIBED": "You are no longer excluded from the mailing list of ",
+          "UNSUBSCRIBED": "You are now excluded from the mailing list of "
+        },
+        "REQUEST_DATA_QUOTA_CHANGE": {
+          "TITLE": "Data quota change request",
+          "RESOURCE": "Resource",
+          "CURRENT_QUOTA": "Current quota",
+          "REQUESTED_QUOTA": "Requested quota",
+          "REASON": "Reason",
+          "SEND": "Send",
+          "CANCEL": "Cancel",
+          "SUCCESS": "Request for changing the data quota has been sent"
+        },
+        "SSH_KEYS": {
+          "SSH_KEYS_TITLE": "SSH keys",
+          "SSH_KEYS_DESCRIPTION": "List of your ssh keys.",
+          "NEW_KEY": "Add new key",
+          "COPY_TOOLTIP": "Copy to clipboard",
+          "REMOVE_TOOLTIP": "Remove",
+          "REMOVE_KEY": "Remove selected key",
+          "REMOVE_DIALOG_TITLE": "Remove ssh key",
+          "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed."
+        },
+        "ROLE_SEARCH_SELECT": {
+          "SELECT_ROLE": "Select role",
+          "FIND_ROLE": "Find role...",
+          "NO_ROLE_FOUND": "No matching role found"
+        },
+        "BAN_SPECIFICATION": {
+          "VALIDITY": "Expire to a date",
+          "NEVER": "Never expire",
+          "DESCRIPTION": "Reason for the ban"
+        },
+        "BAN_ON_ENTITY_LIST": {
+          "BAN_ID_HEADER": "Ban Id",
+          "TARGET_NAME_HEADER": "{{ target }}",
+          "TARGET_ID_HEADER": "{{ target }} Id",
+          "SUBJECT_NAME_HEADER": "{{ subject }}",
+          "SUBJECT_ID_HEADER": "{{ subject }} Id",
+          "DESCRIPTION_HEADER": "Description",
+          "EXPIRATION_HEADER": "Expiration",
+          "NO_BANS": "No bans found.",
+          "UPDATE_BAN": "Update ban"
+        },
+        "UNIVERSAL_OBJECTS_LIST": {
+          "FILTER": "Filter objects by their properties"
+        }
+      },
+      "ORGANIZATIONS": {
+        "TITLE": "User organizations",
+        "FILTER": "Filter by name or Id",
+        "YOU_ARE_ADMIN": "Organizations where you are admin",
+        "YOU_ARE_MEMBER": "Organizations where you are member",
+        "USER_IS_ADMIN": "Organizations where user is admin",
+        "USER_IS_MEMBER": "Organizations where user is member"
+      },
+      "GROUPS": {
+        "MEMBER_GROUPS": "Member groups",
+        "ADMINS_GROUPS": "Groups where user is admin"
+      },
+      "REFRESH_BUTTON": "Refresh",
+      "SERVICES_CONFIGURATIONS": {
+        "ADD": "Add",
+        "SAVE": "Save"
+      },
+      "CHECKBOX_LABEL": {
+        "SELECT_ALL": "Select all",
+        "DESELECT_ALL": "Deselect all",
+        "SELECT_ROW": "Select item {{ name }}",
+        "DESELECT_ROW": "Deselect item {{ name }}"
+      }
+    },
+    "LANGUAGES": {
+      "EN": "English",
+      "CS": "Czech"
+    },
+    "UI": {
+      "ALERTS": {
+        "NO_GROUPS": "No groups found.",
+        "NO_ORGANIZATIONS": "No organizations found",
+        "NO_FILTER_RESULTS_ALERT": "No results match the given search criteria.",
+        "NO_MEMBERS": "No members found",
+        "NO_USERS": "No users found.",
+        "NO_FACILITIES": "No facilities found.",
+        "NO_AUDIT_MESSAGES": "No audit messages found.",
+        "NO_BLOCKED_LOGINS": "No blocked logins found."
+      }
+    }
+  }
+}

@@ -1,5 +1,32 @@
 Upgrade notes
 
+## [16.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.2...v16.0.0) (2024-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove old unused properties from instance configs on the instances where it is still in place
+* **admin:** Visualizer functionality was removed from admin GUI.
+* **pwdreset:** It is now possible to set optional config property `default_namespace` for password reset application.
+
+### Features
+
+* **pwdreset:** option to set default namespace ([485a363](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/485a36305443eb1ddc5f902e296f9a816b1e0f8c))
+
+
+### Bug Fixes
+
+* group list sorting failed when paginated ([6135732](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/61357323c261fb03b3c97314067bc203205bb996))
+* **lib:** fix incorrect value assignment in membership expiration settings ([92c0ae7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/92c0ae71b8710ace086d9a9ff19adba1eace33b2))
+* **profile:** inaccessible exception displayed on login as unknown user ([ca12e58](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ca12e58ee16da0c194bdd85f1bffc11680c74ff5))
+* reworked links to other apps ([abb89ae](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/abb89ae9572ee7fd86bd1c470c6ba62336df5295))
+
+
+### Others
+
+* **admin:** remove visualizer and its dependencies ([bc7e1cd](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/bc7e1cd90d8b5a16dc4661be2fff0f8eab60ce09))
+* delete unused config properties ([67abfea](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/67abfeab1fa63cab4c4b4cd628404267caf02f8c))
+
 ## [15.4.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.1...v15.4.2) (2024-03-13)
 
 

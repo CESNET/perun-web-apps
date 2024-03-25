@@ -1,0 +1,97 @@
+{
+  "HEADER": {
+    "TITLE": "Account linking"
+  },
+  "NAV": {
+    "LOGOUT": "Log out",
+    "OTHER_APPLICATIONS": "Other applications"
+  },
+  "LIST_OF_IDENTITIES": {
+    "SIGN_NOT_KNOW": "You are trying to sign in with",
+    "SIGN_KNOW": "You are signed in with",
+    "LINKED_ACCOUNTS": "Linked accounts",
+    "DELETE_DISABLED_TOOLTIP": "You are logged in by this account",
+    "DELETE": "Delete"
+  },
+  "MAIN_WINDOW": {
+    "IS_NOT_KNOWN_IDENTITY": "The account is not registered in the system",
+    "TITLE_NO_SIMILAR_FOUND": "We didn't find any similar account",
+    "NO_SIMILAR_FOUND_HELP": "Please prove your account by logging in using one of the registered accounts.",
+    "CONNECT_OTHER_ACCOUNT": "Connect another account",
+    "TITLE_SIMILAR_FOUND": "We found account(s) that might be yours",
+    "SIMILAR_FOUND_HELP": "Please prove it's yours by logging in using one of the registered accounts.",
+    "CONNECT_THIS_ACCOUNT": "Connect this account",
+    "LINKED_ACCOUNTS": "Linked accounts"
+  },
+  "SHOW_RESULT": {
+    "TRY_AGAIN": "Try it again",
+    "BACK_HOME": "Back to home page"
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "LOGIN": {
+        "SIGN_IN": "Sign in",
+        "TEXT": "You must sign in to continue.",
+        "LOGOUT_INFO": "You have been successfully logged out."
+      },
+      "COMPONENTS": {
+        "SESSION_EXPIRATION": {
+          "TITLE": "Session expiration",
+          "DESCRIPTION": "Your session has expired. Please sign in to continue.",
+          "SIGN_IN": "Proceed"
+        },
+        "MFA_REQUIRED_DIALOG": {
+          "TITLE": "Step-up authentication required",
+          "INFO": "To perform this action you need to execute step-up authentication.",
+          "INFO_ROLE": "To log in you need to execute step-up authentication.",
+          "CANCEL": "Cancel",
+          "STEP_UP": "Step-up authentication"
+        },
+        "NO_MFA_TOKEN": {
+          "TITLE": "No MFA token",
+          "INFO": "You need to have at least one active MFA token. Please manage your MFA tokens.",
+          "CANCEL": "Cancel",
+          "MANAGE_TOKENS": "Manage tokens"
+        },
+        "FOCUS_ON_MFA_DIALOG": {
+          "MODAL": "Modal window is opened.",
+          "MODAL_WARNING": "Please check your browser settings if no modal window is open."
+        },
+        "REPORT_ISSUE": {
+          "TITLE": "Report an issue",
+          "SUBJECT": "Subject",
+          "SUBJECT_ERROR": "Subject cannot be empty.",
+          "MESSAGE": "Message",
+          "MESSAGE_PLACEHOLDER": "Please describe the issue",
+          "MESSAGE_HINT": "Please try to describe in detail the problem.",
+          "CANCEL": "Cancel",
+          "SEND": "Send",
+          "SUCCESS": "Issue report was sent and got ticket number: "
+        },
+        "REMOVE_USER_EXT_SOURCE": {
+          "TITLE": "Remove account",
+          "DESCRIPTION": "Following account will be removed",
+          "ASK": "Are you sure you want to continue?",
+          "CANCEL": "Cancel",
+          "REMOVE": "Remove",
+          "SUCCESS": "User account successfully removed"
+        }
+      },
+      "USER_NOT_ALLOWED": {
+        "TITLE": "Access not allowed",
+        "MESSAGE": "Service accounts are not allowed to access this application.",
+        "REDIRECT": "Redirect to login page"
+      }
+    },
+    "CONSOLIDATOR": {
+      "OK_TITLE": "Success!",
+      "OK_SUBTITLE": "Accounts successfully linked.",
+      "MESSAGE_SENT_TO_SUPPORT_TITLE": "Email was sent to user support.",
+      "MESSAGE_SENT_TO_SUPPORT_SUBTITLE": "Our user support will answer your email as soon as possible.",
+      "FOCUS_ON_LINKER": {
+        "MODAL": "Modal window is opened.",
+        "MODAL_WARNING": "Please check your browser settings if no modal window is open."
+      }
+    }
+  }
+}

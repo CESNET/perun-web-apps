@@ -1,0 +1,73 @@
+{
+  "HEADER": {
+    "LANGUAGE": "Czech"
+  },
+  "PAGES": {
+    "PWD_RESET_PAGE": {
+      "TITLE_RESET": "Password reset",
+      "TITLE_ACTIVATION": "Account activation",
+      "NAMESPACE": "Namespace",
+      "LOGIN": "Login",
+      "RESET_BUTTON": "Reset password",
+      "ACTIVATION_BUTTON": "Activate account",
+      "INVALID_REQUEST": "<b>Request is invalid</b>\nIt may be expired, already used or incorrect",
+      "RESET_SUCCESS": "Password was successfully reset",
+      "ACTIVATION_SUCCESS": "Account was successfully activated"
+    }
+  },
+  "SHARED_LIB": {
+    "PERUN": {
+      "COMPONENTS": {
+        "MFA_REQUIRED_DIALOG": {
+          "TITLE": "Step-up authentication required",
+          "INFO": "To perform this action you need to execute step-up authentication.",
+          "INFO_ROLE": "To log in you need to execute step-up authentication.",
+          "CANCEL": "Cancel",
+          "STEP_UP": "Step-up authentication"
+        },
+        "NO_MFA_TOKEN": {
+          "TITLE": "No MFA token",
+          "INFO": "You need to have at least one active MFA token. Please manage your MFA tokens.",
+          "CANCEL": "Cancel",
+          "MANAGE_TOKENS": "Manage tokens"
+        },
+        "FOCUS_ON_MFA_DIALOG": {
+          "MODAL": "Modal window is opened.",
+          "MODAL_WARNING": "Please check your browser settings if no modal window is open."
+        },
+        "USER_DONT_EXIST": {
+          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+        },
+        "USER_NOT_ALLOWED": {
+          "TITLE": "Access not allowed",
+          "MESSAGE": "Service accounts are not allowed to access this application.",
+          "REDIRECT": "Redirect to login page"
+        },
+        "SESSION_EXPIRATION": {
+          "TITLE": "Session expiration",
+          "DESCRIPTION": "Your session has expired. Please sign in to continue.",
+          "SIGN_IN": "Proceed"
+        },
+        "PASSWORD_FORM_FIELD": {
+          "PASSWORD": "New password",
+          "PASSWORD_AGAIN": "New password again",
+          "FIELD_EMPTY": "Empty value is not allowed",
+          "PWD_DONT_MATCH": "Passwords do not match"
+        }
+      },
+      "LOGIN": {
+        "SIGN_IN": "Sign in",
+        "TEXT": "You must sign in to continue."
+      },
+      "LOGIN_SERVICE_ACCESS": {
+        "LABEL": "Sign in",
+        "USERNAME": "Username:",
+        "USERNAME_ERROR": "Username cannot be empty",
+        "PASSWORD": "Password:",
+        "PASSWORD_ERROR": "Password cannot be empty",
+        "SIGN_IN": "Sign in",
+        "WRONG_LOGIN_OR_PASSWORD": "Wrong username or password. Please try it again."
+      }
+    }
+  }
+}
