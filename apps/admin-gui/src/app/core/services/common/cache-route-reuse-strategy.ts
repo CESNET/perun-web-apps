@@ -28,6 +28,7 @@ import { AdminSearcherComponent } from '../../../admin/pages/admin-page/admin-se
 import { AdminServicesComponent } from '../../../admin/pages/admin-page/admin-services/admin-services.component';
 import { FacilityAllowedUsersComponent } from '../../../facilities/pages/facility-detail-page/facility-allowed-users/facility-allowed-users.component';
 import { GroupRolesComponent } from '../../../vos/pages/group-detail-page/group-roles/group-roles.component';
+import { GroupSettingsRelationsComponent } from '../../../vos/pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 
 export class CachedRoute {
   routeHandle: DetachedRouteHandle;
@@ -51,6 +52,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     GroupRolesComponent.id,
     GroupApplicationsComponent.id,
     GroupSettingsApplicationFormComponent.id,
+    GroupSettingsRelationsComponent.id,
     FacilityAllowedGroupsComponent.id,
     FacilityResourcesComponent.id,
     FacilityAllowedUsersComponent.id,
