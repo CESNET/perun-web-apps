@@ -56,7 +56,7 @@ export class ImportPublicationsPageComponent implements OnInit {
 
   selected = new SelectionModel<PublicationForGUI>(true, []);
   tableId = TABLE_IMPORT_PUBLICATIONS;
-  displayedColumns = ['select', 'id', 'lock', 'title', 'reportedBy', 'year', 'category'];
+  displayedColumns = ['select', 'title', 'reportedBy', 'year', 'isbn', 'cite'];
   firstSearchDone: boolean;
 
   startYear: FormControl<Moment>;
@@ -130,16 +130,7 @@ export class ImportPublicationsPageComponent implements OnInit {
     }
     const publication = publications.shift();
     const publicationInput: InputCreatePublication = {
-      publication: {
-        id: 0,
-        beanName: 'Publication',
-        title: publication.title,
-        categoryId: publication.categoryId,
-        year: publication.year,
-        isbn: publication.isbn,
-        doi: publication.doi,
-        main: publication.main,
-      },
+      publication,
     };
 
     this.cabinetService.createPublication(publicationInput).subscribe({
