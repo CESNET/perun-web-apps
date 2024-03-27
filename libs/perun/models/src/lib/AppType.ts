@@ -4,4 +4,5 @@ export enum AppType {
   PwdReset = 'pwdReset',
   Consolidator = 'consolidator',
   Linker = 'linker',
+  Publications = 'publications',
 }
