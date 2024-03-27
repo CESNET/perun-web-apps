@@ -14,7 +14,7 @@ import {
   PreferredLanguageService,
   AuthService,
 } from '@perun-web-apps/perun/services';
-import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
+import { AttributesManagerService, PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   isServiceAccess: boolean;
   contentHeight = this.displayWarning ? 'calc(100vh - 112px)' : 'calc(100vh - 64px)';
   headerLabel = this.store.getProperty('header_label_en');
+  principal: PerunPrincipal;
 
   constructor(
     private store: StoreService,
@@ -74,15 +75,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       );
       return;
     }
-    this.attributesManagerService
-      .getUserAttributes(this.store.getPerunPrincipal().userId)
-      .subscribe((atts) => {
+    this.principal = this.store.getPerunPrincipal();
+    if (this.principal?.userId) {
+      this.attributesManagerService.getUserAttributes(this.principal.userId).subscribe((atts) => {
         const userPrefLang = atts.find((elem) => elem.friendlyName === 'preferredLanguage');
         const userLang = (userPrefLang?.value as string) ?? null;
 
         const prefLang = this.preferredLangService.getPreferredLanguage(userLang);
         this.translateService.use(prefLang);
       });
+    }
   }
 
   getTopGap(): number {

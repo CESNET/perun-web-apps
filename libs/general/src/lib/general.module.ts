@@ -7,9 +7,10 @@ import { UserDontExistDialogComponent } from './user-dont-exist-dialog/user-dont
 import { TranslateModule } from '@ngx-translate/core';
 import { PreventProxyOverloadDialogComponent } from './prevent-proxy-overload-dialog/prevent-proxy-overload-dialog.component';
 import { UserNotAllowedAccessComponent } from './user-not-allowed-access/user-not-allowed-access.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [CommonModule, MatDialogModule, MatButtonModule, TranslateModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, TranslateModule, MatIconModule],
   exports: [
     ServerDownDialogComponent,
     UserDontExistDialogComponent,

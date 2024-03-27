@@ -314,7 +314,8 @@
           "EMPTY": "Žádné nastavení nebyly nalezeny. Použijte tlačidlo 'Přidat' pro přidání nových nastavení."
         },
         "USER_DONT_EXIST": {
-          "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje."
+          "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje.",
+          "LOGOUT": "Odhlásit se"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Přístup není povolen",

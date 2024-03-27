@@ -3199,7 +3199,8 @@
           "NO_ITEM_FOUND": "No matching attribute found"
         },
         "USER_DONT_EXIST": {
-          "TITLE": "The requested user (by Id or external identity) doesn't exist."
+          "TITLE": "The requested user (by Id or external identity) doesn't exist.",
+          "LOGOUT": "Log out"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Access not allowed",

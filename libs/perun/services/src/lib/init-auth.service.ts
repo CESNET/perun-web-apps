@@ -109,7 +109,13 @@ export class InitAuthService {
     return firstValueFrom(this.authzService.getPerunPrincipal()).then((perunPrincipal) => {
       if (perunPrincipal.user === null) {
         const config = getDefaultDialogConfig();
-        this.dialog.open(UserDontExistDialogComponent, config);
+        config.height = '150px';
+        this.dialog
+          .open(UserDontExistDialogComponent, config)
+          .afterClosed()
+          .subscribe(() => {
+            this.authService.logout();
+          });
       } else if (perunPrincipal.user.serviceUser) {
         const config = getDefaultDialogConfig();
         this.dialog

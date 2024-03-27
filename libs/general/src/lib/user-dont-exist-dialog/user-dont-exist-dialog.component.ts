@@ -8,4 +8,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class UserDontExistDialogComponent {
   constructor(public dialogRef: MatDialogRef<UserDontExistDialogComponent>) {}
+
+  onLogOut(): void {
+    this.dialogRef.close();
+  }
 }

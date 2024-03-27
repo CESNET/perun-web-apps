@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { GuiAuthResolver, InitAuthService, StoreService } from '@perun-web-apps/perun/services';
 import { Router } from '@angular/router';
+import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'perun-web-apps-root',
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   contentBackgroundColor = this.store.getProperty('theme').content_bg_color;
   contentHeight = 'calc(100vh - 64px)';
 
+  principal: PerunPrincipal;
+
   constructor(
     private store: StoreService,
     private initAuth: InitAuthService,
@@ -40,6 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.principal = this.store.getPerunPrincipal();
     this.isLoginScreenShow = this.initAuth.isLoginScreenShown();
     this.isServiceAccess = this.initAuth.isServiceAccessLoginScreenShown();
     sessionStorage.removeItem('baLogout');
