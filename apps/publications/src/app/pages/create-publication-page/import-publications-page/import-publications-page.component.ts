@@ -9,7 +9,6 @@ import {
 import { FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_IMPORT_PUBLICATIONS } from '@perun-web-apps/config/table-config';
@@ -18,9 +17,6 @@ import { Router } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UniversalConfirmationDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { Moment } from 'moment';
-
-const moment = _moment;
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -59,8 +55,8 @@ export class ImportPublicationsPageComponent implements OnInit {
   displayedColumns = ['select', 'id', 'lock', 'title', 'reportedBy', 'year', 'category'];
   firstSearchDone: boolean;
 
-  startYear: FormControl<Moment>;
-  endYear: FormControl<Moment>;
+  startYear: FormControl<Date>;
+  endYear: FormControl<Date>;
 
   userId: number;
   userAsAuthor = true;
@@ -84,8 +80,10 @@ export class ImportPublicationsPageComponent implements OnInit {
     this.firstSearchDone = false;
     this.userId = this.storeService.getPerunPrincipal().user.id;
 
-    this.startYear = new FormControl(moment().subtract(1, 'year'));
-    this.endYear = new FormControl(moment());
+    const yearMinusOne = new Date();
+    yearMinusOne.setFullYear(new Date().getFullYear() - 1);
+    this.startYear = new FormControl(yearMinusOne);
+    this.endYear = new FormControl(new Date());
 
     this.cabinetService.getPublicationSystems().subscribe((publicationSystems) => {
       this.publicationSystems = publicationSystems.filter((ps) => ps.friendlyName !== 'INTERNAL');
@@ -106,8 +104,8 @@ export class ImportPublicationsPageComponent implements OnInit {
     this.cabinetService
       .findExternalPublications(
         this.storeService.getPerunPrincipal().user.id,
-        this.startYear.value.year(),
-        this.endYear.value.year(),
+        new Date(this.startYear.value).getFullYear(),
+        new Date(this.endYear.value).getFullYear(),
         this.pubSystemNamespace,
       )
       .subscribe({

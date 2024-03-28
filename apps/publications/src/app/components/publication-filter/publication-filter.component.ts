@@ -1,13 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CabinetManagerService, Category } from '@perun-web-apps/perun/openapi';
 import { FormControl } from '@angular/forms';
-import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { formatDate } from '@angular/common';
-import { Moment } from 'moment';
-
-const moment = _moment;
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -51,8 +47,8 @@ export class PublicationFilterComponent implements OnInit {
   code = new FormControl('');
   selectedMode: string;
   selectedCategory: Category | 'no_value';
-  startYear: FormControl<Moment> = new FormControl(moment());
-  endYear: FormControl<Moment> = new FormControl(moment());
+  startYear: FormControl<Date> = new FormControl(new Date());
+  endYear: FormControl<Date> = new FormControl(new Date());
 
   constructor(private cabinetService: CabinetManagerService) {}
 
@@ -73,12 +69,8 @@ export class PublicationFilterComponent implements OnInit {
       isbnissn: this.selectedMode === 'isbn/issn' ? code : null,
       doi: this.selectedMode === 'doi' ? code : null,
       category: this.selectedCategory !== 'no_value' ? this.selectedCategory.id : null,
-      startYear: formatDate(
-        this.startYear.value ? this.startYear.value.toDate() : null,
-        'yyyy',
-        'en-GB',
-      ),
-      endYear: formatDate(this.endYear.value.toDate(), 'yyyy', 'en-GB'),
+      startYear: formatDate(this.startYear.value ? this.startYear.value : null, 'yyyy', 'en-GB'),
+      endYear: formatDate(this.endYear.value, 'yyyy', 'en-GB'),
     };
     this.filteredPublication.emit(filter);
   }
@@ -89,7 +81,7 @@ export class PublicationFilterComponent implements OnInit {
     this.selectedMode = 'isbn/issn';
     this.selectedCategory = 'no_value';
     this.startYear.setValue(null);
-    this.endYear.setValue(moment());
+    this.endYear.setValue(new Date());
     const filter = {
       title: null,
       isbnissn: null,
