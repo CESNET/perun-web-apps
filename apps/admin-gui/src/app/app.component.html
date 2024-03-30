@@ -13,7 +13,9 @@
     [ngStyle]="{'top': getNavMenuTop(), 'background': navBackgroundColor}"
     [showNotifications]="true"
     [ngClass]="['nav-menu mat-elevation-z3', !principal ? 'header-index' : '']"></perun-web-apps-header>
-  <mat-sidenav-container autosize="true" [ngStyle]="{'min-height': getSideNavMinHeight()}">
+  <mat-sidenav-container
+    autosize="true"
+    [ngStyle]="principal ? {'margin-top': getSideNavMarginTop(), 'min-height': getSideNavMinHeight()} : {'min-height': getSideNavMinHeight()}">
     <mat-sidenav
       #sidenav
       [fixedInViewport]="true"
