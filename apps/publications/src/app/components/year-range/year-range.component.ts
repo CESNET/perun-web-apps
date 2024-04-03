@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { Moment } from 'moment';
 
 @Component({
   selector: 'perun-web-apps-year-range',
@@ -10,26 +9,26 @@ import { Moment } from 'moment';
   encapsulation: ViewEncapsulation.None,
 })
 export class YearRangeComponent implements OnInit {
-  @Input() startYear: FormControl<Moment>;
-  @Input() endYear: FormControl<Moment>;
+  @Input() startYear: FormControl<Date>;
+  @Input() endYear: FormControl<Date>;
   startMaxYear: Date;
   endMinYear: Date;
   endMaxYear: Date;
 
   ngOnInit(): void {
     this.endMaxYear = new Date();
-    this.startMaxYear = this.endYear.value.toDate();
+    this.startMaxYear = this.endYear.value;
     this.startYear.setValue(null);
   }
 
   chosenYearHandler(
-    dateFormControl: FormControl<Moment>,
-    event: Moment,
-    datepicker: MatDatepicker<Moment>,
+    dateFormControl: FormControl<Date>,
+    event: Date,
+    datepicker: MatDatepicker<Date>,
   ): void {
     dateFormControl.setValue(event);
-    this.startMaxYear = this.endYear.value.toDate();
-    this.endMinYear = this.startYear.value ? this.startYear.value.toDate() : null;
+    this.startMaxYear = this.endYear.value;
+    this.endMinYear = this.startYear.value ? this.startYear.value : null;
     datepicker.close();
   }
 }
