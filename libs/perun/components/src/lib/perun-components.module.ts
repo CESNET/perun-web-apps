@@ -79,7 +79,7 @@ import { NotificatorComponent } from './notificator/notificator.component';
 import { GroupResourceStatusComponent } from './group-resource-status/group-resource-status.component';
 import { PerunUtilsModule } from '@perun-web-apps/perun/utils';
 import { ServicePackageSearchSelectComponent } from './service-package-search-select/service-package-search-select.component';
-import { UsersDynamicListComponent } from './users-dynamic-list/users-dynamic-list.component';
+import { UsersListComponent } from './users-list/users-list.component';
 import { SelectionItemSearchSelectComponent } from './selection-item-search-select/selection-item-search-select.component';
 import { ServiceSearchSelectComponent } from './service-search-select/service-search-select.component';
 import { AdvancedFilterComponent } from './advanced-filter/advanced-filter.component';
@@ -237,7 +237,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     NotificatorComponent,
     GroupResourceStatusComponent,
     ServicePackageSearchSelectComponent,
-    UsersDynamicListComponent,
+    UsersListComponent,
     SelectionItemSearchSelectComponent,
     ServiceSearchSelectComponent,
     AdvancedFilterComponent,
@@ -320,7 +320,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     OwnersListComponent,
     NotificatorComponent,
     ServicePackageSearchSelectComponent,
-    UsersDynamicListComponent,
+    UsersListComponent,
     SelectionItemSearchSelectComponent,
     ServiceSearchSelectComponent,
     AdvancedFilterComponent,

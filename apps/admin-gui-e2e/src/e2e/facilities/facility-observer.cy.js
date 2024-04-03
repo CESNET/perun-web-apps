@@ -112,7 +112,7 @@ describe('Facility management with role Facility observer', () => {
     it('test list managers', () => {
       cy.get('[data-cy=managers]')
         .click()
-      cy.get(`[data-cy=${dbManagerFirstName}-firstName-td]`)
+      cy.get(`[data-cy=${dbManagerFirstName}-td]`)
         .should('exist')
     });
   });

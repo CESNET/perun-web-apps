@@ -4,24 +4,24 @@
   class="mt-2 search-field"
   [autoFocus]="true"
   [placeholder]="'ADMIN.USERS.SEARCH_PLACEHOLDER'"
-  (filter)="onSearchByString($event)">
+  (filter)="filterSearchString($event)">
 </perun-web-apps-debounce-filter>
-<mat-checkbox (change)="findUsersWithoutVO()" [checked]="usersWithoutVo" color="primary">
+<mat-checkbox (change)="filterUserWithoutVO()" [checked]="usersWithoutVo" color="primary">
   {{'ADMIN.USERS.USERS_WITHOUT_VO' | translate}}
 </mat-checkbox>
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <perun-web-apps-users-dynamic-list
+  <perun-web-apps-users-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
-    (loading$)="loading$ = $event"
-    [disableRouting]="false"
-    [searchString]="searchString"
-    [attrNames]="attributes"
-    [displayedColumns]="['user', 'id', 'name', 'email', 'logins', 'organization']"
-    [tableId]="tableId"
-    [withoutVo]="usersWithoutVo"
-    [updateTable]="update">
-  </perun-web-apps-users-dynamic-list>
+    [loading]="loading$ | async"
+    (queryChanged)="nextPage.next($event)"
+    (downloadAll)="downloadAll($event)"
+    [users]="usersPage$ | async"
+    [routeToAdmin]="true"
+    [displayColumns]="displayedColumns"
+    [selection]="selection"
+    [filter]="searchString"
+    [tableId]="tableId" />
 </div>

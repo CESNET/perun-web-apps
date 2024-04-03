@@ -127,13 +127,14 @@
               {{('ROLES.' + role.roleName + '_USERS_' + entityType) | translate}}
             </div>
             <div class="position-relative table-min-height">
-              <app-users-list
+              <perun-web-apps-users-list
                 *perunWebAppsLoader="loading; indicator: spinner"
                 [loading]="loading"
-                [displayedColumns]="['user', 'id', 'name']"
+                [routeToAdmin]="true"
+                [displayColumns]="['user', 'id', 'name']"
                 [disableRouting]="true"
                 [users]="users | async">
-              </app-users-list>
+              </perun-web-apps-users-list>
             </div>
           </div>
         </div>

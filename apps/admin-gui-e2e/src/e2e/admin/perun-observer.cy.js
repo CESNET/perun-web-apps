@@ -112,7 +112,7 @@ describe('Perun admin management with role Perun observer', () => {
       .click()
     cy.get('[data-cy=searcher-search-button]')
       .click()
-    cy.get(`[data-cy=${dbSearcherUserFirstName.toLowerCase()}-firstName-td]`)
+    cy.get(`[data-cy=${dbSearcherUserFirstName.toLowerCase()}-td]`)
       .should('exist');
   });
 

@@ -40,15 +40,15 @@
       <perun-web-apps-loading-table></perun-web-apps-loading-table>
     </ng-template>
     <div class="position-relative mt-3 table-min-height" *ngIf="firstSearchDone">
-      <app-users-list
+      <perun-web-apps-users-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
         [disableRouting]="true"
         [selection]="selection"
-        [displayedColumns]="['select', 'id', 'name', 'email', 'logins', 'organization']"
+        [displayColumns]="['select', 'id', 'name', 'email', 'logins', 'organization']"
         [tableId]="tableId"
         [users]="users">
-      </app-users-list>
+      </perun-web-apps-users-list>
     </div>
   </div>
 

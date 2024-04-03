@@ -25,16 +25,16 @@
           <perun-web-apps-loading-table></perun-web-apps-loading-table>
         </ng-template>
         <div class="position-relative table-min-height" *ngIf="firstSearchDone">
-          <app-users-list
+          <perun-web-apps-users-list
             *perunWebAppsLoader="loading; indicator: searchSpinner"
             [loading]="loading"
-            [displayedColumns]="displayedColumns"
+            [displayColumns]="displayedColumns"
             [selection]="selection"
             [tableId]="tableId"
             [disableRouting]="true"
             [users]="identities"
             [noUsersFoundLabel]="'DIALOGS.CONNECT_IDENTITY.NO_IDENTITIES' | translate">
-          </app-users-list>
+          </perun-web-apps-users-list>
         </div>
         <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
           {{'DIALOGS.CONNECT_IDENTITY.SEARCH_HINT' | translate}}
