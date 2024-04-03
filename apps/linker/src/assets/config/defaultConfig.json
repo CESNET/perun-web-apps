@@ -14,7 +14,8 @@
     "oauth_acr_value": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport https://refeds.org/profile/sfa https://refeds.org/profile/mfa"
   },
   "mfa": {
-    "url_en": "https://mfa.id.muni.cz/"
+    "url_en": "https://mfa.id.muni.cz/",
+    "step_up_available": true
   },
   "theme": {
   "user_color": "#00796b"

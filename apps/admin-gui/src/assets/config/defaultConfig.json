@@ -25,7 +25,8 @@
   },
   "proxy_logout": true,
   "mfa": {
-    "url_en": "https://mfa.id.muni.cz/"
+    "url_en": "https://mfa.id.muni.cz/",
+    "step_up_available": true
   },
   "login_namespace_attributes": [
     "urn:perun:user:attribute-def:def:login-namespace:einfra",

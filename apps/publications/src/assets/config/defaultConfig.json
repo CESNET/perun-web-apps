@@ -16,7 +16,8 @@
   },
   "proxy_logout": true,
   "mfa": {
-    "url_en": "https://mfa.id.muni.cz/"
+    "url_en": "https://mfa.id.muni.cz/",
+    "step_up_available": true
   },
   "supported_languages": [
     "en"

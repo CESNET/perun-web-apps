@@ -130,10 +130,11 @@ export class ApiInterceptor implements HttpInterceptor {
         const e = err.error as RPCError;
         // catch MFA required error and start MFA logic
         if (
-          e.type === 'MfaPrivilegeException' ||
-          e.type === 'MfaRolePrivilegeException' ||
-          e.type === 'MfaTimeoutException' ||
-          e.type === 'MfaRoleTimeoutException'
+          this.store.getProperty('mfa').step_up_available &&
+          (e.type === 'MfaPrivilegeException' ||
+            e.type === 'MfaRolePrivilegeException' ||
+            e.type === 'MfaTimeoutException' ||
+            e.type === 'MfaRoleTimeoutException')
         ) {
           return this.mfaHandlerService.openMfaWindow(e.type).pipe(
             switchMap((verified) => {
