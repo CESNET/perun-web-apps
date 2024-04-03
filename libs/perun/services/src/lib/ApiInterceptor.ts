@@ -130,12 +130,14 @@ export class ApiInterceptor implements HttpInterceptor {
         const e = err.error as RPCError;
         // catch MFA required error and start MFA logic
         if (
-          this.store.getProperty('mfa').step_up_available &&
-          (e.type === 'MfaPrivilegeException' ||
-            e.type === 'MfaRolePrivilegeException' ||
-            e.type === 'MfaTimeoutException' ||
-            e.type === 'MfaRoleTimeoutException')
+          e.type === 'MfaPrivilegeException' ||
+          e.type === 'MfaRolePrivilegeException' ||
+          e.type === 'MfaTimeoutException' ||
+          e.type === 'MfaRoleTimeoutException'
         ) {
+          if (!this.store.getProperty('mfa').step_up_available) {
+            return this.handleOtherErrors(err, req, shouldHandleError);
+          }
           return this.mfaHandlerService.openMfaWindow(e.type).pipe(
             switchMap((verified) => {
               if (verified) {
@@ -150,14 +152,7 @@ export class ApiInterceptor implements HttpInterceptor {
         } else {
           // Handle other errors
           this.handleInvalidAccessTokenError(err);
-          const errRpc: RPCError = this.formatErrors(err, req);
-          if (errRpc === undefined) {
-            return throwError(() => err);
-          }
-          if (shouldHandleError) {
-            this.notificator.showRPCError(errRpc);
-          }
-          return throwError(() => errRpc);
+          return this.handleOtherErrors(err, req, shouldHandleError);
         }
       }),
     );
@@ -223,5 +218,20 @@ export class ApiInterceptor implements HttpInterceptor {
         this.reauthenticate();
       });
     }
+  }
+
+  private handleOtherErrors<T>(
+    err: HttpErrorResponse,
+    req: HttpRequest<T>,
+    shouldHandleError: boolean,
+  ): Observable<never> {
+    const errRpc: RPCError = this.formatErrors(err, req);
+    if (errRpc === undefined) {
+      return throwError(() => err);
+    }
+    if (shouldHandleError) {
+      this.notificator.showRPCError(errRpc);
+    }
+    return throwError(() => errRpc);
   }
 }
