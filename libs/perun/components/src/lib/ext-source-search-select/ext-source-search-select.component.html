@@ -1,0 +1,10 @@
+<perun-web-apps-entity-search-select
+  [entities]="extSources"
+  [disableAutoSelect]="true"
+  [searchFunction]="nameFunction"
+  [mainTextFunction]="nameFunction"
+  [secondaryTextFunction]="secondaryTextFunction"
+  (entitySelected)="this.extSourceSelected.emit($event)"
+  [selectPlaceholder]="'DIALOGS.ADD_USER_EXT_SOURCE.EXT_SOURCE' | translate"
+  [findPlaceholder]="'DIALOGS.ADD_USER_EXT_SOURCE.FIND_EXT_SOURCE' | translate">
+</perun-web-apps-entity-search-select>
