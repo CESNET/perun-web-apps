@@ -102,20 +102,33 @@
             </mat-form-field>
           </div>
         </mat-step>
+
         <mat-step>
           <ng-template
             matStepLabel
-            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.EXPIRATION_LABEL' | translate}}</ng-template
+            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_LABEL' | translate}}</ng-template
           >
-          <div class="mt-2">
-            <h5 class="mb-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.EXPIRATION' | translate}}</h5>
+          <div class="dialog-container">
+            <h5 class="mt-2">
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_TITLE' | translate}}
+            </h5>
+            <app-choose-sponsor
+              [voId]="data.voId"
+              [voSponsors]="voSponsors"
+              [customTitle]="'DIALOGS.GENERATE_SPONSORED_MEMBERS.SELECT_SPONSOR'"
+              (sponsorTypeSelected)="sponsorType = $event"
+              (sponsorSelected)="selectedSponsor = $event">
+            </app-choose-sponsor>
+
+            <h6 class="mt-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.EXPIRATION' | translate}}</h6>
             <perun-web-apps-expiration-select
-              (expirationSelected)="setExpiration($event)"
               [minDate]="minDate"
-              [expiration]="expiration">
+              (expirationSelected)="setExpiration($event)"
+              class="mt-2">
             </perun-web-apps-expiration-select>
           </div>
         </mat-step>
+
         <mat-step>
           <ng-template
             matStepLabel

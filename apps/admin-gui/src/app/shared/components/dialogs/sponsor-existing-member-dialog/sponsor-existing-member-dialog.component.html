@@ -1,79 +1,84 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
 <div class="{{theme}}">
-  <h1 mat-dialog-title>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.TITLE' | translate}}</h1>
-  <div mat-dialog-content>
-    <mat-form-field class="me-2 search-field adjust-width" *ngIf="!serviceMemberId">
-      <mat-label>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.DESCRIPTION' | translate}}</mat-label>
-      <input
-        data-cy="sponsor-search-input"
-        [formControl]="searchCtrl"
-        autocomplete="false"
-        matInput
-        (keyup.enter)="onSearchByString()" />
-      <mat-error>
-        {{'DIALOGS.SPONSOR_EXISTING_MEMBER.EMPTY_SEARCH_MESSAGE' | translate}}
-      </mat-error>
-    </mat-form-field>
+  <div *perunWebAppsLoader="dialogLoading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      <mat-form-field class="me-2 search-field adjust-width" *ngIf="!serviceMemberId">
+        <mat-label>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.DESCRIPTION' | translate}}</mat-label>
+        <input
+          data-cy="sponsor-search-input"
+          [formControl]="searchCtrl"
+          autocomplete="false"
+          matInput
+          (keyup.enter)="onSearchByString()" />
+        <mat-error>
+          {{'DIALOGS.SPONSOR_EXISTING_MEMBER.EMPTY_SEARCH_MESSAGE' | translate}}
+        </mat-error>
+      </mat-form-field>
 
-    <button
-      *ngIf="!serviceMemberId"
-      data-cy="sponsor-search-button"
-      (click)="onSearchByString()"
-      class="ms-auto"
-      color="accent"
-      [disabled]="loading"
-      mat-flat-button>
-      {{'DIALOGS.SPONSOR_EXISTING_MEMBER.SEARCH' | translate}}
-    </button>
+      <button
+        *ngIf="!serviceMemberId"
+        data-cy="sponsor-search-button"
+        (click)="onSearchByString()"
+        class="ms-auto"
+        color="accent"
+        [disabled]="dialogLoading"
+        mat-flat-button>
+        {{'DIALOGS.SPONSOR_EXISTING_MEMBER.SEARCH' | translate}}
+      </button>
 
-    <ng-template #spinner>
-      <perun-web-apps-loading-table></perun-web-apps-loading-table>
-    </ng-template>
-    <div class="position-relative table-min-height" *ngIf="firstSearchDone">
-      <perun-web-apps-members-list
-        *perunWebAppsLoader="loading; indicator: spinner"
-        [loading]="loading"
-        [displayedColumns]="displayedColumns"
-        [disableStatusChange]="true"
-        [disableRouting]="true"
-        [selection]="selection"
-        [members]="members"
-        [tableId]="tableId" />
+      <ng-template #spinner>
+        <perun-web-apps-loading-table></perun-web-apps-loading-table>
+      </ng-template>
+      <div class="position-relative table-min-height" *ngIf="firstSearchDone">
+        <perun-web-apps-members-list
+          *perunWebAppsLoader="tableLoading; indicator: spinner"
+          [loading]="tableLoading"
+          [displayedColumns]="displayedColumns"
+          [disableStatusChange]="true"
+          [disableRouting]="true"
+          [selection]="selection"
+          [members]="members"
+          [tableId]="tableId" />
+      </div>
+
+      <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
+        {{'DIALOGS.SPONSOR_EXISTING_MEMBER.BEGIN_SEARCH' | translate}}
+      </perun-web-apps-alert>
+
+      <app-choose-sponsor
+        [voId]="data.voId"
+        [voSponsors]="voSponsors"
+        [customTitle]="'DIALOGS.SPONSOR_EXISTING_MEMBER.SELECT_SPONSOR'"
+        (sponsorTypeSelected)="sponsorType = $event"
+        (sponsorSelected)="selectedSponsor = $event">
+      </app-choose-sponsor>
+
+      <div>
+        <br />
+        <h6>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.EXPIRATION' | translate}}</h6>
+        <perun-web-apps-expiration-select
+          [minDate]="minDate"
+          (expirationSelected)="setExpiration($event)">
+        </perun-web-apps-expiration-select>
+      </div>
     </div>
 
-    <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
-      {{'DIALOGS.SPONSOR_EXISTING_MEMBER.BEGIN_SEARCH' | translate}}
-    </perun-web-apps-alert>
-
-    <app-choose-sponsor
-      [voId]="data.voId"
-      [voSponsors]="data.voSponsors"
-      [customTitle]="'DIALOGS.SPONSOR_EXISTING_MEMBER.SELECT_SPONSOR'"
-      (sponsorTypeSelected)="sponsorType = $event"
-      (sponsorSelected)="selectedSponsor = $event">
-    </app-choose-sponsor>
-
-    <div>
-      <br />
-      <h6>{{'DIALOGS.SPONSOR_EXISTING_MEMBER.EXPIRATION' | translate}}</h6>
-      <perun-web-apps-expiration-select
-        [minDate]="minDate"
-        (expirationSelected)="setExpiration($event)">
-      </perun-web-apps-expiration-select>
+    <div mat-dialog-actions>
+      <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+        {{'DIALOGS.SPONSOR_EXISTING_MEMBER.CANCEL' | translate}}
+      </button>
+      <button
+        data-cy="sponsor-member-button"
+        (click)="onSubmit()"
+        class="ms-2"
+        color="accent"
+        [disabled]="dialogLoading || selection.selected.length === 0 || (sponsorType === 'other' && !selectedSponsor)"
+        mat-flat-button>
+        {{'DIALOGS.SPONSOR_EXISTING_MEMBER.SPONSOR' | translate}}
+      </button>
     </div>
-  </div>
-
-  <div mat-dialog-actions>
-    <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
-      {{'DIALOGS.SPONSOR_EXISTING_MEMBER.CANCEL' | translate}}
-    </button>
-    <button
-      data-cy="sponsor-member-button"
-      (click)="onSubmit()"
-      class="ms-2"
-      color="accent"
-      [disabled]="loading || selection.selected.length === 0 || (sponsorType === 'other' && !selectedSponsor)"
-      mat-flat-button>
-      {{'DIALOGS.SPONSOR_EXISTING_MEMBER.SPONSOR' | translate}}
-    </button>
   </div>
 </div>

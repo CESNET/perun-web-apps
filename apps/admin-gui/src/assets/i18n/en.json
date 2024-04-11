@@ -2222,7 +2222,10 @@
       "DOWNLOAD_PDF": "PDF",
       "DOWNLOAD_CSV": "CSV",
       "CLOSE": "Close",
-      "FINISHED_WITH_ERRORS": "Some of the members were not generated properly. See the results for more information."
+      "FINISHED_WITH_ERRORS": "Some of the members were not generated properly. See the results for more information.",
+      "SPONSORSHIP_LABEL": "Sponsorship",
+      "SPONSORSHIP_TITLE": "Sponsorship options",
+      "SELECT_SPONSOR": "Choose sponsor for created user"
     },
     "EDIT_MEMBER_SPONSORS": {
       "TITLE": "Edit sponsors of sponsored member",

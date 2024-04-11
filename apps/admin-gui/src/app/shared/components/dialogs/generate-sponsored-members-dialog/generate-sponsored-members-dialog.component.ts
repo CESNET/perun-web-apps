@@ -4,8 +4,13 @@ import {
   InputCreateSponsoredMemberFromCSV,
   MembersManagerService,
   NamespaceRules,
+  User,
 } from '@perun-web-apps/perun/openapi';
-import { SponsoredMembersPdfService, StoreService } from '@perun-web-apps/perun/services';
+import {
+  FindSponsorsService,
+  SponsoredMembersPdfService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { downloadData, emailRegexString } from '@perun-web-apps/perun/utils';
@@ -53,6 +58,9 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
   passwordReset = 'generate';
   expiration = 'never';
   finishedWithErrors = false;
+  voSponsors: User[] = [];
+  selectedSponsor: User = null;
+  sponsorType = 'self';
 
   submitAllowed = false;
 
@@ -73,6 +81,7 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sponsoredMembersPDFService: SponsoredMembersPdfService,
     private cd: ChangeDetectorRef,
+    private findSponsors: FindSponsorsService,
   ) {}
 
   private static didSomeGenerationFailed(resultData: { [p: string]: string }[]): boolean {
@@ -114,7 +123,10 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
           sponsoredMembers: '',
         });
       }
-      this.loading = false;
+      this.findSponsors.getSponsors(this.data.voId).subscribe((sponsors) => {
+        this.voSponsors = sponsors;
+        this.loading = false;
+      });
       this.cd.detectChanges();
     });
   }
@@ -170,7 +182,10 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
       case 1:
         return this.passwordReset === null;
       case 2:
-        return this.expiration === null;
+        return (
+          this.sponsorType === null ||
+          (this.sponsorType === 'other' && this.selectedSponsor === null)
+        );
       default:
         return false;
     }
@@ -204,7 +219,10 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
       data: generatedMemberNames,
       header: header,
       namespace: '',
-      sponsor: this.store.getPerunPrincipal().userId,
+      sponsor:
+        this.sponsorType === 'self'
+          ? this.store.getPerunPrincipal().userId
+          : this.selectedSponsor.id,
       vo: this.data.voId,
       sendActivationLinks: this.passwordReset === 'reset',
       language: this.currentLanguage,

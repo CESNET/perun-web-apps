@@ -3,12 +3,12 @@
   <perun-web-apps-refresh-button (refresh)="refresh()"></perun-web-apps-refresh-button>
   <span
     matTooltip="{{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.NO_SPONSORS' | translate}}"
-    [matTooltipDisabled]="!(findSponsorsAuth && voSponsors.length === 0)"
+    [matTooltipDisabled]="!(findSponsorsAuth && !sponsorshipIsPossible)"
     matTooltipPosition="above">
     <button
       data-cy="sponsor-dropdown-button"
       *ngIf="createAuth || generateAuth"
-      [disabled]="findSponsorsAuth && voSponsors.length === 0"
+      [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
       [matMenuTriggerFor]="menu"
       class="me-2 dropdown-toggle"
       color="accent"
@@ -38,7 +38,7 @@
     data-cy="sponsor-existing-button"
     *ngIf="setSponsorshipAuth"
     (click)="onSponsorExistingMember()"
-    [disabled]="findSponsorsAuth && voSponsors.length === 0"
+    [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
     color="accent"
     class="me-2 action-button"
     mat-flat-button>
@@ -47,7 +47,7 @@
   <button
     *ngIf="setSponsorshipAuth"
     (click)="copySponsoredMembers()"
-    [disabled]="findSponsorsAuth && voSponsors.length === 0"
+    [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
     color="accent"
     class="me-2 action-button"
     mat-flat-button>

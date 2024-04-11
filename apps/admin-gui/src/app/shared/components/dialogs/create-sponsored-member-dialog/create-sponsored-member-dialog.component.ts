@@ -13,11 +13,14 @@ import {
   MembersManagerService,
   NamespaceRules,
   RichMember,
-  RichUser,
   User,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { ApiRequestConfigurationService, StoreService } from '@perun-web-apps/perun/services';
+import {
+  ApiRequestConfigurationService,
+  FindSponsorsService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
 import { FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { CustomValidators, emailRegexString, enableFormControl } from '@perun-web-apps/perun/utils';
 import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
@@ -27,7 +30,6 @@ import { Subject } from 'rxjs';
 export interface CreateSponsoredMemberDialogData {
   entityId?: number;
   voId?: number;
-  sponsors?: RichUser[];
   theme: string;
 }
 
@@ -71,6 +73,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
       validators: CustomValidators.passwordMatchValidator as ValidatorFn,
     },
   );
+  voSponsors: User[] = [];
   selectedSponsor: User = null;
   sponsorType = 'self';
   languages = ['en'];
@@ -99,6 +102,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
     private formBuilder: FormBuilder,
     private cd: ChangeDetectorRef,
     private groupsService: GroupsManagerService,
+    private findSponsors: FindSponsorsService,
   ) {}
 
   private static parseAttributes(
@@ -305,7 +309,10 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
         this.functionalityNotSupported = true;
       }
       this.onNamespaceChanged(this.selectedNamespace);
-      this.loading = false;
+      this.findSponsors.getSponsors(this.data.voId).subscribe((sponsors) => {
+        this.voSponsors = sponsors;
+        this.loading = false;
+      });
       this.cd.detectChanges();
     });
   }
