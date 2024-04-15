@@ -328,7 +328,7 @@ export class AuthzResolverService {
 
   /**
    * Get all groups of managers (authorizedGroups) for complementaryObject and role
-   * @param role
+   * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
    * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -470,7 +470,7 @@ export class AuthzResolverService {
   /**
    * Gets all valid rich admins
    * Get all valid richUser administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role with specified attributes.
-   * @param role
+   * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
    * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
    * @param specificAttributes list of specified attributes which are needed in object richUser

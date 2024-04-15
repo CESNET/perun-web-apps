@@ -16,7 +16,7 @@ import { PerunBean } from './perunBean';
  */
 export interface UnsetRoleWithGroupComplementaryObjects {
   role: string;
-  authorizedGroup?: number;
+  authorizedGroup: number;
   /**
    * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
    */

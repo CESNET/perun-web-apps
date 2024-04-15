@@ -9,11 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GenMemberDataNode } from './genMemberDataNode';
-import { HashedGenData } from './hashedGenData';
 
 export interface GenDataNode {
-  h?: Array<string>;
-  c?: Array<HashedGenData>;
-  m?: Array<GenMemberDataNode>;
+  children?: { [key: string]: GenDataNode };
+  members?: { [key: string]: number };
 }

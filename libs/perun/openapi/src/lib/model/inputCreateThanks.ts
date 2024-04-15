@@ -15,5 +15,5 @@ import { Thanks } from './thanks';
  * input to createThanks
  */
 export interface InputCreateThanks {
-  thanks?: Thanks;
+  thanks: Thanks;
 }

@@ -9,16 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PerunBean } from './perunBean';
 
 /**
- * input to setRoleWithUserComplementaryObjects
+ * input to checkPasswordResetRequestByTokenIsValid
  */
-export interface SetRoleWithGroupComplementaryObjects {
-  role: string;
-  authorizedGroup: number;
+export interface InputCheckPasswordResetRequestByTokenIsValid {
   /**
-   * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * token for the password reset request
    */
-  complementaryObjects?: Array<PerunBean>;
+  token: string;
 }

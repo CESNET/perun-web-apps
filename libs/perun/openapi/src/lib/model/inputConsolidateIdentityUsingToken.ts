@@ -9,16 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PerunBean } from './perunBean';
 
 /**
- * input to setRoleWithUserComplementaryObjects
+ * input to consolidateIdentityUsingToken
  */
-export interface SetRoleWithGroupComplementaryObjects {
-  role: string;
-  authorizedGroup: number;
+export interface InputConsolidateIdentityUsingToken {
   /**
-   * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * token to be used for joining identities
    */
-  complementaryObjects?: Array<PerunBean>;
+  token: string;
 }
