@@ -2222,7 +2222,10 @@
       "DOWNLOAD_PDF": "PDF",
       "DOWNLOAD_CSV": "CSV",
       "CLOSE": "Close",
-      "FINISHED_WITH_ERRORS": "Some of the members were not generated properly. See the results for more information."
+      "FINISHED_WITH_ERRORS": "Some of the members were not generated properly. See the results for more information.",
+      "SPONSORSHIP_LABEL": "Sponsorship",
+      "SPONSORSHIP_TITLE": "Sponsorship options",
+      "SELECT_SPONSOR": "Choose sponsor for created user"
     },
     "EDIT_MEMBER_SPONSORS": {
       "TITLE": "Edit sponsors of sponsored member",
@@ -3199,7 +3202,8 @@
           "NO_ITEM_FOUND": "No matching attribute found"
         },
         "USER_DONT_EXIST": {
-          "TITLE": "The requested user (by Id or external identity) doesn't exist."
+          "TITLE": "The requested user (by Id or external identity) doesn't exist.",
+          "LOGOUT": "Log out"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Access not allowed",

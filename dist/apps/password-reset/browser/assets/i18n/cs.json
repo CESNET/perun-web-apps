@@ -15,6 +15,9 @@
       "ACTIVATION_SUCCESS": "Účet byl úspěšně aktivován"
     }
   },
+  "NAV": {
+    "LOGOUT": "Odhlásit se"
+  },
   "SHARED_LIB": {
     "PERUN": {
       "COMPONENTS": {
@@ -36,7 +39,8 @@
           "MODAL_WARNING": "Pokud se Vám žádné okno neotevřelo, zkontrolujte si prosím nastavení svého prohlížeče."
         },
         "USER_DONT_EXIST": {
-          "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje."
+          "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje.",
+          "LOGOUT": "Odhlásit se"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Přístup není povolen",
@@ -57,7 +61,8 @@
       },
       "LOGIN": {
         "SIGN_IN": "Přihlásit se",
-        "TEXT": "Pro pokračování se přihlaste."
+        "TEXT": "Pro pokračování se přihlaste.",
+        "LOGOUT_INFO": "Byli jste úspěšně odhlášeni."
       },
       "LOGIN_SERVICE_ACCESS": {
         "LABEL": "Přihlásit se",

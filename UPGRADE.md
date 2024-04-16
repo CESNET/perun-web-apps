@@ -1,5 +1,39 @@
 Upgrade notes
 
+## [17.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v16.0.0...v17.0.0) (2024-04-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** all user tables are now by default sorted by first column (ascending)
+* new 'step_up_available' config option, set this to false to disable step-up dialog (e.g. when proxy doesn't support MFA)
+* Admin-gui defaultConfig new property: `header_label_en`.
+Password-reset defaultConfig new properties: `auto_service_access_redirect`,
+`proxy_logout` and `log_out_enabled`.
+
+### Features
+
+* allow configuration of step-up dialog ([84d77b6](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/84d77b6d39960040c7b4c089102d56ad715ddc90))
+* publications added to appType enum ([31307d1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/31307d16a09f83e2eb8fb5ac576e059ea6ff39a5))
+* update openapi ([36c3e86](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/36c3e86fc89ec19eaf2c533105a38cfb02d9dbe4))
+
+
+### Bug Fixes
+
+* **admin:** add caching to group relations page ([5138361](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5138361da0f996f97112425408c880f6245c9d9b))
+* **admin:** add margin-top ([c2981d7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c2981d77d4808cfe45d5cf65959856373483aafb))
+* **admin:** fix error notification when group form not exists ([01510c1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/01510c170a62922d21d9f064d5e4a3ff8dde276d))
+* **admin:** sponsor optimization ([9b1991d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9b1991d4b820197ebead6cbff6adb5ceb0b2d7b8))
+* avoid unnecessary session expiration when step up is NOT available ([a4321cc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a4321cc155782464ab8954a7970cc9b185215bb6))
+* login pages UI ([5c534a1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5c534a1bfcac3c2a0e883713cd0664149cf5971f))
+* **publications:** fix import missing information ([d3fb4d5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d3fb4d5416a8200fbb7c84701f7c656c061fd378))
+* **publications:** remove moment usage ([2b56128](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2b56128c8ac0e962a304bb34897789cd69c83fbe))
+
+
+### Refactoring
+
+* **admin:** users list component pagination support ([6d883ed](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6d883ed6707759edde5a311753b89fd025aad007))
+
 ## [16.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v15.4.2...v16.0.0) (2024-03-25)
 
 
