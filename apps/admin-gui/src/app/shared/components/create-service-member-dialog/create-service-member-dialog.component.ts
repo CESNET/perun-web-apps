@@ -151,7 +151,7 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
 
     this.findSponsorsAuth = this.findSponsors.findSponsorsAuth(this.data.vo);
     if (this.findSponsorsAuth) {
-      this.findSponsors.getSponsors(this.data.vo.id).subscribe((sponsors) => {
+      this.findSponsors.getRichSponsors(this.data.vo.id).subscribe((sponsors) => {
         this.voSponsors = sponsors;
       });
     }

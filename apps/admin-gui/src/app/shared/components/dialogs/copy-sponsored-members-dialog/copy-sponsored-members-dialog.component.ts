@@ -1,12 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  MembersManagerService,
-  MemberWithSponsors,
-  RichUser,
-  User,
-} from '@perun-web-apps/perun/openapi';
+import { MembersManagerService, MemberWithSponsors, User } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
+  FindSponsorsService,
   GuiAuthResolver,
   NotificatorService,
   PerunTranslateService,
@@ -19,7 +15,6 @@ import { Urns } from '@perun-web-apps/perun/urns';
 export interface CopySponsoredMembersDialogData {
   voId: number;
   theme: string;
-  voSponsors: RichUser[];
   findSponsorsAuth: boolean;
 }
 @Component({
@@ -33,8 +28,9 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
   theme: string;
   sponsorType: 'self' | 'other' = 'self';
   tableId = TABLE_ADD_SPONSORED_MEMBERS;
-  voSponsorsTarget: RichUser[];
-  voSponsorsSource: RichUser[];
+  voSponsors: User[] = [];
+  voSponsorsTarget: User[] = [];
+  voSponsorsSource: User[] = [];
   sourceSponsor: User;
   targetSponsor: User;
   sponsoredMembers: MemberWithSponsors[];
@@ -48,6 +44,7 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
   disableSelf = false;
   isPerunAdmin = false;
   private attrNames: string[] = [Urns.USER_DEF_PREFERRED_MAIL];
+
   constructor(
     private dialogRef: MatDialogRef<CopySponsoredMembersDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CopySponsoredMembersDialogData,
@@ -56,9 +53,12 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
     private auth: GuiAuthResolver,
+    private findSponsors: FindSponsorsService,
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
+    this.theme = this.data.theme;
     this.attrNames = this.attrNames.concat(this.store.getLoginAttributeNames());
     this.membersService
       .getAllSponsoredMembersAndTheirSponsors(this.data.voId, this.attrNames)
@@ -67,22 +67,26 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
           this.sponsoredMembers = members;
         },
       });
-    this.voSponsorsTarget = this.data.voSponsors;
-    this.voSponsorsSource = this.data.voSponsors;
-    this.isPerunAdmin = this.auth.isPerunAdmin();
-    // if not PERUNADMIN user cannot copy to anyone else than self, so do not allow selecting self as source sponsor
-    if (!this.isPerunAdmin) {
-      this.voSponsorsSource = this.voSponsorsSource.filter(
-        (voSponsor) => voSponsor.id !== this.store.getPerunPrincipal().user.id,
-      );
-    }
-    this.theme = this.data.theme;
+    this.findSponsors.getSponsors(this.data.voId).subscribe((sponsors) => {
+      this.voSponsors = sponsors;
+      this.voSponsorsTarget = sponsors;
+      this.voSponsorsSource = sponsors;
+
+      this.isPerunAdmin = this.auth.isPerunAdmin();
+      // if not PERUNADMIN user cannot copy to anyone else than self, so do not allow selecting self as source sponsor
+      if (!this.isPerunAdmin) {
+        this.voSponsorsSource = this.voSponsorsSource.filter(
+          (voSponsor) => voSponsor.id !== this.store.getPerunPrincipal().user.id,
+        );
+      }
+      this.loading = false;
+    });
   }
 
   sourceSponsorChanged(user: User): void {
     this.tableLoading = true;
     this.sourceSponsor = user;
-    this.voSponsorsTarget = this.data.voSponsors.filter(
+    this.voSponsorsTarget = this.voSponsors.filter(
       (sponsor) => sponsor.id !== this.sourceSponsor.id,
     );
     // disable copying to self only if PERUNADMIN (it is not possible to choose self as source sponsor without PERUNADMIN anyway)
