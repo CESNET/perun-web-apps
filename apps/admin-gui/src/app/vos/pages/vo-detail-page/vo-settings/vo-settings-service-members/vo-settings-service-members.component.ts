@@ -100,7 +100,9 @@ export class VoSettingsServiceMembersComponent implements OnInit {
   refresh(): void {
     this.loading = true;
     this.membersManager.getServiceUserRichMembers(this.vo.id).subscribe((members) => {
-      this.members = members;
+      this.members = members.filter((member) =>
+        this.authResolver.isAuthorized('getRichMemberWithAttributes_Member_policy', [member]),
+      );
       this.loading = false;
     });
   }
