@@ -75,6 +75,7 @@ export class MemberApplicationsComponent implements OnInit {
           getDetails: this.showAllDetails,
           dateFrom: dateToString(this.dateFrom),
           dateTo: dateToString(new Date()),
+          userId: this.member.userId,
         },
       }),
     ),
@@ -127,6 +128,7 @@ export class MemberApplicationsComponent implements OnInit {
           getDetails: this.showAllDetails,
           dateFrom: dateToString(this.dateFrom),
           dateTo: dateToString(new Date()),
+          userId: this.member.userId,
         },
       })
       .subscribe({
