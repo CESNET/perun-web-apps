@@ -72,11 +72,19 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     this.setAuth();
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
-    this.registrarManager.getGroupApplicationForm(this.group.id).subscribe(
-      (form) => {
+    this.registrarManager.getGroupApplicationForm(this.group.id).subscribe({
+      next: (form) => {
         this.applicationForm = form;
-        this.registrarManager.getFormItemsForGroup(this.group.id).subscribe(
-          (formItems) => {
+
+        // Refresh cached data
+        this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+          if (nextValue) {
+            this.updateFormItems();
+          }
+        });
+
+        this.registrarManager.getFormItemsForGroup(this.group.id).subscribe({
+          next: (formItems) => {
             this.applicationFormItems = formItems;
             this.embeddedGroupsItemSaved =
               formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
@@ -91,13 +99,13 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
                 this.loadingTable = false;
               });
           },
-          () => {
+          error: () => {
             this.loadingHeader = false;
             this.loadingTable = false;
           },
-        );
+        });
       },
-      (error: RPCError) => {
+      error: (error: RPCError) => {
         if (error.name === 'FormNotExistsException') {
           this.noApplicationForm = true;
           this.loadingHeader = false;
@@ -106,13 +114,6 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
           this.notificator.showRPCError(error);
         }
       },
-    );
-
-    // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.updateFormItems();
-      }
     });
   }
 

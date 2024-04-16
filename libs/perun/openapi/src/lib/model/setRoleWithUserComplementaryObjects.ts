@@ -19,7 +19,7 @@ export interface SetRoleWithUserComplementaryObjects {
   /**
    * user id
    */
-  user?: number;
+  user: number;
   /**
    * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
    */

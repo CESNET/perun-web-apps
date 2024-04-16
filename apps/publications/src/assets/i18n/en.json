@@ -113,6 +113,7 @@
   },
   "PUBLICATIONS_LIST": {
     "TABLE_ID": "Id",
+    "TABLE_ISBN": "ISBN",
     "TABLE_LOCK": "Lock",
     "TABLE_TITLE": "Title",
     "TABLE_REPORTED_BY": "Reported by",
@@ -354,7 +355,8 @@
           "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute"
         },
         "USER_DONT_EXIST": {
-          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+          "TITLE": "Requested user (by ID or external identity) doesn't exist.",
+          "LOGOUT": "Log out"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Access not allowed",

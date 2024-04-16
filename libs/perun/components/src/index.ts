@@ -14,7 +14,6 @@ export * from './lib/groups-tree/groups-tree.component';
 export * from './lib/perun-footer/perun-footer.component';
 export * from './lib/create-group-form/create-group-form.component';
 export * from './lib/app-form-item-search-select/app-form-item-search-select.component';
-export * from './lib/header-menu/header-menu.component';
 export * from './lib/selection-item-search-select/selection-item-search-select.component';
 export * from './lib/not-authorized-page/not-authorized-page.component';
 export * from './lib/settings-data-quotas/data-quotas.component';
@@ -28,3 +27,4 @@ export * from './lib/member-overview-membership/member-overview-membership.compo
 export * from './lib/debounce-filter/debounce-filter.component';
 export * from './lib/application-state-selector/application-state-selector.component';
 export * from './lib/html-content-form-field/html-content-form-field.component';
+export * from './lib/users-list/users-list.component';

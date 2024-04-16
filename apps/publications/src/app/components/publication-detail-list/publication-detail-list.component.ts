@@ -6,16 +6,12 @@ import {
   Publication,
   PublicationForGUI,
 } from '@perun-web-apps/perun/openapi';
-import { Moment } from 'moment';
 import { FormControl, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-
-const moment = _moment;
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -53,12 +49,12 @@ export class PublicationDetailListComponent implements OnInit {
   keys: string[];
   values: string[];
   map: { key: string; value: string }[] = [];
-  yearControl: FormControl<Moment>;
+  yearControl: FormControl<Date>;
   categoryControl: FormControl<string>;
   rankControl: FormControl<number>;
   titleControl: FormControl<string>;
   editing = false;
-  maxYear: Moment;
+  maxYear: Date;
 
   constructor(
     private cabinetService: CabinetManagerService,
@@ -97,20 +93,18 @@ export class PublicationDetailListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<{ key; value }>(this.map);
 
     this.titleControl = new FormControl(this.publication.title, Validators.required);
-    this.yearControl = new FormControl(moment().year(this.publication.year));
+    const yearDate = new Date();
+    yearDate.setFullYear(this.publication.year);
+    this.yearControl = new FormControl(yearDate);
     this.categoryControl = new FormControl(this.publication.categoryName);
     this.rankControl = new FormControl(this.publication.rank, [
       Validators.pattern(/^[0-9]+(\.[0-9])?$/),
       Validators.required,
     ]);
 
-    this.maxYear = moment();
+    this.maxYear = new Date();
 
     this.loading = false;
-  }
-
-  edit(): void {
-    this.editing = true;
   }
 
   save(): void {
@@ -118,7 +112,7 @@ export class PublicationDetailListComponent implements OnInit {
     this.editing = false;
 
     const categoryId = this.categories.find((cat) => cat.name === this.categoryControl.value).id;
-    const year: number = this.yearControl.value.year();
+    const year: number = this.yearControl.value.getFullYear();
 
     const updatedPublication: Publication = {
       id: this.publication.id,
@@ -151,9 +145,9 @@ export class PublicationDetailListComponent implements OnInit {
     });
   }
 
-  chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Date>): void {
+  chosenYearHandler(normalizedYear: Date, datepicker: MatDatepicker<Date>): void {
     const ctrlValue = this.yearControl.value;
-    ctrlValue.year(normalizedYear.year());
+    ctrlValue.setFullYear(new Date(normalizedYear).getFullYear());
     this.yearControl.setValue(ctrlValue);
     datepicker.close();
   }

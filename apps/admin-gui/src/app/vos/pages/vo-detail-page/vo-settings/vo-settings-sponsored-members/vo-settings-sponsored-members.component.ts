@@ -3,7 +3,6 @@ import {
   AuthzResolverService,
   MembersManagerService,
   MemberWithSponsors,
-  RichUser,
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -37,7 +36,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
   setSponsorshipAuth: boolean;
   routeAuth: boolean;
   findSponsorsAuth: boolean;
-  voSponsors: RichUser[] = [];
+  sponsorshipIsPossible = false;
   selection = new SelectionModel<MemberWithSponsors>(true, []);
   searchString = '';
   loading = false;
@@ -64,8 +63,8 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
 
     this.findSponsorsAuth = this.findSponsors.findSponsorsAuth(this.vo);
     if (this.findSponsorsAuth) {
-      this.findSponsors.getSponsors(this.vo.id).subscribe((sponsors) => {
-        this.voSponsors = sponsors;
+      this.findSponsors.someSponsorExists(this.vo.id).subscribe((sponsorExists) => {
+        this.sponsorshipIsPossible = sponsorExists;
         this.refresh();
       });
     } else {
@@ -107,7 +106,6 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     config.data = {
       entityId: this.vo.id,
       voId: this.vo.id,
-      sponsors: this.voSponsors,
       theme: 'vo-theme',
     };
 
@@ -151,7 +149,6 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     config.data = {
       voId: this.vo.id,
       theme: 'vo-theme',
-      voSponsors: this.voSponsors,
       findSponsorsAuth: this.findSponsorsAuth,
     };
 
@@ -174,7 +171,6 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     config.data = {
       voId: this.vo.id,
       theme: 'vo-theme',
-      voSponsors: this.voSponsors,
       findSponsorsAuth: this.findSponsorsAuth,
     };
 

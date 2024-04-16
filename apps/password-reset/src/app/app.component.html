@@ -9,11 +9,11 @@
 <div *ngIf="!isServiceAccess && !showLoginScreen">
   <perun-web-apps-header
     [showToggle]="false"
-    [showHeaderMenu]="false"
+    [showOtherApps]="false"
     [showLanguageMenu]="true"
     [ngStyle]="{'top': getNavMenuTop()}"
     id="nav-menu"
-    class="nav-menu mat-elevation-z3"></perun-web-apps-header>
+    [ngClass]="!principal ? 'header-index' : ''"></perun-web-apps-header>
   <div
     [ngStyle]="{'background': contentBackgroundColor, 'padding-top': getSideNavMarginTop()}"
     id="content-inner">

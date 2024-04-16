@@ -64,8 +64,8 @@ export class UserDashboardComponent implements OnInit {
     this.sideMenuService.setHomeItems([]);
     this.validatePreferredMailChange();
 
-    this.user = this.storeService.getPerunPrincipal().user;
-    this.roles = this.storeService.getPerunPrincipal().roles;
+    this.user = this.storeService.getPerunPrincipal()?.user;
+    this.roles = this.storeService.getPerunPrincipal()?.roles ?? {};
     const allUserRoles = Object.keys(this.roles);
     this.hasOnlyNoRightsRoles = allUserRoles.every((role) => this.noRightsRoles.has(role));
     this.roleNames = this.allowedRoles.filter((value) => allUserRoles.includes(value));
@@ -105,7 +105,7 @@ export class UserDashboardComponent implements OnInit {
     if (token && u) {
       this.apiRequestConfiguration.dontHandleErrorForNext();
       this.userManager
-        .validatePreferredEmailChangeWithToken(token, Number.parseInt(u, 10))
+        .validatePreferredEmailChangeWithToken({ token: token, u: Number.parseInt(u, 10) })
         .subscribe({
           next: () => {
             this.notificator.showSuccess(this.mailSuccessMessage);

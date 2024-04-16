@@ -25,7 +25,8 @@
   },
   "proxy_logout": true,
   "mfa": {
-    "url_en": "https://mfa.id.muni.cz/"
+    "url_en": "https://mfa.id.muni.cz/",
+    "step_up_available": true
   },
   "login_namespace_attributes": [
     "urn:perun:user:attribute-def:def:login-namespace:einfra",
@@ -59,6 +60,7 @@
   "group_name_error_message": "Name cannot be empty and can contain only characters a-z, A-Z, numbers, spaces, dots, '_' and '-'",
   "user_deletion_forced": false,
   "enforce_consents": false,
+  "header_label_en": "Identity and Access Management",
   "footer": {
     "columns": [
       {

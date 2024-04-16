@@ -1,12 +1,28 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { BanOnFacility, FacilitiesManagerService, RichUser } from '@perun-web-apps/perun/openapi';
+import {
+  BanOnFacility,
+  FacilitiesManagerService,
+  PaginatedRichUsers,
+  RichUser,
+  UsersManagerService,
+  UsersOrderColumn,
+} from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_BANS } from '@perun-web-apps/config/table-config';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
-import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { Observable, of } from 'rxjs';
+import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
+import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
+import { PageQuery } from '@perun-web-apps/perun/models';
+import { map, startWith, tap } from 'rxjs/operators';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'app-add-facility-ban-dialog',
@@ -16,12 +32,37 @@ import { Observable, of } from 'rxjs';
 export class AddFacilityBanDialogComponent implements OnInit {
   selection = new SelectionModel<RichUser>(false, []);
   ban: BanOnFacility;
-  loading$: Observable<boolean>;
-  loading = false;
   attrNames = [Urns.USER_DEF_PREFERRED_MAIL].concat(this.store.getLoginAttributeNames());
-  displayedColumns = ['select', 'id', 'name', 'email', 'logins'];
+  displayedColumns: userTableColumn[] = ['select', 'id', 'name', 'email', 'logins'];
   tableId = TABLE_BANS;
-  filter = '';
+  searchString = '';
+  nextPage = new BehaviorSubject<PageQuery>({});
+  routeAuth = false;
+  usersPage$: Observable<PaginatedRichUsers> = this.nextPage.pipe(
+    switchMap((pageQuery) =>
+      this.usersManager.getUsersPage({
+        attrNames: this.attrNames,
+        query: {
+          order: pageQuery.order,
+          pageSize: pageQuery.pageSize,
+          offset: pageQuery.offset,
+          sortColumn: pageQuery.sortColumn as UsersOrderColumn,
+          searchString: pageQuery.searchString,
+          facilityId: this.data.entityId,
+        },
+      }),
+    ),
+    tap(() => {
+      this.selection.clear();
+      setTimeout(() => this.loadingSubject$.next(false), 200);
+    }),
+    startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
+  );
+  loadingSubject$ = new BehaviorSubject<boolean>(false);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: AddBanData<BanOnFacility>,
@@ -29,14 +70,17 @@ export class AddFacilityBanDialogComponent implements OnInit {
     private store: StoreService,
     private facilityService: FacilitiesManagerService,
     private notificator: NotificatorService,
+    private dialog: MatDialog,
     private cd: ChangeDetectorRef,
+    private usersManager: UsersManagerService,
+    private authResolver: GuiAuthResolver,
   ) {}
 
   ngOnInit(): void {
-    this.loading$ = of(true);
     this.selection.changed.subscribe((change) => {
       this.ban = this.data.bans.find((ban) => ban.userId === change.source.selected[0]?.id);
     });
+    this.routeAuth = this.authResolver.isPerunAdminOrObserver();
   }
 
   cancel(): void {
@@ -52,13 +96,45 @@ export class AddFacilityBanDialogComponent implements OnInit {
   }
 
   setFilter(filter: string): void {
-    this.filter = filter;
+    this.searchString = filter;
     this.selection.clear();
     this.cd.detectChanges();
   }
 
+  downloadAll(a: {
+    format: string;
+    length: number;
+    getDataForColumnFun: (data: RichUser, column: string) => string;
+  }): void {
+    const query = this.nextPage.getValue();
+
+    const config = getDefaultDialogConfig();
+    config.width = '300px';
+    const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
+
+    this.usersManager
+      .getUsersPage({
+        attrNames: this.attrNames,
+        query: {
+          order: query.order,
+          pageSize: a.length,
+          offset: 0,
+          sortColumn: query.sortColumn as UsersOrderColumn,
+          searchString: query.searchString,
+          facilityId: this.data.entityId,
+        },
+      })
+      .subscribe({
+        next: (paginatedUsers) => {
+          exportLoading.close();
+          downloadData(
+            getDataForExport(paginatedUsers.data, this.displayedColumns, a.getDataForColumnFun),
+            a.format,
+          );
+        },
+      });
+  }
   private banUser(banForm: BanForm): void {
-    this.loading = true;
     this.facilityService
       .setFacilityBan({
         banOnFacility: {
@@ -75,12 +151,10 @@ export class AddFacilityBanDialogComponent implements OnInit {
           this.notificator.showSuccess('DIALOGS.ADD_BAN.SUCCESS_USER');
           this.dialogRef.close(true);
         },
-        error: () => (this.loading = false),
       });
   }
 
   private updateBan(banForm: BanForm): void {
-    this.loading = true;
     this.facilityService
       .updateFacilityBan({
         banOnFacility: {
@@ -96,9 +170,6 @@ export class AddFacilityBanDialogComponent implements OnInit {
         next: () => {
           this.notificator.showSuccess('DIALOGS.UPDATE_BAN.SUCCESS');
           this.dialogRef.close(true);
-        },
-        error: () => {
-          this.loading = false;
         },
       });
   }

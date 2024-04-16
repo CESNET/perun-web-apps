@@ -10,8 +10,6 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
-import { Moment } from 'moment-timezone';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,8 +25,6 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatStepper } from '@angular/material/stepper';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
-
-const moment = _moment;
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -72,7 +68,7 @@ export class CreateSinglePublicationPageComponent implements OnInit {
 
   innerLoading = false;
 
-  maxYear: Moment;
+  maxYear: Date;
 
   loading = false;
   duplicateCheck = false;
@@ -103,7 +99,7 @@ export class CreateSinglePublicationPageComponent implements OnInit {
       cite: ['', Validators.required],
     });
 
-    this.maxYear = moment();
+    this.maxYear = new Date();
 
     this.cabinetService.getCategories().subscribe((categories) => {
       this.categories = categories;
@@ -111,8 +107,8 @@ export class CreateSinglePublicationPageComponent implements OnInit {
     });
   }
 
-  chosenYearHandler(normalizedYear: Moment, datepicker: MatDatepicker<Date>): void {
-    this.publicationControl.get('year').setValue(normalizedYear);
+  chosenYearHandler(normalizedYear: Date, datepicker: MatDatepicker<Date>): void {
+    this.publicationControl.get('year').setValue(new Date(normalizedYear));
     datepicker.close();
   }
 
@@ -133,7 +129,7 @@ export class CreateSinglePublicationPageComponent implements OnInit {
         beanName: 'Publication',
         title: this.publicationControl.get('title').value as string,
         categoryId: (this.publicationControl.get('category').value as Category).id,
-        year: (this.publicationControl.get('year').value as Moment).year(),
+        year: (this.publicationControl.get('year').value as Date).getFullYear(),
         isbn: this.publicationControl.get('isbn').value as string,
         doi: this.publicationControl.get('doi').value as string,
         main: this.publicationControl.get('cite').value as string,

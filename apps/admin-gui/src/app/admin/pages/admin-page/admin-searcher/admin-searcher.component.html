@@ -11,13 +11,14 @@
         [attributesForEntity]="'user'"
         (search)="getUsers($event)">
       </perun-web-apps-attribute-search-select>
-      <app-users-list
+      <perun-web-apps-users-list
         *ngIf="!loadingEntityData"
         [loading]="loading"
         [tableId]="tableId"
-        [displayedColumns]="['user', 'id', 'name']"
+        [routeToAdmin]="true"
+        [displayColumns]="['user', 'id', 'name']"
         [users]="entities">
-      </app-users-list>
+      </perun-web-apps-users-list>
     </ng-template>
   </mat-tab>
   <mat-tab>

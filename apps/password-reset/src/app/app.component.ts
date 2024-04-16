@@ -7,7 +7,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
+import {
+  AttributesManagerService,
+  PerunPrincipal,
+  UsersManagerService,
+} from '@perun-web-apps/perun/openapi';
 import {
   InitAuthService,
   PreferredLanguageService,
@@ -36,6 +40,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   contentBackgroundColor = this.store.getProperty('theme').content_bg_color;
   isServiceAccess: boolean;
   showLoginScreen: boolean;
+  principal: PerunPrincipal;
 
   constructor(
     private dialog: MatDialog,
@@ -49,8 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.principal = this.store.getPerunPrincipal();
     this.isServiceAccess = this.initAuth.isServiceAccessLoginScreenShown();
     this.showLoginScreen = this.initAuth.isLoginScreenShown();
+    sessionStorage.removeItem('baLogout');
     const prefLang = this.preferredLangService.getPreferredLanguage(null);
     this.translateService.use(prefLang);
 
@@ -66,24 +73,26 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (queryParams.includes('token')) {
       this.token = parseQueryParams('token', queryParams);
 
-      this.usersService.checkPasswordResetRequestByTokenIsValid(this.token, true).subscribe(
-        () => {
-          this.validToken = true;
-        },
-        () => {
-          this.validToken = false;
-        },
-      );
+      this.usersService
+        .checkPasswordResetRequestByTokenIsValid({ token: this.token }, true)
+        .subscribe({
+          next: () => {
+            this.validToken = true;
+          },
+          error: () => {
+            this.validToken = false;
+          },
+        });
     } else if (!this.isServiceAccess && !this.showLoginScreen) {
       this.authWithoutToken = true;
-      this.attributesManagerService
-        .getLogins(this.store.getPerunPrincipal().userId)
-        .subscribe((logins) => {
+      if (this.principal?.userId) {
+        this.attributesManagerService.getLogins(this.principal.userId).subscribe((logins) => {
           const selectedLogin = logins.find(
             (login) => login.friendlyNameParameter === this.namespace,
           );
           this.login = selectedLogin ? String(selectedLogin.value) : '';
         });
+      }
     }
   }
 

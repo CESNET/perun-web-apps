@@ -49,6 +49,8 @@ import { InputAddApplicationMailForVo } from '../model/inputAddApplicationMailFo
 // @ts-ignore
 import { InputConsolidate } from '../model/inputConsolidate';
 // @ts-ignore
+import { InputConsolidateIdentityUsingToken } from '../model/inputConsolidateIdentityUsingToken';
+// @ts-ignore
 import { InputFormItemData } from '../model/inputFormItemData';
 // @ts-ignore
 import { InputFormItemsData } from '../model/inputFormItemsData';
@@ -1606,48 +1608,46 @@ export class RegistrarManagerService {
 
   /**
    * Joins current user identity with the one previously provided and referenced by the token.
-   * @param token token to be used for joining identities
+   * @param InputConsolidateIdentityUsingToken
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public consolidateIdentityUsingToken(
-    token: string,
+    InputConsolidateIdentityUsingToken: InputConsolidateIdentityUsingToken,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<Array<UserExtSource>>;
   public consolidateIdentityUsingToken(
-    token: string,
+    InputConsolidateIdentityUsingToken: InputConsolidateIdentityUsingToken,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<Array<UserExtSource>>>;
   public consolidateIdentityUsingToken(
-    token: string,
+    InputConsolidateIdentityUsingToken: InputConsolidateIdentityUsingToken,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<Array<UserExtSource>>>;
   public consolidateIdentityUsingToken(
-    token: string,
+    InputConsolidateIdentityUsingToken: InputConsolidateIdentityUsingToken,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (token === null || token === undefined) {
+    if (
+      InputConsolidateIdentityUsingToken === null ||
+      InputConsolidateIdentityUsingToken === undefined
+    ) {
       throw new Error(
-        'Required parameter token was null or undefined when calling consolidateIdentityUsingToken.',
+        'Required parameter InputConsolidateIdentityUsingToken was null or undefined when calling consolidateIdentityUsingToken.',
       );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (token !== undefined && token !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>token, 'token');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1680,6 +1680,14 @@ export class RegistrarManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1700,15 +1708,18 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<UserExtSource>>(requestUrl, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<Array<UserExtSource>>(
+      requestUrl,
+      InputConsolidateIdentityUsingToken,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**

@@ -32,3 +32,8 @@ ng-scrollbar {
   display: block;
   height: 100vh;
 }
+
+.header-index {
+  z-index: 1001;
+  position: relative;
+}

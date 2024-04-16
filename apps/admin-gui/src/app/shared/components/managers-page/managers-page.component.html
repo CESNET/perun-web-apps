@@ -55,17 +55,17 @@
       </mat-slide-toggle>
 
       <div class="position-relative table-min-height">
-        <app-users-list
+        <perun-web-apps-users-list
           *perunWebAppsLoader="loading; indicator: spinner"
+          [routeToAdmin]="routeAuth"
           [loading]="loading"
-          [disableSelf]="disableSelf"
-          [directAdmins]="directAdminsIds"
           [tableId]="tableId"
           [disableRouting]="!routeAuth || disableRouting"
-          [displayedColumns]="displayedUserColumns"
+          [sortableColumns]="['id', 'name', 'email', 'logins', 'organization']"
+          [displayColumns]="displayedUserColumns"
           [selection]="selectionUsers"
           [users]="managers">
-        </app-users-list>
+        </perun-web-apps-users-list>
       </div>
     </ng-template>
   </mat-tab>

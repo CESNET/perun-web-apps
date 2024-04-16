@@ -12,7 +12,7 @@
     <perun-web-apps-header
       (sidenavToggle)="sidenav.toggle()"
       [ngStyle]="{'top': getNavMenuTop()}"
-      class="nav-menu mat-elevation-z3"></perun-web-apps-header>
+      [ngClass]="['nav-menu mat-elevation-z3', !principal ? 'header-index' : '']"></perun-web-apps-header>
     <mat-sidenav-container
       autosize="true"
       [ngStyle]="{'margin-top': getSideNavMarginTop(),'min-height': getSideNavMinHeight()}">

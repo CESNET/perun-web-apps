@@ -22,14 +22,14 @@
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <app-users-list
+  <perun-web-apps-users-list
     *perunWebAppsLoader="loading; indicator: spinner"
     [loading]="loading"
     [noUsersFoundLabel]="'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.NO_IDENTITIES' | translate"
-    [displayedColumns]="displayedColumns"
+    [routeToAdmin]="routeToAdminSection"
+    [displayColumns]="displayedColumns"
     [selection]="selection"
     [tableId]="tableId"
-    [routeToAdmin]="routeToAdminSection"
     [users]="identities">
-  </app-users-list>
+  </perun-web-apps-users-list>
 </div>

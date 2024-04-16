@@ -39,11 +39,15 @@ import { InputChangePasswordForLogin } from '../model/inputChangePasswordForLogi
 // @ts-ignore
 import { InputChangePasswordForUser } from '../model/inputChangePasswordForUser';
 // @ts-ignore
+import { InputCheckPasswordResetRequestByTokenIsValid } from '../model/inputCheckPasswordResetRequestByTokenIsValid';
+// @ts-ignore
 import { InputCheckPasswordStrength } from '../model/inputCheckPasswordStrength';
 // @ts-ignore
 import { InputCreateAlternativePassword } from '../model/inputCreateAlternativePassword';
 // @ts-ignore
 import { InputCreateServiceUser } from '../model/inputCreateServiceUser';
+// @ts-ignore
+import { InputDeleteAlternativePassword } from '../model/inputDeleteAlternativePassword';
 // @ts-ignore
 import { InputGetPaginatedBlockedLogins } from '../model/inputGetPaginatedBlockedLogins';
 // @ts-ignore
@@ -54,6 +58,8 @@ import { InputReservePasswordForLogin } from '../model/inputReservePasswordForLo
 import { InputReservePasswordForUser } from '../model/inputReservePasswordForUser';
 // @ts-ignore
 import { InputUpdateUser } from '../model/inputUpdateUser';
+// @ts-ignore
+import { InputValidatePreferredEmailChange } from '../model/inputValidatePreferredEmailChange';
 // @ts-ignore
 import { PaginatedBlockedLogins } from '../model/paginatedBlockedLogins';
 // @ts-ignore
@@ -615,7 +621,7 @@ export class UsersManagerService {
   /**
    * Block logins for given namespace or block logins globally (if no namespace is selected)
    * @param logins list of logins to be blocked
-   * @param namespace
+   * @param namespace login namespace
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1065,48 +1071,46 @@ export class UsersManagerService {
   /**
    * Checks if the password reset request is valid.
    * This method throws PasswordResetLinkExpiredException when the password reset request expired. This method throws PasswordResetLinkNotValidException when the password reset request was already used or has never existed.
-   * @param token token for the password reset request
+   * @param InputCheckPasswordResetRequestByTokenIsValid
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public checkPasswordResetRequestByTokenIsValid(
-    token: string,
+    InputCheckPasswordResetRequestByTokenIsValid: InputCheckPasswordResetRequestByTokenIsValid,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any>;
   public checkPasswordResetRequestByTokenIsValid(
-    token: string,
+    InputCheckPasswordResetRequestByTokenIsValid: InputCheckPasswordResetRequestByTokenIsValid,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<any>>;
   public checkPasswordResetRequestByTokenIsValid(
-    token: string,
+    InputCheckPasswordResetRequestByTokenIsValid: InputCheckPasswordResetRequestByTokenIsValid,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<any>>;
   public checkPasswordResetRequestByTokenIsValid(
-    token: string,
+    InputCheckPasswordResetRequestByTokenIsValid: InputCheckPasswordResetRequestByTokenIsValid,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (token === null || token === undefined) {
+    if (
+      InputCheckPasswordResetRequestByTokenIsValid === null ||
+      InputCheckPasswordResetRequestByTokenIsValid === undefined
+    ) {
       throw new Error(
-        'Required parameter token was null or undefined when calling checkPasswordResetRequestByTokenIsValid.',
+        'Required parameter InputCheckPasswordResetRequestByTokenIsValid was null or undefined when calling checkPasswordResetRequestByTokenIsValid.',
       );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (token !== undefined && token !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>token, 'token');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1139,6 +1143,14 @@ export class UsersManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1159,9 +1171,8 @@ export class UsersManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<any>(requestUrl, {
+    return this.httpClient.post<any>(requestUrl, InputCheckPasswordResetRequestByTokenIsValid, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -1501,81 +1512,42 @@ export class UsersManagerService {
 
   /**
    * Deletes alternative password in external system.
-   * @param user id of User
-   * @param loginNamespace
-   * @param passwordId
+   * @param InputDeleteAlternativePassword
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public deleteAlternativePassword(
-    user: number,
-    loginNamespace: string,
-    passwordId: string,
+    InputDeleteAlternativePassword: InputDeleteAlternativePassword,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any>;
   public deleteAlternativePassword(
-    user: number,
-    loginNamespace: string,
-    passwordId: string,
+    InputDeleteAlternativePassword: InputDeleteAlternativePassword,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<any>>;
   public deleteAlternativePassword(
-    user: number,
-    loginNamespace: string,
-    passwordId: string,
+    InputDeleteAlternativePassword: InputDeleteAlternativePassword,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<any>>;
   public deleteAlternativePassword(
-    user: number,
-    loginNamespace: string,
-    passwordId: string,
+    InputDeleteAlternativePassword: InputDeleteAlternativePassword,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (user === null || user === undefined) {
+    if (InputDeleteAlternativePassword === null || InputDeleteAlternativePassword === undefined) {
       throw new Error(
-        'Required parameter user was null or undefined when calling deleteAlternativePassword.',
-      );
-    }
-    if (loginNamespace === null || loginNamespace === undefined) {
-      throw new Error(
-        'Required parameter loginNamespace was null or undefined when calling deleteAlternativePassword.',
-      );
-    }
-    if (passwordId === null || passwordId === undefined) {
-      throw new Error(
-        'Required parameter passwordId was null or undefined when calling deleteAlternativePassword.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (user !== undefined && user !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'user');
-    }
-    if (loginNamespace !== undefined && loginNamespace !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>loginNamespace,
-        'loginNamespace',
-      );
-    }
-    if (passwordId !== undefined && passwordId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>passwordId,
-        'passwordId',
+        'Required parameter InputDeleteAlternativePassword was null or undefined when calling deleteAlternativePassword.',
       );
     }
 
@@ -1609,6 +1581,14 @@ export class UsersManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1620,7 +1600,7 @@ export class UsersManagerService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/urlinjsonout/usersManager/deleteAlternativePassword`;
+    let requestUrl = `${this.configuration.basePath}/json/usersManager/deleteAlternativePassword`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -1629,9 +1609,8 @@ export class UsersManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<any>(requestUrl, null, {
+    return this.httpClient.post<any>(requestUrl, InputDeleteAlternativePassword, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -2351,7 +2330,7 @@ export class UsersManagerService {
   /**
    * Generates user account in a backend system associated with login-namespace in Perun. Parameters are implementation-dependent for each login-namespace. Returns map with 1) key&#x3D;login-namespace attribute urn, value&#x3D;generated login 2) rest of opt response attributes.
    * @param namespace namespace
-   * @param name
+   * @param name name of the account to generate
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -6120,7 +6099,7 @@ export class UsersManagerService {
 
   /**
    * Checks if the login is available in the namespace. Return 1 if yes, 0 if no.
-   * @param loginNamespace
+   * @param loginNamespace login namespace
    * @param login login
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -7394,7 +7373,7 @@ export class UsersManagerService {
   /**
    * Unblock logins for given namespace or unblock logins globally (if no namespace is selected)
    * @param logins list of logins to be blocked
-   * @param namespace
+   * @param namespace login namespace
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -8093,61 +8072,46 @@ export class UsersManagerService {
 
   /**
    * Validate new preferred email address. Request to validate is determined based on token parameter sent in email notice by requestPreferredEmailChange() method.
-   * @param token token for the email change request
-   * @param u id of user you want to validate preferred email request
+   * @param InputValidatePreferredEmailChange
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public validatePreferredEmailChangeWithToken(
-    token: string,
-    u: number,
+    InputValidatePreferredEmailChange: InputValidatePreferredEmailChange,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<string>;
   public validatePreferredEmailChangeWithToken(
-    token: string,
-    u: number,
+    InputValidatePreferredEmailChange: InputValidatePreferredEmailChange,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<string>>;
   public validatePreferredEmailChangeWithToken(
-    token: string,
-    u: number,
+    InputValidatePreferredEmailChange: InputValidatePreferredEmailChange,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<string>>;
   public validatePreferredEmailChangeWithToken(
-    token: string,
-    u: number,
+    InputValidatePreferredEmailChange: InputValidatePreferredEmailChange,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (token === null || token === undefined) {
+    if (
+      InputValidatePreferredEmailChange === null ||
+      InputValidatePreferredEmailChange === undefined
+    ) {
       throw new Error(
-        'Required parameter token was null or undefined when calling validatePreferredEmailChangeWithToken.',
+        'Required parameter InputValidatePreferredEmailChange was null or undefined when calling validatePreferredEmailChangeWithToken.',
       );
-    }
-    if (u === null || u === undefined) {
-      throw new Error(
-        'Required parameter u was null or undefined when calling validatePreferredEmailChangeWithToken.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (token !== undefined && token !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>token, 'token');
-    }
-    if (u !== undefined && u !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>u, 'u');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -8180,6 +8144,14 @@ export class UsersManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -8191,7 +8163,7 @@ export class UsersManagerService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/urlinjsonout/usersManager/validatePreferredEmailChange`;
+    let requestUrl = `${this.configuration.basePath}/json/usersManager/validatePreferredEmailChange`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -8200,9 +8172,8 @@ export class UsersManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<string>(requestUrl, null, {
+    return this.httpClient.post<string>(requestUrl, InputValidatePreferredEmailChange, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,

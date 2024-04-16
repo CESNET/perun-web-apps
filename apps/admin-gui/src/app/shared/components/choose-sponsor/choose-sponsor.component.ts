@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Role } from '@perun-web-apps/perun/models';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { RichUser, User } from '@perun-web-apps/perun/openapi';
+import { User } from '@perun-web-apps/perun/openapi';
 
 @Component({
   selector: 'app-choose-sponsor',
@@ -10,7 +10,7 @@ import { RichUser, User } from '@perun-web-apps/perun/openapi';
 })
 export class ChooseSponsorComponent implements OnInit, OnChanges {
   @Input() voId: number;
-  @Input() voSponsors: RichUser[] = [];
+  @Input() voSponsors: User[] = [];
   @Input() disableSelf = false;
   @Input() customTitle = 'DIALOGS.CREATE_SPONSORED_MEMBER.SELECT_SPONSOR_DEFAULT';
   @Output() sponsorTypeSelected: EventEmitter<string> = new EventEmitter<string>();

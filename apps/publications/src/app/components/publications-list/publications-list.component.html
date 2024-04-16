@@ -110,6 +110,14 @@
           <span *ngFor="let owner of publication.thanks"> {{owner.ownerName}}<br /> </span>
         </td>
       </ng-container>
+      <ng-container matColumnDef="isbn">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'PUBLICATIONS_LIST.TABLE_ISBN' | translate}}
+        </th>
+        <td *matCellDef="let publication" class="static-column-size" mat-cell>
+          {{publication.isbn}}
+        </td>
+      </ng-container>
       <ng-container matColumnDef="cite">
         <th *matHeaderCellDef mat-header-cell>{{'PUBLICATIONS_LIST.TABLE_CITE' | translate}}</th>
         <td *matCellDef="let publication" class="static-column-size" mat-cell>

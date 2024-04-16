@@ -75,7 +75,7 @@ describe('VO management with role VO observer', () => {
       cy.wait('@getRichAdmins')
 
         // the first name of the admin should be visible
-        .get(`[data-cy=${dbAdminName}-firstName-td]`)
+        .get(`[data-cy=${dbAdminName}-td]`)
         .should('exist')
     })
 

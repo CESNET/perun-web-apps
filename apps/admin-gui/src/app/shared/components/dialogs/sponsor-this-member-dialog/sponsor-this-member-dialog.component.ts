@@ -5,12 +5,11 @@ import {
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { MembersManagerService, RichMember, RichUser, User } from '@perun-web-apps/perun/openapi';
+import { MembersManagerService, RichMember, User } from '@perun-web-apps/perun/openapi';
 
 export interface SponsorThisMemberDialogData {
   theme: string;
   member: RichMember;
-  sponsors: RichUser[];
 }
 
 @Component({
@@ -25,7 +24,7 @@ export class SponsorThisMemberDialogComponent implements OnInit {
   selectedSponsor: User = null;
   sponsorType = 'self';
   member: RichMember;
-  sponsors: RichUser[];
+  sponsors: User[] = [];
   minDate = new Date();
 
   constructor(
@@ -38,9 +37,13 @@ export class SponsorThisMemberDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.theme = this.data.theme;
     this.member = this.data.member;
-    this.sponsors = this.data.sponsors;
+    this.membersService.getAvailableSponsorsForMember(this.member.id).subscribe((sponsors) => {
+      this.sponsors = sponsors;
+      this.loading = false;
+    });
   }
 
   onCancel(): void {

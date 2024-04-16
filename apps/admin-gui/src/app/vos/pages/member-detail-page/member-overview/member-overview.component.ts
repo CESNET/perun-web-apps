@@ -9,7 +9,6 @@ import {
   AttributesManagerService,
   MembersManagerService,
   RichMember,
-  RichUser,
   Sponsor,
   UsersManagerService,
   Vo,
@@ -42,7 +41,6 @@ export class MemberOverviewComponent implements OnInit {
   dataSource = new MatTableDataSource<string>();
   displayedColumns = ['attName', 'attValue'];
   sponsors: Sponsor[] = [];
-  voSponsors: RichUser[] = [];
   sponsorsDataSource = new MatTableDataSource<Sponsor>();
   vo: Vo;
   loading = false;
@@ -156,9 +154,6 @@ export class MemberOverviewComponent implements OnInit {
     config.data = {
       theme: 'member-theme',
       member: this.member,
-      sponsors: this.voSponsors.filter(
-        (s) => !this.sponsors.map((sponsor) => sponsor.user.id).includes(s.id),
-      ),
     };
 
     const dialogRef = this.dialog.open(SponsorThisMemberDialogComponent, config);
@@ -170,14 +165,19 @@ export class MemberOverviewComponent implements OnInit {
     });
   }
 
-  private isSponsorButtonEnabled(): boolean {
+  private isSponsorButtonEnabled(): void {
     const sponsorIds = this.sponsors.map((sponsor) => sponsor.user.id);
-    const availableVoSponsors = this.voSponsors.filter((s) => !sponsorIds.includes(s.id));
 
-    return (
-      (this.isSponsor && !sponsorIds.includes(this.storeService.getPerunPrincipal().user.id)) ||
-      (this.isPerunAdmin && availableVoSponsors.length !== 0)
-    );
+    this.membersService.someAvailableSponsorExistsForMember(this.member.id).subscribe({
+      next: (availableSponsorExists) => {
+        this.sponsorButtonEnabled =
+          (this.isSponsor && !sponsorIds.includes(this.storeService.getPerunPrincipal().user.id)) ||
+          (this.isPerunAdmin && availableSponsorExists);
+      },
+      error: () => {
+        this.sponsorButtonEnabled = false;
+      },
+    });
   }
 
   private initAttributes(): void {
@@ -256,18 +256,15 @@ export class MemberOverviewComponent implements OnInit {
       next: (member) => {
         this.member = member;
         if (member.sponsored && this.canReadSponsors) {
-          this.findSponsors.getSponsors(member.voId).subscribe((sponsors) => {
-            this.voSponsors = sponsors;
-          });
           this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
             this.sponsors = sponsors;
             this.sponsorsDataSource.data = this.sponsors;
-            this.sponsorButtonEnabled = this.isSponsorButtonEnabled();
+            this.isSponsorButtonEnabled();
           });
         } else {
           this.sponsors = [];
           this.sponsorsDataSource.data = this.sponsors;
-          this.sponsorButtonEnabled = this.isSponsorButtonEnabled();
+          this.isSponsorButtonEnabled();
         }
         this.loading = false;
       },

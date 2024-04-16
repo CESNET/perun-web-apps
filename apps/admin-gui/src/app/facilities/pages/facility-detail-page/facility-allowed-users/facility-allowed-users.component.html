@@ -1,7 +1,7 @@
 <div>
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.ALLOWED_USERS.TITLE' | translate}}</h1>
   <div class="filters">
-    <perun-web-apps-refresh-button (refresh)="refreshPage()" class="me-2">
+    <perun-web-apps-refresh-button (refresh)="refresh()" class="me-2">
     </perun-web-apps-refresh-button>
     <perun-web-apps-debounce-filter
       (filter)="applyFilter($event)"
@@ -17,13 +17,13 @@
   <div *ngIf="advancedFilter" class="advanced-filter">
     <div class="toggle filters">
       <mat-slide-toggle
-        [(ngModel)]="allowed"
+        [(ngModel)]="showAllowed"
         (change)="changeFilter()"
         class="me-2"
         labelPosition="before">
         {{'FACILITY_DETAIL.ALLOWED_USERS.FILTER_ALLOWED' | translate}}
       </mat-slide-toggle>
-      <span class="text-muted">{{toggle_messages[allowed ? 1 : 0] | translate}}</span>
+      <span class="text-muted">{{toggle_messages[showAllowed ? 1 : 0] | translate}}</span>
     </div>
     <div class="filters">
       <perun-web-apps-vo-search-select
@@ -50,7 +50,7 @@
       </perun-web-apps-service-search-select>
       <mat-form-field class="search-select" *ngIf="globalForceConsents && facilityForceConsents">
         <mat-label>{{'CONSENTS.STATUS' | translate}}</mat-label>
-        <mat-select (closed)="consentStatusSelected()" [formControl]="statuses" multiple>
+        <mat-select (closed)="consentStatusSelected()" [formControl]="consentStatuses" multiple>
           <mat-select-trigger>
             {{displaySelectedStatuses()}}
           </mat-select-trigger>
@@ -67,21 +67,17 @@
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
   <div class="position-relative table-min-height">
-    <perun-web-apps-users-dynamic-list
+    <perun-web-apps-users-list
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
-      (loading$)="loading$ = $event"
-      [attrNames]="attributes"
-      [disableRouting]="!routeAuth"
-      [displayedColumns]="globalForceConsents && facilityForceConsents ? ['id', 'name', 'email', 'logins', 'organization', 'consentStatus' ] : ['id', 'name', 'email', 'logins', 'organization']"
-      [onlyAllowed]="allowed"
-      [facilityId]="facility.id"
-      [searchString]="filterValue"
-      [resourceId]="selectedResource?.id"
-      [serviceId]="selectedService?.id"
+      [loading]="loading$ | async"
+      (queryChanged)="nextPage.next($event)"
+      (downloadAll)="downloadAll($event)"
+      [routeToAdmin]="routeAuth"
+      [users]="usersPage$ | async"
+      [filter]="searchString"
+      [selection]="selection"
       [tableId]="tableId"
-      [voId]="selectedVo?.id"
-      [consentStatuses]="selectedConsentStatuses"
-      [updateTable]="update">
-    </perun-web-apps-users-dynamic-list>
+      [displayColumns]="displayedColumns"
+      [facilityId]="facility.id" />
   </div>
 </div>

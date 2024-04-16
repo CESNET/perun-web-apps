@@ -37,7 +37,7 @@
     </div>
 
     <span
-      *ngIf="principal.user !== null"
+      *ngIf="showUserName && principal?.user !== null"
       [ngStyle]="{'color': textColor}"
       class="d-none d-lg-inline displayed-name me-1">
       {{principal.user | userFullName}}
@@ -57,15 +57,31 @@
       </mat-icon>
     </button>
 
-    <perun-web-apps-header-menu
-      class="d-flex align-items-center"
-      *ngIf="showHeaderMenu"
-      [otherAppUrls]="otherAppUrls"
-      [otherAppLabels]="otherAppLabels"
-      [user]="principal.user"
-      [logoutEnabled]="logoutEnabled"
-      [iconColor]="iconColor"
-      [textColor]="textColor">
-    </perun-web-apps-header-menu>
+    <div class="d-flex flex-nowrap align-items-center">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="appsMenu"
+        *ngIf="(otherAppUrls | keyvalue)?.length && showOtherApps"
+        [matTooltip]="'NAV.OTHER_APPLICATIONS' | translate">
+        <mat-icon [ngStyle]="{'color': iconColor}"> apps </mat-icon>
+      </button>
+      <mat-menu #appsMenu="matMenu">
+        <button
+          *ngFor="let appLabel of this.otherAppLabels | keyvalue"
+          mat-menu-item
+          (click)="redirectToUrl(this.otherAppUrls[appLabel.key])"
+          (auxclick)="redirectToUrl(this.otherAppUrls[appLabel.key])">
+          <span>{{this.appLabel.value}}</span>
+        </button>
+      </mat-menu>
+
+      <button
+        mat-icon-button
+        *ngIf="logoutEnabled"
+        (click)="onLogOut()"
+        [matTooltip]="'NAV.LOGOUT'|translate">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
   </div>
 </mat-toolbar>

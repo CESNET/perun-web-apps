@@ -4,6 +4,7 @@
     "en": "Password Reset"
   },
   "instance_favicon": false,
+  "auto_service_access_redirect": false,
   "oidc_client": {
     "oauth_authority": "",
     "oauth_callback": "http://localhost:4200/api-callback",
@@ -15,10 +16,13 @@
     "oauth_offline_access_consent_prompt": true,
     "oauth_acr_value": "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport https://refeds.org/profile/sfa https://refeds.org/profile/mfa"
   },
+  "proxy_logout": true,
   "mfa": {
-    "url_en": "https://mfa.id.muni.cz/"
+    "url_en": "https://mfa.id.muni.cz/",
+    "step_up_available": true
   },
   "auto_auth_redirect": true,
+  "log_out_enabled": true,
   "supported_languages": ["en"],
   "display_warning": false,
   "warning_message": "BETA version of new Perun GUI. It doesn’t contain all functionality. Please report any issues to support mail below.",

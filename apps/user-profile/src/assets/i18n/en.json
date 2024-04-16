@@ -353,7 +353,8 @@
           "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute"
         },
         "USER_DONT_EXIST": {
-          "TITLE": "Requested user (by ID or external identity) doesn't exist."
+          "TITLE": "Requested user (by ID or external identity) doesn't exist.",
+          "LOGOUT": "Log out"
         },
         "USER_NOT_ALLOWED": {
           "TITLE": "Access not allowed",

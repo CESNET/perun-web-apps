@@ -58,8 +58,8 @@ describe('Resource management with role Resource observer', () => {
     cy.get('[data-cy=managers]')
       .click()
 
-      // resource admin should be visible
-    cy.get(`[data-cy=${dbResourceAdminName}-firstName-td]`)
+    // resource admin should be visible
+    cy.get(`[data-cy=${dbResourceAdminName}-td]`)
       .should('exist')
   })
 

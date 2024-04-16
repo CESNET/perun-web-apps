@@ -9,6 +9,7 @@ import { ConnectIdentityDialogComponent } from '../../../../../shared/components
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { map, switchMap } from 'rxjs/operators';
+import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
   selector: 'app-user-settings-associated-users',
@@ -21,7 +22,15 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
   associatedUsers: RichUser[] = [];
   user: User;
   tableId = TABLE_USER_ASSOCIATED_USERS;
-  displayedColumns = ['select', 'id', 'user', 'name', 'email', 'logins', 'organization'];
+  displayedColumns: userTableColumn[] = [
+    'select',
+    'id',
+    'user',
+    'name',
+    'email',
+    'logins',
+    'organization',
+  ];
   addAuth: boolean;
   removeAuth: boolean;
   disableRouting: boolean;

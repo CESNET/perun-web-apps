@@ -9,6 +9,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 
 @Component({
   selector: 'app-group-settings-relations',
@@ -16,6 +17,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./group-settings-relations.component.scss'],
 })
 export class GroupSettingsRelationsComponent implements OnInit {
+  static id = 'GroupSettingsRelationsComponent';
+
   @HostBinding('class.router-component') true;
 
   selection = new SelectionModel<Group>(true, []);
@@ -44,11 +47,16 @@ export class GroupSettingsRelationsComponent implements OnInit {
     private dialog: MatDialog,
     private entityStorageService: EntityStorageService,
     private authResolver: GuiAuthResolver,
+    private cacheHelperService: CacheHelperService,
   ) {}
 
   ngOnInit(): void {
     this.group = this.entityStorageService.getEntity();
-    this.refreshTable();
+    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
+      if (nextValue) {
+        this.refreshTable();
+      }
+    });
   }
 
   onCreate(): void {

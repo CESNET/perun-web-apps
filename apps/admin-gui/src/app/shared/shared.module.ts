@@ -128,7 +128,6 @@ import { EditUserDialogComponent } from './components/dialogs/edit-user-dialog/e
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { DeleteTaskResultDialogComponent } from './components/dialogs/delete-task-result-dialog/delete-task-result-dialog.component';
 import { EditApplicationFormItemDataDialogComponent } from './components/dialogs/edit-application-form-item-data-dialog/edit-application-form-item-data-dialog.component';
-import { UsersListComponent } from './components/users-list/users-list.component';
 import { CreateSponsoredMemberDialogComponent } from './components/dialogs/create-sponsored-member-dialog/create-sponsored-member-dialog.component';
 import { GenerateSponsoredMembersDialogComponent } from './components/dialogs/generate-sponsored-members-dialog/generate-sponsored-members-dialog.component';
 import { SponsoredMembersListComponent } from './components/sponsored-members-list/sponsored-members-list.component';
@@ -315,7 +314,6 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
     ServicesListComponent,
     AttrDefListComponent,
     MemberStatusTooltipPipe,
-    UsersListComponent,
     SponsoredMembersListComponent,
     EditMemberSponsorsDialogComponent,
     CreateAttributeDialogComponent,
@@ -422,7 +420,6 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
     EditUserDialogComponent,
     DeleteTaskResultDialogComponent,
     EditApplicationFormItemDataDialogComponent,
-    UsersListComponent,
     EditUserDialogComponent,
     CreateSponsoredMemberDialogComponent,
     GenerateSponsoredMembersDialogComponent,

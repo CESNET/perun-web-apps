@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
+  FindSponsorsService,
   NotificatorService,
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { MembersManagerService, RichMember, RichUser, User } from '@perun-web-apps/perun/openapi';
+import { MembersManagerService, RichMember, User } from '@perun-web-apps/perun/openapi';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
@@ -14,7 +15,6 @@ import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config
 export interface SponsorExistingMemberDialogData {
   voId: number;
   theme: string;
-  voSponsors: RichUser[];
   findSponsorsAuth: boolean;
   serviceMemberId?: number;
 }
@@ -25,7 +25,8 @@ export interface SponsorExistingMemberDialogData {
   styleUrls: ['./sponsor-existing-member-dialog.component.scss'],
 })
 export class SponsorExistingMemberDialogComponent implements OnInit {
-  loading = false;
+  dialogLoading = false;
+  tableLoading = false;
   theme: string;
   tableId = TABLE_ADD_SPONSORED_MEMBERS;
   displayedColumns: string[];
@@ -36,6 +37,7 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
   selection: SelectionModel<RichMember> = new SelectionModel<RichMember>(true, []);
   serviceMemberId: number;
   selectedSponsor: User = null;
+  voSponsors: User[] = [];
   sponsorType = 'self';
   minDate = new Date();
 
@@ -47,18 +49,25 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
     private cd: ChangeDetectorRef,
+    private findSponsors: FindSponsorsService,
   ) {}
 
   ngOnInit(): void {
+    this.dialogLoading = true;
     this.theme = this.data.theme;
     this.serviceMemberId = this.data.serviceMemberId;
     this.displayedColumns = this.serviceMemberId
       ? ['checkbox', 'id', 'fullName', 'sponsored', 'email']
       : ['checkbox', 'id', 'fullName', 'status', 'sponsored', 'email'];
-    if (this.serviceMemberId) {
-      this.searchCtrl.setValue(this.serviceMemberId);
-      this.onSearchByString();
-    }
+    this.findSponsors.getSponsors(this.data.voId).subscribe((sponsors) => {
+      this.voSponsors = sponsors;
+      if (this.serviceMemberId) {
+        this.searchCtrl.setValue(this.serviceMemberId);
+        this.onSearchByString();
+      } else {
+        this.dialogLoading = false;
+      }
+    });
   }
 
   onCancel(): void {
@@ -66,7 +75,7 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
   }
 
   sponsor(members: RichMember[]): void {
-    this.loading = true;
+    this.dialogLoading = true;
 
     const sponsor =
       this.sponsorType === 'self' ? this.store.getPerunPrincipal().user : this.selectedSponsor;
@@ -78,15 +87,15 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
         this.notificator.showSuccess(
           this.translate.instant('DIALOGS.SPONSOR_EXISTING_MEMBER.SUCCESS'),
         );
-        this.loading = false;
+        this.dialogLoading = false;
         this.dialogRef.close(true);
       },
-      error: () => (this.loading = false),
+      error: () => (this.dialogLoading = false),
     });
   }
 
   onSubmit(): void {
-    this.loading = true;
+    this.dialogLoading = true;
     const members = Array.from(this.selection.selected);
     this.expiration = this.expiration === 'never' ? null : this.expiration;
 
@@ -103,7 +112,7 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
       return;
     }
     this.firstSearchDone = true;
-    this.loading = true;
+    this.tableLoading = true;
 
     this.selection.clear();
     this.cd.detectChanges();
@@ -117,9 +126,9 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
           if (this.serviceMemberId) {
             this.selection.toggle(members[0]);
           }
-          this.loading = false;
+          this.tableLoading = false;
         },
-        error: () => (this.loading = false),
+        error: () => (this.tableLoading = false),
       });
   }
 }
