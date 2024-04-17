@@ -1,5 +1,13 @@
 Upgrade notes
 
+## [17.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.0.0...v17.0.1) (2024-04-17)
+
+
+### Bug Fixes
+
+* **admin:** allow to select only existing extSource when adding identity ([66f82b0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/66f82b0de3c31d8431028a6ab84c83f0020c16b4))
+* **admin:** fix member applications showing applications from whole vo ([cad5702](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/cad5702082c53663d3188bef6b57d007f0b8b05f))
+
 ## [17.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v16.0.0...v17.0.0) (2024-04-16)
 
 
