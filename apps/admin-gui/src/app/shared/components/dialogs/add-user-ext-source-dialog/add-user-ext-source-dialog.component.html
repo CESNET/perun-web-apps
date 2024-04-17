@@ -12,23 +12,10 @@
           {{'DIALOGS.ADD_USER_EXT_SOURCE.EMPTY_LOGIN' | translate}}
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="center-self w-100">
-        <mat-label>{{'DIALOGS.ADD_USER_EXT_SOURCE.EXT_SOURCE' | translate}}</mat-label>
-        <input
-          [formControl]="extSourcesControl"
-          [matAutocomplete]="auto"
-          matInput
-          required
-          type="text" />
-        <mat-error>
-          {{'DIALOGS.ADD_USER_EXT_SOURCE.EMPTY_EXT_SOURCE' | translate}}
-        </mat-error>
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let extSource of filteredExtSources | async" [value]="extSource">
-            {{extSource.name}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <perun-web-apps-ext-source-search-select
+        [extSources]="extSources"
+        (extSourceSelected)="this.selectedExtSource=$event">
+      </perun-web-apps-ext-source-search-select>
     </div>
     <div mat-dialog-actions>
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
@@ -36,7 +23,7 @@
       </button>
       <button
         (click)="onAdd()"
-        [disabled]="loginControl.invalid || extSourcesControl.invalid || loading"
+        [disabled]="loginControl.invalid || selectedExtSource === null || loading"
         class="ms-2"
         color="accent"
         mat-flat-button>

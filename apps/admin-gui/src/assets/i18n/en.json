@@ -1878,8 +1878,8 @@
       "SUCCESS": "User identity has been added",
       "LOGIN": "Login",
       "EXT_SOURCE": "External source",
-      "EMPTY_LOGIN": "Login cannot be empty",
-      "EMPTY_EXT_SOURCE": "External source cannot be empty"
+      "FIND_EXT_SOURCE": "Find external source",
+      "EMPTY_LOGIN": "Login cannot be empty"
     },
     "ADD_HOST": {
       "TITLE": "Add hosts",
