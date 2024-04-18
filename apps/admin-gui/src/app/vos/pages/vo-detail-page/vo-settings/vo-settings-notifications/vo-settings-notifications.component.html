@@ -42,6 +42,7 @@
     [loading]="loading"
     [applicationMails]="applicationMails"
     (selectionChange)="changeSelection($event)"
+    (refreshTable)="refresh()"
     [disableSend]="!addAuth"
     [displayedColumns]="displayedColumns"
     [tableId]="tableId"

@@ -47,6 +47,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   loading: boolean;
   @Output()
   selectionChange = new EventEmitter<SelectionModel<ApplicationMail>>();
+  @Output() refreshTable = new EventEmitter<void>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   dataSource: MatTableDataSource<ApplicationMail>;
@@ -122,7 +123,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
       voId: this.voId,
       groupId: this.groupId,
       createMailNotification: false,
-      applicationMail: applicationMail,
+      applicationMail: { ...applicationMail },
     };
 
     const dialog = this.dialog.open(AddEditNotificationDialogComponent, config);
@@ -135,8 +136,8 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
           });
         this.selection.clear();
         this.selectionChange.emit(this.selection);
+        this.refreshTable.emit();
       }
-      this.update();
     });
   }
 
@@ -158,28 +159,9 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
     return value;
   }
 
-  update(): void {
-    if (this.groupId) {
-      this.registrarService.getApplicationMailsForGroup(this.groupId).subscribe((mails) => {
-        this.updateTable(mails);
-      });
-    } else {
-      this.registrarService.getApplicationMailsForVo(this.voId).subscribe((mails) => {
-        this.updateTable(mails);
-      });
-    }
-  }
-
   toggle(row: ApplicationMail): void {
     this.selection.toggle(row);
     this.selectionChange.emit(this.selection);
-  }
-
-  updateTable(mails: ApplicationMail[]): void {
-    this.applicationMails = mails;
-    this.dataSource = new MatTableDataSource<ApplicationMail>(this.applicationMails);
-    this.setDataSource();
-    this.updateSelection();
   }
 
   private setDataSource(): void {
@@ -187,18 +169,5 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
     }
-  }
-
-  private updateSelection(): void {
-    const selected = this.selection.selected;
-    selected.forEach((selectedApplicationMail) => {
-      const found = this.applicationMails.find(
-        (applicationMail) => applicationMail.id === selectedApplicationMail.id,
-      );
-      if (found) {
-        this.selection.deselect(selectedApplicationMail);
-        this.selection.select(found);
-      }
-    });
   }
 }

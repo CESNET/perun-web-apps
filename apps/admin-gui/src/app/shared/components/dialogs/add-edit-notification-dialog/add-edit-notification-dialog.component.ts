@@ -39,6 +39,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
   subjectId = 'perun-subject-input-id';
   textareaId = 'perun-text-textarea-id';
   cursorIndex = 0;
+  noneFilled: boolean = true;
 
   constructor(
     private dialogRef: MatDialogRef<AddEditNotificationDialogComponent>,
@@ -126,6 +127,10 @@ export class AddEditNotificationDialogComponent implements OnInit {
       formGroupFields[`${lang}-html-text`].markAsTouched();
     }
     this.inputFormGroup = new FormGroup(formGroupFields);
+    this.checkEmptyContent();
+    this.inputFormGroup.valueChanges.subscribe(() => {
+      this.checkEmptyContent();
+    });
   }
 
   cancel(): void {
@@ -216,5 +221,20 @@ export class AddEditNotificationDialogComponent implements OnInit {
       ).value;
       this.applicationMail.message[lang].text = this.inputFormGroup.get(`${lang}-plain-text`).value;
     }
+  }
+
+  private checkEmptyContent(): void {
+    for (const language of this.languages) {
+      if (
+        (this.inputFormGroup.get(`${language}-html-text`).value?.length > 0 &&
+          this.inputFormGroup.get(`${language}-html-subject`).value?.length > 0) ||
+        (this.inputFormGroup.get(`${language}-plain-text`).value?.length > 0 &&
+          this.inputFormGroup.get(`${language}-plain-subject`).value?.length > 0)
+      ) {
+        this.noneFilled = false;
+        return;
+      }
+    }
+    this.noneFilled = true;
   }
 }
