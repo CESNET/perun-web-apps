@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  HostBinding,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGroupDialogComponent } from '../../../../shared/components/dialogs/create-group-dialog/create-group-dialog.component';
 import { DeleteGroupDialogComponent } from '../../../../shared/components/dialogs/delete-group-dialog/delete-group-dialog.component';
@@ -28,6 +35,7 @@ import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { GroupUtilsService } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-groups',
@@ -110,6 +118,7 @@ export class VoGroupsComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private groupUtils: GroupUtilsService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   onCreateGroup(): void {
@@ -144,11 +153,14 @@ export class VoGroupsComponent implements OnInit {
     });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refresh();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoGroupsComponent.id) {
+          this.refresh();
+        }
+      });
   }
 
   setAuthRights(): void {

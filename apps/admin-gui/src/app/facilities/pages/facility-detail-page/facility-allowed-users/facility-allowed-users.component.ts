@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
 import { TABLE_FACILITY_ALLOWED_USERS } from '@perun-web-apps/config/table-config';
 import {
   ConsentStatus,
@@ -36,6 +36,7 @@ import {
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { userTableColumn } from '@perun-web-apps/perun/components';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-facility-allowed-users',
@@ -134,6 +135,7 @@ export class FacilityAllowedUsersComponent implements OnInit {
     private dialog: MatDialog,
     private cacheHelperService: CacheHelperService,
     private userManager: UsersManagerService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -156,11 +158,14 @@ export class FacilityAllowedUsersComponent implements OnInit {
     this.changeFilter();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refresh();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === FacilityAllowedUsersComponent.id) {
+          this.refresh();
+        }
+      });
   }
 
   changeFilter(): void {

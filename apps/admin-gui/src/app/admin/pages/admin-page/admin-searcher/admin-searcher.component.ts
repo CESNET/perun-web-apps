@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import {
   AttributeDefinition,
   AttributesManagerService,
@@ -17,6 +17,7 @@ import {
 } from '@perun-web-apps/config/table-config';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-searcher',
@@ -40,6 +41,7 @@ export class AdminSearcherComponent implements OnInit {
     private searcher: SearcherService,
     private voService: VosManagerService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -50,11 +52,14 @@ export class AdminSearcherComponent implements OnInit {
     });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refresh();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === AdminSearcherComponent.id) {
+          this.refresh();
+        }
+      });
   }
 
   tabChanged(indexChangeEvent: number): void {

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { EnrichedFacility, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
@@ -9,6 +9,7 @@ import { CreateFacilityDialogComponent } from '../../../shared/components/dialog
 import { DeleteFacilityDialogComponent } from '../../../shared/components/dialogs/delete-facility-dialog/delete-facility-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-facility-select-page',
@@ -35,6 +36,7 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
     private guiAuthResolver: GuiAuthResolver,
     private dialog: MatDialog,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -43,11 +45,14 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === FacilitySelectPageComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   ngAfterViewChecked(): void {

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import {
   AuthzResolverService,
   MembersManagerService,
@@ -21,6 +21,7 @@ import { SponsorExistingMemberDialogComponent } from '../../../../../shared/comp
 import { Urns } from '@perun-web-apps/perun/urns';
 import { CopySponsoredMembersDialogComponent } from '../../../../../shared/components/dialogs/copy-sponsored-members-dialog/copy-sponsored-members-dialog.component';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-settings-sponsored-members',
@@ -53,6 +54,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private findSponsors: FindSponsorsService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -72,11 +74,14 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
     }
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refresh();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoSettingsSponsoredMembersComponent.id) {
+          this.refresh();
+        }
+      });
   }
 
   setAuthRights(): void {

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { EnrichedVo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
@@ -14,6 +14,7 @@ import { CreateVoDialogComponent } from '../../../shared/components/dialogs/crea
 import { TABLE_VO_SELECT } from '@perun-web-apps/config/table-config';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-select-page',
@@ -44,6 +45,7 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
     private notificator: NotificatorService,
     private apiRequest: ApiRequestConfigurationService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -57,11 +59,14 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoSelectPageComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   ngAfterViewChecked(): void {

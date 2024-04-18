@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ComponentRef, Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   createUrlTreeFromSnapshot,
@@ -30,8 +30,15 @@ import { FacilityAllowedUsersComponent } from '../../../facilities/pages/facilit
 import { GroupRolesComponent } from '../../../vos/pages/group-detail-page/group-roles/group-roles.component';
 import { GroupSettingsRelationsComponent } from '../../../vos/pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
 
+/**
+ * This extended interface is mandatory to access the componentRef of the DetachedRouteHandle
+ */
+interface DetachedRouteHandleExt extends DetachedRouteHandle {
+  componentRef: ComponentRef<unknown>;
+}
+
 export class CachedRoute {
-  routeHandle: DetachedRouteHandle;
+  routeHandle: DetachedRouteHandleExt;
   saveTimeStamp: number;
 }
 
@@ -63,6 +70,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     VoSelectPageComponent.id,
     FacilitySelectPageComponent.id,
   ]);
+  private activeCachedComponentId: string;
 
   private cacheTimeMs = 300_000;
 
@@ -75,13 +83,17 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
   }
 
   /**
-   * Return handlers from cache or null if they are not cached,
+   * Return handlers from cache or null if they are not cached
    *
    * @param route route
    */
-  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandleExt | null {
     const key = this.getKey(route);
     if (!this.handlers.has(key)) return null;
+
+    this.activeCachedComponentId = String(
+      this.handlers.get(key).routeHandle.componentRef.componentType['id'],
+    );
 
     return this.handlers.get(key).routeHandle;
   }
@@ -90,17 +102,27 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     return this.handlers.has(routeUrl);
   }
 
+  getActiveCachedComponentId(): string {
+    return this.activeCachedComponentId;
+  }
+
   /**
    * Returns true if the route should be used from cache.
    *
    * @param route route
    */
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
+    const cachedData = this.handlers.get(this.getKey(route));
+
     if (!this.isUserNavigatingBack || !route.component) {
+      if (cachedData) {
+        // destroy detached component which was not re-attached from cache
+        // component in the cache will be replaced with the new one but the old detached component is not destroyed by default
+        cachedData.routeHandle.componentRef.destroy();
+      }
       return false;
     }
 
-    const cachedData = this.handlers.get(this.getKey(route));
     return cachedData && this.getCurrentTimestamp() - cachedData.saveTimeStamp < this.cacheTimeMs;
   }
 
@@ -110,6 +132,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
    * @param route route
    */
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
+    this.activeCachedComponentId = null;
     const componentId = this.getComponentId(route.component);
     return this.cachedComponents.has(componentId);
   }
@@ -120,7 +143,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
    * @param route route
    * @param detachedTree handlers
    */
-  store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
+  store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandleExt): void {
     // Removes active tooltips, so they are not cached
     while (document.getElementsByTagName('mat-tooltip-component').length > 0) {
       document.getElementsByTagName('mat-tooltip-component')[0].remove();

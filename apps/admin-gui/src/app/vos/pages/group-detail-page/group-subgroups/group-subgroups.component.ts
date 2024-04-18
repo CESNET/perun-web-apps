@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGroupDialogComponent } from '../../../../shared/components/dialogs/create-group-dialog/create-group-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -19,6 +19,7 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-subgroups',
@@ -62,6 +63,7 @@ export class GroupSubgroupsComponent implements OnInit {
     private guiAuthResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   onCreateGroup(): void {
@@ -95,11 +97,14 @@ export class GroupSubgroupsComponent implements OnInit {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupSubgroupsComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   setAuthRights(): void {

@@ -1,7 +1,8 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, RoleService } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-roles',
@@ -22,6 +23,7 @@ export class GroupRolesComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private roleService: RoleService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -29,11 +31,14 @@ export class GroupRolesComponent implements OnInit {
     this.getData();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.getData();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupRolesComponent.id) {
+          this.getData();
+        }
+      });
   }
 
   getData(): void {

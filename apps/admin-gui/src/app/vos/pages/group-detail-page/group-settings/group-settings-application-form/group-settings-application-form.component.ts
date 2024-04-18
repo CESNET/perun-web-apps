@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -23,6 +23,8 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { GroupApplicationsComponent } from '../../group-applications/group-applications.component';
 
 @Component({
   selector: 'app-group-settings-application-form',
@@ -63,6 +65,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     private attributesManager: AttributesManagerService,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -77,11 +80,14 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
         this.applicationForm = form;
 
         // Refresh cached data
-        this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-          if (nextValue) {
-            this.updateFormItems();
-          }
-        });
+        this.cacheHelperService
+          .refreshComponentCachedData()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((nextValue) => {
+            if (nextValue === GroupApplicationsComponent.id) {
+              this.updateFormItems();
+            }
+          });
 
         this.registrarManager.getFormItemsForGroup(this.group.id).subscribe({
           next: (formItems) => {

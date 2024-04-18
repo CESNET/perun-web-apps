@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import {
   Attribute,
   AttributeDefinition,
@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { AppAction } from '../../../../shared/components/application-actions/application-actions.component';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-applications',
@@ -60,6 +61,7 @@ export class GroupApplicationsComponent implements OnInit {
     private translate: PerunTranslateService,
     private authResolver: GuiAuthResolver,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -80,12 +82,15 @@ export class GroupApplicationsComponent implements OnInit {
       });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.updateTable = !this.updateTable;
-        this.cd.detectChanges();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupApplicationsComponent.id) {
+          this.updateTable = !this.updateTable;
+          this.cd.detectChanges();
+        }
+      });
   }
 
   setColumns(): void {

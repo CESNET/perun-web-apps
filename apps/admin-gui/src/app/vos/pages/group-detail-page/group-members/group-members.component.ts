@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   ApiRequestConfigurationService,
@@ -34,6 +34,7 @@ import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { concatMap, map } from 'rxjs/operators';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-members',
@@ -119,6 +120,7 @@ export class GroupMembersComponent implements OnInit {
     private clipboard: Clipboard,
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -145,11 +147,14 @@ export class GroupMembersComponent implements OnInit {
     this.isCopyMembersDisabled();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupMembersComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   loadPage(groupId: number): void {
