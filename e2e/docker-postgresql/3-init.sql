@@ -43,6 +43,7 @@ insert into attr_names (id, attr_name, friendly_name, namespace, type, display_n
    13 - Vo observer
    14 - Perun observer
    15 - Sponsor
+   16 - Sponsor without rights to create
 */
 insert into roles (id, name) values (nextval('roles_id_seq'), 'voadmin');
 insert into roles (id, name) values (nextval('roles_id_seq'), 'groupadmin');
@@ -58,6 +59,7 @@ insert into roles (id, name) values (nextval('roles_id_seq'), 'facilityobserver'
 insert into roles (id, name) values (nextval('roles_id_seq'), 'voobserver');
 insert into roles (id, name) values (nextval('roles_id_seq'), 'perunobserver');
 insert into roles (id, name) values (nextval('roles_id_seq'), 'sponsor');
+insert into roles (id, name) values (nextval('roles_id_seq'), 'sponsornocreaterights');
 
 
 /**********************************************************************************************************************

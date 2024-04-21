@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  AuthzResolverService,
-  MembersManagerService,
-  RichUser,
-  User,
-  Vo,
-} from '@perun-web-apps/perun/openapi';
+import { AuthzResolverService, RichUser, User, Vo } from '@perun-web-apps/perun/openapi';
 import { AuthPrivilege, Role } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Observable } from 'rxjs';
@@ -18,7 +12,6 @@ export class FindSponsorsService {
   constructor(
     private guiAuthResolver: GuiAuthResolver,
     private authzResolver: AuthzResolverService,
-    private membersService: MembersManagerService,
   ) {}
 
   findSponsorsAuth(vo: Vo): boolean {
@@ -34,8 +27,12 @@ export class FindSponsorsService {
       this.authzResolver
         .someAdminExists(Role.SPONSOR, voId, 'Vo', false)
         .subscribe((sponsorExists) => {
-          subscriber.next(sponsorExists);
-          subscriber.complete();
+          this.authzResolver
+            .someAdminExists(Role.SPONSORNOCREATERIGHTS, voId, 'Vo', false)
+            .subscribe((sponsorNoCreateRightsExists) => {
+              subscriber.next(sponsorExists || sponsorNoCreateRightsExists);
+              subscriber.complete();
+            });
         });
     });
   }
@@ -55,8 +52,12 @@ export class FindSponsorsService {
   getSponsors(voId: number): Observable<User[]> {
     return new Observable((subscriber) => {
       this.authzResolver.getAuthzAdmins(Role.SPONSOR, voId, 'Vo', false).subscribe((sponsors) => {
-        subscriber.next(sponsors);
-        subscriber.complete();
+        this.authzResolver
+          .getAuthzAdmins(Role.SPONSORNOCREATERIGHTS, voId, 'Vo', false)
+          .subscribe((sponsorsNoCreateRights) => {
+            subscriber.next(Array.from(new Set(sponsors.concat(sponsorsNoCreateRights))));
+            subscriber.complete();
+          });
       });
     });
   }
