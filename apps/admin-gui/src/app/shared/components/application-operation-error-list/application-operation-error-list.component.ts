@@ -12,6 +12,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Application, PerunException } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceSort,
+  downloadData,
+  getDataForExport,
+  getFedValue,
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
@@ -125,5 +128,51 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
       data: { title: exception.name, description: exception.message, type: 'success' },
       autoFocus: false,
     });
+  }
+
+  getExportDataForColumn(data: [Application, PerunException], column: string): string {
+    const [application, exception] = data;
+    switch (column) {
+      case 'id':
+        return application.id.toString();
+      case 'groupId':
+        return application.group?.id.toString() ?? '';
+      case 'groupName':
+        return application.group?.name ?? '';
+      case 'createdBy':
+        return application.createdBy;
+      case 'createdAt':
+        return application.createdAt;
+      case 'error':
+        return exception.name;
+      default:
+        return getFedValue(application.fedInfo, column);
+    }
+  }
+
+  exportDisplayedData(format: string): void {
+    // dataSource is never dynamic, no need to check
+    const start = this.dataSource.paginator.pageIndex * this.dataSource.paginator.pageSize;
+    const end = start + this.dataSource.paginator.pageSize;
+    downloadData(
+      getDataForExport(
+        this.dataSource
+          .sortData(this.dataSource.filteredData, this.dataSource.sort)
+          .slice(start, end),
+        this.displayedColumns,
+        (data, column) => this.getExportDataForColumn(data, column),
+      ),
+      format,
+    );
+  }
+
+  exportAllData(format: string): void {
+    // dataSource is never dynamic, no need to check
+    downloadData(
+      getDataForExport(this.dataSource.filteredData, this.displayedColumns, (data, column) =>
+        this.getExportDataForColumn(data, column),
+      ),
+      format,
+    );
   }
 }

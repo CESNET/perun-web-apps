@@ -3,8 +3,9 @@ import {
   ApplicationsOrderColumn,
   RichApplication,
 } from '@perun-web-apps/perun/openapi';
-import { parseFullName } from './perun-utils';
+import { downloadData, parseFullName } from './perun-utils';
 import { formatDate } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 export function dateToString(date: Date): string {
   // in case end date hasn't been picked yet in the date picker, show all until today
@@ -99,7 +100,9 @@ export function getExportDataForColumn(data: Application, column: string): strin
     case 'extSourceType':
       return data.extSourceType;
     case 'user':
-      return data.user ? parseFullName(data.user) : '';
+      return data.user
+        ? parseFullName(data.user)
+        : data.createdBy.slice(data.createdBy.lastIndexOf('=') + 1, data.createdBy.length);
     case 'createdBy':
       return data.createdBy;
     case 'createdAt':
@@ -110,6 +113,33 @@ export function getExportDataForColumn(data: Application, column: string): strin
       return data.modifiedAt;
     default:
       return getFedValue(data.fedInfo, column);
+  }
+}
+export function downloadApplicationsData<T>(
+  data: T[],
+  translate: TranslateService,
+  format = 'csv',
+  filename = 'export',
+): void {
+  switch (format) {
+    case 'csv': {
+      const replacer = (key, value): string => {
+        if (key === 'state') {
+          switch (value) {
+            case 'APPROVED':
+              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.APPROVED'));
+            case 'REJECTED':
+              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.REJECTED'));
+            case 'NEW':
+              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.NEW'));
+            case 'VERIFIED':
+              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.VERIFIED'));
+          }
+        }
+        return value === null ? '' : (value as string);
+      };
+      downloadData(data, format, filename, replacer);
+    }
   }
 }
 export function stringify(obj: object): string {
