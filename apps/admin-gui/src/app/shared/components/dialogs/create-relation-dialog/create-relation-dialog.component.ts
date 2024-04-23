@@ -35,7 +35,6 @@ export class CreateRelationDialogComponent implements OnInit {
   tableId = TABLE_CREATE_RELATION_GROUP_DIALOG;
   thisVo: EnrichedVo;
   groupsToNotInclude: number[];
-  groupsToDisable: Set<number> = new Set<number>();
   vosToSelect: Vo[] = [];
   private successMessage: string;
 
@@ -117,24 +116,21 @@ export class CreateRelationDialogComponent implements OnInit {
     this.filterValue = filterValue;
   }
 
-  private setGroupsToDisable(): void {
-    for (const group of this.groups) {
-      if (
-        !this.guiAuthResolver.isAuthorized('result-createGroupUnion_Group_Group_policy', [
+  private filterGroups(): void {
+    this.groups.filter(
+      (group) =>
+        this.guiAuthResolver.isAuthorized('result-createGroupUnion_Group_Group_policy', [
           this.data.group,
-        ]) ||
-        !this.guiAuthResolver.isAuthorized('operand-createGroupUnion_Group_Group_policy', [group])
-      ) {
-        this.groupsToDisable.add(group.id);
-      }
-    }
+        ]) &&
+        this.guiAuthResolver.isAuthorized('operand-createGroupUnion_Group_Group_policy', [group]),
+    );
   }
 
   private finishLoadingGroups(groups: Group[]): void {
     this.groups = groups.filter(
       (group) => !this.groupsToNotInclude.includes(group.id) && group.id !== this.data.group.id,
     );
-    this.setGroupsToDisable();
+    this.filterGroups();
     this.selection.clear();
     this.loading = false;
   }
