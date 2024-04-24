@@ -61,6 +61,7 @@ export class BlockedLoginsListComponent {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = blockedLogins.data;
       this.dataSource.count = blockedLogins.totalCount;
+      this.child.paginator.pageIndex = blockedLogins.offset / blockedLogins.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = blockedLogins;
     }
