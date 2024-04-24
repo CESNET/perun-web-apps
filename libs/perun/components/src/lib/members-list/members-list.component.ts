@@ -116,6 +116,7 @@ export class MembersListComponent implements OnInit {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = members.data;
       this.dataSource.count = members.totalCount;
+      this.child.paginator.pageIndex = members.offset / members.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = members;
     }
