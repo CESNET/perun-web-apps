@@ -1,25 +1,23 @@
-import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
   AttributeDefinition,
   AttributesManagerService,
-  RegistrarManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import {
   TABLE_VO_APPLICATIONS_DETAILED,
   TABLE_VO_APPLICATIONS_NORMAL,
 } from '@perun-web-apps/config/table-config';
-import {
-  EntityStorageService,
-  GuiAuthResolver,
-  PerunTranslateService,
-} from '@perun-web-apps/perun/services';
+import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ApplicationsListColumnsChangeDialogComponent } from '../../../../shared/components/dialogs/applications-list-columns-change-dialog/applications-list-columns-change-dialog.component';
 import { Observable } from 'rxjs';
-import { AppAction } from '../../../../shared/components/application-actions/application-actions.component';
+import {
+  AppAction,
+  ApplicationActionsComponent,
+} from '../../../../shared/components/application-actions/application-actions.component';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -31,6 +29,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class VoApplicationsComponent implements OnInit {
   static id = 'VoApplicationsComponent';
   @HostBinding('class.router-component') true;
+
+  @ViewChild(ApplicationActionsComponent) applicationActions: ApplicationActionsComponent;
 
   vo: Vo;
 
@@ -48,15 +48,10 @@ export class VoApplicationsComponent implements OnInit {
   fedAttrs: AttributeDefinition[] = [];
   viewPreferences$: Observable<Attribute>;
 
-  updateTable = false;
-
   constructor(
-    private registrarManager: RegistrarManagerService,
     private entityStorageService: EntityStorageService,
     private attributeService: AttributesManagerService,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef,
-    private translate: PerunTranslateService,
     private authResolver: GuiAuthResolver,
     private cacheHelperService: CacheHelperService,
     private destroyRef: DestroyRef,
@@ -85,8 +80,7 @@ export class VoApplicationsComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((nextValue) => {
         if (nextValue === VoApplicationsComponent.id) {
-          this.updateTable = !this.updateTable;
-          this.cd.detectChanges();
+          this.applicationActions.refreshTable();
         }
       });
   }
