@@ -1,4 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  HostBinding,
+  OnInit,
+} from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Clipboard } from '@angular/cdk/clipboard';
 import {
@@ -31,6 +38,7 @@ import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { concatMap, map, tap } from 'rxjs/operators';
 import { MembersListService } from '@perun-web-apps/perun/services';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-members',
@@ -88,6 +96,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
     private clipboard: Clipboard,
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngAfterViewInit(): void {
@@ -120,11 +129,14 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
     void this.isManualAddingBlocked(this.vo.id);
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoMembersComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   setAuthRights(members: RichMember[]): void {

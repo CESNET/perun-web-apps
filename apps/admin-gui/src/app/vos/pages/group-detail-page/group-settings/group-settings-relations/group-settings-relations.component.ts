@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
@@ -10,6 +10,7 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-settings-relations',
@@ -48,15 +49,19 @@ export class GroupSettingsRelationsComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private authResolver: GuiAuthResolver,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
     this.group = this.entityStorageService.getEntity();
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupSettingsRelationsComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   onCreate(): void {

@@ -1,4 +1,11 @@
-import { Component, ChangeDetectorRef, HostBinding, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  HostBinding,
+  OnInit,
+  AfterViewInit,
+  DestroyRef,
+} from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveResourceDialogComponent } from '../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
@@ -14,6 +21,7 @@ import { TABLE_FACILITY_RESOURCES_LIST } from '@perun-web-apps/config/table-conf
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-facility-resources',
@@ -52,6 +60,7 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
     private entityStorageService: EntityStorageService,
     private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -65,11 +74,14 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
     this.loadResourcesForFacility();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === FacilityResourcesComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   ngAfterViewInit(): void {

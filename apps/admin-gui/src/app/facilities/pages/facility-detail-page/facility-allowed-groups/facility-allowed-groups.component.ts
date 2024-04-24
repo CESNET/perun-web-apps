@@ -1,8 +1,9 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, Input, OnInit } from '@angular/core';
 import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { TABLE_FACILITY_ALLOWED_GROUPS } from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-facility-allowed-groups',
@@ -37,6 +38,7 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -48,11 +50,14 @@ export class FacilityAllowedGroupsComponent implements OnInit {
     });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === FacilityAllowedGroupsComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   showGroup(): void {

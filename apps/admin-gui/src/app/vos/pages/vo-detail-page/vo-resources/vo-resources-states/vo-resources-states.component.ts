@@ -1,7 +1,8 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { ResourceState, TasksManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-resources-states',
@@ -23,6 +24,7 @@ export class VoResourcesStatesComponent implements OnInit {
     private taskService: TasksManagerService,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -31,11 +33,14 @@ export class VoResourcesStatesComponent implements OnInit {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoResourcesStatesComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   refreshTable(): void {

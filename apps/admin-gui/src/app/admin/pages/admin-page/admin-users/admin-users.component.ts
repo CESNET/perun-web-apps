@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { TABLE_ADMIN_USER_SELECT } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { StoreService } from '@perun-web-apps/perun/services';
@@ -21,6 +21,7 @@ import {
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { userTableColumn } from '@perun-web-apps/perun/components';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-users',
@@ -71,6 +72,7 @@ export class AdminUsersComponent implements OnInit {
     private dialog: MatDialog,
     private cacheHelperService: CacheHelperService,
     private userManager: UsersManagerService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -78,11 +80,14 @@ export class AdminUsersComponent implements OnInit {
     this.attributes = this.attributes.concat(this.storeService.getLoginAttributeNames());
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refresh();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === AdminUsersComponent.id) {
+          this.refresh();
+        }
+      });
   }
 
   filterSearchString(searchString: string): void {
