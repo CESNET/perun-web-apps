@@ -14,7 +14,7 @@ USER root
 RUN install_packages postgresql-client ca-certificates libnet-ldap-perl libnet-dns-perl libtry-tiny-perl libswitch-perl libstring-random-perl heimdal-clients openssh-client wget
 
 RUN cd /opt/bitnami/tomcat/webapps && \
-    wget -O perun-rpc.war https://gitlab.ics.muni.cz/api/v4/projects/perun%2Fperun-idm%2Fperun/packages/generic/release/${RPC_VERSION}/perun-rpc.war && \
+    wget -O perun-rpc.war https://gitlab.ics.muni.cz/api/v4/projects/5975/packages/maven/cz/metacentrum/perun/perun-rpc/0.0.0-development/perun-rpc-0.0.0-development.war && \
     chmod a+rwx perun-rpc.war && \
     chown 1001:1001 perun-rpc.war && \
     mkdir /var/log/perun && \
