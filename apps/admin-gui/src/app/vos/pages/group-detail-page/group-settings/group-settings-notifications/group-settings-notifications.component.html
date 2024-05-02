@@ -48,6 +48,7 @@
       [disableSend]="!addAuth"
       [displayedColumns]="displayedColumns"
       (selectionChange)="changeSelection($event)"
+      (refreshTable)="refresh()"
       [applicationMails]="applicationMails"
       [groupId]="group.id"
       [selection]="selection"
