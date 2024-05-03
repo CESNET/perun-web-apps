@@ -706,6 +706,12 @@
         "DELETE_NOTIFICATION": "Failed to delete some applications.",
         "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below."
       },
+      "EXPORT": {
+        "APPROVED": "APPROVED",
+        "REJECTED": "REJECTED",
+        "NEW": "WAITING FOR MAIL VERIFICATION",
+        "VERIFIED": "SUBMITTED"
+      },
 
       "APPLICATION_DETAIL": {
         "TITLE": "Application detail",

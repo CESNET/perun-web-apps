@@ -750,13 +750,24 @@ export function getDataForExport<T>(
   return result;
 }
 
-export function downloadData<T>(data: T[], format = 'csv', filename = 'export'): void {
+export function downloadData<T>(
+  data: T[],
+  format = 'csv',
+  filename = 'export',
+  customReplacer?: (key, value) => string,
+): void {
   switch (format) {
     case 'csv': {
-      const replacer = (key, value): string => (value === null ? '' : (value as string));
+      const replacer = customReplacer
+        ? customReplacer
+        : (key, value): string => (value === null ? '' : (value as string));
       const header = Object.keys(data[0]);
       const csv = data.map((row) =>
-        header.map((fieldName) => JSON.stringify(row[fieldName], replacer)).join(','),
+        header
+          .map((fieldName) =>
+            JSON.stringify(row[fieldName], (key, value) => replacer(fieldName, value)),
+          )
+          .join(','),
       );
       csv.unshift(header.join(',').split(' ').join('_').split('"').join("''"));
       const csvArray = csv.join('\r\n');

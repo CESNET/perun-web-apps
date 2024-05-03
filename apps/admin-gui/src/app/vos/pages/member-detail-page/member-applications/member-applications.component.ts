@@ -10,10 +10,10 @@ import {
   TABLE_MEMBER_APPLICATIONS_NORMAL,
 } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { EntityStorageService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { PageQuery } from '@perun-web-apps/perun/models';
-import { downloadData, getDataForExport } from '@perun-web-apps/perun/utils';
+import { downloadApplicationsData, getDataForExport } from '@perun-web-apps/perun/utils';
 import {
   dateToString,
   getExportDataForColumn,
@@ -94,6 +94,7 @@ export class MemberApplicationsComponent implements OnInit {
   constructor(
     private entityStorageService: EntityStorageService,
     private registrarService: RegistrarManagerService,
+    private translate: PerunTranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -133,12 +134,13 @@ export class MemberApplicationsComponent implements OnInit {
       })
       .subscribe({
         next: (paginatedGroups) => {
-          downloadData(
+          downloadApplicationsData(
             getDataForExport(
               paginatedGroups.data,
               this.showAllDetails ? this.detailedDisplayedColumns : this.displayedColumns,
               getExportDataForColumn,
             ),
+            this.translate,
             a.format,
           );
         },

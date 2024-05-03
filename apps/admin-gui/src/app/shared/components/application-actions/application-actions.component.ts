@@ -18,7 +18,7 @@ import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ApplicationsBulkOperationDialogComponent } from '../dialogs/applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
 import {
-  downloadData,
+  downloadApplicationsData,
   getDataForExport,
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
@@ -383,7 +383,7 @@ export class ApplicationActionsComponent implements OnInit {
 
     this.registrarService
       .getApplicationsPage({
-        vo: this.vo.id,
+        vo: this.vo ? this.vo.id : this.group.voId,
         query: {
           order: query.order,
           pageSize: a.length,
@@ -400,8 +400,9 @@ export class ApplicationActionsComponent implements OnInit {
       })
       .subscribe({
         next: (paginatedGroups) => {
-          downloadData(
+          downloadApplicationsData(
             getDataForExport(paginatedGroups.data, this.currentColumns, getExportDataForColumn),
+            this.translate,
             a.format,
           );
         },
