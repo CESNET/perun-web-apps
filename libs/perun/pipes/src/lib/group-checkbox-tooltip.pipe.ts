@@ -15,7 +15,7 @@ export class GroupCheckboxTooltipPipe implements PipeTransform {
       return 'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.INDIRECT_GROUP';
     } else if (group.name === 'members') {
       return '';
-    } else if (!indirect) {
+    } else if (indirect) {
       return 'MEMBERS_LIST.CHECKBOX_TOOLTIP_INDIRECT';
     } else {
       return 'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.ALREADY_MEMBER_TOOLTIP';
