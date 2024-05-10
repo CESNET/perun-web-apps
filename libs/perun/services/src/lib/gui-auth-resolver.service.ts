@@ -86,6 +86,7 @@ export class GuiAuthResolver {
       Role.PERUNOBSERVER,
       Role.FACILITYADMIN,
       Role.FACILITIYOBSERVER,
+      Role.FACILITYBANMANAGER,
     );
   }
 

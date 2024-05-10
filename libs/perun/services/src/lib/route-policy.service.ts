@@ -355,8 +355,10 @@ export class RoutePolicyService {
       (facility): boolean =>
         this.authResolver.isAuthorized('getAllRichDestinations_Facility_policy', [facility]),
     ],
-    // TODO fix when policies are updated
-    ['facilities-hosts', (): boolean => this.authResolver.isFacilityAdmin()],
+    [
+      'facilities-hosts',
+      (facility): boolean => this.authResolver.isAuthorized('getHosts_Facility_policy', [facility]),
+    ],
     [
       'facilities-attributes',
       (facility): boolean =>
