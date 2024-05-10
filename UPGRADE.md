@@ -1,5 +1,31 @@
 Upgrade notes
 
+## [17.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.0.1...v17.1.0) (2024-05-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** new role 'SERVICEACCOUNTCREATOR'
+
+### Features
+
+* **admin:** check whether notification mail text filled ([96683a4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/96683a432fe18cf6c2cc14d2f436a20c549f5828))
+* **admin:** new role service account creator ([e80d31f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e80d31f46dae7b3ff533d678b5719677c59b6e49))
+* ban manager roles ([9ed34b2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9ed34b27fd79f7bfe0eaba3c19793fad92037126))
+
+
+### Bug Fixes
+
+* **admin:** allow to select only existing extSource when adding identity ([b37d2b7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b37d2b78df88d6ca9b9c21a4bddf861f4fcd50bf))
+* **admin:** fix issues with applications export ([a65a0a7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a65a0a7776353694571636ef784143895e58e498))
+* **admin:** fix member applications showing applications from whole vo ([d1ed176](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d1ed1760eb120091767f11980f2a060b311c8364))
+* **admin:** improve create group relations dialog ([63bbb80](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/63bbb80bdb137952734fad34cbcaaea696d97a94))
+* **admin:** improve refreshing of data for all cached components ([3d3c730](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3d3c730b959c3d58882aa4f914eba353ef00213c))
+* **admin:** refresh application data in components restored from cache ([ce72539](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ce72539771f9efa3957fc8f28c9b1a77049431a5))
+* propagate the backend offset to the frontend paginator for the... ([a3747a7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a3747a76a8751639349e9889681978b3b0b05e27))
+* **pwdreset:** display request invalid notification ([b34d839](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b34d839c5c2c5fe69ce3eb59b70054c86873b9c3))
+* step up infinite loading on firefox ([8f5286b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8f5286b09cf3c9d53c73cd1d7fa7ddb360345c6d))
+
 ## [17.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.0.0...v17.0.1) (2024-04-17)
 
 
