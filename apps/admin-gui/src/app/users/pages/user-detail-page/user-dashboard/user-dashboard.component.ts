@@ -40,6 +40,7 @@ export class UserDashboardComponent implements OnInit {
     'GROUPMEMBERSHIPMANAGER',
     'FACILITYOBSERVER',
     'RESOURCEOBSERVER',
+    'SERVICEACCOUNTCREATOR',
   ];
   mailSuccessMessage: string;
 

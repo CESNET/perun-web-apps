@@ -138,7 +138,12 @@ export class RoutePolicyService {
     [
       'members-groups',
       (member): boolean =>
-        this.authResolver.isAuthorized('getMemberGroups_Member_policy', [member]),
+        this.authResolver.isAuthorized('getMemberGroups_Member_policy', [member]) &&
+        this.authResolver.isAuthorized(
+          'getMemberRichGroupsWithAttributesByNames_Member_List<String>_policy',
+          [member],
+        ) &&
+        this.authResolver.isAuthorized('getAllGroups_Vo_policy', [member]),
     ],
     [
       'members-applications',

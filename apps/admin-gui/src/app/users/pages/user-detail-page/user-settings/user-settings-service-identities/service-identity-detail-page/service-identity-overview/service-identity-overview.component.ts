@@ -23,6 +23,36 @@ export class ServiceIdentityOverviewComponent implements OnInit {
   private initNavItems(): void {
     this.navItems = [
       {
+        cssIcon: 'perun-vo',
+        url: `/myProfile/service-identities/${this.serviceAccount.id}/organizations`,
+        label: 'MENU_ITEMS.ADMIN.ORGANIZATIONS',
+        style: 'user-btn',
+      },
+      {
+        cssIcon: 'perun-group',
+        url: `/myProfile/service-identities/${this.serviceAccount.id}/groups`,
+        label: 'MENU_ITEMS.ADMIN.GROUPS',
+        style: 'user-btn',
+      },
+      {
+        cssIcon: 'perun-attributes',
+        url: `/myProfile/service-identities/${this.serviceAccount.id}/attributes`,
+        label: 'MENU_ITEMS.USER.ATTRIBUTES',
+        style: 'user-btn',
+      },
+      {
+        cssIcon: 'perun-roles',
+        url: `/myProfile/service-identities/${this.serviceAccount.id}/roles`,
+        label: 'MENU_ITEMS.USER.ROLES',
+        style: 'user-btn',
+      },
+      {
+        cssIcon: 'perun-ban',
+        url: `/myProfile/service-identities/${this.serviceAccount.id}/bans`,
+        label: 'MENU_ITEMS.USER.BANS',
+        style: 'user-btn',
+      },
+      {
         cssIcon: 'perun-manager',
         url: `/myProfile/service-identities/${this.serviceAccount.id}/associated-users`,
         label: 'MENU_ITEMS.USER.ASSOCIATED_USERS',

@@ -2693,6 +2693,8 @@
       "ROLE_INFO_RESOURCEOBSERVER": "You can observe resources that are listed below",
       "CARD_TITLE_GROUPMEMBERSHIPMANAGER": "Membership manager in Groups",
       "ROLE_INFO_GROUPMEMBERSHIPMANAGER": "You can manage members in groups that are listed below",
+      "CARD_TITLE_SERVICEACCOUNTCREATOR": "Service account creator in VOs",
+      "ROLE_INFO_SERVICEACCOUNTCREATOR": "You can create service accounts in organizations that are listed below",
       "DASHBOARD_SETTINGS": "Dashboard Settings",
       "SHOW_RECENTLY_VIEWED": "Show Recently viewed",
       "SHOW_ROLES": "Show roles",
@@ -3024,6 +3026,10 @@
     "PERUNADMINBA": "Perun admin for BA accounts",
     "PERUNADMINBA_SELF": "You have the role of perun admin for BA accounts",
     "PERUNOBSERVER": "Perun observer",
+    "SERVICEACCOUNTCREATOR": "Service account creator",
+    "SERVICEACCOUNTCREATOR_VOS_USER": "Organizations where user can create service accounts",
+    "SERVICEACCOUNTCREATOR_VOS_SELF": "Organizations where you can create service accounts",
+    "SERVICEACCOUNTCREATOR_VOS_GROUP": "Organizations where group members can create service accounts",
     "PERUNOBSERVER_SELF": "You have the role of perun observer"
   },
   "SHARED_LIB": {
