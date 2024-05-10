@@ -202,33 +202,28 @@
       <button (click)="cancel()" class="ms-auto" mat-stroked-button>
         {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CANCEL_BUTTON' | translate}}
       </button>
-      <button
-        (click)="create()"
-        *ngIf="data.createMailNotification"
-        class="ms-2"
-        color="accent"
-        [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending"
-        mat-flat-button>
-        {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
-      </button>
       <div
-        [matTooltipDisabled]="editAuth"
+        [matTooltipDisabled]="editAuth && !inputFormGroup.invalid && (!noneFilled || !applicationMail.send)"
         [matTooltipPosition]="'above'"
-        matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EDIT_HINT' | translate}}">
-        <div
-          [matTooltipDisabled]="!inputFormGroup.invalid"
-          [matTooltipPosition]="'above'"
-          matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_HTML_CONTENT' | translate}}">
-          <button
-            (click)="save()"
-            *ngIf="!data.createMailNotification"
-            class="ms-2"
-            color="accent"
-            [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending"
-            mat-flat-button>
-            {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
-          </button>
-        </div>
+        [matTooltip]="(editAuth | mailNotificationTooltip : inputFormGroup.invalid : (applicationMail.send && noneFilled))">
+        <button
+          (click)="create()"
+          *ngIf="data.createMailNotification"
+          class="ms-2"
+          color="accent"
+          [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
+          mat-flat-button>
+          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
+        </button>
+        <button
+          (click)="save()"
+          *ngIf="!data.createMailNotification"
+          class="ms-2"
+          color="accent"
+          [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
+          mat-flat-button>
+          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
+        </button>
       </div>
     </div>
   </div>

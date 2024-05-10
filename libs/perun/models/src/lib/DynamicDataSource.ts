@@ -128,7 +128,9 @@ export class DynamicDataSource<T> implements DataSource<T> {
           order: sort.direction === 'asc' ? 'ASCENDING' : 'DESCENDING',
           sortColumn: sort.active.toUpperCase(),
           pageSize: page.pageSize,
-          offset: page.pageIndex * page.pageSize,
+          // take pageIndex directly from paginator especially to cover the use-case when the offset is propagated from
+          // backend in the server-side paginated table components and is not changed via the pageChange event
+          offset: this.paginator.pageIndex * page.pageSize,
           searchString: filter,
         } as PageQuery);
       }),

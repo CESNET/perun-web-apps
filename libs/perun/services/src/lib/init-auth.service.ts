@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators';
 import { firstValueFrom, timer } from 'rxjs';
 import { MfaHandlerService } from './mfa-handler.service';
 import { UserNotAllowedAccessComponent } from '@perun-web-apps/general';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +78,13 @@ export class InitAuthService {
       } else {
         return this.oauthService
           .loadDiscoveryDocument()
+          .catch((err: HttpErrorResponse) => {
+            if (err.name === 'HttpErrorResponse' && err.url.endsWith('jwk')) {
+              // thrown only in Firefox **should** be ok to ignore
+              return;
+            }
+            throw err;
+          })
           .then(() => this.tryRefreshToken())
           .then(() => {
             if (this.storeService.getProperty('application') === 'Linker') {

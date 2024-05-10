@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesManagerService, RichResource, Vo } from '@perun-web-apps/perun/openapi';
 import { RemoveResourceDialogComponent } from '../../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
@@ -7,6 +7,7 @@ import { TABLE_VO_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-resources-preview',
@@ -33,6 +34,7 @@ export class VoResourcesPreviewComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -42,11 +44,14 @@ export class VoResourcesPreviewComponent implements OnInit {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === VoResourcesPreviewComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   setAuthRights(): void {

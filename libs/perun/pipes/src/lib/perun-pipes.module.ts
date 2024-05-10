@@ -72,6 +72,8 @@ import { SelectedRoleFilterValuesPipe } from './selected-role-filter-values.pipe
 import { AppFedInfoParsePipe } from './app-fed-info-parse.pipe';
 import { AppValuePipe } from './app-value.pipe';
 import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
+import { MailNotificationTooltipPipe } from './mail-notification-tooltip.pipe';
+import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
 
 @NgModule({
   declarations: [
@@ -122,6 +124,8 @@ import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
     IsAllSelectedPipe,
     FindAttributePipe,
     CanManageGroupPipe,
+    MailNotificationTooltipPipe,
+    AppMailSendingDisabledPipe,
     DisableGroupSelectPipe,
     GroupCheckboxTooltipPipe,
     CheckboxLabelPipe,
@@ -197,6 +201,8 @@ import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
     IsAllSelectedPipe,
     FindAttributePipe,
     CanManageGroupPipe,
+    MailNotificationTooltipPipe,
+    AppMailSendingDisabledPipe,
     DisableGroupSelectPipe,
     GroupCheckboxTooltipPipe,
     CheckboxLabelPipe,

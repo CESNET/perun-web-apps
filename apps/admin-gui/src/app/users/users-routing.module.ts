@@ -94,6 +94,36 @@ const routes: Routes = [
         component: ServiceIdentityOverviewComponent,
       },
       {
+        path: 'attributes',
+        component: UserAttributesComponent,
+        data: { animation: 'UserAttributesPage' },
+      },
+      {
+        path: 'organizations',
+        component: UserOrganizationsComponent,
+        data: { animation: 'UserOrganizationsPage' },
+      },
+      {
+        path: 'groups',
+        component: UserGroupsComponent,
+        data: { animation: 'UserGroupsPage' },
+      },
+      {
+        path: 'roles',
+        component: UserRolesComponent,
+        data: { animation: 'UserRolesPage' },
+      },
+      {
+        path: 'service-identities',
+        component: UserSettingsServiceIdentitiesComponent,
+        data: { animation: 'UserServiceIdentities' },
+      },
+      {
+        path: 'bans',
+        component: UserBansComponent,
+        data: { animation: 'UserBansPage' },
+      },
+      {
         path: 'associated-users',
         component: UserSettingsAssociatedUsersComponent,
       },

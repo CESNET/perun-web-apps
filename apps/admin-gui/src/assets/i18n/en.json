@@ -706,6 +706,12 @@
         "DELETE_NOTIFICATION": "Failed to delete some applications.",
         "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below."
       },
+      "EXPORT": {
+        "APPROVED": "APPROVED",
+        "REJECTED": "REJECTED",
+        "NEW": "WAITING FOR MAIL VERIFICATION",
+        "VERIFIED": "SUBMITTED"
+      },
 
       "APPLICATION_DETAIL": {
         "TITLE": "Application detail",
@@ -1571,6 +1577,7 @@
       "APPLICATION_TYPE_DESCRIPTION_EDIT": "Application type which will trigger sending.",
       "SENDING_ENABLED": "Sending enabled",
       "SENDING_ENABLED_DESCRIPTION": "If checked, a notification will be sent. Un-check it to temporarily disable sending.",
+      "ALL_LOCALES_EMPTY": "You have to set subject and text for at least one locale and form of notification, or disable sending.",
       "LANG_EN": "Language: en",
       "LANG_CS": "Language: cz",
       "FORMAT_INFO": "<ul><li>when the HTML notification is filled then this one will be sent to a user<ul><li>the plain text will be used as an alternative for the email clients that do not support HTML in email</ul></li></li><li>don't forget to change both (HTML + plain text) formats when updating some of the formats</li></ul> ",
@@ -2686,6 +2693,8 @@
       "ROLE_INFO_RESOURCEOBSERVER": "You can observe resources that are listed below",
       "CARD_TITLE_GROUPMEMBERSHIPMANAGER": "Membership manager in Groups",
       "ROLE_INFO_GROUPMEMBERSHIPMANAGER": "You can manage members in groups that are listed below",
+      "CARD_TITLE_SERVICEACCOUNTCREATOR": "Service account creator in VOs",
+      "ROLE_INFO_SERVICEACCOUNTCREATOR": "You can create service accounts in organizations that are listed below",
       "DASHBOARD_SETTINGS": "Dashboard Settings",
       "SHOW_RECENTLY_VIEWED": "Show Recently viewed",
       "SHOW_ROLES": "Show roles",
@@ -2946,6 +2955,10 @@
     "VOOBSERVER_VOS_SELF": "Organizations you are observer of",
     "VOOBSERVER_VOS_USER": "Organizations user is observer of",
     "VOOBSERVER_VOS_GROUP": "Organizations where group members are observers",
+    "VOBANMANAGER": "Organization ban manager",
+    "VOBANMANAGER_VOS_SELF": "Organizations you are ban manager of",
+    "VOBANMANAGER_VOS_USER": "Organizations user is ban manager of",
+    "VOBANMANAGER_VOS_GROUP": "Organizations where group members are ban managers",
     "TOPGROUPCREATOR": "Top group creator",
     "TOPGROUPCREATOR_VOS_SELF": "Organizations where you can create groups",
     "TOPGROUPCREATOR_VOS_USER": "Organizations where user can create groups",
@@ -2976,6 +2989,10 @@
     "TRUSTEDFACILITYADMIN_VOS_SELF": "Virtual organizations you are trusted facility admin in",
     "TRUSTEDFACILITYADMIN_VOS_USER": "Virtual organizations user is trusted facility admin in",
     "TRUSTEDFACILITYADMIN_VOS_GROUP": "Virtual organizations where group members are trusted facility admins",
+    "FACILITYBANMANAGER": "Facility ban manager",
+    "FACILITYBANMANAGER_FACILITIES_SELF": "Facilities you are ban manager of",
+    "FACILITYBANMANAGER_FACILITIES_USER": "Facilities user is ban manager of",
+    "FACILITYBANMANAGER_FACILITIES_GROUP": "Facilities where group members are ban managers",
     "GROUPOBSERVER": "Group observer",
     "GROUPOBSERVER_GROUPS_SELF": "Groups you are observer of",
     "GROUPOBSERVER_GROUPS_USER": "Groups where user is observer",
@@ -2992,6 +3009,10 @@
     "RESOURCEADMIN_RESOURCES_SELF": "Resources you are manager of",
     "RESOURCEADMIN_RESOURCES_USER": "Resources where user is manager",
     "RESOURCEADMIN_RESOURCES_GROUP": "Resources where group members are managers",
+    "RESOURCEBANMANAGER": "Resource ban manager",
+    "RESOURCEBANMANAGER_RESOURCES_SELF": "Resources you are ban manager of",
+    "RESOURCEBANMANAGER_RESOURCES_USER": "Resources user is ban manager of",
+    "RESOURCEBANMANAGER_RESOURCES_GROUP": "Resources where group members are ban managers",
     "SPONSOR": "Sponsor",
     "SPONSOR_VOS_SELF": "Organizations where you are sponsor",
     "SPONSOR_VOS_USER": "Organizations where user is sponsor",
@@ -3017,6 +3038,10 @@
     "PERUNADMINBA": "Perun admin for BA accounts",
     "PERUNADMINBA_SELF": "You have the role of perun admin for BA accounts",
     "PERUNOBSERVER": "Perun observer",
+    "SERVICEACCOUNTCREATOR": "Service account creator",
+    "SERVICEACCOUNTCREATOR_VOS_USER": "Organizations where user can create service accounts",
+    "SERVICEACCOUNTCREATOR_VOS_SELF": "Organizations where you can create service accounts",
+    "SERVICEACCOUNTCREATOR_VOS_GROUP": "Organizations where group members can create service accounts",
     "PERUNOBSERVER_SELF": "You have the role of perun observer"
   },
   "SHARED_LIB": {

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   Group,
@@ -14,6 +14,7 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { ResourcesListComponent } from '@perun-web-apps/perun/components';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-resources',
@@ -45,6 +46,7 @@ export class GroupResourcesComponent implements OnInit {
     private guiAuthResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -53,11 +55,14 @@ export class GroupResourcesComponent implements OnInit {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupResourcesComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   setAuthorization(): void {

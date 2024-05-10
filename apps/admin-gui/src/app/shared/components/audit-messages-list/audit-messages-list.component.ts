@@ -67,6 +67,7 @@ export class AuditMessagesListComponent {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = auditMessages.data;
       this.dataSource.count = auditMessages.totalCount;
+      this.tableWrapper.paginator.pageIndex = auditMessages.offset / auditMessages.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = auditMessages;
     }

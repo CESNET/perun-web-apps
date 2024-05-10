@@ -97,6 +97,7 @@ export class UsersListComponent {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = users.data;
       this.dataSource.count = users.totalCount;
+      this.child.paginator.pageIndex = users.offset / users.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = users;
     }

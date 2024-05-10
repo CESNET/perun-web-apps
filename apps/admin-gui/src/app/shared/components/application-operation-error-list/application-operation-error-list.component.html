@@ -1,5 +1,7 @@
 <div class="card mt-3">
   <perun-web-apps-table-wrapper
+    (exportDisplayedData)="exportDisplayedData($event)"
+    (exportAllData)="exportAllData($event)"
     [pageSizeOptions]="pageSizeOptions"
     [dataLength]="dataSource.data.length">
     <table

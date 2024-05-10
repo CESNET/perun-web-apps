@@ -19,13 +19,17 @@ import {
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
-  downloadData,
+  downloadApplicationsData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  TableCheckbox,
+  PerunTranslateService,
+} from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { MatTableDataSource } from '@angular/material/table';
@@ -61,6 +65,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private translate: PerunTranslateService,
   ) {}
 
   @Input() set applications(applications: Application[] | PaginatedRichApplications) {
@@ -75,6 +80,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = applications.data;
       this.dataSource.count = applications.totalCount;
+      this.child.paginator.pageIndex = applications.offset / applications.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = applications;
     }
@@ -139,14 +145,15 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
 
   exportDisplayedData(format: string): void {
     if (isDynamicDataSource(this.dataSource)) {
-      downloadData(
+      downloadApplicationsData(
         getDataForExport(this.dataSource.data, this.displayedColumns, getExportDataForColumn),
+        this.translate,
         format,
       );
     } else {
       const start = this.dataSource.paginator.pageIndex * this.dataSource.paginator.pageSize;
       const end = start + this.dataSource.paginator.pageSize;
-      downloadData(
+      downloadApplicationsData(
         getDataForExport(
           this.dataSource
             .sortData(this.dataSource.filteredData, this.dataSource.sort)
@@ -154,6 +161,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
           this.displayedColumns,
           getExportDataForColumn,
         ),
+        this.translate,
         format,
       );
     }
@@ -167,12 +175,13 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
     if (isDynamicDataSource(this.dataSource)) {
       this.downloadAll.emit({ format: format, length: this.dataSource.paginator.length });
     } else {
-      downloadData(
+      downloadApplicationsData(
         getDataForExport(
           this.dataSource.filteredData,
           this.displayedColumns,
           getExportDataForColumn,
         ),
+        this.translate,
         format,
       );
     }

@@ -75,7 +75,7 @@
             <mat-slide-toggle
               (change)="changeSending(applicationMail)"
               (click)="$event.stopPropagation()"
-              [disabled]="disableSend"
+              [disabled]="disableSend || (applicationMail | appMailSendingDisabled)"
               [matTooltipDisabled]="!disableSend"
               [ngModel]="applicationMail.send"
               matTooltip="{{'VO_DETAIL.SETTINGS.NOTIFICATIONS.DISABLED_HINT' | translate}}">

@@ -47,6 +47,7 @@ export class MemberOverviewComponent implements OnInit {
   pwdResetAuth: boolean;
   isSponsor = false;
   canReadSponsors = false;
+  canReadGroups = false;
   isPerunAdmin = false;
   sponsorButtonEnabled = false;
 
@@ -98,6 +99,10 @@ export class MemberOverviewComponent implements OnInit {
             this.canReadSponsors = this.authResolver.isAuthorized(
               'getSponsorsForMember_Member_List<String>_policy',
               [this.member],
+            );
+            this.canReadGroups = this.authResolver.isAuthorized(
+              'getGroupRichMembersByIds_int_List<Integer>_List<String>_policy',
+              [this.vo],
             );
             if (this.member.sponsored && this.canReadSponsors) {
               this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
@@ -207,7 +212,6 @@ export class MemberOverviewComponent implements OnInit {
 
   private initNavItems(): void {
     this.navItems = [];
-
     if (this.routePolicyService.canNavigate('members-groups', this.member)) {
       this.navItems.push({
         cssIcon: 'perun-group',

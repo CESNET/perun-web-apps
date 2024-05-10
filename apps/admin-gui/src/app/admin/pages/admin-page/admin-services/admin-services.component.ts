@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { TABLE_ADMIN_SERVICES } from '@perun-web-apps/config/table-config';
@@ -8,6 +8,7 @@ import { CreateEditServiceDialogComponent } from '../../../../shared/components/
 import { DeleteServiceDialogComponent } from '../../../../shared/components/dialogs/delete-service-dialog/delete-service-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-services',
@@ -28,17 +29,21 @@ export class AdminServicesComponent implements OnInit {
     private dialog: MatDialog,
     public authResolver: GuiAuthResolver,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
     this.refreshTable();
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === AdminServicesComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   createService(): void {

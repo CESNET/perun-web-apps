@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   Group,
@@ -22,6 +22,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { GroupsListComponent } from '@perun-web-apps/perun/components';
 import { GroupWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-member-groups',
@@ -68,6 +69,7 @@ export class MemberGroupsComponent implements OnInit {
     private memberService: MembersManagerService,
     private entityService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -95,11 +97,14 @@ export class MemberGroupsComponent implements OnInit {
     });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.refreshTable();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === MemberGroupsComponent.id) {
+          this.refreshTable();
+        }
+      });
   }
 
   refreshTable(): void {

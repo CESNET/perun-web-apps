@@ -323,6 +323,31 @@ export class SideMenuItemService {
           activatedRegex: '/myProfile/service-identities/\\d+$',
         },
         {
+          label: 'MENU_ITEMS.USER.ORGANIZATIONS',
+          url: [`/myProfile/service-identities/${user.id}/organizations`],
+          activatedRegex: `^/myProfile/service-identities/\\d+/organizations$`,
+        },
+        {
+          label: 'MENU_ITEMS.USER.GROUPS',
+          url: [`/myProfile/service-identities/${user.id}/groups`],
+          activatedRegex: `^/myProfile/service-identities/\\d+/groups$`,
+        },
+        {
+          label: 'MENU_ITEMS.USER.ATTRIBUTES',
+          url: [`/myProfile/service-identities/${user.id}/attributes`],
+          activatedRegex: `^/myProfile/service-identities/\\d+/attributes$`,
+        },
+        {
+          label: 'MENU_ITEMS.USER.ROLES',
+          url: [`/myProfile/service-identities/${user.id}/roles`],
+          activatedRegex: `/myProfile/service-identities/\\d+/roles`,
+        },
+        {
+          label: 'MENU_ITEMS.USER.BANS',
+          url: [`/myProfile/service-identities/${user.id}/bans`],
+          activatedRegex: `^/myProfile/service-identities/\\d+/bans`,
+        },
+        {
           label: 'MENU_ITEMS.USER.ASSOCIATED_USERS',
           url: [`/myProfile/service-identities/${user.id}/associated-users`],
           activatedRegex: '/myProfile/service-identities/\\d+/associated-users',

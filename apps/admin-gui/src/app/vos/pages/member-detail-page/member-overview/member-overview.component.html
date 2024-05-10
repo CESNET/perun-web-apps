@@ -40,7 +40,10 @@
           [voId]="vo.id">
         </perun-web-apps-member-overview-membership>
       </mat-card>
-      <mat-card appearance="outlined" class="mat-elevation-z3 membership-card mt-4">
+      <mat-card
+        *ngIf="canReadGroups"
+        appearance="outlined"
+        class="mat-elevation-z3 membership-card mt-4">
         <perun-web-apps-member-overview-groups
           [member]="member"
           [voId]="vo.id"></perun-web-apps-member-overview-groups>

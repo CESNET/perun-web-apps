@@ -1,27 +1,26 @@
-import { ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
   AttributeDefinition,
   AttributesManagerService,
   Group,
-  RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
 import {
   TABLE_GROUP_APPLICATIONS_DETAILED,
   TABLE_GROUP_APPLICATIONS_NORMAL,
 } from '@perun-web-apps/config/table-config';
-import {
-  EntityStorageService,
-  GuiAuthResolver,
-  PerunTranslateService,
-} from '@perun-web-apps/perun/services';
+import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ApplicationsListColumnsChangeDialogComponent } from '../../../../shared/components/dialogs/applications-list-columns-change-dialog/applications-list-columns-change-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { AppAction } from '../../../../shared/components/application-actions/application-actions.component';
+import {
+  AppAction,
+  ApplicationActionsComponent,
+} from '../../../../shared/components/application-actions/application-actions.component';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-group-applications',
@@ -31,6 +30,8 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 export class GroupApplicationsComponent implements OnInit {
   static id = 'GroupApplicationsComponent';
   @HostBinding('class.router-component') true;
+
+  @ViewChild(ApplicationActionsComponent) applicationActions: ApplicationActionsComponent;
 
   group: Group;
 
@@ -48,18 +49,13 @@ export class GroupApplicationsComponent implements OnInit {
   fedAttrs: AttributeDefinition[] = [];
   viewPreferences$: Observable<Attribute>;
 
-  updateTable = false;
-
   constructor(
-    private registrarManager: RegistrarManagerService,
-    private guiAuthResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private attributeService: AttributesManagerService,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef,
-    private translate: PerunTranslateService,
     private authResolver: GuiAuthResolver,
     private cacheHelperService: CacheHelperService,
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -80,12 +76,14 @@ export class GroupApplicationsComponent implements OnInit {
       });
 
     // Refresh cached data
-    this.cacheHelperService.refreshComponentCachedData().subscribe((nextValue) => {
-      if (nextValue) {
-        this.updateTable = !this.updateTable;
-        this.cd.detectChanges();
-      }
-    });
+    this.cacheHelperService
+      .refreshComponentCachedData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nextValue) => {
+        if (nextValue === GroupApplicationsComponent.id) {
+          this.applicationActions.refreshTable();
+        }
+      });
   }
 
   setColumns(): void {
