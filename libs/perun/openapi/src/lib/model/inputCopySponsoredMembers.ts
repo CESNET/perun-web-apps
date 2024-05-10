@@ -10,10 +10,13 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to copy sponsored members
+ */
+export interface InputCopySponsoredMembers {
+  members: Array<number>;
+  copyFrom: number;
+  copyTo: number;
+  copyValidity: boolean;
+  validityTo?: string;
 }

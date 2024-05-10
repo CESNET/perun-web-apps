@@ -111,6 +111,7 @@ model/inputAssignResourceTagsToResource.ts
 model/inputAttributeDefinition.ts
 model/inputAttributePolicyCollections.ts
 model/inputAttributeRights.ts
+model/inputBlockLogins.ts
 model/inputBlockServicesOnDestinations.ts
 model/inputChangeNonAuthzPasswordByToken.ts
 model/inputChangePasswordForLogin.ts
@@ -120,6 +121,7 @@ model/inputCheckPasswordStrength.ts
 model/inputConsolidate.ts
 model/inputConsolidateIdentityUsingToken.ts
 model/inputCopyResource.ts
+model/inputCopySponsoredMembers.ts
 model/inputCreateAlternativePassword.ts
 model/inputCreateAttributeDefinition.ts
 model/inputCreateAuthorship.ts
@@ -142,6 +144,7 @@ model/inputCreateThanks.ts
 model/inputCreateVoWithVo.ts
 model/inputDeleteAlternativePassword.ts
 model/inputDeleteGroups.ts
+model/inputDeleteMembers.ts
 model/inputDeleteResourceTag.ts
 model/inputEntitylessAttribute.ts
 model/inputFormItemData.ts
@@ -162,6 +165,7 @@ model/inputGetUsers.ts
 model/inputInvitationsFromCsv.ts
 model/inputInviteMemberCandidates.ts
 model/inputLockPublications.ts
+model/inputRemoveMembers.ts
 model/inputRemoveResourceTagFromResource.ts
 model/inputRemoveResourceTagsFromResource.ts
 model/inputRemoveRichDestinations.ts
@@ -207,7 +211,10 @@ model/inputSetVoAttribute.ts
 model/inputSetVoAttributes.ts
 model/inputSetVoBan.ts
 model/inputSpecificMember.ts
+model/inputSponsorMembers.ts
 model/inputSubmitApplication.ts
+model/inputUnblockLogins.ts
+model/inputUnblockLoginsById.ts
 model/inputUnlockServicesOnDestinations.ts
 model/inputUpdateApplicationMail.ts
 model/inputUpdateBan.ts
@@ -217,6 +224,7 @@ model/inputUpdateCategory.ts
 model/inputUpdateConsentHub.ts
 model/inputUpdateFacility.ts
 model/inputUpdateForm.ts
+model/inputUpdateFormItemTexts.ts
 model/inputUpdateFormItemsForGroup.ts
 model/inputUpdateFormItemsForVo.ts
 model/inputUpdateGroup.ts

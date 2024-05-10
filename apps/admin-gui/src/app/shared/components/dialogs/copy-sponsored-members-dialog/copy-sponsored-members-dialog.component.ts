@@ -108,13 +108,13 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
     const memberIds = members.map((member) => member.member.id);
 
     this.membersService
-      .copySponsoredMembers(
-        memberIds,
-        this.sourceSponsor.id,
-        sponsor.id,
-        !this.pickExpiration,
-        this.expiration,
-      )
+      .copySponsoredMembersBodyParams({
+        members: memberIds,
+        copyFrom: this.sourceSponsor.id,
+        copyTo: sponsor.id,
+        copyValidity: !this.pickExpiration,
+        validityTo: this.expiration,
+      })
       .subscribe({
         next: () => {
           this.notificator.showSuccess(

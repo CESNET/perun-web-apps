@@ -36,10 +36,10 @@ export class BlockLoginsDialogComponent {
   onSubmit(): void {
     this.loading = true;
     this.usersService
-      .blockLogins(
-        this.blockLogins.value.split('\n').map((login) => login.trim()),
-        this.isGlobal ? null : this.selectedNamespace,
-      )
+      .blockLoginsBodyParams({
+        logins: this.blockLogins.value.split('\n').map((login) => login.trim()),
+        namespace: this.isGlobal ? null : this.selectedNamespace,
+      })
       .subscribe({
         next: () => {
           this.notificator.showInstantSuccess('ADMIN.BLOCKED_LOGINS.BLOCK_SUCCESS');
