@@ -193,7 +193,7 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
       const config = getDefaultDialogConfig();
       config.width = '700px';
       config.data = {
-        attDef: attDef,
+        attDef: { ...attDef },
       };
 
       const dialogRef = this.dialog.open(EditAttributeDefinitionDialogComponent, config);
