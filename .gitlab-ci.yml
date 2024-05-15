@@ -61,18 +61,12 @@ eslint:
   script:
     - npm run lint
 
-e2e_docker_build:
+.e2e_docker_build:
   stage: build
   needs: []
-  image:
-    name: registry.gitlab.ics.muni.cz:443/perun/ci/pipeline-components/kaniko:latest
+  image: registry.gitlab.ics.muni.cz:443/perun/ci/pipeline-components/kaniko:latest
   tags:
     - k8s-root
-  parallel:
-    matrix:
-      - IMAGE:
-          - rpc
-          - postgresql
   before_script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$CI_DEPENDENCY_PROXY_SERVER\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
@@ -103,13 +97,31 @@ e2e_docker_build:
           - package-lock.json
           - package.json
 
+e2e_docker_build_postgres:
+  extends: .e2e_docker_build
+  variables:
+    IMAGE: postgresql
+
+e2e_docker_build_rpc:
+  extends: .e2e_docker_build
+  variables:
+    IMAGE: rpc
+  script:
+    - >-
+      /kaniko/executor
+      --context "$CI_PROJECT_DIR/e2e/docker-$IMAGE"
+      --dockerfile "$CI_PROJECT_DIR/e2e/docker-$IMAGE/Dockerfile"
+      --build-arg CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX="$CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX"
+      --destination "$CI_REGISTRY_IMAGE/$IMAGE:k8s"
+
 # inspired by https://medium.com/devops-with-valentine/run-your-cypress-e2e-tests-in-gitlab-ci-complete-guide-909990962001
 e2e_tests:
   extends: .npm
   stage: test
   needs:
     - test_build
-    - e2e_docker_build
+    - e2e_docker_build_postgres
+    - e2e_docker_build_rpc
   image: registry.gitlab.ics.muni.cz:443/perun/ci/pipeline-components/cypress:latest
   tags:
     - k8s-3s-hpc
@@ -138,7 +150,7 @@ e2e_tests:
         POSTGRESQL_PASSWORD: test
         POSTGRESQL_DATABASE: perun
         HEALTHCHECK_TCP_PORT: "5432"
-    - name: $CI_REGISTRY_IMAGE/rpc:$RPC_VERSION-k8s
+    - name: $CI_REGISTRY_IMAGE/rpc:k8s
       alias: perun-rpc
       variables:
         HEALTHCHECK_TCP_PORT: "8009"
