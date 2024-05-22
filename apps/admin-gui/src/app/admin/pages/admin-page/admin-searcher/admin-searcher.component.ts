@@ -18,6 +18,7 @@ import {
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { compareFnName } from '@perun-web-apps/perun/utils';
 
 @Component({
   selector: 'app-admin-searcher',
@@ -47,7 +48,9 @@ export class AdminSearcherComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.attributesManager.getAllAttributeDefinitions().subscribe((attrDefs) => {
-      this.allAttrDefinitions = attrDefs;
+      this.allAttrDefinitions = attrDefs.filter(
+        (attrDef) => !attrDef.namespace.includes('-def:virt'),
+      );
       this.loading = false;
     });
 
@@ -88,6 +91,7 @@ export class AdminSearcherComponent implements OnInit {
     this.loadingEntityData = true;
     this.voService.getAllVos().subscribe((vos) => {
       this.vos = vos;
+      this.vos.sort(compareFnName);
       this.selectedVo = vos[0];
       this.loadingEntityData = false;
     });
@@ -106,9 +110,14 @@ export class AdminSearcherComponent implements OnInit {
       .getUsersSearcher({
         attributesWithSearchingValues: this.searchInput,
       })
-      .subscribe((users) => {
-        this.entities = users as RichUser[];
-        this.loadingEntityData = false;
+      .subscribe({
+        next: (users) => {
+          this.entities = users as RichUser[];
+          this.loadingEntityData = false;
+        },
+        error: () => {
+          this.loadingEntityData = false;
+        },
       });
   }
 
@@ -120,9 +129,14 @@ export class AdminSearcherComponent implements OnInit {
         vo: this.selectedVo.id,
         userAttributesWithSearchingValues: this.searchInput,
       })
-      .subscribe((members) => {
-        this.entities = members as RichMember[];
-        this.loadingEntityData = false;
+      .subscribe({
+        next: (members) => {
+          this.entities = members as RichMember[];
+          this.loadingEntityData = false;
+        },
+        error: () => {
+          this.loadingEntityData = false;
+        },
       });
   }
 
@@ -133,9 +147,14 @@ export class AdminSearcherComponent implements OnInit {
       .getFacilities({
         attributesWithSearchingValues: this.searchInput,
       })
-      .subscribe((facilities) => {
-        this.entities = facilities.map((f) => ({ facility: f })) as EnrichedFacility[];
-        this.loadingEntityData = false;
+      .subscribe({
+        next: (facilities) => {
+          this.entities = facilities.map((f) => ({ facility: f })) as EnrichedFacility[];
+          this.loadingEntityData = false;
+        },
+        error: () => {
+          this.loadingEntityData = false;
+        },
       });
   }
 
@@ -146,9 +165,14 @@ export class AdminSearcherComponent implements OnInit {
       .getAttributesResources({
         attributesWithSearchingValues: this.searchInput,
       })
-      .subscribe((resources) => {
-        this.entities = resources as ResourceWithStatus[];
-        this.loadingEntityData = false;
+      .subscribe({
+        next: (resources) => {
+          this.entities = resources as ResourceWithStatus[];
+          this.loadingEntityData = false;
+        },
+        error: () => {
+          this.loadingEntityData = false;
+        },
       });
   }
 
