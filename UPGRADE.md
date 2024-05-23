@@ -1,5 +1,21 @@
 Upgrade notes
 
+## [17.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.1.0...v17.2.0) (2024-05-23)
+
+
+### Features
+
+* **admin:** use params in body versions of chosen methods ([1aebeea](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/1aebeeaf21c22238abb7a6498aba92ff9ded4ff4))
+
+
+### Bug Fixes
+
+* **admin:** data persisting in dialogs after canceling ([39ee05d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/39ee05d34a10da13fd1fd7be0480cd5e3e372253))
+* **admin:** new sponsor role ([12c5f43](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/12c5f4306a2120df772d4636b001ed8ff20f6cc9))
+* **admin:** searcher issues ([846d239](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/846d2394b86b567aacc99f4c870c749d46c9cf9d))
+* **admin:** wrong disabled tooltip on already member ([2e2532a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2e2532abda1be865119d37a5f5e18ea81dcb23e0))
+* revert problematic offset changes ([d10cc0d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d10cc0d100b85da41ea2b0c85f916a66ffeb0121))
+
 ## [17.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.0.1...v17.1.0) (2024-05-10)
 
 
