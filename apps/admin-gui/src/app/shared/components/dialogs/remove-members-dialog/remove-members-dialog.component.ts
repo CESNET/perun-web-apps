@@ -48,19 +48,21 @@ export class RemoveMembersDialogComponent implements OnInit {
     this.loading = true;
     if (this.data.groupId) {
       this.groupService
-        .removeMembers(
-          this.data.groupId,
-          this.data.members.map((m) => m.id),
-        )
-        .subscribe(
-          () => this.onSuccess(),
-          () => this.onError(),
-        );
+        .removeMembersBodyParams({
+          group: this.data.groupId,
+          members: this.data.members.map((m) => m.id),
+        })
+        .subscribe({
+          next: () => this.onSuccess(),
+          error: () => this.onError(),
+        });
     } else {
-      this.membersService.deleteMembers(this.data.members.map((m) => m.id)).subscribe(
-        () => this.onSuccess(),
-        () => this.onError(),
-      );
+      this.membersService
+        .deleteMembersBodyParams({ members: this.data.members.map((m) => m.id) })
+        .subscribe({
+          next: () => this.onSuccess(),
+          error: () => this.onError(),
+        });
     }
   }
 

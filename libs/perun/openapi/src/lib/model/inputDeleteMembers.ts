@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to delete members
+ */
+export interface InputDeleteMembers {
+  members: Array<number>;
 }

@@ -9,11 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ApplicationFormItem } from './applicationFormItem';
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to updateFormItemTexts
+ */
+export interface InputUpdateFormItemTexts {
+  formItem?: ApplicationFormItem;
+  locale?: string | null;
 }

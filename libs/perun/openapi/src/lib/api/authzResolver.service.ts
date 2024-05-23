@@ -468,6 +468,158 @@ export class AuthzResolverService {
   }
 
   /**
+   * Gets all valid admins
+   * Get all valid user administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role.
+   * @param role User role
+   * @param complementaryObjectId Property id of complementaryObject to get managers for
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param onlyDirectAdmins When true, return only direct users of the complementary object for role
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getAuthzAdmins(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<User>>;
+  public getAuthzAdmins(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<User>>>;
+  public getAuthzAdmins(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<User>>>;
+  public getAuthzAdmins(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (role === null || role === undefined) {
+      throw new Error('Required parameter role was null or undefined when calling getAuthzAdmins.');
+    }
+    if (complementaryObjectId === null || complementaryObjectId === undefined) {
+      throw new Error(
+        'Required parameter complementaryObjectId was null or undefined when calling getAuthzAdmins.',
+      );
+    }
+    if (complementaryObjectName === null || complementaryObjectName === undefined) {
+      throw new Error(
+        'Required parameter complementaryObjectName was null or undefined when calling getAuthzAdmins.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (role !== undefined && role !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>role, 'role');
+    }
+    if (complementaryObjectId !== undefined && complementaryObjectId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>complementaryObjectId,
+        'complementaryObjectId',
+      );
+    }
+    if (complementaryObjectName !== undefined && complementaryObjectName !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>complementaryObjectName,
+        'complementaryObjectName',
+      );
+    }
+    if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>onlyDirectAdmins,
+        'onlyDirectAdmins',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/getAdmins`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<User>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Gets all valid rich admins
    * Get all valid richUser administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role with specified attributes.
    * @param role User role
@@ -642,313 +794,6 @@ export class AuthzResolverService {
       requestUrl = helperUrl.toString();
     }
     return this.httpClient.get<Array<RichUser>>(requestUrl, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * Gets all valid admins
-   * Get all valid user administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role.
-   * @param role
-   * @param complementaryObjectId Property id of complementaryObject to get managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
-   * @param onlyDirectAdmins When true, return only direct users of the complementary object for role
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getAuthzAdmins(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<User>>;
-  public getAuthzAdmins(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<User>>>;
-  public getAuthzAdmins(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<User>>>;
-  public getAuthzAdmins(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    if (role === null || role === undefined) {
-      throw new Error(
-        'Required parameter role was null or undefined when calling getAuthzRichAdmins.',
-      );
-    }
-    if (complementaryObjectId === null || complementaryObjectId === undefined) {
-      throw new Error(
-        'Required parameter complementaryObjectId was null or undefined when calling getAuthzRichAdmins.',
-      );
-    }
-    if (complementaryObjectName === null || complementaryObjectName === undefined) {
-      throw new Error(
-        'Required parameter complementaryObjectName was null or undefined when calling getAuthzRichAdmins.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (role !== undefined && role !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>role, 'role');
-    }
-    if (complementaryObjectId !== undefined && complementaryObjectId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>complementaryObjectId,
-        'complementaryObjectId',
-      );
-    }
-    if (complementaryObjectName !== undefined && complementaryObjectName !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>complementaryObjectName,
-        'complementaryObjectName',
-      );
-    }
-    if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>onlyDirectAdmins,
-        'onlyDirectAdmins',
-      );
-    }
-
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/jsonlite/authzResolver/getAdmins`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.get<Array<RichUser>>(requestUrl, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * Check that some valid richUser administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role exists.
-   * @param role
-   * @param complementaryObjectId Property id of complementaryObject to check managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
-   * @param onlyDirectAdmins When true, check only direct users of the complementary object for role
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public someAdminExists(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<boolean>;
-  public someAdminExists(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<boolean>>;
-  public someAdminExists(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<boolean>>;
-  public someAdminExists(
-    role: string,
-    complementaryObjectId: number,
-    complementaryObjectName: string,
-    onlyDirectAdmins?: boolean,
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    if (role === null || role === undefined) {
-      throw new Error(
-        'Required parameter role was null or undefined when calling someAdminExists.',
-      );
-    }
-    if (complementaryObjectId === null || complementaryObjectId === undefined) {
-      throw new Error(
-        'Required parameter complementaryObjectId was null or undefined when calling someAdminExists.',
-      );
-    }
-    if (complementaryObjectName === null || complementaryObjectName === undefined) {
-      throw new Error(
-        'Required parameter complementaryObjectName was null or undefined when calling someAdminExists.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (role !== undefined && role !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>role, 'role');
-    }
-    if (complementaryObjectId !== undefined && complementaryObjectId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>complementaryObjectId,
-        'complementaryObjectId',
-      );
-    }
-    if (complementaryObjectName !== undefined && complementaryObjectName !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>complementaryObjectName,
-        'complementaryObjectName',
-      );
-    }
-    if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>onlyDirectAdmins,
-        'onlyDirectAdmins',
-      );
-    }
-
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/json/authzResolver/someAdminExists`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.get<boolean>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -3305,96 +3150,6 @@ export class AuthzResolverService {
   }
 
   /**
-   * Refreshes MFA-related data for principal.
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public refreshMfa(
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
-  public refreshMfa(
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
-  public refreshMfa(
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
-  public refreshMfa(
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/json/authzResolver/refreshMfa`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.get<any>(requestUrl, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
    * Set role for authorizedGroup
    * @param SetRoleForGroup
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -4052,6 +3807,160 @@ export class AuthzResolverService {
     }
     return this.httpClient.post<any>(requestUrl, SetRoleWithUserComplementaryObjects, {
       context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Checks if some valid admin exists.
+   * Checks if valid user administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role exists.
+   * @param role User role
+   * @param complementaryObjectId Property id of complementaryObject to get managers for
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param onlyDirectAdmins When true, check only direct users of the complementary object for role
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public someAdminExists(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<boolean>;
+  public someAdminExists(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<boolean>>;
+  public someAdminExists(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<boolean>>;
+  public someAdminExists(
+    role: string,
+    complementaryObjectId: number,
+    complementaryObjectName: string,
+    onlyDirectAdmins?: boolean,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (role === null || role === undefined) {
+      throw new Error(
+        'Required parameter role was null or undefined when calling someAdminExists.',
+      );
+    }
+    if (complementaryObjectId === null || complementaryObjectId === undefined) {
+      throw new Error(
+        'Required parameter complementaryObjectId was null or undefined when calling someAdminExists.',
+      );
+    }
+    if (complementaryObjectName === null || complementaryObjectName === undefined) {
+      throw new Error(
+        'Required parameter complementaryObjectName was null or undefined when calling someAdminExists.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (role !== undefined && role !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>role, 'role');
+    }
+    if (complementaryObjectId !== undefined && complementaryObjectId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>complementaryObjectId,
+        'complementaryObjectId',
+      );
+    }
+    if (complementaryObjectName !== undefined && complementaryObjectName !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>complementaryObjectName,
+        'complementaryObjectName',
+      );
+    }
+    if (onlyDirectAdmins !== undefined && onlyDirectAdmins !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>onlyDirectAdmins,
+        'onlyDirectAdmins',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/someAdminExists`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<boolean>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,

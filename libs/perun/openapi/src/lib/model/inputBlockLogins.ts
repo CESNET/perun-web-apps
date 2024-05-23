@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to block logins
+ */
+export interface InputBlockLogins {
+  logins: Array<string>;
+  namespace?: string;
 }

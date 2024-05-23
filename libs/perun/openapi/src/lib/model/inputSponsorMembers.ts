@@ -10,10 +10,11 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to sponsor members
+ */
+export interface InputSponsorMembers {
+  members: Array<number>;
+  sponsor: number;
+  validityTo?: string;
 }

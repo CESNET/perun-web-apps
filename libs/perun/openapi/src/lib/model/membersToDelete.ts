@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * member ids to delete
+ */
+export interface MembersToDelete {
+  members: Array<number>;
 }
