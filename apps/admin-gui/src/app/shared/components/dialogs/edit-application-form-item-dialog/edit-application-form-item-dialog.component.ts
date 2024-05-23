@@ -287,7 +287,7 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
   }
 
   copy(from: ApplicationFormItem, to: ApplicationFormItem): void {
-    to.applicationTypes = from.applicationTypes;
+    to.applicationTypes = [...from.applicationTypes];
     to.federationAttribute = from.federationAttribute;
     to.forDelete = from.forDelete;
     for (const lang of this.languages) {

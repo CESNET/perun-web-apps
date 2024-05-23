@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface ItemTexts {
-  locale?: string;
-  label?: string;
-  options?: string | null;
-  help?: string;
-  errorMessage?: string;
+/**
+ * input to remove members
+ */
+export interface InputRemoveMembers {
+  group: number;
+  members: Array<number>;
 }

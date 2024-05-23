@@ -43,15 +43,17 @@ export class UnblockLoginsDialogComponent implements OnInit {
 
   onSubmit(): void {
     this.loading = true;
-    this.usersService.unblockLoginsById(this.data.logins.map((login) => login.id)).subscribe({
-      next: () => {
-        this.notificator.showInstantSuccess('ADMIN.BLOCKED_LOGINS.UNBLOCK_SUCCESS');
-        this.dialogRef.close(true);
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      },
-    });
+    this.usersService
+      .unblockLoginsByIdBodyParams({ logins: this.data.logins.map((login) => login.id) })
+      .subscribe({
+        next: () => {
+          this.notificator.showInstantSuccess('ADMIN.BLOCKED_LOGINS.UNBLOCK_SUCCESS');
+          this.dialogRef.close(true);
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
   }
 }

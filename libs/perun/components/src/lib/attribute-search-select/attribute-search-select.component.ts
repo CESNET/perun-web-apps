@@ -23,11 +23,13 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
     this.availableAttrDefs = this.attributes
       .filter((attrDef) => attrDef.entity === this.attributesForEntity)
       .sort(compareFnDisplayName);
+
+    this.addOption();
   }
 
   ngOnChanges(): void {
     this.options = [];
-    this.options.push([this.attributes[0].namespace + ':' + this.attributes[0].friendlyName, '']);
+    this.addOption();
   }
 
   removeOption(option: string[]): void {
@@ -35,7 +37,12 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
   }
 
   addOption(): void {
-    this.options.push([this.attributes[0].namespace + ':' + this.attributes[0].friendlyName, '']);
+    if (this.availableAttrDefs.length > 0) {
+      this.options.push([
+        this.availableAttrDefs[0].namespace + ':' + this.availableAttrDefs[0].friendlyName,
+        '',
+      ]);
+    }
   }
 
   emptySearchString(): boolean {

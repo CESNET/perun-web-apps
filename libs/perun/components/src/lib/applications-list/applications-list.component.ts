@@ -80,7 +80,6 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = applications.data;
       this.dataSource.count = applications.totalCount;
-      this.child.paginator.pageIndex = applications.offset / applications.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = applications;
     }

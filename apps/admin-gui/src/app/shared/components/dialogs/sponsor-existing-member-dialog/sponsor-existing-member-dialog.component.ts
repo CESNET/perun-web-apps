@@ -82,16 +82,22 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
 
     const memberIds = members.map((member) => member.id);
 
-    this.membersService.sponsorMembers(memberIds, sponsor.id, this.expiration).subscribe({
-      next: () => {
-        this.notificator.showSuccess(
-          this.translate.instant('DIALOGS.SPONSOR_EXISTING_MEMBER.SUCCESS'),
-        );
-        this.dialogLoading = false;
-        this.dialogRef.close(true);
-      },
-      error: () => (this.dialogLoading = false),
-    });
+    this.membersService
+      .sponsorMembersBodyParams({
+        members: memberIds,
+        sponsor: sponsor.id,
+        validityTo: this.expiration,
+      })
+      .subscribe({
+        next: () => {
+          this.notificator.showSuccess(
+            this.translate.instant('DIALOGS.SPONSOR_EXISTING_MEMBER.SUCCESS'),
+          );
+          this.dialogLoading = false;
+          this.dialogRef.close(true);
+        },
+        error: () => (this.dialogLoading = false),
+      });
   }
 
   onSubmit(): void {

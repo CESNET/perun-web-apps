@@ -24,7 +24,9 @@ export class ChooseSponsorComponent implements OnInit, OnChanges {
   constructor(private guiAuthResolver: GuiAuthResolver) {}
 
   ngOnInit(): void {
-    this.isSponsor = this.guiAuthResolver.principalHasRole(Role.SPONSOR, 'Vo', this.voId);
+    this.isSponsor =
+      this.guiAuthResolver.principalHasRole(Role.SPONSOR, 'Vo', this.voId) ||
+      this.guiAuthResolver.principalHasRole(Role.SPONSORNOCREATERIGHTS, 'Vo', this.voId);
     this.isPerunAdmin = this.guiAuthResolver.isPerunAdmin();
     if (this.isSelfEnabled()) {
       this.selfTooltip = 'DIALOGS.CREATE_SPONSORED_MEMBER.SELECT_SELF_DISABLED_COPY';
