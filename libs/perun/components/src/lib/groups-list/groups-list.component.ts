@@ -104,7 +104,6 @@ export class GroupsListComponent {
     if (isDynamicDataSource(this.dataSource) && paginated) {
       this.dataSource.data = groups.data;
       this.dataSource.count = groups.totalCount;
-      this.tableWrapper.paginator.pageIndex = groups.offset / groups.pageSize;
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = groups;
     }
