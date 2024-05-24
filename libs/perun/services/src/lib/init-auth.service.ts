@@ -71,10 +71,17 @@ export class InitAuthService {
       const queryParams = location.search.substring(1);
 
       if (currentPathname === '/api-callback') {
-        return this.oauthService
-          .loadDiscoveryDocumentAndTryLogin()
-          .then(() => this.startRefreshToken())
-          .then(() => this.redirectToOriginDestination());
+        return (
+          this.oauthService
+            .loadDiscoveryDocumentAndTryLogin()
+            .then(() => this.startRefreshToken())
+            // do not refresh gui on step-up
+            .then(() =>
+              localStorage.getItem('mfaWindow')
+                ? Promise.resolve(true)
+                : this.redirectToOriginDestination(),
+            )
+        );
       } else {
         return this.oauthService
           .loadDiscoveryDocument()
