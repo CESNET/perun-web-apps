@@ -11,15 +11,15 @@
  */
 
 /**
- * Input to getMembersByUserAttributes
+ * Input to getMembersSearcher
  */
-export interface InputGetMembersByUserAttributes {
+export interface InputGetMembersSearcher {
   /**
    * vo id
    */
   vo: number;
   /**
-   * Map of attribute names with searching values Map<string,string>
+   * Map of user and member attribute names with searching values Map<string,string>
    */
-  userAttributesWithSearchingValues: { [key: string]: string };
+  attributesWithSearchingValues: { [key: string]: string };
 }

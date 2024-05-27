@@ -125,9 +125,9 @@ export class AdminSearcherComponent implements OnInit {
     this.searchInput = event;
     this.loadingEntityData = true;
     this.searcher
-      .getMembersByUserAttributes({
+      .getMembersSearcher({
         vo: this.selectedVo.id,
-        userAttributesWithSearchingValues: this.searchInput,
+        attributesWithSearchingValues: this.searchInput,
       })
       .subscribe({
         next: (members) => {
