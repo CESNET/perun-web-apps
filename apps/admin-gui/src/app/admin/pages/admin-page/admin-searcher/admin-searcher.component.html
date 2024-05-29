@@ -8,7 +8,7 @@
       <perun-web-apps-attribute-search-select
         *ngIf="!loading"
         [attributes]="allAttrDefinitions"
-        [attributesForEntity]="'user'"
+        [attributesForEntity]="['user']"
         (search)="getUsers($event)">
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-users-list
@@ -37,7 +37,7 @@
       <perun-web-apps-attribute-search-select
         *ngIf="!loading"
         [attributes]="allAttrDefinitions"
-        [attributesForEntity]="'user'"
+        [attributesForEntity]="['user', 'member']"
         (search)="getMembers($event)">
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-members-list
@@ -57,7 +57,7 @@
       <perun-web-apps-attribute-search-select
         *ngIf="!loading"
         [attributes]="allAttrDefinitions"
-        [attributesForEntity]="'facility'"
+        [attributesForEntity]="['facility']"
         (search)="getFacilities($event)">
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-facilities-list
@@ -77,7 +77,7 @@
       <perun-web-apps-attribute-search-select
         *ngIf="!loading"
         [attributes]="allAttrDefinitions"
-        [attributesForEntity]="'resource'"
+        [attributesForEntity]="['resource']"
         (search)="getResources($event)">
       </perun-web-apps-attribute-search-select>
       <perun-web-apps-resources-list

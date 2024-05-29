@@ -153,6 +153,7 @@ model/inputGetAllResourcesByResourceTag.ts
 model/inputGetFacilities.ts
 model/inputGetMatchResources.ts
 model/inputGetMembersByUserAttributes.ts
+model/inputGetMembersSearcher.ts
 model/inputGetMessagesPage.ts
 model/inputGetPaginatedApplications.ts
 model/inputGetPaginatedBlockedLogins.ts

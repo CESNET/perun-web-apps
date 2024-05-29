@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 import { compareFnDisplayName } from '@perun-web-apps/perun/utils';
 
+type Entity = 'user' | 'facility' | 'resource' | 'member';
+
 @Component({
   selector: 'perun-web-apps-attribute-search-select',
   templateUrl: './attribute-search-select.component.html',
@@ -9,7 +11,7 @@ import { compareFnDisplayName } from '@perun-web-apps/perun/utils';
 })
 export class AttributeSearchSelectComponent implements OnInit, OnChanges {
   @Input() attributes: AttributeDefinition[];
-  @Input() attributesForEntity: 'user' | 'facility' | 'resource';
+  @Input() attributesForEntity: Entity[];
   @Output() attributeSelected = new EventEmitter<AttributeDefinition>();
   @Output() search = new EventEmitter<{ [p: string]: string }>();
 
@@ -21,8 +23,12 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.availableAttrDefs = this.attributes
-      .filter((attrDef) => attrDef.entity === this.attributesForEntity)
+      .filter((attrDef) => this.attributesForEntity.includes(attrDef.entity as Entity))
       .sort(compareFnDisplayName);
+    if (this.attributesForEntity.length > 1) {
+      this.nameFunction = (attr: AttributeDefinition): string =>
+        '(' + attr.entity + ') ' + attr.displayName;
+    }
 
     this.addOption();
   }
