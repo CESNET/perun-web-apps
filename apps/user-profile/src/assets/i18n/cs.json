@@ -358,14 +358,16 @@
         "BUG_REPORT": {
           "TITLE": "Nahlásit chybu",
           "SUBJECT": "Předmět",
-          "SUBJECT_VALUE": "Nahlásený problém: ",
+          "SUBJECT_VALUE": "Nahlášený problém: ",
           "SUBJECT_ERROR": "Předmět musí být vyplněn.",
           "MESSAGE": "Zpráva",
-          "MESSAGE_PLACEHOLDER": "Popište, co jste delali když nastal problém. (Minimální délka je 60 znaků)",
+          "MESSAGE_PLACEHOLDER": "Popište, co jste dělali, když nastal problém. (Minimální délka je 60 znaků)",
           "MESSAGE_ERROR": "Minimální délka je 60 znaků.",
           "CANCEL": "Zrušit",
           "SEND": "Poslat",
-          "SUCCESS": "Nahlášená chyba byla odoslána"
+          "SUCCESS": "Nahlášená chyba byla odeslána",
+          "SUCCESS1": "Ticket s ID: ",
+          "SUCCESS2": " byl vytvořen."
         },
         "REMOVE_USER_EXT_SOURCE": {
           "TITLE": "Odstranit účet",

@@ -9,6 +9,7 @@
       "NAMESPACE": "Namespace",
       "LOGIN": "Login",
       "RESET_BUTTON": "Reset password",
+      "RETRY_BUTTON": "Try again",
       "ACTIVATION_BUTTON": "Activate account",
       "INVALID_REQUEST": "<b>Request is invalid</b>\nIt may be expired, already used or incorrect",
       "RESET_SUCCESS": "Password was successfully reset",
@@ -57,6 +58,19 @@
           "PASSWORD_AGAIN": "New password again",
           "FIELD_EMPTY": "Empty value is not allowed",
           "PWD_DONT_MATCH": "Passwords do not match"
+        },
+        "BUG_REPORT": {
+          "TITLE": "Report a bug",
+          "SUBJECT": "Subject",
+          "SUBJECT_VALUE": "Reported error: ",
+          "SUBJECT_ERROR": "Subject cannot be empty.",
+          "MESSAGE": "Message",
+          "MESSAGE_PLACEHOLDER": "Please describe your problem and which of your actions lead to this problem.",
+          "MESSAGE_ERROR": "Please tell us something about the problem.",
+          "CANCEL": "Cancel",
+          "SEND": "Send",
+          "SUCCESS1": "Ticket with ID: ",
+          "SUCCESS2": " was created."
         }
       },
       "LOGIN": {
