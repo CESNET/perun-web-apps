@@ -1,5 +1,6 @@
 {
   "api_url": "http://localhost:8081/ba/rpc/",
+  "config": "default",
   "document_title": {
     "en": "Password Reset"
   },

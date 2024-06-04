@@ -115,9 +115,11 @@ export class BugReportDialogComponent implements OnInit {
     );
 
     if (this.data.error.payload) {
-      const re = /"password":".+?"/;
+      let re = /"password":".+?"/;
       let payload = JSON.stringify(this.data.error.payload);
       payload = payload.replace(re, '"password":"####"');
+      re = /"newPassword":".+?"/;
+      payload = payload.replace(re, '"newPassword":"####"');
       text = text.concat('Payload:\n' + payload + '\n\n');
     }
 
