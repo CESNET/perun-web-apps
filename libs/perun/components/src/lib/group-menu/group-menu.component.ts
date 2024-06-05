@@ -11,6 +11,7 @@ export class GroupMenuComponent implements OnChanges {
   @Input() group: GroupFlatNode;
   @Input() disabled = false;
   @Input() displayButtons: boolean;
+  @Input() nameToCopy: string;
   @Output() moveGroup: EventEmitter<void> = new EventEmitter<void>();
   @Output() syncGroup: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeNameDescription: EventEmitter<void> = new EventEmitter<void>();

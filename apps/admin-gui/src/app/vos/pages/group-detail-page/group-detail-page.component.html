@@ -22,6 +22,14 @@
           </a>
           <span class="text-muted"> &nbsp;#{{group.id}} </span>
           <button
+            [cdkCopyToClipboard]="group.name"
+            [matTooltipPosition]="'below'"
+            class="ms-auto"
+            mat-icon-button
+            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}">
+            <mat-icon> file_copy </mat-icon>
+          </button>
+          <button
             *ngIf="group.name !== 'members' && editAuth"
             (click)="editGroup()"
             aria-label="Edit group"

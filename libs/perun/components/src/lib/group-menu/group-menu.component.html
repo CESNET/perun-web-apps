@@ -1,6 +1,6 @@
 <div *ngIf="displayButtons" class="d-flex justify-content-end">
   <button
-    [cdkCopyToClipboard]="group.name"
+    [cdkCopyToClipboard]="nameToCopy"
     [matTooltipPosition]="'above'"
     class="ms-auto"
     mat-icon-button
@@ -48,7 +48,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #groupMenu="matMenu">
-    <button [cdkCopyToClipboard]="group.name" mat-menu-item>
+    <button [cdkCopyToClipboard]="nameToCopy" mat-menu-item>
       <mat-icon> file_copy </mat-icon>
       <span>{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}</span>
     </button>

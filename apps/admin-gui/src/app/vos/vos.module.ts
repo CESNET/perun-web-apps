@@ -72,6 +72,7 @@ import { VoSettingsManageEmbeddedGroupsComponent } from './pages/vo-detail-page/
 import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { MatSortModule } from '@angular/material/sort';
     PerunUtilsModule,
     MatCheckboxModule,
     MatSortModule,
+    CdkCopyToClipboard,
   ],
   exports: [],
   declarations: [
