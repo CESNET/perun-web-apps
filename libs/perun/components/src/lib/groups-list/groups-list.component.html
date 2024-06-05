@@ -185,7 +185,8 @@
             (syncGroup)="openSyncDetail(group)"
             [disabled]="group.name === 'members'"
             [displayButtons]="displayButtons"
-            [group]="group">
+            [group]="group"
+            [nameToCopy]="group.name">
           </perun-web-apps-group-menu>
         </td>
       </ng-container>

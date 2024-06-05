@@ -1,4 +1,6 @@
+<mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
 <app-managers-page
+  *ngIf="!loading && group !== undefined"
   [complementaryObject]="group"
   [availableRoles]="availableRoles"
   [complementaryObjectType]="type"

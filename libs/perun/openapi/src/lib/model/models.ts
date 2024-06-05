@@ -124,6 +124,7 @@ export * from './inputGetAllResourcesByResourceTag';
 export * from './inputGetFacilities';
 export * from './inputGetMatchResources';
 export * from './inputGetMembersByUserAttributes';
+export * from './inputGetMembersSearcher';
 export * from './inputGetMessagesPage';
 export * from './inputGetPaginatedApplications';
 export * from './inputGetPaginatedBlockedLogins';

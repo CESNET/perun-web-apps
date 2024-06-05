@@ -8,7 +8,7 @@ import {
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { CustomValidators } from '@perun-web-apps/perun/utils';
+import { CustomValidators, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
   PasswordAction,
   PasswordLabel,
@@ -16,6 +16,8 @@ import {
   RPCError,
 } from '@perun-web-apps/perun/models';
 import { iif, mergeMap, of } from 'rxjs';
+import { BugReportDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'perun-web-apps-password-reset-form',
@@ -32,7 +34,7 @@ export class PasswordResetFormComponent implements OnInit {
   loading = false;
   success = false;
   successMsg: string;
-  error = false;
+  error: RPCError;
   errorMsg: string;
   errorKey: keyof PasswordLabel;
   language = 'en';
@@ -49,6 +51,7 @@ export class PasswordResetFormComponent implements OnInit {
     private usersService: UsersManagerService,
     private formBuilder: FormBuilder,
     private errorTranslate: ErrorTranslateService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -113,12 +116,21 @@ export class PasswordResetFormComponent implements OnInit {
           this.loading = false;
         },
         error: (e: RPCError) => {
-          this.error = true;
+          this.error = e;
           this.errorKey = this.errorTranslate.getErrorKey(e);
           this.errorMsg = this.getMessage(this.errorKey);
           this.loading = false;
         },
       });
+  }
+
+  onBugReportClick(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '550px';
+    config.data = { error: this.error };
+    config.autoFocus = false;
+
+    this.dialog.open(BugReportDialogComponent, config);
   }
 
   private setLabels(lang: string): void {
