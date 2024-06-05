@@ -3093,7 +3093,7 @@
         "GROUP_MENU": {
           "MOVE": "Move group",
           "RENAME": "Update name/description",
-          "COPY": "Copy group name to clipboard",
+          "COPY": "Copy hierarchical group name to clipboard",
           "MORE": "More"
         },
         "GROUP_SEARCH_SELECT": {

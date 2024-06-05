@@ -1,5 +1,25 @@
 Upgrade notes
 
+## [17.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.2.0...v17.3.0) (2024-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **pwdreset:** "config" property now needs to be set in instanceConfig for bug reports in password reset, same as in the Admin GUI app
+
+### Features
+
+* **admin:** copy hierarchical group name ([2137c3d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2137c3d7e5526a56ab71bc021c88b4f0e1e418dd))
+* **admin:** search for members also by member attributes in searcher ([014c403](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/014c403a506382882532e4643e0a5ca23c120db3))
+* **pwdreset:** options after reset call failed ([f99661d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f99661d743a0c87501bfc2af8d8b0348e68c3c30))
+
+
+### Bug Fixes
+
+* **admin:** cache everything in application form ([9f0fa40](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9f0fa40e72f3cd0f659944d3e8783031998fea13))
+* **admin:** data loading after the back button ([fb11590](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/fb11590fa58b4dcf186c920d25450dfe32a5373e))
+* do not refresh gui after step-up ([f89df9e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f89df9e0449534723807df1dc7af0f072f1a0210))
+
 ## [17.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.1.0...v17.2.0) (2024-05-23)
 
 
