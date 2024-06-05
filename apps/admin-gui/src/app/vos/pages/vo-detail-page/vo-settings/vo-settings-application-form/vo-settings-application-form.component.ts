@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateApplicationFormDialogComponent } from '../../../../../shared/components/dialogs/update-application-form-dialog/update-application-form-dialog.component';
@@ -16,11 +16,8 @@ import {
   ApplicationFormItem,
   RegistrarManagerService,
   Vo,
-  VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vo-settings-application-form',
@@ -52,10 +49,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private authResolver: GuiAuthResolver,
-    private voService: VosManagerService,
     private entityStorageService: EntityStorageService,
-    private cacheHelperService: CacheHelperService,
-    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
@@ -73,16 +67,6 @@ export class VoSettingsApplicationFormComponent implements OnInit {
         this.loadingTable = false;
       });
     });
-
-    // Refresh cached data
-    this.cacheHelperService
-      .refreshComponentCachedData()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((nextValue) => {
-        if (nextValue === VoSettingsApplicationFormComponent.id) {
-          this.updateFormItems();
-        }
-      });
   }
 
   add(): void {
