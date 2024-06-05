@@ -54,6 +54,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.group = this.entityStorageService.getEntity();
+    this.refreshTable();
     this.cacheHelperService
       .refreshComponentCachedData()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -106,13 +107,13 @@ export class GroupSettingsRelationsComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selection.clear();
-    this.groupService.getGroupUnions(this.group.id, this.reverse).subscribe(
-      (groups) => {
+    this.groupService.getGroupUnions(this.group.id, this.reverse).subscribe({
+      next: (groups) => {
         this.groups = groups;
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   applyFilter(filterValue: string): void {
