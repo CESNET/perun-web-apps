@@ -25,6 +25,7 @@ import { ReloadEntityDetailService } from '../../../core/services/common/reload-
 import { SideMenuItem } from '../../../shared/side-menu/side-menu.component';
 import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
 import { takeUntil } from 'rxjs/operators';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-resource-detail-page',
@@ -74,12 +75,15 @@ export class ResourceDetailPageComponent extends destroyDetailMixin() implements
 
       this.resourcesManager.getRichResourceById(resourceId).subscribe((resource) => {
         this.resource = resource;
-        this.entityStorageService.setEntity({
-          id: resource.id,
-          voId: resource.voId,
-          facilityId: resource.facilityId,
-          beanName: 'Resource',
-        });
+        this.entityStorageService.setEntityAndPathParam(
+          {
+            id: resource.id,
+            voId: resource.voId,
+            facilityId: resource.facilityId,
+            beanName: 'Resource',
+          },
+          EntityPathParam.Resource,
+        );
         this.setAuth();
         if (this.route.parent.snapshot.url[0].path === 'facilities') {
           this.baseUrl = new GetResourceRoutePipe().transform(resource, false);

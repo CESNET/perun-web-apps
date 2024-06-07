@@ -19,6 +19,7 @@ import { DeleteFacilityDialogComponent } from '../../../shared/components/dialog
 import { ReloadEntityDetailService } from '../../../core/services/common/reload-entity-detail.service';
 import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
 import { takeUntil } from 'rxjs/operators';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-facility-detail-page',
@@ -58,10 +59,13 @@ export class FacilityDetailPageComponent extends destroyDetailMixin() implements
     this.route.params.subscribe((params) => {
       const facilityId = Number(params['facilityId']);
 
-      this.facilityManager.getFacilityById(facilityId).subscribe(
-        (facility) => {
+      this.facilityManager.getFacilityById(facilityId).subscribe({
+        next: (facility) => {
           this.facility = facility;
-          this.entityStorageService.setEntity({ id: facility.id, beanName: facility.beanName });
+          this.entityStorageService.setEntityAndPathParam(
+            { id: facility.id, beanName: facility.beanName },
+            EntityPathParam.Facility,
+          );
           this.setMenuItems();
 
           this.editFacilityAuth = this.guiAuthResolver.isAuthorized(
@@ -77,8 +81,8 @@ export class FacilityDetailPageComponent extends destroyDetailMixin() implements
           addRecentlyVisitedObject(this.facility);
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
     });
   }
 
