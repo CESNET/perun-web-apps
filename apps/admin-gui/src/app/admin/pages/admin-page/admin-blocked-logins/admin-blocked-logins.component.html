@@ -19,7 +19,7 @@
       color="warn"
       data-cy="unblock-logins-button"
       mat-flat-button
-      [disabled]="selection.selected.length === 0">
+      [disabled]="(loading$ | async) || selection.selected.length === 0">
       {{'ADMIN.BLOCKED_LOGINS.UNBLOCK' | translate}}
     </button>
   </div>
@@ -47,7 +47,7 @@
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <perun-web-apps-logins-dynamic-list
+  <perun-web-apps-logins-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
     [loading]="loading$ | async"
     (queryChanged)="nextPage.next($event)"
@@ -56,5 +56,6 @@
     [displayedColumns]="displayedColumns"
     [selection]="selection"
     [filter]="searchString"
-    [tableId]="tableId" />
+    [tableId]="tableId"
+    [cacheSubject]="cacheSubject" />
 </div>

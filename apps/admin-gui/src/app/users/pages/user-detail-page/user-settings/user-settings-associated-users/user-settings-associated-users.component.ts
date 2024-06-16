@@ -10,6 +10,7 @@ import { DisconnectIdentityDialogComponent } from '../../../../../shared/compone
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { map, switchMap } from 'rxjs/operators';
 import { userTableColumn } from '@perun-web-apps/perun/components';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-settings-associated-users',
@@ -18,7 +19,12 @@ import { userTableColumn } from '@perun-web-apps/perun/components';
 })
 export class UserSettingsAssociatedUsersComponent implements OnInit {
   loading = false;
-  selection = new SelectionModel<RichUser>(false, []);
+  selection = new SelectionModel<RichUser>(
+    false,
+    [],
+    true,
+    (richUser1, richUser2) => richUser1.id === richUser2.id,
+  );
   associatedUsers: RichUser[] = [];
   user: User;
   tableId = TABLE_USER_ASSOCIATED_USERS;
@@ -34,6 +40,7 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
   addAuth: boolean;
   removeAuth: boolean;
   disableRouting: boolean;
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialog: MatDialog,
@@ -61,6 +68,7 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
       )
       .subscribe((associatedUsers) => {
         this.associatedUsers = associatedUsers;
+        this.cacheSubject.next(true);
         this.selection.clear();
         this.setAuth();
         this.loading = false;

@@ -84,7 +84,7 @@
           *ngIf="stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1"
           [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
           [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
-          [disabled]="selection.selected.length === 0 || !canAddGroups()"
+          [disabled]="loading || selection.selected.length === 0 || !canAddGroups()"
           color="accent"
           mat-flat-button
           type="button"

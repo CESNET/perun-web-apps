@@ -1,4 +1,15 @@
-import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   ChangeGroupExpirationDialogComponent,
   EditFacilityResourceGroupVoDialogComponent,
@@ -6,7 +17,7 @@ import {
   GroupSyncDetailDialogComponent,
 } from '@perun-web-apps/perun/dialogs';
 import { Group, PaginatedRichGroups, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -30,6 +41,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DisableGroupSelectPipe } from '@perun-web-apps/perun/pipes';
 import { GroupUtilsService } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-groups-list',
@@ -37,13 +50,13 @@ import { GroupUtilsService } from '@perun-web-apps/perun/services';
   styleUrls: ['./groups-list.component.scss'],
   providers: [DisableGroupSelectPipe],
 })
-export class GroupsListComponent {
+export class GroupsListComponent implements OnInit, OnChanges {
   @Input() theme = 'group-theme';
-  @Input() selection = new SelectionModel<GroupWithStatus>(true, []);
+  @Input() selection: SelectionModel<GroupWithStatus>;
   @Input() groupWithAuthzGroupPairs: Map<number, Group[]>;
   @Input() authzVoNames: Map<number, string>;
   @Input() disableMembers: boolean;
-  @Input() disableGroups: boolean;
+  @Input() disableGroups: boolean = false;
   @Input() groupsToDisableCheckbox: Set<number> = new Set<number>();
   @Input() groupsToDisableRouting: Set<number> = new Set<number>();
   @Input() disableHeadCheckbox: boolean;
@@ -58,6 +71,7 @@ export class GroupsListComponent {
   @Input() relation = false;
   @Input() noGroupsAlert = 'SHARED_LIB.UI.ALERTS.NO_GROUPS';
   @Input() loading: boolean;
+  @Input() cacheSubject: BehaviorSubject<boolean>;
   @Output() groupMoved = new EventEmitter<GroupWithStatus>();
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
@@ -65,10 +79,14 @@ export class GroupsListComponent {
   @ViewChild(TableWrapperComponent, { static: true }) tableWrapper: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  // contains all selected groups across all pages
+  cachedSelection: SelectionModel<GroupWithStatus>;
+
   displayButtons = window.innerWidth > 800;
   dataSource: MatTableDataSource<GroupWithStatus> | DynamicDataSource<GroupWithStatus>;
   disabledRouting = false;
   voNames: Map<number, string> = new Map<number, string>();
+  isMasterCheckboxEnabled: boolean = true;
   columns: string[] = [
     'select',
     'id',
@@ -87,9 +105,10 @@ export class GroupsListComponent {
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private voService: VosManagerService,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private disableGroupSelect: DisableGroupSelectPipe,
     private groupUtils: GroupUtilsService,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set groups(groups: GroupWithStatus[] | PaginatedRichGroups) {
@@ -125,6 +144,40 @@ export class GroupsListComponent {
   @HostListener('window:resize', ['$event'])
   shouldHideButtons(): void {
     this.displayButtons = window.innerWidth > 800;
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<GroupWithStatus>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+    }
+    this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.cachedSelection.clear();
+      }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.isMasterCheckboxEnabled =
+      !this.disableGroups ||
+      this.tableCheckbox.anySelectableRows(this.dataSource, this.canBeSelected);
+    if (this.cachedSelection && changes['groups']) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+    if (this.cachedSelection && changes['filter']) {
+      this.selection.clear();
+      this.cachedSelection.clear();
+    }
   }
 
   isPaginated(data: GroupWithStatus[] | PaginatedRichGroups): data is PaginatedRichGroups {
@@ -193,6 +246,7 @@ export class GroupsListComponent {
       this.tableCheckbox.masterTogglePaginated(
         this.dataSource,
         this.selection,
+        this.cachedSelection,
         !this.isAllSelected(),
         this.canBeSelected,
       );
@@ -200,6 +254,7 @@ export class GroupsListComponent {
       this.tableCheckbox.masterToggle(
         this.isAllSelected(),
         this.selection,
+        this.cachedSelection,
         this.dataSource.filter,
         this.dataSource,
         this.dataSource.sort,
@@ -264,6 +319,7 @@ export class GroupsListComponent {
 
   itemSelectionToggle(item: GroupWithStatus): void {
     this.selection.toggle(item);
+    this.cachedSelection.toggle(item);
   }
 
   canBeSelected = (group: GroupWithStatus): boolean => {
@@ -279,6 +335,23 @@ export class GroupsListComponent {
       this.groupsToDisableCheckbox,
     );
   };
+
+  pageChanged(): void {
+    if (isDynamicDataSource(this.dataSource)) {
+      return;
+    }
+    if (this.cachedSelection) {
+      this.isMasterCheckboxEnabled =
+        !this.disableGroups ||
+        this.tableCheckbox.anySelectableRows(this.dataSource, this.canBeSelected);
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+  }
 
   private dataSourceInit(groups: GroupWithStatus[] | PaginatedRichGroups): void {
     const paginated = this.isPaginated(groups);

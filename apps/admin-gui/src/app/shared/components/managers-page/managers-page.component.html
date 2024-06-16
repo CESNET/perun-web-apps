@@ -28,7 +28,7 @@
         *ngIf="manageAuth && !configMode"
         (click)="removeManager()"
         color="warn"
-        [disabled]="selectionUsers.selected.length === 0"
+        [disabled]="loading || selectionUsers.selected.length === 0"
         data-cy="remove-manager-button"
         class="me-2"
         mat-flat-button>
@@ -64,7 +64,8 @@
           [sortableColumns]="['id', 'name', 'email', 'logins', 'organization']"
           [displayColumns]="displayedUserColumns"
           [selection]="selectionUsers"
-          [users]="managers">
+          [users]="managers"
+          [cacheSubject]="cacheSubject">
         </perun-web-apps-users-list>
       </div>
     </ng-template>
@@ -90,7 +91,7 @@
       <button
         *ngIf="manageAuth && !configMode"
         (click)="removeGroup()"
-        [disabled]="selectionGroups.selected.length === 0"
+        [disabled]="loading || selectionGroups.selected.length === 0"
         class="me-2"
         color="warn"
         mat-flat-button>
@@ -117,7 +118,8 @@
           [displayedColumns]="displayedGroupColumns"
           [groups]="groups"
           [selection]="selectionGroups"
-          [tableId]="tableId">
+          [tableId]="tableId"
+          [cacheSubject]="cacheSubject">
         </perun-web-apps-groups-list>
       </div>
     </ng-template>

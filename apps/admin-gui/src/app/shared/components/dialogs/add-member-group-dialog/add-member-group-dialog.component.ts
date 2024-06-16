@@ -30,7 +30,12 @@ export class AddMemberGroupDialogComponent implements OnInit {
   member: Member;
   membersGroups: Set<number>;
   groups: RichGroup[] = [];
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
 
   attrNames = [
     Urns.GROUP_SYNC_ENABLED,

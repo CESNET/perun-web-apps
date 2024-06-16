@@ -25,10 +25,10 @@
           *ngIf="editable && role.roleName !== 'SELF' && role.roleName !== 'MEMBERSHIP' && role.roleName !== 'SPONSORSHIP'"
           matTooltip="{{'ROLES.REMOVE_DISABLED_TOOLTIP'| translate}}"
           matTooltipPosition="left"
-          [matTooltipDisabled]="(selection.selected.length === 0 && selectedFacilities.selected.length === 0) || !disableRemove">
+          [matTooltipDisabled]="loading || (selection.selected.length === 0 && selectedFacilities.selected.length === 0) || !disableRemove">
           <button
             (click)="openConfirmDialog(role)"
-            [disabled]="(role.primaryObject === 'Facility' && (selectedFacilities.selected.length === 0 || disableRemove))
+            [disabled]="loading || (role.primaryObject === 'Facility' && (selectedFacilities.selected.length === 0 || disableRemove))
            ||  ( ['Vo', 'Group', 'Resource'].includes(role.primaryObject) && (selection.selected.length === 0 || disableRemove))"
             mat-flat-button
             color="warn"

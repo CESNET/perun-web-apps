@@ -58,7 +58,7 @@
       *ngIf="removeAuth"
       (click)="onRemoveMembers()"
       color="warn"
-      [disabled]="selection.isEmpty()"
+      [disabled]="(loading$ | async) || selection.isEmpty()"
       data-cy="remove-members"
       class="me-2"
       mat-flat-button>
@@ -102,6 +102,7 @@
       [selection]="selection"
       [filter]="searchString"
       [tableId]="tableId"
-      [voId]="vo.id" />
+      [voId]="vo.id"
+      [cacheSubject]="cacheSubject" />
   </div>
 </div>

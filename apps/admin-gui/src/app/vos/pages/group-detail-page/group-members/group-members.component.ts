@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   ApiRequestConfigurationService,
@@ -49,7 +49,12 @@ export class GroupMembersComponent implements OnInit {
   // used for router animation
   @HostBinding('class.router-component') true;
   group: RichGroup;
-  selection: SelectionModel<RichMember>;
+  selection = new SelectionModel<RichMember>(
+    true,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   synchEnabled = false;
   searchString = '';
   updateTable = false;
@@ -92,6 +97,7 @@ export class GroupMembersComponent implements OnInit {
   nextPage = new BehaviorSubject<PageQuery>({});
   membersPage$: Observable<PaginatedRichMembers>;
   loadingSubject$ = new BehaviorSubject(false);
+  cacheSubject = new BehaviorSubject(true);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -117,7 +123,6 @@ export class GroupMembersComponent implements OnInit {
     private apiRequest: ApiRequestConfigurationService,
     private notificator: NotificatorService,
     private entityStorageService: EntityStorageService,
-    private cd: ChangeDetectorRef,
     private cacheHelperService: CacheHelperService,
     private clipboard: Clipboard,
     private membersService: MembersManagerService,
@@ -126,7 +131,6 @@ export class GroupMembersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selection = new SelectionModel<RichMember>(true, []);
     this.statuses.setValue(this.selectedStatuses);
     this.groupStatuses.setValue(this.selectedGroupStatuses);
     this.memberAttrNames = this.memberAttrNames.concat(this.storeService.getLoginAttributeNames());
@@ -203,7 +207,7 @@ export class GroupMembersComponent implements OnInit {
 
   onSearchByString(filter: string): void {
     this.searchString = filter;
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   onAddMember(): void {
@@ -376,15 +380,16 @@ export class GroupMembersComponent implements OnInit {
 
   changeVoStatuses(): void {
     this.selectedStatuses = this.statuses.value as VoMemberStatuses[];
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   changeGroupStatuses(): void {
     this.selectedGroupStatuses = this.groupStatuses.value as MemberGroupStatus[];
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   refreshTable(): void {
+    this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
     this.isCopyMembersDisabled();
   }

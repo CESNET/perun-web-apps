@@ -6,7 +6,7 @@
 <button
   (click)="onRemoveMembers()"
   *ngIf="removeAuth"
-  [disabled]="selection.isEmpty()"
+  [disabled]="loading || selection.isEmpty()"
   class="me-2"
   color="warn"
   mat-flat-button>
@@ -28,5 +28,6 @@
     [selection]="selection"
     [members]="members"
     [filter]="searchString"
-    [tableId]="tableId" />
+    [tableId]="tableId"
+    [cacheSubject]="cacheSubject" />
 </div>

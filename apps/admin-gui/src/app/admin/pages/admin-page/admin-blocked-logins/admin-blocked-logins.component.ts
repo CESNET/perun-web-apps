@@ -32,7 +32,12 @@ export class AdminBlockedLoginsComponent implements OnInit {
   isAdmin = false;
 
   searchString: string;
-  selection = new SelectionModel<BlockedLogin>(true, []);
+  selection: SelectionModel<BlockedLogin> = new SelectionModel<BlockedLogin>(
+    true,
+    [],
+    true,
+    (blockedLogin1, blockedLogin2) => blockedLogin1.id === blockedLogin2.id,
+  );
 
   logins: BlockedLogin[] = [];
 
@@ -66,6 +71,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
   );
   loadingSubject$ = new BehaviorSubject(false);
+  cacheSubject = new BehaviorSubject(true);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -80,6 +86,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
   ) {}
 
   refreshTable(): void {
+    this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 
@@ -110,8 +117,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((wereLoginsBlocked) => {
       if (wereLoginsBlocked) {
-        this.selection.clear();
-        this.nextPage.next(this.nextPage.value);
+        this.refreshTable();
       }
     });
   }
@@ -128,8 +134,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((wereLoginsUnblocked) => {
       if (wereLoginsUnblocked) {
-        this.selection.clear();
-        this.nextPage.next(this.nextPage.value);
+        this.refreshTable();
       }
     });
   }
@@ -145,7 +150,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
   refreshOnClosed(): void {
     this.selectedNamespaces = [...this.selectedNamespaces];
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   downloadAll(a: {

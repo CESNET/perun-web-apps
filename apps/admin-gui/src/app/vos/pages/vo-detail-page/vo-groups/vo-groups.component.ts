@@ -77,7 +77,12 @@ export class VoGroupsComponent implements OnInit {
   );
 
   showGroupList = false;
-  selected = new SelectionModel<RichGroup>(true, []);
+  selected: SelectionModel<RichGroup> = new SelectionModel<RichGroup>(
+    true,
+    [],
+    true,
+    (richGroup1, richGroup2) => richGroup1.id === richGroup2.id,
+  );
   loadingSubject$ = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
@@ -101,6 +106,7 @@ export class VoGroupsComponent implements OnInit {
     ),
     startWith(true),
   );
+  cacheSubject = new BehaviorSubject(true);
 
   private attrNames = [
     Urns.GROUP_SYNC_ENABLED,
@@ -222,6 +228,7 @@ export class VoGroupsComponent implements OnInit {
       )
       .subscribe((groups) => {
         this.groups = groups;
+        this.cacheSubject.next(true);
         this.selected.clear();
         this.setAuthRights();
         this.loadingSubject$.next(false);
@@ -246,6 +253,7 @@ export class VoGroupsComponent implements OnInit {
   refresh(): void {
     this.loadingSubject$.next(true);
     if (this.showGroupList) {
+      this.cacheSubject.next(true);
       this.nextPage.next(this.nextPage.value);
     } else {
       this.loadAllGroups();

@@ -36,7 +36,12 @@ export class AddGroupManagerDialogComponent implements OnInit {
   searchString = '';
   successMessage: string;
 
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   loading: boolean;
   groups: Group[] = [];
   selected: number;

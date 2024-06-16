@@ -1,10 +1,12 @@
 import {
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -27,13 +29,15 @@ import {
 import { MatSort } from '@angular/material/sort';
 import {
   GuiAuthResolver,
-  TableCheckbox,
+  TableCheckboxModified,
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { MatTableDataSource } from '@angular/material/table';
 import { getExportDataForColumn, getSortDataColumn } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'perun-web-apps-applications-list',
   templateUrl: './applications-list.component.html',
@@ -51,21 +55,25 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   @Input() member: Member;
   @Input() fedAttrs: AttributeDefinition[] = [];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
-  @Input() selection = new SelectionModel<Application>(true, []);
+  @Input() selection: SelectionModel<Application>;
   @Input() loading: boolean;
   @Input() noAppsAlert = 'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND';
+  @Input() cacheSubject: BehaviorSubject<boolean>;
 
   @Output() queryChanged = new EventEmitter<PageQuery>();
-
   @Output() downloadAll = new EventEmitter<{ format: string; length: number }>();
   parsedColumns: string[] = [];
   dataSource: MatTableDataSource<Application> | DynamicDataSource<Application>;
   fedColumnsDisplay = [];
 
+  // contains all selected applications across all pages
+  cachedSelection: SelectionModel<Application>;
+
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private translate: PerunTranslateService,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set applications(applications: Application[] | PaginatedRichApplications) {
@@ -90,18 +98,42 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Application>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+    }
+    this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.cachedSelection.clear();
+      }
+    });
     if (!this.authResolver.isPerunAdminOrObserver()) {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     if (this.loading || !this.displayedColumns.includes('fedInfo')) return;
-
     const data = this.dataSource.data[0] as RichApplication;
     if (data) {
       this.parseColumns(data.formData);
     }
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.cachedSelection && changes['applications']) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+    if (this.cachedSelection && changes['filter']) {
+      this.selection.clear();
+      this.cachedSelection.clear();
+    }
     this.fedColumnsDisplay = [];
     this.fedColumnsFriendly.forEach((name) =>
       this.fedColumnsDisplay.push(
@@ -126,12 +158,14 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
       this.tableCheckbox.masterTogglePaginated(
         this.dataSource,
         this.selection,
+        this.cachedSelection,
         !this.isAllSelected(),
       );
     } else {
       this.tableCheckbox.masterToggle(
         this.isAllSelected(),
         this.selection,
+        this.cachedSelection,
         this.dataSource.filter,
         this.dataSource,
         this.dataSource.sort,
@@ -195,6 +229,25 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         this.parsedColumns.push(val.shortname);
       }
     });
+  }
+
+  toggleRow(row: Application): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (isDynamicDataSource(this.dataSource)) {
+      return;
+    }
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private dataSourceInit(applications: Application[] | PaginatedRichApplications): void {

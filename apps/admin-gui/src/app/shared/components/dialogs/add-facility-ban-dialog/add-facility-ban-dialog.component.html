@@ -1,5 +1,5 @@
 <app-add-ban-dialog
-  [disabled]="selection.selected.length === 0"
+  [disabled]="(loading$ | async) || selection.selected.length === 0"
   [theme]="data.theme"
   [ban]="ban"
   (add)="submitBan($event)"

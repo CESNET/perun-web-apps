@@ -27,7 +27,12 @@ export class ConnectIdentityDialogComponent implements OnInit {
   finalLoading = false;
   target: string;
   identities: RichUser[] = [];
-  selection = new SelectionModel<RichUser>(false, []);
+  selection = new SelectionModel<RichUser>(
+    false,
+    [],
+    true,
+    (richUser1, richUser2) => richUser1.id === richUser2.id,
+  );
   firstSearchDone = false;
   displayedColumns: userTableColumn[] = [
     'select',

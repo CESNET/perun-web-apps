@@ -12,12 +12,12 @@
   </button>
   <span
     *ngIf="{removeAuth: removeAuth$ | async} as auth"
-    [matTooltipDisabled]="selected.selected.length === 0 || auth.removeAuth"
+    [matTooltipDisabled]="loading || selected.selected.length === 0 || auth.removeAuth"
     matTooltip="{{'GROUP_DETAIL.SUBGROUPS.DELETE_PERMISSION_HINT' | translate}}">
     <button
       (click)="deleteGroup()"
       *ngIf="deleteAuth"
-      [disabled]="selected.selected.length === 0 || !auth.removeAuth"
+      [disabled]="loading || selected.selected.length === 0 || !auth.removeAuth"
       color="warn"
       class="me-2"
       data-cy="delete-group-button"
@@ -77,7 +77,8 @@
         [groups]="groups"
         [selection]="selected"
         [filter]="filterValue"
-        [tableId]="tableId">
+        [tableId]="tableId"
+        [cacheSubject]="cacheSubject">
       </perun-web-apps-groups-list>
     </div>
   </div>
