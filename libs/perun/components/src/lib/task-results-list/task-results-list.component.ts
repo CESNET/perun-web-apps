@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { TaskResult } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
@@ -9,20 +17,23 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { formatDate } from '@angular/common';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-task-results-list',
   templateUrl: './task-results-list.component.html',
   styleUrls: ['./task-results-list.component.css'],
 })
-export class TaskResultsListComponent implements AfterViewInit, OnChanges {
+export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() taskResults: TaskResult[] = [];
   @Input() selection = new SelectionModel<TaskResult>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
   @Input() tableId: string;
   @Input() loading: boolean;
@@ -41,11 +52,14 @@ export class TaskResultsListComponent implements AfterViewInit, OnChanges {
 
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   dataSource: MatTableDataSource<TaskResult>;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<TaskResult>;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -104,6 +118,22 @@ export class TaskResultsListComponent implements AfterViewInit, OnChanges {
         return data.errorMessage;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<TaskResult>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -167,6 +197,7 @@ export class TaskResultsListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -178,5 +209,21 @@ export class TaskResultsListComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.child.paginator;
+  }
+
+  toggleRow(row: TaskResult): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

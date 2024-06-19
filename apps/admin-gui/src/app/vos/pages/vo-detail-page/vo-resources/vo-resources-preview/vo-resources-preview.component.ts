@@ -8,6 +8,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-resources-preview',
@@ -20,7 +21,13 @@ export class VoResourcesPreviewComponent implements OnInit {
   @HostBinding('class.router-component') true;
   vo: Vo;
   resources: RichResource[] = [];
-  selected = new SelectionModel<RichResource>(true, []);
+  selected = new SelectionModel<RichResource>(
+    true,
+    [],
+    true,
+    (richResource1, richResource2) => richResource1.id === richResource2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   displayedColumns: string[] = [];
@@ -74,6 +81,7 @@ export class VoResourcesPreviewComponent implements OnInit {
     this.resourcesManager.getRichResources(this.vo.id).subscribe((resources) => {
       this.resources = resources;
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.setAuthRights();
       this.loading = false;
     });
@@ -81,6 +89,7 @@ export class VoResourcesPreviewComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   deleteSelectedResources(): void {

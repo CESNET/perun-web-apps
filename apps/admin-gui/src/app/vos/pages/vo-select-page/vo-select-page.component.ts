@@ -15,6 +15,7 @@ import { TABLE_VO_SELECT } from '@perun-web-apps/config/table-config';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-select-page',
@@ -32,7 +33,13 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
   createAuth: boolean;
   deleteAuth: boolean;
 
-  selection: SelectionModel<EnrichedVo>;
+  selection = new SelectionModel<EnrichedVo>(
+    true,
+    [],
+    true,
+    (enrichedVo1, enrichedVo2) => enrichedVo1.vo.id === enrichedVo2.vo.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
 
   displayedColumns: string[];
   tableId = TABLE_VO_SELECT;
@@ -76,6 +83,7 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
   refreshTable(): void {
     this.loading = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     this.apiRequest.dontHandleErrorForNext();
     this.voService.getMyEnrichedVos().subscribe({
       next: (vos) => {
@@ -96,6 +104,7 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onCreateVo(): void {

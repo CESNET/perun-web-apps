@@ -56,7 +56,7 @@
       (click)="onSave(specificSecondEntity.id)"
       class="me-2"
       color="accent"
-      [disabled]="selection.selected.length === 0"
+      [disabled]="loading || selection.selected.length === 0"
       mat-flat-button>
       {{'ATTRIBUTE_PAGE.SAVE' | translate}}
     </button>
@@ -64,7 +64,7 @@
     <button
       (click)="onDelete(specificSecondEntity.id)"
       color="warn"
-      [disabled]="selection.selected.length === 0"
+      [disabled]="loading || selection.selected.length === 0"
       class="me-2"
       mat-flat-button>
       {{'ATTRIBUTE_PAGE.DELETE' | translate}}
@@ -88,7 +88,8 @@
         [attributes]="attributes"
         [filterValue]="filterValue"
         [filterEmpty]="filterEmpty"
-        [selection]="selection">
+        [selection]="selection"
+        [cachedSubject]="cachedSubject">
       </perun-web-apps-attributes-list>
     </div>
   </div>

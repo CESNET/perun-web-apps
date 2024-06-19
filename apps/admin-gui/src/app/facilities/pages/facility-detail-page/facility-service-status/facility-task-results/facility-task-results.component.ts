@@ -7,6 +7,7 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { DeleteTaskResultDialogComponent } from '../../../../../shared/components/dialogs/delete-task-result-dialog/delete-task-result-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-task-results',
@@ -17,12 +18,17 @@ export class FacilityTaskResultsComponent implements OnInit {
   loading = false;
   filterValue = '';
 
-  selection: SelectionModel<TaskResult> = new SelectionModel<TaskResult>(true, []);
+  selection = new SelectionModel<TaskResult>(
+    true,
+    [],
+    true,
+    (taskResult1, taskResult2) => taskResult1.id === taskResult2.id,
+  );
   taskId: number;
   task: Task = { id: 0 };
   facility: Facility;
   taskResults: TaskResult[] = [];
-
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_TASK_RESULTS;
   displayedColumns = [
     'select',
@@ -78,6 +84,7 @@ export class FacilityTaskResultsComponent implements OnInit {
     this.loading = true;
     this.taskManager.getTaskResultsForGUIByTask(this.taskId).subscribe((taskResults) => {
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.taskResults = taskResults;
       this.loading = false;
     });
@@ -102,5 +109,6 @@ export class FacilityTaskResultsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

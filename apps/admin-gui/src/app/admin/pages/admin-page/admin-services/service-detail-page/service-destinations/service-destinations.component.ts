@@ -14,6 +14,7 @@ import {
   RemoveDestinationDialogComponent,
   RemoveDestinationDialogData,
 } from '../../../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-service-destinations',
@@ -24,7 +25,13 @@ export class ServiceDestinationsComponent implements OnInit {
   loading = false;
   filterValue = '';
   destinations: RichDestination[] = [];
-  selection = new SelectionModel<RichDestination>(true, []);
+  selection = new SelectionModel<RichDestination>(
+    true,
+    [],
+    true,
+    (richDestination1, richDestination2) => richDestination1.id === richDestination2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_FACILITY_SERVICES_DESTINATION_LIST;
   private service: Service;
 
@@ -49,6 +56,7 @@ export class ServiceDestinationsComponent implements OnInit {
       .getAllRichDestinationsForService(this.service.id)
       .subscribe((destinations) => {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.filterValue = '';
         this.destinations = destinations;
         this.loading = false;
@@ -84,6 +92,7 @@ export class ServiceDestinationsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   private blockServiceOnDestinations(destinations: RichDestination[]): void {

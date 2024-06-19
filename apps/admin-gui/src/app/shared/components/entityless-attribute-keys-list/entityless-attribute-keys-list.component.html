@@ -18,7 +18,12 @@
     matTooltipPosition="above">
     {{'SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.ADD' | translate}}
   </button>
-  <button (click)="onRemove()" class="ms-2" color="warn" mat-flat-button>
+  <button
+    (click)="onRemove()"
+    class="ms-2"
+    color="warn"
+    mat-flat-button
+    [disabled]="loading || selection.selected.length === 0">
     {{'SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.REMOVE' | translate}}
   </button>
 </div>
@@ -29,9 +34,11 @@
       [pageSizeOptions]="pageSizeOptions"
       [dataLength]="dataSource.filteredData.length"
       [hideExport]="true"
-      [tableId]="tableId">
+      [tableId]="tableId"
+      (pageChanged)="pageChanged()">
       <table
         [dataSource]="dataSource"
+        (matSortChange)="pageChanged()"
         class="w-100"
         mat-table
         matSort
@@ -52,7 +59,7 @@
           </th>
           <td *matCellDef="let record" class="static-column-size align-checkbox" mat-cell>
             <mat-checkbox
-              (change)="$event ? selection.toggle(record) : null"
+              (change)="$event ? toggleRow(record) : null"
               (click)="$event.stopPropagation()"
               [aria-label]="selection.isSelected(record) | checkboxLabel | translate: {name: record[0]}"
               [checked]="selection.isSelected(record)"

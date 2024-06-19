@@ -7,6 +7,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveFacilityOwnerDialogComponent } from '../../../../../shared/components/dialogs/remove-facility-owner-dialog/remove-facility-owner-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { TABLE_FACILITY_OWNERS } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-settings-owners',
@@ -19,7 +20,13 @@ export class FacilitySettingsOwnersComponent implements OnInit {
 
   facility: Facility;
   owners: Owner[] = [];
-  selection = new SelectionModel<Owner>(true, []);
+  selection = new SelectionModel<Owner>(
+    true,
+    [],
+    true,
+    (owner1, owner2) => owner1.id === owner2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue: string;
   displayedColumns: string[] = ['id', 'name', 'contact', 'type'];
@@ -45,6 +52,7 @@ export class FacilitySettingsOwnersComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     this.facilitiesManagerService.getFacilityOwners(this.facility.id).subscribe((owners) => {
       this.owners = owners;
       this.ownerEmitter.emit(this.owners);
@@ -67,6 +75,7 @@ export class FacilitySettingsOwnersComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onCreate(): void {

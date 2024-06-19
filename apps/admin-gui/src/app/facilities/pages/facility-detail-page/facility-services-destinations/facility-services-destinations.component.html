@@ -17,7 +17,7 @@
     (click)="removeDestination()"
     class="me-2"
     color="warn"
-    [disabled]="selected.selected.length === 0"
+    [disabled]="loading || selected.selected.length === 0"
     mat-flat-button>
     {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.REMOVE' | translate}}
   </button>
@@ -25,7 +25,7 @@
     *ngIf="allowAuth"
     (click)="onAllow()"
     class="me-2"
-    [disabled]="selected.selected.length === 0 || allSelectedAllowed()"
+    [disabled]="loading || selected.selected.length === 0 || allSelectedAllowed()"
     mat-stroked-button>
     <mat-icon> check_circle_outline </mat-icon>
     {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ALLOW' | translate}}
@@ -34,7 +34,7 @@
     *ngIf="blockAuth"
     (click)="onBlock()"
     class="me-2"
-    [disabled]="selected.selected.length === 0 || allSelectedBlocked()"
+    [disabled]="loading || selected.selected.length === 0 || allSelectedBlocked()"
     mat-stroked-button>
     <mat-icon> block </mat-icon>
     {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.BLOCK' | translate}}
@@ -51,6 +51,7 @@
       *perunWebAppsLoader="loading; indicator: spinner"
       [loading]="loading"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [destinations]="destinations"
       [services]="configServicesIds"
       [displayedColumns]="displayedColumns"

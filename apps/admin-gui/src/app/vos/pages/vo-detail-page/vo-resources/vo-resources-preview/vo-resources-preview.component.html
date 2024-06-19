@@ -6,7 +6,7 @@
     class="me-2"
     color="warn"
     (click)="deleteSelectedResources()"
-    [disabled]="selected.selected.length === 0"
+    [disabled]="selected.selected.length === 0 || loading"
     mat-flat-button>
     {{'VO_DETAIL.RESOURCES.LIST.DELETE' | translate}}
   </button>
@@ -27,6 +27,7 @@
       [routingVo]="true"
       [displayedColumns]="displayedColumns"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [tableId]="tableId">
     </perun-web-apps-resources-list>
   </div>

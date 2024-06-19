@@ -9,7 +9,7 @@
       mat-flat-button
       color="warn"
       class="me-2"
-      [disabled]="selected.selected.length === 0"
+      [disabled]="selected.selected.length === 0 || loading"
       (click)="removePublication()">
       {{'ALL_PUBLICATIONS.REMOVE' | translate}}
     </button>
@@ -26,6 +26,7 @@
       [loading]="loading"
       [publications]="publications"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [routerPath]="'/all-publications'"
       [tableId]="tableId">
     </perun-web-apps-publications-list>

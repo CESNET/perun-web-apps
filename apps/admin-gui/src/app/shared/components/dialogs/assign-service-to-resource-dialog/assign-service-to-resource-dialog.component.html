@@ -23,6 +23,7 @@
             [displayedColumns]="['select', 'id', 'name', 'enabled', 'description']"
             [filterValue]="filterValue"
             [selection]="selection"
+            [cachedSubject]="cachedSubject"
             [tableId]="tableId">
           </app-services-list>
         </mat-tab>
@@ -44,6 +45,7 @@
             [services]="filteredServices"
             [displayedColumns]="['id', 'name', 'enabled', 'description']"
             [selection]="selection"
+            [cachedSubject]="cachedSubject"
             [tableId]="tableId">
           </app-services-list>
         </mat-tab>

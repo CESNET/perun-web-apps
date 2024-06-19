@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { DeleteOwnerDialogComponent } from '../../../../shared/components/delete-owner-dialog/delete-owner-dialog.component';
 import { AddOwnerDialogComponent } from '../../../../shared/components/add-owner-dialog/add-owner-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-admin-owners',
@@ -15,7 +16,8 @@ import { AddOwnerDialogComponent } from '../../../../shared/components/add-owner
 })
 export class AdminOwnersComponent implements OnInit {
   owners: Owner[] = [];
-  selected = new SelectionModel<Owner>(true, []);
+  selected = new SelectionModel<Owner>(true, [], true, (owner1, owner2) => owner1.id === owner2.id);
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   tableId = TABLE_GROUP_RESOURCES_LIST;
@@ -44,12 +46,14 @@ export class AdminOwnersComponent implements OnInit {
     this.ownersManagerService.getAllOwners().subscribe((owners) => {
       this.owners = owners;
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   addOwner(): void {

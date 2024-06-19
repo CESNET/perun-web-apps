@@ -10,6 +10,7 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_ADD_THANKS_DIALOG } from '@perun-web-apps/config/table-config';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-add-thanks-dialog',
@@ -19,7 +20,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class AddThanksDialogComponent implements OnInit {
   loading: boolean;
   owners: Owner[] = [];
-  selected = new SelectionModel<Owner>(true, []);
+  selected = new SelectionModel<Owner>(true, [], true, (owner1, owner2) => owner1.id === owner2.id);
+  cachedSubject = new BehaviorSubject(true);
   filterValue: string;
   tableId = TABLE_ADD_THANKS_DIALOG;
 
@@ -74,12 +76,20 @@ export class AddThanksDialogComponent implements OnInit {
             beanName: 'Thanks',
           },
         })
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.onSubmit();
           },
-          () => (this.loading = false),
-        );
+          error: () => {
+            this.loading = false;
+          },
+        });
     }
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue;
+    this.selected.clear();
+    this.cachedSubject.next(true);
   }
 }

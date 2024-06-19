@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '@perun-web-apps/perun/services';
@@ -7,6 +7,7 @@ import { AttrEntity } from '@perun-web-apps/perun/models';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import { BehaviorSubject } from 'rxjs';
 
 export interface CreateAttributeDialogData {
   entityId: number;
@@ -27,7 +28,13 @@ export class CreateAttributeDialogComponent implements OnInit {
   private list: AttributesListComponent;
 
   attributes: Attribute[] = [];
-  selected = new SelectionModel<Attribute>(true, []);
+  selected = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   showError = false;
   filterValue = '';
   tableId = TABLE_ATTRIBUTES_SETTINGS;
@@ -41,6 +48,7 @@ export class CreateAttributeDialogComponent implements OnInit {
     private attributesManager: AttributesManagerService,
     private notificator: NotificatorService,
     private translate: TranslateService,
+    private cd: ChangeDetectorRef,
   ) {
     this.translate
       .get('DIALOGS.CREATE_ATTRIBUTE.SUCCESS_SAVE')
@@ -340,12 +348,15 @@ export class CreateAttributeDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selected.clear();
+    this.cachedSubject.next(true);
   }
 
   private handleSuccess(): void {
     this.notificator.showSuccess(this.saveSuccessMessage);
     this.selected.clear();
     this.dialogRef.close('saved');
+    this.cd.detectChanges();
   }
 
   private twoEntityValid(attribute: Attribute): boolean {

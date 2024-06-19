@@ -19,6 +19,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { UpdateFacilityBanDialogComponent } from '../../../../../shared/components/dialogs/update-facility-ban-dialog/update-facility-ban-dialog.component';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-settings-bans',
@@ -33,7 +34,13 @@ export class FacilitySettingsBansComponent implements OnInit {
   addAuth: boolean;
   removeAuth = false;
   filter = '';
-  selection = new SelectionModel<EnrichedBanOnFacility>(false, []);
+  selection = new SelectionModel<EnrichedBanOnFacility>(
+    false,
+    [],
+    true,
+    (banOnFacility1, banOnFacility2) => banOnFacility1.ban.id === banOnFacility2.ban.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   attrNames = [Urns.MEMBER_DEF_MAIL, Urns.USER_DEF_PREFERRED_MAIL].concat(
     this.store.getLoginAttributeNames(),
   );
@@ -71,6 +78,7 @@ export class FacilitySettingsBansComponent implements OnInit {
       next: (bans) => {
         this.bans = bans;
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       },
       error: () => (this.loading = false),
@@ -130,5 +138,10 @@ export class FacilitySettingsBansComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) this.refresh();
     });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filter = filterValue;
+    this.refresh();
   }
 }

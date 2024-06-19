@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -11,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
+import { AttributeDefinition, RichDestination } from '@perun-web-apps/perun/openapi';
 import { EditAttributeDefinitionDialogComponent } from '../dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
 import {
   customDataSourceFilterPredicate,
@@ -22,19 +24,23 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { ConsentRelatedAttributePipe } from '../../pipes/consent-related-attribute.pipe';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-attr-def-list',
   templateUrl: './attr-def-list.component.html',
   styleUrls: ['./attr-def-list.component.scss'],
 })
-export class AttrDefListComponent implements OnChanges, AfterViewInit {
+export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   definitions: AttributeDefinition[];
   @Input()
   selection = new SelectionModel<AttributeDefinition>(true, []);
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   displayedColumns: string[] = [
     'select',
@@ -61,13 +67,17 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<AttributeDefinition>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<AttributeDefinition>;
+  isMasterCheckboxEnabled: boolean = true;
   private sort: MatSort;
 
   constructor(
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private consentRelatedPipe: ConsentRelatedAttributePipe,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -104,6 +114,22 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
     }
   }
 
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<AttributeDefinition>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
+  }
+
   canBeSelected = (row: AttributeDefinition): boolean =>
     !this.consentRelatedPipe.transform(row.namespace, this.serviceEnabled, this.consentRequired);
 
@@ -113,6 +139,11 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
     }
     this.dataSource = new MatTableDataSource<AttributeDefinition>(this.definitions);
     this.setDataSource();
+
+    this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+      this.dataSource,
+      this.canBeSelected,
+    );
   }
 
   ngAfterViewInit(): void {
@@ -178,6 +209,7 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -204,6 +236,26 @@ export class AttrDefListComponent implements OnChanges, AfterViewInit {
           this.refreshEvent.emit();
         }
       });
+    }
+  }
+
+  toggleRow(row: RichDestination): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+        this.dataSource,
+        this.canBeSelected,
+      );
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
     }
   }
 }

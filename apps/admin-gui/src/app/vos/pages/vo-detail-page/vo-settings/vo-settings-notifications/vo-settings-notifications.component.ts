@@ -22,6 +22,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { TABLE_VO_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-notifications',
@@ -34,7 +35,13 @@ export class VoSettingsNotificationsComponent implements OnInit {
   loading = false;
   vo: Vo;
   applicationMails: ApplicationMail[] = [];
-  selection = new SelectionModel<ApplicationMail>(true, []);
+  selection = new SelectionModel<ApplicationMail>(
+    true,
+    [],
+    true,
+    (applicationMail1, applicationMail2) => applicationMail1.id === applicationMail2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_VO_SETTINGS_NOTIFICATIONS;
   displayedColumns: string[] = [];
   addAuth: boolean;
@@ -114,6 +121,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
             this.notificator.showSuccess(text);
           });
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });
@@ -133,6 +141,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
             this.notificator.showSuccess(text);
           });
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });
@@ -147,6 +156,7 @@ export class VoSettingsNotificationsComponent implements OnInit {
     dialog.afterClosed().subscribe((copyFrom) => {
       if (copyFrom) {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EnrichedFacility, Group } from '@perun-web-apps/perun/openapi';
@@ -11,15 +11,17 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-facilities-list',
   templateUrl: './facilities-list.component.html',
   styleUrls: ['./facilities-list.component.scss'],
 })
-export class FacilitiesListComponent implements OnChanges {
+export class FacilitiesListComponent implements OnInit, OnChanges {
   @Input() facilities: EnrichedFacility[];
   @Input() loading: boolean;
   @Input() facilityWithAuthzGroupPairs: Map<number, Group[]>;
@@ -38,6 +40,7 @@ export class FacilitiesListComponent implements OnChanges {
     'hosts',
   ];
   @Input() selection: SelectionModel<EnrichedFacility>;
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() disableRouting = false;
   @Input() enableMasterCheckbox = false;
@@ -45,10 +48,16 @@ export class FacilitiesListComponent implements OnChanges {
 
   dataSource: MatTableDataSource<EnrichedFacility>;
   localDisableRouting: boolean;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<EnrichedFacility>;
 
   private sort: MatSort;
 
-  constructor(private authResolver: GuiAuthResolver) {}
+  constructor(
+    private authResolver: GuiAuthResolver,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -77,6 +86,22 @@ export class FacilitiesListComponent implements OnChanges {
         return data.hosts.map((d) => d.hostname).join(' ; ');
       default:
         return data[column] as string;
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<EnrichedFacility>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -138,17 +163,37 @@ export class FacilitiesListComponent implements OnChanges {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
+    this.tableCheckbox.masterToggle(
+      this.isAllSelected(),
+      this.selection,
+      this.cachedSelection,
+      this.filterValue,
+      this.dataSource,
+      this.sort,
+      this.child.paginator.pageSize,
+      this.child.paginator.pageIndex,
+      false,
+    );
+  }
+
+  toggleRow(row: EnrichedFacility): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
     }
   }
 }

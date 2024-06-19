@@ -28,6 +28,7 @@ import { CancelConfigurationDialogComponent } from '../../components/cancel-conf
 import { Router } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-configuration-page',
@@ -41,12 +42,23 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
 
   facility: Facility;
   filteredAttributes: Attribute[] = [];
-  attSelection: SelectionModel<Attribute> = new SelectionModel<Attribute>(true, []);
+  attSelection = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   services: Service[] = [];
   serviceIds: Set<number> = new Set<number>();
   servicePackages: ServicesPackage[] = [];
   selectedPackages: ServicesPackage[] = [];
-  selection: SelectionModel<Service> = new SelectionModel<Service>(true, []);
+  selection = new SelectionModel<Service>(
+    true,
+    [],
+    true,
+    (service1, service2) => service1.id === service2.id,
+  );
   owners: Owner[] = [];
   hosts: Host[] = [];
   destinations: RichDestination[] = [];
@@ -198,6 +210,7 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
           next: () => {
             this.notificator.showSuccess(this.saveMsg);
             this.attSelection.clear();
+            this.cachedSubject.next(true);
             this.processing = false;
             resolve();
           },
@@ -244,6 +257,8 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
     this.attributesManager.removeFacilityAttributes(this.facility.id, ids).subscribe({
       next: () => {
         this.notificator.showSuccess(this.removeMsg);
+        this.attSelection.clear();
+        this.cachedSubject.next(true);
         this.getRequiredAttributes();
         this.processing = false;
       },
@@ -267,6 +282,9 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
         this.filteredAttributes.push(att);
       }
     }
+
+    this.attSelection.clear();
+    this.cachedSubject.next(true);
   }
 
   getNonEmptyAttributes(): void {
@@ -291,6 +309,8 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 
   canDeactivate(): boolean {

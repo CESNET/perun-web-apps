@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   RegistrarManagerService,
   RichUserExtSource,
-  UserExtSource,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
@@ -13,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveUserExtSourceDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { TABLE_USER_IDENTITIES } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-identities',
@@ -21,12 +21,19 @@ import { TABLE_USER_IDENTITIES } from '@perun-web-apps/config/table-config';
 })
 export class UserIdentitiesComponent implements OnInit {
   userExtSources: RichUserExtSource[] = [];
-  selection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>(false, []);
+  selection = new SelectionModel<RichUserExtSource>(
+    false,
+    [],
+    true,
+    (userExtSource1, userExtSource2) =>
+      userExtSource1.userExtSource.id === userExtSource2.userExtSource.id,
+  );
   userId: number;
   displayedColumns = ['select', 'id', 'extSourceName', 'login', 'lastAccess'];
   loading: boolean;
   tableId = TABLE_USER_IDENTITIES;
   filterValue = '';
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private usersManagerService: UsersManagerService,
@@ -47,13 +54,16 @@ export class UserIdentitiesComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selection.clear();
-    this.usersManagerService.getRichUserExtSources(this.userId).subscribe(
-      (userExtSources) => {
+    this.cachedSubject.next(true);
+    this.usersManagerService.getRichUserExtSources(this.userId).subscribe({
+      next: (userExtSources) => {
         this.userExtSources = userExtSources;
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => {
+        this.loading = false;
+      },
+    });
   }
 
   addIdentity(): void {
@@ -87,5 +97,6 @@ export class UserIdentitiesComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

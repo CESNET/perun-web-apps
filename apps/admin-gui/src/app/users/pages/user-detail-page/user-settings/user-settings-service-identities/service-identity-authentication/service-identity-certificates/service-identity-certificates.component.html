@@ -4,7 +4,7 @@
   (click)="save()"
   class="me-2 mt-2"
   color="accent"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   mat-flat-button>
   {{'USER_DETAIL.SETTINGS.CERTIFICATES.SAVE' | translate}}
 </button>
@@ -17,6 +17,7 @@
     [loading]="loading"
     #list
     [attributes]="[certificates]"
-    [selection]="selection">
+    [selection]="selection"
+    [cachedSubject]="cachedSubject">
   </perun-web-apps-attributes-list>
 </div>

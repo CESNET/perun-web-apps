@@ -18,7 +18,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -40,7 +40,18 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<[Application, PerunException]>;
-  selection = new SelectionModel<[Application, PerunException]>(true, []);
+  selection = new SelectionModel<[Application, PerunException]>(
+    true,
+    [],
+    true,
+    ([app1, exp1], [app2, exp2]) => app1.id === app2.id && exp1.errorId === exp2.errorId,
+  );
+  cachedSelection = new SelectionModel<[Application, PerunException]>(
+    this.selection.isMultipleSelection(),
+    [],
+    true,
+    this.selection.compareWith,
+  );
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   clickable = true;
   private sort: MatSort;
@@ -48,6 +59,7 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   constructor(
     private authResolver: GuiAuthResolver,
     private dialog: MatDialog,
+    private tableCheckbox: TableCheckboxModified,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -111,15 +123,21 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   }
 
   isAllSelected(): boolean {
-    return this.selection.selected.length === this.dataSource.data.length;
+    return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
   }
 
   masterToggle(): void {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
-    }
+    this.tableCheckbox.masterToggle(
+      this.isAllSelected(),
+      this.selection,
+      this.cachedSelection,
+      '',
+      this.dataSource,
+      this.sort,
+      this.child.paginator.pageSize,
+      this.child.paginator.pageIndex,
+      false,
+    );
   }
 
   openExceptionDetail(exception: PerunException): void {
@@ -173,6 +191,20 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
         this.getExportDataForColumn(data, column),
       ),
       format,
+    );
+  }
+
+  toggleRow(row: [Application, PerunException]): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    this.tableCheckbox.selectCachedDataOnPage(
+      this.dataSource,
+      this.selection,
+      this.cachedSelection,
+      this.selection.compareWith,
     );
   }
 }

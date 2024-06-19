@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ExtSource, UserExtSource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
@@ -11,18 +19,22 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-ext-sources-list',
   templateUrl: './ext-sources-list.component.html',
   styleUrls: ['./ext-sources-list.component.scss'],
 })
-export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
+export class ExtSourcesListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
   extSources: ExtSource[];
   @Input()
   selection: SelectionModel<ExtSource> = new SelectionModel<ExtSource>();
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   filterValue = '';
   @Input()
@@ -32,6 +44,8 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
   @Input()
   loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ExtSource>;
   dataSource: MatTableDataSource<ExtSource>;
   exporting = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -39,7 +53,8 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -57,6 +72,22 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
         return data.name;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<ExtSource>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -123,6 +154,7 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -130,5 +162,21 @@ export class ExtSourcesListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: ExtSource): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

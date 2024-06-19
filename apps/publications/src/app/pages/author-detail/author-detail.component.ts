@@ -12,6 +12,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { RemovePublicationDialogComponent } from '../../dialogs/remove-publication-dialog/remove-publication-dialog.component';
 import { FilterPublication } from '../../components/publication-filter/publication-filter.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-author-detail',
@@ -22,7 +23,13 @@ export class AuthorDetailComponent implements OnInit {
   loading: boolean;
   initLoading: boolean;
   publications: PublicationForGUI[] = [];
-  selected = new SelectionModel<PublicationForGUI>(true, []);
+  selected = new SelectionModel<PublicationForGUI>(
+    true,
+    [],
+    true,
+    (publication1, publication2) => publication1.id === publication2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   author: User;
 
@@ -62,6 +69,7 @@ export class AuthorDetailComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selected.clear();
+    this.cachedSubject.next(true);
     this.cabinetService
       .findPublicationsByGUIFilter(null, null, null, null, null, null, null, null, this.author.id)
       .subscribe((publications) => {
@@ -73,6 +81,7 @@ export class AuthorDetailComponent implements OnInit {
   filterPublication(event: FilterPublication): void {
     this.loading = true;
     this.selected.clear();
+    this.cachedSubject.next(true);
     this.cabinetService
       .findPublicationsByGUIFilter(
         event.title,

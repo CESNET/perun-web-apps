@@ -13,7 +13,7 @@
           data-cy="search-members"
           [autoFocus]="true"
           [control]="searchCtrl"
-          (filter)="search.emit($event)"></perun-web-apps-debounce-filter>
+          (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
 
         <ng-template #searchSpinner>
           <perun-web-apps-loading-table></perun-web-apps-loading-table>
@@ -25,6 +25,7 @@
             [tableId]="tableId"
             [members]="members"
             [selection]="selection"
+            [cachedSubject]="cachedSubject"
             [blockManualAdding]="manualAddingBlocked">
           </app-members-candidates-list>
         </div>

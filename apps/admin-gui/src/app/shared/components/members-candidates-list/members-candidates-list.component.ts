@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -16,9 +24,11 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { TableCheckbox } from '@perun-web-apps/perun/services';
+import { TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { MemberTypePipe } from '../../pipes/member-type.pipe';
 import { DisabledCandidatePipe } from '../../pipes/disabled-candidate.pipe';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-members-candidates-list',
@@ -26,10 +36,11 @@ import { DisabledCandidatePipe } from '../../pipes/disabled-candidate.pipe';
   styleUrls: ['./members-candidates-list.component.scss'],
   providers: [MemberTypePipe, DisabledCandidatePipe],
 })
-export class MembersCandidatesListComponent implements OnChanges, AfterViewInit {
+export class MembersCandidatesListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() members: MemberCandidate[];
   @Input() selection: SelectionModel<MemberCandidate>;
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() tableId: string;
   @Input() blockManualAdding = false;
   @Input() loading: boolean;
@@ -46,17 +57,37 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
   dataSource: MatTableDataSource<MemberCandidate> = new MatTableDataSource<MemberCandidate>([]);
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   firstSearchDone = false;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<MemberCandidate>;
+  isMasterCheckboxEnabled: boolean = true;
   private sort: MatSort;
 
   constructor(
     private memberTypePipe: MemberTypePipe,
     private disabledCandidatePipe: DisabledCandidatePipe,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSource();
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<MemberCandidate>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -68,6 +99,12 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       this.firstSearchDone = true;
       this.dataSource = new MatTableDataSource<MemberCandidate>(this.members);
       this.setDataSource();
+    }
+    if (this.dataSource.paginator) {
+      this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+        this.dataSource,
+        this.canBeSelected,
+      );
     }
   }
 
@@ -262,6 +299,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
 
   itemSelectionToggle(item: MemberCandidate): void {
     this.selection.toggle(item);
+    this.cachedSelection.toggle(item);
   }
 
   isAllSelected(): boolean {
@@ -276,6 +314,7 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       '',
       this.dataSource,
       this.sort,
@@ -284,5 +323,20 @@ export class MembersCandidatesListComponent implements OnChanges, AfterViewInit 
       true,
       this.canBeSelected,
     );
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection && this.dataSource.paginator) {
+      this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+        this.dataSource,
+        this.canBeSelected,
+      );
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -13,20 +15,30 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AddEditNotificationDialogComponent } from '../../../shared/components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
-import { ApplicationMail, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import {
+  GuiAuthResolver,
+  NotificatorService,
+  TableCheckboxModified,
+} from '@perun-web-apps/perun/services';
+import {
+  ApplicationMail,
+  PublicationForGUI,
+  RegistrarManagerService,
+} from '@perun-web-apps/perun/openapi';
 import {
   getDefaultDialogConfig,
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
   styleUrls: ['./notification-list.component.scss'],
 })
-export class NotificationListComponent implements OnChanges, AfterViewInit {
+export class NotificationListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   applicationMails: ApplicationMail[];
   @Input()
@@ -40,6 +52,8 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   @Input()
   selection = new SelectionModel<ApplicationMail>(true, []);
   @Input()
+  cachedSubject: BehaviorSubject<boolean>;
+  @Input()
   tableId: string;
   @Input()
   theme: string;
@@ -49,6 +63,8 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
   selectionChange = new EventEmitter<SelectionModel<ApplicationMail>>();
   @Output() refreshTable = new EventEmitter<void>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ApplicationMail>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   dataSource: MatTableDataSource<ApplicationMail>;
   private sort: MatSort;
@@ -59,12 +75,29 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
     private notificator: NotificatorService,
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSource();
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<PublicationForGUI>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
   }
 
   ngOnChanges(): void {
@@ -87,6 +120,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       '',
       this.dataSource,
       this.sort,
@@ -111,6 +145,17 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
           applicationMail.send = true;
           this.notificator.showInstantSuccess('VO_DETAIL.SETTINGS.NOTIFICATIONS.SENDING_ENABLE');
         });
+    }
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
     }
   }
 
@@ -161,6 +206,7 @@ export class NotificationListComponent implements OnChanges, AfterViewInit {
 
   toggle(row: ApplicationMail): void {
     this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
     this.selectionChange.emit(this.selection);
   }
 

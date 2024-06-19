@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-publication-detail',
@@ -32,8 +33,20 @@ export class PublicationDetailComponent implements OnInit {
   mode: string;
   mainAuthorId: number;
   mainAuthor: Author;
-  selectionAuthors: SelectionModel<Author> = new SelectionModel<Author>(true, []);
-  selectionThanks: SelectionModel<ThanksForGUI> = new SelectionModel<ThanksForGUI>(true, []);
+  selectionAuthors = new SelectionModel<Author>(
+    true,
+    [],
+    true,
+    (author1, author2) => author1.id === author2.id,
+  );
+  selectionThanks: SelectionModel<ThanksForGUI> = new SelectionModel<ThanksForGUI>(
+    true,
+    [],
+    true,
+    (thank1, thank2) => thank1.id === thank2.id,
+  );
+
+  cachedSubject = new BehaviorSubject(true);
   lockAuth = false;
 
   constructor(

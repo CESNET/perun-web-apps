@@ -14,12 +14,13 @@
             >{{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.SELECTION_STEP' | translate}}</ng-template
           >
           <perun-web-apps-debounce-filter
-            (filter)="voFilter = $event"
+            (filter)="applyFilter($event)"
             [placeholder]="'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.FILTER_VOS'"></perun-web-apps-debounce-filter>
           <perun-web-apps-vos-list
             [loading]="loading"
             [vos]="vos"
             [selection]="voSelection"
+            [cachedSubject]="cachedSubject"
             [displayedColumns]="displayedColumns"
             [filterValue]="voFilter"
             [disableRouting]="true"></perun-web-apps-vos-list>

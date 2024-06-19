@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_RESOURCE_DELETE_SERVICE } from '@perun-web-apps/config/table-config';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 export interface DeleteServiceFromFacilityData {
   theme: string;
@@ -36,7 +37,13 @@ export class DeleteServiceFromFacilityComponent implements OnInit {
   destinationChecked = true;
   tableId = TABLE_RESOURCE_DELETE_SERVICE;
   dataSource = new MatTableDataSource<RichResource>(this.data.resource);
-  selected = new SelectionModel<RichResource>(true, [...this.dataSource.data]);
+  selected = new SelectionModel<RichResource>(
+    true,
+    [...this.dataSource.data],
+    true,
+    (richResource1, richResource2) => richResource1.id === richResource2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   private serviceId: number;
   private facilityId: number;
 

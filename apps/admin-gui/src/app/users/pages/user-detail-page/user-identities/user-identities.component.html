@@ -11,7 +11,7 @@
 <button
   *ngIf="authResolver.isPerunAdmin()"
   (click)="removeIdentity()"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   class="me-2"
   color="warn"
   mat-flat-button>
@@ -32,6 +32,7 @@
     [displayedColumns]="displayedColumns"
     [filterValue]="filterValue"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [tableId]="tableId"
     [userExtSources]="userExtSources"></perun-web-apps-user-ext-sources-list>
 </div>

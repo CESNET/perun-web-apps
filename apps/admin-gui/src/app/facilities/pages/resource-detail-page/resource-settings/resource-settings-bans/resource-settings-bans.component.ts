@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   EnrichedBanOnResource,
+  EnrichedBanOnVo,
   Resource,
   ResourcesManagerService,
 } from '@perun-web-apps/perun/openapi';
@@ -19,6 +20,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { UpdateResourceBanDialogComponent } from '../../../../../shared/components/dialogs/update-resource-ban-dialog/update-resource-ban-dialog.component';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-resource-settings-bans',
@@ -33,7 +35,14 @@ export class ResourceSettingsBansComponent implements OnInit {
   addAuth: boolean;
   removeAuth = false;
   filter = '';
-  selection = new SelectionModel<EnrichedBanOnResource>(false, []);
+  selection = new SelectionModel<EnrichedBanOnVo>(
+    false,
+    [],
+    true,
+    (banOnVo1, banOnVo2) => banOnVo1.ban.id === banOnVo2.ban.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
+
   attrNames = [Urns.MEMBER_DEF_MAIL, Urns.USER_DEF_PREFERRED_MAIL].concat(
     this.store.getLoginAttributeNames(),
   );
@@ -73,6 +82,7 @@ export class ResourceSettingsBansComponent implements OnInit {
       next: (bans) => {
         this.bans = bans;
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       },
       error: () => (this.loading = false),
@@ -131,5 +141,10 @@ export class ResourceSettingsBansComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) this.refresh();
     });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filter = filterValue;
+    this.refresh();
   }
 }

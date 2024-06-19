@@ -23,7 +23,7 @@
   (click)="removeTags()"
   class="me-2"
   color="warn"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   mat-flat-button>
   {{'RESOURCE_DETAIL.TAGS.REMOVE_BUTTON' | translate}}
 </button>
@@ -44,6 +44,7 @@
     [resourceTags]="resourceTags"
     [filterValue]="filterValue"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [tableId]="tableId">
   </app-resources-tags-list>
 </div>

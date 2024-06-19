@@ -23,6 +23,7 @@ import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-app
 import { TABLE_GROUP_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-group-settings-notifications',
@@ -34,7 +35,13 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   loading = false;
   applicationForm: ApplicationForm;
   applicationMails: ApplicationMail[] = [];
-  selection = new SelectionModel<ApplicationMail>(true, []);
+  selection = new SelectionModel<ApplicationMail>(
+    true,
+    [],
+    true,
+    (applicationMail1, applicationMail2) => applicationMail1.id === applicationMail2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   noApplicationForm = false;
   group: Group;
   editEmailFooterAuth = false;
@@ -66,8 +73,8 @@ export class GroupSettingsNotificationsComponent implements OnInit {
     this.loading = true;
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
-    this.registrarService.getGroupApplicationForm(this.group.id).subscribe(
-      (form) => {
+    this.registrarService.getGroupApplicationForm(this.group.id).subscribe({
+      next: (form) => {
         this.applicationForm = form;
         this.registrarService.getApplicationMailsForGroup(this.group.id).subscribe((mails) => {
           this.applicationMails = mails;
@@ -75,22 +82,22 @@ export class GroupSettingsNotificationsComponent implements OnInit {
           this.apiRequest.dontHandleErrorForNext();
           this.attributesService
             .getGroupAttributeByName(this.group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
-            .subscribe(
-              () => {
+            .subscribe({
+              next: () => {
                 this.setAuthRights();
                 this.loading = false;
               },
-              (error: RPCError) => {
+              error: (error: RPCError) => {
                 if (error.name !== 'PrivilegeException') {
                   this.notificator.showRPCError(error);
                 }
                 this.setAuthRights();
                 this.loading = false;
               },
-            );
+            });
         });
       },
-      (error: RPCError) => {
+      error: (error: RPCError) => {
         if (error.name === 'FormNotExistsException') {
           this.noApplicationForm = true;
           this.setAuthRights();
@@ -99,7 +106,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
           this.notificator.showRPCError(error);
         }
       },
-    );
+    });
   }
 
   setAuthRights(): void {
@@ -149,6 +156,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
             this.notificator.showSuccess(text);
           });
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });
@@ -173,6 +181,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
             this.notificator.showSuccess(text);
           });
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });
@@ -187,6 +196,7 @@ export class GroupSettingsNotificationsComponent implements OnInit {
     dialog.afterClosed().subscribe((copyFrom) => {
       if (copyFrom) {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.updateTable();
       }
     });

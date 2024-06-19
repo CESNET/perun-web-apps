@@ -20,6 +20,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { DeleteTaskResultDialogComponent } from '../../../../shared/components/dialogs/delete-task-result-dialog/delete-task-result-dialog.component';
 import { DeleteServiceFromFacilityComponent } from '../../../../shared/components/dialogs/delete-service-from-facility/delete-service-from-facility.component';
 import { DeleteTaskDialogComponent } from '../../../../shared/components/dialogs/delete-task-dialog/delete-task-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-service-status',
@@ -30,7 +31,13 @@ export class FacilityServiceStatusComponent implements OnInit {
   facility: Facility;
   servicesStates: ServiceState[] = [];
 
-  selected = new SelectionModel<ServiceState>(true, []);
+  selected = new SelectionModel<ServiceState>(
+    true,
+    [],
+    true,
+    (serviceState1, serviceState2) => serviceState1.service.id === serviceState2.service.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   loading: boolean;
 
@@ -76,6 +83,7 @@ export class FacilityServiceStatusComponent implements OnInit {
           'FACILITY_DETAIL.SERVICES_STATUS.SUCCESS_FORCE_PROPAGATION',
         );
         this.loading = false;
+        this.refreshTable();
       },
       error: () => {
         this.loading = false;
@@ -184,6 +192,7 @@ export class FacilityServiceStatusComponent implements OnInit {
     this.tasksManager.getFacilityServicesState(this.facility.id).subscribe((states) => {
       this.servicesStates = states;
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.setAuthRights();
       this.loading = false;
     });
@@ -210,6 +219,7 @@ export class FacilityServiceStatusComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   selectionChanged(): void {

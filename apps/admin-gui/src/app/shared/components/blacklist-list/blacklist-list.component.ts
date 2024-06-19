@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { BanOnFacility, User } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -12,18 +20,22 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-perun-web-apps-blacklist-list',
   templateUrl: './blacklist-list.component.html',
   styleUrls: ['./blacklist-list.component.scss'],
 })
-export class BlacklistListComponent implements AfterViewInit, OnChanges {
+export class BlacklistListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
   bansOnFacilitiesWithUsers: [BanOnFacility, User][] = [];
   @Input()
   selection = new SelectionModel<[BanOnFacility, User]>(true, []);
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   filterValue: string;
   @Input()
@@ -31,6 +43,8 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
   @Input()
   loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<[BanOnFacility, User]>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'userId', 'name', 'reason'];
   dataSource: MatTableDataSource<[BanOnFacility, User]>;
@@ -38,7 +52,8 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -56,6 +71,22 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
         return parseName(data[1]);
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<[BanOnFacility, User]>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -118,11 +149,17 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
     return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
   }
 
+  toggleRow(item: [BanOnFacility, User]): void {
+    this.selection.toggle(item);
+    this.cachedSelection.toggle(item);
+  }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -134,5 +171,16 @@ export class BlacklistListComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.child.paginator;
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

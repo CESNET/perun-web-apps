@@ -8,6 +8,7 @@ import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
 import { AttributesListComponent } from '@perun-web-apps/perun/components';
 import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-one-entity-attribute-page',
@@ -19,7 +20,13 @@ export class OneEntityAttributePageComponent implements OnInit {
   @Input() entityId: number;
   @ViewChild('list') list: AttributesListComponent;
   attributes: Attribute[] = [];
-  selection = new SelectionModel<Attribute>(true, []);
+  selection = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   filterEmpty = true;
   tableId = TABLE_ATTRIBUTES_SETTINGS;
@@ -41,6 +48,7 @@ export class OneEntityAttributePageComponent implements OnInit {
         this.attributesManagerService.getMemberAttributes(this.entityId).subscribe((attributes) => {
           this.attributes = attributes;
           this.selection.clear();
+          this.cachedSubject.next(true);
           this.loading = false;
         });
         break;
@@ -48,6 +56,7 @@ export class OneEntityAttributePageComponent implements OnInit {
         this.attributesManagerService.getGroupAttributes(this.entityId).subscribe((attributes) => {
           this.attributes = attributes;
           this.selection.clear();
+          this.cachedSubject.next(true);
           this.loading = false;
         });
         break;
@@ -55,6 +64,7 @@ export class OneEntityAttributePageComponent implements OnInit {
         this.attributesManagerService.getUserAttributes(this.entityId).subscribe((attributes) => {
           this.attributes = attributes;
           this.selection.clear();
+          this.cachedSubject.next(true);
           this.loading = false;
         });
         break;
@@ -64,6 +74,7 @@ export class OneEntityAttributePageComponent implements OnInit {
           .subscribe((attributes) => {
             this.attributes = attributes;
             this.selection.clear();
+            this.cachedSubject.next(true);
             this.loading = false;
           });
         break;
@@ -73,6 +84,7 @@ export class OneEntityAttributePageComponent implements OnInit {
           .subscribe((attributes) => {
             this.attributes = attributes;
             this.selection.clear();
+            this.cachedSubject.next(true);
             this.loading = false;
           });
         break;
@@ -80,6 +92,7 @@ export class OneEntityAttributePageComponent implements OnInit {
         this.attributesManagerService.getVoAttributes(this.entityId).subscribe((attributes) => {
           this.attributes = attributes;
           this.selection.clear();
+          this.cachedSubject.next(true);
           this.loading = false;
         });
         break;
@@ -87,6 +100,7 @@ export class OneEntityAttributePageComponent implements OnInit {
         this.attributesManagerService.getHostAttributes(this.entityId).subscribe((attributes) => {
           this.attributes = attributes;
           this.selection.clear();
+          this.cachedSubject.next(true);
           this.loading = false;
         });
     }
@@ -94,6 +108,7 @@ export class OneEntityAttributePageComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onCreate(): void {

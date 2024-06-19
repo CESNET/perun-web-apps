@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-settings-preferred-unix-group-names',
@@ -21,6 +22,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
   loading = false;
 
   selectionList: SelectionModel<string>[] = [];
+  cachedSubject = new BehaviorSubject(true);
 
   alertText: string;
   headerColumnText: string;
@@ -71,7 +73,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
   initSelection(): void {
     this.namespaces.forEach(() => {
-      this.selectionList.push(new SelectionModel<string>(true, []));
+      this.selectionList.push(new SelectionModel<string>(true, [], true, (s1, s2) => s1 === s2));
     });
   }
 
@@ -90,7 +92,7 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
       });
   }
 
-  addGroupName(namespace: string): void {
+  addGroupName(namespace: string, index: number): void {
     const groups = this.groupNames.get(namespace);
 
     const config = getDefaultDialogConfig();
@@ -101,6 +103,8 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((added) => {
       if (added) {
+        this.selectionList[index].clear();
+        this.cachedSubject.next(true);
         this.getAttribute(namespace);
       }
     });
@@ -119,9 +123,10 @@ export class SettingsPreferredUnixGroupNamesComponent implements OnInit {
 
     const dialogRef = this.dialog.open(RemoveStringValueDialogComponent, config);
 
-    dialogRef.afterClosed().subscribe((added) => {
-      if (added) {
+    dialogRef.afterClosed().subscribe((removed) => {
+      if (removed) {
         this.selectionList[index].clear();
+        this.cachedSubject.next(true);
         this.getAttribute(namespace);
       }
     });

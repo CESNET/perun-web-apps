@@ -9,6 +9,7 @@ import {
 import { TABLE_FACILITY_BLACKLIST_LIST } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-facility-settings-blacklist',
@@ -17,7 +18,13 @@ import { EntityStorageService } from '@perun-web-apps/perun/services';
 })
 export class FacilitySettingsBlacklistComponent implements OnInit {
   bansOnFacilitiesWithUsers: [BanOnFacility, User][] = [];
-  selected = new SelectionModel<[BanOnFacility, User]>(true, []);
+  selected = new SelectionModel<[BanOnFacility, User]>(
+    true,
+    [],
+    true,
+    ([ban1, user1], [ban2, user2]) => ban1.id === ban2.id && user1.id === user2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   loading: boolean;
   tableId = TABLE_FACILITY_BLACKLIST_LIST;
@@ -47,11 +54,13 @@ export class FacilitySettingsBlacklistComponent implements OnInit {
         this.bansOnFacilitiesWithUsers.push([ban, user]);
       }
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

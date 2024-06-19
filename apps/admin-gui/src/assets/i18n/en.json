@@ -2556,7 +2556,8 @@
     "EMAIL": "Email",
     "LOGINS": "Logins",
     "ALREADY_MEMBER": "Already member",
-    "ADDING_BLOCKED": "Manual adding of users outside of the organization is blocked."
+    "ADDING_BLOCKED": "Manual adding of users outside of the organization is blocked.",
+    "MASTER_CHECKBOX_TOOLTIP": "No member candidate on this page can be selected"
   },
   "MANAGERS_LIST": {
     "ID": "Id",
@@ -2605,7 +2606,8 @@
       "DELETE": "Delete",
       "SEARCH": "Filter by Id, name, entity, definition, or type",
       "NO_ATTRIBUTES": "There are no attributes available.",
-      "CONSENT_RELATED_DISABLED": "Attribute requires user's permission. It can only be added, when service is disabled."
+      "CONSENT_RELATED_DISABLED": "Attribute requires user's permission. It can only be added, when service is disabled.",
+      "MASTER_CHECKBOX_TOOLTIP": "No attribute definition on this page can be selected"
     },
     "USERS": {
       "TITLE": "Users",
@@ -3142,7 +3144,8 @@
           "TABLE_GROUP_RESOURCE_STATUS": "Status",
           "NO_RESOURCES_WARNING": "No resources assigned.",
           "INDIRECT_RESOURCE": "This resource is assigned indirectly.",
-          "AUTHZ_GROUP": "Role acquired through"
+          "AUTHZ_GROUP": "Role acquired through",
+          "MASTER_CHECKBOX_TOOLTIP": "No resource on this page can be selected"
         },
         "RESOURCE_SEARCH_SELECT": {
           "SELECT_RESOURCE": "Select resource",
@@ -3223,7 +3226,8 @@
           "DISABLED_HINT": "You don't have permission to change this attribute.",
           "EMPTY_ATTRIBUTES": "No attributes found.",
           "EMPTY_SETTINGS": "No attributes found. Use 'Add' button to add new attribute.",
-          "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute"
+          "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute",
+          "MASTER_CHECKBOX_TOOLTIP": "No attribute on this page can be selected"
         },
         "SELECTION_ITEM_SEARCH_SELECT": {
           "SELECT_ITEM": "Select attribute",

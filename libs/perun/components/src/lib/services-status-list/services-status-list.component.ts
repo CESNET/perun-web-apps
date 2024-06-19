@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -17,17 +19,19 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { formatDate } from '@angular/common';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-services-status-list',
   templateUrl: './services-status-list.component.html',
   styleUrls: ['./services-status-list.component.css'],
 })
-export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
+export class ServicesStatusListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() servicesStatus: ServiceState[] = [];
   @Input() displayedColumns: string[] = [
@@ -40,6 +44,7 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
     'task.endTime',
   ];
   @Input() selection = new SelectionModel<ServiceState>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
   @Input() tableId: string;
   @Input() disableRouting = true;
@@ -48,11 +53,14 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
 
   dataSource: MatTableDataSource<ServiceState>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ServiceState>;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -115,6 +123,22 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
           : (data[column] as string);
       default:
         return data[column] as string;
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<ServiceState>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -198,6 +222,7 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -209,5 +234,21 @@ export class ServicesStatusListComponent implements OnChanges, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.child.paginator;
+  }
+
+  toggleRow(row: ServiceState): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

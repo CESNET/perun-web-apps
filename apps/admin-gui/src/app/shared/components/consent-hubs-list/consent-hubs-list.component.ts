@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ConsentHub, ConsentsManagerService } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -11,37 +11,43 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
+import { NotificatorService, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { EditEnforceConsentsDialogComponent } from '../dialogs/edit-enforce-consents-dialog/edit-enforce-consents-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-perun-web-apps-consent-hubs-list',
   templateUrl: './consent-hubs-list.component.html',
   styleUrls: ['./consent-hubs-list.component.scss'],
 })
-export class ConsentHubsListComponent implements OnChanges {
+export class ConsentHubsListComponent implements OnInit, OnChanges {
   @Input() consentHubs: ConsentHub[];
   @Input() filterValue = '';
   @Input() displayedColumns: string[] = ['select', 'id', 'name', 'enforceConsents', 'facilities'];
   @Input() tableId: string;
   @Input() selection = new SelectionModel<ConsentHub>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ConsentHub>;
   dataSource: MatTableDataSource<ConsentHub>;
   exporting = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private dialog: MatDialog,
     private notificator: NotificatorService,
     private translate: TranslateService,
     private consentsManager: ConsentsManagerService,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -64,6 +70,22 @@ export class ConsentHubsListComponent implements OnChanges {
       }
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<ConsentHub>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -108,6 +130,7 @@ export class ConsentHubsListComponent implements OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -131,6 +154,22 @@ export class ConsentHubsListComponent implements OnChanges {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
       this.dataSource.filter = this.filterValue;
+    }
+  }
+
+  toggleRow(row: ConsentHub): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
     }
   }
 

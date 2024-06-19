@@ -8,6 +8,7 @@ import { ShowGeneratedPasswordDialogComponent } from '../../../components/dialog
 import { SelectionModel } from '@angular/cdk/collections';
 import { RemoveAltPasswordDialogComponent } from '../../../components/dialogs/remove-alt-password-dialog/remove-alt-password-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-authentication-alternative-passwords',
@@ -21,7 +22,8 @@ export class AuthenticationAlternativePasswordsComponent implements OnInit {
   removeDialogDescription: string;
   passwordDescriptions = new Set<string>();
   displayedValues: string[] = [];
-  selection = new SelectionModel<string>(false, []);
+  selection = new SelectionModel<string>(false, [], true, (s1, s2) => s1 === s2);
+  cachedSubject = new BehaviorSubject(true);
   altPasswordsAttributeValue: Map<string, string>;
   alertText: string;
   headerColumnText: string;
@@ -110,6 +112,7 @@ export class AuthenticationAlternativePasswordsComponent implements OnInit {
       if (added) {
         this.getAltPasswords();
         this.selection.clear();
+        this.cachedSubject.next(true);
       }
     });
   }

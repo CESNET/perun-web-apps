@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-add-authors',
@@ -16,7 +17,13 @@ import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
 })
 export class AddAuthorsComponent implements OnInit {
   @Input() publication: PublicationForGUI;
-  @Input() selection: SelectionModel<Author> = new SelectionModel<Author>(true, []);
+  @Input() selection = new SelectionModel<Author>(
+    true,
+    [],
+    true,
+    (author1, author2) => author1.id === author2.id,
+  );
+  @Input() cachedSubject = new BehaviorSubject(true);
   @Input() disableRouting = false;
   @Input() similarityCheck = false;
   @Output() yourselfAsAnAuthor: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -46,6 +53,7 @@ export class AddAuthorsComponent implements OnInit {
       );
       this.publication.authors = authors;
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
@@ -62,7 +70,6 @@ export class AddAuthorsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((authorshipCreated) => {
       if (authorshipCreated) {
-        this.selection.clear();
         this.refresh();
       }
     });
@@ -110,12 +117,12 @@ export class AddAuthorsComponent implements OnInit {
       this.notificator.showSuccess(
         this.translate.instant('DIALOGS.REMOVE_AUTHORS.SUCCESS_MESSAGE') as string,
       );
-      this.selection.clear();
       this.refresh();
     }
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refresh();
   }
 }

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -19,12 +27,14 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { formatDate } from '@angular/common';
 import { BAN_EXPIRATION_NEVER } from '../ban-specification/ban-specification.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 export type EnrichedBan = EnrichedBanOnVo | EnrichedBanOnFacility | EnrichedBanOnResource;
 export type BanOnEntityListColumn =
@@ -44,8 +54,9 @@ export type BanOnEntityListColumn =
   styleUrls: ['./ban-on-entity-list.component.scss'],
   providers: [UserFullNamePipe],
 })
-export class BanOnEntityListComponent {
+export class BanOnEntityListComponent implements OnInit {
   @Input() selection = new SelectionModel<EnrichedBan>(false, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() tableId: string;
   @Input() updatePolicy: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -68,13 +79,16 @@ export class BanOnEntityListComponent {
   dataSource: MatTableDataSource<EnrichedBan>;
   target: string;
   subject: string;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<EnrichedBan>;
   // This date is set by backend as a 'never' expire option
   EXPIRE_NEVER = BAN_EXPIRATION_NEVER;
 
   constructor(
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private authResolver: GuiAuthResolver,
     private userName: UserFullNamePipe,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set bans(bans: EnrichedBan[]) {
@@ -97,6 +111,22 @@ export class BanOnEntityListComponent {
       columns = columns.filter((column) => !column.endsWith('Id'));
     }
     this.columns = columns;
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<EnrichedBan>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
   }
 
   getDataForColumn = (data: EnrichedBan, column: BanOnEntityListColumn): string => {
@@ -159,6 +189,7 @@ export class BanOnEntityListComponent {
     this.tableCheckbox.masterToggle(
       allSelected,
       this.selection,
+      this.cachedSelection,
       this.dataSource.filter,
       this.dataSource,
       this.dataSource.sort,
@@ -166,6 +197,22 @@ export class BanOnEntityListComponent {
       this.dataSource.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: EnrichedBan): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private dataSourceInit(bans: EnrichedBan[]): void {
