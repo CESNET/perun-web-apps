@@ -33,8 +33,8 @@ export class VoStatisticsComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource<string>(this.rowNames);
 
-    this.voService.getVoMembersCountsByStatus(this.vo.id).subscribe(
-      (numOfMembersByStatus) => {
+    this.voService.getVoMembersCountsByStatus(this.vo.id).subscribe({
+      next: (numOfMembersByStatus) => {
         this.allMembersCount = 0;
 
         for (const status of Object.keys(numOfMembersByStatus)) {
@@ -45,7 +45,7 @@ export class VoStatisticsComponent implements OnInit {
         this.membersCount.set('members', this.allMembersCount);
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 }

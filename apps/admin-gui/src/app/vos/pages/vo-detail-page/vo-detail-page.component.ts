@@ -20,6 +20,7 @@ import { ReloadEntityDetailService } from '../../../core/services/common/reload-
 import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
 import { takeUntil } from 'rxjs/operators';
 import { QueryParamsRouterService } from '../../../shared/query-params-router.service';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-vo-detail-page',
@@ -61,11 +62,14 @@ export class VoDetailPageComponent extends destroyDetailMixin() implements OnIni
     this.route.params.subscribe((params) => {
       const voId = Number(params['voId']);
 
-      this.voService.getEnrichedVoById(voId).subscribe(
-        (enrichedVo) => {
+      this.voService.getEnrichedVoById(voId).subscribe({
+        next: (enrichedVo) => {
           this.vo = enrichedVo.vo;
           this.enrichedVo = enrichedVo;
-          this.entityStorageService.setEntity({ id: this.vo.id, beanName: this.vo.beanName });
+          this.entityStorageService.setEntityAndPathParam(
+            { id: this.vo.id, beanName: this.vo.beanName },
+            EntityPathParam.Vo,
+          );
           this.editAuth = this.authResolver.isAuthorized('updateVo_Vo_policy', [this.vo]);
           this.removeAuth = this.authResolver.isAuthorized('deleteVo_Vo_policy', [this.vo]);
 
@@ -76,8 +80,8 @@ export class VoDetailPageComponent extends destroyDetailMixin() implements OnIni
 
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
     });
   }
 

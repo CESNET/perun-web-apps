@@ -30,6 +30,7 @@ import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { QueryParamsRouterService } from '../../../shared/query-params-router.service';
 import { forkJoin, of } from 'rxjs';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-group-detail-page',
@@ -141,7 +142,10 @@ export class GroupDetailPageComponent extends destroyDetailMixin() implements On
           this.parentGroup = additionalEntities.parentGroup;
           this.group = additionalEntities.richGroup;
 
-          this.entityStorageService.setEntity(this.group);
+          this.entityStorageService.setEntityAndPathParam(
+            { id: this.group.id, voId: this.group.voId, beanName: this.group.beanName },
+            EntityPathParam.Group,
+          );
           addRecentlyVisited('groups', this.group);
           addRecentlyVisitedObject(this.group, this.vo.name);
 

@@ -7,6 +7,7 @@ import { SideMenuItemService } from '../../../../../../shared/side-menu/side-men
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditUserDialogComponent } from '../../../../../../shared/components/dialogs/edit-user-dialog/edit-user-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-service-identity-detail-page',
@@ -31,18 +32,21 @@ export class ServiceIdentityDetailPageComponent implements OnInit {
     this.loading = true;
     this.route.params.subscribe((params) => {
       const userId = Number(params['userId']);
-      this.entityStorageService.setEntity({ id: userId, beanName: 'User' });
+      this.entityStorageService.setEntityAndPathParam(
+        { id: userId, beanName: 'User' },
+        EntityPathParam.User,
+      );
 
-      this.usersService.getUserById(userId).subscribe(
-        (user) => {
+      this.usersService.getUserById(userId).subscribe({
+        next: (user) => {
           this.user = user;
 
           const userItem = this.sideMenuItemService.parseServiceIdentity(user);
           this.sideMenuService.setUserItems([userItem]);
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
     });
   }
 

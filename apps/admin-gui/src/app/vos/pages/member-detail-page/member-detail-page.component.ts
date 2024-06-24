@@ -11,6 +11,7 @@ import {
   Vo,
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-member-detail-page',
@@ -44,32 +45,35 @@ export class MemberDetailPageComponent implements OnInit {
       const memberId = Number(params['memberId']);
       this.isAuthorized = this.authResolver.isPerunAdminOrObserver();
 
-      this.voService.getVoById(voId).subscribe(
-        (vo) => {
+      this.voService.getVoById(voId).subscribe({
+        next: (vo) => {
           this.vo = vo;
-          this.membersService.getRichMemberWithAttributes(memberId).subscribe(
-            (member) => {
+          this.membersService.getRichMemberWithAttributes(memberId).subscribe({
+            next: (member) => {
               this.member = member;
               this.svgIcon = this.member.user.serviceUser
                 ? 'perun-service-identity'
                 : 'perun-user-dark';
-              this.entityService.setEntity({
-                id: member.id,
-                beanName: member.beanName,
-                voId: member.voId,
-                userId: member.userId,
-              });
+              this.entityService.setEntityAndPathParam(
+                {
+                  id: member.id,
+                  beanName: member.beanName,
+                  voId: member.voId,
+                  userId: member.userId,
+                },
+                EntityPathParam.Member,
+              );
               const voSideMenuItem = this.sideMenuItemService.parseVo(this.vo);
               const memberSideMenuItem = this.sideMenuItemService.parseMember(this.member);
               this.fullName = memberSideMenuItem.label;
               this.sideMenuService.setAccessMenuItems([voSideMenuItem, memberSideMenuItem]);
               this.loading = false;
             },
-            () => (this.loading = false),
-          );
+            error: () => (this.loading = false),
+          });
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
     });
   }
 }

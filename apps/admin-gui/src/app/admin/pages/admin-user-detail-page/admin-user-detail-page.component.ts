@@ -21,6 +21,7 @@ import {
   DeleteUserDialogComponentData,
 } from '@perun-web-apps/perun/dialogs';
 import { ComponentType } from '@angular/cdk/overlay';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-admin-user-detail-page',
@@ -54,7 +55,10 @@ export class AdminUserDetailPageComponent implements OnInit {
     this.userDeletionForced = this.store.getProperty('user_deletion_forced');
     this.route.params.subscribe((params) => {
       const userId = Number(params['userId']);
-      this.entityStorageService.setEntity({ id: Number(userId), beanName: 'User' });
+      this.entityStorageService.setEntityAndPathParam(
+        { id: Number(userId), beanName: 'User' },
+        EntityPathParam.User,
+      );
 
       this.path = `/admin/users/${userId}`;
       this.regex = `/admin/users/\\d+`;
