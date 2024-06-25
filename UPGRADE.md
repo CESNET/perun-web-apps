@@ -1,5 +1,16 @@
 Upgrade notes
 
+## [17.3.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.0...v17.3.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* **admin:** broken button layout on group detail ([d3ff654](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d3ff65491a6f02f03eea891e31621196d49e26ea))
+* **admin:** entity service providing correct id on nav back ([78d2181](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/78d2181ca92f1b177d05921167be48d13170cf03))
+* **admin:** group relations missing initial fetch ([582c075](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/582c0758d9f0475ef13160a87ce8c61913795066))
+* **admin:** missing vo id in the vo member component ([0d4cba0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0d4cba0bf302e10da5a320e17d94b119bbff7508))
+* **pwdreset:** edit action buttons ([e296af8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e296af80fe081ac0d2caf3775eb1e15e5679cd95))
+
 ## [17.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.2.0...v17.3.0) (2024-06-05)
 
 
