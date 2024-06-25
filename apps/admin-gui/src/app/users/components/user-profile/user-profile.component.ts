@@ -3,6 +3,7 @@ import { SideMenuService } from '../../../core/services/common/side-menu.service
 import { PerunPrincipal, User } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, StoreService } from '@perun-web-apps/perun/services';
 import { Router } from '@angular/router';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-user-profile',
@@ -28,7 +29,7 @@ export class UserProfileComponent implements OnInit {
     });
     this.principal = this.store.getPerunPrincipal();
     this.user = this.principal.user;
-    this.entityStore.setEntity(this.user);
+    this.entityStore.setEntityAndPathParam(this.user, EntityPathParam.User);
     this.sideMenuService.setUserItems([]);
   }
 

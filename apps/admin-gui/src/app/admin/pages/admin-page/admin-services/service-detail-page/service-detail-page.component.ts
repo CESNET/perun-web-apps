@@ -28,6 +28,7 @@ import {
   UniversalConfirmationItemsDialogComponent,
   UniversalConfirmationItemsDialogData,
 } from '@perun-web-apps/perun/dialogs';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
   selector: 'app-service-detail-page',
@@ -58,7 +59,10 @@ export class ServiceDetailPageComponent implements OnInit {
     this.loading = true;
     this.route.params.subscribe((params: Params) => {
       this.serviceId = Number(params['serviceId']);
-      this.entityStorageService.setEntity({ id: this.serviceId, beanName: 'Service' });
+      this.entityStorageService.setEntityAndPathParam(
+        { id: this.serviceId, beanName: 'Service' },
+        EntityPathParam.Service,
+      );
       this.refresh();
     });
   }

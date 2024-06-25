@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 export interface CreateFacilityDialogData {
   theme: string;
@@ -55,7 +56,10 @@ export class CreateFacilityDialogComponent implements OnInit {
       .createFacility(this.nameControl.value, this.descControl.value)
       .subscribe({
         next: (facility) => {
-          this.entityStorageService.setEntity({ id: facility.id, beanName: facility.beanName });
+          this.entityStorageService.setEntityAndPathParam(
+            { id: facility.id, beanName: facility.beanName },
+            EntityPathParam.Facility,
+          );
           sessionStorage.setItem('newFacilityId', String(facility.id));
           if (this.srcFacility !== null) {
             this.copyFacilitySettings(facility.id);
