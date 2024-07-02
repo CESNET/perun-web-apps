@@ -38,7 +38,7 @@ export class AddMemberOrganizationDialogComponent implements OnInit {
         this.vosService.getAllVos().subscribe(
           (vos) => {
             const memberVoIds: number[] = enrichedVo.memberVos.map((vo) => vo.id);
-            this.vos = vos.filter((vo) => !memberVoIds.includes(vo.id));
+            this.vos = vos.filter((vo) => !memberVoIds.includes(vo.id) && vo.id !== this.voId);
             this.loading = false;
           },
           () => (this.loading = false),
