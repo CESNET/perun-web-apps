@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [17.3.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.1...v17.3.2) (2024-07-04)
+
+
+### Bug Fixes
+
+* **admin:** vo_hierarchy_prevent_cycles ([90340ab](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/90340ab23712b57e24c67817b4c93da2a2e6e78f))
+
 ## [17.3.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.0...v17.3.1) (2024-06-25)
 
 
