@@ -47,7 +47,7 @@ export const loginAsyncValidator =
       // catch error and send it as a valid value
       catchError((err: RPCError) => {
         const pwdError: PasswordError = {
-          backendError: err.message.substring(err.message.indexOf(':') + 1),
+          backendError: err.message.substring(err.message.indexOf(':') + 1).trim(),
         };
         return of(pwdError);
       }),
