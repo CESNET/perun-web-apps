@@ -42,12 +42,28 @@
         {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
       </button>
       <button
+        (click)="onInvitePreapprovedMember()"
+        *ngIf="inviteAuth"
+        [disabled]="(group | groupMembersActionButtonDisabled)"
+        class="action-button"
+        mat-menu-item>
+        {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
+      </button>
+      <button
         *ngIf="inviteAuth"
         (click)="onBulkInvite()"
         [disabled]="(group | groupMembersActionButtonDisabled)"
         class="action-button"
         mat-menu-item>
         {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
+      </button>
+      <button
+        *ngIf="inviteAuth"
+        (click)="onBulkPreapprovedInvite()"
+        [disabled]="(group | groupMembersActionButtonDisabled)"
+        class="action-button"
+        mat-menu-item>
+        {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
       </button>
     </mat-menu>
   </span>
