@@ -9,6 +9,7 @@ import { DeleteServiceDialogComponent } from '../../../../shared/components/dial
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-admin-services',
@@ -19,7 +20,13 @@ export class AdminServicesComponent implements OnInit {
   static id = 'AdminServicesComponent';
 
   services: Service[];
-  selection = new SelectionModel<Service>(true, []);
+  selection = new SelectionModel<Service>(
+    true,
+    [],
+    true,
+    (service1, service2) => service1.id === service2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading = false;
   filterValue = '';
   tableId = TABLE_ADMIN_SERVICES;
@@ -84,11 +91,13 @@ export class AdminServicesComponent implements OnInit {
     this.serviceManager.getServices().subscribe((services) => {
       this.services = services;
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

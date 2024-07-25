@@ -6,7 +6,7 @@
     <h1 mat-dialog-title>{{"DIALOGS.ADD_THANKS.TITLE" | translate}}</h1>
     <div mat-dialog-content class="dialog-container">
       <perun-web-apps-debounce-filter
-        (filter)="filterValue = $event"
+        (filter)="applyFilter($event)"
         [placeholder]="'DIALOGS.ADD_THANKS.FILTER'">
       </perun-web-apps-debounce-filter>
       <perun-web-apps-owners-list
@@ -15,7 +15,8 @@
         [filterValue]="filterValue"
         [tableId]="tableId"
         [displayedColumns]="['select', 'id', 'name', 'contact']"
-        [selection]="selected">
+        [selection]="selected"
+        [cachedSubject]="cachedSubject">
       </perun-web-apps-owners-list>
     </div>
     <div mat-dialog-actions>

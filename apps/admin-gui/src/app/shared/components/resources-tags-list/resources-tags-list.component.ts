@@ -1,8 +1,20 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  NotificatorService,
+  TableCheckboxModified,
+} from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import {
@@ -13,19 +25,22 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-resources-tags-list',
   templateUrl: './resources-tags-list.component.html',
   styleUrls: ['./resources-tags-list.component.scss'],
 })
-export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
+export class ResourcesTagsListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   resourceTags: ResourceTag[] = [];
   @Input()
   filterValue: string;
   @Input()
   selection = new SelectionModel<ResourceTag>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input()
   tableId: string;
   @Input()
@@ -39,6 +54,8 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
   dataSource: MatTableDataSource<ResourceTag>;
   isChanging = new SelectionModel<ResourceTag>(true, []);
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ResourceTag>;
   private sort: MatSort;
 
   constructor(
@@ -46,7 +63,8 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
     private notificator: NotificatorService,
     private translator: TranslateService,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -62,6 +80,22 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
         return data.tagName;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<ResourceTag>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -128,6 +162,7 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -135,6 +170,22 @@ export class ResourcesTagsListComponent implements OnChanges, AfterViewInit {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: ResourceTag): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   save(tag: ResourceTag): void {

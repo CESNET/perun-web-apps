@@ -14,7 +14,7 @@
   (click)="deleteTag()"
   class="me-2"
   color="warn"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   mat-flat-button>
   {{'VO_DETAIL.RESOURCES.TAGS.DELETE_BUTTON' | translate}}
 </button>
@@ -35,5 +35,6 @@
     [resourceTags]="resourceTag"
     [filterValue]="filterValue"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [tableId]="tableId"></app-resources-tags-list>
 </div>

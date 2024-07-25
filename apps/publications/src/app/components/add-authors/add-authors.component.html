@@ -12,7 +12,7 @@
     mat-flat-button
     color="warn"
     class="me-2"
-    [disabled]="selection.selected.length === 0 || publication.locked"
+    [disabled]="selection.selected.length === 0 || publication.locked || loading"
     (click)="onRemoveAuthors()">
     {{'PUBLICATION_DETAIL.REMOVE' | translate}}
   </button>
@@ -28,6 +28,7 @@
       [loading]="loading"
       [authors]="publication.authors"
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [filterValue]="filterValue"
       [tableId]="tableId"
       [disableRouting]="disableRouting"

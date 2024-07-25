@@ -11,6 +11,7 @@ import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/p
 import { TABLE_ADMIN_ATTRIBUTES } from '@perun-web-apps/config/table-config';
 import { AttributeImportDialogComponent } from '../../../../shared/components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-admin-attributes',
@@ -22,7 +23,14 @@ export class AdminAttributesComponent implements OnInit {
 
   attrDefinitions: AttributeDefinition[] = [];
 
-  selected = new SelectionModel<AttributeDefinition>(true, []);
+  selected = new SelectionModel<AttributeDefinition>(
+    true,
+    [],
+    true,
+    (attributeDefinition1, attributeDefinition2) =>
+      attributeDefinition1.id === attributeDefinition2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
 
   loading: boolean;
@@ -64,7 +72,6 @@ export class AdminAttributesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.refreshTable();
-        this.selected.clear();
       }
     });
   }
@@ -73,12 +80,15 @@ export class AdminAttributesComponent implements OnInit {
     this.loading = true;
     this.attributesManager.getAllAttributeDefinitions().subscribe((attrDefs) => {
       this.attrDefinitions = attrDefs;
+      this.selected.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onImport(): void {

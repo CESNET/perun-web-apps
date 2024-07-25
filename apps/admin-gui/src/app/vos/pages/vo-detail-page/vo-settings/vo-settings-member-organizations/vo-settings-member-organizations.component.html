@@ -11,14 +11,14 @@
 <button
   *ngIf="auth"
   (click)="removeMemberOrganization()"
-  [disabled]="voSelection.selected.length === 0"
+  [disabled]="loading || voSelection.selected.length === 0"
   mat-flat-button
   color="warn"
   class="me-2">
   {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.REMOVE' | translate}}
 </button>
 <perun-web-apps-debounce-filter
-  (filter)="filterValue = $event"
+  (filter)="applyFilter($event)"
   [placeholder]="'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.FILTER'"></perun-web-apps-debounce-filter>
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
@@ -29,6 +29,7 @@
     [loading]="loading"
     [vos]="memberVos"
     [selection]="voSelection"
+    [cachedSubject]="cachedSubject"
     [filterValue]="filterValue"
     [disableRouting]="!auth"
     [displayedColumns]="displayedColumns">

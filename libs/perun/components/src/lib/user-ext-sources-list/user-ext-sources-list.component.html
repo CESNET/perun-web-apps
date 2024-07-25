@@ -6,9 +6,11 @@
     (exportAllData)="exportAllData($event)"
     [tableId]="tableId"
     [dataLength]="dataSource.filteredData.length"
-    [pageSizeOptions]="pageSizeOptions">
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="pageChanged()">
     <table
       [dataSource]="dataSource"
+      (matSortChange)="pageChanged()"
       class="w-100"
       mat-table
       matSort
@@ -23,7 +25,7 @@
             [matTooltipPosition]="'above'"
             [matTooltipDisabled]="!row.userExtSource.persistent">
             <mat-checkbox
-              (change)="$event ? selection.toggle(row) : null"
+              (change)="$event ? toggleRow(row) : null"
               (click)="$event.stopPropagation()"
               [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.userExtSource.extSource.name}"
               [checked]="selection.isSelected(row)"

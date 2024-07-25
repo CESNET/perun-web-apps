@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Filter } from '../Filter';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-all-publications-page',
@@ -19,7 +20,13 @@ import { Filter } from '../Filter';
 export class AllPublicationsPageComponent implements OnInit {
   loading: boolean;
   publications: PublicationForGUI[] = [];
-  selected = new SelectionModel<PublicationForGUI>(true, []);
+  selected = new SelectionModel<PublicationForGUI>(
+    true,
+    [],
+    true,
+    (publication1, publication2) => publication1.id === publication2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   filter: Filter = {
     title: null,
@@ -64,6 +71,7 @@ export class AllPublicationsPageComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selected.clear();
+    this.cachedSubject.next(true);
     this.cabinetService
       .findPublicationsByGUIFilter(
         this.filter.title,

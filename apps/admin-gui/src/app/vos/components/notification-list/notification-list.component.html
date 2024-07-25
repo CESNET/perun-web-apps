@@ -3,9 +3,11 @@
     [pageSizeOptions]="pageSizeOptions"
     [dataLength]="dataSource.filteredData.length"
     [hideExport]="true"
-    [tableId]="tableId">
+    [tableId]="tableId"
+    (pageChanged)="pageChanged()">
     <table
       [dataSource]="dataSource"
+      (matSortChange)="pageChanged()"
       class="w-100"
       mat-table
       matSort

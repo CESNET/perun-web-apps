@@ -27,7 +27,7 @@
       mat-flat-button
       class="me-2"
       data-cy="delete-facility-button"
-      [disabled]="selection.selected.length === 0 || !([selection.selected[0]?.facility] | isAuthorized: 'deleteFacility_Facility_Boolean_policy')"
+      [disabled]="loading || selection.selected.length === 0 || !([selection.selected[0]?.facility] | isAuthorized: 'deleteFacility_Facility_Boolean_policy')"
       *ngIf="deleteAuth"
       (click)="onDelete()"
       color="warn">
@@ -47,6 +47,7 @@
       [tableId]="tableId"
       *perunWebAppsLoader="loading; indicator: spinner"
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [loading]="loading"
       [filterValue]="filterValue"
       [facilities]="facilities"

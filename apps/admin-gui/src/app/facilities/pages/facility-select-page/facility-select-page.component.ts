@@ -10,6 +10,7 @@ import { DeleteFacilityDialogComponent } from '../../../shared/components/dialog
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-select-page',
@@ -28,7 +29,14 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
   deleteAuth: boolean;
   filterValue = '';
   tableId = TABLE_FACILITY_SELECT;
-  selection = new SelectionModel<EnrichedFacility>(false, []);
+  selection = new SelectionModel<EnrichedFacility>(
+    false,
+    [],
+    true,
+    (enrichedFacility1, enrichedFacility2) =>
+      enrichedFacility1.facility.id === enrichedFacility2.facility.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private facilityManager: FacilitiesManagerService,
@@ -63,6 +71,7 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
     this.loading = true;
     this.facilityManager.getEnrichedFacilities().subscribe((facilities) => {
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.facilities = facilities;
       this.recentIds = getRecentlyVisitedIds('facilities');
       this.loading = false;
@@ -104,5 +113,6 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

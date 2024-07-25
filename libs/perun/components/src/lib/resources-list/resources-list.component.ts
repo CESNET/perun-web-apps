@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Group, RichResource } from '@perun-web-apps/perun/openapi';
@@ -9,22 +18,25 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-resources-list',
   templateUrl: './resources-list.component.html',
   styleUrls: ['./resources-list.component.scss'],
 })
-export class ResourcesListComponent implements OnChanges {
+export class ResourcesListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() resources: ResourceWithStatus[] = [];
   @Input() resourceWithAuthzGroupPairs: Map<number, Group[]>;
   @Input() authzVoNames: Map<number, string>;
   @Input() selection = new SelectionModel<ResourceWithStatus>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
   @Input() disableRouting = false;
   @Input() routingVo = false;
@@ -52,6 +64,9 @@ export class ResourcesListComponent implements OnChanges {
   @Output() refreshTable: EventEmitter<void> = new EventEmitter<void>();
   @Output() allSelected = new EventEmitter();
 
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<ResourceWithStatus>;
+  isMasterCheckboxEnabled: boolean = true;
   dataSource: MatTableDataSource<RichResource>;
   removeAuth = false;
   addAuth = false;
@@ -60,7 +75,8 @@ export class ResourcesListComponent implements OnChanges {
 
   constructor(
     private guiAuthResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -106,6 +122,22 @@ export class ResourcesListComponent implements OnChanges {
     }
   }
 
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<ResourceWithStatus>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
+  }
+
   getDataForColumnFun = (data: ResourceWithStatus, column: string): string => {
     return ResourcesListComponent.getDataForColumn(data, column, this.recentIds);
   };
@@ -117,6 +149,11 @@ export class ResourcesListComponent implements OnChanges {
     }
     this.setDataSource();
     this.setAuth();
+
+    this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+      this.dataSource,
+      this.canBeSelected,
+    );
   }
 
   exportAllData(format: string): void {
@@ -183,6 +220,7 @@ export class ResourcesListComponent implements OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -218,10 +256,26 @@ export class ResourcesListComponent implements OnChanges {
 
   itemSelectionToggle(item: ResourceWithStatus): void {
     this.selection.toggle(item);
+    this.cachedSelection.toggle(item);
     this.setAuth();
   }
 
   disableSelect(resource: ResourceWithStatus): boolean {
     return this.resourcesToDisableCheckbox.has(resource.id);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+        this.dataSource,
+        this.canBeSelected,
+      );
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

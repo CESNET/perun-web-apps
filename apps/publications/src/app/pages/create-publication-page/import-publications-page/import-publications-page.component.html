@@ -30,7 +30,7 @@
         mat-flat-button
         class="left-space"
         color="accent"
-        [disabled]="selected.selected.length === 0"
+        [disabled]="selected.selected.length === 0 || loading"
         (click)="importPublications(selected.selected)">
         {{'IMPORT_PUBLICATIONS.IMPORT' | translate}}
       </button>
@@ -46,6 +46,7 @@
       [publications]="publications"
       [displayedColumns]="displayedColumns"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [tableId]="tableId"
       [disabledRouting]="true"
       [allowAlert]="firstSearchDone">

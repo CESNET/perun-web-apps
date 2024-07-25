@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatStepper } from '@angular/material/stepper';
 import { EntityStorageService, NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-add-member-organization-dialog',
@@ -19,7 +20,8 @@ export class AddMemberOrganizationDialogComponent implements OnInit {
   columns: string[] = ['name'];
   voId: number;
   vos: Vo[] = [];
-  voSelection: SelectionModel<Vo> = new SelectionModel<Vo>(false, []);
+  voSelection = new SelectionModel<Vo>(false, [], true, (vo1, vo2) => vo1.id === vo2.id);
+  cachedSubject = new BehaviorSubject(true);
   voFilter = '';
 
   constructor(
@@ -58,6 +60,12 @@ export class AddMemberOrganizationDialogComponent implements OnInit {
 
   stepperPrevious(): void {
     this.stepper.previous();
+  }
+
+  applyFilter(filterValue: string): void {
+    this.voFilter = filterValue;
+    this.voSelection.clear();
+    this.cachedSubject.next(true);
   }
 
   addMemberOrganization(): void {

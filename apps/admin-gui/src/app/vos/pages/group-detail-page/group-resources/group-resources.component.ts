@@ -15,6 +15,7 @@ import { ResourcesListComponent } from '@perun-web-apps/perun/components';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-group-resources',
@@ -31,7 +32,13 @@ export class GroupResourcesComponent implements OnInit {
 
   group: Group;
   resources: ResourceWithStatus[] = [];
-  selected = new SelectionModel<ResourceWithStatus>(true, []);
+  selected = new SelectionModel<ResourceWithStatus>(
+    true,
+    [],
+    true,
+    (richResource1, richResource2) => richResource1.id === richResource2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   resourcesToDisable: Set<number>;
   loading: boolean;
   filterValue = '';
@@ -87,6 +94,7 @@ export class GroupResourcesComponent implements OnInit {
         return resWithStatus;
       });
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.resourcesToDisable = new Set(
         this.resources
           .filter((resource) => resource.sourceGroupId !== null)
@@ -99,6 +107,7 @@ export class GroupResourcesComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   addResource(): void {
@@ -128,7 +137,6 @@ export class GroupResourcesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.selected.clear();
         this.refreshTable();
       }
     });

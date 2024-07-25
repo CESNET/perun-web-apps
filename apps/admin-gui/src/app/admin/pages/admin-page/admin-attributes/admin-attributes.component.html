@@ -22,7 +22,7 @@
     *ngIf="authResolver.isPerunAdmin()"
     (click)="onDelete()"
     color="warn"
-    [disabled]="selected.selected.length === 0"
+    [disabled]="loading || selected.selected.length === 0"
     class="me-2"
     data-cy="delete-attr-definition-button"
     mat-flat-button>
@@ -43,6 +43,7 @@
       [disableRouting]="!authResolver.isPerunAdminOrObserver()"
       [filterValue]="filterValue"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [tableId]="tableId">
     </app-attr-def-list>
   </div>

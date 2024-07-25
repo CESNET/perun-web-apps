@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesListComponent } from '@perun-web-apps/perun/components';
 import { MatStepper } from '@angular/material/stepper';
 import { TABLE_ASSIGN_RESOURCE_TO_GROUP } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AddGroupResourceDialogData {
   theme: string;
@@ -27,7 +28,13 @@ export class AddGroupResourceDialogComponent implements OnInit {
   loading: boolean;
   filterValue = '';
   resources: RichResource[] = null;
-  selection = new SelectionModel<RichResource>(true, []);
+  selection = new SelectionModel<RichResource>(
+    true,
+    [],
+    true,
+    (richResource1, richResource2) => richResource1.id === richResource2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   theme = '';
   async = true;
   autoAssignSubgroups = false;
@@ -87,6 +94,8 @@ export class AddGroupResourceDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 
   onCancel(): void {

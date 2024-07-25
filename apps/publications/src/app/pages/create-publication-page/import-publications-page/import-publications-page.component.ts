@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UniversalConfirmationDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { BehaviorSubject } from 'rxjs';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -50,7 +51,13 @@ export class ImportPublicationsPageComponent implements OnInit {
   pubSystemNamespace: string;
   publications: PublicationForGUI[] = [];
 
-  selected = new SelectionModel<PublicationForGUI>(true, []);
+  selected = new SelectionModel<PublicationForGUI>(
+    true,
+    [],
+    true,
+    (publication1, publication2) => publication1.id === publication2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_IMPORT_PUBLICATIONS;
   displayedColumns = ['select', 'title', 'reportedBy', 'year', 'isbn', 'cite'];
   firstSearchDone: boolean;

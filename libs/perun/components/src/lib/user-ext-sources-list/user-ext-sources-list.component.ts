@@ -1,18 +1,20 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { RichUserExtSource, UserExtSource } from '@perun-web-apps/perun/openapi';
+import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { RichUserExtSource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-user-ext-sources-list',
@@ -21,7 +23,8 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
 })
 export class UserExtSourcesListComponent implements OnInit, OnChanges {
   @Input() userExtSources: RichUserExtSource[];
-  @Input() selection: SelectionModel<UserExtSource> = new SelectionModel<UserExtSource>();
+  @Input() selection: SelectionModel<RichUserExtSource> = new SelectionModel<RichUserExtSource>();
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue = '';
   @Input() displayedColumns: string[] = [
     'select',
@@ -41,11 +44,15 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   dataSource: MatTableDataSource<RichUserExtSource>;
   userId: number;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<RichUserExtSource>;
   private sort: MatSort;
 
   constructor(
     private route: ActivatedRoute,
     private authResolver: GuiAuthResolver,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -79,6 +86,20 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
       });
     }
     this.setDataSource();
+
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<RichUserExtSource>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
   }
 
   ngOnChanges(): void {
@@ -129,6 +150,22 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
       this.dataSource.filter = this.filterValue;
+    }
+  }
+
+  toggleRow(row: RichUserExtSource): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
     }
   }
 }

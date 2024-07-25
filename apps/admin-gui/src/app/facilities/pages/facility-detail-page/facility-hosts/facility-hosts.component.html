@@ -12,7 +12,7 @@
   <button
     *ngIf="removeAuth"
     (click)="removeHost()"
-    [disabled]="selected.selected.length === 0"
+    [disabled]="loading || selected.selected.length === 0"
     class="me-2"
     color="warn"
     mat-flat-button>
@@ -32,6 +32,7 @@
       [filterValue]="filterValue"
       [hosts]="hosts"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [displayedColumns]="displayedColumns"
       [facilityId]="facility.id"
       [tableId]="tableId">

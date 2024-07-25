@@ -16,6 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ToEnrichedFacilityPipe } from '@perun-web-apps/perun/pipes';
 import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { combineLatestWith } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AddRoleDialogData {
   entityId: number;
@@ -43,8 +44,15 @@ export class AddRoleDialogComponent implements OnInit {
   filterComponent: DebounceFilterComponent;
 
   selectedRule: RoleManagementRules;
-  selected = new SelectionModel<PerunBean>(true, []);
-  selectedFacilities = new SelectionModel<EnrichedFacility>(true, []);
+  selected = new SelectionModel<PerunBean>(true, [], true, (bean1, bean2) => bean1.id === bean2.id);
+  cachedSubject = new BehaviorSubject(true);
+  selectedFacilities = new SelectionModel<EnrichedFacility>(
+    true,
+    [],
+    true,
+    (enrichedFacility1, enrichedFacility2) =>
+      enrichedFacility1.facility.id === enrichedFacility2.facility.id,
+  );
   filterValue = '';
   vos: Vo[] = [];
   groups: Group[] = [];
@@ -108,11 +116,19 @@ export class AddRoleDialogComponent implements OnInit {
   resetSelection(selectedRule: RoleManagementRules): void {
     this.selectedRule = selectedRule;
     this.selected.clear();
+    this.cachedSubject.next(true);
     this.selectedFacilities.clear();
     this.filterValue = '';
     this.loadObjects();
     if (this.filterComponent) {
       this.filterComponent.control.setValue('');
     }
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue;
+    this.selected.clear();
+    this.selectedFacilities.clear();
+    this.cachedSubject.next(true);
   }
 }

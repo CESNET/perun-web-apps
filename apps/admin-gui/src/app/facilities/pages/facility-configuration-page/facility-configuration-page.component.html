@@ -49,6 +49,7 @@
           [disableRouting]="true"
           [displayedColumns]="['select', 'id', 'name', 'enabled', 'description']"
           [selection]="selection"
+          [cachedSubject]="cachedSubject"
           [filterValue]="filterValue"
           [services]="services">
         </app-services-list>
@@ -72,7 +73,7 @@
             (click)="onRemoveAttributes()"
             class="me-2"
             color="warn"
-            [disabled]="attSelection.selected.length === 0"
+            [disabled]="processing || attSelection.selected.length === 0"
             mat-flat-button>
             {{'FACILITY_CONFIGURATION.REMOVE' | translate}}
           </button>
@@ -80,7 +81,7 @@
             (click)="onSaveAttributes()"
             class="me-2"
             color="accent"
-            [disabled]="attSelection.selected.length === 0"
+            [disabled]="processing || attSelection.selected.length === 0"
             mat-flat-button>
             {{'FACILITY_CONFIGURATION.SAVE' | translate}}
           </button>
@@ -100,7 +101,8 @@
             [loading]="processing"
             [emptyListText]="'FACILITY_CONFIGURATION.EMPTY_REQ_ATT'"
             [attributes]="filteredAttributes"
-            [selection]="attSelection">
+            [selection]="attSelection"
+            [cachedSubject]="cachedSubject">
           </perun-web-apps-attributes-list>
         </div>
       </ng-template>

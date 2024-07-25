@@ -4,6 +4,7 @@ import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/opena
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { TABLE_ADD_EXTSOURCE_DIALOG } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AddExtSourceDialogData {
   voId: number;
@@ -21,6 +22,7 @@ export class AddExtSourceDialogComponent implements OnInit {
   theme: string;
   extSources: ExtSource[] = [];
   selection = new SelectionModel<ExtSource>(true, []);
+  cachedSubject = new BehaviorSubject(true);
   loading = false;
   filterValue = '';
   successMessage: string;
@@ -63,6 +65,8 @@ export class AddExtSourceDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 
   addVoExtSources(extSources: ExtSource[]): void {

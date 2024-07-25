@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   AttributesManagerService,
   MemberWithSponsors,
@@ -20,19 +29,27 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { EditMemberSponsorsDialogComponent } from '../dialogs/edit-member-sponsors-dialog/edit-member-sponsors-dialog.component';
-import { GuiAuthResolver, StoreService, TableCheckbox } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  StoreService,
+  TableCheckboxModified,
+} from '@perun-web-apps/perun/services';
 import { PasswordResetRequestDialogComponent } from '../dialogs/password-reset-request-dialog/password-reset-request-dialog.component';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sponsored-members-list',
   templateUrl: './sponsored-members-list.component.html',
   styleUrls: ['./sponsored-members-list.component.scss'],
 })
-export class SponsoredMembersListComponent implements OnChanges {
+export class SponsoredMembersListComponent implements OnInit, OnChanges {
   @Input()
   sponsoredMembers: MemberWithSponsors[] = [];
   @Input()
   selection: SelectionModel<MemberWithSponsors>;
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   filterValue = '';
   @Input()
@@ -50,6 +67,9 @@ export class SponsoredMembersListComponent implements OnChanges {
   refreshTable = new EventEmitter<void>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<MemberWithSponsors>;
+
   dataSource: MatTableDataSource<MemberWithSponsors>;
   loading = false;
   routingStrategy = false;
@@ -61,7 +81,8 @@ export class SponsoredMembersListComponent implements OnChanges {
     private authResolver: GuiAuthResolver,
     private storeService: StoreService,
     private attributesManager: AttributesManagerService,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -99,6 +120,22 @@ export class SponsoredMembersListComponent implements OnChanges {
         return data.sponsors.map((s) => parseFullName(s.user)).join();
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<MemberWithSponsors>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -182,6 +219,7 @@ export class SponsoredMembersListComponent implements OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -189,6 +227,11 @@ export class SponsoredMembersListComponent implements OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: MemberWithSponsors): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
   }
 
   resetPassword(sponsoredMember: MemberWithSponsors): void {
@@ -233,5 +276,16 @@ export class SponsoredMembersListComponent implements OnChanges {
       'sendPasswordResetLinkEmail_Member_String_String_String_String_policy',
       [vo, sponsoredMember.member],
     );
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

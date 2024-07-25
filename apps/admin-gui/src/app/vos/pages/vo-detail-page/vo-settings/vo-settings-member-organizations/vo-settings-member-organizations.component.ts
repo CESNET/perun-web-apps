@@ -12,6 +12,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ReloadEntityDetailService } from '../../../../../core/services/common/reload-entity-detail.service';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-member-organizations',
@@ -21,7 +22,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class VoSettingsMemberOrganizationsComponent implements OnInit {
   loading = false;
   voId: number;
-  voSelection: SelectionModel<Vo> = new SelectionModel<Vo>(false, []);
+  voSelection = new SelectionModel<Vo>(false, [], true, (vo1, vo2) => vo1.id === vo2.id);
+  cachedSubject = new BehaviorSubject(true);
   displayedColumns = ['checkbox', 'id', 'shortName', 'name'];
   filterValue = '';
   auth = false;
@@ -45,15 +47,18 @@ export class VoSettingsMemberOrganizationsComponent implements OnInit {
 
   refresh(): void {
     this.loading = true;
-    this.vosService.getEnrichedVoById(this.voId).subscribe(
-      (enrichedVo) => {
+    this.vosService.getEnrichedVoById(this.voId).subscribe({
+      next: (enrichedVo) => {
         this.voId = enrichedVo.vo.id;
         this.memberVos = enrichedVo.memberVos;
         this.voSelection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => {
+        this.loading = false;
+      },
+    });
   }
 
   addMemberOrganization(): void {
@@ -103,5 +108,10 @@ export class VoSettingsMemberOrganizationsComponent implements OnInit {
           this.removeMemberVos();
         }
       });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue;
+    this.refresh();
   }
 }

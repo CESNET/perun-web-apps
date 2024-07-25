@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Host } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
@@ -11,19 +19,23 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-hosts-list',
   templateUrl: './hosts-list.component.html',
   styleUrls: ['./hosts-list.component.css'],
 })
-export class HostsListComponent implements AfterViewInit, OnChanges {
+export class HostsListComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input()
   hosts: Host[] = [];
   @Input()
   selection = new SelectionModel<Host>(true, []);
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   filterValue: string;
   @Input()
@@ -36,13 +48,16 @@ export class HostsListComponent implements AfterViewInit, OnChanges {
   displayedColumns: string[] = ['select', 'id', 'name'];
   @Input()
   loading: boolean;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Host>;
   dataSource: MatTableDataSource<Host>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -58,6 +73,22 @@ export class HostsListComponent implements AfterViewInit, OnChanges {
         return data.hostname;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Host>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -122,6 +153,7 @@ export class HostsListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -129,6 +161,22 @@ export class HostsListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: Host): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   ngAfterViewInit(): void {

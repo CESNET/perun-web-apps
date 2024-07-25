@@ -11,7 +11,7 @@
       </perun-web-apps-role-search-select>
       <perun-web-apps-debounce-filter
         *ngIf="selectedRule?.primaryObject"
-        (filter)="filterValue = $event"
+        (filter)="applyFilter($event)"
         [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_OBJECTS_LIST.FILTER'"
         class="font-size-1rem"></perun-web-apps-debounce-filter>
       <perun-web-apps-vos-list
@@ -21,6 +21,7 @@
         [vos]="vos | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
         [displayedColumns]="['checkbox', 'id', 'shortName', 'name']"
         [selection]="selected"
+        [cachedSubject]="cachedSubject"
         [disableRouting]="true">
       </perun-web-apps-vos-list>
       <perun-web-apps-groups-list
@@ -38,6 +39,7 @@
         [facilities]="facilities | extractFacility | manageableEntities: selectedRule | unassignedRole: roles : selectedRule | toEnrichedFacility"
         [displayedColumns]="['select', 'id', 'name', 'description']"
         [selection]="selectedFacilities"
+        [cachedSubject]="cachedSubject"
         [loading]="loading"
         [disableRouting]="true">
       </perun-web-apps-facilities-list>
@@ -48,6 +50,7 @@
         [resources]="resources | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
         [displayedColumns]="['select', 'id', 'name']"
         [selection]="selected"
+        [cachedSubject]="cachedSubject"
         [disableRouting]="true">
       </perun-web-apps-resources-list>
     </div>
@@ -57,7 +60,7 @@
       </button>
       <button
         (click)="addRole()"
-        [disabled]="selectedRule === null || ((selectedRule.primaryObject === 'Facility' && selectedFacilities.isEmpty())
+        [disabled]="loading || selectedRule === null || ((selectedRule.primaryObject === 'Facility' && selectedFacilities.isEmpty())
         || (selectedRule.primaryObject && selectedRule.primaryObject !== 'Facility' && selected.isEmpty()))"
         class="ms-2"
         color="accent"

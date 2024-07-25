@@ -10,6 +10,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { TABLE_ASSIGN_SERVICE_TO_RESOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AssignServiceToResourceDialogData {
   theme: string;
@@ -33,7 +34,13 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
     id: -1,
     beanName: 'ServicePackage',
   };
-  selection = new SelectionModel<Service>(true, []);
+  selection = new SelectionModel<Service>(
+    true,
+    [],
+    true,
+    (service1, service2) => service1.id === service2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_ASSIGN_SERVICE_TO_RESOURCE_DIALOG;
   filterValue = '';
 
@@ -85,6 +92,8 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 
   servicePackageSelected(servicesPackage: ServicesPackage): void {
@@ -109,8 +118,8 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
   private addServicePackage(): void {
     this.resourceManager
       .assignServicesPackage(this.data.resourceId, this.selectedPackage.id)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.translate
             .get('DIALOGS.ASSIGN_SERVICE_TO_RESOURCE.PACKAGE_SUCCESS_MESSAGE')
             .subscribe((message: string) => {
@@ -122,8 +131,10 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
               }
             });
         },
-        () => (this.loading = false),
-      );
+        error: () => {
+          this.loading = false;
+        },
+      });
   }
 
   private addServices(): void {

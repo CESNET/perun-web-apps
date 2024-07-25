@@ -82,7 +82,7 @@
       </form>
       <div class="actions">
         <button
-          [disabled]="publicationControl.invalid"
+          [disabled]="publicationControl.invalid || loading"
           class="ms-auto me-2"
           mat-flat-button
           color="accent"
@@ -207,6 +207,7 @@
           *ngIf="publication !== null"
           [publication]="publication"
           [selection]="authorsSelection"
+          [cachedSubject]="cachedSubject"
           [disableRouting]="true"
           (yourselfAsAnAuthor)="yourselfAsAnAuthor = $event">
         </perun-web-apps-add-authors>
@@ -230,7 +231,8 @@
       <perun-web-apps-add-thanks
         *ngIf="publication !== null"
         [publication]="publication"
-        [selection]="thanksSelection">
+        [selection]="thanksSelection"
+        [cachedSubject]="cachedSubject">
       </perun-web-apps-add-thanks>
       <mat-spinner *ngIf="innerLoading" class="ms-auto me-auto"></mat-spinner>
 

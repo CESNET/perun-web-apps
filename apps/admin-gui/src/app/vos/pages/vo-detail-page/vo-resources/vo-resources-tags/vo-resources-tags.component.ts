@@ -12,6 +12,7 @@ import {
 import { ResourcesManagerService, ResourceTag, Vo } from '@perun-web-apps/perun/openapi';
 import { TABLE_VO_RESOURCES_TAGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-resources-tags',
@@ -23,13 +24,19 @@ export class VoResourcesTagsComponent implements OnInit {
 
   loading = false;
   resourceTag: ResourceTag[] = [];
-  selection = new SelectionModel<ResourceTag>(true, []);
+  selection = new SelectionModel<ResourceTag>(
+    true,
+    [],
+    true,
+    (resourceTag1, resourceTag2) => resourceTag1.id === resourceTag2.id,
+  );
   filterValue: string;
   tableId = TABLE_VO_RESOURCES_TAGS;
   displayedColumns: string[] = [];
   createAuth: boolean;
   deleteAuth: boolean;
   editAuth: boolean;
+  cachedSubject = new BehaviorSubject(true);
   private vo: Vo;
 
   constructor(
@@ -85,6 +92,7 @@ export class VoResourcesTagsComponent implements OnInit {
   updateData(): void {
     this.loading = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     this.resourceManager.getAllResourcesTagsForVo(this.vo.id).subscribe((tags) => {
       this.resourceTag = tags;
       this.selection.clear();
@@ -95,6 +103,7 @@ export class VoResourcesTagsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.updateData();
   }
 
   private setAuthRights(): void {

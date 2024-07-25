@@ -5,7 +5,7 @@
     *ngIf="authResolver.isPerunAdmin()"
     (click)="onRemove()"
     color="warn"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="loading || selection.selected.length === 0"
     class="me-2"
     mat-flat-button>
     {{ 'SERVICE_DETAIL.DESTINATIONS.REMOVE' | translate}}
@@ -13,7 +13,7 @@
   <button
     *ngIf="authResolver.isPerunAdmin()"
     (click)="onAllow()"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="loading || selection.selected.length === 0"
     class="me-2"
     color="accent"
     mat-flat-button>
@@ -22,7 +22,7 @@
   <button
     *ngIf="authResolver.isPerunAdmin()"
     (click)="onBlock()"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="loading || selection.selected.length === 0"
     class="me-2"
     color="warn"
     mat-flat-button>
@@ -42,6 +42,7 @@
       [destinations]="destinations"
       [filterValue]="filterValue"
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [displayedColumns]="['select', 'destinationId', 'facility', 'destination', 'type', 'status', 'propagationType']"
       [tableId]="tableId">
     </app-perun-web-apps-destination-list>

@@ -23,6 +23,7 @@
         [attributes]="attributes"
         [filterValue]="filterValue"
         [selection]="selected"
+        [cachedSubject]="cachedSubject"
         [tableId]="tableId">
       </perun-web-apps-attributes-list>
     </div>
@@ -34,7 +35,7 @@
 
     <button
       (click)="onSave()"
-      [disabled]="selected.selected.length === 0"
+      [disabled]="loading || selected.selected.length === 0"
       class="ms-2"
       color="accent"
       data-cy="save-selected-attributes"

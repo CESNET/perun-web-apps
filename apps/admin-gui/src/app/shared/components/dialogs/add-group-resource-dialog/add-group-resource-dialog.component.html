@@ -24,6 +24,7 @@
             [disableRouting]="true"
             [resources]="resources"
             [selection]="selection"
+            [cachedSubject]="cachedSubject"
             [displayedColumns]="['select', 'id', 'name', 'facility', 'tags', 'description']"
             [tableId]="tableId"></perun-web-apps-resources-list>
         </mat-step>
@@ -85,7 +86,7 @@
           *ngIf="stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1"
           [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
           [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
-          [disabled]="selection.selected.length === 0 || (list !== undefined && !list.addAuth)"
+          [disabled]="selection.selected.length === 0 || (list !== undefined && !list.addAuth) || loading"
           class="ms-auto"
           color="accent"
           mat-flat-button

@@ -7,6 +7,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddHostDialogComponent } from '../../../../shared/components/dialogs/add-host-dialog/add-host-dialog.component';
 import { RemoveHostDialogComponent } from '../../../../shared/components/dialogs/remove-host-dialog/remove-host-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-hosts',
@@ -22,7 +23,8 @@ export class FacilityHostsComponent implements OnInit {
 
   facility: Facility;
   hosts: Host[] = [];
-  selected = new SelectionModel<Host>(true, []);
+  selected = new SelectionModel<Host>(true, [], true, (host1, hos2) => host1.id === hos2.id);
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   tableId = TABLE_FACILITY_HOSTS_LIST;
@@ -52,6 +54,7 @@ export class FacilityHostsComponent implements OnInit {
       this.hosts = hosts;
       this.hostEmitter.emit(this.hosts);
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.setAuthRights();
       this.loading = false;
     });
@@ -112,5 +115,6 @@ export class FacilityHostsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

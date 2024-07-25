@@ -20,7 +20,7 @@
     (click)="onSave()"
     class="me-2"
     color="accent"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="loading || selection.selected.length === 0"
     mat-flat-button>
     {{ 'SHARED.IDENTITY_DETAIL.SAVE' | translate}}
   </button>
@@ -29,7 +29,7 @@
   </button>
   <button
     (click)="onRemove()"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="loading || selection.selected.length === 0"
     class="me-2"
     color="warn"
     mat-flat-button>
@@ -44,6 +44,7 @@
       [loading]="loading"
       #list
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [attributes]="attributes"
       [tableId]="tableId">
     </perun-web-apps-attributes-list>

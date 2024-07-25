@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddExtSourceDialogComponent } from '../../../../../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { RemoveExtSourceDialogComponent } from '../../../../../shared/components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-group-settings-extsources',
@@ -22,6 +23,7 @@ export class GroupSettingsExtsourcesComponent implements OnInit {
   group: Group;
   extSources: ExtSource[] = [];
   selection = new SelectionModel<ExtSource>(true, []);
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   successMessage: string;
@@ -66,12 +68,14 @@ export class GroupSettingsExtsourcesComponent implements OnInit {
     this.extSourceService.getGroupExtSources(this.group.id).subscribe((sources) => {
       this.extSources = sources;
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onAdd(): void {

@@ -13,6 +13,7 @@ import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun
 import { MatDialog } from '@angular/material/dialog';
 import { AddResourceTagToResourceDialogComponent } from '../../../../shared/components/dialogs/add-resource-tag-to-resource-dialog/add-resource-tag-to-resource-dialog.component';
 import { CreateResourceTagDialogComponent } from '../../../../shared/components/dialogs/create-resource-tag-dialog/create-resource-tag-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-resource-tags',
@@ -23,13 +24,19 @@ export class ResourceTagsComponent implements OnInit {
   loading = false;
   resourceTags: ResourceTag[] = [];
   resource: Resource;
-  selection = new SelectionModel<ResourceTag>(true, []);
+  selection = new SelectionModel<ResourceTag>(
+    true,
+    [],
+    true,
+    (resourceTag1, resourceTag2) => resourceTag1.id === resourceTag2.id,
+  );
   filterValue: string;
   tableId = TABLE_RESOURCES_TAGS;
   displayedColumns: string[] = [];
   createAuth: boolean;
   addAuth: boolean;
   removeAuth: boolean;
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private authResolver: GuiAuthResolver,
@@ -120,6 +127,7 @@ export class ResourceTagsComponent implements OnInit {
   updateData(): void {
     this.loading = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     this.resourcesManager.getAllResourcesTagsForResource(this.resource.id).subscribe((tags) => {
       this.resourceTags = tags;
       this.selection.clear();
@@ -150,5 +158,6 @@ export class ResourceTagsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.updateData();
   }
 }

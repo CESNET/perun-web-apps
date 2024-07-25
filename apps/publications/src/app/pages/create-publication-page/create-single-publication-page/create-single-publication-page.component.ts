@@ -25,6 +25,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatStepper } from '@angular/material/stepper';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { BehaviorSubject } from 'rxjs';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -62,9 +63,15 @@ export class CreateSinglePublicationPageComponent implements OnInit {
 
   publication: PublicationForGUI = null;
 
-  authorsSelection: SelectionModel<Author> = new SelectionModel<Author>(true, []);
+  authorsSelection = new SelectionModel<Author>(
+    true,
+    [],
+    true,
+    (author1, author2) => author1.id === author2.id,
+  );
   yourselfAsAnAuthor = true;
   thanksSelection: SelectionModel<ThanksForGUI> = new SelectionModel<ThanksForGUI>(true, []);
+  cachedSubject = new BehaviorSubject(true);
 
   innerLoading = false;
 

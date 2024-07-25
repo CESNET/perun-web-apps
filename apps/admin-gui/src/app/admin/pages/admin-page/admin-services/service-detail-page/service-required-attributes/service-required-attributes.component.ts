@@ -17,6 +17,7 @@ import {
   RemoveRequiredAttributesDialogData,
 } from '../../../../../../shared/components/dialogs/remove-required-attributes-dialog/remove-required-attributes-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-service-required-attributes',
@@ -26,7 +27,14 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 export class ServiceRequiredAttributesComponent implements OnInit {
   loading = false;
   filterValue = '';
-  selection = new SelectionModel<AttributeDefinition>(true, []);
+  selection = new SelectionModel<AttributeDefinition>(
+    true,
+    [],
+    true,
+    (attributeDefinition1, attributeDefinition2) =>
+      attributeDefinition1.id === attributeDefinition2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   attrDefinitions: AttributeDefinition[] = [];
   tableId = TABLE_REQUIRED_ATTRIBUTES;
   private service: Service;
@@ -48,6 +56,7 @@ export class ServiceRequiredAttributesComponent implements OnInit {
     this.loading = true;
     this.attributeManager.getRequiredAttributesDefinition(this.service.id).subscribe((attrDef) => {
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.attrDefinitions = attrDef;
       this.loading = false;
     });
@@ -90,5 +99,6 @@ export class ServiceRequiredAttributesComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

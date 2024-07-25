@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesManagerService, Facility, SecurityTeam } from '@perun-web-apps/perun/openapi';
 import { TABLE_FACILITY_SECURITY_TEAMS_LIST } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-security-teams',
@@ -13,8 +13,13 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 export class FacilitySecurityTeamsComponent implements OnInit {
   facility: Facility;
   securityTeams: SecurityTeam[] = [];
-  selected = new SelectionModel<SecurityTeam>(true, []);
-
+  selected = new SelectionModel<SecurityTeam>(
+    true,
+    [],
+    true,
+    (securityTeam1, securityTeam2) => securityTeam1.id === securityTeam2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
 
   loading: boolean;
@@ -25,7 +30,6 @@ export class FacilitySecurityTeamsComponent implements OnInit {
   removeAuth: boolean;
 
   constructor(
-    private dialog: MatDialog,
     private facilitiesManager: FacilitiesManagerService,
     private authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
@@ -41,6 +45,7 @@ export class FacilitySecurityTeamsComponent implements OnInit {
     this.facilitiesManager.getAssignedSecurityTeams(this.facility.id).subscribe((securityTeams) => {
       this.securityTeams = securityTeams;
       this.selected.clear();
+      this.cachedSubject.next(true);
       this.setAuthRights();
       this.loading = false;
     });
@@ -63,5 +68,6 @@ export class FacilitySecurityTeamsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 }
