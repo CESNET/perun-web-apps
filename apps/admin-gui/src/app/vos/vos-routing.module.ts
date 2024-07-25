@@ -67,6 +67,7 @@ import { MemberBansComponent } from './pages/member-detail-page/member-bans/memb
 import { ResourceSettingsBansComponent } from '../facilities/pages/resource-detail-page/resource-settings/resource-settings-bans/resource-settings-bans.component';
 import { VoSettingsManageEmbeddedGroupsComponent } from './pages/vo-detail-page/vo-settings/vo-settings-manage-embedded-groups/vo-settings-manage-embedded-groups.component';
 import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
+import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
 
 const routes: Routes = [
   {
@@ -277,6 +278,11 @@ const routes: Routes = [
         path: 'applications',
         component: GroupApplicationsComponent,
         data: { animation: 'GroupApplicationsPage' },
+      },
+      {
+        path: 'invitations',
+        component: GroupInvitationsComponent,
+        data: { animation: 'GroupInvitationsPage' },
       },
       {
         path: 'resources',

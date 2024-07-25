@@ -121,3 +121,4 @@ export const TABLE_HIERARCHICAL_INCLUSION = '86';
 export const TABLE_ADD_HIERARCHICAL_INCLUSION = '87';
 export const TABLE_BANS = '88';
 export const TABLE_ADMIN_BLOCKED_LOGINS = '89';
+export const TABLE_GROUP_INVITATIONS = '90';

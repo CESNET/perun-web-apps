@@ -947,6 +947,18 @@ export class SideMenuItemService {
       });
     }
 
+    //Invitations
+    if (
+      group.name !== 'members' &&
+      this.routePolicyService.canNavigate('groups-invitations', group)
+    ) {
+      links.push({
+        label: 'MENU_ITEMS.GROUP.INVITATIONS',
+        url: [`/organizations/${group.voId}/groups/${group.id}/invitations`],
+        activatedRegex: '/organizations/\\d+/groups/\\d+/invitations$',
+      });
+    }
+
     //Attributes
     if (this.routePolicyService.canNavigate('groups-attributes', group)) {
       links.push({
