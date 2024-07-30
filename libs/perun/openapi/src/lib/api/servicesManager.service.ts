@@ -4721,6 +4721,7 @@ export class ServicesManagerService {
    * @param service id of Service
    * @param facility id of Facility
    * @param consentEval if true the method will run consent eval
+   * @param taskRun id of the task propagation run
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -4729,6 +4730,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -4738,6 +4740,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -4747,6 +4750,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -4756,6 +4760,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -4792,6 +4797,13 @@ export class ServicesManagerService {
         localVarQueryParameters,
         <any>consentEval,
         'consentEval',
+      );
+    }
+    if (taskRun !== undefined && taskRun !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>taskRun,
+        'taskRun',
       );
     }
 
@@ -4861,6 +4873,7 @@ export class ServicesManagerService {
    * @param service id of Service
    * @param facility id of Facility
    * @param consentEval if true the method will run consent eval
+   * @param taskRun id of the task propagation run
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -4869,6 +4882,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -4878,6 +4892,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -4887,6 +4902,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -4896,6 +4912,7 @@ export class ServicesManagerService {
     service: number,
     facility: number,
     consentEval?: boolean,
+    taskRun?: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -4932,6 +4949,13 @@ export class ServicesManagerService {
         localVarQueryParameters,
         <any>consentEval,
         'consentEval',
+      );
+    }
+    if (taskRun !== undefined && taskRun !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>taskRun,
+        'taskRun',
       );
     }
 

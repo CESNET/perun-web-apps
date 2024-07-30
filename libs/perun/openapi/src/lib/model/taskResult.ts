@@ -16,6 +16,7 @@ import { TaskResultStatus } from './taskResultStatus';
 
 export interface TaskResult extends PerunBean {
   taskId?: number;
+  taskRunId?: number;
   destinationId?: number;
   errorMessage?: string;
   standardMessage?: string;
