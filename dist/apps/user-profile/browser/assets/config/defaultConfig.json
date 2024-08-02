@@ -77,9 +77,6 @@
   ],
   "mfa": {
     "api_url": "https://id.muni.cz/mfaapi/",
-    "enable_security_image": true,
-    "enable_security_text": true,
-    "security_image_attribute": "urn:perun:user:attribute-def:def:securityImage:mu",
     "security_text_attribute": "urn:perun:user:attribute-def:def:securityText:mu",
     "step_up_available": true,
     "mfa_instance": "mu",

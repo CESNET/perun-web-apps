@@ -1,5 +1,26 @@
 Upgrade notes
 
+## [17.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.3...v17.4.0) (2024-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **profile:** Configuration properties `enable_security_image`,
+`security_image_attribute` and `enable_security_text` were removed.
+The security text section is now always visible when the anti-phishing
+page is available (`anti_phishing` listed in `displayed_tabs`).
+
+### Features
+
+* **admin:** dialog windows to invite preapproved members ([2ca1a84](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2ca1a8441a81f51c10326578d1a1ea180e67be66))
+
+
+### Bug Fixes
+
+* client side table selection ([04f5596](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/04f5596e27cd133c64eeb6cae5ef30c48872ba04))
+* long notification title overflow ([9324ee7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9324ee781f7a8eda4b5a2fb4cc35ca9410a3eedf))
+* **profile:** remove security image ([f31f633](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f31f633632736e8bc3add0f7c7d01d5f5824eff0))
+
 ## [17.3.3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.2...v17.3.3) (2024-07-18)
 
 
