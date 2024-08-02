@@ -15,7 +15,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NotificatorService } from '@perun-web-apps/perun/services';
+import { NotificatorService, TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -52,7 +52,18 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   dataSource: MatTableDataSource<[string, Attribute]> = new MatTableDataSource<
     [string, Attribute]
   >();
-  selection = new SelectionModel<[string, Attribute]>(true, []);
+  selection = new SelectionModel<[string, Attribute]>(
+    true,
+    [],
+    true,
+    ([s1, attr1], [s2, attr2]) => s1 === s2 && attr1.id === attr2.id,
+  );
+  cachedSelection = new SelectionModel<[string, Attribute]>(
+    this.selection.isMultipleSelection(),
+    [],
+    true,
+    this.selection.compareWith,
+  );
   isAddButtonDisabled = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   loading: boolean;
@@ -65,10 +76,12 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     private translate: TranslateService,
     private attributesManager: AttributesManagerService,
     private cd: ChangeDetectorRef,
+    private tableCheckbox: TableCheckboxModified,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
+    this.setDataSource();
   }
 
   ngOnChanges(): void {
@@ -120,6 +133,7 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
         });
     }
     this.selection.clear();
+    this.cachedSelection.clear();
     this.isAddButtonDisabled = false;
     this.cd.detectChanges();
   }
@@ -137,6 +151,7 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     }
     this.ngOnInit();
     this.selection.clear();
+    this.cachedSelection.clear();
     this.isAddButtonDisabled = false;
     this.cd.detectChanges();
   }
@@ -148,7 +163,9 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     this.dataSource.data = this.records;
     this.setDataSource();
     this.selection.clear();
+    this.cachedSelection.clear();
     this.selection.select(rec);
+    this.cachedSelection.select(rec);
     this.isAddButtonDisabled = true;
     this.cd.detectChanges();
   }
@@ -159,22 +176,27 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-    } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
-    }
+    this.tableCheckbox.masterToggle(
+      this.isAllSelected(),
+      this.selection,
+      this.cachedSelection,
+      '',
+      this.dataSource,
+      this.sort,
+      this.child.paginator.pageSize,
+      this.child.paginator.pageIndex,
+      false,
+    );
   }
 
   onValueChange(record: [string, Attribute]): void {
     this.selection.select(record);
+    this.cachedSelection.select(record);
   }
 
   updateMapAttributes(): void {
@@ -191,5 +213,21 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
       this.dataSource.paginator = this.child.paginator;
     });
     this.setDataSource();
+  }
+
+  toggleRow(row: [string, Attribute]): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.dataSource.paginator) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

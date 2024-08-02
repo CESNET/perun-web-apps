@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { SecurityTeam, Vo } from '@perun-web-apps/perun/openapi';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -11,19 +19,23 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-security-teams-list',
   templateUrl: './security-teams-list.component.html',
   styleUrls: ['./security-teams-list.component.scss'],
 })
-export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
+export class SecurityTeamsListComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input()
   securityTeams: SecurityTeam[] = [];
   @Input()
   selection = new SelectionModel<SecurityTeam>(true, []);
+  @Input()
+  cachedSubject: BehaviorSubject<boolean>;
   @Input()
   filterValue: string;
   @Input()
@@ -34,11 +46,14 @@ export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
   loading: boolean;
   dataSource: MatTableDataSource<SecurityTeam>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<SecurityTeam>;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -56,6 +71,22 @@ export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
         return data.description;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<SecurityTeam>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -120,6 +151,7 @@ export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -127,6 +159,22 @@ export class SecurityTeamsListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: SecurityTeam): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   ngAfterViewInit(): void {

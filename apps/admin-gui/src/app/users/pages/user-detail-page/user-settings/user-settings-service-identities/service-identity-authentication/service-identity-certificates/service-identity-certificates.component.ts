@@ -7,6 +7,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-service-identity-certificates',
@@ -18,7 +19,13 @@ export class ServiceIdentityCertificatesComponent implements OnInit {
   loading: boolean;
   userId: number;
   certificates: Attribute;
-  selection: SelectionModel<Attribute> = new SelectionModel<Attribute>(true, []);
+  selection = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private entityStorageService: EntityStorageService,
@@ -38,6 +45,7 @@ export class ServiceIdentityCertificatesComponent implements OnInit {
       .subscribe((certificates) => {
         this.certificates = certificates;
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       });
   }

@@ -27,6 +27,7 @@ import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { GroupWithStatus, ResourceWithStatus } from '@perun-web-apps/perun/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-two-entity-attribute-page',
@@ -42,7 +43,13 @@ export class TwoEntityAttributePageComponent implements OnInit {
   @Input() facilityId: number;
   entityValues: Resource[] | Facility[] | Group[] | RichMember[] | User[] = [];
   attributes: Attribute[] = [];
-  selection = new SelectionModel<Attribute>(true, []);
+  selection = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   allowedStatuses: string[] = ['INVALID', 'VALID'];
   loading = false;
   innerLoading = false;
@@ -218,6 +225,7 @@ export class TwoEntityAttributePageComponent implements OnInit {
   getAttributes(entityId: number): void {
     this.innerLoading = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     switch (this.firstEntity) {
       case 'member':
         switch (this.secondEntity) {
@@ -336,6 +344,7 @@ export class TwoEntityAttributePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.getAttributes(entityId);
       }
     });
@@ -358,6 +367,7 @@ export class TwoEntityAttributePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((didConfirm) => {
       if (didConfirm) {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.getAttributes(entityId);
       }
     });
@@ -380,6 +390,7 @@ export class TwoEntityAttributePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.getAttributes(entityId);
       }
     });

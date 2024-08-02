@@ -60,7 +60,6 @@ import { ApiService } from '@perun-web-apps/perun/services';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { AddAuthImgDialogComponent } from './components/dialogs/add-auth-img-dialog/add-auth-img-dialog.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
@@ -133,7 +132,6 @@ const loadConfigs: (appConfig: UserProfileConfigService) => () => Promise<void> 
     ValidateExpirationPipe,
     CategoryLabelPipe,
     BreadcrumbsComponent,
-    AddAuthImgDialogComponent,
     ConsentsPageComponent,
     ConsentRequestComponent,
     ConsentsPreviewComponent,

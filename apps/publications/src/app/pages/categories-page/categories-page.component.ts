@@ -7,6 +7,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddCategoryDialogComponent } from '../../dialogs/add-category-dialog/add-category-dialog.component';
 import { RemoveCategoryDialogComponent } from '../../dialogs/remove-category-dialog/remove-category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-categories-page',
@@ -15,7 +16,13 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CategoriesPageComponent implements OnInit {
   categories: Category[] = [];
-  selected = new SelectionModel<Category>(true, []);
+  selected = new SelectionModel<Category>(
+    true,
+    [],
+    true,
+    (category1, category2) => category1.id === category2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   tableId = TABLE_GROUP_RESOURCES_LIST;
@@ -43,12 +50,15 @@ export class CategoriesPageComponent implements OnInit {
     this.loading = true;
     this.cabinetManagerService.getCategories().subscribe((categories) => {
       this.categories = categories;
+      this.selected.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   addCategory(): void {
@@ -74,7 +84,6 @@ export class CategoriesPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.selected.clear();
         this.refreshTable();
       }
     });

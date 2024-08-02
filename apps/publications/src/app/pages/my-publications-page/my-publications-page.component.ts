@@ -12,6 +12,7 @@ import { TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS } from '@perun-web-apps/co
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from '../Filter';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-my-publications-page',
@@ -21,7 +22,13 @@ import { Filter } from '../Filter';
 export class MyPublicationsPageComponent implements OnInit {
   loading: boolean;
   publications: PublicationForGUI[] = [];
-  selected = new SelectionModel<PublicationForGUI>(true, []);
+  selected = new SelectionModel<PublicationForGUI>(
+    true,
+    [],
+    true,
+    (publication1, publication2) => publication1.id === publication2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   authorId: number;
   filter: Filter = {
@@ -66,6 +73,7 @@ export class MyPublicationsPageComponent implements OnInit {
   refreshTable(): void {
     this.loading = true;
     this.selected.clear();
+    this.cachedSubject.next(true);
     this.cabinetService
       .findPublicationsByGUIFilter(
         this.filter.title,

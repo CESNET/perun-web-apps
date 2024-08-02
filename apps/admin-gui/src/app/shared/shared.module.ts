@@ -194,6 +194,8 @@ import { ApplicationsBulkOperationFailureDialogComponent } from './components/di
 import { ApplicationOperationErrorListComponent } from './components/application-operation-error-list/application-operation-error-list.component';
 import { GroupRolesFilterComponent } from './components/group-roles-filter/group-roles-filter.component';
 import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
+import { InvitePreapprovedMemberDialogComponent } from './components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
+import { BulkInvitePreapprovedMembersDialogComponent } from './components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 
 @NgModule({
   imports: [
@@ -335,6 +337,7 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
     SideMenuItemComponent,
     CreateGroupDialogComponent,
     InviteMemberDialogComponent,
+    InvitePreapprovedMemberDialogComponent,
     DeleteGroupDialogComponent,
     SettingsToggleItemComponent,
     AttributeTypeCleanPipe,
@@ -463,6 +466,7 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
     AddUserRoleDialogComponent,
     AddGroupRoleDialogComponent,
     BulkInviteMembersDialogComponent,
+    BulkInvitePreapprovedMembersDialogComponent,
     AddVoBanDialogComponent,
     AddBanDialogComponent,
     AddResourceBanDialogComponent,

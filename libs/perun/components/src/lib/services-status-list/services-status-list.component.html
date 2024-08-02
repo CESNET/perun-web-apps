@@ -6,10 +6,12 @@
     (exportAllData)="exportAllData($event)"
     [tableId]="tableId"
     [dataLength]="dataSource.filteredData.length"
-    [pageSizeOptions]="pageSizeOptions">
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="pageChanged()">
     <table
       mat-table
       [dataSource]="dataSource"
+      (matSortChange)="pageChanged()"
       matSort
       matSortActive="service.name"
       matSortDirection="asc"
@@ -31,7 +33,7 @@
           <mat-checkbox
             color="primary"
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(serviceState) : null; this.selectionChange.emit()"
+            (change)="$event ? toggleRow(serviceState) : null; this.selectionChange.emit()"
             [checked]="selection.isSelected(serviceState)"
             [aria-label]="selection.isSelected(serviceState) | checkboxLabel | translate: {name: serviceState.service.name}">
           </mat-checkbox>

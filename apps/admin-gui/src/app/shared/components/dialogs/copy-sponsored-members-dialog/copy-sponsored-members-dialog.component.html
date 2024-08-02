@@ -20,7 +20,7 @@
           {{'DIALOGS.COPY_SPONSORED_MEMBERS.SPONSORED_MEMBERS_INFO' | translate}}
         </perun-web-apps-alert>
         <perun-web-apps-debounce-filter
-          (filter)="filter = $event"
+          (filter)="applyFilter($event)"
           [placeholder]="'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.FILTER'">
         </perun-web-apps-debounce-filter>
         <app-sponsored-members-list
@@ -29,6 +29,7 @@
           [disableRouting]="true"
           [sponsoredMembers]="filteredSponsoredMembers"
           [selection]="selection"
+          [cachedSubject]="cachedSubject"
           [filterValue]="filter"
           [displayedColumns]="['select', 'id', 'name', 'email', 'logins', 'expiration']"
           [selectedSponsor]="sourceSponsor"

@@ -12,6 +12,7 @@ api/extSourcesManager.service.ts
 api/facilitiesManager.service.ts
 api/groupsManager.service.ts
 api/integrationManager.service.ts
+api/invitationsManager.service.ts
 api/membersManager.service.ts
 api/ownersManager.service.ts
 api/rTMessagesManager.service.ts
@@ -165,6 +166,7 @@ model/inputGetResources.ts
 model/inputGetUsers.ts
 model/inputInvitationsFromCsv.ts
 model/inputInviteMemberCandidates.ts
+model/inputInviteToGroupFromCsv.ts
 model/inputLockPublications.ts
 model/inputRemoveMembers.ts
 model/inputRemoveResourceTagFromResource.ts
@@ -238,6 +240,8 @@ model/inputUpdateServicesPackage.ts
 model/inputUpdateUser.ts
 model/inputUpdateVo.ts
 model/inputValidatePreferredEmailChange.ts
+model/invitation.ts
+model/invitationStatus.ts
 model/itemTexts.ts
 model/mailText.ts
 model/mailType.ts

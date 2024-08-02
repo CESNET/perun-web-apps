@@ -12,6 +12,7 @@ import { ExtSourcesManagerService } from './api/extSourcesManager.service';
 import { FacilitiesManagerService } from './api/facilitiesManager.service';
 import { GroupsManagerService } from './api/groupsManager.service';
 import { IntegrationManagerService } from './api/integrationManager.service';
+import { InvitationsManagerService } from './api/invitationsManager.service';
 import { MembersManagerService } from './api/membersManager.service';
 import { OwnersManagerService } from './api/ownersManager.service';
 import { RTMessagesManagerService } from './api/rTMessagesManager.service';

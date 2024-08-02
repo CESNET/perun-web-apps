@@ -12,6 +12,7 @@ import { TABLE_PUBLICATION_THANKS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddThanksDialogComponent } from '../../dialogs/add-thanks-dialog/add-thanks-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'perun-web-apps-add-thanks',
@@ -20,7 +21,14 @@ import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun
 })
 export class AddThanksComponent implements OnInit {
   @Input() publication: PublicationForGUI;
-  @Input() selection: SelectionModel<ThanksForGUI> = new SelectionModel<ThanksForGUI>(true, []);
+  @Input() selection: SelectionModel<ThanksForGUI> = new SelectionModel<ThanksForGUI>(
+    true,
+    [],
+    true,
+    (thank1, thank2) => thank1.id === thank2.id,
+  );
+  @Input() cachedSubject = new BehaviorSubject(true);
+
   @Input() similarityCheck = false;
 
   tableId = TABLE_PUBLICATION_THANKS;
@@ -44,6 +52,7 @@ export class AddThanksComponent implements OnInit {
     this.cabinetService.findPublicationById(this.publication.id).subscribe((publication) => {
       this.publication = publication;
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.loading = false;
     });
   }
@@ -101,5 +110,6 @@ export class AddThanksComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refresh();
   }
 }

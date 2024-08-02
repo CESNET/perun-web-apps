@@ -11,6 +11,7 @@ import {
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-admin-consent-hubs',
@@ -20,10 +21,16 @@ import { MatDialog } from '@angular/material/dialog';
 export class AdminConsentHubsComponent implements OnInit {
   loading = false;
   tableId = TABLE_CONSENT_HUBS;
-  selection = new SelectionModel<ConsentHub>(true, []);
+  selection = new SelectionModel<ConsentHub>(
+    true,
+    [],
+    true,
+    (consentHub1, consentHub2) => consentHub1.id === consentHub2.id,
+  );
   filterValue = '';
   consentHubs: ConsentHub[] = [];
   globalForceConsents: boolean;
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private consentsManager: ConsentsManagerService,
@@ -41,11 +48,13 @@ export class AdminConsentHubsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   refreshTable(): void {
     this.loading = true;
-
+    this.selection.clear();
+    this.cachedSubject.next(true);
     this.consentsManager.getAllConsentHubs().subscribe((consentHubs) => {
       this.consentHubs = consentHubs;
       this.loading = false;
@@ -81,8 +90,7 @@ export class AdminConsentHubsComponent implements OnInit {
         this.notificator.showSuccess(
           this.translate.instant('ADMIN.CONSENT_HUBS.EVALUATION_FINISH'),
         );
-        this.selection.clear();
-        this.loading = false;
+        this.refreshTable();
       },
       error: () => (this.loading = false),
     });

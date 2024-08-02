@@ -1,11 +1,19 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Author } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
   downloadData,
-  getDataForExport,
   findAttribute,
+  getDataForExport,
   parseFullName,
   parseName,
   TABLE_ITEMS_COUNT_OPTIONS,
@@ -14,14 +22,16 @@ import {
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TableCheckbox } from '@perun-web-apps/perun/services';
+import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-authors-list',
   templateUrl: './authors-list.component.html',
   styleUrls: ['./authors-list.component.scss'],
 })
-export class AuthorsListComponent implements AfterViewInit, OnChanges {
+export class AuthorsListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() authors: Author[] = [];
   @Input() filterValue: string;
   @Input() tableId: string;
@@ -36,13 +46,19 @@ export class AuthorsListComponent implements AfterViewInit, OnChanges {
   @Input() disableRouting = false;
   @Input() reloadTable: boolean;
   @Input() selection = new SelectionModel<Author>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Author>;
   dataSource: MatTableDataSource<Author>;
   private sort: MatSort;
 
-  constructor(private tableCheckbox: TableCheckbox) {}
+  constructor(
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -97,6 +113,22 @@ export class AuthorsListComponent implements AfterViewInit, OnChanges {
         return data.authorships.length.toString();
       default:
         return data[column] as string;
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Author>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -158,6 +190,7 @@ export class AuthorsListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -165,6 +198,22 @@ export class AuthorsListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: Author): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private setDataSource(): void {

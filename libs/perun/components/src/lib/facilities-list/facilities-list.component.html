@@ -6,9 +6,11 @@
     (exportAllData)="exportAllData($event)"
     [tableId]="tableId"
     [dataLength]="dataSource.filteredData.length"
-    [pageSizeOptions]="pageSizeOptions">
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="pageChanged()">
     <table
       [dataSource]="dataSource"
+      (matSortChange)="pageChanged()"
       class="w-100"
       mat-table
       matSort
@@ -30,7 +32,7 @@
         </th>
         <td *matCellDef="let facility" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
-            (change)="$event ? selection.toggle(facility) : null"
+            (change)="$event ? toggleRow(facility) : null"
             (click)="$event.stopPropagation()"
             [aria-label]="selection.isSelected(facility) | checkboxLabel | translate: {name: facility.facility.name}"
             [checked]="selection.isSelected(facility)"

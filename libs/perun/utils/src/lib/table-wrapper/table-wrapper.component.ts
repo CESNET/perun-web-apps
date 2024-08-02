@@ -31,6 +31,7 @@ export class TableWrapperComponent implements OnInit {
   @Input() allowExportAll = true;
   @Output() exportDisplayedData = new EventEmitter<string>();
   @Output() exportAllData = new EventEmitter<string>();
+  @Output() pageChanged = new EventEmitter<void>();
   @ViewChild('topNav') topNav: ElementRef<HTMLDivElement>;
   @ViewChild('table') table: ElementRef<HTMLDivElement>;
 
@@ -53,6 +54,8 @@ export class TableWrapperComponent implements OnInit {
   }
 
   pageChangedTop(event: PageEvent): void {
+    // let the parent component know about the page change
+    this.pageChanged.emit();
     if (this.table) {
       this.pageSize = event.pageSize;
       this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);

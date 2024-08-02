@@ -1,7 +1,6 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  FacilitiesManagerService,
   Facility,
   RichDestination,
   Service,
@@ -18,6 +17,7 @@ import {
 } from '@perun-web-apps/perun/services';
 import { AddServicesDestinationDialogComponent } from '../../../../shared/components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-facility-services-destinations',
@@ -54,7 +54,16 @@ export class FacilityServicesDestinationsComponent implements OnInit {
 
   facility: Facility;
   destinations: RichDestination[] = [];
-  selected = new SelectionModel<RichDestination>(true, []);
+  selected = new SelectionModel<RichDestination>(
+    true,
+    [],
+    true,
+    (richDestination1, richDestination2) =>
+      richDestination1.id === richDestination2.id &&
+      richDestination1.facility?.id === richDestination2.facility?.id &&
+      richDestination1.service?.id === richDestination2.service?.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   tableId = TABLE_FACILITY_SERVICES_DESTINATION_LIST;
 
@@ -65,7 +74,6 @@ export class FacilityServicesDestinationsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private facilitiesManager: FacilitiesManagerService,
     private servicesManager: ServicesManagerService,
     private translate: PerunTranslateService,
     private notificator: NotificatorService,
@@ -89,6 +97,7 @@ export class FacilityServicesDestinationsComponent implements OnInit {
         this.destinations = destinations;
         this.destinationEmitter.emit(this.destinations);
         this.selected.clear();
+        this.cachedSubject.next(true);
         this.setAuthRights();
         this.loading = false;
       });
@@ -190,6 +199,7 @@ export class FacilityServicesDestinationsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   allSelectedAllowed(): boolean {

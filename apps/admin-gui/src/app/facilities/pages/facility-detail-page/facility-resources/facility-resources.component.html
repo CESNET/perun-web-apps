@@ -17,7 +17,7 @@
       color="warn"
       class="me-2"
       data-cy="delete-resource-button"
-      [disabled]="selected.selected.length === 0"
+      [disabled]="selected.selected.length === 0 || loading"
       (click)="removeResource()">
       {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
     </button>
@@ -44,6 +44,7 @@
       [filterValue]="filterValue"
       [resources]="resources"
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       [disableRouting]="!routeAuth"
       [displayedColumns]="displayedColumns">
     </perun-web-apps-resources-list>

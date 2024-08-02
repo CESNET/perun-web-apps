@@ -35,6 +35,8 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 import { concatMap, map } from 'rxjs/operators';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { InvitePreapprovedMemberDialogComponent } from '../../../../shared/components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
+import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 
 @Component({
   selector: 'app-group-members',
@@ -251,12 +253,32 @@ export class GroupMembersComponent implements OnInit {
     this.dialog.open(InviteMemberDialogComponent, config);
   }
 
+  onInvitePreapprovedMember(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '650px';
+    config.data = {
+      voId: this.group.voId,
+      groupId: this.group.id,
+      theme: 'group-theme',
+    };
+
+    this.dialog.open(InvitePreapprovedMemberDialogComponent, config);
+  }
+
   onBulkInvite(): void {
     const config = getDefaultDialogConfig();
     config.width = '650px';
     config.data = { voId: this.group.voId, groupId: this.group.id, theme: 'group-theme' };
 
     this.dialog.open(BulkInviteMembersDialogComponent, config);
+  }
+
+  onBulkPreapprovedInvite(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '650px';
+    config.data = { voId: this.group.voId, groupId: this.group.id, theme: 'group-theme' };
+
+    this.dialog.open(BulkInvitePreapprovedMembersDialogComponent, config);
   }
 
   copyInvitationLink(): void {

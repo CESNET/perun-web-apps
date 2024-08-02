@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Owner } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -9,16 +17,18 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-owners-list',
   templateUrl: './owners-list.component.html',
   styleUrls: ['./owners-list.component.scss'],
 })
-export class OwnersListComponent implements OnChanges, AfterViewInit {
+export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() owners: Owner[] = [];
   @Input() selection = new SelectionModel<Owner>(true, []);
@@ -26,14 +36,19 @@ export class OwnersListComponent implements OnChanges, AfterViewInit {
   @Input() filterValue = '';
   @Input() displayedColumns: string[] = ['select', 'id', 'name', 'contact', 'type'];
   @Input() loading: boolean;
+  @Input() cachedSubject: BehaviorSubject<boolean>;
 
   dataSource: MatTableDataSource<Owner>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Owner>;
+
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -53,6 +68,22 @@ export class OwnersListComponent implements OnChanges, AfterViewInit {
         return data.type;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Owner>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -119,6 +150,7 @@ export class OwnersListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -126,5 +158,21 @@ export class OwnersListComponent implements OnChanges, AfterViewInit {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  toggleRow(row: Owner): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 }

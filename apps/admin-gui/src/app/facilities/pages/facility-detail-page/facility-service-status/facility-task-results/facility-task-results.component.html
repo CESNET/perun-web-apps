@@ -6,7 +6,7 @@
 <button
   (click)="removeTaskResult()"
   *ngIf="removeAuth"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   class="me-2"
   color="warn"
   mat-flat-button>
@@ -26,6 +26,7 @@
     [displayedColumns]="displayedColumns"
     [filterValue]="filterValue"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [taskResults]="taskResults">
   </perun-web-apps-task-results-list>
 </div>

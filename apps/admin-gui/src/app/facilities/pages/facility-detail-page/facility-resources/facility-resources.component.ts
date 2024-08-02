@@ -1,20 +1,20 @@
 import {
-  Component,
+  AfterViewInit,
   ChangeDetectorRef,
+  Component,
+  DestroyRef,
   HostBinding,
   OnInit,
-  AfterViewInit,
-  DestroyRef,
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveResourceDialogComponent } from '../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
 import {
   FacilitiesManagerService,
-  ServicesManagerService,
   Facility,
   RichResource,
   Service,
+  ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { CreateResourceDialogComponent } from '../../../../shared/components/dialogs/create-resource-dialog/create-resource-dialog.component';
 import { TABLE_FACILITY_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
@@ -22,6 +22,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facility-resources',
@@ -36,7 +37,13 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
 
   facility: Facility;
   resources: RichResource[] = [];
-  selected = new SelectionModel<RichResource>(true, []);
+  selected = new SelectionModel<RichResource>(
+    true,
+    [],
+    true,
+    (richResource1, richResource2) => richResource1.id === richResource2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
 
   emptyService: Service = { id: -1, beanName: 'Service', name: 'All' };
   services: Service[] = [this.emptyService];
@@ -112,6 +119,7 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
         .subscribe((resources) => {
           this.resources = resources;
           this.selected.clear();
+          this.cachedSubject.next(true);
           this.setAuthRights();
           this.loading = false;
         });
@@ -140,6 +148,7 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   createResource(): void {
@@ -167,6 +176,7 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
       .subscribe((resources) => {
         this.resources = resources;
         this.selected.clear();
+        this.cachedSubject.next(true);
         this.setAuthRights();
         this.loading = false;
       });

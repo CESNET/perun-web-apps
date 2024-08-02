@@ -12,7 +12,7 @@
     mat-flat-button
     color="warn"
     class="me-2"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="selection.selected.length === 0 || loading"
     (click)="onRemoveThanks()">
     {{'PUBLICATION_DETAIL.REMOVE' | translate}}
   </button>
@@ -30,7 +30,8 @@
       [filterValue]="filterValue"
       [tableId]="tableId"
       [displayedColumns]="publication.locked ? ['id', 'name', 'createdBy'] : ['select', 'id', 'name', 'createdBy']"
-      [selection]="selection">
+      [selection]="selection"
+      [cachedSubject]="cachedSubject">
     </perun-web-apps-thanks-list>
   </div>
 </div>

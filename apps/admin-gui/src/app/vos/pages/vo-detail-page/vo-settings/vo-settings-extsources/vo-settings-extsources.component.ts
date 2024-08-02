@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TABLE_VO_EXTSOURCES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveExtSourceDialogComponent } from '../../../../../shared/components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-extsources',
@@ -21,6 +22,7 @@ import { RemoveExtSourceDialogComponent } from '../../../../../shared/components
 export class VoSettingsExtsourcesComponent implements OnInit {
   extSources: ExtSource[] = [];
   selection = new SelectionModel<ExtSource>(true, []);
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   successMessage: string;
@@ -55,6 +57,7 @@ export class VoSettingsExtsourcesComponent implements OnInit {
     this.extSourceService.getVoExtSources(this.vo.id).subscribe((sources) => {
       this.extSources = sources;
       this.selection.clear();
+      this.cachedSubject.next(true);
       this.setAuthRights();
       this.loading = false;
     });
@@ -62,6 +65,7 @@ export class VoSettingsExtsourcesComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.refreshTable();
   }
 
   onAdd(): void {

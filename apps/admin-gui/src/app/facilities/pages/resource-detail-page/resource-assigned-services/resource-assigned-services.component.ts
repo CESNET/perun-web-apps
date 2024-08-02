@@ -8,6 +8,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AssignServiceToResourceDialogComponent } from '../../../../shared/components/dialogs/assign-service-to-resource-dialog/assign-service-to-resource-dialog.component';
 import { RemoveServiceFromResourceDialogComponent } from '../../../../shared/components/dialogs/remove-service-from-resource-dialog/remove-service-from-resource-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-resource-assigned-services',
@@ -17,7 +18,13 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 export class ResourceAssignedServicesComponent implements OnInit {
   resource: Resource;
   assignedServices: Service[] = [];
-  selected = new SelectionModel<Service>(true, []);
+  selected = new SelectionModel<Service>(
+    true,
+    [],
+    true,
+    (service1, service2) => service1.id === service2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   tableId = TABLE_RESOURCE_ASSIGNED_SERVICES;
   filterValue = '';
@@ -48,6 +55,7 @@ export class ResourceAssignedServicesComponent implements OnInit {
       .subscribe((assignedServices) => {
         this.assignedServices = assignedServices;
         this.selected.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       });
   }
@@ -84,6 +92,7 @@ export class ResourceAssignedServicesComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.loadAllServices();
   }
 
   getDataForAuthorization(): void {

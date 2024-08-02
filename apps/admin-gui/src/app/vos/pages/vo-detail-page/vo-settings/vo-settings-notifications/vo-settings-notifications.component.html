@@ -12,7 +12,7 @@
     *ngIf="removeAuth"
     (click)="remove()"
     color="warn"
-    [disabled]="selection.selected.length === 0"
+    [disabled]="selection.selected.length === 0 || loading"
     class="me-2"
     mat-flat-button>
     {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
@@ -47,6 +47,7 @@
     [displayedColumns]="displayedColumns"
     [tableId]="tableId"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [theme]="'vo-theme'"
     [voId]="vo.id">
   </app-notification-list>

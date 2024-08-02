@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Owner, ThanksForGUI } from '@perun-web-apps/perun/openapi';
 import { MatSort } from '@angular/material/sort';
 import {
@@ -11,26 +19,34 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TableCheckbox } from '@perun-web-apps/perun/services';
+import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-thanks-list',
   templateUrl: './thanks-list.component.html',
   styleUrls: ['./thanks-list.component.scss'],
 })
-export class ThanksListComponent implements AfterViewInit, OnChanges {
+export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() thanks: ThanksForGUI[] = [];
   @Input() filterValue = '';
   @Input() tableId: string;
   @Input() displayedColumns = ['select', 'id', 'name', 'createdBy'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() selection = new SelectionModel<Owner>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<ThanksForGUI>;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Owner>;
   private sort: MatSort;
 
-  constructor(private tableCheckbox: TableCheckbox) {}
+  constructor(
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -48,6 +64,22 @@ export class ThanksListComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Owner>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
+  }
+
   ngOnChanges(): void {
     this.dataSource = new MatTableDataSource<ThanksForGUI>(this.thanks);
     this.setDataSource();
@@ -60,6 +92,11 @@ export class ThanksListComponent implements AfterViewInit, OnChanges {
 
   isAllSelected(): boolean {
     return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
+  }
+
+  toggleRow(row: Owner): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
   }
 
   exportAllData(format: string): void {
@@ -92,6 +129,7 @@ export class ThanksListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -99,6 +137,17 @@ export class ThanksListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private setDataSource(): void {

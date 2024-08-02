@@ -14,6 +14,7 @@ import { AttributesListComponent } from '@perun-web-apps/perun/components';
 import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
 import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-identity-detail',
@@ -24,7 +25,13 @@ export class IdentityDetailComponent implements OnInit {
   @ViewChild('list')
   list: AttributesListComponent;
   loading = false;
-  selection = new SelectionModel<Attribute>(true, []);
+  selection = new SelectionModel<Attribute>(
+    true,
+    [],
+    true,
+    (attribute1, attribute2) => attribute1.id === attribute2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_ATTRIBUTES_SETTINGS;
   attributes: Attribute[] = [];
   userExtSource: UserExtSource;
@@ -53,6 +60,7 @@ export class IdentityDetailComponent implements OnInit {
       .subscribe((attributes) => {
         this.attributes = filterCoreAttributes(attributes);
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       });
   }

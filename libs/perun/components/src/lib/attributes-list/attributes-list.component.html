@@ -4,10 +4,12 @@
     (exportAllData)="exportAllData($event)"
     [tableId]="tableId"
     [dataLength]="dataSource.filteredData.length"
-    [pageSizeOptions]="pageSizeOptions">
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="pageChanged()">
     <table
       mat-table
       [dataSource]="dataSource"
+      [matSortDisabled]="pageChanged()"
       matSort
       matSortActive="displayName"
       matSortDirection="asc"
@@ -17,20 +19,26 @@
         matColumnDef="select"
         *ngIf="{all: dataSource | isAllSelected: selection.selected.length :canBeSelected} as selected">
         <th mat-header-cell *matHeaderCellDef class="align-checkbox">
-          <mat-checkbox
-            color="primary"
-            (change)="$event ? masterToggle() : null"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            [aria-label]="selected.all | masterCheckboxLabel | translate">
-          </mat-checkbox>
+          <span
+            [matTooltipDisabled]="isMasterCheckboxEnabled"
+            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.MASTER_CHECKBOX_TOOLTIP' | translate">
+            <mat-checkbox
+              *ngIf="selection.isMultipleSelection()"
+              color="primary"
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [disabled]="!isMasterCheckboxEnabled">
+            </mat-checkbox>
+          </span>
         </th>
         <td mat-cell *matCellDef="let attribute" class="static-column-size align-checkbox">
           <mat-checkbox
             color="primary"
             attr.data-cy="{{attribute.displayName | multiWordDataCy}}-checkbox"
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(attribute) : null"
+            (change)="$event ? toggleRow(attribute) : null"
             [checked]="selection.isSelected(attribute)"
             [disabled]="(attribute | isVirtualAttribute) || !attribute.writable"
             [aria-label]="selection.isSelected(attribute) | checkboxLabel | translate: {name: attribute.displayName}">

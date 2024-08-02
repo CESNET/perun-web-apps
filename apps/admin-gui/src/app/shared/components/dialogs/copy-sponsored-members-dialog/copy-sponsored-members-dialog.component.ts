@@ -11,6 +11,7 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { BehaviorSubject } from 'rxjs';
 
 export interface CopySponsoredMembersDialogData {
   voId: number;
@@ -35,7 +36,14 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
   targetSponsor: User;
   sponsoredMembers: MemberWithSponsors[];
   filteredSponsoredMembers: MemberWithSponsors[];
-  selection: SelectionModel<MemberWithSponsors> = new SelectionModel<MemberWithSponsors>(true, []);
+  selection = new SelectionModel<MemberWithSponsors>(
+    true,
+    [],
+    true,
+    (sponsoredMember1, sponsoredMember2) =>
+      sponsoredMember1.member?.id === sponsoredMember2.member?.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   sourceSponsorSelected = false;
   filter: string;
   expiration = 'never';
@@ -95,6 +103,7 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
     }
     this.sourceSponsorSelected = true;
     this.selection.clear();
+    this.cachedSubject.next(true);
     this.filteredSponsoredMembers = this.sponsoredMembers.filter((member) =>
       member.sponsors.map((sponsor) => sponsor.user.id).includes(this.sourceSponsor.id),
     );
@@ -136,5 +145,11 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
 
   cancel(): void {
     this.dialogRef.close(false);
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filter = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 }

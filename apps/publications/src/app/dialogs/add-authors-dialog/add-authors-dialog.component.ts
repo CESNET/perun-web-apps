@@ -6,6 +6,7 @@ import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AddAuthorsDialogData {
   publicationId: number;
@@ -27,7 +28,13 @@ export class AddAuthorsDialogComponent implements OnInit {
   authors: Author[] = [];
   alreadyAddedAuthors: Author[] = [];
   tableIdAuthors = TABLE_PUBLICATION_AUTHORS;
-  selection: SelectionModel<Author> = new SelectionModel<Author>(true, []);
+  selection = new SelectionModel<Author>(
+    true,
+    [],
+    true,
+    (author1, author2) => author1.id === author2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
 
   constructor(
     private dialogRef: MatDialogRef<AddAuthorsDialogComponent>,
@@ -60,6 +67,8 @@ export class AddAuthorsDialogComponent implements OnInit {
             (item) => !this.alreadyAddedAuthors.map((author) => author.id).includes(item.id),
           );
           this.authors = authors;
+          this.selection.clear();
+          this.cachedSubject.next(true);
           this.searchLoading = false;
         },
         error: () => {

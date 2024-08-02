@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   Input,
   OnChanges,
+  OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -20,20 +22,24 @@ import {
   getDataForExport,
   isVirtualAttribute,
   TABLE_ITEMS_COUNT_OPTIONS,
+  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perun-web-apps-attributes-list',
   templateUrl: './attributes-list.component.html',
   styleUrls: ['./attributes-list.component.scss'],
 })
-export class AttributesListComponent implements OnChanges, AfterViewInit {
+export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChildren(AttributeValueComponent) items: QueryList<AttributeValueComponent>;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() attributes: Attribute[] = [];
   @Input() selection = new SelectionModel<Attribute>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   @Input() filterValue = '';
   @Input() filterEmpty = false;
@@ -42,13 +48,19 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   @Input() hiddenColumns: string[] = [];
   @Input() emptyListText = 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.EMPTY_SETTINGS';
   @Input() loading: boolean;
+
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Attribute>;
+  isMasterCheckboxEnabled: boolean = true;
   dataSource: MatTableDataSource<Attribute>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
+    private translate: TranslateService,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -77,6 +89,22 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
     }
   }
 
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Attribute>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
+    }
+  }
+
   canBeSelected(attribute: Attribute): boolean {
     return !isVirtualAttribute(attribute) && attribute.writable;
   }
@@ -99,6 +127,11 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
     filteredAttributes = filterCoreAttributes(filteredAttributes);
     this.dataSource = new MatTableDataSource<Attribute>(filteredAttributes);
     this.setDataSource();
+
+    this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+      this.dataSource,
+      AttributesListComponent.canBeSelected,
+    );
   }
 
   ngAfterViewInit(): void {
@@ -161,6 +194,7 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -169,6 +203,26 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
       true,
       AttributesListComponent.canBeSelected,
     );
+  }
+
+  toggleRow(row: Attribute): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.isMasterCheckboxEnabled = this.tableCheckbox.anySelectableRows(
+        this.dataSource,
+        AttributesListComponent.canBeSelected,
+      );
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   updateMapAttributes(): void {
@@ -182,6 +236,7 @@ export class AttributesListComponent implements OnChanges, AfterViewInit {
   onValueChange(attribute: Attribute): void {
     if (AttributesListComponent.canBeSelected(attribute)) {
       this.selection.select(attribute);
+      this.cachedSelection.select(attribute);
     }
   }
 

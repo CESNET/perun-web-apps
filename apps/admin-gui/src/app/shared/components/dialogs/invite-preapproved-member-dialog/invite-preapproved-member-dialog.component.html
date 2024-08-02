@@ -1,0 +1,73 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      <div class="font-italic">
+        {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.DESCRIPTION' | translate}}
+      </div>
+
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          placeholder="{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.NAME' | translate}}"
+          [formControl]="name"
+          required />
+        <mat-error *ngIf="name.invalid">
+          {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.NAME_ERROR' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.EMAIL' | translate}}</mat-label>
+        <textarea matInput [formControl]="emailForm" required></textarea>
+        <mat-error *ngIf="emailForm.invalid">
+          {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.EMAIL_ERROR' | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color="primary" class="cursor-pointer w-100" (click)="picker.open()">
+        <mat-label>{{'DIALOGS.CHANGE_EXPIRATION.DATE_LABEL'|translate}}</mat-label>
+        <input
+          [min]="minDate"
+          [max]="null"
+          [formControl]="expirationControl"
+          [matDatepicker]="picker"
+          class="disable"
+          readonly
+          matInput />
+        <mat-datepicker-toggle [for]="picker" [disabled]="false" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input
+          matInput
+          placeholder="{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.REDIRECT_URL' | translate}}"
+          [formControl]="url" />
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.LANGUAGE' | translate}}</mat-label>
+        <mat-select [(value)]="currentLanguage">
+          <mat-option
+            *ngFor="let lang of languages"
+            value="{{lang}}"
+            >{{'SHARED_LIB.LANGUAGES.'+lang | uppercase | translate}}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+        {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.CANCEL' | translate}}
+      </button>
+      <button
+        (click)="onSubmit()"
+        class="ms-2"
+        color="accent"
+        [disabled]="emailForm.invalid || name.invalid || loading"
+        mat-flat-button>
+        {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.INVITE' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

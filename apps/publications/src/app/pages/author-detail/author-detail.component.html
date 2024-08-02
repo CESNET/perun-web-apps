@@ -11,7 +11,7 @@
         mat-flat-button
         color="warn"
         class="me-2"
-        [disabled]="selected.selected.length === 0"
+        [disabled]="selected.selected.length === 0 || loading"
         (click)="removePublication()">
         {{'AUTHOR_DETAIL.REMOVE' | translate}}
       </button>
@@ -28,6 +28,7 @@
         [loading]="loading"
         [publications]="publications"
         [selection]="selected"
+        [cachedSubject]="cachedSubject"
         [tableId]="tableId"
         [routerPath]="'/authors/'+author.id+'/publication'"></perun-web-apps-publications-list>
     </div>

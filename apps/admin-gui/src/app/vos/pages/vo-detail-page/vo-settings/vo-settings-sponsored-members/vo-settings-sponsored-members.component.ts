@@ -22,6 +22,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { CopySponsoredMembersDialogComponent } from '../../../../../shared/components/dialogs/copy-sponsored-members-dialog/copy-sponsored-members-dialog.component';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-sponsored-members',
@@ -38,7 +39,14 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
   routeAuth: boolean;
   findSponsorsAuth: boolean;
   sponsorshipIsPossible = false;
-  selection = new SelectionModel<MemberWithSponsors>(true, []);
+  selection = new SelectionModel<MemberWithSponsors>(
+    true,
+    [],
+    true,
+    (sponsoredMember1, sponsoredMember2) =>
+      sponsoredMember1.member?.id === sponsoredMember2.member?.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   searchString = '';
   loading = false;
   tableId = TABLE_SPONSORED_MEMBERS;
@@ -198,6 +206,7 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
       .getSponsoredMembersAndTheirSponsors(this.vo.id, this.attrNames)
       .subscribe((members) => {
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.members = members;
         this.setAuthRights();
         this.loading = false;
@@ -206,5 +215,6 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.searchString = filterValue;
+    this.refresh();
   }
 }

@@ -13,6 +13,7 @@ import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun
 import { UpdateVoBanDialogComponent } from '../../../../../shared/components/dialogs/update-vo-ban-dialog/update-vo-ban-dialog.component';
 import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-bans',
@@ -27,7 +28,13 @@ export class VoSettingsBansComponent implements OnInit {
   addAuth: boolean;
   removeAuth = false;
   filter = '';
-  selection = new SelectionModel<EnrichedBanOnVo>(false, []);
+  selection = new SelectionModel<EnrichedBanOnVo>(
+    false,
+    [],
+    true,
+    (banOnVo1, banOnVo2) => banOnVo1.ban.id === banOnVo2.ban.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   displayedColumns: BanOnEntityListColumn[] = [
     'select',
     'banId',
@@ -61,6 +68,7 @@ export class VoSettingsBansComponent implements OnInit {
       next: (bans) => {
         this.bans = bans;
         this.selection.clear();
+        this.cachedSubject.next(true);
         this.loading = false;
       },
       error: () => (this.loading = false),
@@ -117,5 +125,10 @@ export class VoSettingsBansComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) this.refresh();
     });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filter = filterValue;
+    this.refresh();
   }
 }

@@ -15,7 +15,7 @@
     class="me-2"
     color="warn"
     *ngIf="removeAuth"
-    [disabled]="!selected.selected.length"
+    [disabled]="loading || !selected.selected.length"
     mat-flat-button>
     {{'ADMIN.OWNERS.DELETE' | translate}}
   </button>
@@ -29,6 +29,7 @@
   <div class="position-relative table-min-height">
     <perun-web-apps-owners-list
       [selection]="selected"
+      [cachedSubject]="cachedSubject"
       *perunWebAppsLoader="loading; indicator: spinner"
       [loading]="loading"
       [filterValue]="filterValue"

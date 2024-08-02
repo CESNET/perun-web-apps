@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -24,19 +26,26 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  NotificatorService,
+  TableCheckboxModified,
+} from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowCiteDialogComponent } from '../../dialogs/show-cite-dialog/show-cite-dialog.component';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-publications-list',
   templateUrl: './publications-list.component.html',
   styleUrls: ['./publications-list.component.scss'],
 })
-export class PublicationsListComponent implements OnChanges, AfterViewInit {
+export class PublicationsListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() publications: PublicationForGUI[];
   @Input() selection = new SelectionModel<PublicationForGUI>(true, []);
+  @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() displayedColumns: string[] = [
     'select',
     'id',
@@ -59,6 +68,9 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
     new EventEmitter<PublicationForGUI>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<PublicationForGUI>;
+
   dataSource: MatTableDataSource<PublicationForGUI>;
   buttonPressed = false;
   changeLockMessage: string;
@@ -69,12 +81,13 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
     private cabinetService: CabinetManagerService,
     private dialog: MatDialog,
     private notificator: NotificatorService,
     private translate: TranslateService,
     private authResolver: GuiAuthResolver,
+    private destroyRef: DestroyRef,
   ) {
     translate
       .get('PUBLICATIONS_LIST.CHANGE_LOCK_SUCCESS')
@@ -115,6 +128,22 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
       }
       default:
         return data[column] as string;
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<PublicationForGUI>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cachedSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -163,6 +192,7 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       '',
       this.dataSource,
       this.sort,
@@ -174,6 +204,7 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
 
   itemSelectionToggle(item: RichResource): void {
     this.selection.toggle(item);
+    this.cachedSelection.toggle(item);
   }
 
   showCite(publication: PublicationForGUI): void {
@@ -202,6 +233,17 @@ export class PublicationsListComponent implements OnChanges, AfterViewInit {
 
   emitPublication(publication: PublicationForGUI): void {
     this.publicationSelector.emit(publication);
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private setDataSource(): void {

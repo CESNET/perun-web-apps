@@ -10,13 +10,13 @@
   *ngIf="removeAuth"
   (click)="remove()"
   color="warn"
-  [disabled]="selection.selected.length === 0"
+  [disabled]="loading || selection.selected.length === 0"
   class="me-2"
   mat-flat-button>
   {{'FACILITY_DETAIL.SETTINGS.BANS.REMOVE' | translate}}
 </button>
 <perun-web-apps-debounce-filter
-  (filter)="filter = $event"
+  (filter)="applyFilter($event)"
   [placeholder]="'FACILITY_DETAIL.SETTINGS.BANS.FILTER'"
   class="mt-2 search-field">
 </perun-web-apps-debounce-filter>
@@ -26,6 +26,7 @@
     [loading]="loading"
     [bans]="bans"
     [selection]="selection"
+    [cachedSubject]="cachedSubject"
     [displayedColumns]="displayedColumns"
     [filter]="filter"
     [updatePolicy]="'updateBan_BanOnFacility_policy'"

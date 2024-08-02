@@ -9,7 +9,7 @@
   {{'RESOURCE_DETAIL.ASSIGNED_SERVICES.ADD_SERVICE' | translate}}
 </button>
 <button
-  [disabled]="selected.selected.length === 0"
+  [disabled]="loading || selected.selected.length === 0"
   class="me-2"
   color="warn"
   (click)="removeServices()"
@@ -30,6 +30,7 @@
     [loading]="loading"
     [disableRouting]="!serviceRoutingAuth"
     [selection]="selected"
+    [cachedSubject]="cachedSubject"
     [displayedColumns]="displayedColumns"
     [filterValue]="filterValue"
     [services]="assignedServices"

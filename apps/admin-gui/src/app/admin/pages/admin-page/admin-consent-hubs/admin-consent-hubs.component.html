@@ -10,7 +10,7 @@
     <button
       *ngIf="authResolver.isPerunAdmin()"
       (click)="evaluateConsents()"
-      [disabled]="!globalForceConsents || selection.selected.length === 0"
+      [disabled]="!globalForceConsents || loading || selection.selected.length === 0"
       color="accent"
       class="action-button me-2"
       mat-flat-button>
@@ -31,6 +31,7 @@
       [loading]="loading"
       [consentHubs]="consentHubs"
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [filterValue]="filterValue"
       [tableId]="tableId">
     </app-perun-web-apps-consent-hubs-list>

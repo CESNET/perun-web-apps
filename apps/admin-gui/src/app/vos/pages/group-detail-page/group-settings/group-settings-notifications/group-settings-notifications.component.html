@@ -17,7 +17,7 @@
       *ngIf="removeAuth"
       (click)="remove()"
       color="warn"
-      [disabled]="selection.selected.length === 0"
+      [disabled]="selection.selected.length === 0 || loading"
       class="me-2"
       mat-flat-button>
       {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
@@ -52,6 +52,7 @@
       [applicationMails]="applicationMails"
       [groupId]="group.id"
       [selection]="selection"
+      [cachedSubject]="cachedSubject"
       [tableId]="tableId"
       [theme]="'group-theme'">
     </app-notification-list>

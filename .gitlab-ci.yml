@@ -165,3 +165,5 @@ e2e_tests:
       when: manual
       changes:
         paths: *admin_gui_e2e_files
+  # 2024-08-02: temporary workaround until runner issue is fixed; revert asap
+  allow_failure: true

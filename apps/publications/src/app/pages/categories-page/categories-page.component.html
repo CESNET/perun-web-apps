@@ -15,7 +15,7 @@
     color="warn"
     class="me-2"
     *ngIf="removeAuth"
-    [disabled]="!selected.selected.length"
+    [disabled]="!selected.selected.length || loading"
     (click)="removeCategory()">
     {{'CATEGORIES_PAGE.REMOVE' | translate}}
   </button>
@@ -35,6 +35,7 @@
       (refreshTable)="refreshTable()"
       [displayedColumns]="removeAuth ? ['select', 'id', 'name', 'rank'] : ['name', 'rank']"
       [tableId]="tableId"
-      [selection]="selected"></perun-web-apps-categories-list>
+      [selection]="selected"
+      [cachedSubject]="cachedSubject"></perun-web-apps-categories-list>
   </div>
 </div>

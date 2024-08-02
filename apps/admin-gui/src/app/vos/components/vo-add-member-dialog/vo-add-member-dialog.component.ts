@@ -14,7 +14,7 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { AddMemberService, FailedCandidate } from '../add-member.service';
-import { merge, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { RPCError } from '@perun-web-apps/perun/models';
 
@@ -43,7 +43,15 @@ export class VoAddMemberDialogComponent implements OnInit {
     startWith(undefined as MemberCandidate[]),
   );
   failed: FailedCandidate[] = [];
-  selection: SelectionModel<MemberCandidate> = new SelectionModel<MemberCandidate>(true, []);
+  selection = new SelectionModel<MemberCandidate>(
+    true,
+    [],
+    true,
+    (memberCandidate1, memberCandidate2) =>
+      memberCandidate1.richUser?.id === memberCandidate2.richUser?.id &&
+      memberCandidate1.member?.id === memberCandidate2.member?.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   attrNames: string[] = [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL].concat(
     this.store.getLoginAttributeNames(),
   );

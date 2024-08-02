@@ -9,6 +9,7 @@ import {
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { TABLE_ADD_EXTSOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs';
 
 interface AddFacilityOwnerDialogData {
   theme: string;
@@ -24,7 +25,13 @@ interface AddFacilityOwnerDialogData {
 export class AddFacilityOwnerDialogComponent implements OnInit {
   theme: string;
   extSources: ExtSource[] = [];
-  selection = new SelectionModel<Owner>(true, []);
+  selection = new SelectionModel<Owner>(
+    true,
+    [],
+    true,
+    (owner1, owner2) => owner1.id === owner2.id,
+  );
+  cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
   tableId = TABLE_ADD_EXTSOURCE_DIALOG;
@@ -42,17 +49,21 @@ export class AddFacilityOwnerDialogComponent implements OnInit {
   ngOnInit(): void {
     this.theme = this.data.theme;
     this.loading = true;
-    this.ownersManagerService.getAllOwners().subscribe(
-      (owners) => {
+    this.ownersManagerService.getAllOwners().subscribe({
+      next: (owners) => {
         this.owners = owners.filter((owner) => !this.data.forbiddenOwners.includes(owner.id));
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => {
+        this.loading = false;
+      },
+    });
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
+    this.cachedSubject.next(true);
   }
 
   onAdd(): void {
