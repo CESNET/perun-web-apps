@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   FindSponsorsService,
@@ -11,6 +11,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 export interface SponsorExistingMemberDialogData {
   voId: number;
@@ -34,12 +35,18 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
   searchCtrl: UntypedFormControl = new UntypedFormControl('', [Validators.required]);
   firstSearchDone = false;
   members: RichMember[] = [];
-  selection: SelectionModel<RichMember> = new SelectionModel<RichMember>(true, []);
+  selection = new SelectionModel<RichMember>(
+    true,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   serviceMemberId: number;
   selectedSponsor: User = null;
   voSponsors: User[] = [];
   sponsorType = 'self';
   minDate = new Date();
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialogRef: MatDialogRef<SponsorExistingMemberDialogComponent>,
@@ -48,7 +55,6 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
     private membersService: MembersManagerService,
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
-    private cd: ChangeDetectorRef,
     private findSponsors: FindSponsorsService,
   ) {}
 
@@ -120,8 +126,8 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
     this.firstSearchDone = true;
     this.tableLoading = true;
 
+    this.cacheSubject.next(true);
     this.selection.clear();
-    this.cd.detectChanges();
 
     const attrNames = [Urns.MEMBER_DEF_EXPIRATION, Urns.USER_DEF_PREFERRED_MAIL];
     this.membersService

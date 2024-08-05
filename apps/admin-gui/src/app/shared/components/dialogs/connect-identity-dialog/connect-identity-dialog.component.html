@@ -47,7 +47,7 @@
         <button
           class="ms-2"
           (click)="onAdd()"
-          [disabled]="selection.selected.length === 0"
+          [disabled]="loading || selection.selected.length === 0"
           color="accent"
           mat-flat-button>
           {{'DIALOGS.CONNECT_IDENTITY.CONNECT' | translate}}

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import {
   EntityStorageService,
@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddGroupHierarchicalIncludeDialogComponent } from '../../../../../shared/components/dialogs/add-group-hierarchical-include-dialog/add-group-hierarchical-include-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { TABLE_HIERARCHICAL_INCLUSION } from '@perun-web-apps/config/table-config';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-hierarchical-inclusion',
@@ -23,8 +24,14 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
   parentVos: Vo[] = [];
   selectedParentVo: Vo;
   allowedGroups: Group[] = [];
-  selected = new SelectionModel<Group>(true, []);
+  selected: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   tableId = TABLE_HIERARCHICAL_INCLUSION;
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialog: MatDialog,
@@ -33,7 +40,6 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
     private groupService: GroupsManagerService,
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
-    private changeDetector: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -51,11 +57,11 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
   voSelected(vo: Vo): void {
     this.selectedParentVo = vo;
     this.loadAllowedGroups();
-    this.changeDetector.detectChanges();
   }
 
   loadAllowedGroups(): void {
     this.loading = true;
+    this.cacheSubject.next(true);
     this.selected.clear();
     this.groupService
       .getVoAllAllowedGroupsToHierarchicalVo(this.selectedParentVo.id, this.vo.id)

@@ -16,7 +16,7 @@ import { AddMemberGroupDialogComponent } from '../../../../shared/components/dia
 import { RemoveMemberGroupDialogComponent } from '../../../../shared/components/dialogs/remove-member-group-dialog/remove-member-group-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { GroupsListComponent } from '@perun-web-apps/perun/components';
@@ -45,7 +45,12 @@ export class MemberGroupsComponent implements OnInit {
   filtering = false;
   tableId = TABLE_MEMBER_DETAIL_GROUPS;
   showGroupList = false;
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   selectedRoles: GroupAdminRoles[] = [];
   selectedRoleTypes: RoleAssignmentType[] = [];
   addAuth: boolean;
@@ -60,6 +65,7 @@ export class MemberGroupsComponent implements OnInit {
     ),
     startWith(true),
   );
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private groupsService: GroupsManagerService,
@@ -122,6 +128,7 @@ export class MemberGroupsComponent implements OnInit {
       )
       .subscribe({
         next: (groups) => {
+          this.cacheSubject.next(true);
           this.selection.clear();
           this.groups = groups;
 
@@ -181,19 +188,24 @@ export class MemberGroupsComponent implements OnInit {
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
     this.filtering = filterValue !== '';
+    this.selection.clear();
   }
 
   applyRoles(roles: GroupAdminRoles[]): void {
     this.selectedRoles = roles;
+    this.selection.clear();
     this.refreshTable();
   }
 
   applyRoleTypes(types: RoleAssignmentType[]): void {
     this.selectedRoleTypes = types;
+    this.selection.clear();
     this.refreshTable();
   }
 
   labelToggle(): void {
+    this.cacheSubject.next(true);
+    this.selection.clear();
     this.showGroupList = !this.showGroupList;
     this.refreshTable();
   }

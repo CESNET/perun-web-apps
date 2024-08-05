@@ -23,7 +23,12 @@ export class AddGroupHierarchicalIncludeDialogComponent implements OnInit {
   voId: number;
   parentVo: Vo;
   groups: Group[];
-  selected = new SelectionModel<Group>(true, []);
+  selected: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   tableId = TABLE_ADD_HIERARCHICAL_INCLUSION;
   filterValue = '';
 

@@ -13,7 +13,7 @@ import { TABLE_BANS } from '@perun-web-apps/config/table-config';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
 import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, finalize, merge, Observable, switchMap } from 'rxjs';
 import { PageQuery } from '@perun-web-apps/perun/models';
 import { map, startWith, tap } from 'rxjs/operators';
 import {
@@ -30,7 +30,12 @@ import { userTableColumn } from '@perun-web-apps/perun/components';
   styleUrls: ['./add-facility-ban-dialog.component.scss'],
 })
 export class AddFacilityBanDialogComponent implements OnInit {
-  selection = new SelectionModel<RichUser>(false, []);
+  selection = new SelectionModel<RichUser>(
+    false,
+    [],
+    true,
+    (richUser1, richUser2) => richUser1.id === richUser2.id,
+  );
   ban: BanOnFacility;
   attrNames = [Urns.USER_DEF_PREFERRED_MAIL].concat(this.store.getLoginAttributeNames());
   displayedColumns: userTableColumn[] = ['select', 'id', 'name', 'email', 'logins'];
@@ -40,17 +45,19 @@ export class AddFacilityBanDialogComponent implements OnInit {
   routeAuth = false;
   usersPage$: Observable<PaginatedRichUsers> = this.nextPage.pipe(
     switchMap((pageQuery) =>
-      this.usersManager.getUsersPage({
-        attrNames: this.attrNames,
-        query: {
-          order: pageQuery.order,
-          pageSize: pageQuery.pageSize,
-          offset: pageQuery.offset,
-          sortColumn: pageQuery.sortColumn as UsersOrderColumn,
-          searchString: pageQuery.searchString,
-          facilityId: this.data.entityId,
-        },
-      }),
+      this.usersManager
+        .getUsersPage({
+          attrNames: this.attrNames,
+          query: {
+            order: pageQuery.order,
+            pageSize: pageQuery.pageSize,
+            offset: pageQuery.offset,
+            sortColumn: pageQuery.sortColumn as UsersOrderColumn,
+            searchString: pageQuery.searchString,
+            facilityId: this.data.entityId,
+          },
+        })
+        .pipe(finalize(() => this.cd.detectChanges())),
     ),
     tap(() => {
       this.selection.clear();
@@ -134,6 +141,7 @@ export class AddFacilityBanDialogComponent implements OnInit {
         },
       });
   }
+
   private banUser(banForm: BanForm): void {
     this.facilityService
       .setFacilityBan({

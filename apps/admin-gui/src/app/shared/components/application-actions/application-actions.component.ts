@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import {
   Application,
@@ -149,8 +149,14 @@ export class ApplicationActionsComponent implements OnInit {
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
   );
 
-  selected = new SelectionModel<Application>(true, []);
+  selected: SelectionModel<Application> = new SelectionModel<Application>(
+    true,
+    [],
+    true,
+    (app1, app2) => app1.id === app2.id,
+  );
   loadingSubject$ = new BehaviorSubject(false);
+  cacheSubject = new BehaviorSubject(true);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -167,6 +173,7 @@ export class ApplicationActionsComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
     private dialog: MatDialog,
+    private cd: ChangeDetectorRef,
   ) {}
 
   @Input() set viewPreferences(att: Attribute) {
@@ -192,6 +199,7 @@ export class ApplicationActionsComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 
@@ -376,6 +384,7 @@ export class ApplicationActionsComponent implements OnInit {
     const state = this.getSelectedState();
     this.setCanPerform(state);
     this.setButtonsTooltips(state);
+    this.cd.detectChanges();
   }
 
   downloadAll(a: { format: string; length: number }): void {

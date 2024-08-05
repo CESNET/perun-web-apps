@@ -1,4 +1,11 @@
-import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  HostBinding,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGroupDialogComponent } from '../../../../shared/components/dialogs/create-group-dialog/create-group-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -16,7 +23,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,10 +39,14 @@ export class GroupSubgroupsComponent implements OnInit {
   // used for router animation
   @HostBinding('class.router-component') true;
   @ViewChild('toggle', { static: true }) toggle: MatSlideToggle;
-
   group: Group;
   groups: Group[] = [];
-  selected = new SelectionModel<Group>(true, []);
+  selected: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   selectedRoles: GroupAdminRoles[] = [];
   selectedRoleTypes: RoleAssignmentType[] = [];
   showGroupList = false;
@@ -56,6 +67,7 @@ export class GroupSubgroupsComponent implements OnInit {
     }),
     startWith(true),
   );
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialog: MatDialog,
@@ -64,6 +76,7 @@ export class GroupSubgroupsComponent implements OnInit {
     private entityStorageService: EntityStorageService,
     private cacheHelperService: CacheHelperService,
     private destroyRef: DestroyRef,
+    private cd: ChangeDetectorRef,
   ) {}
 
   onCreateGroup(): void {
@@ -157,6 +170,7 @@ export class GroupSubgroupsComponent implements OnInit {
       )
       .subscribe((groups) => {
         this.groups = groups;
+        this.cacheSubject.next(true);
         this.selected.clear();
         this.setAuthRights();
         this.loading = false;
@@ -166,6 +180,7 @@ export class GroupSubgroupsComponent implements OnInit {
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
     this.filtering = filterValue !== '';
+    this.selected.clear();
   }
 
   applyRoles(roles: GroupAdminRoles[]): void {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BanOnResource, ResourcesManagerService, RichMember } from '@perun-web-apps/perun/openapi';
 import { TABLE_BANS } from '@perun-web-apps/config/table-config';
@@ -12,7 +12,12 @@ import { BanForm, AddBanData } from '../add-ban-dialog/add-ban-dialog.component'
   styleUrls: ['./add-resource-ban-dialog.component.scss'],
 })
 export class AddResourceBanDialogComponent implements OnInit {
-  selection = new SelectionModel<RichMember>(false, []);
+  selection = new SelectionModel<RichMember>(
+    false,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   ban: BanOnResource;
   loading = false;
   displayedColumns = ['checkbox', 'id', 'fullName', 'organization', 'email', 'logins'];
@@ -26,6 +31,7 @@ export class AddResourceBanDialogComponent implements OnInit {
     private store: StoreService,
     private resourceService: ResourcesManagerService,
     private notificator: NotificatorService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

@@ -32,7 +32,12 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
   async = true;
   autoAssignSubgroups = false;
   asActive = true;
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   filterValue = '';
   tableId = TABLE_ASSIGN_GROUP_TO_RESOURCE_DIALOG;
   autoAssignHint: string;
@@ -124,6 +129,7 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
   }
 
   canAddGroups(): boolean {

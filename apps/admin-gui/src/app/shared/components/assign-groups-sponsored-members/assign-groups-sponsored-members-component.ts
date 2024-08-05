@@ -31,7 +31,12 @@ export class AssignGroupsSponsoredMembersComponent implements OnInit, OnDestroy 
   manualMemberAddingBlocked = false;
   groupAssignment = 'none';
 
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   name = '';
   description = '';
   asSubgroup = false;

@@ -27,7 +27,6 @@ import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { PageQuery, UserWithConsentStatus } from '@perun-web-apps/perun/models';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
-import { SelectionModel } from '@angular/cdk/collections';
 import {
   downloadData,
   getDataForExport,
@@ -50,7 +49,6 @@ export class FacilityAllowedUsersComponent implements OnInit {
   attributes: string[] = [];
 
   searchString = '';
-  selection = new SelectionModel<RichUser>(true, []);
   nextPage = new BehaviorSubject<PageQuery>({});
   usersPage$: Observable<PaginatedRichUsers> = this.nextPage.pipe(
     switchMap((pageQuery) =>
@@ -72,7 +70,6 @@ export class FacilityAllowedUsersComponent implements OnInit {
       }),
     ),
     tap(() => {
-      this.selection.clear();
       setTimeout(() => this.loadingSubject$.next(false), 200);
     }),
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),

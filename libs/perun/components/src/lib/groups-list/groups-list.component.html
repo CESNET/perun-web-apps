@@ -2,10 +2,12 @@
   <perun-web-apps-table-wrapper
     (exportDisplayedData)="exportDisplayedData($event)"
     (exportAllData)="exportAllData($event)"
+    (pageChanged)="pageChanged()"
     [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions"
     [tableId]="tableId">
     <table
+      (matSortChange)="pageChanged()"
       [dataSource]="dataSource"
       class="w-100"
       mat-table
@@ -15,16 +17,21 @@
       matSortDisableClear>
       <ng-container
         matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length :canBeSelected} as selected">
+        *ngIf="{all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected} as selected">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            *ngIf="!disableHeadCheckbox && selection.isMultipleSelection()"
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
+          <span
+            [matTooltipDisabled]="isMasterCheckboxEnabled"
+            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.MASTER_CHECKBOX_TOOLTIP' | translate">
+            <mat-checkbox
+              *ngIf="!disableHeadCheckbox && selection.isMultipleSelection()"
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              [disabled]="!isMasterCheckboxEnabled"
+              color="primary">
+            </mat-checkbox>
+          </span>
         </th>
         <td
           *matCellDef="let group"

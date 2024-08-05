@@ -7,7 +7,7 @@ import { RemoveRelationDialogComponent } from '../../../../../shared/components/
 import { TABLE_GROUP_SETTINGS_RELATIONS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,7 +22,12 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   @HostBinding('class.router-component') true;
 
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   groups: Group[] = [];
   group: Group;
   reverse = false;
@@ -42,6 +47,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
       );
     }),
   );
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private groupService: GroupsManagerService,
@@ -106,6 +112,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   refreshTable(): void {
     this.loading = true;
+    this.cacheSubject.next(true);
     this.selection.clear();
     this.groupService.getGroupUnions(this.group.id, this.reverse).subscribe({
       next: (groups) => {
@@ -118,6 +125,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
   }
 
   showReverseUnions(): void {

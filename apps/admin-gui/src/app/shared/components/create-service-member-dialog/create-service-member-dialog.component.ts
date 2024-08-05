@@ -93,7 +93,12 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
   firstSearchDone = false;
   searchCtrl = new FormControl('');
   members: RichMember[] = [];
-  selection = new SelectionModel<RichMember>(true, []);
+  selection = new SelectionModel<RichMember>(
+    true,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   tableId = TABLE_VO_MEMBERS;
   assignedMembers: RichMember[] = [];
   candidate: Candidate = { beanName: '', id: 0 };

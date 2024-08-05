@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { GlobalNamespacePipe } from '@perun-web-apps/perun/pipes';
 import {
   customDataSourceFilterPredicate,
@@ -8,30 +18,33 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { TableCheckbox } from '@perun-web-apps/perun/services';
+import { TableCheckboxModified } from '@perun-web-apps/perun/services';
 import { BlockedLogin, PaginatedBlockedLogins } from '@perun-web-apps/perun/openapi';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'perun-web-apps-logins-dynamic-list',
+  selector: 'perun-web-apps-logins-list',
   templateUrl: './blocked-logins-list.component.html',
   styleUrls: ['./blocked-logins-list.component.scss'],
   providers: [GlobalNamespacePipe],
 })
-export class BlockedLoginsListComponent {
+export class BlockedLoginsListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @Input() tableId: string;
   @Input() updateTable: boolean;
   @Input() searchString = '';
-  @Input() selection = new SelectionModel<BlockedLogin>(true, []);
+  @Input() selection: SelectionModel<BlockedLogin>;
   @Input() selectedNamespaces: string[] = [];
   @Input() displayedColumns: string[];
   @Input() loading: boolean;
+  @Input() cacheSubject: BehaviorSubject<boolean>;
 
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
@@ -44,9 +57,13 @@ export class BlockedLoginsListComponent {
   // currently is used only DynamicDataSource, this list should work also for MatTableDataSource, but it has not been tested yet
   dataSource: MatTableDataSource<BlockedLogin> | DynamicDataSource<BlockedLogin>;
 
+  // contains all selected blocked logins across all pages
+  cachedSelection: SelectionModel<BlockedLogin>;
+
   constructor(
     private globalNamespacePipe: GlobalNamespacePipe,
-    private tableCheckbox: TableCheckbox,
+    private tableCheckbox: TableCheckboxModified,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set blockedLogins(blockedLogins: BlockedLogin[] | PaginatedBlockedLogins) {
@@ -68,6 +85,37 @@ export class BlockedLoginsListComponent {
 
   @Input() set filter(value: string) {
     this.dataSource.filter = value;
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<BlockedLogin>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+    }
+    this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.cachedSelection.clear();
+      }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.cachedSelection && changes['blockedLogins']) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+    if (this.cachedSelection && changes['filter']) {
+      this.selection.clear();
+      this.cachedSelection.clear();
+    }
   }
 
   isPaginated(data: BlockedLogin[] | PaginatedBlockedLogins): data is PaginatedBlockedLogins {
@@ -96,12 +144,14 @@ export class BlockedLoginsListComponent {
       this.tableCheckbox.masterTogglePaginated(
         this.dataSource,
         this.selection,
+        this.cachedSelection,
         !this.isAllSelected(),
       );
     } else {
       this.tableCheckbox.masterToggle(
         this.isAllSelected(),
         this.selection,
+        this.cachedSelection,
         this.dataSource.filter,
         this.dataSource,
         this.dataSource.sort,
@@ -160,6 +210,25 @@ export class BlockedLoginsListComponent {
           this.getDataForColumnFun,
         ),
         format,
+      );
+    }
+  }
+
+  toggleRow(row: BlockedLogin): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (isDynamicDataSource(this.dataSource)) {
+      return;
+    }
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
       );
     }
   }

@@ -12,9 +12,9 @@
   <span
     *ngIf="{removeAuth: removeAuth$ | async} as auth"
     matTooltip="{{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE_TOOLTIP' | translate}}"
-    [matTooltipDisabled]="selection.selected.length === 0 || auth.removeAuth">
+    [matTooltipDisabled]="loading || selection.selected.length === 0 || auth.removeAuth">
     <button
-      [disabled]="selection.selected.length === 0 || !auth.removeAuth || reverse"
+      [disabled]="loading || selection.selected.length === 0 || !auth.removeAuth || reverse"
       class="me-2"
       color="warn"
       (click)="onDelete()"
@@ -43,6 +43,8 @@
       [selection]="selection"
       [displayedColumns]="['select', 'id', 'vo', 'name', 'description']"
       [filter]="filterValue"
-      [tableId]="tableId"></perun-web-apps-groups-list>
+      [tableId]="tableId"
+      [cacheSubject]="cacheSubject">
+    </perun-web-apps-groups-list>
   </div>
 </div>

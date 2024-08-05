@@ -122,7 +122,7 @@
           </button>
           <button
             (click)="addUsers()"
-            [disabled]="selection.selected.length === 0"
+            [disabled]="loading || selection.selected.length === 0"
             color="accent"
             mat-flat-button>
             {{'DIALOGS.CREATE_SERVICE_MEMBER.ADD_USER' | translate}}
@@ -167,7 +167,7 @@
           {{'DIALOGS.CREATE_SERVICE_MEMBER.BACK' | translate}}
         </button>
         <span
-          [matTooltipDisabled]="selection.selected.length === 0"
+          [matTooltipDisabled]="loading || selection.selected.length === 0"
           [matTooltip]="'DIALOGS.CREATE_SERVICE_MEMBER.NEXT_BUTTON_DISABLED_TOOLTIP' | translate">
           <button
             (click)="stepperNext()"

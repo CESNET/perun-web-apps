@@ -58,7 +58,12 @@ export class RolesPageComponent implements OnInit {
   @Output() startLoading = new EventEmitter<void>();
   @Output() currentlyOpenPanelChange = new EventEmitter<string | null>();
 
-  selection = new SelectionModel<PerunBean>(true, []);
+  selection = new SelectionModel<PerunBean>(
+    true,
+    [],
+    true,
+    (bean1, bean2) => bean1.id === bean2.id,
+  );
   selectedFacilities = new SelectionModel<EnrichedFacility>(true, []);
   loading: boolean;
   assignableRules: RoleManagementRules[] = [];

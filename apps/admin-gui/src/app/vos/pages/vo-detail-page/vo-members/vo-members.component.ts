@@ -50,7 +50,12 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
 
   @HostBinding('class.router-component') true;
   vo: Vo;
-  selection = new SelectionModel<RichMember>(true, []);
+  selection = new SelectionModel<RichMember>(
+    true,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   attrNames = [
     Urns.MEMBER_DEF_ORGANIZATION,
     Urns.MEMBER_DEF_MAIL,
@@ -77,6 +82,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
   nextPage = new BehaviorSubject<PageQuery>({});
   membersPage$: Observable<PaginatedRichMembers>;
   loadingSubject$ = new BehaviorSubject(false);
+  cacheSubject = new BehaviorSubject(true);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -176,7 +182,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
 
   onSearchByString(filter: string): void {
     this.searchString = filter;
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   onAddMember(): void {
@@ -284,10 +290,11 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
 
   changeStatuses(): void {
     this.selectedStatuses = this.statuses.value as VoMemberStatuses[];
-    this.nextPage.next(this.nextPage.value);
+    this.refreshTable();
   }
 
   refreshTable(): void {
+    this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 
