@@ -10,13 +10,18 @@
           </div>
         </mat-panel-title>
 
-        <mat-panel-description *ngIf="getErrorCountStates(resourceStatus) !== 0">
-          <div>
+        <mat-panel-description>
+          <div *ngIf="getErrorCountStates(resourceStatus) !== 0; else okStateDescription">
             <i class="material-icons red"> error </i>
             {{getErrorCountStates(resourceStatus)}}
             {{'VO_DETAIL.RESOURCES.STATES.FROM' | translate}} {{resourceStatus.taskList.length}}
             {{'VO_DETAIL.RESOURCES.STATES.TASKS_WITH_ERROR_STATE' | translate}}
           </div>
+          <ng-template #okStateDescription>
+            {{resourceStatus.taskList.length === 0 ?
+            ('VO_DETAIL.RESOURCES.STATES.NO_SERVICES_ASSIGNED' | translate) :
+            resourceStatus.taskList.length + ' ' + ('VO_DETAIL.RESOURCES.STATES.SERVICES_ASSIGNED' | translate)}}
+          </ng-template>
         </mat-panel-description>
       </mat-expansion-panel-header>
 

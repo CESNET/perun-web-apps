@@ -313,6 +313,8 @@
       "STATES": {
         "TITLE": "Resources state",
         "ERROR_RESOURCES": "Resources with tasks in error state",
+        "SERVICES_ASSIGNED": "services assigned",
+        "NO_SERVICES_ASSIGNED": "No services assigned",
         "FROM": "from",
         "TASKS_WITH_ERROR_STATE": "tasks with error state",
         "OK_RESOURCES": "Resources with tasks in Ok state",
