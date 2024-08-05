@@ -18,4 +18,8 @@ import { Application } from './application';
 export interface InputSubmitApplication {
   app: Application;
   data: Array<ApplicationFormItemData>;
+  /**
+   * uuid token of invitation if application is pre-approved
+   */
+  invitationToken?: string | null;
 }

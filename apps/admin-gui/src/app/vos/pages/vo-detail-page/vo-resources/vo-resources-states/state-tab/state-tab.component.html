@@ -68,7 +68,7 @@
             </th>
             <td *matCellDef="let task" mat-cell>
               <div *ngIf="task.startTime; else notStartedYet">
-                {{task.schedule | date:'d.M.y H:mm:ss'}}
+                {{task.startTime | date:'d.M.y H:mm:ss'}}
               </div>
               <ng-template #notStartedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
@@ -82,7 +82,7 @@
             </th>
             <td *matCellDef="let task" mat-cell>
               <div *ngIf="task.endTime; else notEndedYet">
-                {{task.schedule | date:'d.M.y H:mm:ss'}}
+                {{task.endTime | date:'d.M.y H:mm:ss'}}
               </div>
               <ng-template #notEndedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
