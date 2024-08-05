@@ -27,7 +27,7 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
@@ -85,7 +85,7 @@ export class BanOnEntityListComponent implements OnInit {
   EXPIRE_NEVER = BAN_EXPIRATION_NEVER;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private authResolver: GuiAuthResolver,
     private userName: UserFullNamePipe,
     private destroyRef: DestroyRef,

@@ -24,7 +24,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { MemberTypePipe } from '../../pipes/member-type.pipe';
 import { DisabledCandidatePipe } from '../../pipes/disabled-candidate.pipe';
 import { BehaviorSubject } from 'rxjs';
@@ -65,7 +65,7 @@ export class MembersCandidatesListComponent implements OnInit, OnChanges, AfterV
   constructor(
     private memberTypePipe: MemberTypePipe,
     private disabledCandidatePipe: DisabledCandidatePipe,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -21,6 +23,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Consent } from '@perun-web-apps/perun/openapi';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-consents-list',
@@ -34,22 +38,28 @@ import { Consent } from '@perun-web-apps/perun/openapi';
     ]),
   ],
 })
-export class ConsentsListComponent implements AfterViewInit, OnChanges {
+export class ConsentsListComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() filterValue = '';
   @Input() tableId: string;
   @Input() consents: Consent[] = [];
   @Input() selection = new SelectionModel<Consent>(true, []);
+  @Input() cacheSubject: BehaviorSubject<boolean>;
   @Input() displayedColumns: string[] = ['select', 'status', 'name'];
   @Input() loading: boolean;
   @Output() grantConsent: EventEmitter<number> = new EventEmitter<number>();
   @Output() rejectConsent: EventEmitter<number> = new EventEmitter<number>();
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<Consent>;
   expandedConsent: Consent | null;
   dataSource: MatTableDataSource<Consent>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   private sort: MatSort;
 
-  constructor(private tableCheckbox: TableCheckbox) {}
+  constructor(
+    private tableCheckbox: TableCheckbox,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -64,6 +74,22 @@ export class ConsentsListComponent implements AfterViewInit, OnChanges {
         return data.status;
       default:
         return '';
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<Consent>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+      this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+        if (value) {
+          this.cachedSelection.clear();
+        }
+      });
     }
   }
 
@@ -127,6 +153,7 @@ export class ConsentsListComponent implements AfterViewInit, OnChanges {
     this.tableCheckbox.masterToggle(
       this.isAllSelected(),
       this.selection,
+      this.cachedSelection,
       this.filterValue,
       this.dataSource,
       this.sort,
@@ -134,5 +161,21 @@ export class ConsentsListComponent implements AfterViewInit, OnChanges {
       this.child.paginator.pageIndex,
       false,
     );
+  }
+
+  pageChanged(): void {
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+  }
+
+  toggleRow(row: Consent): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
   }
 }

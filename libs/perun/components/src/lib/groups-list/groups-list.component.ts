@@ -17,7 +17,7 @@ import {
   GroupSyncDetailDialogComponent,
 } from '@perun-web-apps/perun/dialogs';
 import { Group, PaginatedRichGroups, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -105,7 +105,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private voService: VosManagerService,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private disableGroupSelect: DisableGroupSelectPipe,
     private groupUtils: GroupUtilsService,
     private destroyRef: DestroyRef,

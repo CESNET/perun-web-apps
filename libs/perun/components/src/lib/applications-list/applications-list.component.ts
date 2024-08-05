@@ -29,7 +29,7 @@ import {
 import { MatSort } from '@angular/material/sort';
 import {
   GuiAuthResolver,
-  TableCheckboxModified,
+  TableCheckbox,
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -71,7 +71,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private translate: PerunTranslateService,
     private destroyRef: DestroyRef,
   ) {}
