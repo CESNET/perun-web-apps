@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DynamicDataSource } from '@perun-web-apps/perun/models';
+import { DynamicDataSource, isDynamicDataSource } from '@perun-web-apps/perun/models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,6 @@ export class TableCheckbox {
   private pageEnd: number;
   private pageIterator: number;
   private dataLength: number;
-  private itemsCheckedCounter: number;
 
   // checks if all rendered rows are selected (in this function also disabled checkboxes are allowed)
   isAllSelected<T>(
@@ -62,6 +61,7 @@ export class TableCheckbox {
   masterToggle<T>(
     isAllSelected: boolean,
     selection: SelectionModel<T>,
+    cachedSelection: SelectionModel<T>,
     filter: string,
     dataSource: MatTableDataSource<T>,
     sort: MatSort,
@@ -70,24 +70,29 @@ export class TableCheckbox {
     someCheckboxDisabled: boolean,
     canBeSelected?: (T) => boolean,
   ): void {
-    selection.clear();
+    this.deselectAllOnPage(dataSource, selection, cachedSelection);
+
     if (!isAllSelected) {
-      this.itemsCheckedCounter = 0;
       this.pageStart = pageIndex * pageSize;
       this.pageEnd = this.pageStart + pageSize;
       this.pageIterator = 0;
 
-      dataSource.sortData(dataSource.filteredData, sort).forEach((row) => {
+      const data = sort
+        ? dataSource.sortData(dataSource.filteredData, sort)
+        : dataSource.filteredData;
+      data.forEach((row) => {
         if (someCheckboxDisabled) {
           if (
             canBeSelected(row) &&
             this.pageStart <= this.pageIterator &&
             this.pageIterator < this.pageEnd
           ) {
+            cachedSelection.select(row);
             selection.select(row);
           }
         } else {
           if (this.pageStart <= this.pageIterator && this.pageIterator < this.pageEnd) {
+            cachedSelection.select(row);
             selection.select(row);
           }
         }
@@ -122,20 +127,79 @@ export class TableCheckbox {
    * @param selection Selection model
    * @param selectAll Flag, all rows to be selected
    * @param canBeSelected By default all rows can be selected
+   * @param cachedSelection
    */
   masterTogglePaginated<T>(
     dataSource: DynamicDataSource<T>,
     selection: SelectionModel<T>,
+    cachedSelection: SelectionModel<T>,
     selectAll: boolean,
     canBeSelected: (T) => boolean = (): boolean => true,
   ): void {
-    selection.clear();
+    this.deselectAllOnPage(dataSource, selection, cachedSelection);
+
     if (selectAll) {
       dataSource.data.forEach((row) => {
         if (canBeSelected(row)) {
           selection.select(row);
+          cachedSelection.select(row);
         }
       });
     }
+  }
+
+  deselectAllOnPage<T>(
+    dataSource: MatTableDataSource<T> | DynamicDataSource<T>,
+    selection: SelectionModel<T>,
+    cachedSelection: SelectionModel<T>,
+  ): void {
+    this.getDataOnCurrentPage(dataSource).forEach((data) => cachedSelection.deselect(data));
+    selection.clear();
+  }
+
+  selectCachedDataOnPage<T>(
+    dataSource: MatTableDataSource<T> | DynamicDataSource<T>,
+    selection: SelectionModel<T>,
+    cachedSelection: SelectionModel<T>,
+    compareWith: (o1, o2) => boolean = (o1, o2): boolean => o1 === o2,
+  ): void {
+    selection.clear();
+    const dataOnCurrentPage = this.getDataOnCurrentPage(dataSource);
+    selection.select(
+      ...cachedSelection.selected.filter((selectedDataInCache) =>
+        dataOnCurrentPage.some((dataItem) => {
+          if (compareWith(selectedDataInCache, dataItem)) {
+            return true;
+          }
+        }),
+      ),
+    );
+  }
+
+  anySelectableRows<T>(
+    dataSource: MatTableDataSource<T> | DynamicDataSource<T>,
+    canBeSelected: (row: T) => boolean,
+  ): boolean {
+    const rows = this.getDataOnCurrentPage(dataSource);
+    for (const row of rows) {
+      if (canBeSelected(row)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private getDataOnCurrentPage<T>(dataSource: MatTableDataSource<T> | DynamicDataSource<T>): T[] {
+    if (isDynamicDataSource(dataSource)) {
+      // Might return old data if called too early after loading new page of server-paginated table
+      return dataSource.filteredData;
+    }
+    const start = dataSource.paginator.pageIndex * dataSource.paginator.pageSize;
+    const end = start + dataSource.paginator.pageSize;
+
+    const allData = dataSource.sort
+      ? dataSource.sortData(dataSource.filteredData, dataSource.sort)
+      : dataSource.filteredData;
+    return allData.slice(start, end).map((data) => data);
   }
 }

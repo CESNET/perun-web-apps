@@ -29,7 +29,7 @@ import {
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
-import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   DynamicDataSource,
   isDynamicDataSource,
@@ -99,7 +99,7 @@ export class UsersListComponent implements OnInit, OnChanges {
   ];
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private consentPipe: ConsentStatusIconPipe,
     private translate: TranslateService,
     private consentService: ConsentsManagerService,

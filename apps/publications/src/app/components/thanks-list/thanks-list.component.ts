@@ -19,7 +19,7 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -44,7 +44,7 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

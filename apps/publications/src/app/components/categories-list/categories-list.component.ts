@@ -22,7 +22,7 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateRankDialogComponent } from '../../dialogs/update-rank-dialog/update-rank-dialog.component';
 import { BehaviorSubject } from 'rxjs';
@@ -51,7 +51,7 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private destroyRef: DestroyRef,

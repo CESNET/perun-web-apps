@@ -11,7 +11,7 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NotificatorService, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -42,7 +42,7 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private dialog: MatDialog,
     private notificator: NotificatorService,
     private translate: TranslateService,

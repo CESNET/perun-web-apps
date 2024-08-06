@@ -26,11 +26,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import {
-  GuiAuthResolver,
-  NotificatorService,
-  TableCheckboxModified,
-} from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowCiteDialogComponent } from '../../dialogs/show-cite-dialog/show-cite-dialog.component';
@@ -81,7 +77,7 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private cabinetService: CabinetManagerService,
     private dialog: MatDialog,
     private notificator: NotificatorService,

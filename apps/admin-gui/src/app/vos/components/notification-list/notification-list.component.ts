@@ -15,11 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AddEditNotificationDialogComponent } from '../../../shared/components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  GuiAuthResolver,
-  NotificatorService,
-  TableCheckboxModified,
-} from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   ApplicationMail,
   PublicationForGUI,
@@ -75,7 +71,7 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
     private notificator: NotificatorService,
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

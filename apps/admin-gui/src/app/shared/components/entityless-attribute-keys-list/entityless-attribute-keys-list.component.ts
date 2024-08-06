@@ -15,7 +15,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NotificatorService, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -76,7 +76,7 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     private translate: TranslateService,
     private attributesManager: AttributesManagerService,
     private cd: ChangeDetectorRef,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {

@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { downloadData, getDataForExport, TableWrapperComponent } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'perun-web-apps-string-list',
@@ -35,7 +35,7 @@ export class StringListComponent implements OnInit, OnChanges, AfterViewInit {
   private sort: MatSort;
 
   constructor(
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

@@ -11,7 +11,6 @@ export { NotificatorService } from './lib/notificator.service';
 export { NotificationStorageService } from './lib/notification-storage.service';
 export { ApiService } from './lib/api.service';
 export { TableCheckbox } from './lib/table-checkbox.service';
-export { TableCheckboxModified } from './lib/table-checkbox-modified.service';
 export { DynamicPaginatingService } from './lib/dynamic-paginating.service';
 export { DynamicDataSource, isPaginatedDataSource } from './lib/dynamicDataSource';
 export { PreferredLanguageService } from './lib/preferred-language.service';

@@ -18,7 +18,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BlockedLogin, PaginatedBlockedLogins } from '@perun-web-apps/perun/openapi';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -62,7 +62,7 @@ export class BlockedLoginsListComponent implements OnInit, OnChanges {
 
   constructor(
     private globalNamespacePipe: GlobalNamespacePipe,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

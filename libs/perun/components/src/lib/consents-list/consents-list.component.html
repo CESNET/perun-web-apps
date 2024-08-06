@@ -4,10 +4,12 @@
     (exportAllData)="exportAllData($event)"
     [tableId]="tableId"
     [dataLength]="dataSource.filteredData.length"
-    [pageSizeOptions]="pageSizeOptions">
+    [pageSizeOptions]="pageSizeOptions"
+    (pageChanged)="pageChanged()">
     <table
       mat-table
       [dataSource]="dataSource"
+      (matSortChange)="pageChanged()"
       matSort
       matSortActive="status"
       matSortDirection="asc"
@@ -29,7 +31,7 @@
           <mat-checkbox
             color="primary"
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(consent) : null"
+            (change)="$event ? toggleRow(consent) : null"
             [checked]="selection.isSelected(consent)">
           </mat-checkbox>
         </td>

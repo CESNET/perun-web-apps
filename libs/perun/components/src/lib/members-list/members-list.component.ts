@@ -13,7 +13,7 @@ import {
 import { MemberTreeViewDialogComponent } from '@perun-web-apps/perun/dialogs';
 import {
   GuiAuthResolver,
-  TableCheckboxModified,
+  TableCheckbox,
   EntityStorageService,
 } from '@perun-web-apps/perun/services';
 import {
@@ -110,7 +110,7 @@ export class MembersListComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private entityStorage: EntityStorageService,
     private destroyRef: DestroyRef,
   ) {}
