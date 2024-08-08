@@ -795,6 +795,11 @@
       "FILTER_GROUP_STATUS": "Filter by group status",
       "BUTTON_DISABLED_MEMBERS_GROUP": "Action is disabled on this group because it represents all members of the organization. To edit members of the organization go to organization members."
     },
+    "INVITATIONS": {
+      "TITLE": "Preapproved invitations",
+      "FILTER_STATUS": "Filter by status",
+      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email"
+    },
     "RESOURCES": {
       "TITLE": "Resources",
       "DELETE": "Remove selected",
@@ -903,6 +908,15 @@
     "CREATED_BY": "Created by",
     "VO_NAME": "Organization name",
     "ERROR": "Error"
+  },
+  "INVITATIONS_LIST": {
+    "ID": "Id",
+    "STATUS": "Status",
+    "EXPIRATION": "Expiration",
+    "RECEIVER_NAME": "Receiver name",
+    "RECEIVER_EMAIL": "Receiver email",
+    "SENDER_NAME": "Sender name",
+    "SENDER_EMAIL": "Sender email"
   },
   "MEMBER_DETAIL": {
     "ENTITY": "Member",
@@ -1076,6 +1090,7 @@
       "SUBGROUPS": "Subgroups",
       "RESOURCES": "Resources",
       "APPLICATIONS": "Applications",
+      "INVITATIONS": "Preapproved invitations",
       "SETTINGS": "Advanced settings",
       "ATTRIBUTES": "Attributes",
       "RESOURCE_ATTRIBUTES": "Resource attributes",
@@ -3631,7 +3646,8 @@
         "NO_USERS": "No users found.",
         "NO_FACILITIES": "No facilities found.",
         "NO_AUDIT_MESSAGES": "No audit messages found.",
-        "NO_BLOCKED_LOGINS": "No blocked logins found."
+        "NO_BLOCKED_LOGINS": "No blocked logins found.",
+        "NO_INVITATIONS": "No invitations found."
       }
     }
   }
