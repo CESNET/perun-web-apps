@@ -16,6 +16,7 @@ export class TagBarComponent implements OnInit {
   applicationLinksAdministratorsTags: string[][] = [];
   perunLinksAdministratorsTags: string[][] = [];
   userInvitationsTags: string[][] = [];
+  userPreapprovedInvitationsTags: string[][] = [];
 
   ngOnInit(): void {
     this.getApplicationRelatedTags();
@@ -25,6 +26,7 @@ export class TagBarComponent implements OnInit {
     this.getApplicationLinksAdministratorsTags();
     this.getPerunLinksAdministratorsTags();
     this.getUserInvitationsTags();
+    this.getUserPreapprovedInvitationsTags();
   }
 
   getApplicationRelatedTags(): void {
@@ -109,6 +111,19 @@ export class TagBarComponent implements OnInit {
     tags.push(['invitationLink-cert', 'INVITATIONLINKCERT_DESCRIPTION']);
     tags.push(['invitationLink-non', 'INVITATIONLINKNON_DESCRIPTION']);
     this.userInvitationsTags = tags;
+  }
+
+  getUserPreapprovedInvitationsTags(): void {
+    const tags: string[][] = [];
+    tags.push(['voName', 'USER_INVITATIONS_VONAME_DESCRIPTION']);
+    tags.push(['groupName', 'USER_INVITATIONS_GROUPNAME_DESCRIPTION']);
+    tags.push(['displayName', 'USER_INVITATIONS_DISPLAYNAME_DESCRIPTION']);
+    tags.push(['mailFooter', 'USER_INVITATIONS_MAILFOOTER_DESCRIPTION']);
+    tags.push(['htmlMailFooter', 'USER_INVITATIONS_HTMLMAILFOOTER_DESCRIPTION']);
+    tags.push(['preapprovedInvitationLink', 'USER_PREAPPROVED_INVITATIONS_LINK_DESCRIPTION']);
+    tags.push(['expirationDate', 'USER_PREAPPROVED_INVITATIONS_EXPIRATION_DESCRIPTION']);
+    tags.push(['senderName', 'USER_PREAPPROVED_INVITATIONS_SENDER_NAME_DESCRIPTION']);
+    this.userPreapprovedInvitationsTags = tags;
   }
 
   addTag(tag: string): void {

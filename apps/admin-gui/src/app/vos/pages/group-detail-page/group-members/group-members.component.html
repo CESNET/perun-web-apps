@@ -20,12 +20,12 @@
     </button>
   </span>
   <span
-    [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || inviteDisabled)"
+    [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled))"
     [matTooltipPosition]="'above'"
-    matTooltip="{{inviteDisabled ? ('GROUP_DETAIL.MEMBERS.INVITE_DISABLED' | translate) : (group | groupMembersActionButtonDisabledTooltip | translate)}}">
+    matTooltip="{{inviteDisabled && preApprovedInviteDisabled ? ('GROUP_DETAIL.MEMBERS.INVITE_BUTTON_DISABLED' | translate) : (group | groupMembersActionButtonDisabledTooltip | translate)}}">
     <button
       *ngIf="inviteAuth"
-      [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+      [disabled]="(group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled)"
       [matMenuTriggerFor]="menu"
       class="me-2 dropdown-toggle"
       color="accent"
@@ -33,38 +33,58 @@
       {{'GROUP_DETAIL.MEMBERS.INVITE' | translate}}
     </button>
     <mat-menu #menu="matMenu">
-      <button
-        (click)="onInviteMember()"
-        *ngIf="inviteAuth"
-        [disabled]="(group | groupMembersActionButtonDisabled)"
-        class="action-button"
-        mat-menu-item>
-        {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
-      </button>
-      <button
-        (click)="onInvitePreapprovedMember()"
-        *ngIf="inviteAuth"
-        [disabled]="(group | groupMembersActionButtonDisabled)"
-        class="action-button"
-        mat-menu-item>
-        {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
-      </button>
-      <button
-        *ngIf="inviteAuth"
-        (click)="onBulkInvite()"
-        [disabled]="(group | groupMembersActionButtonDisabled)"
-        class="action-button"
-        mat-menu-item>
-        {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
-      </button>
-      <button
-        *ngIf="inviteAuth"
-        (click)="onBulkPreapprovedInvite()"
-        [disabled]="(group | groupMembersActionButtonDisabled)"
-        class="action-button"
-        mat-menu-item>
-        {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
-      </button>
+      <span
+        [matTooltipDisabled]="!inviteDisabled"
+        [matTooltipPosition]="'right'"
+        matTooltip="{{'GROUP_DETAIL.MEMBERS.INVITE_DISABLED' | translate}}">
+        <button
+          (click)="onInviteMember()"
+          *ngIf="inviteAuth"
+          [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+          class="action-button"
+          mat-menu-item>
+          {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
+        </button>
+      </span>
+      <span
+        [matTooltipDisabled]="!preApprovedInviteDisabled"
+        [matTooltipPosition]="'right'"
+        matTooltip="{{'GROUP_DETAIL.MEMBERS.PREAPPROVED_INVITE_DISABLED' | translate}}">
+        <button
+          (click)="onInvitePreapprovedMember()"
+          *ngIf="preApprovedInviteAuth"
+          [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+          class="action-button"
+          mat-menu-item>
+          {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
+        </button>
+      </span>
+      <span
+        [matTooltipDisabled]="!inviteDisabled"
+        [matTooltipPosition]="'right'"
+        matTooltip="{{'GROUP_DETAIL.MEMBERS.INVITE_DISABLED' | translate}}">
+        <button
+          *ngIf="inviteAuth"
+          (click)="onBulkInvite()"
+          [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+          class="action-button"
+          mat-menu-item>
+          {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
+        </button>
+      </span>
+      <span
+        [matTooltipDisabled]="!preApprovedInviteDisabled"
+        [matTooltipPosition]="'right'"
+        matTooltip="{{'GROUP_DETAIL.MEMBERS.PREAPPROVED_INVITE_DISABLED' | translate}}">
+        <button
+          *ngIf="preApprovedInviteAuth"
+          (click)="onBulkPreapprovedInvite()"
+          [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+          class="action-button"
+          mat-menu-item>
+          {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
+        </button>
+      </span>
     </mat-menu>
   </span>
   <span

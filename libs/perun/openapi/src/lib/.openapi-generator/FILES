@@ -152,6 +152,7 @@ model/inputFormItemData.ts
 model/inputFormItemsData.ts
 model/inputGetAllResourcesByResourceTag.ts
 model/inputGetFacilities.ts
+model/inputGetInvitationsPage.ts
 model/inputGetMatchResources.ts
 model/inputGetMembersByUserAttributes.ts
 model/inputGetMembersSearcher.ts
@@ -242,6 +243,9 @@ model/inputUpdateVo.ts
 model/inputValidatePreferredEmailChange.ts
 model/invitation.ts
 model/invitationStatus.ts
+model/invitationWithSender.ts
+model/invitationsOrderColumn.ts
+model/invitationsPageQuery.ts
 model/itemTexts.ts
 model/mailText.ts
 model/mailType.ts
@@ -258,6 +262,7 @@ model/owner.ts
 model/ownerType.ts
 model/paginatedAuditMessages.ts
 model/paginatedBlockedLogins.ts
+model/paginatedInvitationsWithSender.ts
 model/paginatedRichApplications.ts
 model/paginatedRichGroups.ts
 model/paginatedRichMembers.ts
