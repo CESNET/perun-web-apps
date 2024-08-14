@@ -10,13 +10,18 @@
           </div>
         </mat-panel-title>
 
-        <mat-panel-description *ngIf="getErrorCountStates(resourceStatus) !== 0">
-          <div>
+        <mat-panel-description>
+          <div *ngIf="getErrorCountStates(resourceStatus) !== 0; else okStateDescription">
             <i class="material-icons red"> error </i>
             {{getErrorCountStates(resourceStatus)}}
             {{'VO_DETAIL.RESOURCES.STATES.FROM' | translate}} {{resourceStatus.taskList.length}}
             {{'VO_DETAIL.RESOURCES.STATES.TASKS_WITH_ERROR_STATE' | translate}}
           </div>
+          <ng-template #okStateDescription>
+            {{resourceStatus.taskList.length === 0 ?
+            ('VO_DETAIL.RESOURCES.STATES.NO_SERVICES_ASSIGNED' | translate) :
+            resourceStatus.taskList.length + ' ' + ('VO_DETAIL.RESOURCES.STATES.SERVICES_ASSIGNED' | translate)}}
+          </ng-template>
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -68,7 +73,7 @@
             </th>
             <td *matCellDef="let task" mat-cell>
               <div *ngIf="task.startTime; else notStartedYet">
-                {{task.schedule | date:'d.M.y H:mm:ss'}}
+                {{task.startTime | date:'d.M.y H:mm:ss'}}
               </div>
               <ng-template #notStartedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
@@ -82,7 +87,7 @@
             </th>
             <td *matCellDef="let task" mat-cell>
               <div *ngIf="task.endTime; else notEndedYet">
-                {{task.schedule | date:'d.M.y H:mm:ss'}}
+                {{task.endTime | date:'d.M.y H:mm:ss'}}
               </div>
               <ng-template #notEndedYet class="font-italic">
                 {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
