@@ -200,6 +200,13 @@ export class RoutePolicyService {
         ]),
     ],
     [
+      'groups-invitations',
+      (group): boolean =>
+        this.authResolver.isAuthorized('getInvitationsPage_Group_InvitationPageQuery_policy', [
+          group,
+        ]),
+    ],
+    [
       'groups-attributes',
       (group): boolean => this.authResolver.isAuthorized('getGroupById_int_policy', [group]),
     ],

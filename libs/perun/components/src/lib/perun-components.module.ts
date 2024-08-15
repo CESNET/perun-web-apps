@@ -123,6 +123,7 @@ import { ExpandableTilesComponent } from './expandable-tiles/expandable-tiles.co
 import { ApplicationsListComponent } from './applications-list/applications-list.component';
 import { ApplicationTypeIconComponent } from './application-type-icon/application-type-icon.component';
 import { ExtSourceSearchSelectComponent } from './ext-source-search-select/ext-source-search-select.component';
+import { InvitationsListComponent } from './invitations-list/invitations-list.component';
 
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
@@ -279,6 +280,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ExpandableTilesComponent,
     ApplicationsListComponent,
     ApplicationTypeIconComponent,
+    InvitationsListComponent,
   ],
   exports: [
     VosListComponent,
@@ -360,6 +362,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ExpandableTilesComponent,
     ApplicationsListComponent,
     ApplicationTypeIconComponent,
+    InvitationsListComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

@@ -18,7 +18,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -59,7 +59,7 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   constructor(
     private authResolver: GuiAuthResolver,
     private dialog: MatDialog,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {

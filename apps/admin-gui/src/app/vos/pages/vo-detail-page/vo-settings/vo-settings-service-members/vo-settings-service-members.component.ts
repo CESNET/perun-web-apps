@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MembersManagerService, RichMember, Vo } from '@perun-web-apps/perun/openapi';
 import { TABLE_SERVICE_MEMBERS } from '@perun-web-apps/config/table-config';
@@ -11,6 +11,7 @@ import {
 } from '../../../../../shared/components/create-service-member-dialog/create-service-member-dialog.component';
 import { RemoveMembersDialogComponent } from '../../../../../shared/components/dialogs/remove-members-dialog/remove-members-dialog.component';
 import { SponsorExistingMemberDialogComponent } from '../../../../../shared/components/dialogs/sponsor-existing-member-dialog/sponsor-existing-member-dialog.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-vo-settings-service-members',
@@ -19,11 +20,17 @@ import { SponsorExistingMemberDialogComponent } from '../../../../../shared/comp
 })
 export class VoSettingsServiceMembersComponent implements OnInit {
   members: RichMember[] = [];
-  selection = new SelectionModel<RichMember>(true, []);
+  selection = new SelectionModel<RichMember>(
+    true,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   searchString = '';
   loading = false;
   tableId = TABLE_SERVICE_MEMBERS;
   removeAuth: boolean;
+  cacheSubject = new BehaviorSubject(true);
   private vo: Vo;
 
   constructor(
@@ -32,6 +39,7 @@ export class VoSettingsServiceMembersComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private authzService: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -87,8 +95,8 @@ export class VoSettingsServiceMembersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((wereMembersDeleted) => {
       if (wereMembersDeleted) {
-        this.refresh();
         this.selection.clear();
+        this.refresh();
       }
     });
   }
@@ -98,12 +106,14 @@ export class VoSettingsServiceMembersComponent implements OnInit {
   }
 
   refresh(): void {
+    this.cacheSubject.next(true);
     this.loading = true;
     this.membersManager.getServiceUserRichMembers(this.vo.id).subscribe((members) => {
       this.members = members.filter((member) =>
         this.authResolver.isAuthorized('getRichMemberWithAttributes_Member_policy', [member]),
       );
       this.loading = false;
+      this.cd.detectChanges();
     });
   }
 }

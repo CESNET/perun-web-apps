@@ -24,7 +24,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
   TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { ConsentRelatedAttributePipe } from '../../pipes/consent-related-attribute.pipe';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -75,7 +75,7 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private consentRelatedPipe: ConsentRelatedAttributePipe,
     private destroyRef: DestroyRef,
   ) {}

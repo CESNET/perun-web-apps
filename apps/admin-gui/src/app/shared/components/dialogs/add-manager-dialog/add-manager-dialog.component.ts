@@ -18,6 +18,7 @@ import { Role } from '@perun-web-apps/perun/models';
 import { TABLE_ADD_MANAGER } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AddManagerDialogData {
   complementaryObject: PerunBean;
@@ -34,7 +35,12 @@ export interface AddManagerDialogData {
 export class AddManagerDialogComponent implements OnInit {
   title: string;
   successMessage: string;
-  selection = new SelectionModel<RichUser>(true, []);
+  selection = new SelectionModel<RichUser>(
+    true,
+    [],
+    true,
+    (richUser1, richUser2) => richUser1.id === richUser2.id,
+  );
   loading: boolean;
   users: RichUser[] = [];
   selectedRole: Role;
@@ -43,6 +49,7 @@ export class AddManagerDialogComponent implements OnInit {
   theme: string;
   tableId = TABLE_ADD_MANAGER;
   searchCtrl: UntypedFormControl;
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialogRef: MatDialogRef<AddManagerDialogComponent>,
@@ -99,6 +106,7 @@ export class AddManagerDialogComponent implements OnInit {
     this.loading = true;
     this.firstSearchDone = true;
 
+    this.cacheSubject.next(true);
     this.selection.clear();
 
     let attributes = [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL];

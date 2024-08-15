@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -26,7 +26,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./add-vo-ban-dialog.component.scss'],
 })
 export class AddVoBanDialogComponent implements OnInit {
-  selection = new SelectionModel<RichMember>(false, []);
+  selection: SelectionModel<RichMember> = new SelectionModel<RichMember>(
+    false,
+    [],
+    true,
+    (richMember1, richMember2) => richMember1.id === richMember2.id,
+  );
   ban: BanOnVo;
   loading = false;
   attrNames = [Urns.MEMBER_DEF_MAIL, Urns.USER_DEF_PREFERRED_MAIL].concat(
@@ -52,6 +57,7 @@ export class AddVoBanDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

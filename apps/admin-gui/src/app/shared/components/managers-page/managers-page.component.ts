@@ -20,7 +20,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReloadEntityDetailService } from '../../../core/services/common/reload-entity-detail.service';
 import { AuthPrivilege } from '@perun-web-apps/perun/models';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 
@@ -51,8 +51,18 @@ export class ManagersPageComponent implements OnInit {
   groups: Group[] = [];
   managers: RichUser[] = [];
   managers$: Observable<Array<RichUser>> = null;
-  selectionUsers = new SelectionModel<RichUser>(true, []);
-  selectionGroups = new SelectionModel<Group>(true, []);
+  selectionUsers = new SelectionModel<RichUser>(
+    true,
+    [],
+    true,
+    (user1, user2) => user1.id === user2.id,
+  );
+  selectionGroups = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   selectedMode = '';
   selectedRole: string;
   showIndirectAdmins = false;
@@ -63,6 +73,7 @@ export class ManagersPageComponent implements OnInit {
   manageAuth: boolean;
   roleModes: string[];
   availableRolesPrivileges = new Map<string, AuthPrivilege>();
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private dialog: MatDialog,
@@ -164,6 +175,9 @@ export class ManagersPageComponent implements OnInit {
         this.loading = false;
       },
     });
+
+    this.cacheSubject.next(true);
+    this.selectionUsers.clear();
   }
 
   getDirectAdmins(attributes: string[]): Observable<Array<RichUser>> {
@@ -211,6 +225,9 @@ export class ManagersPageComponent implements OnInit {
           this.loading = false;
         },
       });
+
+    this.cacheSubject.next(true);
+    this.selectionGroups.clear();
   }
 
   addManager(): void {

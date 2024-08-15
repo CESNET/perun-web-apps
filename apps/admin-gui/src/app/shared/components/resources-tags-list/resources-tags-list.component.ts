@@ -10,11 +10,7 @@ import {
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  GuiAuthResolver,
-  NotificatorService,
-  TableCheckboxModified,
-} from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import {
@@ -63,7 +59,7 @@ export class ResourcesTagsListComponent implements OnInit, OnChanges, AfterViewI
     private notificator: NotificatorService,
     private translator: TranslateService,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

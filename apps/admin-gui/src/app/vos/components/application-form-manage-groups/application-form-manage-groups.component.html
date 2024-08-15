@@ -24,12 +24,12 @@
 </span>
 <span
   *ngIf="{ removeAuth: removeAuth$ | async } as auth"
-  [matTooltipDisabled]="selected.selected.length === 0 || auth.removeAuth"
+  [matTooltipDisabled]="loading || selected.selected.length === 0 || auth.removeAuth"
   matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.REMOVE_PERMISSION_HINT' | translate}}">
   <button
     (click)="removeGroups()"
     color="warn"
-    [disabled]="selected.selected.length === 0 || !auth.removeAuth || !manageEmbeddedGroupsItemSaved"
+    [disabled]="loading || selected.selected.length === 0 || !auth.removeAuth || !manageEmbeddedGroupsItemSaved"
     class="me-2"
     mat-flat-button>
     {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_PAGE.REMOVE' | translate}}

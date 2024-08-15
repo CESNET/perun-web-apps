@@ -313,6 +313,8 @@
       "STATES": {
         "TITLE": "Resources state",
         "ERROR_RESOURCES": "Resources with tasks in error state",
+        "SERVICES_ASSIGNED": "services assigned",
+        "NO_SERVICES_ASSIGNED": "No services assigned",
         "FROM": "from",
         "TASKS_WITH_ERROR_STATE": "tasks with error state",
         "OK_RESOURCES": "Resources with tasks in Ok state",
@@ -795,6 +797,11 @@
       "FILTER_GROUP_STATUS": "Filter by group status",
       "BUTTON_DISABLED_MEMBERS_GROUP": "Action is disabled on this group because it represents all members of the organization. To edit members of the organization go to organization members."
     },
+    "INVITATIONS": {
+      "TITLE": "Preapproved invitations",
+      "FILTER_STATUS": "Filter by status",
+      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email"
+    },
     "RESOURCES": {
       "TITLE": "Resources",
       "DELETE": "Remove selected",
@@ -903,6 +910,15 @@
     "CREATED_BY": "Created by",
     "VO_NAME": "Organization name",
     "ERROR": "Error"
+  },
+  "INVITATIONS_LIST": {
+    "ID": "Id",
+    "STATUS": "Status",
+    "EXPIRATION": "Expiration",
+    "RECEIVER_NAME": "Receiver name",
+    "RECEIVER_EMAIL": "Receiver email",
+    "SENDER_NAME": "Sender name",
+    "SENDER_EMAIL": "Sender email"
   },
   "MEMBER_DETAIL": {
     "ENTITY": "Member",
@@ -1076,6 +1092,7 @@
       "SUBGROUPS": "Subgroups",
       "RESOURCES": "Resources",
       "APPLICATIONS": "Applications",
+      "INVITATIONS": "Preapproved invitations",
       "SETTINGS": "Advanced settings",
       "ATTRIBUTES": "Attributes",
       "RESOURCE_ATTRIBUTES": "Resource attributes",
@@ -2582,6 +2599,7 @@
     "DIRECT_MEMBER": "Direct member",
     "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied",
     "CHECKBOX_TOOLTIP_UNALTERABLE": "Members from member organizations cannot be directly removed",
+    "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
     "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
     "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
     "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
@@ -3117,6 +3135,7 @@
           "TABLE_GROUP_EXPIRATION": "Expiration",
           "TABLE_GROUP_STATUS": "Status",
           "DISABLED_HINT": "You cannot add members to this group or the user is already member.",
+          "MASTER_CHECKBOX_TOOLTIP": "No group on this page can be selected",
           "ALREADY_MEMBER_TOOLTIP": "User is already member of group",
           "CREATE_RELATION_AUTH_TOOLTIP": "You don't have permission to create relation with this group.",
           "SYNCHRONIZED_GROUP": "Group is filled with members from an external source",
@@ -3629,7 +3648,8 @@
         "NO_USERS": "No users found.",
         "NO_FACILITIES": "No facilities found.",
         "NO_AUDIT_MESSAGES": "No audit messages found.",
-        "NO_BLOCKED_LOGINS": "No blocked logins found."
+        "NO_BLOCKED_LOGINS": "No blocked logins found.",
+        "NO_INVITATIONS": "No invitations found."
       }
     }
   }

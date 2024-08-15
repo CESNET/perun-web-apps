@@ -17,7 +17,7 @@
     <button
       (click)="deleteGroup()"
       color="warn"
-      [disabled]="selected.selected.length === 0 || !auth.removeAuth"
+      [disabled]="(loading$ | async) || selected.selected.length === 0 || !auth.removeAuth"
       data-cy="delete-group-button"
       class="me-2"
       mat-flat-button>
@@ -75,6 +75,7 @@
         [selection]="selected"
         [filter]="filterValue"
         [tableId]="tableId"
+        [cacheSubject]="cacheSubject"
         theme="vo-theme">
       </perun-web-apps-groups-list>
     </div>

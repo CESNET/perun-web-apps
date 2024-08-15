@@ -108,6 +108,18 @@ export class GroupOverviewComponent implements OnInit, DoCheck {
       });
     }
 
+    if (
+      this.group.name !== 'members' &&
+      this.routePolicyService.canNavigate('groups-invitations', this.group)
+    ) {
+      this.items.push({
+        cssIcon: 'perun-invitations',
+        url: `/organizations/${this.group.voId}/groups/${this.group.id}/invitations`,
+        label: 'MENU_ITEMS.GROUP.INVITATIONS',
+        style: 'group-btn',
+      });
+    }
+
     if (this.routePolicyService.canNavigate('groups-attributes', this.group)) {
       this.items.push({
         cssIcon: 'perun-attributes',

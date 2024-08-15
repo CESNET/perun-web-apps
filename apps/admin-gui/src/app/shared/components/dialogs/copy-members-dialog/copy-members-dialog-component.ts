@@ -28,7 +28,12 @@ export class CopyMembersDialogComponent implements OnInit {
   filterValue = '';
   tableId = TABLE_VO_GROUPS;
   assignableGroups: Group[] = [];
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
 
   private groupAttrNames = [Urns.GROUP_SYNC_ENABLED, Urns.GROUP_BLOCK_MANUAL_MEMBER_ADDING];
 
@@ -80,8 +85,10 @@ export class CopyMembersDialogComponent implements OnInit {
         },
       });
   }
+
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
   }
 
   private filterAssignableGroups(groups: RichGroup[]): RichGroup[] {

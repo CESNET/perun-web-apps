@@ -8,7 +8,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ConnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/connect-identity-dialog/connect-identity-dialog.component';
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
@@ -18,7 +18,12 @@ import { userTableColumn } from '@perun-web-apps/perun/components';
 })
 export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy {
   loading = false;
-  selection = new SelectionModel<RichUser>(false, []);
+  selection = new SelectionModel<RichUser>(
+    false,
+    [],
+    false,
+    (richUser1, richUser2) => richUser1.id === richUser2.id,
+  );
   identities: RichUser[] = [];
   userId: number;
   tableId = TABLE_USER_SERVICE_IDENTITIES;
@@ -29,6 +34,7 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
   targetTitle = 'SERVICE';
   targetDescription = 'SERVICE';
   subscription: Subscription;
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private route: ActivatedRoute,
@@ -63,6 +69,7 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
     this.loading = true;
     this.userManager.getSpecificUsersByUser(this.userId).subscribe((identities) => {
       this.identities = identities as RichUser[];
+      this.cacheSubject.next(true);
       this.selection.clear();
       this.loading = false;
     });

@@ -67,6 +67,10 @@ export class CustomIconService {
       name: 'perun-applications',
     },
     {
+      url: 'assets/img/PerunWebImages/preapproved_invite.svg',
+      name: 'perun-invitations',
+    },
+    {
       url: 'assets/img/PerunWebImages/manager-white.svg',
       name: 'perun-manager',
     },

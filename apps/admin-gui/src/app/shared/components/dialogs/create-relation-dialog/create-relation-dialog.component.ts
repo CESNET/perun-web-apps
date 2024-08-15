@@ -26,7 +26,12 @@ export interface CreateRelationDialogData {
   styleUrls: ['./create-relation-dialog.component.scss'],
 })
 export class CreateRelationDialogComponent implements OnInit {
-  selection = new SelectionModel<Group>(false, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    false,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   groups: Group[] = [];
   theme: string;
   filterValue = '';
@@ -114,6 +119,7 @@ export class CreateRelationDialogComponent implements OnInit {
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
+    this.selection.clear();
   }
 
   private filterGroups(): void {

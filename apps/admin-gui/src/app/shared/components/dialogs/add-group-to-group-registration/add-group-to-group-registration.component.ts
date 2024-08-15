@@ -23,7 +23,12 @@ export class AddGroupToGroupRegistrationComponent implements OnInit {
   loading = false;
   theme: string;
   unAssignedGroups: Group[] = [];
-  selection = new SelectionModel<Group>(true, []);
+  selection: SelectionModel<Group> = new SelectionModel<Group>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
 
   constructor(
     public dialogRef: MatDialogRef<AddGroupToGroupRegistrationComponent>,

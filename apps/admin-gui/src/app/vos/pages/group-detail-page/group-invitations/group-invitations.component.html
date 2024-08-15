@@ -1,0 +1,52 @@
+<h1 class="page-subtitle">{{'GROUP_DETAIL.INVITATIONS.TITLE' | translate}}</h1>
+
+<div class="align-elements">
+  <perun-web-apps-refresh-button (click)="refreshTable()"></perun-web-apps-refresh-button>
+
+  <mat-form-field class="me-2 fix-select">
+    <mat-label>{{'GROUP_DETAIL.INVITATIONS.FILTER_STATUS' | translate}}</mat-label>
+    <mat-select (closed)="changeInvitationStatus()" [formControl]="statuses" multiple>
+      <mat-select-trigger>
+        {{displaySelectedStatuses()}}
+      </mat-select-trigger>
+      <mat-option
+        class="group-theme"
+        *ngFor="let status of statusList"
+        [value]="status"
+        >{{status}}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <perun-web-apps-debounce-filter
+    (filter)="onSearchByString($event)"
+    [placeholder]="'GROUP_DETAIL.INVITATIONS.SEARCH_DESCRIPTION'"
+    class="mt-2 me-2 search-field">
+  </perun-web-apps-debounce-filter>
+
+  <!--  TODO: Add expiration range filter-->
+  <!--  <perun-web-apps-date-range-->
+  <!--    [endDate]="endDate"-->
+  <!--    [startDate]="startDate"-->
+  <!--    [allowFutureDate]="true"-->
+  <!--    class="mt-2 search-field" />-->
+</div>
+
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative table-min-height">
+  <perun-web-apps-invitations-list
+    *perunWebAppsLoader="loading$ | async; indicator: spinner"
+    [loading]="loading$ | async"
+    (queryChanged)="nextPage.next($event)"
+    (refreshTable)="refreshTable()"
+    (downloadAll)="downloadAll($event)"
+    [displayedColumns]="displayedColumns"
+    [groupId]="group.id"
+    [invitations]="invitationsPage$ | async"
+    [selection]="selection"
+    [cacheSubject]="cacheSubject"
+    [filter]="searchString"
+    [tableId]="tableId" />
+</div>

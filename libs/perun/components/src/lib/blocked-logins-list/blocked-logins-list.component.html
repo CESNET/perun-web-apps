@@ -2,10 +2,12 @@
   <perun-web-apps-table-wrapper
     (exportDisplayedData)="exportDisplayedData($event)"
     (exportAllData)="exportAllData($event)"
+    (pageChanged)="pageChanged()"
     [tableId]="tableId"
     [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions">
     <table
+      (matSortChange)="pageChanged()"
       [dataSource]="dataSource"
       class="w-100"
       mat-table
@@ -15,7 +17,7 @@
       matSortDisableClear>
       <ng-container
         matColumnDef="checkbox"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
+        *ngIf="{all: dataSource | isAllSelected: selection?.selected?.length} as selected">
         <th *matHeaderCellDef="let row" mat-header-cell class="align-checkbox">
           <mat-checkbox
             (change)="$event ? masterToggle() : null"
@@ -29,7 +31,7 @@
         <td *matCellDef="let blockedLogin" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
             attr.data-cy="{{blockedLogin.login}}-checkbox"
-            (change)="$event ? selection.toggle(blockedLogin) : null"
+            (change)="$event ? toggleRow(blockedLogin) : null"
             (click)="$event.stopPropagation()"
             [aria-label]="selection.isSelected(blockedLogin) | checkboxLabel | translate: {name: blockedLogin.login}"
             [checked]="selection.isSelected(blockedLogin)"

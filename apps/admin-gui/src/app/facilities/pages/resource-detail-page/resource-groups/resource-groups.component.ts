@@ -10,6 +10,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { GroupWithStatus } from '@perun-web-apps/perun/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perun-web-apps-resource-groups',
@@ -18,13 +19,19 @@ import { GroupWithStatus } from '@perun-web-apps/perun/models';
 })
 export class ResourceGroupsComponent implements OnInit {
   assignedGroups: GroupWithStatus[] = [];
-  selected = new SelectionModel<GroupWithStatus>(true, []);
+  selected = new SelectionModel<GroupWithStatus>(
+    true,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
   loading: boolean;
   filteredValue = '';
   groupsToDisable: Set<number>;
 
   tableId = TABLE_RESOURCE_ALLOWED_GROUPS;
   resource: Resource;
+  cacheSubject = new BehaviorSubject(true);
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +88,7 @@ export class ResourceGroupsComponent implements OnInit {
             .filter((group) => !!group.sourceGroupId && !group.moreTypesOfAssignment)
             .map((group) => group.id),
         );
+        this.cacheSubject.next(true);
         this.selected.clear();
         this.loading = false;
       });

@@ -10,7 +10,7 @@ import {
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -44,7 +44,7 @@ export class VosListComponent implements OnInit, OnChanges {
 
   constructor(
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

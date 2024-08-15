@@ -47,7 +47,12 @@ export class AddMemberToResourceDialogComponent implements OnInit, AfterViewInit
   description = '';
 
   groups: Group[] = [];
-  selectedGroups = new SelectionModel<Group>(false, []);
+  selectedGroups: SelectionModel<Group> = new SelectionModel<Group>(
+    false,
+    [],
+    true,
+    (group1, group2) => group1.id === group2.id,
+  );
 
   constructor(
     private dialogRef: MatDialogRef<AddMemberToResourceDialogComponent>,

@@ -1,9 +1,12 @@
 import {
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -46,6 +49,8 @@ import {
   PageQuery,
 } from '@perun-web-apps/perun/models';
 import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'perun-web-apps-members-list',
@@ -53,7 +58,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./members-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MembersListComponent implements OnInit {
+export class MembersListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() selection: SelectionModel<RichMember>;
@@ -83,6 +88,7 @@ export class MembersListComponent implements OnInit {
   @Input() disableStatusChange = false;
   @Input() disableCheckbox = true;
   @Input() loading: boolean;
+  @Input() cacheSubject: BehaviorSubject<boolean>;
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
@@ -93,15 +99,20 @@ export class MembersListComponent implements OnInit {
 
   expireGroupAuth: boolean;
   expireVoAuth: boolean;
+  isMasterCheckboxEnabled: boolean = true;
 
   dataSource: MatTableDataSource<MemberWithConsentStatus> | DynamicDataSource<RichMember>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+
+  // contains all selected members across all pages
+  cachedSelection: SelectionModel<RichMember>;
 
   constructor(
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private entityStorage: EntityStorageService,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set members(members: MemberWithConsentStatus[] | PaginatedRichMembers) {
@@ -133,6 +144,19 @@ export class MembersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<RichMember>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+    }
+    this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.cachedSelection.clear();
+      }
+    });
     // without entity beanName the error is thrown e.g. in searcher component
     if (this.entityStorage.getEntity()) {
       this.expireGroupAuth = this.authResolver.isAuthorized(
@@ -142,6 +166,24 @@ export class MembersListComponent implements OnInit {
       this.expireVoAuth = this.authResolver.isAuthorized('setStatus_Member_Status_policy', [
         this.entityStorage.getEntity(),
       ]);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.isMasterCheckboxEnabled =
+      !this.disableCheckbox ||
+      this.tableCheckbox.anySelectableRows(this.dataSource, this.canBeSelected);
+    if (this.cachedSelection && changes['members']) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+    if (this.cachedSelection && changes['filter']) {
+      this.cachedSelection.clear();
+      this.selection.clear();
     }
   }
 
@@ -208,6 +250,7 @@ export class MembersListComponent implements OnInit {
       this.tableCheckbox.masterTogglePaginated(
         this.dataSource,
         this.selection,
+        this.cachedSelection,
         !this.isAllSelected(),
         this.canBeSelected,
       );
@@ -215,6 +258,7 @@ export class MembersListComponent implements OnInit {
       this.tableCheckbox.masterToggle(
         this.isAllSelected(),
         this.selection,
+        this.cachedSelection,
         this.dataSource.filter,
         this.dataSource,
         this.dataSource.sort,
@@ -327,6 +371,28 @@ export class MembersListComponent implements OnInit {
     config.data = { member: member, groupId: this.groupId };
 
     this.dialog.open(MemberTreeViewDialogComponent, config);
+  }
+
+  toggleRow(row: RichMember): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (isDynamicDataSource(this.dataSource)) {
+      return;
+    }
+    if (this.cachedSelection) {
+      this.isMasterCheckboxEnabled =
+        !this.disableCheckbox ||
+        this.tableCheckbox.anySelectableRows(this.dataSource, this.canBeSelected);
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
   }
 
   private dataSourceInit(members: MemberWithConsentStatus[] | PaginatedRichMembers): void {

@@ -1,40 +1,41 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.APPLICATION.TITLE' | translate}}</h1>
 <div class="action-row">
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <span [matTooltip]="!canPerformAction.approve ? tooltipMessages.approve : ''">
+  <span
+    [matTooltip]="(loading$ | async) && !canPerformAction.approve ? tooltipMessages.approve : ''">
     <button
       *ngIf="authRights.approve"
-      [disabled]="!canPerformAction.approve"
+      [disabled]="(loading$ | async) || !canPerformAction.approve"
       (click)="onApprove()"
       color="accent"
       mat-flat-button>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
     </button>
   </span>
-  <span [matTooltip]="!canPerformAction.reject ? tooltipMessages.reject : ''">
+  <span [matTooltip]="(loading$ | async) || !canPerformAction.reject ? tooltipMessages.reject : ''">
     <button
       *ngIf="authRights.reject"
-      [disabled]="!canPerformAction.reject"
+      [disabled]="(loading$ | async) || !canPerformAction.reject"
       (click)="onReject()"
       color="warn"
       mat-flat-button>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
     </button>
   </span>
-  <span [matTooltip]="!canPerformAction.delete ? tooltipMessages.delete : ''">
+  <span [matTooltip]="(loading$ | async) || !canPerformAction.delete ? tooltipMessages.delete : ''">
     <button
       *ngIf="authRights.delete"
-      [disabled]="!canPerformAction.delete"
+      [disabled]="(loading$ | async) || !canPerformAction.delete"
       (click)="onDelete()"
       color="warn"
       mat-flat-button>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
     </button>
   </span>
-  <span [matTooltip]="!canPerformAction.resend ? tooltipMessages.resend : ''">
+  <span [matTooltip]="(loading$ | async) || !canPerformAction.resend ? tooltipMessages.resend : ''">
     <button
       *ngIf="authRights.resend"
-      [disabled]="!canPerformAction.resend"
+      [disabled]="(loading$ | async) || !canPerformAction.resend"
       (click)="onResend()"
       mat-stroked-button>
       <i class="material-icons"> mail_outline </i>
@@ -84,6 +85,7 @@
     [selection]="selected"
     (downloadAll)="downloadAll($event)"
     (queryChanged)="nextPage.next($event)"
-    [group]="group">
+    [group]="group"
+    [cacheSubject]="cacheSubject">
   </perun-web-apps-applications-list>
 </div>

@@ -29,11 +29,7 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { EditMemberSponsorsDialogComponent } from '../dialogs/edit-member-sponsors-dialog/edit-member-sponsors-dialog.component';
-import {
-  GuiAuthResolver,
-  StoreService,
-  TableCheckboxModified,
-} from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, StoreService, TableCheckbox } from '@perun-web-apps/perun/services';
 import { PasswordResetRequestDialogComponent } from '../dialogs/password-reset-request-dialog/password-reset-request-dialog.component';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -81,7 +77,7 @@ export class SponsoredMembersListComponent implements OnInit, OnChanges {
     private authResolver: GuiAuthResolver,
     private storeService: StoreService,
     private attributesManager: AttributesManagerService,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

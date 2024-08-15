@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   Consent,
   ConsentsManagerService,
@@ -29,6 +39,8 @@ import {
 import { ConsentStatusIconPipe } from '@perun-web-apps/perun/pipes';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export type userTableColumn =
   | 'select'
@@ -46,12 +58,12 @@ export type userTableColumn =
   styleUrls: ['./users-list.component.css'],
   providers: [ConsentStatusIconPipe],
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @Input() tableId: string;
-  @Input() selection = new SelectionModel<RichUser>(true, []);
+  @Input() selection: SelectionModel<RichUser>;
   @Input() disableRouting = false;
   @Input() facilityId: number;
   @Input() loading: boolean;
@@ -59,6 +71,7 @@ export class UsersListComponent {
   @Input() routeToAdmin = false;
   @Input() defaultSort: userTableColumn;
   @Input() sortableColumns: userTableColumn[] = ['id', 'name'];
+  @Input() cacheSubject: BehaviorSubject<boolean>;
 
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
@@ -67,6 +80,9 @@ export class UsersListComponent {
     getDataForColumnFun: (data: RichUser, column: string) => string;
     convertToExport?: (data: RichUser[]) => UserWithConsentStatus[] | RichUser[];
   }>();
+
+  // contains all selected users across all pages
+  cachedSelection: SelectionModel<RichUser>;
 
   consents: Consent[];
   dataSource: MatTableDataSource<RichUser> | DynamicDataSource<RichUser>;
@@ -81,11 +97,13 @@ export class UsersListComponent {
     'logins',
     'organization',
   ];
+
   constructor(
     private tableCheckbox: TableCheckbox,
     private consentPipe: ConsentStatusIconPipe,
     private translate: TranslateService,
     private consentService: ConsentsManagerService,
+    private destroyRef: DestroyRef,
   ) {}
 
   @Input() set users(users: RichUser[] | PaginatedRichUsers) {
@@ -138,6 +156,37 @@ export class UsersListComponent {
     }
   }
 
+  ngOnInit(): void {
+    if (this.selection) {
+      this.cachedSelection = new SelectionModel<RichUser>(
+        this.selection.isMultipleSelection(),
+        [],
+        true,
+        this.selection.compareWith,
+      );
+    }
+    this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.cachedSelection.clear();
+      }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.cachedSelection && changes['users']) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+    if (this.cachedSelection && changes['filter']) {
+      this.selection.clear();
+      this.cachedSelection.clear();
+    }
+  }
+
   isPaginated(data: RichUser[] | PaginatedRichUsers): data is PaginatedRichUsers {
     return 'data' in data;
   }
@@ -147,12 +196,14 @@ export class UsersListComponent {
       this.tableCheckbox.masterTogglePaginated(
         this.dataSource,
         this.selection,
+        this.cachedSelection,
         !this.isAllSelected(),
       );
     } else {
       this.tableCheckbox.masterToggle(
         this.isAllSelected(),
         this.selection,
+        this.cachedSelection,
         this.dataSource.filter,
         this.dataSource,
         this.dataSource.sort,
@@ -251,6 +302,25 @@ export class UsersListComponent {
     });
     return result;
   };
+
+  toggleRow(row: RichUser): void {
+    this.selection.toggle(row);
+    this.cachedSelection.toggle(row);
+  }
+
+  pageChanged(): void {
+    if (isDynamicDataSource(this.dataSource)) {
+      return;
+    }
+    if (this.cachedSelection) {
+      this.tableCheckbox.selectCachedDataOnPage(
+        this.dataSource,
+        this.selection,
+        this.cachedSelection,
+        this.selection.compareWith,
+      );
+    }
+  }
 
   private dataSourceInit(users: RichUser[] | PaginatedRichUsers): void {
     const paginated = this.isPaginated(users);

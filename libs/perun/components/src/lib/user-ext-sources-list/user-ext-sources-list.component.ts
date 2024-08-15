@@ -4,7 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { GuiAuthResolver, TableCheckboxModified } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -51,7 +51,7 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private authResolver: GuiAuthResolver,
-    private tableCheckbox: TableCheckboxModified,
+    private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
   ) {}
 

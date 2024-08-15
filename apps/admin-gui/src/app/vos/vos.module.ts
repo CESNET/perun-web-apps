@@ -73,6 +73,7 @@ import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
 
 @NgModule({
   imports: [
@@ -158,6 +159,7 @@ import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
     MemberBansComponent,
     VoSettingsManageEmbeddedGroupsComponent,
     GroupSettingsManageEmbeddedGroupsComponent,
+    GroupInvitationsComponent,
   ],
 })
 export class VosModule {}

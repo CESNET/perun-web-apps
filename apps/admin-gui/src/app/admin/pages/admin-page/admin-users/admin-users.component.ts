@@ -12,7 +12,6 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { PageQuery } from '@perun-web-apps/perun/models';
 import { map, startWith, tap } from 'rxjs/operators';
-import { SelectionModel } from '@angular/cdk/collections';
 import {
   downloadData,
   getDataForExport,
@@ -35,7 +34,6 @@ export class AdminUsersComponent implements OnInit {
 
   usersWithoutVo = false;
   searchString: string;
-  selection = new SelectionModel<RichUser>(true, []);
   tableId = TABLE_ADMIN_USER_SELECT;
   attributes: string[] = [];
   displayedColumns: userTableColumn[] = ['user', 'id', 'name', 'email', 'logins', 'organization'];
@@ -55,7 +53,6 @@ export class AdminUsersComponent implements OnInit {
       }),
     ),
     tap(() => {
-      this.selection.clear();
       setTimeout(() => this.loadingSubject$.next(false), 200);
     }),
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),

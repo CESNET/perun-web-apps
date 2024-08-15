@@ -11,7 +11,7 @@
 </button>
 <button
   (click)="removeGroups()"
-  [disabled]="selected.selected.length === 0 || !canRemoveGroups()"
+  [disabled]="loading || selected.selected.length === 0 || !canRemoveGroups()"
   class="ms-2 me-2"
   color="warn"
   mat-flat-button
@@ -43,6 +43,7 @@
     [filter]="filteredValue"
     [resourceId]="resource.id"
     [selection]="selected"
-    [tableId]="tableId">
+    [tableId]="tableId"
+    [cacheSubject]="cacheSubject">
   </perun-web-apps-groups-list>
 </div>
