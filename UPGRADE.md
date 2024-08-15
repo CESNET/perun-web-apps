@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [17.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.4.0...v17.5.0) (2024-08-15)
+
+
+### Features
+
+* **admin:** display number of assigned services in OK state resources ([94d09c5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/94d09c5ec978fc897941925d9eee1a20c6d04870))
+* **admin:** invitations page ([aaffbe8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/aaffbe869029cbda9d4283d21056da83f332f02f))
+
+
+### Bug Fixes
+
+* **admin:** correct times in resource states table ([3f885f5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3f885f5f99b716914dfde1feec212a5fa4963cbe))
+
 ## [17.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.3.3...v17.4.0) (2024-08-02)
 
 
