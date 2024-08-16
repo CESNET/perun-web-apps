@@ -1,0 +1,44 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="group-theme position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.REVOKE_INVITATION.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      {{'DIALOGS.REVOKE_INVITATION.TEXT' | translate}}
+
+      <table mat-table [dataSource]="data.invitations" class="w-100 mt-3 table-margin">
+        <ng-container matColumnDef="email">
+          <th *matHeaderCellDef mat-header-cell>
+            {{'INVITATIONS_LIST.RECEIVER_EMAIL' | translate}}
+          </th>
+          <td *matCellDef="let invitation" mat-cell>
+            {{ invitation.receiverEmail }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expiration">
+          <th *matHeaderCellDef mat-header-cell>
+            {{'INVITATIONS_LIST.EXPIRATION' | translate}}
+          </th>
+          <td *matCellDef="let invitation" mat-cell>
+            {{ invitation.expiration }}
+          </td>
+        </ng-container>
+        <tr
+          *matHeaderRowDef="['email', 'expiration']"
+          class="font-weight-bolder"
+          mat-header-row></tr>
+        <tr *matRowDef="let invitation; columns: ['email', 'expiration'];" mat-row></tr>
+      </table>
+    </div>
+
+    <div mat-dialog-actions>
+      <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+        {{'DIALOGS.REVOKE_INVITATION.CANCEL' | translate}}
+      </button>
+      <button (click)="onSubmit()" [disabled]="loading" class="ms-2" color="warn" mat-flat-button>
+        {{'DIALOGS.REVOKE_INVITATION.SUBMIT' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
