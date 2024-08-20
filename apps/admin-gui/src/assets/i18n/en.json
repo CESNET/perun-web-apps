@@ -800,7 +800,8 @@
     "INVITATIONS": {
       "TITLE": "Preapproved invitations",
       "FILTER_STATUS": "Filter by status",
-      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email"
+      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email",
+      "EXTEND_EXPIRATION_DATE": "Extend expiration"
     },
     "RESOURCES": {
       "TITLE": "Resources",
@@ -2579,6 +2580,14 @@
       "SPECIFIC": "For specific namespace",
       "NAMESPACE": "Namespace",
       "NAMESPACE_ERROR": "Namespace cannot be empty"
+    },
+    "EXTEND_INVITATION_EXPIRATION_DATE": {
+      "TITLE": "Extend expiration date",
+      "TEXT": "Expiration date of the preapproved invitation sent to the {{receiverEmail}} will be extended",
+      "SUCCESS": "New expiration date for the preapproved invitation was set",
+      "INVALID_DATE": "Incorect new expiration date",
+      "SUBMIT": "Change",
+      "CANCEL": "Cancel"
     }
   },
   "MEMBERS_LIST": {

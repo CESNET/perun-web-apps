@@ -2,6 +2,14 @@
 
 <div class="align-elements">
   <perun-web-apps-refresh-button (click)="refreshTable()"></perun-web-apps-refresh-button>
+  <button
+    [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
+    (click)="onInvitationExtendDate()"
+    class="me-3"
+    color="accent"
+    mat-flat-button>
+    {{'GROUP_DETAIL.INVITATIONS.EXTEND_EXPIRATION_DATE' | translate}}
+  </button>
 
   <mat-form-field class="me-2 fix-select">
     <mat-label>{{'GROUP_DETAIL.INVITATIONS.FILTER_STATUS' | translate}}</mat-label>

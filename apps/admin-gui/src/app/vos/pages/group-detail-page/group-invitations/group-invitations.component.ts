@@ -17,13 +17,21 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_GROUP_INVITATIONS } from '@perun-web-apps/config/table-config';
-import { downloadData, getDataForExport } from '@perun-web-apps/perun/utils';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
+import { SelectedPendingInvitation } from '@perun-web-apps/perun/pipes';
 
 @Component({
   selector: 'app-group-invitations',
   templateUrl: './group-invitations.component.html',
   styleUrls: ['./group-invitations.component.scss'],
+  providers: [SelectedPendingInvitation],
 })
 export class GroupInvitationsComponent implements OnInit {
   static id = 'GroupInvitationsComponent';
@@ -89,6 +97,8 @@ export class GroupInvitationsComponent implements OnInit {
     private destroyRef: DestroyRef,
     private cacheHelperService: CacheHelperService,
     private invitationsManager: InvitationsManagerService,
+    private dialog: MatDialog,
+    public selectedPendingInvitation: SelectedPendingInvitation,
   ) {}
 
   ngOnInit(): void {
@@ -171,6 +181,22 @@ export class GroupInvitationsComponent implements OnInit {
           );
         },
       });
+  }
+
+  onInvitationExtendDate(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {
+      invitation: this.selection.selected[0],
+      theme: 'group-theme',
+    };
+    const dialogRef = this.dialog.open(InvitationExtendDateDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((isApplicationRevoked) => {
+      if (isApplicationRevoked) {
+        this.refreshTable();
+      }
+    });
   }
 
   private expirationDateToString(date: Date): string | null {
