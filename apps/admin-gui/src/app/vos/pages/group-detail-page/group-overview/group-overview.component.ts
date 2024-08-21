@@ -43,7 +43,7 @@ export class GroupOverviewComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     const currentGroupId = this.group.id;
-    this.group = this.entityStorageService.getEntity();
+    this.group = this.entityStorageService.getEntity(false);
     if (currentGroupId !== this.group.id) {
       this.loadData();
     }
@@ -51,7 +51,7 @@ export class GroupOverviewComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.loading = true;
-    this.group = this.entityStorageService.getEntity();
+    this.group = this.entityStorageService.getEntity(false);
     this.loadData();
   }
 

@@ -40,11 +40,13 @@ export class EntityStorageService {
     this.entityPathParam = entityPathParam;
   }
 
-  getEntity(): Entity {
+  getEntity(readFromUrl = true): Entity {
     // the stored entity might wrong (e.g. nav back from the same entity with different id)
     // try to read the id from the current path and use it on disagreement
+    // there is also the option of disabling this behaviour as it causes issues
+    // when applied to overview components that have cached subcomponents
     const entityIdFromUrl = this.readEntityIdFromUrl(this.url, this.entityPathParam);
-    if (entityIdFromUrl && entityIdFromUrl !== this.entity.id) {
+    if (readFromUrl && entityIdFromUrl && entityIdFromUrl !== this.entity.id) {
       this.entity.id = entityIdFromUrl;
     }
     return this.entity;
