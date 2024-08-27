@@ -55,7 +55,7 @@
                   <mat-option value="USER_INVITE">
                     {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_INVITE' | translate}}
                   </mat-option>
-                  <mat-option value="USER_PRE_APPROVED_INVITE">
+                  <mat-option *ngIf="data.groupId" value="USER_PRE_APPROVED_INVITE">
                     {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_PRE_APPROVED_INVITE' | translate}}
                   </mat-option>
                 </mat-select>

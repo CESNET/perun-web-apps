@@ -789,7 +789,7 @@
       "INVITE_ONE_PREAPPROVED": "Invite preapproved member",
       "INVITE_BULK": "Invite multiple members",
       "INVITE_BULK_PREAPPROVED": "Invite multiple preapproved members",
-      "INVITE_BUTTON_DISABLED": "Application form is setup incorrectly or neither invitation nor preapproved invitation notification does not exist.",
+      "INVITE_BUTTON_DISABLED": "The application form is set up incorrectly, or neither the invitation notification nor the preapproved invitation notification exists.",
       "INVITE_DISABLED": "Invitation notification does not exist.",
       "PREAPPROVED_INVITE_DISABLED": "Preapproved invitation notification does not exist.",
       "COPY_INVITATION_LINK": "Copy invitation link",

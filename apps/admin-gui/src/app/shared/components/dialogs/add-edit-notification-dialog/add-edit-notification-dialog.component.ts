@@ -149,8 +149,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
         const value = String(control.value);
         if (
           this.applicationMail.mailType === MailType.USER_PRE_APPROVED_INVITE &&
-          value &&
-          value.length > 0 &&
+          value?.length > 0 &&
           (!value.includes('{preapprovedInvitationLink}') ||
             !String(control.value).includes('{expirationDate}'))
         ) {
