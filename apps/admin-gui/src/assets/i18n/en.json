@@ -538,6 +538,7 @@
         "MAIL_TYPE_APP_REJECTED_USER": "Rejected / user",
         "MAIL_TYPE_APP_ERROR_VO_ADMIN": "Error / manager",
         "MAIL_TYPE_USER_INVITE": "Invitation / user",
+        "MAIL_TYPE_USER_PRE_APPROVED_INVITE": "Invitation (preapproved) / user",
         "DELETE_SUCCESS": "Email notification deleted.",
         "NO_EMAILS": "No mail notifications found.",
         "EDIT_SUCCESS": "Email notification was successfully edited",
@@ -788,7 +789,9 @@
       "INVITE_ONE_PREAPPROVED": "Invite preapproved member",
       "INVITE_BULK": "Invite multiple members",
       "INVITE_BULK_PREAPPROVED": "Invite multiple preapproved members",
-      "INVITE_DISABLED": "Application form is not setup correctly or invitation notification does not exist.",
+      "INVITE_BUTTON_DISABLED": "The application form is set up incorrectly, or neither the invitation notification nor the preapproved invitation notification exists.",
+      "INVITE_DISABLED": "Invitation notification does not exist.",
+      "PREAPPROVED_INVITE_DISABLED": "Preapproved invitation notification does not exist.",
       "COPY_INVITATION_LINK": "Copy invitation link",
       "COPY_INVITATION_LINK_SUCCESS": "Invitation link has been copied successfully",
       "COPY_INVITATION_LINK_DISABLED": "Application form is not setup correctly.",
@@ -800,7 +803,9 @@
     "INVITATIONS": {
       "TITLE": "Preapproved invitations",
       "FILTER_STATUS": "Filter by status",
-      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email"
+      "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email",
+      "EXTEND_EXPIRATION_DATE": "Extend expiration",
+      "REVOKE": "Revoke"
     },
     "RESOURCES": {
       "TITLE": "Resources",
@@ -1631,6 +1636,7 @@
       "APPLICATION_LINKS_ADMINISTRATOR_SECTION": "Application GUI links for administrators",
       "PERUN_LINKS_ADMINISTRATOR_SECTION": "Perun GUI links for administrators",
       "USER_INVITATIONS_SECTION": "User invitations",
+      "USER_PREAPPROVED_INVITATIONS_SECTION": "Preapproved user invitations",
       "APPID_DESCRIPTION": "application Id",
       "ACTOR_DESCRIPTION": "user's login used when submitting application",
       "EXTSOURCE_DESCRIPTION": "user's identity provider when submitting an application",
@@ -1675,6 +1681,7 @@
       "PERUNGUIURLCERT_DESCRIPTION": "link for personal certificate authentication",
       "PERUNGUINEWGUI_DESCRIPTION": "link for new admin GUI",
       "USER_INVITATIONS_DESCRIPTION": "Following tags can be used on user invitation template",
+      "USER_PREAPPROVED_INVITATIONS_DESCRIPTION": "Following tags can be used on preapproved user invitation template",
       "USER_INVITATIONS_VONAME_DESCRIPTION": "name of organization to invite user into",
       "USER_INVITATIONS_GROUPNAME_DESCRIPTION": "name of Group to invite user into",
       "USER_INVITATIONS_DISPLAYNAME_DESCRIPTION": "invited user's name",
@@ -1685,8 +1692,14 @@
       "INVITATIONLINKFED_DESCRIPTION": "link for Shibboleth IdP (federation) authentication",
       "INVITATIONLINKCERT_DESCRIPTION": "link for personal certificate authentication",
       "INVITATIONLINKNON_DESCRIPTION": "link without any authentication",
+      "USER_PREAPPROVED_INVITATIONS_LINK_DESCRIPTION": "link to registration form. Please make sure you set \"Authentication type\" setting of your organization.",
+      "USER_PREAPPROVED_INVITATIONS_EXPIRATION_DESCRIPTION": "invitation expiration date",
+      "USER_PREAPPROVED_INVITATIONS_SENDER_NAME_DESCRIPTION": "inviting user's name",
       "INVALID_NOTIFICATION": "Notification with selected type and selected application type already exist.",
-      "TAG_HINT": "Click to add tag"
+      "TAG_HINT": "Click to add tag",
+      "MISSING_TAGS_ERROR": "Mail text must contain tags {preapprovedInvitationLink} and {expirationDate}",
+      "MISSING_TAGS_TOOLTIP": "Mail text does not contain all required tags",
+      "DEFAULT_PRE_APPROVED_MAIL_TEXT":  "You have been invited to join group {groupName}. Please open the following link to fill out a preapproved application:\n{preapprovedInvitationLink}\nThis link will expire on {expirationDate}.\nThis message was generated automatically, please do not reply to it."
     },
     "NOTIFICATIONS_COPY_MAILS": {
       "TITLE": "Copy mail notifications from Organization/group",
@@ -2579,6 +2592,21 @@
       "SPECIFIC": "For specific namespace",
       "NAMESPACE": "Namespace",
       "NAMESPACE_ERROR": "Namespace cannot be empty"
+    },
+    "REVOKE_INVITATION": {
+      "TITLE": "Revoke invitations",
+      "TEXT": "These preapproved invitations will become invalid:",
+      "SUCCESS": "The preapproved invitation was revoked",
+      "SUBMIT": "Revoke",
+      "CANCEL": "Cancel"
+    },
+    "EXTEND_INVITATION_EXPIRATION_DATE": {
+      "TITLE": "Extend expiration date",
+      "TEXT": "Expiration date of the preapproved invitation sent to the {{receiverEmail}} will be extended",
+      "SUCCESS": "New expiration date for the preapproved invitation was set",
+      "INVALID_DATE": "Incorect new expiration date",
+      "SUBMIT": "Change",
+      "CANCEL": "Cancel"
     }
   },
   "MEMBERS_LIST": {

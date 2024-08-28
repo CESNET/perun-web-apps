@@ -71,7 +71,9 @@ export class GroupMembersComponent implements OnInit {
   addAuth: boolean;
   removeAuth: boolean;
   inviteAuth: boolean;
+  preApprovedInviteAuth: boolean;
   inviteDisabled = true;
+  preApprovedInviteDisabled = true;
   invitationLink: string;
   copyInvitationDisabled = true;
   copyAuth: boolean;
@@ -186,6 +188,10 @@ export class GroupMembersComponent implements OnInit {
       'group-sendInvitation_Vo_Group_String_String_String_policy',
       [this.group],
     );
+    this.preApprovedInviteAuth = this.guiAuthResolver.isAuthorized(
+      'inviteToGroup_Vo_Group_String_String_String_LocalDate_String_policy',
+      [this.group],
+    );
     this.copyAuth = this.guiAuthResolver.isAuthorized(
       'source-copyMembers_Group_List<Group>_List<Member>_boolean_policy',
       [this.group],
@@ -201,6 +207,14 @@ export class GroupMembersComponent implements OnInit {
         .isLinkInvitationEnabled(this.group.voId, this.group.id)
         .subscribe((enabled) => {
           this.copyInvitationDisabled = !enabled;
+        });
+    }
+
+    if (this.preApprovedInviteAuth) {
+      this.registrarService
+        .isPreApprovedInvitationEnabled(this.group.voId, this.group.id)
+        .subscribe((enabled) => {
+          this.preApprovedInviteDisabled = !enabled;
         });
     }
   }

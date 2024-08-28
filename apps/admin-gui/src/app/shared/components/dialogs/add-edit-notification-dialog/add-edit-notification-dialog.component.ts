@@ -1,13 +1,20 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { ChangeDetectorRef, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { openClose, tagsOpenClose } from '@perun-web-apps/perun/animations';
 import {
   ApplicationMail,
   GroupsManagerService,
+  MailType,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  PerunTranslateService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
+import { Observable, of, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 export interface ApplicationFormAddEditMailDialogData {
   theme: string;
@@ -48,6 +55,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private groupsService: GroupsManagerService,
     private store: StoreService,
+    private translate: PerunTranslateService,
     public cd: ChangeDetectorRef,
   ) {}
 
@@ -113,8 +121,9 @@ export class AddEditNotificationDialogComponent implements OnInit {
       formGroupFields[`${lang}-plain-text`] = new FormControl(
         this.applicationMail.message[lang].text,
         [],
+        [this.requestedTagsValidator.bind(this)],
       );
-      // Html - async validators are set in a separate component
+      // Html - other async validators are added in a separate component
       formGroupFields[`${lang}-html-subject`] = new FormControl(
         this.applicationMail.htmlMessage[lang].subject,
         [],
@@ -122,6 +131,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
       formGroupFields[`${lang}-html-text`] = new FormControl(
         this.applicationMail.htmlMessage[lang].text,
         [],
+        [this.requestedTagsValidator.bind(this)],
       );
       formGroupFields[`${lang}-html-subject`].markAsTouched();
       formGroupFields[`${lang}-html-text`].markAsTouched();
@@ -131,6 +141,29 @@ export class AddEditNotificationDialogComponent implements OnInit {
     this.inputFormGroup.valueChanges.subscribe(() => {
       this.checkEmptyContent();
     });
+  }
+
+  requestedTagsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    return timer(500).pipe(
+      switchMap(() => {
+        const value = String(control.value);
+        if (
+          this.applicationMail.mailType === MailType.USER_PRE_APPROVED_INVITE &&
+          value?.length > 0 &&
+          (!value.includes('{preapprovedInvitationLink}') ||
+            !String(control.value).includes('{expirationDate}'))
+        ) {
+          return of({ missingTags: 'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.MISSING_TAGS_ERROR' });
+        }
+        return of(null);
+      }),
+    );
+  }
+
+  missingTagsErrorExists(): boolean {
+    return Object.keys(this.inputFormGroup.controls).some((key) =>
+      this.inputFormGroup.get(key)?.hasError('missingTags'),
+    );
   }
 
   cancel(): void {
@@ -203,6 +236,24 @@ export class AddEditNotificationDialogComponent implements OnInit {
       }
     }
     this.invalidNotification = false;
+  }
+
+  toggleMailType(mailType: string): void {
+    if (mailType === MailType.USER_PRE_APPROVED_INVITE) {
+      for (const lang of this.languages) {
+        if (
+          !this.inputFormGroup.get([`${lang}-plain-text`]).value ||
+          String(this.inputFormGroup.get([`${lang}-plain-text`]).value).length === 0
+        )
+          this.translate.use(lang).subscribe(() => {
+            const defaultMailText = this.translate.instant(
+              'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT',
+            );
+            this.inputFormGroup.patchValue({ [`${lang}-plain-text`]: defaultMailText });
+          });
+      }
+    }
+    this.applicationMail.mailType = mailType as MailType;
   }
 
   /**

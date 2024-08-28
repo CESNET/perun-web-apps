@@ -65,4 +65,15 @@
   </div>
 
   <app-tag-section (addedTag)="addTag($event)" [tags]="userInvitationsTags"> </app-tag-section>
+
+  <div class="fw-bold pt-2">
+    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.USER_PREAPPROVED_INVITATIONS_SECTION' | translate}}:
+  </div>
+
+  <div class="font-italic text-muted">
+    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.USER_PREAPPROVED_INVITATIONS_DESCRIPTION' | translate}}
+  </div>
+
+  <app-tag-section (addedTag)="addTag($event)" [tags]="userPreapprovedInvitationsTags">
+  </app-tag-section>
 </div>

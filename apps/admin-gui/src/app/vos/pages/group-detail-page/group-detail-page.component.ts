@@ -142,10 +142,7 @@ export class GroupDetailPageComponent extends destroyDetailMixin() implements On
           this.parentGroup = additionalEntities.parentGroup;
           this.group = additionalEntities.richGroup;
 
-          this.entityStorageService.setEntityAndPathParam(
-            { id: this.group.id, voId: this.group.voId, beanName: this.group.beanName },
-            EntityPathParam.Group,
-          );
+          this.entityStorageService.setEntityAndPathParam(this.group, EntityPathParam.Group);
           addRecentlyVisited('groups', this.group);
           addRecentlyVisitedObject(this.group, this.vo.name);
 

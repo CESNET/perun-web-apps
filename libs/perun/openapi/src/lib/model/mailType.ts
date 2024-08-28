@@ -18,7 +18,8 @@ export type MailType =
   | 'APP_APPROVED_USER'
   | 'APP_REJECTED_USER'
   | 'APP_ERROR_VO_ADMIN'
-  | 'USER_INVITE';
+  | 'USER_INVITE'
+  | 'USER_PRE_APPROVED_INVITE';
 
 export const MailType = {
   APP_CREATED_USER: 'APP_CREATED_USER' as MailType,
@@ -29,4 +30,5 @@ export const MailType = {
   APP_REJECTED_USER: 'APP_REJECTED_USER' as MailType,
   APP_ERROR_VO_ADMIN: 'APP_ERROR_VO_ADMIN' as MailType,
   USER_INVITE: 'USER_INVITE' as MailType,
+  USER_PRE_APPROVED_INVITE: 'USER_PRE_APPROVED_INVITE' as MailType,
 };

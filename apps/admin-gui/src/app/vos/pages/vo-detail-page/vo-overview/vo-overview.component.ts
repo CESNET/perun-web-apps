@@ -35,7 +35,7 @@ export class VoOverviewComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     const currentVoId = this.vo.id;
-    this.vo = this.entityStorageService.getEntity();
+    this.vo = this.entityStorageService.getEntity(false);
     if (currentVoId !== this.vo.id) {
       this.refresh();
     }
@@ -43,7 +43,7 @@ export class VoOverviewComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.loading = true;
-    this.vo = this.entityStorageService.getEntity();
+    this.vo = this.entityStorageService.getEntity(false);
     this.refresh();
   }
 

@@ -11,19 +11,28 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { PageQuery } from '@perun-web-apps/perun/models';
-import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_GROUP_INVITATIONS } from '@perun-web-apps/config/table-config';
-import { downloadData, getDataForExport } from '@perun-web-apps/perun/utils';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
+import { InvitationRevokeDialogComponent } from '../../../../shared/components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
+import { SelectedPendingInvitation } from '@perun-web-apps/perun/pipes';
 
 @Component({
   selector: 'app-group-invitations',
   templateUrl: './group-invitations.component.html',
   styleUrls: ['./group-invitations.component.scss'],
+  providers: [SelectedPendingInvitation],
 })
 export class GroupInvitationsComponent implements OnInit {
   static id = 'GroupInvitationsComponent';
@@ -83,17 +92,26 @@ export class GroupInvitationsComponent implements OnInit {
   searchString = '';
   startDate: FormControl<Date> = new FormControl<Date>(null);
   endDate: FormControl<Date> = new FormControl<Date>(null);
+  revokeAuth: boolean;
+  authRights = {
+    revoke: false,
+    extend: false,
+  };
 
   constructor(
     private entityStorageService: EntityStorageService,
     private destroyRef: DestroyRef,
     private cacheHelperService: CacheHelperService,
     private invitationsManager: InvitationsManagerService,
+    private authResolver: GuiAuthResolver,
+    private dialog: MatDialog,
+    public selectedPendingInvitation: SelectedPendingInvitation,
   ) {}
 
   ngOnInit(): void {
     this.statuses.setValue(this.selectedStatuses);
     this.group = this.entityStorageService.getEntity();
+    this.setAuthRights();
 
     this.startDate.valueChanges.subscribe(() => this.refreshTable());
     this.endDate.valueChanges.subscribe(() => this.refreshTable());
@@ -173,6 +191,45 @@ export class GroupInvitationsComponent implements OnInit {
       });
   }
 
+  isRevokeButtonEnabled(): boolean {
+    return (
+      this.selection.selected.every(
+        (invitation) => invitation.status === InvitationStatus.PENDING,
+      ) && this.selection.selected.length > 0
+    );
+  }
+
+  onInvitationRevoke(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {
+      invitations: this.selection.selected,
+    };
+    const dialogRef = this.dialog.open(InvitationRevokeDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((isApplicationRevoked) => {
+      if (isApplicationRevoked) {
+        this.refreshTable();
+      }
+    });
+  }
+
+  onInvitationExtendDate(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {
+      invitation: this.selection.selected[0],
+      theme: 'group-theme',
+    };
+    const dialogRef = this.dialog.open(InvitationExtendDateDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((isApplicationRevoked) => {
+      if (isApplicationRevoked) {
+        this.refreshTable();
+      }
+    });
+  }
+
   private expirationDateToString(date: Date): string | null {
     return date ? formatDate(date, 'yyyy-MM-dd', 'en-GB') : null;
   }
@@ -197,5 +254,15 @@ export class GroupInvitationsComponent implements OnInit {
       default:
         return InvitationsOrderColumn.ID;
     }
+  }
+
+  private setAuthRights(): void {
+    this.authRights.revoke = this.authResolver.isAuthorized('revokeInvitationById_int_policy', [
+      this.group,
+    ]);
+    this.authRights.extend = this.authResolver.isAuthorized(
+      'extendInvitationExpiration_Invitation_LocalDate_policy',
+      [this.group],
+    );
   }
 }

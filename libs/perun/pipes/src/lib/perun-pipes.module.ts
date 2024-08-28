@@ -74,6 +74,7 @@ import { AppValuePipe } from './app-value.pipe';
 import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
 import { MailNotificationTooltipPipe } from './mail-notification-tooltip.pipe';
 import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
+import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
     AppFedInfoParsePipe,
     AppValuePipe,
     AppFriendlyNamePipe,
+    SelectedPendingInvitation,
   ],
   exports: [
     ResourceTagsToStringPipe,
@@ -229,6 +231,7 @@ import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
     AppFedInfoParsePipe,
     AppValuePipe,
     AppFriendlyNamePipe,
+    SelectedPendingInvitation,
   ],
   imports: [CommonModule],
 })
