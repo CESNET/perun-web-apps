@@ -50,6 +50,7 @@ import { ExpirationSelectComponent } from './expiration-select/expiration-select
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dialog.component';
 
 @NgModule({
   imports: [
@@ -102,6 +103,7 @@ import { MatSortModule } from '@angular/material/sort';
     ChangePasswordDialogComponent,
     AnonymizeUserDialogComponent,
     DeleteEntityDialogComponent,
+    RemoveRoleDialogComponent,
     ExportDataDialogComponent,
     RequestChangeDataQuotaDialogComponent,
     ExpirationSelectComponent,
@@ -129,6 +131,7 @@ import { MatSortModule } from '@angular/material/sort';
     ChangePasswordDialogComponent,
     AnonymizeUserDialogComponent,
     DeleteEntityDialogComponent,
+    RemoveRoleDialogComponent,
     ExportDataDialogComponent,
     RequestChangeDataQuotaDialogComponent,
     ExpirationSelectComponent,

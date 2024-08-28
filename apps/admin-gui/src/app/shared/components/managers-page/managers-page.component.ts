@@ -257,6 +257,7 @@ export class ManagersPageComponent implements OnInit {
       complementaryObject: this.complementaryObject,
       role: this.selectedRole,
       theme: this.theme,
+      checkLastWarning: this.selectionUsers.selected.length === this.directAdminsIds.length,
     };
 
     const dialogRef = this.dialog.open(RemoveManagerDialogComponent, config);
@@ -280,6 +281,7 @@ export class ManagersPageComponent implements OnInit {
       complementaryObject: this.complementaryObject,
       role: this.selectedRole,
       theme: this.theme,
+      doCheckLastWarning: this.selectionGroups.selected.length === this.groups.length,
     };
 
     const dialogRef = this.dialog.open(RemoveGroupManagerDialogComponent, config);

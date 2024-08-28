@@ -24,6 +24,8 @@ export class DeleteGroupDialogComponent implements OnInit {
   loading = false;
   relations: string[] = [];
   force = false;
+  lastVoAdminGroupIds: number[] = [];
+  lastFacAdminGroupIds: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<DeleteGroupDialogComponent>,
@@ -34,6 +36,7 @@ export class DeleteGroupDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.theme = this.data.theme;
     this.dataSource = new MatTableDataSource<Group>(this.data.groups);
     this.relations = [
@@ -45,6 +48,28 @@ export class DeleteGroupDialogComponent implements OnInit {
       'DIALOGS.DELETE_GROUP.ATTRIBUTE_RELATION',
       'DIALOGS.DELETE_GROUP.SUBGROUP_OTHER_RELATION',
     ].map((key) => this.translate.instant(key) as string);
+
+    this.groupService
+      .isGroupLastAdminInSomeVo(this.data.groups.map((group) => group.id))
+      .subscribe({
+        next: (lastVoAdminGroups) => {
+          this.lastVoAdminGroupIds = lastVoAdminGroups.map((group) => group.id);
+          this.groupService
+            .isGroupLastAdminInSomeFacility(this.data.groups.map((group) => group.id))
+            .subscribe({
+              next: (lastFacAdminGroups) => {
+                this.lastFacAdminGroupIds = lastFacAdminGroups.map((group) => group.id);
+                this.loading = false;
+              },
+              error: () => {
+                this.loading = false;
+              },
+            });
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
   }
 
   onCancel(): void {
@@ -54,18 +79,18 @@ export class DeleteGroupDialogComponent implements OnInit {
   onDelete(): void {
     this.loading = true;
     const groups: number[] = this.data.groups.map((elem) => elem.id);
-    this.groupService.deleteGroups({ groups: groups, forceDelete: this.force }).subscribe(
-      () => {
-        this.translate.get('DIALOGS.DELETE_GROUP.SUCCESS').subscribe(
-          (successMessage: string) => {
+    this.groupService.deleteGroups({ groups: groups, forceDelete: this.force }).subscribe({
+      next: () => {
+        this.translate.get('DIALOGS.DELETE_GROUP.SUCCESS').subscribe({
+          next: (successMessage: string) => {
             this.notificator.showSuccess(successMessage);
             this.dialogRef.close(true);
           },
-          () => (this.loading = false),
-        );
+          error: () => (this.loading = false),
+        });
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   onSubmit(result: DeleteDialogResult): void {

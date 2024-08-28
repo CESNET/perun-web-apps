@@ -30,3 +30,4 @@ export * from './lib/show-notification-history-dialog/show-notification-history-
 export * from './lib/delete-user-dialog/delete-user-dialog.component';
 export * from './lib/password-reset-dialog/password-reset-dialog.component';
 export * from './lib/bug-report-dialog/bug-report-dialog.component';
+export * from './lib/remove-role-dialog/remove-role-dialog.component';
