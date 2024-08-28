@@ -196,6 +196,7 @@ import { GroupRolesFilterComponent } from './components/group-roles-filter/group
 import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
 import { InvitePreapprovedMemberDialogComponent } from './components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
 import { BulkInvitePreapprovedMembersDialogComponent } from './components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
+import { InvitationExtendDateDialogComponent } from './components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 
 @NgModule({
   imports: [
@@ -486,6 +487,7 @@ import { BulkInvitePreapprovedMembersDialogComponent } from './components/dialog
     GroupRolesFilterComponent,
     ApplicationsBulkOperationFailureDialogComponent,
     ApplicationOperationErrorListComponent,
+    InvitationExtendDateDialogComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })
