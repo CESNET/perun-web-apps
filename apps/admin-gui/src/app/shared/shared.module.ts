@@ -197,6 +197,7 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
 import { InvitePreapprovedMemberDialogComponent } from './components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
 import { BulkInvitePreapprovedMembersDialogComponent } from './components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 import { InvitationExtendDateDialogComponent } from './components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
+import { InvitationRevokeDialogComponent } from './components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
 
 @NgModule({
   imports: [
@@ -488,6 +489,7 @@ import { InvitationExtendDateDialogComponent } from './components/dialogs/invita
     ApplicationsBulkOperationFailureDialogComponent,
     ApplicationOperationErrorListComponent,
     InvitationExtendDateDialogComponent,
+    InvitationRevokeDialogComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })

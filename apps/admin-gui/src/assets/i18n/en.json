@@ -804,7 +804,8 @@
       "TITLE": "Preapproved invitations",
       "FILTER_STATUS": "Filter by status",
       "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email",
-      "EXTEND_EXPIRATION_DATE": "Extend expiration"
+      "EXTEND_EXPIRATION_DATE": "Extend expiration",
+      "REVOKE": "Revoke"
     },
     "RESOURCES": {
       "TITLE": "Resources",
@@ -2591,6 +2592,13 @@
       "SPECIFIC": "For specific namespace",
       "NAMESPACE": "Namespace",
       "NAMESPACE_ERROR": "Namespace cannot be empty"
+    },
+    "REVOKE_INVITATION": {
+      "TITLE": "Revoke invitations",
+      "TEXT": "These preapproved invitations will become invalid:",
+      "SUCCESS": "The preapproved invitation was revoked",
+      "SUBMIT": "Revoke",
+      "CANCEL": "Cancel"
     },
     "EXTEND_INVITATION_EXPIRATION_DATE": {
       "TITLE": "Extend expiration date",
