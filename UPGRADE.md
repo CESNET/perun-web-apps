@@ -1,5 +1,21 @@
 Upgrade notes
 
+## [17.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.5.0...v17.6.0) (2024-08-28)
+
+
+### Features
+
+* **admin:** extend invitation expiration date ([a16b2d4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a16b2d4750c67282f7500462378a1e2ed2d6771e))
+* **admin:** revoke invitation functionality ([6df3eda](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6df3edad939c998039047a6e87bb7304b920af77))
+
+
+### Bug Fixes
+
+* **admin:** additional changes squash later ([3501c80](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3501c806d39dcfc6957338bb49d82f30e3c70315))
+* **admin:** include whole group object in entity-storage service ([5f53c3b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5f53c3b6fa783cd34edf27a13709fc2c8c4f1469))
+* **admin:** nav back on cached components clashing with entity storage service ([d9ed5ee](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d9ed5ee591265a196833a8e9a0b585bcacc973d0))
+* **admin:** preapprove invitation notification ([dd991b8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/dd991b8f9b9bdb0774685d94227e1a848f4f2eea))
+
 ## [17.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.4.0...v17.5.0) (2024-08-15)
 
 
