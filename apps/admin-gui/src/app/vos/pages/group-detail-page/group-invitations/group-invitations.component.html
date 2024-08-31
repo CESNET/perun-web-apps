@@ -8,6 +8,7 @@
   <button
     [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
     (click)="onInvitationExtendDate()"
+    *ngIf="authRights.extend"
     class="me-2"
     color="accent"
     mat-flat-button>

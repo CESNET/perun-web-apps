@@ -805,7 +805,29 @@
       "FILTER_STATUS": "Filter by status",
       "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email",
       "EXTEND_EXPIRATION_DATE": "Extend expiration",
-      "REVOKE": "Revoke"
+      "REVOKE": "Revoke",
+      "INVITATION_DETAIL": {
+        "TITLE": "Preapproved invitation",
+        "INVITATION_FOR_GROUP": "Invitation for group",
+        "INVITATION_IN_VO": "in Organization",
+        "STATUS": "Status",
+        "LANGUAGE": "Language",
+        "EXPIRATION_DATE": "Expiration date",
+        "REDIRECT_URL":"Redirect URL",
+        "SENT_BY":"Sent by",
+        "EXTEND_EXPIRATION_DATE": "Extend expiration",
+        "REVOKE": "Revoke",
+        "DATE": "Date",
+        "TOKEN": "Token",
+        "REVOKED_BY":"Revoked by",
+        "LAST_MODIFIED_BY": "Last modified by",
+        "APPLICATION": "Application",
+        "RECEIVER": {
+          "TITLE": "Receiver",
+          "NAME": "Name",
+          "EMAIL": "Email"
+        }
+      }
     },
     "RESOURCES": {
       "TITLE": "Resources",

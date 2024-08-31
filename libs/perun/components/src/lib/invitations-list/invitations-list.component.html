@@ -85,7 +85,10 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr
         *matRowDef="let invitation; columns: displayedColumns;"
-        class="dark-hover-list-item"
+        class="dark-hover-list-item cursor-pointer"
+        [perunWebAppsMiddleClickRouterLink]="['/organizations', invitation.voId.toString(), 'groups', invitation.groupId.toString(), 'invitations', invitation.id.toString()]"
+        (auxclick)="$event.preventDefault()"
+        [routerLink]="['/organizations', invitation.voId.toString(), 'groups', invitation.groupId.toString(), 'invitations', invitation.id.toString()]"
         mat-row></tr>
     </table>
   </perun-web-apps-table-wrapper>
