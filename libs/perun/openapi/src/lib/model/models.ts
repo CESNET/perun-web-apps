@@ -87,6 +87,8 @@ export * from './inputBlockServicesOnDestinations';
 export * from './inputChangeNonAuthzPasswordByToken';
 export * from './inputChangePasswordForLogin';
 export * from './inputChangePasswordForUser';
+export * from './inputCheckCheckboxHtml';
+export * from './inputCheckHtmlInput';
 export * from './inputCheckPasswordResetRequestByTokenIsValid';
 export * from './inputCheckPasswordStrength';
 export * from './inputConsolidate';

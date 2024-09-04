@@ -117,6 +117,8 @@ model/inputBlockServicesOnDestinations.ts
 model/inputChangeNonAuthzPasswordByToken.ts
 model/inputChangePasswordForLogin.ts
 model/inputChangePasswordForUser.ts
+model/inputCheckCheckboxHtml.ts
+model/inputCheckHtmlInput.ts
 model/inputCheckPasswordResetRequestByTokenIsValid.ts
 model/inputCheckPasswordStrength.ts
 model/inputConsolidate.ts
