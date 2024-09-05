@@ -136,6 +136,10 @@ export class AddGroupManagerDialogComponent implements OnInit {
 
   private _filter(value: string | Vo): Vo[] {
     const filterValue = typeof value === 'string' ? value.toLowerCase() : value.name.toLowerCase();
-    return this.vos.filter((option) => option.name.toLowerCase().includes(filterValue));
+    return this.vos.filter(
+      (option) =>
+        option.name.toLowerCase().includes(filterValue) ||
+        option.shortName.toLowerCase().includes(filterValue),
+    );
   }
 }
