@@ -8,8 +8,10 @@ import { ApplicationRejectDialogComponent } from '../../../shared/components/dia
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
 import {
   Application,
-  ApplicationFormItem,
   ApplicationFormItemData,
+  Invitation,
+  InvitationsManagerService,
+  MembersManagerService,
   RegistrarManagerService,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
@@ -37,9 +39,11 @@ export class ApplicationDetailComponent implements OnInit {
   rejectAuth: boolean;
   deleteAuth: boolean;
   resendAuth: boolean;
+  invitation: Invitation = null;
 
   constructor(
     private registrarManager: RegistrarManagerService,
+    private invitationsManager: InvitationsManagerService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -47,6 +51,7 @@ export class ApplicationDetailComponent implements OnInit {
     private router: Router,
     private authResolver: GuiAuthResolver,
     private usersService: UsersManagerService,
+    private membersService: MembersManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +84,19 @@ export class ApplicationDetailComponent implements OnInit {
               this.userData = value;
               this.dataSource = new MatTableDataSource<ApplicationFormItemData>(this.userData);
               this.setAuthRights();
-              this.loading = false;
+              if (this.application.group && this.application.state === 'APPROVED') {
+                this.invitationsManager.getInvitationByApplication(this.application.id).subscribe({
+                  next: (invitation) => {
+                    this.invitation = invitation;
+                    this.loading = false;
+                  },
+                  error: () => {
+                    this.loading = false;
+                  },
+                });
+              } else {
+                this.loading = false;
+              }
             });
           }
         });
@@ -127,36 +144,6 @@ export class ApplicationDetailComponent implements OnInit {
         [this.application.vo],
       );
     }
-  }
-
-  getLabel(formItem: ApplicationFormItem): string {
-    if (formItem.i18n['en'].label !== null) {
-      if (formItem.i18n['en'].label.length !== 0) {
-        return formItem.i18n['en'].label; // prerobit na ne en
-      }
-    }
-    return formItem.shortname;
-  }
-
-  submittedBy(): string {
-    return this.application.createdBy.slice(
-      this.application.createdBy.lastIndexOf('=') + 1,
-      this.application.createdBy.length,
-    );
-  }
-
-  getModifiedAtName(modifiedBy: string): string {
-    const index = modifiedBy.lastIndexOf('/CN=');
-    if (index !== -1) {
-      const string = modifiedBy
-        .slice(index + 4, modifiedBy.length)
-        .replace('/unstructuredName=', ' ');
-      if (string.lastIndexOf('\\') !== -1) {
-        return modifiedBy.slice(modifiedBy.lastIndexOf('=') + 1, modifiedBy.length);
-      }
-      return string;
-    }
-    return modifiedBy;
   }
 
   resendNotification(): void {
