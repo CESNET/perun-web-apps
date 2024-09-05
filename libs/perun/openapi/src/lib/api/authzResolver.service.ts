@@ -2779,6 +2779,258 @@ export class AuthzResolverService {
   }
 
   /**
+   * Checks whether groups is the last admin the facilities and returns those in which it is.
+   * @param group id of Group
+   * @param facilities list of Facility ids List&lt;Integer&gt;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public isGroupLastAdminInFacilities(
+    group: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Facility>>;
+  public isGroupLastAdminInFacilities(
+    group: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Facility>>>;
+  public isGroupLastAdminInFacilities(
+    group: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Facility>>>;
+  public isGroupLastAdminInFacilities(
+    group: number,
+    facilities: Array<number>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (group === null || group === undefined) {
+      throw new Error(
+        'Required parameter group was null or undefined when calling isGroupLastAdminInFacilities.',
+      );
+    }
+    if (facilities === null || facilities === undefined) {
+      throw new Error(
+        'Required parameter facilities was null or undefined when calling isGroupLastAdminInFacilities.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (group !== undefined && group !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>group, 'group');
+    }
+    if (facilities) {
+      facilities.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'facilities[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/isGroupLastAdminInFacilities`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<Facility>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Checks whether groups is the last admin the vos and returns those in which it is.
+   * @param group id of Group
+   * @param vos list of Vo ids List&lt;Integer&gt;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public isGroupLastAdminInVos(
+    group: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Vo>>;
+  public isGroupLastAdminInVos(
+    group: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Vo>>>;
+  public isGroupLastAdminInVos(
+    group: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Vo>>>;
+  public isGroupLastAdminInVos(
+    group: number,
+    vos: Array<number>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (group === null || group === undefined) {
+      throw new Error(
+        'Required parameter group was null or undefined when calling isGroupLastAdminInVos.',
+      );
+    }
+    if (vos === null || vos === undefined) {
+      throw new Error(
+        'Required parameter vos was null or undefined when calling isGroupLastAdminInVos.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (group !== undefined && group !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>group, 'group');
+    }
+    if (vos) {
+      vos.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'vos[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/isGroupLastAdminInVos`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<Vo>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Returns 1 if User has Perun admin role (perunadmin).
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2860,6 +3112,258 @@ export class AuthzResolverService {
     }
     return this.httpClient.get<number>(requestUrl, {
       context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Checks whether user is the last admin the facilities and returns those in which it is.
+   * @param user id of User
+   * @param facilities list of Facility ids List&lt;Integer&gt;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public isUserLastAdminInFacilities(
+    user: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Facility>>;
+  public isUserLastAdminInFacilities(
+    user: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Facility>>>;
+  public isUserLastAdminInFacilities(
+    user: number,
+    facilities: Array<number>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Facility>>>;
+  public isUserLastAdminInFacilities(
+    user: number,
+    facilities: Array<number>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (user === null || user === undefined) {
+      throw new Error(
+        'Required parameter user was null or undefined when calling isUserLastAdminInFacilities.',
+      );
+    }
+    if (facilities === null || facilities === undefined) {
+      throw new Error(
+        'Required parameter facilities was null or undefined when calling isUserLastAdminInFacilities.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'user');
+    }
+    if (facilities) {
+      facilities.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'facilities[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/isUserLastAdminInFacilities`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<Facility>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Checks whether user is the last admin the vos and returns those in which it is.
+   * @param user id of User
+   * @param vos list of Vo ids List&lt;Integer&gt;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public isUserLastAdminInVos(
+    user: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Vo>>;
+  public isUserLastAdminInVos(
+    user: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Vo>>>;
+  public isUserLastAdminInVos(
+    user: number,
+    vos: Array<number>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Vo>>>;
+  public isUserLastAdminInVos(
+    user: number,
+    vos: Array<number>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (user === null || user === undefined) {
+      throw new Error(
+        'Required parameter user was null or undefined when calling isUserLastAdminInVos.',
+      );
+    }
+    if (vos === null || vos === undefined) {
+      throw new Error(
+        'Required parameter vos was null or undefined when calling isUserLastAdminInVos.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'user');
+    }
+    if (vos) {
+      vos.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'vos[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/authzResolver/isUserLastAdminInVos`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<Vo>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,

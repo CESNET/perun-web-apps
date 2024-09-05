@@ -6,3 +6,7 @@
 .table-margin {
   margin-bottom: 20px;
 }
+
+::ng-deep .mdc-tooltip {
+  white-space: pre-line !important;
+}

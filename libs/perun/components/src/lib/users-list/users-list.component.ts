@@ -72,6 +72,8 @@ export class UsersListComponent implements OnInit, OnChanges {
   @Input() defaultSort: userTableColumn;
   @Input() sortableColumns: userTableColumn[] = ['id', 'name'];
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() disableCheckbox = false;
+  @Input() directManagerIds: number[] = null;
 
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
@@ -191,6 +193,9 @@ export class UsersListComponent implements OnInit, OnChanges {
     return 'data' in data;
   }
 
+  canBeSelected = (user: RichUser): boolean =>
+    !this.disableCheckbox || this.directManagerIds?.includes(user.id);
+
   masterToggle(): void {
     if (isDynamicDataSource(this.dataSource)) {
       this.tableCheckbox.masterTogglePaginated(
@@ -198,6 +203,7 @@ export class UsersListComponent implements OnInit, OnChanges {
         this.selection,
         this.cachedSelection,
         !this.isAllSelected(),
+        this.canBeSelected,
       );
     } else {
       this.tableCheckbox.masterToggle(
@@ -209,7 +215,8 @@ export class UsersListComponent implements OnInit, OnChanges {
         this.dataSource.sort,
         this.dataSource.paginator.pageSize,
         this.dataSource.paginator.pageIndex,
-        false,
+        true,
+        this.canBeSelected,
       );
     }
   }
@@ -219,9 +226,14 @@ export class UsersListComponent implements OnInit, OnChanges {
       return this.tableCheckbox.isAllSelectedPaginated(
         this.dataSource,
         this.selection.selected.length,
+        this.canBeSelected,
       );
     } else {
-      return this.tableCheckbox.isAllSelected(this.selection.selected.length, this.dataSource);
+      return this.tableCheckbox.isAllSelected(
+        this.selection.selected.length,
+        this.dataSource,
+        this.canBeSelected,
+      );
     }
   }
 

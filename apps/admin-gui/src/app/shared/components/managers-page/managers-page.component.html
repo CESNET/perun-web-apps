@@ -2,7 +2,10 @@
   {{'SHARED.COMPONENTS.MANAGERS_PAGE.TITLE' | translate}}
 </h1>
 
-<mat-tab-group (selectedTabChange)="tabChanged($event)" mat-stretch-tabs="false">
+<mat-tab-group
+  (selectedTabChange)="tabChanged($event)"
+  mat-stretch-tabs="false"
+  preserveContent="true">
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
@@ -65,6 +68,8 @@
           [displayColumns]="displayedUserColumns"
           [selection]="selectionUsers"
           [users]="managers"
+          [disableCheckbox]="true"
+          [directManagerIds]="directAdminsIds"
           [cacheSubject]="cacheSubject">
         </perun-web-apps-users-list>
       </div>

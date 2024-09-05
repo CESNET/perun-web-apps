@@ -1317,7 +1317,9 @@
       "CANCEL": "Cancel",
       "DELETE": "Remove",
       "SUCCESS": "Selected managers were removed",
-      "WARNING_REMOVE_YOURSELF": "You are removing yourself as manager - you will immediately lose the rights of the {{role}} role for this entity."
+      "WARNING_REMOVE_YOURSELF": "You are removing yourself as manager - you will immediately lose the rights of the {{role}} role for this entity.",
+      "WARNING_REMOVE_LAST_VO": "You are removing the last organization admin. This VO will have no contact person.",
+      "WARNING_REMOVE_LAST_FACILITY": "You are removing the last facility admin. This facility will have no contact person."
     },
     "ADD_MANAGERS": {
       "TITLE": "Add manager",
@@ -1395,7 +1397,20 @@
       "ASK": "Do you want to proceed?",
       "CANCEL": "Cancel",
       "DELETE": "Remove",
-      "SUCCESS": "Selected groups were removed"
+      "SUCCESS": "Selected groups were removed",
+      "WARNING_REMOVE_LAST_VO": "You are removing the last organization admin group. This VO will have no contact person.",
+      "WARNING_REMOVE_LAST_FACILITY": "You are removing the last facility admin group. This facility will have no contact person."
+    },
+    "REMOVE_ROLE": {
+      "TITLE": "Remove role",
+      "DESCRIPTION": "{{role}} role will be removed.",
+      "DESCRIPTION_WITH_OBJECTS": "{{role}} role will be removed from {{count}} following objects:",
+      "ASK": "Do you want to proceed?",
+      "TOOLTIP": "This entity will have no contact person.",
+      "WARNING_REMOVE_LAST_VO": "You are removing the last organization admin. The highlighted organizations will have no contact person.",
+      "WARNING_REMOVE_LAST_FACILITY": "You are removing the last facility admin. The highlighted facilities will have no contact person.",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
     },
     "RE_SEND_NOTIFICATION": {
       "TITLE": "Re-send notification",
@@ -2424,6 +2439,10 @@
       "CONTROL": "Type \"{{action}}\" to confirm",
       "ASK": "Are you sure you want to permanently {{action}} following",
       "WARN": "This action will also delete all",
+      "WARN_LAST_VO": "You are deleting a group, which is the last organization admin for some VOs. These VOs will have no contact person.",
+      "WARN_LAST_VO_TOOLTIP": "This group is the last organization admin for some VOs. These VOs will have no contact person.",
+      "WARN_LAST_FAC": "You are deleting a group, which is the last facility admin for some facilities. These facilities will have no contact person.",
+      "WARN_LAST_FAC_TOOLTIP": "This group is the last facility admin for some facilities. These facilities will have no contact person.",
       "TYPE_DELETE": "delete",
       "TYPE_ANONYMIZE": "anonymize"
     },
@@ -2650,7 +2669,7 @@
     "LOGINS": "Logins",
     "PERSON": "Person",
     "SERVICE": "Service",
-    "INDIRECT_DISABLED_TOOLTIP": "Indirect manager cannot be deleted"
+    "INDIRECT_DISABLED_TOOLTIP": "Derived manager cannot be directly removed"
   },
   "AUDIT_MESSAGES_LIST": {
     "ID": "Id",

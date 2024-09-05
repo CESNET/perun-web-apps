@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 import { Invitation } from './invitation';
-import { ApplicationFormItemData } from './applicationFormItemData';
 
 export interface InvitationWithSender extends Invitation {
   senderName?: string;
