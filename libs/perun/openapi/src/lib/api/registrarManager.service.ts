@@ -47,6 +47,10 @@ import { InputAddApplicationMailForGroup } from '../model/inputAddApplicationMai
 // @ts-ignore
 import { InputAddApplicationMailForVo } from '../model/inputAddApplicationMailForVo';
 // @ts-ignore
+import { InputCheckCheckboxHtml } from '../model/inputCheckCheckboxHtml';
+// @ts-ignore
+import { InputCheckHtmlInput } from '../model/inputCheckHtmlInput';
+// @ts-ignore
 import { InputConsolidate } from '../model/inputConsolidate';
 // @ts-ignore
 import { InputConsolidateIdentityUsingToken } from '../model/inputConsolidateIdentityUsingToken';
@@ -1108,48 +1112,43 @@ export class RegistrarManagerService {
 
   /**
    * Check whether input html is safe for our application form item checkbox labels
-   * @param html string containing the html to check for
+   * @param InputCheckCheckboxHtml
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public checkCheckboxHtml(
-    html: string,
+    InputCheckCheckboxHtml: InputCheckCheckboxHtml,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any>;
   public checkCheckboxHtml(
-    html: string,
+    InputCheckCheckboxHtml: InputCheckCheckboxHtml,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<any>>;
   public checkCheckboxHtml(
-    html: string,
+    InputCheckCheckboxHtml: InputCheckCheckboxHtml,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<any>>;
   public checkCheckboxHtml(
-    html: string,
+    InputCheckCheckboxHtml: InputCheckCheckboxHtml,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (html === null || html === undefined) {
+    if (InputCheckCheckboxHtml === null || InputCheckCheckboxHtml === undefined) {
       throw new Error(
-        'Required parameter html was null or undefined when calling checkCheckboxHtml.',
+        'Required parameter InputCheckCheckboxHtml was null or undefined when calling checkCheckboxHtml.',
       );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (html !== undefined && html !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>html, 'html');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1182,6 +1181,14 @@ export class RegistrarManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1202,9 +1209,8 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<any>(requestUrl, {
+    return this.httpClient.post<any>(requestUrl, InputCheckCheckboxHtml, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -1395,46 +1401,43 @@ export class RegistrarManagerService {
 
   /**
    * Checks whether input is valid html according to the rules in our custom html parser (returns warning message if the input will be autocompleted/changed during the sanitization)
-   * @param html input html to check
+   * @param InputCheckHtmlInput
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public checkHtmlInput(
-    html: string,
+    InputCheckHtmlInput: InputCheckHtmlInput,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<string>;
   public checkHtmlInput(
-    html: string,
+    InputCheckHtmlInput: InputCheckHtmlInput,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<string>>;
   public checkHtmlInput(
-    html: string,
+    InputCheckHtmlInput: InputCheckHtmlInput,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<string>>;
   public checkHtmlInput(
-    html: string,
+    InputCheckHtmlInput: InputCheckHtmlInput,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (html === null || html === undefined) {
-      throw new Error('Required parameter html was null or undefined when calling checkHtmlInput.');
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (html !== undefined && html !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>html, 'html');
+    if (InputCheckHtmlInput === null || InputCheckHtmlInput === undefined) {
+      throw new Error(
+        'Required parameter InputCheckHtmlInput was null or undefined when calling checkHtmlInput.',
+      );
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1467,6 +1470,14 @@ export class RegistrarManagerService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -1487,9 +1498,8 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<string>(requestUrl, {
+    return this.httpClient.post<string>(requestUrl, InputCheckHtmlInput, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
