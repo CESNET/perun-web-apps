@@ -27,6 +27,7 @@
           [displayWith]="displayFn">
           <mat-option *ngFor="let vo of filteredOptions | async" [value]="vo">
             {{vo.name}}
+            <span class="text-muted">{{vo.shortName}}</span>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
