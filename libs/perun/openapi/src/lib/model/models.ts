@@ -238,6 +238,7 @@ export * from './paginatedRichApplications';
 export * from './paginatedRichGroups';
 export * from './paginatedRichMembers';
 export * from './paginatedRichUsers';
+export * from './personalDataChangeConfig';
 export * from './perunAppsConfig';
 export * from './perunBean';
 export * from './perunException';

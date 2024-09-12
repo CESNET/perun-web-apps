@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>{{'DIALOGS.CHANGE_ORGANIZATION.TITLE'|customTranslate | translate}}</h1>
+<div mat-dialog-content class="dialog-container user-theme">
+  <mat-spinner *ngIf="loading" class="me-auto ms-auto" [diameter]="50"></mat-spinner>
+  <div *ngIf="!loading">
+    <mat-radio-group [(ngModel)]="selectedOrganization">
+      <div *ngIf="data.enableLinkedOrganization" class="d-flex flex-column">
+        <mat-radio-button
+          *ngFor="let uesOrganization of uesOrganizations"
+          class="me-3"
+          color="primary"
+          value="{{uesOrganization}}">
+          {{uesOrganization}}
+        </mat-radio-button>
+      </div>
+      <perun-web-apps-alert
+        alert_type="info"
+        *ngIf="data.enableLinkedOrganization && uesOrganizations.length === 0">
+        {{'DIALOGS.CHANGE_ORGANIZATION.NO_LINKED_ACCOUNTS' | translate}}
+      </perun-web-apps-alert>
+      <mat-radio-button
+        *ngIf="data.enableCustomOrganization"
+        color="primary"
+        class="d-flex flex-wraps"
+        value="{{CUSTOM_OPTION}}">
+        <mat-form-field class="me-2">
+          <mat-label>{{'DIALOGS.CHANGE_ORGANIZATION.ORGANIZATION_NAME' | translate}}</mat-label>
+          <input matInput [formControl]="customOrganization" />
+          <mat-error
+            *ngIf="customOrganization.invalid"
+            >{{'DIALOGS.CHANGE_ORGANIZATION.ERROR_EMPTY_NAME' | translate}}</mat-error
+          >
+        </mat-form-field>
+      </mat-radio-button>
+    </mat-radio-group>
+    <p
+      class="pt-4 ps-3"
+      *ngIf="data.enableCustomOrganization && data.customOrganizationRequiresApprove">
+      {{'DIALOGS.CHANGE_ORGANIZATION.NOTE' | translate}}
+    </p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button class="ms-auto" (click)="onCancel()">
+    {{'DIALOGS.CHANGE_ORGANIZATION.CANCEL'| customTranslate | translate}}
+  </button>
+  <button
+    (click)="onSubmit()"
+    [disabled]="loading || !selectedOrganization || (selectedOrganization === CUSTOM_OPTION && customOrganization.errors)"
+    class="ms-2"
+    color="accent"
+    mat-flat-button>
+    {{'DIALOGS.CHANGE_ORGANIZATION.CHANGE'| customTranslate | translate}}
+  </button>
+</div>

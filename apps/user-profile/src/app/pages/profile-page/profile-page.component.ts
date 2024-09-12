@@ -2,12 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment-timezone';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeEmailDialogComponent } from '@perun-web-apps/perun/dialogs';
+import {
+  ChangeEmailDialogComponent,
+  ChangeNameDialogComponent,
+  ChangeOrganizationDialogComponent,
+} from '@perun-web-apps/perun/dialogs';
 import {
   Attribute,
   AttributeDefinition,
   AttributesManagerService,
   AuthzResolverService,
+  ConfigManagerService,
+  PersonalDataChangeConfig,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
@@ -18,6 +24,8 @@ import {
   NotificatorService,
   StoreService,
   PreferredLanguageService,
+  InitAuthService,
+  ChangeNameService,
 } from '@perun-web-apps/perun/services';
 import { MailChangeFailedDialogComponent } from '@perun-web-apps/perun/dialogs';
 
@@ -62,6 +70,8 @@ export class ProfilePageComponent implements OnInit {
   organization = '';
   currentTimezone = '';
 
+  personalDataChangeConfig: PersonalDataChangeConfig;
+
   constructor(
     public translateService: TranslateService,
     private dialog: MatDialog,
@@ -74,6 +84,9 @@ export class ProfilePageComponent implements OnInit {
     private storeService: StoreService,
     private apiRequestConfiguration: ApiRequestConfigurationService,
     private preferredLangService: PreferredLanguageService,
+    private configManagerService: ConfigManagerService,
+    private initAuthService: InitAuthService,
+    private changeNameService: ChangeNameService,
   ) {
     translateService
       .get('PROFILE_PAGE.MAIL_CHANGE_SUCCESS')
@@ -84,30 +97,36 @@ export class ProfilePageComponent implements OnInit {
     const params = this.route.snapshot.queryParamMap;
     const token = params.get('token');
     const u = params.get('u');
-    this.loading = true;
-    if (token && u) {
-      this.apiRequestConfiguration.dontHandleErrorForNext();
-      this.usersManagerService
-        .validatePreferredEmailChangeWithToken({ token: token, u: Number.parseInt(u, 10) })
-        .subscribe({
-          next: () => {
-            this.notificator.showSuccess(this.successMessage);
-            void this.router.navigate([], { replaceUrl: true, queryParamsHandling: 'preserve' });
-            this.getData();
-          },
-          error: () => {
-            const config = getDefaultDialogConfig();
-            config.width = '600px';
 
-            const dialogRef = this.dialog.open(MailChangeFailedDialogComponent, config);
-            dialogRef.afterClosed().subscribe(() => {
+    this.loading = true;
+
+    this.configManagerService.getPersonalDataChangeConfig().subscribe((dataChangeConfig) => {
+      this.personalDataChangeConfig = dataChangeConfig;
+
+      if (token && u) {
+        this.apiRequestConfiguration.dontHandleErrorForNext();
+        this.usersManagerService
+          .validatePreferredEmailChangeWithToken({ token: token, u: Number.parseInt(u, 10) })
+          .subscribe({
+            next: () => {
+              this.notificator.showSuccess(this.successMessage);
+              void this.router.navigate([], { replaceUrl: true, queryParamsHandling: 'preserve' });
               this.getData();
-            });
-          },
-        });
-    } else {
-      this.getData();
-    }
+            },
+            error: () => {
+              const config = getDefaultDialogConfig();
+              config.width = '600px';
+
+              const dialogRef = this.dialog.open(MailChangeFailedDialogComponent, config);
+              dialogRef.afterClosed().subscribe(() => {
+                this.getData();
+              });
+            },
+          });
+      } else {
+        this.getData();
+      }
+    });
   }
 
   getData(): void {
@@ -229,8 +248,15 @@ export class ProfilePageComponent implements OnInit {
 
   changeEmail(): void {
     const config = getDefaultDialogConfig();
-    config.width = '350px';
-    config.data = { userId: this.userId };
+    config.width = '800px';
+    config.data = {
+      userId: this.userId,
+      enableLinkedEmail: this.personalDataChangeConfig.enableLinkedEmail,
+      enableCustomEmail: this.personalDataChangeConfig.enableCustomEmail,
+      customEmailRequiresVerification:
+        this.personalDataChangeConfig.customEmailRequiresVerification,
+      currentEmail: this.email,
+    };
 
     const dialogRef = this.dialog.open(ChangeEmailDialogComponent, config);
 
@@ -241,12 +267,87 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+  changeName(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '1200px';
+    config.data = {
+      userId: this.userId,
+      enableLinkedName: this.personalDataChangeConfig.enableLinkedName,
+      enableCustomName: this.personalDataChangeConfig.enableCustomName,
+      customNameRequiresApprove: this.personalDataChangeConfig.customNameRequiresApprove,
+      currentName: this.fullName,
+    };
+
+    const dialogRef = this.dialog.open(ChangeNameDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((success) => {
+      if (success) {
+        this.getName();
+      }
+    });
+  }
+
+  changeOrganization(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '1000px';
+    config.data = {
+      userId: this.userId,
+      enableLinkedOrganization: this.personalDataChangeConfig.enableLinkedOrganization,
+      enableCustomOrganization: this.personalDataChangeConfig.enableCustomOrganization,
+      customOrganizationRequiresApprove:
+        this.personalDataChangeConfig.customOrganizationRequiresApprove,
+      currentOrganization: this.additionalAttributes.find(
+        (attr) => attr.attribute.friendlyName === 'organization',
+      ).attribute.value as string,
+    };
+
+    const dialogRef = this.dialog.open(ChangeOrganizationDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((success) => {
+      if (success) {
+        this.getOrganization();
+      }
+    });
+  }
+
   getEmail(): void {
+    this.loading = true;
     this.attributesManagerService
       .getUserAttributeByName(this.userId, 'urn:perun:user:attribute-def:def:preferredMail')
       .subscribe((attribute) => {
         this.email = (attribute?.value as string) ?? '-';
+        this.loading = false;
       });
+  }
+
+  getName(): void {
+    this.loading = true;
+    this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe((richUser) => {
+      this.fullName = new UserFullNamePipe().transform(richUser);
+      void this.initAuthService.loadPrincipal().then(() => {
+        this.changeNameService.changeName();
+        this.loading = false;
+      });
+    });
+  }
+
+  getOrganization(): void {
+    this.loading = true;
+    this.usersManagerService.getRichUserWithAttributes(this.userId).subscribe((richUser) => {
+      const organizationAttr = richUser.userAttributes.find(
+        (att) => att.friendlyName === 'organization',
+      );
+      // Update organization attribute value but keep the order of displayed attributes
+      this.additionalAttributes = this.additionalAttributes.map((displayedAttr) =>
+        displayedAttr.attribute.id === organizationAttr.id
+          ? {
+              ...displayedAttr,
+              attribute: { ...displayedAttr.attribute, value: organizationAttr.value as string },
+            }
+          : displayedAttr,
+      );
+      this.loading = false;
+    });
   }
 
   private addAttribute(att: AttributeDefinition, spec: ProfileAttribute, langs: string[]): void {
