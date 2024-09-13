@@ -15,6 +15,7 @@ export interface RemoveManagerDialogData {
   managers: RichUser[];
   role: Role;
   theme: string;
+  checkLastWarning: boolean;
 }
 
 @Component({
@@ -28,6 +29,8 @@ export class RemoveManagerDialogComponent implements OnInit {
   loading: boolean;
   theme: string;
   removeSelf: boolean;
+  warningMessage: string;
+  doLastWarning = false;
 
   constructor(
     public dialogRef: MatDialogRef<RemoveManagerDialogComponent>,
@@ -40,11 +43,39 @@ export class RemoveManagerDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.dataSource = new MatTableDataSource<RichUser>(this.data.managers);
     this.theme = this.data.theme;
     this.removeSelf =
       this.data.managers.map((user) => user.id).includes(this.store.getPerunPrincipal().userId) &&
       !this.authService.isPerunAdmin();
+    if (this.theme === 'vo-theme') {
+      this.warningMessage = 'DIALOGS.REMOVE_MANAGERS.WARNING_REMOVE_LAST_VO';
+    } else if (this.theme === 'facility-theme') {
+      this.warningMessage = 'DIALOGS.REMOVE_MANAGERS.WARNING_REMOVE_LAST_FACILITY';
+    }
+    if (
+      this.data.checkLastWarning &&
+      (this.data.role === Role.VOADMIN || this.data.role === Role.FACILITYADMIN)
+    ) {
+      this.authzService
+        .getAuthzAdminGroups(
+          this.data.role.toString(),
+          this.data.complementaryObject.id,
+          this.data.complementaryObject.beanName,
+        )
+        .subscribe({
+          next: (groups) => {
+            this.doLastWarning = groups.length === 0;
+            this.loading = false;
+          },
+          error: () => {
+            this.loading = false;
+          },
+        });
+    } else {
+      this.loading = false;
+    }
   }
 
   onCancel(): void {

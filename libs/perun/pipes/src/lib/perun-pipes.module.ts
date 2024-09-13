@@ -74,6 +74,7 @@ import { AppValuePipe } from './app-value.pipe';
 import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
 import { MailNotificationTooltipPipe } from './mail-notification-tooltip.pipe';
 import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
+import { RemoveGroupTooltipPipe } from './remove-group-tooltip.pipe';
 import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
 
 @NgModule({
@@ -99,6 +100,7 @@ import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
     MemberOrganizationPipe,
     MemberStatusDisabledPipe,
     MemberCheckboxLabelPipe,
+    RemoveGroupTooltipPipe,
     GroupExpirationPipe,
     ParseDatePipe,
     SelectedSponsorPipe,
@@ -179,6 +181,7 @@ import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
     MemberOrganizationPipe,
     MemberStatusDisabledPipe,
     MemberCheckboxLabelPipe,
+    RemoveGroupTooltipPipe,
     ParseDatePipe,
     SelectedSponsorPipe,
     TechnicalOwnersPipe,

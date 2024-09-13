@@ -9,6 +9,12 @@
         {{entityType}}
       </h1>
       <div class="dialog-container" mat-dialog-content>
+        <perun-web-apps-alert *ngIf="lastGroupsVo?.length > 0" alert_type="warn">
+          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_VO' | translate}}
+        </perun-web-apps-alert>
+        <perun-web-apps-alert *ngIf="lastGroupsFac?.length > 0" alert_type="warn">
+          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_FAC' | translate}}
+        </perun-web-apps-alert>
         <div *ngIf="!disableForce">
           {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
           {{'DIALOGS.DELETE_ENTITY.ONLY' | translate}}
@@ -25,8 +31,20 @@
         <table [dataSource]="entityNames" class="w-100 table-margin" mat-table>
           <ng-container matColumnDef="name">
             <th *matHeaderCellDef mat-header-cell></th>
-            <td *matCellDef="let entity" mat-cell>
-              {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
+            <td
+              *matCellDef="let entity"
+              mat-cell
+              [matTooltip]="entity | removeGroupTooltip: lastGroupsVo: lastGroupsFac"
+              [matTooltipDisabled]="!lastGroupsVo?.includes(entity.id) && !lastGroupsFac?.includes(entity.id)"
+              [matTooltipClass]="'my-tooltip'">
+              <div class="d-flex align-items-center">
+                {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
+                <mat-icon
+                  class="ms-2"
+                  *ngIf="lastGroupsVo?.includes(entity.id) || lastGroupsFac?.includes(entity.id)"
+                  >warning</mat-icon
+                >
+              </div>
             </td>
           </ng-container>
 

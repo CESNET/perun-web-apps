@@ -9,9 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Invitation } from './invitation';
 
-export interface InvitationWithSender extends Invitation {
-  senderName?: string;
-  senderEmail?: string;
+/**
+ * input to checkHtmlInput
+ */
+export interface InputCheckHtmlInput {
+  /**
+   * input html to check
+   */
+  html: string;
 }

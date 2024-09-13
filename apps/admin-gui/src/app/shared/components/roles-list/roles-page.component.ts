@@ -30,7 +30,6 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddGroupRoleDialogComponent } from '../dialogs/add-role-dialog/add-group-role-dialog/add-group-role-dialog.component';
 import { AddUserRoleDialogComponent } from '../dialogs/add-role-dialog/add-user-role-dialog/add-user-role-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import {
   GuiAuthResolver,
   NotificatorService,
@@ -39,6 +38,7 @@ import {
 import { DisplayedRolePipe, ManageableEntitiesPipe } from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject, iif, mergeMap, Observable, of } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
+import { RemoveRoleDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 @Component({
   selector: 'app-perun-web-apps-roles-page',
@@ -245,20 +245,13 @@ export class RolesPageComponent implements OnInit {
     config.width = '550px';
     config.data = {
       theme: this.entityType === 'GROUP' ? 'group-theme' : 'user-theme',
-      title: 'ROLES.REMOVE',
-      description: this.selectedRole.getValue().primaryObject
-        ? this.translate.instant('ROLES.REMOVE_DESC_WITH_OBJECTS', {
-            role: this.rolePipe.transform(role),
-            count: displayItems.length,
-          })
-        : this.translate.instant('ROLES.REMOVE_DESC', { role: this.rolePipe.transform(role) }),
+      role: this.rolePipe.transform(role),
+      entityId: this.entityId,
       items: displayItems,
-      alert: false,
-      type: 'remove',
-      showAsk: true,
+      primaryObject: this.selectedRole.getValue().primaryObject,
     };
 
-    const dialogRef = this.dialog.open(UniversalConfirmationItemsDialogComponent, config);
+    const dialogRef = this.dialog.open(RemoveRoleDialogComponent, config);
     dialogRef.afterClosed().subscribe({
       next: (result) => {
         if (result) {
@@ -282,14 +275,14 @@ export class RolesPageComponent implements OnInit {
     }
   }
 
-  private getItems(): string[] {
+  private getItems(): Facility[] | Group[] | RichResource[] | Vo[] {
     if (!this.selectedRole.getValue().primaryObject) {
       return [];
     }
     if (this.selectedRole.getValue().primaryObject === 'Facility') {
-      return this.selectedFacilities.selected.map((ef) => ef.facility.name);
+      return this.selectedFacilities.selected.map((ef) => ef.facility);
     }
-    return this.selection.selected.map((bean) => (bean as Group | RichResource | Vo).name);
+    return this.selection.selected.map((bean) => bean as Group | RichResource | Vo);
   }
 
   private removeRole(role: RoleManagementRules): void {

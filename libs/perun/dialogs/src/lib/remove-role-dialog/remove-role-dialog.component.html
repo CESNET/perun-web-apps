@@ -1,0 +1,47 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.REMOVE_MANAGERS.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      <perun-web-apps-alert *ngIf="doLastWarning" alert_type="warn">
+        {{warningMessage | translate}}
+      </perun-web-apps-alert>
+
+      <p>
+        {{description}}
+      </p>
+      <div class="fw-bold">
+        {{'DIALOGS.REMOVE_ROLE.ASK' | translate}}
+      </div>
+
+      <table *ngIf="data.items.length" mat-table [dataSource]="dataSource" class="w-100">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td
+            mat-cell
+            *matCellDef="let item"
+            [matTooltip]="'DIALOGS.REMOVE_ROLE.TOOLTIP' | translate"
+            [matTooltipDisabled]="!lastIds.includes(item.id)">
+            <div class="d-flex align-items-center">
+              {{item.name}}
+              <mat-icon class="ms-2" *ngIf="lastIds?.includes(item.id)">warning</mat-icon>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-weight-bolder"></tr>
+        <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-stroked-button class="ms-auto" (click)="onCancel()">
+        {{'DIALOGS.REMOVE_ROLE.CANCEL' | translate}}
+      </button>
+      <button mat-flat-button class="ms-2" color="warn" (click)="onSubmit()">
+        {{'DIALOGS.REMOVE_ROLE.REMOVE' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

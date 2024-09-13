@@ -28,7 +28,7 @@ export class HtmlEscapeService {
       return timer(500).pipe(
         switchMap(() => {
           this.apiRequestConfiguration.dontHandleErrorForNext();
-          return this.registrarManager.checkCheckboxHtml(String(control.value));
+          return this.registrarManager.checkCheckboxHtml({ html: String(control.value) });
         }),
         map(() => null),
         catchError((err: RPCError) => {
@@ -56,7 +56,7 @@ export class HtmlEscapeService {
       return timer(500).pipe(
         switchMap(() => {
           this.apiRequestConfiguration.dontHandleErrorForNext();
-          return this.registrarManager.checkHtmlInput(String(control.value));
+          return this.registrarManager.checkHtmlInput({ html: String(control.value) });
         }),
         map((warningMessage) => {
           if (this.autocompletionMessage.value !== warningMessage) {

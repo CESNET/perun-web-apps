@@ -32,6 +32,10 @@ export class DeleteEntityDialogComponent implements OnInit {
   loading = false;
   @Input()
   anonymize = false;
+  @Input()
+  lastGroupsVo: number[] = [];
+  @Input()
+  lastGroupsFac: number[] = [];
 
   @Output()
   deleted: EventEmitter<DeleteDialogResult> = new EventEmitter<DeleteDialogResult>();
@@ -40,6 +44,7 @@ export class DeleteEntityDialogComponent implements OnInit {
 
   deleteReg: RegExp;
   deleteControl: UntypedFormControl;
+  warnMessage: string;
 
   ngOnInit(): void {
     this.deleteReg = this.anonymize ? /^ANONYMIZE$/ : /^DELETE$/;

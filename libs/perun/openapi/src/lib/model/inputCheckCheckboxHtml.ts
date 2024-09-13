@@ -9,9 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Invitation } from './invitation';
 
-export interface InvitationWithSender extends Invitation {
-  senderName?: string;
-  senderEmail?: string;
+/**
+ * input to checkCheckboxHtml
+ */
+export interface InputCheckCheckboxHtml {
+  /**
+   * string containing the html to check for
+   */
+  html: string;
 }

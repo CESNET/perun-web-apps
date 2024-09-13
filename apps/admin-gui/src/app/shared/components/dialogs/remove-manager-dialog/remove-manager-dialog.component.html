@@ -5,6 +5,12 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.REMOVE_MANAGERS.TITLE' | translate}}</h1>
     <div mat-dialog-content>
+      <perun-web-apps-alert *ngIf="doLastWarning" alert_type="warn">
+        {{warningMessage | translate}}
+      </perun-web-apps-alert>
+      <perun-web-apps-alert *ngIf="removeSelf" alert_type="warn">
+        {{'DIALOGS.REMOVE_MANAGERS.WARNING_REMOVE_YOURSELF' | translate: {role: 'ROLES.' + this.data.role | translate} }}
+      </perun-web-apps-alert>
       <p>
         {{'DIALOGS.REMOVE_MANAGERS.DESCRIPTION' | translate}}
       </p>
@@ -22,9 +28,6 @@
         <tr *matHeaderRowDef="displayedColumns" class="font-weight-bolder" mat-header-row></tr>
         <tr *matRowDef="let manager; columns: displayedColumns;" mat-row></tr>
       </table>
-      <perun-web-apps-alert *ngIf="removeSelf" alert_type="warn">
-        {{'DIALOGS.REMOVE_MANAGERS.WARNING_REMOVE_YOURSELF' | translate: {role: 'ROLES.' + this.data.role | translate} }}
-      </perun-web-apps-alert>
     </div>
     <div mat-dialog-actions>
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
