@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [17.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.6.0...v17.7.0) (2024-09-16)
+
+
+### Features
+
+* **admin:** display a warning when removing last VO/Facility admin ([a5b64ca](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a5b64ca6d8b85221e3e72ea9a4ece97782d4a3c2))
+* **admin:** search vos by short name ([9b2a8da](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9b2a8da88a90c28935aac2b265165f056c571d13))
+
+
+### Bug Fixes
+
+* **admin:** change html check methods to POST ([f045df0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f045df0cbaa4632b42321a8a3932ea3625265882))
+* **admin:** correctly use label instead of placeholder text in invite dialogs ([4c8a99a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4c8a99a462ef87b9140b63bb1075a83eb33d6a7a))
+
 ## [17.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.5.0...v17.6.0) (2024-08-28)
 
 
