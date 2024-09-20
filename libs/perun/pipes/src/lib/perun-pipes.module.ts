@@ -76,12 +76,16 @@ import { MailNotificationTooltipPipe } from './mail-notification-tooltip.pipe';
 import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
 import { RemoveGroupTooltipPipe } from './remove-group-tooltip.pipe';
 import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
+import { ModifiedNamePipe } from './modified-name.pipe';
+import { GetLabelPipe } from './get-label.pipe';
 
 @NgModule({
   declarations: [
     ResourceTagsToStringPipe,
     IsVirtualAttributePipe,
     UserFullNamePipe,
+    ModifiedNamePipe,
+    GetLabelPipe,
     GetMailFromAttributesPipe,
     CustomTranslatePipe,
     GroupSyncIconPipe,
@@ -161,6 +165,8 @@ import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
     ResourceTagsToStringPipe,
     IsVirtualAttributePipe,
     UserFullNamePipe,
+    ModifiedNamePipe,
+    GetLabelPipe,
     GetMailFromAttributesPipe,
     CustomTranslatePipe,
     GroupSyncIconPipe,

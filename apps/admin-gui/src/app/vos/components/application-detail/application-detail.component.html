@@ -83,11 +83,31 @@
     </span>
   </div>
 
+  <div *ngIf="this.invitation && application.state === 'APPROVED'" class="card p-3 mt-2">
+    <mat-card-title
+      ><i class="material-icons green align-text-top">done</i>
+      <a
+        class="group-link"
+        [routerLink]="['/organizations', application.vo.id, 'groups', application.group.id, 'invitations', invitation.id]"
+        [perunWebAppsMiddleClickRouterLink]="['/organizations', application.vo.id.toString(), 'groups', application.group.id.toString(), 'invitations', invitation.id.toString()]"
+        >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.PREAPPROVED' | translate}}</a
+      ></mat-card-title
+    >
+    <div>
+      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
+      >: {{invitation.createdBy | modifiedName}}
+    </div>
+    <div>
+      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+      >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+    </div>
+  </div>
+
   <div *ngIf="this.application.state === 'REJECTED'" class="card p-3 mt-2">
     <mat-card-title
       ><i class="material-icons red align-text-top">clear</i>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
-      {{getModifiedAtName(application.modifiedBy)}}</mat-card-title
+      {{application.modifiedBy | modifiedName}}</mat-card-title
     >
     <div>
       <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
@@ -95,11 +115,11 @@
     </div>
   </div>
 
-  <div *ngIf="this.application.state === 'APPROVED'" class="card p-3 mt-2">
+  <div *ngIf="this.application.state === 'APPROVED' && !this.invitation" class="card p-3 mt-2">
     <mat-card-title
       ><i class="material-icons green align-text-top">done</i>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
-      {{getModifiedAtName(application.modifiedBy)}}</mat-card-title
+      {{application.modifiedBy | modifiedName}}</mat-card-title
     >
     <div>
       <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
@@ -121,7 +141,7 @@
     <mat-card-title
       ><i class="material-icons align-text-top">redo</i>
       {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate}}:
-      {{application.user === null ? submittedBy() : application.user | userFullName}}</mat-card-title
+      {{application.user === null ? application.createdBy.slice(application.createdBy.lastIndexOf('=') + 1, application.createdBy.length) : application.user | userFullName}}</mat-card-title
     >
 
     <div *ngIf="userMail">
@@ -148,7 +168,7 @@
       <ng-container matColumnDef="label">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let userData" class="fw-bold" mat-cell>
-          {{getLabel(userData.formItem)}}
+          {{userData.formItem | getLabel}}
         </td>
       </ng-container>
       <ng-container matColumnDef="value">
