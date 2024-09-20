@@ -725,6 +725,8 @@
         "TYPE": "Type",
         "STATE": "State",
         "SUBMITTED_BY": "Submitted by",
+        "PREAPPROVED": "Approved via preapproved invitation:",
+        "SENDER": "Sender",
         "EXT_SRC": "From External Source",
         "LOA": "Level of Assurance",
         "MAIL": "Preferred mail",

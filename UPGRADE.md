@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [17.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.7.0...v17.8.0) (2024-09-20)
+
+
+### Features
+
+* **admin:** indicate that application was approved via preapproved invitation ([c75e09d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c75e09d3066281319eefbf51b1a7e9ba5d50dcc2))
+
 ## [17.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.6.0...v17.7.0) (2024-09-16)
 
 
