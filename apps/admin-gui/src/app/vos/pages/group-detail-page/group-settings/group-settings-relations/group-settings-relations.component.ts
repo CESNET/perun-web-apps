@@ -40,7 +40,7 @@ export class GroupSettingsRelationsComponent implements OnInit {
         (acc, grp) =>
           acc &&
           this.authResolver.isAuthorized('result-removeGroupUnion_Group_Group_policy', [
-            { id: this.group.id, beanName: 'Group' },
+            { id: this.group.id, beanName: 'Group', voId: this.group.voId } as Group,
           ]) &&
           this.authResolver.isAuthorized('operand-removeGroupUnion_Group_Group_policy', [grp]),
         true,
