@@ -249,7 +249,11 @@ export class AddEditNotificationDialogComponent implements OnInit {
             const defaultMailText = this.translate.instant(
               'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT',
             );
+            const defaultMailSubject = this.translate.instant(
+              'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT',
+            );
             this.inputFormGroup.patchValue({ [`${lang}-plain-text`]: defaultMailText });
+            this.inputFormGroup.patchValue({ [`${lang}-plain-subject`]: defaultMailSubject });
           });
       }
     }
