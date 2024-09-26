@@ -1716,7 +1716,8 @@
       "TAG_HINT": "Click to add tag",
       "MISSING_TAGS_ERROR": "Mail text must contain tags {preapprovedInvitationLink} and {expirationDate}",
       "MISSING_TAGS_TOOLTIP": "Mail text does not contain all required tags",
-      "DEFAULT_PRE_APPROVED_MAIL_TEXT":  "You have been invited to join group {groupName}. Please open the following link to fill out a preapproved application:\n{preapprovedInvitationLink}\nThis link will expire on {expirationDate}.\nThis message was generated automatically, please do not reply to it."
+      "DEFAULT_PRE_APPROVED_MAIL_TEXT":  "You have been invited to join group {groupName}. Please open the following link to fill out a preapproved application:\n{preapprovedInvitationLink}\nThis link will expire on {expirationDate}.\nThis message was generated automatically, please do not reply to it.",
+      "DEFAULT_PRE_APPROVED_MAIL_SUBJECT":  "Invitation to {groupName}"
     },
     "NOTIFICATIONS_COPY_MAILS": {
       "TITLE": "Copy mail notifications from Organization/group",
