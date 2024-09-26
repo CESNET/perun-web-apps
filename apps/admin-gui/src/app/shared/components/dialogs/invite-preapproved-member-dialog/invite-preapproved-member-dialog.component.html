@@ -27,7 +27,7 @@
         <mat-label>{{'DIALOGS.CHANGE_EXPIRATION.DATE_LABEL'|translate}}</mat-label>
         <input
           [min]="minDate"
-          [max]="null"
+          [max]="maxDate"
           [formControl]="expirationControl"
           [matDatepicker]="picker"
           class="disable"

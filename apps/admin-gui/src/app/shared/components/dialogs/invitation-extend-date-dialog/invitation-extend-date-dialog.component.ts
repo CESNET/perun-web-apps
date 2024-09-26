@@ -19,6 +19,7 @@ export interface DialogData {
 export class InvitationExtendDateDialogComponent implements OnInit {
   loading = false;
   minDate: Date;
+  maxDate: Date;
   defaultDate: Date;
   dateForm: FormControl<string>;
   theme: string;
@@ -34,8 +35,9 @@ export class InvitationExtendDateDialogComponent implements OnInit {
   ngOnInit(): void {
     this.theme = this.data.theme;
     this.minDate = new Date(this.data.invitation.expiration);
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() + 1);
     this.defaultDate = new Date(this.minDate);
-
     this.defaultDate.setMonth(this.defaultDate.getMonth() + 1);
     this.minDate.setDate(this.minDate.getDate() + 1);
 
