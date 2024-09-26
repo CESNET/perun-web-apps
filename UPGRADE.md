@@ -1,5 +1,17 @@
 Upgrade notes
 
+## [17.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.8.0...v17.9.0) (2024-09-26)
+
+
+### Features
+
+* **admin:** prefill preapproved invitation notification subject ([e9e7ce4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e9e7ce4b2ea74b07453041b6560ac38e52c3f9d3))
+
+
+### Bug Fixes
+
+* **admin:** group relations authorization ([5a8c67e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5a8c67e635c856021b2546d3e8f25dd1342fa2c5))
+
 ## [17.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.7.0...v17.8.0) (2024-09-20)
 
 
