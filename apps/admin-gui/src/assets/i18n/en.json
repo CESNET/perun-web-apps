@@ -2647,7 +2647,7 @@
     "NO_FILTER_RESULTS_ALERT": "No members are matching your query",
     "INDIRECT_MEMBER": "Show indirect member origin",
     "DIRECT_MEMBER": "Direct member",
-    "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied",
+    "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied. You must go to member’s origin group.",
     "CHECKBOX_TOOLTIP_UNALTERABLE": "Members from member organizations cannot be directly removed",
     "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
     "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
