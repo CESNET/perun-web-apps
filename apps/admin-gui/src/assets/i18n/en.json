@@ -40,6 +40,7 @@
   "VO_MANAGEMENT": {
     "TITLE": "Select organization",
     "CREATE_VO": "New",
+    "CREATE_DISABLED": "Organization creator role is required to create organizations",
     "REMOVE_VO": "Remove",
     "FILTER_PLACEHOLDER": "Filter by name",
     "SETTINGS": {

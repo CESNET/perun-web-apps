@@ -8,15 +8,20 @@
   </h1>
 
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    (click)="onCreateVo()"
-    *ngIf="createAuth"
-    class="me-2 action-button"
-    data-cy="new-vo-button"
-    color="accent"
-    mat-flat-button>
-    {{'VO_MANAGEMENT.CREATE_VO' | translate}}
-  </button>
+  <span
+    [matTooltipDisabled]="createAuth"
+    matTooltip="{{'VO_MANAGEMENT.CREATE_DISABLED' | translate}}"
+    matTooltipPosition="below">
+    <button
+      (click)="onCreateVo()"
+      [disabled]="!createAuth"
+      class="me-2 action-button"
+      data-cy="new-vo-button"
+      color="accent"
+      mat-flat-button>
+      {{'VO_MANAGEMENT.CREATE_VO' | translate}}
+    </button>
+  </span>
   <button
     (click)="onRemoveVo()"
     *ngIf="deleteAuth"
