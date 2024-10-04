@@ -74,6 +74,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
+import { GroupInvitationDetailComponent } from './pages/group-detail-page/group-invitation-detail/group-invitation-detail.component';
 
 @NgModule({
   imports: [
@@ -160,6 +161,7 @@ import { GroupInvitationsComponent } from './pages/group-detail-page/group-invit
     VoSettingsManageEmbeddedGroupsComponent,
     GroupSettingsManageEmbeddedGroupsComponent,
     GroupInvitationsComponent,
+    GroupInvitationDetailComponent,
   ],
 })
 export class VosModule {}

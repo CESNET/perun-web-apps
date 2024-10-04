@@ -68,6 +68,7 @@ import { ResourceSettingsBansComponent } from '../facilities/pages/resource-deta
 import { VoSettingsManageEmbeddedGroupsComponent } from './pages/vo-detail-page/vo-settings/vo-settings-manage-embedded-groups/vo-settings-manage-embedded-groups.component';
 import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
 import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
+import { GroupInvitationDetailComponent } from './pages/group-detail-page/group-invitation-detail/group-invitation-detail.component';
 
 const routes: Routes = [
   {
@@ -283,6 +284,11 @@ const routes: Routes = [
         path: 'invitations',
         component: GroupInvitationsComponent,
         data: { animation: 'GroupInvitationsPage' },
+      },
+      {
+        path: 'invitations/:invitationId',
+        component: GroupInvitationDetailComponent,
+        data: { animation: 'GroupInvitationDetailPage' },
       },
       {
         path: 'resources',
