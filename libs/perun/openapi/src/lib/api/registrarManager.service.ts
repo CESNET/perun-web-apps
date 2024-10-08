@@ -1509,6 +1509,218 @@ export class RegistrarManagerService {
   }
 
   /**
+   * Resets the group application form to the state after creation - deletes all form items, removes modules and sets approval styles to manual.
+   * @param group id of Group
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public clearGroupForm(
+    group: number,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<ApplicationForm>;
+  public clearGroupForm(
+    group: number,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<ApplicationForm>>;
+  public clearGroupForm(
+    group: number,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<ApplicationForm>>;
+  public clearGroupForm(
+    group: number,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (group === null || group === undefined) {
+      throw new Error(
+        'Required parameter group was null or undefined when calling clearGroupForm.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (group !== undefined && group !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>group, 'group');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/urlinjsonout/registrarManager/clearGroupForm`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<ApplicationForm>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Resets the vo application form to the state after creation - deletes all form items, removes modules and sets approval styles to manual.
+   * @param vo id of Vo
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public clearVoForm(
+    vo: number,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<ApplicationForm>;
+  public clearVoForm(
+    vo: number,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<ApplicationForm>>;
+  public clearVoForm(
+    vo: number,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<ApplicationForm>>;
+  public clearVoForm(
+    vo: number,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (vo === null || vo === undefined) {
+      throw new Error('Required parameter vo was null or undefined when calling clearVoForm.');
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (vo !== undefined && vo !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>vo, 'vo');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/urlinjsonout/registrarManager/clearVoForm`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<ApplicationForm>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Join user identities by access tokens.
    * Join user identities by access tokens.
    * @param InputConsolidate
@@ -1738,6 +1950,7 @@ export class RegistrarManagerService {
    * Copy all form items from selected Group into another.
    * @param fromGroup source group
    * @param toGroup destination group
+   * @param idempotent when true existing target items are deleted
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1745,6 +1958,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToGroup(
     fromGroup?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -1753,6 +1967,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToGroup(
     fromGroup?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -1761,6 +1976,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToGroup(
     fromGroup?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -1769,6 +1985,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToGroup(
     fromGroup?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1787,6 +2004,13 @@ export class RegistrarManagerService {
         localVarQueryParameters,
         <any>toGroup,
         'toGroup',
+      );
+    }
+    if (idempotent !== undefined && idempotent !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idempotent,
+        'idempotent',
       );
     }
 
@@ -1855,6 +2079,7 @@ export class RegistrarManagerService {
    * Copy all form items from selected Group into VO.
    * @param fromGroup source group
    * @param toVo destination VO
+   * @param idempotent when true existing target items are deleted
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1862,6 +2087,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToVo(
     fromGroup?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -1870,6 +2096,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToVo(
     fromGroup?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -1878,6 +2105,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToVo(
     fromGroup?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -1886,6 +2114,7 @@ export class RegistrarManagerService {
   public copyFormFromGroupToVo(
     fromGroup?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1901,6 +2130,13 @@ export class RegistrarManagerService {
     }
     if (toVo !== undefined && toVo !== null) {
       localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>toVo, 'toVo');
+    }
+    if (idempotent !== undefined && idempotent !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idempotent,
+        'idempotent',
+      );
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1968,6 +2204,7 @@ export class RegistrarManagerService {
    * Copy all form items from selected VO into Group.
    * @param fromVo source VO
    * @param toGroup destination group
+   * @param idempotent when true existing target items are deleted
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1975,6 +2212,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToGroup(
     fromVo?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -1983,6 +2221,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToGroup(
     fromVo?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -1991,6 +2230,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToGroup(
     fromVo?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -1999,6 +2239,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToGroup(
     fromVo?: number,
     toGroup?: number,
+    idempotent?: boolean,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -2017,6 +2258,13 @@ export class RegistrarManagerService {
         localVarQueryParameters,
         <any>toGroup,
         'toGroup',
+      );
+    }
+    if (idempotent !== undefined && idempotent !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idempotent,
+        'idempotent',
       );
     }
 
@@ -2085,6 +2333,7 @@ export class RegistrarManagerService {
    * Copy all form items from selected VO into another.
    * @param fromVo source VO
    * @param toVo destination VO
+   * @param idempotent when true existing target items are deleted
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -2092,6 +2341,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToVo(
     fromVo?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -2100,6 +2350,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToVo(
     fromVo?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -2108,6 +2359,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToVo(
     fromVo?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -2116,6 +2368,7 @@ export class RegistrarManagerService {
   public copyFormFromVoToVo(
     fromVo?: number,
     toVo?: number,
+    idempotent?: boolean,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -2131,6 +2384,13 @@ export class RegistrarManagerService {
     }
     if (toVo !== undefined && toVo !== null) {
       localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>toVo, 'toVo');
+    }
+    if (idempotent !== undefined && idempotent !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idempotent,
+        'idempotent',
+      );
     }
 
     let localVarHeaders = this.defaultHeaders;
