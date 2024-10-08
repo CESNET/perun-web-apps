@@ -18,6 +18,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 import { InvitationRevokeDialogComponent } from '../../../../shared/components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { InvitationResendDialogComponent } from '../../../../shared/components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 
 @Component({
   selector: 'app-group-invitation-detail',
@@ -40,6 +41,7 @@ export class GroupInvitationDetailComponent implements OnInit {
   authRights = {
     revoke: false,
     extend: false,
+    resend: false,
   };
 
   constructor(
@@ -169,6 +171,15 @@ export class GroupInvitationDetailComponent implements OnInit {
     });
   }
 
+  onInvitationResend(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {
+      invitations: [this.invitation],
+    };
+    this.dialog.open(InvitationResendDialogComponent, config);
+  }
+
   private setAuthRights(): void {
     this.authRights.revoke = this.authResolver.isAuthorized('revokeInvitationById_int_policy', [
       this.group,
@@ -177,5 +188,8 @@ export class GroupInvitationDetailComponent implements OnInit {
       'extendInvitationExpiration_Invitation_LocalDate_policy',
       [this.group],
     );
+    this.authRights.resend = this.authResolver.isAuthorized('resendInvitation_Invitation_policy', [
+      this.group,
+    ]);
   }
 }
