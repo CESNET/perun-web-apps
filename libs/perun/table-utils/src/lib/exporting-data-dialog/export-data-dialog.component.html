@@ -1,0 +1,17 @@
+<div class="loading-container">
+  <h1 mat-dialog-title>
+    {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.EXPORT_LOADING' | translate}}
+  </h1>
+  <div mat-dialog-content class="dialog-container user-theme">
+    <mat-spinner class="me-auto ms-auto" [diameter]="50"></mat-spinner>
+    <perun-web-apps-alert
+      alert_type="info"
+      >{{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.EXPORT_INFO' | translate}}</perun-web-apps-alert
+    >
+  </div>
+  <div mat-dialog-actions>
+    <button (click)="close()" mat-stroked-button>
+      {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.BUTTON_CLOSE' | customTranslate | translate}}
+    </button>
+  </div>
+</div>

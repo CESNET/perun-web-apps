@@ -22,8 +22,8 @@ import {
   parseUserEmail,
   parseVo,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { MemberTypePipe } from '../../pipes/member-type.pipe';
 import { DisabledCandidatePipe } from '../../pipes/disabled-candidate.pipe';

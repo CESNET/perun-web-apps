@@ -40,7 +40,7 @@ import {
 
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TableWrapperComponent } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ChangeMemberStatusOrExpirationDialogComponent } from '../change-member-status-or-expiration-dialog/change-member-status-or-expiration-dialog.component';
 import {
   DynamicDataSource,

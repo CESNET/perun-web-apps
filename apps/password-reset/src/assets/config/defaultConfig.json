@@ -173,5 +173,6 @@
         "passwordOperationTimeoutError": "Operace překročila předpokládaný časový limit. Zkuste to prosím znovu."
       }
     }
-  }
+  },
+  "export_limit": 1000
 }

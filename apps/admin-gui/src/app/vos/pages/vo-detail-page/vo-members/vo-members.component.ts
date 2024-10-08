@@ -29,7 +29,11 @@ import {
 import { Urns } from '@perun-web-apps/perun/urns';
 import { FormControl } from '@angular/forms';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
-import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
 import { InviteMemberDialogComponent } from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
 import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { VoAddMemberDialogComponent } from '../../../components/vo-add-member-dialog/vo-add-member-dialog.component';
@@ -39,6 +43,7 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 import { concatMap, map, tap } from 'rxjs/operators';
 import { MembersListService } from '@perun-web-apps/perun/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'app-vo-members',
@@ -303,18 +308,42 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
     length: number;
     getDataForColumnFun: (data: RichMember, column: string) => string;
   }): void {
-    this.membersListService.downloadAll(
-      a.format,
-      a.length,
-      a.getDataForColumnFun,
-      this.nextPage,
-      this.membersService,
-      this.vo.id,
-      this.attrNames,
-      this.statuses,
-      null,
-      null,
-      this.displayedColumns,
-    );
+    const pageQuery = this.nextPage.getValue();
+
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
+
+    const call = this.membersService
+      .getMembersPage({
+        vo: this.vo.id,
+        attrNames: this.attrNames,
+        query: {
+          order: pageQuery.order,
+          pageSize: a.length,
+          offset: 0,
+          sortColumn: this.membersListService.getSortColumn(pageQuery.sortColumn),
+          searchString: pageQuery.searchString,
+          statuses: this.statuses.value as VoMemberStatuses[],
+        },
+      })
+      .subscribe({
+        next: (result) => {
+          exportLoading.close();
+          downloadData(
+            getDataForExport(result.data, this.displayedColumns, a.getDataForColumnFun),
+            a.format,
+          );
+        },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
+      });
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 }

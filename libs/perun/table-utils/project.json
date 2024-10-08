@@ -1,0 +1,21 @@
+{
+  "name": "perun-table-utils",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/perun/table-utils/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/perun/table-utils/jest.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/perun/table-utils"]
+    }
+  },
+  "tags": []
+}

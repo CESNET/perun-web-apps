@@ -18,7 +18,6 @@ import {
   getExportDataForColumn,
   getSortDataColumn,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -31,6 +30,7 @@ import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'perun-web-apps-invitations-list',

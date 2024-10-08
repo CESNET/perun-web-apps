@@ -25,7 +25,8 @@
     <perun-web-apps-table-options
       (exportDisplayedData)="exportDisplayedData.emit($event)"
       (exportAllData)="exportAllData.emit($event)"
-      [allowExportAll]="allowExportAll"
+      [dataLength]="dataLength"
+      [displayedLength]="(this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) < this.pageSize ? (this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) : this.pageSize "
       *ngIf="!hideExport"></perun-web-apps-table-options>
   </div>
   <div class="overflow-auto border-top table-height" #table>

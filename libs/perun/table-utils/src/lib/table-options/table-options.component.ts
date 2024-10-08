@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ExportTableDialogComponent } from '../export-table-dialog/export-table-dialog.component';
-import { getDefaultDialogConfig } from '../perun-utils';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  ExportTableDialogComponent,
+  InputData,
+} from '../export-table-dialog/export-table-dialog.component';
 
 interface DialogData {
   exportType: string;
@@ -14,16 +16,20 @@ interface DialogData {
   styleUrls: ['./table-options.component.scss'],
 })
 export class TableOptionsComponent {
-  @Input() allowExportAll: boolean;
+  @Input() dataLength: number;
+  @Input() displayedLength: number;
   @Output() exportDisplayedData = new EventEmitter<string>();
   @Output() exportAllData = new EventEmitter<string>();
 
   constructor(private dialog: MatDialog) {}
   openDialog(): void {
-    const config = getDefaultDialogConfig();
+    const config = new MatDialogConfig<InputData>();
+    config.disableClose = true;
+    config.autoFocus = false;
     config.width = '500px';
     config.data = {
-      allowExportAll: this.allowExportAll,
+      dataLength: this.dataLength,
+      displayedLength: this.displayedLength,
     };
     this.dialog
       .open(ExportTableDialogComponent, config)

@@ -17,7 +17,7 @@
     <mat-radio-button value="current" color="primary">
       {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.DISPLAYED_DATA'| translate}}
     </mat-radio-button>
-    <mat-radio-button *ngIf="inputData.allowExportAll" value="all" color="primary">
+    <mat-radio-button value="all" color="primary">
       {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.ALL_DATA'| translate}}
     </mat-radio-button>
   </mat-radio-group>
@@ -27,19 +27,15 @@
     {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.BUTTON_CLOSE'| translate}}
   </button>
   <div
-    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.ERROR_FORMAT'| translate}}"
-    [matTooltipDisabled]="selectedFormat.valid || selectedFormat.getRawValue()?.length > 0">
-    <div
-      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.ERROR_OPTION'| translate}}"
-      [matTooltipDisabled]="selectedFormat.invalid || selectedExportType.valid || selectedExportType.getRawValue()?.length > 0"
-      class="ms-2">
-      <button
-        mat-flat-button
-        color="accent"
-        [disabled]="selectedFormat.invalid || selectedExportType.invalid"
-        [matDialogClose]="export()">
-        {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.BUTTON_EXPORT'| translate}}
-      </button>
-    </div>
+    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.DISABLED_EXPORT'| translate : {data: selectedExportType.value === 'current' ? inputData.displayedLength : inputData.dataLength, limit: exportLimit} }}"
+    [matTooltipDisabled]="(selectedExportType.value === 'all' && inputData.dataLength <= exportLimit) || (selectedExportType.value === 'current' && inputData.displayedLength <= exportLimit)">
+    <button
+      mat-flat-button
+      color="accent"
+      class="ms-2"
+      [disabled]="(selectedExportType.value === 'all' && inputData.dataLength > exportLimit) || (selectedExportType.value === 'current' && inputData.displayedLength > exportLimit)"
+      [matDialogClose]="export()">
+      {{'SHARED_LIB.PERUN.COMPONENTS.TABLE_OPTIONS.BUTTON_EXPORT'| translate}}
+    </button>
   </div>
 </div>

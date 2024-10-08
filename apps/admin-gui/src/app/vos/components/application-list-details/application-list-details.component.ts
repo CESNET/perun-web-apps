@@ -13,8 +13,8 @@ import {
   getDataForExport,
   parseFullName,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 interface ApplicationData extends Application {

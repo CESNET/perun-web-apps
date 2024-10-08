@@ -7,7 +7,6 @@ import {
   getDataForExport,
   getDefaultDialogConfig,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,6 +18,7 @@ import { EditEnforceConsentsDialogComponent } from '../dialogs/edit-enforce-cons
 import { SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'app-perun-web-apps-consent-hubs-list',
