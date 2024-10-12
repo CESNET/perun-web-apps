@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [17.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.9.0...v17.10.0) (2024-10-12)
+
+
+### Features
+
+* added upper limit for expiration date for invite member and extend expiration date dialogs ([5d5af1e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5d5af1e1adda43b13861a987ed535729c64510a9))
+* **admin:** invitation detail page ([089d463](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/089d463dbee52928f944e2cee5fd9a224339ce51))
+
+
+### Bug Fixes
+
+* **admin:** better tooltip on indirect member manipulation ([2cd5051](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2cd5051b3717344134282b81df0ad35a301c866b))
+* **admin:** duplicated invitations manager methods ([4338e60](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4338e6022f4eebe6e1992a84ae7d18fb599a5262))
+
 ## [17.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.8.0...v17.9.0) (2024-09-26)
 
 
