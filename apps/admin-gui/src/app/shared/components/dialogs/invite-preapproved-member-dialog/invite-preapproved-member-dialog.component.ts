@@ -25,6 +25,7 @@ export class InvitePreapprovedMemberDialogComponent implements OnInit {
   loading = false;
   theme: string;
   minDate: Date;
+  maxDate: Date;
   expirationControl = new FormControl<Date>(null);
   url: FormControl<string> = new FormControl<string>(null);
 
@@ -42,6 +43,8 @@ export class InvitePreapprovedMemberDialogComponent implements OnInit {
     this.theme = this.data.theme;
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() + 1);
     const monthFromNow = new Date();
     monthFromNow.setMonth(monthFromNow.getMonth() + 1);
     this.expirationControl.setValue(monthFromNow);
