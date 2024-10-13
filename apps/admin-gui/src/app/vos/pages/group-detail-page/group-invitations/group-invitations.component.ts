@@ -193,14 +193,6 @@ export class GroupInvitationsComponent implements OnInit {
       });
   }
 
-  isRevokeButtonEnabled(): boolean {
-    return (
-      this.selection.selected.every(
-        (invitation) => invitation.status === InvitationStatus.PENDING,
-      ) && this.selection.selected.length > 0
-    );
-  }
-
   onInvitationRevoke(): void {
     const config = getDefaultDialogConfig();
     config.width = '500px';

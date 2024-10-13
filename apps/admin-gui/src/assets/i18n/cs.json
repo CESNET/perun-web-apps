@@ -1,0 +1,8 @@
+{
+  "DIALOGS": {
+    "NOTIFICATIONS_ADD_EDIT_MAIL": {
+      "DEFAULT_PRE_APPROVED_MAIL_TEXT": "Prosím, klikněte na následující odkaz a vyplňte formulář pro přijetí pozvánky do skupiny {groupName}:\n{preapprovedInvitationLink}\nPlatnost tohoto odkazu vyprší {expirationDate}.\n\nV případě dotazů kontaktujte {senderName}. Na tento email neodpovídejte.",
+      "DEFAULT_PRE_APPROVED_MAIL_SUBJECT": "{senderName} vás pozval/a do skupiny {groupName}"
+    }
+  }
+}

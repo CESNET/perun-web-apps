@@ -47,6 +47,7 @@ export class AddEditNotificationDialogComponent implements OnInit {
   textareaId = 'perun-text-textarea-id';
   cursorIndex = 0;
   noneFilled: boolean = true;
+  previousMailType: MailType;
 
   constructor(
     private dialogRef: MatDialogRef<AddEditNotificationDialogComponent>,
@@ -239,6 +240,30 @@ export class AddEditNotificationDialogComponent implements OnInit {
   }
 
   toggleMailType(mailType: string): void {
+    // clear old texts and subjects if they are the prefilled default values
+    if (
+      this.previousMailType === MailType.USER_PRE_APPROVED_INVITE &&
+      mailType !== this.previousMailType
+    ) {
+      for (const lang of this.languages) {
+        this.translate.use(lang).subscribe(() => {
+          const defaultMailText = this.translate.instant(
+            'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT',
+          );
+          const defaultMailSubject = this.translate.instant(
+            'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT',
+          );
+          if (this.inputFormGroup.get([`${lang}-plain-text`]).value === defaultMailText) {
+            this.inputFormGroup.get([`${lang}-plain-text`]).setValue('');
+          }
+          if (this.inputFormGroup.get([`${lang}-plain-subject`]).value === defaultMailSubject) {
+            this.inputFormGroup.get([`${lang}-plain-subject`]).setValue('');
+          }
+        });
+      }
+    }
+
+    this.previousMailType = mailType as MailType;
     if (mailType === MailType.USER_PRE_APPROVED_INVITE) {
       for (const lang of this.languages) {
         if (
