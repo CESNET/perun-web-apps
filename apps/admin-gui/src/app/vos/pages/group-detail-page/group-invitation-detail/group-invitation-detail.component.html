@@ -10,6 +10,15 @@
 <div *ngIf="!loading">
   <div *ngIf="this.invitation?.status === InvitationStatus.PENDING">
     <button
+      (click)="onInvitationResend()"
+      *ngIf="authRights.resend"
+      class="me-2"
+      color="accent"
+      mat-flat-button>
+      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RESEND' | translate}}
+    </button>
+
+    <button
       (click)="onInvitationExtendDate()"
       *ngIf="authRights.extend"
       class="me-2"

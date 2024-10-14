@@ -198,6 +198,7 @@ import { InvitePreapprovedMemberDialogComponent } from './components/dialogs/inv
 import { BulkInvitePreapprovedMembersDialogComponent } from './components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 import { InvitationExtendDateDialogComponent } from './components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 import { InvitationRevokeDialogComponent } from './components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
+import { InvitationResendDialogComponent } from './components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 
 @NgModule({
   imports: [
@@ -490,6 +491,7 @@ import { InvitationRevokeDialogComponent } from './components/dialogs/invitation
     ApplicationOperationErrorListComponent,
     InvitationExtendDateDialogComponent,
     InvitationRevokeDialogComponent,
+    InvitationResendDialogComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })

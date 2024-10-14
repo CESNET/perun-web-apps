@@ -27,6 +27,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 import { InvitationRevokeDialogComponent } from '../../../../shared/components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
 import { SelectedPendingInvitation } from '@perun-web-apps/perun/pipes';
+import { InvitationResendDialogComponent } from '../../../../shared/components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 
 @Component({
   selector: 'app-group-invitations',
@@ -96,6 +97,7 @@ export class GroupInvitationsComponent implements OnInit {
   authRights = {
     revoke: false,
     extend: false,
+    resend: false,
   };
 
   constructor(
@@ -207,8 +209,8 @@ export class GroupInvitationsComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(InvitationRevokeDialogComponent, config);
 
-    dialogRef.afterClosed().subscribe((isApplicationRevoked) => {
-      if (isApplicationRevoked) {
+    dialogRef.afterClosed().subscribe((isInvitationRevoked) => {
+      if (isInvitationRevoked) {
         this.refreshTable();
       }
     });
@@ -223,11 +225,20 @@ export class GroupInvitationsComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(InvitationExtendDateDialogComponent, config);
 
-    dialogRef.afterClosed().subscribe((isApplicationRevoked) => {
-      if (isApplicationRevoked) {
+    dialogRef.afterClosed().subscribe((isInvitationRevoked) => {
+      if (isInvitationRevoked) {
         this.refreshTable();
       }
     });
+  }
+
+  onInvitationResend(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = {
+      invitations: this.selection.selected,
+    };
+    this.dialog.open(InvitationResendDialogComponent, config);
   }
 
   private expirationDateToString(date: Date): string | null {
@@ -264,5 +275,8 @@ export class GroupInvitationsComponent implements OnInit {
       'extendInvitationExpiration_Invitation_LocalDate_policy',
       [this.group],
     );
+    this.authRights.resend = this.authResolver.isAuthorized('resendInvitation_Invitation_policy', [
+      this.group,
+    ]);
   }
 }

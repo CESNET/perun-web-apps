@@ -808,6 +808,7 @@
       "SEARCH_DESCRIPTION": "Search by ID, receiver or sender name/email",
       "EXTEND_EXPIRATION_DATE": "Extend expiration",
       "REVOKE": "Revoke",
+      "RESEND": "Resend",
       "INVITATION_DETAIL": {
         "TITLE": "Preapproved invitation",
         "INVITATION_FOR_GROUP": "Invitation for group",
@@ -819,6 +820,7 @@
         "SENT_BY":"Sent by",
         "EXTEND_EXPIRATION_DATE": "Extend expiration",
         "REVOKE": "Revoke",
+        "RESEND": "Resend",
         "DATE": "Date",
         "TOKEN": "Token",
         "REVOKED_BY":"Revoked by",
@@ -2642,6 +2644,13 @@
       "TEXT": "These preapproved invitations will become invalid:",
       "SUCCESS": "The preapproved invitation was revoked",
       "SUBMIT": "Revoke",
+      "CANCEL": "Cancel"
+    },
+    "RESEND_INVITATION": {
+      "TITLE": "Resend invitations",
+      "TEXT": "The notification mails for the following preapproved invitations will be sent again:",
+      "SUCCESS": "The preapproved invitation was sent again",
+      "SUBMIT": "Resend",
       "CANCEL": "Cancel"
     },
     "EXTEND_INVITATION_EXPIRATION_DATE": {
