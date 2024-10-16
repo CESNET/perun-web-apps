@@ -540,6 +540,8 @@ export class ApplicationActionsComponent implements OnInit {
       allowGroupMailType: !!this.group,
       fedColumnsFriendly: this.configuredFedColumns,
       fedAttrs: this.fedAttrs,
+      voId: this.vo?.id,
+      groupId: this.group?.id,
     };
 
     return this.dialog.open(ApplicationsBulkOperationDialogComponent, config);

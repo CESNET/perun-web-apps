@@ -5,38 +5,15 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.RE_SEND_NOTIFICATION.TITLE' | translate}}</h1>
     <div mat-dialog-content>
+      <perun-web-apps-alert *ngIf="!loading && displayedMailTypes.length === 0" alert_type="warn">
+        {{'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_ALERT' | translate}}
+      </perun-web-apps-alert>
       {{'DIALOGS.RE_SEND_NOTIFICATION.SELECT' | translate}}:
       <mat-form-field class="w-100">
         <mat-select [(value)]="mailType" disableOptionCentering>
-          <mat-option
-            value="APP_CREATED_USER"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APP_CREATED_USER' | translate}}</mat-option
-          >
-          <mat-option
-            *ngIf="data.groupId"
-            value="APPROVABLE_GROUP_APP_USER"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APPROVABLE_GROUP_APP_USER' | translate}}</mat-option
-          >
-          <mat-option
-            value="APP_CREATED_VO_ADMIN"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APP_CREATED_VO_ADMIN' | translate}}</mat-option
-          >
-          <mat-option
-            value="MAIL_VALIDATION"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.MAIL_VALIDATION' | translate}}</mat-option
-          >
-          <mat-option
-            value="APP_APPROVED_USER"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APP_APPROVED_USER' | translate}}</mat-option
-          >
-          <mat-option
-            value="APP_REJECTED_USER"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APP_REJECTED_USER' | translate}}</mat-option
-          >
-          <mat-option
-            value="APP_ERROR_VO_ADMIN"
-            >{{'DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.APP_ERROR_VO_ADMIN' | translate}}</mat-option
-          >
+          <mat-option *ngFor="let mailType of displayedMailTypes" [value]="mailType">
+            {{('DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.' + mailType) | translate}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -51,9 +28,18 @@
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
         {{'DIALOGS.RE_SEND_NOTIFICATION.CANCEL' | translate}}
       </button>
-      <button (click)="onSubmit()" [disabled]="loading" class="ms-2" color="accent" mat-flat-button>
-        {{'DIALOGS.RE_SEND_NOTIFICATION.SEND' | translate}}
-      </button>
+      <span
+        [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_TOOLTIP' | translate"
+        [matTooltipDisabled]="loading || displayedMailTypes.length > 0">
+        <button
+          (click)="onSubmit()"
+          [disabled]="loading || displayedMailTypes.length === 0"
+          class="ms-2"
+          color="accent"
+          mat-flat-button>
+          {{'DIALOGS.RE_SEND_NOTIFICATION.SEND' | translate}}
+        </button>
+      </span>
     </div>
   </div>
 </div>

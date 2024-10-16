@@ -1443,6 +1443,9 @@
       "SELECT": "Select notification",
       "REASON": "Reason",
       "SUCCESS": "Notification was sent",
+      "EMPTY_TYPES_TOOLTIP": "None of the notifications available for resend exist or they are disabled",
+      "EMPTY_TYPES_ALERT": "None of the notifications available for resend exist or they are disabled. These can be set up by VO/group admin in advanced settings.",
+      "MISSING_TYPE_TOOLTIP": "The selected notification is disabled or not set up for some of the applications' type.",
       "NOTIFICATION_TYPE": {
         "APP_CREATED_USER": "Created / user",
         "APPROVABLE_GROUP_APP_USER": "Approvable / user",
