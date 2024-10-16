@@ -24,7 +24,7 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field color="primary" class="cursor-pointer w-100" (click)="picker.open()">
-        <mat-label>{{'DIALOGS.CHANGE_EXPIRATION.DATE_LABEL'|translate}}</mat-label>
+        <mat-label>{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.EXPIRE_DATE'|translate}}</mat-label>
         <input
           [min]="minDate"
           [max]="maxDate"
@@ -37,9 +37,10 @@
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="w-100">
+        <mat-label>{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.REDIRECT_URL' | translate}}</mat-label>
         <input
           matInput
-          placeholder="{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.REDIRECT_URL' | translate}}"
+          placeholder="{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.REDIRECT_URL_PLACEHOLDER' | translate}}"
           [formControl]="url" />
       </mat-form-field>
       <mat-form-field class="w-100">
@@ -57,14 +58,18 @@
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
         {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.CANCEL' | translate}}
       </button>
-      <button
-        (click)="onSubmit()"
-        class="ms-2"
-        color="accent"
-        [disabled]="emailForm.invalid || name.invalid || loading"
-        mat-flat-button>
-        {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.INVITE' | translate}}
-      </button>
+      <span
+        [matTooltipDisabled]="!(emailForm.invalid || name.invalid || loading)"
+        matTooltip="{{'DIALOGS.INVITE_PREAPPROVED_MEMBER.DISABLED_TOOLTIP' | translate }}">
+        <button
+          (click)="onSubmit()"
+          class="ms-2"
+          color="accent"
+          [disabled]="emailForm.invalid || name.invalid || loading"
+          mat-flat-button>
+          {{'DIALOGS.INVITE_PREAPPROVED_MEMBER.INVITE' | translate}}
+        </button>
+      </span>
     </div>
   </div>
 </div>
