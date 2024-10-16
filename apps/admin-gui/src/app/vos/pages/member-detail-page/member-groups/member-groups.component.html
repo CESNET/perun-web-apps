@@ -23,6 +23,7 @@
 </span>
 
 <app-group-roles-filter
+  [hidden]="true"
   [theme]="'member-theme'"
   (filterRoles)="applyRoles($event)"
   (filterRoleTypes)="applyRoleTypes($event)">
