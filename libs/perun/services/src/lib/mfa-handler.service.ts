@@ -61,7 +61,7 @@ export class MfaHandlerService {
 
         localStorage.setItem('mfaRequired', 'true');
 
-        // save tokens - if MFA will NOT be successful, we will need to give them back to oauth storage
+        // save tokens - after logout we will need to give them back to oauth storage
         sessionStorage.setItem('oldAccessToken', this.oauthService.getAccessToken());
         sessionStorage.setItem('oldRefreshToken', this.oauthService.getRefreshToken());
 
@@ -100,12 +100,6 @@ export class MfaHandlerService {
           localStorage.removeItem('mfaRequired');
           localStorage.removeItem('mfaProcessed');
           localStorage.removeItem('mfaTimeout');
-          // if the window is closed without successful MFA, then give back previous tokens to the oauth storage
-          if (this.oauthService.getAccessToken() === null) {
-            localStorage.setItem('access_token', sessionStorage.getItem('oldAccessToken'));
-            localStorage.setItem('refresh_token', sessionStorage.getItem('oldRefreshToken'));
-          }
-          // remove 'mfaWindow' property
           localStorage.removeItem('mfaWindow');
           return observer.next(true);
         }
@@ -138,6 +132,11 @@ export class MfaHandlerService {
     if (localStorage.getItem('mfaRequired') && !localStorage.getItem('mfaProcessed')) {
       localStorage.setItem('mfaProcessed', 'true');
       this.oauthService.logOut(true);
+
+      // OAuthService logOut method also removes tokens. We need to set them back to avoid unauthorized api calls.
+      localStorage.setItem('access_token', sessionStorage.getItem('oldAccessToken'));
+      localStorage.setItem('refresh_token', sessionStorage.getItem('oldRefreshToken'));
+
       this.authService.loadOidcConfigData();
       return void this.oauthService.loadDiscoveryDocumentAndLogin();
     } else {
