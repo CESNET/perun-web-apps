@@ -1048,7 +1048,8 @@
     "PROPAGATION_CHANGE_SUCCESS": "Service propagation of expired members was successfully changed",
     "DESCRIPTION": "Description",
     "ENABLE": "Enable service",
-    "PROPAGATE": "Propagate expired members",
+    "PROPAGATE_GROUP": "Propagate expired group members",
+    "PROPAGATE_VO": "Propagate expired VO members",
     "EDIT": "Edit",
     "DELETE": "Delete",
     "REQUIRED_ATTRIBUTES": {
