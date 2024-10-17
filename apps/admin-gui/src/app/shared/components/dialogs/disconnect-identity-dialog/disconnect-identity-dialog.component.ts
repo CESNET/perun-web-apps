@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -21,12 +21,14 @@ export interface RemoveUserServiceIdentityDialogData {
 })
 export class DisconnectIdentityDialogComponent implements OnInit {
   theme: string;
+  loading: boolean = false;
   displayedColumns: string[] = ['name'];
   dataSource: MatTableDataSource<User>;
   targetTitle: string;
   targetDescription: string;
   disconnectingLastOwner: boolean;
   disconnectingSelf: boolean;
+  disconnectingAnonymizedUser: boolean;
   private userId: number;
   private isService: boolean;
 
@@ -37,9 +39,11 @@ export class DisconnectIdentityDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private translate: TranslateService,
     private store: StoreService,
+    private authService: GuiAuthResolver,
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.targetTitle = this.data.targetTitle;
     this.targetDescription = this.data.targetDescription;
     this.theme = this.data.theme;
@@ -48,15 +52,30 @@ export class DisconnectIdentityDialogComponent implements OnInit {
     this.isService = this.data.isService;
 
     let specificUser: number;
+    let removedOwnerId: number;
     if (this.isService) {
       specificUser = this.userId;
-      this.disconnectingSelf = this.dataSource.data[0].id === this.store.getPerunPrincipal().userId;
+      removedOwnerId = this.dataSource.data[0].id;
+      this.disconnectingSelf =
+        !this.authService.isPerunAdmin() &&
+        removedOwnerId === this.store.getPerunPrincipal().userId;
     } else {
       specificUser = this.dataSource.data[0].id;
-      this.disconnectingSelf = this.userId === this.store.getPerunPrincipal().userId;
+      removedOwnerId = this.userId;
+      this.disconnectingSelf =
+        !this.authService.isPerunAdmin() && this.userId === this.store.getPerunPrincipal().userId;
     }
-    this.userManager.getUsersBySpecificUser(specificUser).subscribe((associatedUsers) => {
-      this.disconnectingLastOwner = associatedUsers.length === 1;
+
+    this.userManager.getUnanonymizedUsersBySpecificUser(specificUser).subscribe({
+      next: (associatedUsers: Array<User>) => {
+        if (associatedUsers.length === 1) {
+          this.disconnectingLastOwner = associatedUsers[0].id === removedOwnerId;
+        }
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      },
     });
   }
 

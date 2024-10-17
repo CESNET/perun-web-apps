@@ -1,7 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { Facility, Group, Resource, Service, User, Vo } from '@perun-web-apps/perun/openapi';
+import {
+  Facility,
+  Group,
+  Resource,
+  Service,
+  User,
+  UsersManagerService,
+  Vo,
+} from '@perun-web-apps/perun/openapi';
 
 type entityToDelete = Facility | Group | Vo | Resource | User | Service;
 
@@ -45,6 +53,10 @@ export class DeleteEntityDialogComponent implements OnInit {
   deleteReg: RegExp;
   deleteControl: UntypedFormControl;
   warnMessage: string;
+  lastOwnerAnyServiceAccount: boolean = false;
+  serviceAccountsLeftUnattended: MatTableDataSource<string> = new MatTableDataSource<string>();
+
+  constructor(private userManager: UsersManagerService) {}
 
   ngOnInit(): void {
     this.deleteReg = this.anonymize ? /^ANONYMIZE$/ : /^DELETE$/;
@@ -52,6 +64,38 @@ export class DeleteEntityDialogComponent implements OnInit {
       Validators.required,
       Validators.pattern(this.deleteReg),
     ]);
+    if (this.anonymize) {
+      this.loading = true;
+      const removedOwner = this.entityNames.data[0];
+      this.userManager.getSpecificUsersByUser(removedOwner.id).subscribe((resultSpecificUsers) => {
+        resultSpecificUsers.forEach((specificUser: User) => {
+          this.userManager.getUnanonymizedUsersBySpecificUser(specificUser.id).subscribe({
+            next: (associatedUsers) => {
+              if (associatedUsers.length === 1) {
+                if (associatedUsers[0].id === removedOwner.id) {
+                  this.lastOwnerAnyServiceAccount ||= true;
+
+                  const oldServiceAccounts = this.serviceAccountsLeftUnattended.data;
+                  const serviceAccountToAdd =
+                    specificUser.firstName +
+                    (specificUser.middleName ? ' ' + specificUser.middleName : '') +
+                    ' ' +
+                    specificUser.lastName;
+                  this.serviceAccountsLeftUnattended.data = [
+                    ...oldServiceAccounts,
+                    serviceAccountToAdd,
+                  ];
+                }
+                this.loading = false;
+              }
+            },
+            error: () => {
+              this.loading = false;
+            },
+          });
+        });
+      });
+    }
   }
 
   onCancel(): void {
