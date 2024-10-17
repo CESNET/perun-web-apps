@@ -26,7 +26,6 @@ import {
   parseUserEmail,
   parseVo,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { MatSort } from '@angular/material/sort';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
@@ -41,6 +40,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 export type userTableColumn =
   | 'select'

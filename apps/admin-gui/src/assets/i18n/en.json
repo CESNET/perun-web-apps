@@ -3391,14 +3391,14 @@
           "EXPORT_TO_FILE": "Export to file",
           "EXPORT_TITLE": "Export table",
           "BUTTON_EXPORT": "Export",
-          "BUTTON_CLOSE": "Close",
+          "BUTTON_CLOSE": "Cancel",
           "SELECT_FORMAT": "Select format",
           "EXPORT_OPTIONS": "Export options",
           "DISPLAYED_DATA": "Displayed data",
           "ALL_DATA": "All data",
-          "ERROR_FORMAT":"Export format is not selected",
-          "ERROR_OPTION": "Export option is not selected",
+          "DISABLED_EXPORT": "The size of data ({{data}}) is larger than the instance export limit ({{limit}})",
           "EXPORT_LOADING": "Exporting data...",
+          "EXPORT_INFO": "This operation might take a couple of minutes for large amounts of data",
           "MORE": "More"
         },
         "NOTIFICATOR": {

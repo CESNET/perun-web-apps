@@ -7,8 +7,8 @@ import {
   getDataForExport,
   getDefaultDialogConfig,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuditMessageDetailDialogComponent } from '../dialogs/audit-message-detail-dialog/audit-message-detail-dialog.component';
 import { CustomMatPaginator } from '@perun-web-apps/perun/services';

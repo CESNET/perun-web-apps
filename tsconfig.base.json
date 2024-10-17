@@ -76,6 +76,9 @@
       "@perun-web-apps/perun/session-expiration": [
         "libs/perun/session-expiration/src/index.ts"
       ],
+      "@perun-web-apps/perun/table-utils": [
+        "libs/perun/table-utils/src/index.ts"
+      ],
       "@perun-web-apps/perun/tokens": [
         "libs/perun/tokens/src/index.ts"
       ],
@@ -96,6 +99,9 @@
       ],
       "@perun-web-apps/ui/material": [
         "libs/ui/material/src/index.ts"
+      ],
+      "perun-table-util": [
+        "libs/perun-table-util/src/index.ts"
       ]
     }
   },

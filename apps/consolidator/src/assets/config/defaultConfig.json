@@ -89,5 +89,6 @@
     "footer_links_text_color": "#e0e0e0",
     "footer_copyright_text_color": "#9e9e9e",
     "user_color": "#00796b"
-  }
+  },
+  "export_limit": 1000
 }

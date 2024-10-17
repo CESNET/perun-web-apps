@@ -3,8 +3,7 @@
     (exportDisplayedData)="exportDisplayedData($event)"
     [dataLength]="dataSource['count'] ?? dataSource.filteredData.length"
     [pageSizeOptions]="pageSizeOptions"
-    [tableId]="tableId"
-    [allowExportAll]="false">
+    [tableId]="tableId">
     <table
       [dataSource]="dataSource"
       class="w-100"

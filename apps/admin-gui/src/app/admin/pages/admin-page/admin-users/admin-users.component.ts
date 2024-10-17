@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { TABLE_ADMIN_USER_SELECT } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { StoreService } from '@perun-web-apps/perun/services';
+import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import {
@@ -10,14 +10,14 @@ import {
   UsersManagerService,
   UsersOrderColumn,
 } from '@perun-web-apps/perun/openapi';
-import { PageQuery } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { map, startWith, tap } from 'rxjs/operators';
 import {
   downloadData,
   getDataForExport,
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
-import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -70,6 +70,7 @@ export class AdminUsersComponent implements OnInit {
     private cacheHelperService: CacheHelperService,
     private userManager: UsersManagerService,
     private destroyRef: DestroyRef,
+    private notificator: NotificatorService,
   ) {}
 
   ngOnInit(): void {
@@ -109,10 +110,10 @@ export class AdminUsersComponent implements OnInit {
     const query = this.nextPage.getValue();
 
     const config = getDefaultDialogConfig();
-    config.width = '300px';
+    config.width = '500px';
     const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
 
-    this.userManager
+    const call = this.userManager
       .getUsersPage({
         attrNames: this.attributes,
         query: {
@@ -132,6 +133,16 @@ export class AdminUsersComponent implements OnInit {
             a.format,
           );
         },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
       });
+
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 }

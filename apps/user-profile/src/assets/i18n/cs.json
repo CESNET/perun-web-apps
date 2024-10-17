@@ -315,9 +315,9 @@
           "EXPORT_OPTIONS": "Možnosti exportu",
           "DISPLAYED_DATA": "Zobrazená data",
           "ALL_DATA": "Všechna data",
-          "ERROR_FORMAT":"Formát exportu není zvolen",
-          "ERROR_OPTION": "Není vybrána možnost exportu",
+          "DISABLED_EXPORT": "Množství exportovaných dat ({{data}}) je větší než limit instance ({{limit}})",
           "EXPORT_LOADING": "Probíhá exportování dat...",
+          "EXPORT_INFO": "Tato operace může trvat i několik minut pro velké množství dat.",
           "MORE": "Více"
         },
         "NOTIFICATOR": {

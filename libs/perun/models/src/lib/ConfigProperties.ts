@@ -165,6 +165,7 @@ export interface PerunConfig {
   display_warning?: boolean;
   warning_message?: string;
   other_apps?: Record<string, Record<string, string>>;
+  export_limit?: number;
 
   // Admin gui specific
   // Required

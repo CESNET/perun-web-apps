@@ -12,7 +12,7 @@ import {
   MatPaginator,
   PageEvent,
 } from '@angular/material/paginator';
-import { TABLE_ITEMS_COUNT_OPTIONS } from '../perun-utils';
+import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
@@ -28,7 +28,6 @@ export class TableWrapperComponent implements OnInit {
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() dataLength = 0;
   @Input() tableId: string;
-  @Input() allowExportAll = true;
   @Output() exportDisplayedData = new EventEmitter<string>();
   @Output() exportAllData = new EventEmitter<string>();
   @Output() pageChanged = new EventEmitter<void>();

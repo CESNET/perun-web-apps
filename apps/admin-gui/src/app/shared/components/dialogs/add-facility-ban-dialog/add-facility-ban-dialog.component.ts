@@ -14,14 +14,14 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
 import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, finalize, merge, Observable, switchMap } from 'rxjs';
-import { PageQuery } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { map, startWith, tap } from 'rxjs/operators';
 import {
   downloadData,
   getDataForExport,
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
-import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 
 @Component({
@@ -116,10 +116,10 @@ export class AddFacilityBanDialogComponent implements OnInit {
     const query = this.nextPage.getValue();
 
     const config = getDefaultDialogConfig();
-    config.width = '300px';
+    config.width = '500px';
     const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
 
-    this.usersManager
+    const call = this.usersManager
       .getUsersPage({
         attrNames: this.attrNames,
         query: {
@@ -139,7 +139,17 @@ export class AddFacilityBanDialogComponent implements OnInit {
             a.format,
           );
         },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
       });
+
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 
   private banUser(banForm: BanForm): void {
