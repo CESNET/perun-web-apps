@@ -78,6 +78,7 @@ import { RemoveGroupTooltipPipe } from './remove-group-tooltip.pipe';
 import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
 import { ModifiedNamePipe } from './modified-name.pipe';
 import { GetLabelPipe } from './get-label.pipe';
+import { AppTypeMailTypeMatchPipe } from './app-type-mail-type-match.pipe';
 
 @NgModule({
   declarations: [
@@ -158,6 +159,7 @@ import { GetLabelPipe } from './get-label.pipe';
     SelectedRoleFilterValuesPipe,
     AppFedInfoParsePipe,
     AppValuePipe,
+    AppTypeMailTypeMatchPipe,
     AppFriendlyNamePipe,
     SelectedPendingInvitation,
   ],
@@ -239,6 +241,7 @@ import { GetLabelPipe } from './get-label.pipe';
     SelectedRoleFilterValuesPipe,
     AppFedInfoParsePipe,
     AppValuePipe,
+    AppTypeMailTypeMatchPipe,
     AppFriendlyNamePipe,
     SelectedPendingInvitation,
   ],
