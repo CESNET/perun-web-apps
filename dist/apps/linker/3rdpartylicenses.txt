@@ -379,13 +379,13 @@ License: "MIT"
 
 
 --------------------------------------------------------------------------------
-Package: @angular/forms
-License: "MIT"
+Package: @ngx-translate/core
+License: "SEE LICENSE IN LICENSE"
 
 
 --------------------------------------------------------------------------------
-Package: @ngx-translate/core
-License: "SEE LICENSE IN LICENSE"
+Package: @angular/forms
+License: "MIT"
 
 
 --------------------------------------------------------------------------------

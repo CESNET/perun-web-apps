@@ -1,5 +1,30 @@
 Upgrade notes
 
+## [18.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.10.0...v18.0.0) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* new export limit is by default 1000 items
+* new config property 'export_limit'
+
+### Features
+
+* **admin:** add "expired VO members" into service dialog ([5758310](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5758310b0505e72897b6819245838128ec55aa8c))
+* **admin:** disable VO create button on no auth ([d1e36a3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d1e36a3a9d22978985948288c19a438009e075c5))
+* **admin:** hide member groups role and assignment filters ([8f30511](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8f3051161093ccec2911ca57f3d3750dbfcb76a5))
+* **admin:** new role EXEMPTEDFROMMFA ([2eca7ae](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2eca7ae239809ccce52b545dec1113b01f99e378))
+* **admin:** propagate expired vo members ([273604f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/273604fa8297c6ff6f50cb605c9958eed6915e38))
+* **admin:** resend preapproved invitation mail ([55327e6](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/55327e696d5043d88589b24f78f9128bd0ea1646))
+* **admin:** ux text improvements on preapproved invites ([0a8d161](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0a8d161f2fcf1856f1536da960e9086a90aa40b0))
+* table export upgrades ([0deb7b8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0deb7b8b4766d5b652ffa16df702ee4e186a7280))
+
+
+### Bug Fixes
+
+* **admin:** filter mail types from resend notification dialog ([753cae8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/753cae8d29b508aed00e169505644dba9648feb9))
+* **admin:** restore tokens ([4f223fb](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4f223fb1a3aa3bcb66a78de554450b61f238b0f6))
+
 ## [17.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.9.0...v17.10.0) (2024-10-12)
 
 

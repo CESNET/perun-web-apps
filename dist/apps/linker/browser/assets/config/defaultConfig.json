@@ -24,5 +24,6 @@
   "document_title": "Linker",
   "support_mail": "perun@cesnet.cz",
   "instance_favicon": false,
-  "auto_auth_redirect": true
+  "auto_auth_redirect": true,
+  "export_limit": 1000
 }

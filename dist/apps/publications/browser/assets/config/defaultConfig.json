@@ -148,5 +148,6 @@
     "sidemenu_active_text_color": "#ffffff",
     "user_color": "#00796b"
   },
-  "log_out_enabled": true
+  "log_out_enabled": true,
+  "export_limit": 1000
 }
