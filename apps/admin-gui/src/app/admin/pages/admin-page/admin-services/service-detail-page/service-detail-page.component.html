@@ -54,10 +54,17 @@
         </mat-slide-toggle>
         <mat-slide-toggle
           [checked]="service.useExpiredMembers"
-          (toggleChange)="propagationChange()"
+          (toggleChange)="groupPropagationChange()"
           labelPosition="before"
           class="mb-25">
-          {{'SERVICE_DETAIL.PROPAGATE' | translate}}
+          {{'SERVICE_DETAIL.PROPAGATE_GROUP' | translate}}
+        </mat-slide-toggle>
+        <mat-slide-toggle
+          [checked]="service.useExpiredVoMembers"
+          (toggleChange)="voPropagationChange()"
+          labelPosition="before"
+          class="mb-25">
+          {{'SERVICE_DETAIL.PROPAGATE_VO' | translate}}
         </mat-slide-toggle>
         <button
           *ngIf="authResolver.isPerunAdmin()"

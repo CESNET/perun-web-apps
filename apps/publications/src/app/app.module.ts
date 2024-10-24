@@ -54,6 +54,7 @@ import { YearRangeComponent } from './components/year-range/year-range.component
 import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -131,6 +132,7 @@ const loadConfigs: (appConfig: PublicationsConfigService) => () => Promise<void>
     PerunUtilsModule,
     OAuthModule.forRoot(),
     PerunSharedComponentsModule,
+    PerunTableUtilsModule,
   ],
   providers: [
     CustomIconService,

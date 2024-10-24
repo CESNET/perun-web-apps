@@ -25,8 +25,8 @@ import {
   getDefaultDialogConfig,
   parseFullName,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { EditMemberSponsorsDialogComponent } from '../dialogs/edit-member-sponsors-dialog/edit-member-sponsors-dialog.component';
 import { GuiAuthResolver, StoreService, TableCheckbox } from '@perun-web-apps/perun/services';

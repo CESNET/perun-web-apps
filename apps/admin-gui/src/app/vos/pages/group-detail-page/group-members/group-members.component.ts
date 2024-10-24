@@ -23,7 +23,12 @@ import {
   VoMemberStatuses,
 } from '@perun-web-apps/perun/openapi';
 import { TABLE_GROUP_MEMBERS } from '@perun-web-apps/config/table-config';
-import { getDefaultDialogConfig, isGroupSynchronized } from '@perun-web-apps/perun/utils';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+  isGroupSynchronized,
+} from '@perun-web-apps/perun/utils';
 import { InviteMemberDialogComponent } from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
 import { FormControl } from '@angular/forms';
 import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
@@ -37,6 +42,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvitePreapprovedMemberDialogComponent } from '../../../../shared/components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
 import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'app-group-members',
@@ -413,18 +419,44 @@ export class GroupMembersComponent implements OnInit {
     length: number;
     getDataForColumnFun: (data: RichMember, column: string) => string;
   }): void {
-    this.membersListService.downloadAll(
-      a.format,
-      a.length,
-      a.getDataForColumnFun,
-      this.nextPage,
-      this.membersService,
-      this.group.voId,
-      this.memberAttrNames,
-      this.statuses,
-      this.group.id,
-      this.groupStatuses,
-      this.displayedColumns,
-    );
+    const pageQuery = this.nextPage.getValue();
+
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
+
+    const call = this.membersService
+      .getMembersPage({
+        vo: this.group.voId,
+        attrNames: this.memberAttrNames,
+        query: {
+          order: pageQuery.order,
+          pageSize: a.length,
+          offset: 0,
+          sortColumn: this.membersListService.getSortColumn(pageQuery.sortColumn),
+          searchString: pageQuery.searchString,
+          groupId: this.group.id,
+          statuses: this.statuses.value as VoMemberStatuses[],
+          groupStatuses: this.groupStatuses?.value as MemberGroupStatus[],
+        },
+      })
+      .subscribe({
+        next: (result) => {
+          exportLoading.close();
+          downloadData(
+            getDataForExport(result.data, this.displayedColumns, a.getDataForColumnFun),
+            a.format,
+          );
+        },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
+      });
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 }

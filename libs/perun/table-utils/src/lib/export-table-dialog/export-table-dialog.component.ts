@@ -1,14 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { StoreService } from '@perun-web-apps/perun/services';
 
 interface Format {
   value: string;
   viewValue: string;
 }
 
-interface InputData {
-  allowExportAll: boolean;
+export interface InputData {
+  displayedLength: number;
+  dataLength: number;
 }
 
 @Component({
@@ -20,10 +22,11 @@ export class ExportTableDialogComponent {
   formats: Format[] = [{ value: 'csv', viewValue: 'CSV' }];
   selectedFormat = new FormControl<string>('csv', Validators.required);
   selectedExportType = new FormControl<string>('current', Validators.required);
-  constructor(@Inject(MAT_DIALOG_DATA) public inputData: InputData) {}
-  isValidSelection(): boolean {
-    return this.selectedFormat.value !== null && this.selectedExportType.value !== null;
-  }
+  exportLimit = this.storeService.getProperty('export_limit');
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public inputData: InputData,
+    private storeService: StoreService,
+  ) {}
 
   export(): { exportType: string; format: string } {
     return {

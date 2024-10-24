@@ -17,8 +17,8 @@ import {
   parseFullName,
   parseName,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';

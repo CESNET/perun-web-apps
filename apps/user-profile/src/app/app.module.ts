@@ -80,6 +80,7 @@ import { AuthenticationPageComponent } from './pages/authentication-page/authent
 import { AuthenticationOverviewComponent } from './pages/authentication-page/authentication-overview/authentication-overview.component';
 import { AuthenticationAntiPhishingSecurityComponent } from './pages/authentication-page/authentication-anti-phishing-security/authentication-anti-phishing-security.component';
 import { AuthenticationAccountActivationComponent } from './pages/authentication-page/authentication-account-activation/authentication-account-activation.component';
+import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -188,6 +189,7 @@ const loadConfigs: (appConfig: UserProfileConfigService) => () => Promise<void> 
     MatMenuModule,
     OAuthModule.forRoot(),
     PerunNamespacePasswordFormModule,
+    PerunTableUtilsModule,
   ],
   providers: [
     CustomIconService,

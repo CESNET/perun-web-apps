@@ -16,7 +16,6 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BlockedLogin, PaginatedBlockedLogins } from '@perun-web-apps/perun/openapi';
@@ -26,6 +25,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'perun-web-apps-logins-list',

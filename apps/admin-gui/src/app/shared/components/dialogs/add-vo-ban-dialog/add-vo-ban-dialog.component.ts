@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   BanOnVo,
@@ -17,8 +17,14 @@ import {
 } from '@perun-web-apps/perun/services';
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { PageQuery } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { map } from 'rxjs/operators';
+import {
+  downloadData,
+  getDataForExport,
+  getDefaultDialogConfig,
+} from '@perun-web-apps/perun/utils';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'app-add-vo-ban-dialog',
@@ -57,6 +63,7 @@ export class AddVoBanDialogComponent implements OnInit {
     private notificator: NotificatorService,
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
+    private dialog: MatDialog,
     private cd: ChangeDetectorRef,
   ) {}
 
@@ -101,19 +108,42 @@ export class AddVoBanDialogComponent implements OnInit {
     length: number;
     getDataForColumnFun: (data: RichMember, column: string) => string;
   }): void {
-    this.membersListService.downloadAll(
-      a.format,
-      a.length,
-      a.getDataForColumnFun,
-      this.nextPage,
-      this.membersService,
-      this.voId,
-      this.attrNames,
-      null,
-      null,
-      null,
-      this.displayedColumns,
-    );
+    const pageQuery = this.nextPage.getValue();
+
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
+
+    const call = this.membersService
+      .getMembersPage({
+        vo: this.voId,
+        attrNames: this.attrNames,
+        query: {
+          order: pageQuery.order,
+          pageSize: a.length,
+          offset: 0,
+          sortColumn: this.membersListService.getSortColumn(pageQuery.sortColumn),
+          searchString: pageQuery.searchString,
+        },
+      })
+      .subscribe({
+        next: (result) => {
+          exportLoading.close();
+          downloadData(
+            getDataForExport(result.data, this.displayedColumns, a.getDataForColumnFun),
+            a.format,
+          );
+        },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
+      });
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 
   private banMember(banForm: BanForm): void {

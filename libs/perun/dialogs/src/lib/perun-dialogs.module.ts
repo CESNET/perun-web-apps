@@ -44,7 +44,6 @@ import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespac
 import { AnonymizeUserDialogComponent } from './anonymize-user-dialog/anonymize-user-dialog.component';
 import { DeleteEntityDialogComponent } from './delete-entity-dialog/delete-entity-dialog.component';
 import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { ExportDataDialogComponent } from './exporting-data-dialog/export-data-dialog.component';
 import { RequestChangeDataQuotaDialogComponent } from './request-change-data-quota-dialog/request-change-data-quota-dialog.component';
 import { ExpirationSelectComponent } from './expiration-select/expiration-select.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
@@ -104,7 +103,6 @@ import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dial
     AnonymizeUserDialogComponent,
     DeleteEntityDialogComponent,
     RemoveRoleDialogComponent,
-    ExportDataDialogComponent,
     RequestChangeDataQuotaDialogComponent,
     ExpirationSelectComponent,
     DeleteUserDialogComponent,
@@ -132,7 +130,6 @@ import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dial
     AnonymizeUserDialogComponent,
     DeleteEntityDialogComponent,
     RemoveRoleDialogComponent,
-    ExportDataDialogComponent,
     RequestChangeDataQuotaDialogComponent,
     ExpirationSelectComponent,
     DeleteUserDialogComponent,

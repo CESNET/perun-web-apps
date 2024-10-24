@@ -175,5 +175,6 @@
     "member_color": "#ad1457",
     "admin_color": "#c62828",
     "service_color": "#561335"
-  }
+  },
+  "export_limit": 1000
 }

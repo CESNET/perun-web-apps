@@ -21,11 +21,8 @@ import {
   PublicationForGUI,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import {
-  getDefaultDialogConfig,
-  TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
-} from '@perun-web-apps/perun/utils';
+import { getDefaultDialogConfig, TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

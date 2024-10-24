@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
+import { AuthzResolverService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { AddRoleDialogData, AddRoleForm } from '../add-role-dialog.component';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
@@ -12,7 +12,7 @@ import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
   styleUrls: ['./add-user-role-dialog.component.scss'],
   providers: [DisplayedRolePipe],
 })
-export class AddUserRoleDialogComponent {
+export class AddUserRoleDialogComponent implements OnInit {
   loading = false;
   rules = this.authResolver.getAssignableRoleRules('USER');
 
@@ -21,10 +21,23 @@ export class AddUserRoleDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: AddRoleDialogData,
     private authResolver: GuiAuthResolver,
     private authzService: AuthzResolverService,
+    private usersService: UsersManagerService,
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
     private displayedRole: DisplayedRolePipe,
   ) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.usersService.getUserById(this.data.entityId).subscribe({
+      next: (user) => {
+        if (!user.serviceUser) {
+          this.rules = this.rules.filter((rule) => !rule.skipMFA);
+        }
+      },
+      error: () => (this.loading = false),
+    });
+  }
 
   addRole(formValue: AddRoleForm): void {
     this.loading = true;

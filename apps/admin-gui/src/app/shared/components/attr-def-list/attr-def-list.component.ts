@@ -22,8 +22,8 @@ import {
   getDataForExport,
   getDefaultDialogConfig,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { ConsentRelatedAttributePipe } from '../../pipes/consent-related-attribute.pipe';
 import { BehaviorSubject } from 'rxjs';

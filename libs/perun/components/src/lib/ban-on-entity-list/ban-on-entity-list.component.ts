@@ -13,7 +13,6 @@ import {
   downloadData,
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import {
   EnrichedBanOnFacility,
@@ -35,6 +34,7 @@ import { formatDate } from '@angular/common';
 import { BAN_EXPIRATION_NEVER } from '../ban-specification/ban-specification.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 export type EnrichedBan = EnrichedBanOnVo | EnrichedBanOnFacility | EnrichedBanOnResource;
 export type BanOnEntityListColumn =

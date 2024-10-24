@@ -22,12 +22,12 @@ import {
   getDataForExport,
   isVirtualAttribute,
   TABLE_ITEMS_COUNT_OPTIONS,
-  TableWrapperComponent,
 } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
+import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
   selector: 'perun-web-apps-attributes-list',

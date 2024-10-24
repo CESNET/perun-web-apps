@@ -152,6 +152,8 @@ export class ApplicationDetailComponent implements OnInit {
     config.data = {
       applicationId: this.application.id,
       theme: this.dialogTheme,
+      appType: this.application.type,
+      voId: this.application.vo.id,
       groupId: this.application.group?.id,
     };
 

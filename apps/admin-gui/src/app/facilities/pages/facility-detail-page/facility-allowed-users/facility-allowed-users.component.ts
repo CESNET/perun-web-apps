@@ -20,19 +20,20 @@ import {
   GuiAuthResolver,
   StoreService,
   PerunTranslateService,
+  NotificatorService,
 } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
-import { PageQuery, UserWithConsentStatus } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError, UserWithConsentStatus } from '@perun-web-apps/perun/models';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import {
   downloadData,
   getDataForExport,
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
-import { ExportDataDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -133,6 +134,7 @@ export class FacilityAllowedUsersComponent implements OnInit {
     private cacheHelperService: CacheHelperService,
     private userManager: UsersManagerService,
     private destroyRef: DestroyRef,
+    private notificator: NotificatorService,
   ) {}
 
   ngOnInit(): void {
@@ -294,10 +296,10 @@ export class FacilityAllowedUsersComponent implements OnInit {
     const query = this.nextPage.getValue();
 
     const config = getDefaultDialogConfig();
-    config.width = '300px';
+    config.width = '500px';
     const exportLoading = this.dialog.open(ExportDataDialogComponent, config);
 
-    this.userManager
+    const call = this.userManager
       .getUsersPage({
         attrNames: this.attributes,
         query: {
@@ -326,6 +328,16 @@ export class FacilityAllowedUsersComponent implements OnInit {
             a.format,
           );
         },
+        error: (err: RPCError) => {
+          this.notificator.showRPCError(err);
+          exportLoading.close();
+        },
       });
+
+    exportLoading.afterClosed().subscribe(() => {
+      if (call) {
+        call.unsubscribe();
+      }
+    });
   }
 }

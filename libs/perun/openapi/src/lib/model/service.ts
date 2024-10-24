@@ -19,4 +19,5 @@ export interface Service extends Auditable {
   enabled?: boolean;
   script?: string;
   useExpiredMembers?: boolean;
+  useExpiredVoMembers?: boolean;
 }

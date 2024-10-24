@@ -112,16 +112,27 @@ export class ServiceDetailPageComponent implements OnInit {
     );
   }
 
-  propagationChange(): void {
+  groupPropagationChange(): void {
     this.service.useExpiredMembers = !this.service.useExpiredMembers;
-    this.serviceManager.updateService({ service: this.service }).subscribe(
-      () => {
+    this.serviceManager.updateService({ service: this.service }).subscribe({
+      next: () => {
         this.notificator.showSuccess(
           this.translate.instant('SERVICE_DETAIL.PROPAGATION_CHANGE_SUCCESS') as string,
         );
       },
-      () => (this.service.useExpiredMembers = !this.service.useExpiredMembers),
-    );
+      error: () => (this.service.useExpiredMembers = !this.service.useExpiredMembers),
+    });
+  }
+  voPropagationChange(): void {
+    this.service.useExpiredVoMembers = !this.service.useExpiredVoMembers;
+    this.serviceManager.updateService({ service: this.service }).subscribe({
+      next: () => {
+        this.notificator.showSuccess(
+          this.translate.instant('SERVICE_DETAIL.PROPAGATION_CHANGE_SUCCESS') as string,
+        );
+      },
+      error: () => (this.service.useExpiredVoMembers = !this.service.useExpiredVoMembers),
+    });
   }
 
   evaluateConsents(): void {
