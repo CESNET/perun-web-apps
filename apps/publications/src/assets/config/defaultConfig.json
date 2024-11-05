@@ -30,21 +30,6 @@
       "pwdReset": "Password Reset"
     }
   },
-  "link_to_admin_gui_by_roles": [
-    "PERUNADMIN",
-    "PERUNOBSERVER",
-    "VOADMIN",
-    "VOOBSERVER",
-    "GROUPADMIN",
-    "GROUPOBSERVER",
-    "RESOURCEADMIN",
-    "RESOURCEOBSERVER",
-    "FACILITYADMIN",
-    "FACILITYOBSERVER",
-    "TRUSTEDFACILITYADMIN",
-    "SPONSOR",
-    "TOPGROUPCREATOR"
-  ],
   "auto_auth_redirect": true,
 
   "other_apps": {
@@ -59,6 +44,7 @@
     "PERUNOBSERVER",
     "VOADMIN",
     "VOOBSERVER",
+    "ORGANIZATIONMEMBERSHIPMANAGER",
     "GROUPADMIN",
     "GROUPOBSERVER",
     "RESOURCEADMIN",
