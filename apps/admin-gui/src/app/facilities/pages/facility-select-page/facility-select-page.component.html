@@ -10,15 +10,20 @@
     {{'FACILITY_MANAGEMENT.TITLE' | translate}}
   </h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    mat-flat-button
-    class="action-button me-2"
-    *ngIf="createAuth"
-    (click)="onCreate()"
-    data-cy="new-facility-button"
-    color="accent">
-    {{'FACILITY_MANAGEMENT.CREATE' | translate}}
-  </button>
+  <span
+    [matTooltipDisabled]="createAuth"
+    matTooltip="{{'FACILITY_MANAGEMENT.CREATE_DISABLED' | translate}}"
+    matTooltipPosition="below">
+    <button
+      mat-flat-button
+      class="action-button me-2"
+      [disabled]="!createAuth"
+      (click)="onCreate()"
+      data-cy="new-facility-button"
+      color="accent">
+      {{'FACILITY_MANAGEMENT.CREATE' | translate}}
+    </button>
+  </span>
   <span
     [matTooltipDisabled]="selection.selected.length === 0 || ([selection.selected[0]?.facility] | isAuthorized: 'deleteFacility_Facility_Boolean_policy')"
     [matTooltipPosition]="'below'"

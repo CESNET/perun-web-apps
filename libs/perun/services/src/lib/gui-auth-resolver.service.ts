@@ -87,6 +87,7 @@ export class GuiAuthResolver {
       Role.FACILITYADMIN,
       Role.FACILITIYOBSERVER,
       Role.FACILITYBANMANAGER,
+      Role.FACILITYCREATOR,
     );
   }
 
