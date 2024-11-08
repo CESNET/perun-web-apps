@@ -74,6 +74,7 @@
     "TITLE": "Select facility",
     "FILTER_PLACEHOLDER": "Filter by name, Id, description, owner, host or destination",
     "CREATE": "Create",
+    "CREATE_DISABLED": "Facility creator role is required to create facilities",
     "DELETE": "Delete",
     "DELETE_PERMISSION_HINT": "You don't have permission to delete selected facility"
   },

@@ -38,6 +38,7 @@ export class AddServicesDestinationDialogComponent implements OnInit {
     'email',
     'semail',
     'service-specific',
+    's3',
   ];
   selectedType = 'host';
   propagations: string[] = ['PARALLEL', 'DUMMY'];
@@ -61,6 +62,9 @@ export class AddServicesDestinationDialogComponent implements OnInit {
     '^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)@(?:(?!:\\/\\/)(?=.{1,255}$)((.{1,63}\\.){1,127}(?![0-9]*$)[a-z0-9-]+\\.?)|(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}):[0-9]+',
   );
   private serviceSpecificPattern = new RegExp('^(?!-)[a-zA-Z0-9-_.:/]*$');
+  private s3Pattern = new RegExp(
+    "^(https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;()*$']+)/([-a-zA-Z0-9+&@#%?=~_|!:,.;()*$'']+)$",
+  );
 
   constructor(
     public dialogRef: MatDialogRef<AddServicesDestinationDialogComponent>,
@@ -218,6 +222,9 @@ export class AddServicesDestinationDialogComponent implements OnInit {
           break;
         case 'service-specific':
           pattern = this.serviceSpecificPattern;
+          break;
+        case 's3':
+          pattern = this.s3Pattern;
           break;
         default:
           return null;
