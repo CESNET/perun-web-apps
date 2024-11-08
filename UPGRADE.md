@@ -1,5 +1,13 @@
 Upgrade notes
 
+## [18.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.0.0...v18.1.0) (2024-11-08)
+
+
+### Features
+
+* **admin:** add s3 as possible service destination ([b05e2a3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b05e2a30f783175c4557e8db95e9cac42798dc0b))
+* **admin:** tooltip for disabled create facility button ([ccf9e84](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ccf9e84a01bb410d9710f0dd8aa5a0bf428625cd))
+
 ## [18.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v17.10.0...v18.0.0) (2024-10-24)
 
 
