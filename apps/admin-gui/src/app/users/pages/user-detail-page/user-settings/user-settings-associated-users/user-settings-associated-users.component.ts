@@ -8,7 +8,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ConnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/connect-identity-dialog/connect-identity-dialog.component';
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap, filter } from 'rxjs/operators';
 import { userTableColumn } from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
 
@@ -40,6 +40,7 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
   addAuth: boolean;
   removeAuth: boolean;
   disableRouting: boolean;
+  hasManagers: boolean;
   cacheSubject = new BehaviorSubject(true);
 
   constructor(
@@ -62,16 +63,31 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
       .getUsersBySpecificUser(this.user.id)
       .pipe(
         map((associatedUsers) => associatedUsers.map((user) => user.id)),
+        tap((usersIds: number[]) => {
+          if (usersIds.length === 0) {
+            this.loading = false;
+            this.associatedUsers = [];
+            this.hasManagers = false;
+          } else {
+            this.hasManagers = true;
+          }
+        }),
+        filter((usersIds: number[]) => usersIds.length > 0),
         switchMap((usersIds: number[]) =>
           this.userManager.getRichUsersWithAttributesByIds(usersIds),
         ),
       )
-      .subscribe((associatedUsers) => {
-        this.associatedUsers = associatedUsers;
-        this.cacheSubject.next(true);
-        this.selection.clear();
-        this.setAuth();
-        this.loading = false;
+      .subscribe({
+        next: (associatedUsers) => {
+          this.associatedUsers = associatedUsers;
+          this.cacheSubject.next(true);
+          this.selection.clear();
+          this.setAuth();
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        },
       });
   }
 
@@ -114,7 +130,7 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
       isService: true,
       theme: 'user-theme',
       targetTitle: 'USER',
-      targetDescription: 'SERVICE',
+      targetDescription: 'USER',
     };
 
     const dialogRef = this.dialog.open(DisconnectIdentityDialogComponent, config);

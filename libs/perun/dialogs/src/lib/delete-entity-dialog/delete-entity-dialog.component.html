@@ -15,6 +15,9 @@
         <perun-web-apps-alert *ngIf="lastGroupsFac?.length > 0" alert_type="warn">
           {{'DIALOGS.DELETE_ENTITY.WARN_LAST_FAC' | translate}}
         </perun-web-apps-alert>
+        <perun-web-apps-alert *ngIf="lastOwnerAnyServiceAccount" alert_type="warn">
+          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_OWNER' | translate}}
+        </perun-web-apps-alert>
         <div *ngIf="!disableForce">
           {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
           {{'DIALOGS.DELETE_ENTITY.ONLY' | translate}}
@@ -51,6 +54,26 @@
           <tr *matHeaderRowDef="['name']" class="font-weight-bolder" mat-header-row></tr>
           <tr *matRowDef="let entity; columns: ['name'];" mat-row></tr>
         </table>
+
+        <div *ngIf="lastOwnerAnyServiceAccount">
+          {{ 'DIALOGS.DELETE_ENTITY.UNATTENDED_SERVICE_ACCOUNTS' | translate }}
+          <table [dataSource]="serviceAccountsLeftUnattended" class="w-100 table-margin" mat-table>
+            <ng-container matColumnDef="serviceAccount">
+              <th *matHeaderCellDef mat-header-cell></th>
+              <td *matCellDef="let serviceAccount" mat-cell>
+                <div class="d-flex align-items-center">
+                  {{ serviceAccount }}
+                </div>
+              </td>
+            </ng-container>
+
+            <tr
+              *matHeaderRowDef="['serviceAccount']"
+              class="font-weight-bolder"
+              mat-header-row></tr>
+            <tr *matRowDef="let serviceAccount; columns: ['serviceAccount'];" mat-row></tr>
+          </table>
+        </div>
       </div>
       <div mat-dialog-actions>
         <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
