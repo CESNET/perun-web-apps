@@ -215,6 +215,11 @@ export class SideMenuItemService {
           url: ['/admin/blocked_logins'],
           activatedRegex: '^/admin/blocked_logins',
         },
+        {
+          label: 'MENU_ITEMS.ADMIN.TASKS',
+          url: ['/admin/tasks'],
+          activatedRegex: '^/admin/tasks',
+        },
       ],
     };
   }

@@ -2014,7 +2014,7 @@ export class AuthzResolverService {
   }
 
   /**
-   * Returns all roles except for those obtained from membership in authorized groups as an AuthzRoles object for a given user.
+   * Returns all roles accessible to the principal except for those obtained from membership in authorized groups as an AuthzRoles object for a given user.
    * @param userId id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2232,7 +2232,7 @@ export class AuthzResolverService {
   }
 
   /**
-   * Returns all roles as an AuthzRoles object for a given user.
+   * Returns all roles accessible to the principal as an AuthzRoles object for a given user.
    * @param userId id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

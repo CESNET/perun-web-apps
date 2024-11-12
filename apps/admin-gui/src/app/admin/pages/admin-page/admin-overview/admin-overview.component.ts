@@ -64,5 +64,11 @@ export class AdminOverviewComponent {
       label: 'MENU_ITEMS.ADMIN.BLOCKED_LOGINS',
       style: 'admin-btn',
     },
+    {
+      cssIcon: 'perun-automated-tasks',
+      url: '/admin/tasks',
+      label: 'MENU_ITEMS.ADMIN.TASKS',
+      style: 'admin-btn',
+    },
   ];
 }

@@ -1167,7 +1167,8 @@
       "AUDIT_LOG": "Audit log",
       "CONSENT_HUBS": "Consent hubs",
       "SEARCHER": "Searcher",
-      "BLOCKED_LOGINS": "Blocked logins"
+      "BLOCKED_LOGINS": "Blocked logins",
+      "TASKS": "Automated tasks"
     },
     "USER": {
       "OVERVIEW": "Overview",
@@ -2814,6 +2815,16 @@
       "FILTER_NAMESPACE": "Filter by namespace",
       "UNBLOCK_SUCCESS": "Logins were successfully unblocked",
       "BLOCK_SUCCESS": "Logins were successfully blocked"
+    },
+    "TASKS": {
+      "TITLE": "Automated tasks management",
+      "GROUP": "Group synchronizations suspended",
+      "TASKS": "Tasks propagation suspended",
+      "INFO": "The automated processes can still be suspended by other means (e.g. machine configuration files) even if they appear enabled here. However, if suspended here, the processes will always be suspended.",
+      "PROPAGATION_SUSPENDED_SUCCESS": "Task propagation was successfully suspended.",
+      "PROPAGATION_RESUMED_SUCCESS": "Task propagation was successfully resumed.",
+      "SYNC_SUSPENDED_SUCCESS": "Group synchronizations were successfully suspended.",
+      "SYNC_RESUMED_SUCCESS": "Group synchronizations were successfully resumed."
     }
   },
   "USER_DETAIL": {

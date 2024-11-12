@@ -27,6 +27,7 @@ import { RouteAuthGuardService } from '../shared/route-auth-guard.service';
 import { UserBansComponent } from '../users/pages/user-detail-page/user-bans/user-bans.component';
 import { AdminBlockedLoginsComponent } from './pages/admin-page/admin-blocked-logins/admin-blocked-logins.component';
 import { UserAssignmentsComponent } from '../users/pages/user-detail-page/user-assignments/user-assignments.component';
+import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,11 @@ const routes: Routes = [
         path: 'blocked_logins',
         component: AdminBlockedLoginsComponent,
         data: { animation: 'AdminBlockedLoginsPage' },
+      },
+      {
+        path: 'tasks',
+        component: AdminTasksComponent,
+        data: { animation: 'AdminTasksComponent' },
       },
     ],
   },
