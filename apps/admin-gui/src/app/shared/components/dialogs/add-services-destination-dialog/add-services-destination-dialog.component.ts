@@ -39,6 +39,7 @@ export class AddServicesDestinationDialogComponent implements OnInit {
     'semail',
     'service-specific',
     's3',
+    'url-json',
   ];
   selectedType = 'host';
   propagations: string[] = ['PARALLEL', 'DUMMY'];
@@ -65,6 +66,7 @@ export class AddServicesDestinationDialogComponent implements OnInit {
   private s3Pattern = new RegExp(
     "^(https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;()*$']+)/([-a-zA-Z0-9+&@#%?=~_|!:,.;()*$'']+)$",
   );
+  private urlJsonPattern = this.urlPattern;
 
   constructor(
     public dialogRef: MatDialogRef<AddServicesDestinationDialogComponent>,
@@ -225,6 +227,9 @@ export class AddServicesDestinationDialogComponent implements OnInit {
           break;
         case 's3':
           pattern = this.s3Pattern;
+          break;
+        case 'url-json':
+          pattern = this.urlJsonPattern;
           break;
         default:
           return null;
