@@ -1,18 +1,48 @@
 <h1 mat-dialog-title>{{'DIALOGS.CHANGE_EMAIL.TITLE'|customTranslate | translate}}</h1>
 <div mat-dialog-content class="dialog-container user-theme">
-  <perun-web-apps-alert
-    *ngIf="pendingMails.length"
-    alert_type="warn"
-    >{{pendingEmailsMessage}}</perun-web-apps-alert
-  >
-  <mat-form-field class="w-100">
-    <mat-label>{{'DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|customTranslate | translate}}</mat-label>
-    <input matInput required [formControl]="emailControl" />
-    <mat-error
-      *ngIf="emailControl.invalid"
-      >{{'DIALOGS.CHANGE_EMAIL.EMAIL_ERROR'|customTranslate | translate}}</mat-error
+  <mat-spinner *ngIf="loading" class="me-auto ms-auto" [diameter]="50"></mat-spinner>
+  <div *ngIf="!loading">
+    <perun-web-apps-alert
+      *ngIf="pendingMails.length"
+      alert_type="warn"
+      >{{pendingEmailsMessage}}</perun-web-apps-alert
     >
-  </mat-form-field>
+    <mat-radio-group [(ngModel)]="selectedEmail">
+      <div *ngIf="data.enableLinkedEmail" class="d-flex flex-column">
+        <mat-radio-button
+          *ngFor="let uesName of uesEmails"
+          class="me-3"
+          color="primary"
+          value="{{uesName}}">
+          {{uesName}}
+        </mat-radio-button>
+      </div>
+      <perun-web-apps-alert
+        alert_type="info"
+        *ngIf="data.enableLinkedEmail && uesEmails.length === 0">
+        {{'DIALOGS.CHANGE_EMAIL.NO_LINKED_ACCOUNTS' | translate}}
+      </perun-web-apps-alert>
+      <mat-radio-button
+        *ngIf="data.enableCustomEmail"
+        color="primary"
+        class="d-flex flex-wraps"
+        value="{{CUSTOM_OPTION}}">
+        <mat-form-field class="w-100">
+          <mat-label
+            >{{'DIALOGS.CHANGE_EMAIL.INPUT_PLACEHOLDER'|customTranslate | translate}}</mat-label
+          >
+          <input matInput required [formControl]="emailControl" />
+          <mat-error
+            *ngIf="emailControl.invalid"
+            >{{'DIALOGS.CHANGE_EMAIL.EMAIL_ERROR'|customTranslate | translate}}</mat-error
+          >
+        </mat-form-field>
+      </mat-radio-button>
+    </mat-radio-group>
+    <p class="pt-4 ps-3" *ngIf="data.enableCustomEmail && data.customEmailRequiresVerification">
+      {{'DIALOGS.CHANGE_EMAIL.NOTE' | translate}}
+    </p>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button class="ms-auto" (click)="onCancel()">
@@ -20,7 +50,7 @@
   </button>
   <button
     (click)="onSubmit()"
-    [disabled]="!emailControl.valid"
+    [disabled]="loading || !selectedEmail || (selectedEmail === CUSTOM_OPTION && !emailControl.valid)"
     class="ms-2"
     color="accent"
     mat-flat-button>

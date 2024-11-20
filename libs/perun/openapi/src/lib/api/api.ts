@@ -6,6 +6,8 @@ export * from './authzResolver.service';
 import { AuthzResolverService } from './authzResolver.service';
 export * from './cabinetManager.service';
 import { CabinetManagerService } from './cabinetManager.service';
+export * from './configManager.service';
+import { ConfigManagerService } from './configManager.service';
 export * from './consentsManager.service';
 import { ConsentsManagerService } from './consentsManager.service';
 export * from './databaseManager.service';
@@ -47,6 +49,7 @@ export const APIS = [
   AuditMessagesManagerService,
   AuthzResolverService,
   CabinetManagerService,
+  ConfigManagerService,
   ConsentsManagerService,
   DatabaseManagerService,
   ExtSourcesManagerService,

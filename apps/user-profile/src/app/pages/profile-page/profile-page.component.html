@@ -4,7 +4,17 @@
     <tbody>
       <tr>
         <td class="fw-bold">{{'PROFILE_PAGE.NAME'|customTranslate | translate}}</td>
-        <td>{{fullName}}</td>
+        <td class="d-flex align-items-center">
+          <p class="center-self">{{fullName}}</p>
+          <button
+            *ngIf="personalDataChangeConfig.enableLinkedName || personalDataChangeConfig.enableCustomName"
+            (click)="changeName()"
+            class="ms-2"
+            matTooltip="{{'PROFILE_PAGE.CHANGE_NAME' | translate}}"
+            mat-icon-button>
+            <mat-icon> edit </mat-icon>
+          </button>
+        </td>
       </tr>
       <tr *ngFor="let attribute of additionalAttributes">
         <td class="fw-bold att-name-width">
@@ -27,6 +37,7 @@
           <div *ngSwitchCase="'preferredMail'" class="d-flex align-items-center">
             <a class="center-self" href="mailto:{{email}}">{{email}}</a>
             <button
+              *ngIf="personalDataChangeConfig.enableLinkedEmail || personalDataChangeConfig.enableCustomEmail"
               (click)="changeEmail()"
               class="ms-2"
               matTooltip="{{'PROFILE_PAGE.CHANGE_EMAIL' | translate}}"
@@ -43,13 +54,20 @@
             </mat-select>
           </mat-form-field>
 
-          <div *ngSwitchDefault>
+          <div *ngSwitchDefault class="d-flex align-items-center">
             <p *ngIf="!attribute.attribute.value">-</p>
             <perun-web-apps-attribute-value
               *ngIf="attribute.attribute.value"
               [attribute]="attribute.attribute"
               [readonly]="true">
             </perun-web-apps-attribute-value>
+            <button
+              *ngIf="attribute.attribute.friendlyName === 'organization' && (personalDataChangeConfig.enableLinkedOrganization || personalDataChangeConfig.enableCustomOrganization)"
+              (click)="changeOrganization()"
+              matTooltip="{{'PROFILE_PAGE.CHANGE_ORGANIZATION' | translate}}"
+              mat-icon-button>
+              <mat-icon> edit </mat-icon>
+            </button>
           </div>
         </td>
       </tr>

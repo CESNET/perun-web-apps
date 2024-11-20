@@ -50,6 +50,8 @@ import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dial
 import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
 import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dialog.component';
+import { ChangeNameDialogComponent } from './change-name-dialog/change-name-dialog.component';
+import { ChangeOrganizationDialogComponent } from './change-organization-dialog/change-organization-dialog.component';
 
 @NgModule({
   imports: [
@@ -107,6 +109,8 @@ import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dial
     ExpirationSelectComponent,
     DeleteUserDialogComponent,
     PasswordResetDialogComponent,
+    ChangeNameDialogComponent,
+    ChangeOrganizationDialogComponent,
   ],
   exports: [
     BugReportDialogComponent,
@@ -134,6 +138,8 @@ import { RemoveRoleDialogComponent } from './remove-role-dialog/remove-role-dial
     ExpirationSelectComponent,
     DeleteUserDialogComponent,
     PasswordResetDialogComponent,
+    ChangeNameDialogComponent,
+    ChangeOrganizationDialogComponent,
   ],
 })
 export class PerunDialogsModule {}
