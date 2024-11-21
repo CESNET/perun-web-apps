@@ -57,7 +57,12 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
     nameCtrl: ['', Validators.required],
     emailCtrl: [
       '',
-      [Validators.required, Validators.pattern('\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(.\\w{2,3})+')],
+      [
+        Validators.required,
+        Validators.pattern(
+          /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+        ),
+      ],
     ],
     subjectCtrl: [''],
     issuerCtrl: [''],

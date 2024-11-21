@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShowNotificationHistoryDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { AppType } from '@perun-web-apps/perun/models';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeNameService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'perun-web-apps-header',
@@ -51,11 +52,15 @@ export class PerunHeaderComponent implements OnInit {
     private otherApplicationService: OtherApplicationsService,
     private notificationStorageService: NotificationStorageService,
     private dialog: MatDialog,
+    private changeNameService: ChangeNameService,
     public route: ActivatedRoute,
     public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.changeNameService.getNameChange().subscribe(() => {
+      this.principal = this.storeService.getPerunPrincipal();
+    });
     this.otherAppLabels = this.storeService.getProperty('other_apps')
       ? this.storeService.getProperty('other_apps')['en'] || {}
       : {};

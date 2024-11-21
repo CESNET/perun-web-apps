@@ -46,7 +46,9 @@
   "PROFILE_PAGE": {
     "NAME": "Jméno",
     "MAIL_CHANGE_SUCCESS": "Preferovaný email byl změněn",
-    "CHANGE_EMAIL": "Změnit email"
+    "CHANGE_EMAIL": "Změnit email",
+    "CHANGE_NAME": "Změnit jméno",
+    "CHANGE_ORGANIZATION": "Změnit organizaci"
   },
   "IDENTITIES": {
     "IDP": "Vaše spojené účty",
@@ -165,14 +167,45 @@
   },
   "DIALOGS": {
     "CHANGE_EMAIL": {
-      "TITLE": "Změnit preferovaný email",
+      "TITLE": "Změňte svůj email",
       "INPUT_PLACEHOLDER": "Nový email",
-      "CANCEL": "Zrušit",
-      "CHANGE": "Změnit",
-      "SUCCESS": "Žádost o změnu preferovaného emailu byla odeslána na zadanou adresu.",
+      "CANCEL": "Zrušit akci",
+      "CHANGE": "Změnit email",
+      "SUCCESS": "Email byl úspěšně změněn",
+      "WAIT": "Žádost o změnu preferovaného emailu byla odeslána na zadanou adresu.",
       "PENDING_MAILS_BEGIN": "Potvrzovací email byl odeslán na ",
       "PENDING_MAILS_END": ". Podívejte se do své mailové schránky a dokončete validaci kliknutím na link v emailu.",
-      "EMAIL_ERROR": "Zadejte validní email"
+      "EMAIL_ERROR": "Zadejte validní email",
+      "NO_LINKED_ACCOUNTS": "Nebyl nalezen e-mail s požadovanou úrovní záruky a jinou hodnotou, než je nastavena.",
+      "NOTE": "Upozornění: Ručně zadaný email musí být ověřený. To může trvat několik minut."
+    },
+    "CHANGE_NAME": {
+      "TITLE": "Změňte svoje jméno",
+      "CANCEL": "Zrušit akci",
+      "CHANGE": "Změnit jméno",
+      "TITLE_BEFORE": "Titul před",
+      "TITLE_AFTER": "Titul za",
+      "FIRST_NAME": "Křestní jméno",
+      "MIDDLE_NAME": "Druhé jméno",
+      "LAST_NAME": "Příjmení",
+      "ERROR_LAST_NAME": "Příjmení nemůže být prázdné nebo delší než 128 znaků",
+      "ERROR_FIRST_NAME": "Jméno nesmí být prázdné nebo delší než 128 znaků",
+      "ERROR_LENGTH": "Délka pole musí být kratší než 128 znaků",
+      "NOTE": "Upozornění: Uživatelská podpora musí ověřit a schválit ručně zadané jméno. To může trvat několik dní.",
+      "SUCCESS": "Jméno bylo úspěšně změněno",
+      "WAIT": "Změna jména byla předložena k ověření uživatelské podpoře",
+      "NO_LINKED_ACCOUNTS": "Nebylo nalezeno žádné jméno s požadovanou úrovní záruky a jinou hodnotou, než je nastavena."
+    },
+    "CHANGE_ORGANIZATION": {
+      "TITLE": "Změnit organizaci",
+      "CANCEL": "Zrušit",
+      "CHANGE": "Změnit",
+      "ERROR_EMPTY_NAME": "Jméno organizace nemůže být prázdné",
+      "ORGANIZATION_NAME": "Jméno organizace",
+      "NOTE": "Upozornění: Uživatelská podpora musí ověřit a schválit ručně zadanou organizaci. To může trvat několik dní.",
+      "SUCCESS": "Organizace byla úspěšně změněna",
+      "WAIT": "Změna organizace byla předložena k ověření uživatelské podpoře",
+      "NO_LINKED_ACCOUNTS": "Nebyla nalezena žádná organizace s požadovanou úrovní záruky a jinou hodnotou, než je nastavena."
     },
     "ADD_SSH": {
       "TITLE": "Přidat nový SSH klíč",

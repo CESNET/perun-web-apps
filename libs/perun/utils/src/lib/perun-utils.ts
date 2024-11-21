@@ -742,8 +742,21 @@ export function getDataForExport<T>(
   columns = columns.filter((c) => !skippedColumns.includes(c));
   data.forEach((row) => {
     const resultRow: T = {} as T;
+    let logins: string[] = [];
+
     columns.forEach((col) => {
-      resultRow[col] = (getDataForColumn(row, col) ?? '').split('"').join("''").trim();
+      const columnData = (getDataForColumn(row, col) ?? '').split('"').join("''").trim();
+      if (col === 'logins') {
+        if (columnData) {
+          logins = columnData.split(', ');
+        }
+      }
+      resultRow[col] = columnData;
+    });
+
+    logins.forEach((loginString) => {
+      const [org, login] = loginString.split(': ');
+      resultRow[org] = login;
     });
     result.push(resultRow);
   });
@@ -761,7 +774,11 @@ export function downloadData<T>(
       const replacer = customReplacer
         ? customReplacer
         : (key, value): string => (value === null ? '' : (value as string));
-      const header = Object.keys(data[0]);
+
+      const header = Array.from(
+        new Set([].concat(...data.map((row) => Object.keys(row)))),
+      ) as (keyof T)[];
+
       const csv = data.map((row) =>
         header
           .map((fieldName) =>

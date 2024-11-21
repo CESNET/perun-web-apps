@@ -1,0 +1,84 @@
+<h1 mat-dialog-title>{{'DIALOGS.CHANGE_NAME.TITLE'|customTranslate | translate}}</h1>
+<div mat-dialog-content class="dialog-container user-theme d-flex flex-column">
+  <mat-spinner *ngIf="loading" class="me-auto ms-auto" [diameter]="50"></mat-spinner>
+  <div *ngIf="!loading">
+    <mat-radio-group [(ngModel)]="selectedName">
+      <div *ngIf="data.enableLinkedName" class="d-flex flex-column">
+        <mat-radio-button
+          *ngFor="let uesName of uesNames"
+          class="me-3"
+          color="primary"
+          value="{{uesName}}">
+          {{uesName}}
+        </mat-radio-button>
+      </div>
+      <perun-web-apps-alert
+        alert_type="info"
+        *ngIf="data.enableLinkedName && uesNames.length === 0">
+        {{'DIALOGS.CHANGE_NAME.NO_LINKED_ACCOUNTS' | translate}}
+      </perun-web-apps-alert>
+      <mat-radio-button
+        *ngIf="data.enableCustomName"
+        color="primary"
+        class="d-flex flex-wraps"
+        value="{{CUSTOM_OPTION}}">
+        <mat-form-field class="me-2">
+          <mat-label>{{'DIALOGS.CHANGE_NAME.TITLE_BEFORE' | translate}}</mat-label>
+          <input matInput [formControl]="titleBefore" />
+          <mat-error
+            *ngIf="titleBefore.invalid"
+            >{{'DIALOGS.CHANGE_NAME.ERROR_LENGTH' | translate}}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="me-2">
+          <mat-label>{{'DIALOGS.CHANGE_NAME.FIRST_NAME' | translate}}</mat-label>
+          <input matInput [formControl]="firstName" data-cy="user-first-name-input" required />
+          <mat-error
+            *ngIf="firstName.invalid"
+            >{{'DIALOGS.CHANGE_NAME.ERROR_FIRST_NAME' | translate}}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="me-2">
+          <mat-label>{{'DIALOGS.CHANGE_NAME.MIDDLE_NAME' | translate}}</mat-label>
+          <input matInput [formControl]="middleName" />
+          <mat-error
+            *ngIf="middleName.invalid"
+            >{{'DIALOGS.CHANGE_NAME.CHANGE_NAME' | translate}}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="me-2">
+          <mat-label>{{'DIALOGS.CHANGE_NAME.LAST_NAME' | translate}}</mat-label>
+          <input matInput [formControl]="lastName" required />
+          <mat-error
+            *ngIf="lastName.invalid"
+            >{{'DIALOGS.CHANGE_NAME.ERROR_LAST_NAME' | translate}}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{'DIALOGS.CHANGE_NAME.TITLE_AFTER' | translate}}</mat-label>
+          <input matInput [formControl]="titleAfter" />
+          <mat-error
+            *ngIf="titleAfter.invalid"
+            >{{'DIALOGS.CHANGE_NAME.ERROR_LENGTH' | translate}}</mat-error
+          >
+        </mat-form-field>
+      </mat-radio-button>
+    </mat-radio-group>
+    <p class="pt-4 ps-3" *ngIf="data.enableCustomName && data.customNameRequiresApprove">
+      {{'DIALOGS.CHANGE_NAME.NOTE' | translate}}
+    </p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button class="ms-auto" (click)="onCancel()">
+    {{'DIALOGS.CHANGE_NAME.CANCEL'|customTranslate | translate}}
+  </button>
+  <button
+    (click)="onSubmit()"
+    [disabled]="loading || !selectedName || (selectedName === CUSTOM_OPTION && (firstName.errors || lastName.errors))"
+    class="ms-2"
+    color="accent"
+    mat-flat-button>
+    {{'DIALOGS.CHANGE_NAME.CHANGE'|customTranslate | translate}}
+  </button>
+</div>

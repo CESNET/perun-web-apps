@@ -6,6 +6,7 @@ api/attributesManager.service.ts
 api/auditMessagesManager.service.ts
 api/authzResolver.service.ts
 api/cabinetManager.service.ts
+api/configManager.service.ts
 api/consentsManager.service.ts
 api/databaseManager.service.ts
 api/extSourcesManager.service.ts
@@ -269,6 +270,7 @@ model/paginatedRichApplications.ts
 model/paginatedRichGroups.ts
 model/paginatedRichMembers.ts
 model/paginatedRichUsers.ts
+model/personalDataChangeConfig.ts
 model/perunAppsConfig.ts
 model/perunBean.ts
 model/perunException.ts
