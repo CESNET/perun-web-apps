@@ -1,5 +1,20 @@
 Upgrade notes
 
+## [18.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.1.0...v18.2.0) (2024-11-21)
+
+
+### Features
+
+* **admin:** add url-json as possible service destination ([17671de](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/17671de7092ee847e9d5739476c0ea5c3f62e28d))
+* new export login columns ([0a3765a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0a3765a45c93cdd3370b2785e172924b0b177f23))
+* **profile:** change personal data dialogs ([078444e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/078444eabd32f424c84956a389be8ec8a7a0158a))
+* warnings and fixes when disconnecting last owner from service accout ([b1dccf5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b1dccf520cc0f4f85e7fe36ae347cb39ae19a108))
+
+
+### Bug Fixes
+
+* **admin:** correct regex on service account mail validation ([d8d9ef2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d8d9ef2469866f798a4105d9797672c8e63b22f0))
+
 ## [18.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.0.0...v18.1.0) (2024-11-08)
 
 

@@ -2156,11 +2156,11 @@
       "TITLE_USER": "Disconnect user",
       "REMOVE": "Disconnect",
       "CANCEL": "Cancel",
-      "DESCRIPTION_SERVICE": "Following users will be disconnected from service account.",
-      "DESCRIPTION_USER": "Following service accounts will be disconnected from the user.",
       "DESCRIPTION_SELF": "Following service accounts will be disconnected from you.",
+      "DESCRIPTION_USER": "Following users will be disconnected from service account.",
+      "DESCRIPTION_SERVICE": "Following service accounts will be disconnected from the user.",
       "WARNING_DISCONNECT_YOURSELF": "You will be disconnected from the service account - you will immediately lose rights to access and manage the account. If you want to move rights to another user, you should do it before disconnecting yourself.",
-      "WARNING_LAST_USER": "You want to disconnect the last identity from the service account - the account will be unattended.",
+      "WARNING_LAST_USER": "You are disconnecting the last manager. This service account will be left unattended. Consider connecting a replacement manager or deleting the service account first.",
       "ASK": "Do you want to proceed?",
       "SUCCESS": "Identity has been disconnected."
     },
@@ -2484,8 +2484,10 @@
       "WARN_LAST_VO_TOOLTIP": "This group is the last organization admin for some VOs. These VOs will have no contact person.",
       "WARN_LAST_FAC": "You are deleting a group, which is the last facility admin for some facilities. These facilities will have no contact person.",
       "WARN_LAST_FAC_TOOLTIP": "This group is the last facility admin for some facilities. These facilities will have no contact person.",
+      "WARN_LAST_OWNER": "You are anonymizing a user, who is the last manager for some service accounts. These accounts will be left unattended. Consider connecting a replacement manager or deleting the accounts first.",
       "TYPE_DELETE": "delete",
-      "TYPE_ANONYMIZE": "anonymize"
+      "TYPE_ANONYMIZE": "anonymize",
+      "UNATTENDED_SERVICE_ACCOUNTS": "Following service accounts will be left unattended:"
     },
     "ANONYMIZE_USER": {
       "VO_RELATION": "User's membership in all organizations",

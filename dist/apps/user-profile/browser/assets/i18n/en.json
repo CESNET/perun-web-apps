@@ -47,7 +47,9 @@
   "PROFILE_PAGE": {
     "NAME": "Name",
     "MAIL_CHANGE_SUCCESS": "Preferred mail has been changed",
-    "CHANGE_EMAIL": "Change email"
+    "CHANGE_EMAIL": "Change email",
+    "CHANGE_NAME": "Change name",
+    "CHANGE_ORGANIZATION": "Change organization"
   },
   "IDENTITIES": {
     "IDP": "Your linked accounts",
@@ -166,14 +168,46 @@
   },
   "DIALOGS": {
     "CHANGE_EMAIL": {
-      "TITLE": "Change preferred email",
+      "TITLE": "Update your email",
       "INPUT_PLACEHOLDER": "New email",
       "CANCEL": "Cancel",
-      "CHANGE": "Change",
-      "SUCCESS": "Request for changing preferred email has been sent. Please check your mailbox.",
+      "CHANGE": "Update  email",
+      "SUCCESS": "Email was successfully changed",
+      "WAIT": "Request for changing preferred email has been sent. Please check your mailbox.",
       "PENDING_MAILS_BEGIN": "Validation e-mail has been sent to ",
       "PENDING_MAILS_END": ". Check your inbox and complete validation by clicking on link in received e-mail.",
-      "EMAIL_ERROR": "Input valid email"
+      "EMAIL_ERROR": "Input valid email",
+      "NO_LINKED_ACCOUNTS": "No email with required level of assurance and other value than is already set found.",
+      "NOTE": "Note: Custom email must be verified. This may take several minutes."
+    },
+    "CHANGE_NAME": {
+      "TITLE": "Update your name",
+      "CANCEL": "Cancel",
+      "CHANGE": "Update name",
+      "TITLE_BEFORE": "Title before",
+      "TITLE_AFTER": "Title after",
+      "FIRST_NAME": "First name",
+      "MIDDLE_NAME": "Middle name",
+      "LAST_NAME": "Last name",
+      "ERROR_LAST_NAME": "Last name cannot be empty or longer than 128 characters",
+      "ERROR_FIRST_NAME": "First name cannot be empty or longer than 128 characters",
+      "ERROR_LENGTH": "Length of field has to be less than 128 characters",
+      "NOTE": "Note: Entering a custom name will notify user support to verify and approve the change. This may take several days.",
+      "WAIT": "User's name change was submitted for user support verification",
+      "SUCCESS": "User's name was successfully changed",
+      "NO_LINKED_ACCOUNTS": "No name with required level of assurance and other value than is already set found."
+    },
+    "CHANGE_ORGANIZATION": {
+      "TITLE": "Change organization",
+      "CANCEL": "Cancel",
+      "CHANGE": "Change",
+      "ERROR_EMPTY_NAME": "Organization name cannot be empty",
+      "ORGANIZATION_NAME": "Organization name",
+      "NOTE": "Note: Entering a custom organization will notify user support to verify and approve the change. This may take several days.",
+      "WAIT": "Organization change was submitted for user support verification",
+      "SUCCESS": "Organization was successfully changed",
+      "NO_LINKED_ACCOUNTS": "No organization with required level of assurance and other value than is already set found."
+
     },
     "ADD_SSH": {
       "TITLE": "Add new ssh key",
