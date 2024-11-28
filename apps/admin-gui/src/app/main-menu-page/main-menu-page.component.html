@@ -6,7 +6,7 @@
     <p>{{'MAIN_MENU.PROFILE_DESC' | translate}}</p>
   </a>
   <a
-    *ngIf="authResolver.isVoAdmin() || authResolver.isVoObserver()"
+    *ngIf="authResolver.isVoAdmin() || authResolver.isVoObserver() ||authResolver.isOrganizationMembershipManager()"
     class="main-menu-button vo-btn"
     [routerLink]="['organizations']"
     mat-ripple>

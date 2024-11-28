@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Attribute, AttributesManagerService, RichMember } from '@perun-web-apps/perun/openapi';
+import {
+  Attribute,
+  AttributesManagerService,
+  RichMember,
+  VosManagerService,
+} from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
   ChangeMemberStatusDialogComponent,
@@ -40,11 +45,14 @@ export class MemberOverviewMembershipComponent implements OnInit {
     private translate: PerunTranslateService,
     private notificator: NotificatorService,
     private disablePipe: MemberStatusDisabledPipe,
+    private voService: VosManagerService,
   ) {}
 
   ngOnInit(): void {
     this.editAuth =
-      this.authResolver.isThisVoAdmin(this.voId) && !this.disablePipe.transform(this.member);
+      this.authResolver.isAuthorized('setStatus_Member_Status_policy', [
+        { id: this.member.voId, beanName: 'Vo' },
+      ]) && !this.disablePipe.transform(this.member);
     this.setExpirationRelevant();
     this.refreshVoExpiration();
   }
