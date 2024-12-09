@@ -18,6 +18,9 @@
   </div>
 
   <div mat-dialog-content>
+    <perun-web-apps-alert alert_type="info" *ngIf="cantBeApprovedPresent">
+      <i [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.CANT_BE_APPROVED' | translate"></i>
+    </perun-web-apps-alert>
     <perun-web-apps-alert alert_type="error">
       <div
         [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_DESCRIPTION' | translate"></div>
@@ -26,7 +29,8 @@
       (selectedApplicationResults)="onSelectedApplicationResultsChange($event)"
       [appErrorPairs]="applicationFailures"
       [displayedColumns]="displayedColumns"
-      [theme]="data.theme">
+      [theme]="data.theme"
+      (updated)="updated = $event">
     </app-application-operation-error-list>
   </div>
 

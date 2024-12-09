@@ -709,7 +709,8 @@
         "DELETE": "Failed to delete {{count}} applications",
         "DELETE_SINGULAR": "Failed to delete {{count}} application",
         "DELETE_NOTIFICATION": "Failed to delete some applications.",
-        "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below."
+        "DELETE_DESCRIPTION": "Following applications could not be deleted due to errors.<br>The errors are listed in the table below.",
+        "CANT_BE_APPROVED": "Applications with the <b>CantBeApprovedException</b> error might be approvable on the detail pages of those applications or on the detailed error views displayed after clicking on them in the table below."
       },
       "EXPORT": {
         "APPROVED": "APPROVED",
@@ -1481,6 +1482,18 @@
       "SUBMIT": "Reject",
       "CANCEL": "Cancel",
       "SUCCESS": "Application was rejected"
+    },
+    "APP_APPROVE_ANYWAY": {
+      "TITLE": "Application should not be approved",
+      "SUBMIT": "Approve anyway",
+      "CANCEL": "Cancel",
+      "TEXT": "This application should not be approved for the following reason:",
+      "APPROVE_ANYWAY": "You can try to override the restriction by clicking the 'Approve anyway' button.",
+      "NOT_ACADEMIC": "User is not an active academia member and the application should not be approved.",
+      "LOA": "LoA:",
+      "IDP_CATEGORY": "IdP category:",
+      "AFFILIATION": "Affiliation:",
+      "NOT_ELIGIBLE": "User is not eligible for CESNET services and the application should not be approved."
     },
     "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
       "TITLE": "Change applications view preferences",

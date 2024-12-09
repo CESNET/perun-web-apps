@@ -9,11 +9,16 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Application, PerunException } from '@perun-web-apps/perun/openapi';
+import {
+  Application,
+  CantBeApprovedException,
+  PerunException,
+} from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceSort,
   downloadData,
   getDataForExport,
+  getDefaultDialogConfig,
   getFedValue,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
@@ -22,6 +27,7 @@ import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ApplicationApproveAnywayDialogComponent } from '../dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
 
 @Component({
   selector: 'app-application-operation-error-list',
@@ -37,6 +43,7 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   theme: string;
   @Output()
   selectedApplicationResults = new EventEmitter<[Application, PerunException][]>();
+  @Output() updated = new EventEmitter<boolean>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   dataSource: MatTableDataSource<[Application, PerunException]>;
@@ -96,6 +103,19 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
 
   ngOnInit(): void {
     this.clickable = this.displayedColumns.includes('error');
+    this.updateDatasource();
+    this.selection.changed.subscribe((change) => {
+      this.selectedApplicationResults.emit(change.source.selected);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.authResolver.isPerunAdminOrObserver()) {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
+  }
+
+  updateDatasource(): void {
     this.dataSource = new MatTableDataSource(this.appErrorPairs);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.child.paginator;
@@ -111,15 +131,6 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
           column: string,
         ) => string,
       );
-    this.selection.changed.subscribe((change) => {
-      this.selectedApplicationResults.emit(change.source.selected);
-    });
-  }
-
-  ngAfterViewInit(): void {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
   }
 
   isAllSelected(): boolean {
@@ -140,12 +151,32 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
     );
   }
 
-  openExceptionDetail(exception: PerunException): void {
-    this.dialog.open(NotificationDialogComponent, {
-      width: '550px',
-      data: { title: exception.name, description: exception.message, type: 'success' },
-      autoFocus: false,
-    });
+  openExceptionDetail(data: [Application, PerunException]): void {
+    const [application, exception] = data;
+    if (exception.name === 'CantBeApprovedException') {
+      const config = getDefaultDialogConfig();
+      config.width = '600px';
+      config.data = {
+        err: exception as CantBeApprovedException,
+        theme: this.theme,
+        application: application,
+      };
+
+      const dialogRef = this.dialog.open(ApplicationApproveAnywayDialogComponent, config);
+      dialogRef.afterClosed().subscribe((success) => {
+        if (success) {
+          this.appErrorPairs = this.appErrorPairs.filter(([, error]) => error !== exception);
+          this.updateDatasource();
+          this.updated.emit(true);
+        }
+      });
+    } else {
+      this.dialog.open(NotificationDialogComponent, {
+        width: '550px',
+        data: { title: exception.name, description: exception.message, type: 'success' },
+        autoFocus: false,
+      });
+    }
   }
 
   getExportDataForColumn(data: [Application, PerunException], column: string): string {

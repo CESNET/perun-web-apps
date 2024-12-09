@@ -67,6 +67,7 @@ model/blockedLoginsOrderColumn.ts
 model/blockedLoginsPageQuery.ts
 model/brand.ts
 model/candidate.ts
+model/cantBeApprovedException.ts
 model/category.ts
 model/consent.ts
 model/consentHub.ts
