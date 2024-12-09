@@ -36,6 +36,7 @@ export * from './blockedLoginsOrderColumn';
 export * from './blockedLoginsPageQuery';
 export * from './brand';
 export * from './candidate';
+export * from './cantBeApprovedException';
 export * from './category';
 export * from './consent';
 export * from './consentHub';

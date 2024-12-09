@@ -5,10 +5,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationReSendNotificationDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-dialog/application-re-send-notification-dialog.component';
 import { ApplicationRejectDialogComponent } from '../../../shared/components/dialogs/application-reject-dialog/application-reject-dialog.component';
-import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
+import {
+  ApiRequestConfigurationService,
+  GuiAuthResolver,
+  NotificatorService,
+} from '@perun-web-apps/perun/services';
 import {
   Application,
   ApplicationFormItemData,
+  CantBeApprovedException,
   Invitation,
   InvitationsManagerService,
   MembersManagerService,
@@ -18,6 +23,8 @@ import {
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditApplicationFormItemDataDialogComponent } from '../../../shared/components/dialogs/edit-application-form-item-data-dialog/edit-application-form-item-data-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { RPCError } from '@perun-web-apps/perun/models';
+import { ApplicationApproveAnywayDialogComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
 
 @Component({
   selector: 'app-application-detail',
@@ -52,6 +59,7 @@ export class ApplicationDetailComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private usersService: UsersManagerService,
     private membersService: MembersManagerService,
+    private apiRequest: ApiRequestConfigurationService,
   ) {}
 
   ngOnInit(): void {
@@ -199,35 +207,73 @@ export class ApplicationDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       this.loading = true;
-      this.registrarManager.getApplicationById(this.application.id).subscribe(
-        (reloaded) => {
+      this.registrarManager.getApplicationById(this.application.id).subscribe({
+        next: (reloaded) => {
           this.application = reloaded;
           this.loading = false;
         },
-        () => (this.loading = false),
-      );
+        error: () => (this.loading = false),
+      });
     });
   }
 
   approveApplication(): void {
     this.loading = true;
-    this.registrarManager.approveApplication(this.application.id).subscribe(
-      () => {
+    this.apiRequest.dontHandleErrorForNext();
+    this.registrarManager.canBeApproved(this.application.id).subscribe({
+      next: () => {
+        this.approveApplicationCall();
+      },
+      error: (err: RPCError) => {
+        this.loading = false;
+        if (err.name === 'CantBeApprovedException') {
+          const config = getDefaultDialogConfig();
+          config.width = '600px';
+          config.data = {
+            err: err as CantBeApprovedException,
+            theme: this.dialogTheme,
+            application: this.application,
+          };
+
+          const dialogRef = this.dialog.open(ApplicationApproveAnywayDialogComponent, config);
+          dialogRef.afterClosed().subscribe((success) => {
+            if (success) {
+              this.loading = true;
+              this.registrarManager.getApplicationById(this.application.id).subscribe({
+                next: (reloaded) => {
+                  this.application = reloaded;
+                  this.loading = false;
+                },
+                error: () => (this.loading = false),
+              });
+            }
+          });
+        } else {
+          this.notificator.showRPCError(err);
+        }
+      },
+    });
+  }
+
+  approveApplicationCall(): void {
+    this.loading = true;
+    this.registrarManager.approveApplication(this.application.id).subscribe({
+      next: () => {
         this.translate
           .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_MESSAGE')
           .subscribe((successMessage: string) => {
             this.notificator.showSuccess(successMessage);
           });
-        this.registrarManager.getApplicationById(this.application.id).subscribe(
-          (reloaded) => {
+        this.registrarManager.getApplicationById(this.application.id).subscribe({
+          next: (reloaded) => {
             this.application = reloaded;
             this.loading = false;
           },
-          () => (this.loading = false),
-        );
+          error: () => (this.loading = false),
+        });
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   verifyApplication(): void {

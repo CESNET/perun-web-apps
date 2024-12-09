@@ -87,7 +87,7 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <div *ngIf="clickable">
         <tr
-          (click)="openExceptionDetail(appErrorPair[1])"
+          (click)="openExceptionDetail(appErrorPair)"
           *matRowDef="let appErrorPair; columns: this.displayedColumns;"
           class="cursor-pointer dark-hover-list-item"
           mat-row></tr>
