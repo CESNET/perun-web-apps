@@ -2927,7 +2927,8 @@
       },
       "CERTIFICATES": {
         "TITLE": "Certificates",
-        "SAVE": "Save"
+        "SAVE": "Save",
+        "EMPTY": "Certificate attribute not found. Please report the error."
       },
       "FACILITY_ATTRIBUTES": {
         "TITLE": "Facility attributes"
