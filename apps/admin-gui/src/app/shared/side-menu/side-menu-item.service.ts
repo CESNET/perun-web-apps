@@ -861,24 +861,6 @@ export class SideMenuItemService {
           activatedRegex: '/facilities/\\d+/settings/managers$',
         });
       }
-      // Security teams
-      if (this.routePolicyService.canNavigate('facilities-settings-security-teams', facility)) {
-        children.push({
-          label: 'MENU_ITEMS.FACILITY.SECURITY_TEAMS',
-          url: [`/facilities/${facility.id}/settings/security-teams`],
-          activatedRegex: 'facilities/\\d+/settings/security-teams',
-        });
-      }
-
-      // Blacklist
-      if (this.routePolicyService.canNavigate('facilities-settings-blacklist', facility)) {
-        children.push({
-          label: 'MENU_ITEMS.FACILITY.BLACKLIST',
-          url: ['facilities', facility.id.toString(), 'settings', 'blacklist'],
-          activatedRegex: '/facilities/\\d+/settings/blacklist',
-        });
-      }
-
       // Bans
       if (this.routePolicyService.canNavigate('facilities-settings-bans', facility)) {
         children.push({
