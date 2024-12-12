@@ -447,7 +447,14 @@ export class ApplicationActionsComponent implements OnInit {
       null,
       '',
       'VO_DETAIL.APPLICATION.SHOW',
-      () => this.dialog.open(ApplicationsBulkOperationFailureDialogComponent, config),
+      () => {
+        const dialogRef = this.dialog.open(ApplicationsBulkOperationFailureDialogComponent, config);
+        dialogRef.afterClosed().subscribe((success) => {
+          if (success) {
+            this.refreshTable();
+          }
+        });
+      },
     );
   }
 

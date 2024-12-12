@@ -24,6 +24,8 @@ export class ApplicationsBulkOperationFailureDialogComponent implements OnInit {
   displayedColumns: string[];
   displayedColumnsSuccess: string[];
   selectedApplicationResults: [Application, PerunException][] = [];
+  cantBeApprovedPresent: boolean = false;
+  updated: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<ApplicationsBulkOperationFailureDialogComponent>,
@@ -36,10 +38,13 @@ export class ApplicationsBulkOperationFailureDialogComponent implements OnInit {
     this.applicationSuccesses = this.data.applicationsResults.filter(([, error]) => error === null);
     this.displayedColumns = this.data.displayedColumns;
     this.displayedColumnsSuccess = this.displayedColumns.filter((column) => column !== 'error');
+    this.cantBeApprovedPresent = this.data.applicationsResults.some(
+      (result) => result[1].name === 'CantBeApprovedException',
+    );
   }
 
   onClose(): void {
-    this.dialogRef.close(false);
+    this.dialogRef.close(this.updated);
   }
 
   onSelectedApplicationResultsChange(applicationResults: [Application, PerunException][]): void {

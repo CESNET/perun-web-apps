@@ -200,6 +200,7 @@ import { InvitationExtendDateDialogComponent } from './components/dialogs/invita
 import { InvitationRevokeDialogComponent } from './components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 import { InvitationResendDialogComponent } from './components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
+import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
 
 @NgModule({
   imports: [
@@ -348,6 +349,7 @@ import { InvitationResendDialogComponent } from './components/dialogs/invitation
     AttributeTypeCleanPipe,
     NameSpaceToDefPipe,
     ApplicationReSendNotificationDialogComponent,
+    ApplicationApproveAnywayDialogComponent,
     ApplicationRejectDialogComponent,
     RemoveMembersDialogComponent,
     DebuggerPageComponent,
