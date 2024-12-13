@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [18.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.2.0...v18.3.0) (2024-12-13)
+
+
+### Features
+
+* **admin:** check whether application can be approved ([e02f097](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e02f097183fc6be353433eddd595cefd2102355f))
+
 ## [18.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.1.0...v18.2.0) (2024-11-21)
 
 
