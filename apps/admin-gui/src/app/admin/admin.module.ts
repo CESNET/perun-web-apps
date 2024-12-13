@@ -23,6 +23,7 @@ import { AdminAuditLogComponent } from './pages/admin-page/admin-audit-log/admin
 import { AdminConsentHubsComponent } from './pages/admin-page/admin-consent-hubs/admin-consent-hubs.component';
 import { AdminSearcherComponent } from './pages/admin-page/admin-searcher/admin-searcher.component';
 import { AdminBlockedLoginsComponent } from './pages/admin-page/admin-blocked-logins/admin-blocked-logins.component';
+import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AdminBlockedLoginsComponent } from './pages/admin-page/admin-blocked-lo
     AdminConsentHubsComponent,
     AdminSearcherComponent,
     AdminBlockedLoginsComponent,
+    AdminTasksComponent,
   ],
   imports: [
     CommonModule,

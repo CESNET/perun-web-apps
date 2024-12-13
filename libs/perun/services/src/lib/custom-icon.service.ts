@@ -246,6 +246,10 @@ export class CustomIconService {
       url: 'assets/img/PerunWebImages/blocked.svg',
       name: 'perun-blocked-logins',
     },
+    {
+      url: 'assets/img/PerunWebImages/refresh_page-blue.svg',
+      name: 'perun-automated-tasks',
+    },
   ];
 
   constructor(

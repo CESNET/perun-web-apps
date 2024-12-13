@@ -1,0 +1,30 @@
+<div>
+  <h1 class="page-subtitle">{{'ADMIN.TASKS.TITLE' | translate}}</h1>
+  <div>
+    <perun-web-apps-alert
+      alert_type="info"
+      >{{'ADMIN.TASKS.INFO' | translate}}</perun-web-apps-alert
+    >
+  </div>
+
+  <div class="toggles">
+    <div class="spinner-container" *ngIf="loading">
+      <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
+    </div>
+    <mat-slide-toggle
+      [disabled]="loading"
+      labelPosition="before"
+      [checked]="groupSyncSuspended"
+      (change)="toggleGroupSuspension()"
+      class="mb-2"
+      >{{'ADMIN.TASKS.GROUP' | translate}}</mat-slide-toggle
+    >
+    <mat-slide-toggle
+      [disabled]="loading"
+      labelPosition="before"
+      [checked]="tasksPropSuspended"
+      (change)="toggleTaskSuspension()"
+      >{{'ADMIN.TASKS.TASKS' | translate}}</mat-slide-toggle
+    >
+  </div>
+</div>
