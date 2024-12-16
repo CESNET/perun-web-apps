@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [18.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.3.0...v18.4.0) (2024-12-16)
+
+
+### Features
+
+* **admin:** `Tasks` admin page ([c6e119d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c6e119dedef0aa159a4661ebfd9390d13c863a8b))
+* **admin:** check whether application can be approved ([4ab87b3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4ab87b3524e262e84a41e686512dbdf45f1786c1))
+* **admin:** organization membership manager role ([928dfec](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/928dfec28508c049460505c26879e4e132fb4bdb))
+
+
+### Bug Fixes
+
+* **admin:** certificates page infinite loading fix ([8d112e7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8d112e76ea18260d80959e9a47708aa10280391d))
+
 ## [18.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.2.0...v18.3.0) (2024-12-13)
 
 
