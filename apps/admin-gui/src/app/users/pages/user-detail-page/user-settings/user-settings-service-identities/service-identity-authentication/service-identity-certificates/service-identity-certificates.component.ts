@@ -18,7 +18,7 @@ export class ServiceIdentityCertificatesComponent implements OnInit {
   @ViewChild('list') list: AttributesListComponent;
   loading: boolean;
   userId: number;
-  certificates: Attribute;
+  certificates: Attribute[] = [];
   selection = new SelectionModel<Attribute>(
     true,
     [],
@@ -42,11 +42,16 @@ export class ServiceIdentityCertificatesComponent implements OnInit {
     this.loading = true;
     this.attributesManagerService
       .getUserAttributeByName(this.userId, Urns.USER_DEF_CERTIFICATES)
-      .subscribe((certificates) => {
-        this.certificates = certificates;
-        this.selection.clear();
-        this.cachedSubject.next(true);
-        this.loading = false;
+      .subscribe({
+        next: (certificates) => {
+          this.certificates.push(certificates);
+          this.selection.clear();
+          this.cachedSubject.next(true);
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        },
       });
   }
 

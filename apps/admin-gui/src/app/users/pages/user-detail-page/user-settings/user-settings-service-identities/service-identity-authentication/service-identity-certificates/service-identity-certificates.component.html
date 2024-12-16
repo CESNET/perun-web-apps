@@ -16,8 +16,9 @@
     *perunWebAppsLoader="loading; indicator: spinner"
     [loading]="loading"
     #list
-    [attributes]="[certificates]"
+    [attributes]="certificates"
     [selection]="selection"
-    [cachedSubject]="cachedSubject">
+    [cachedSubject]="cachedSubject"
+    [emptyListText]="'USER_DETAIL.SETTINGS.CERTIFICATES.EMPTY'">
   </perun-web-apps-attributes-list>
 </div>

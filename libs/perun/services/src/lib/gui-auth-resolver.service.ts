@@ -158,6 +158,10 @@ export class GuiAuthResolver {
     return this.isPerunAdminOrObserver() || this.hasAtLeastOne(Role.VOOBSERVER);
   }
 
+  isOrganizationMembershipManager(): boolean {
+    return this.hasAtLeastOne(Role.ORGANIZATIONMEMBERSHIPMANAGER);
+  }
+
   isThisVoObserver(id: number): boolean {
     return this.isPerunAdminOrObserver() || this.observableVos.includes(id);
   }
