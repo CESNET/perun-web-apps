@@ -176,10 +176,6 @@
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
       },
-      "BLACKLIST": {
-        "TITLE": "Blacklist",
-        "FILTER": "Filter"
-      },
       "OWNERS": {
         "TITLE": "Owners",
         "ADD": "Add",
@@ -204,12 +200,6 @@
         "REMOVE": "Remove",
         "SAVE": "Save"
       }
-    },
-    "SECURITY_TEAMS": {
-      "TITLE": "Security teams",
-      "ADD": "Add",
-      "REMOVE": "Remove",
-      "FILTER": "Filter"
     },
     "SERVICES_STATUS": {
       "TITLE": "Services status",
@@ -1107,8 +1097,6 @@
       "MANAGERS": "Managers",
       "SERVICES_DESTINATIONS": "Services destinations",
       "HOSTS": "Hosts",
-      "BLACKLIST": "Blacklist",
-      "SECURITY_TEAMS": "Security teams",
       "SERVICES_STATUS": "Services status",
       "ALLOWED_USERS": "Assigned users",
       "BANS": "Bans"
@@ -3038,18 +3026,6 @@
         "TABLE_HOST_NAME": "Host name",
         "NO_HOST_WARNING": "No hosts found"
       },
-      "BLACKLIST_LIST": {
-        "USER_ID": "Id",
-        "NAME": "Name",
-        "REASON": "Reason",
-        "NO_BANS_WARNING": "No bans found"
-      },
-      "SECURITY_TEAMS_LIST": {
-        "ID": "Id",
-        "NAME": "name",
-        "DESCRIPTION": "description",
-        "NO_SECURITY_TEAMS_WARNING": "No security teams found"
-      },
       "SPONSORED_MEMBERS_LIST": {
         "ID": "Id",
         "NAME": "Name",
@@ -3217,7 +3193,6 @@
     "RESOURCEOBSERVER_RESOURCES_SELF": "Resources you are observer of",
     "RESOURCEOBSERVER_RESOURCES_USER": "Resources where user is observer",
     "RESOURCEOBSERVER_RESOURCES_GROUP": "Resources where group members are observers",
-    "SECURITYADMIN":  "Security admin",
     "SERVICEUSER": "Service user",
     "CABINETADMIN": "Cabinet admin",
     "MEMBERSHIP": "Membership",

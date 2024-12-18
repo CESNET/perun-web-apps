@@ -19,9 +19,7 @@ import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/
 import { FacilityServicesDestinationsComponent } from './pages/facility-detail-page/facility-services-destinations/facility-services-destinations.component';
 import { FacilitySettingsOwnersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-owners/facility-settings-owners.component';
 import { FacilityHostsComponent } from './pages/facility-detail-page/facility-hosts/facility-hosts.component';
-import { FacilitySettingsBlacklistComponent } from './pages/facility-detail-page/facility-settings/facility-settings-blacklist/facility-settings-blacklist.component';
 import { FacilityHostsDetailComponent } from './pages/facility-detail-page/facility-hosts/facility-hosts-detail/facility-hosts-detail.component';
-import { FacilitySecurityTeamsComponent } from './pages/facility-detail-page/facility-security-teams/facility-security-teams.component';
 import { ResourceSettingsManagersComponent } from './pages/resource-detail-page/resource-settings/resource-settings-managers/resource-settings-managers.component';
 import { ResourceAssignedServicesComponent } from './pages/resource-detail-page/resource-assigned-services/resource-assigned-services.component';
 import { FacilityServiceStatusComponent } from './pages/facility-detail-page/facility-service-status/facility-service-status.component';
@@ -119,16 +117,6 @@ const routes: Routes = [
             path: 'managers',
             component: FacilitySettingsManagersComponent,
             data: { animation: 'FacilitySettingsManagersPage' },
-          },
-          {
-            path: 'security-teams',
-            component: FacilitySecurityTeamsComponent,
-            data: { animation: 'FacilitySecurityTeamsPage' },
-          },
-          {
-            path: 'blacklist',
-            component: FacilitySettingsBlacklistComponent,
-            data: { animation: 'FacilitySettingsBlackListPage' },
           },
           {
             path: 'bans',

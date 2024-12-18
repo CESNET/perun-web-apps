@@ -21,7 +21,7 @@ export interface UnsetRoleWithUserComplementaryObjects {
    */
   user: number;
   /**
-   * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * List of complementary objects (supported objects: Group | RichGroup | Vo | Resource | Facility)
    */
   complementaryObjects?: Array<PerunBean>;
 }

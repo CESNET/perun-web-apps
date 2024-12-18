@@ -124,24 +124,6 @@ export class FacilityOverviewComponent implements OnInit {
         style: 'facility-btn',
       });
     }
-    // Security teams
-    if (this.routePolicyService.canNavigate('facilities-settings-security-teams', this.facility)) {
-      this.settingItems.push({
-        cssIcon: 'perun-security-teams',
-        url: `/facilities/${this.facility.id}/settings/security-teams`,
-        label: 'MENU_ITEMS.FACILITY.SECURITY_TEAMS',
-        style: 'facility-btn',
-      });
-    }
-    // Blacklist
-    if (this.routePolicyService.canNavigate('facilities-settings-blacklist', this.facility)) {
-      this.settingItems.push({
-        cssIcon: 'perun-black-list',
-        url: `/facilities/${this.facility.id}/settings/blacklist`,
-        label: 'MENU_ITEMS.FACILITY.BLACKLIST',
-        style: 'facility-btn',
-      });
-    }
     // Bans
     if (this.routePolicyService.canNavigate('facilities-settings-bans', this.facility)) {
       this.settingItems.push({

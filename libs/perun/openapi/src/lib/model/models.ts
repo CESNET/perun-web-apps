@@ -263,7 +263,6 @@ export * from './richUserExtSource';
 export * from './roleAssignmentType';
 export * from './roleManagementRules';
 export * from './roleObject';
-export * from './securityTeam';
 export * from './service';
 export * from './serviceForGUI';
 export * from './serviceState';

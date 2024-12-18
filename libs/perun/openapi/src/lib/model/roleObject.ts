@@ -13,15 +13,7 @@
 /**
  * Represents objects, upon which Perun roles can be set, e.g. role RESOURCEADMIN can be set upon Resource, Vo, Facility or no object (None).
  */
-export type RoleObject =
-  | 'None'
-  | 'Group'
-  | 'Vo'
-  | 'Facility'
-  | 'Resource'
-  | 'User'
-  | 'Member'
-  | 'SecurityTeam';
+export type RoleObject = 'None' | 'Group' | 'Vo' | 'Facility' | 'Resource' | 'User' | 'Member';
 
 export const RoleObject = {
   None: 'None' as RoleObject,
@@ -31,5 +23,4 @@ export const RoleObject = {
   Resource: 'Resource' as RoleObject,
   User: 'User' as RoleObject,
   Member: 'Member' as RoleObject,
-  SecurityTeam: 'SecurityTeam' as RoleObject,
 };
