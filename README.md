@@ -20,7 +20,28 @@ See also other related repositories in the [Perun IdM](https://gitlab.ics.muni.c
 
 ### Configuration
 
-Further documentation on how to configure the application is [here](https://perunaai.atlassian.net/wiki/external/3440714/ZTRlMzIyY2ZjNzk1NDE3MzhkMzVkZDNmODIwN2UyYmY?atlOrigin=eyJpIjoiZGI5YTc5ZjE4M2ExNDk4YWExNjQ4ZTIyMTU1N2RmZGQiLCJwIjoiYyJ9).
+To deploy an application for production environment:
+
+1) Configure web server `Apache`/`Nginx` with certificate
+2) Register oidc client for each application at the service provider
+3) Register and configure also backend as an OIDC client, if needed (set client id and client secret)
+4) Create instance configuration file located at `perun-web-apps/apps/<app_name>/src/assets/config/instanceConfig.json` and configure the deployed application
+
+To register an app to an SP contact the manager of the given instance.
+
+The common configuration properties of **all** applications are specified in:
+
+- [Common configuration](configuration.md)
+
+For specific application configuration please refer to the README files in their respective folders:
+
+- [Admin GUI](apps/admin-gui/README.md)
+- [Consolidator](apps/consolidator/README.md)
+- [Linker](apps/linker/README.md)
+- [Password Reset](apps/password-reset/README.md)
+- [Publications](apps/publications/README.md)
+- [User profile](apps/user-profile/README.md)
+
 
 ### Contributing
 
