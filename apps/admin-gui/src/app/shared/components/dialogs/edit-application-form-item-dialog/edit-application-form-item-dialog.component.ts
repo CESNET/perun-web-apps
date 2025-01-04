@@ -77,6 +77,7 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
   displayWarningForSourceAttr = false;
   displayWarningForDestinationAttr = false;
   languages = ['en'];
+  typesRequiringDestinationAttr: Type[] = [Type.PASSWORD];
   private dependencyTypes: Type[] = [
     'PASSWORD',
     'VALIDATED_EMAIL',
