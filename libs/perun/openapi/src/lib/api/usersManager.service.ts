@@ -5571,7 +5571,7 @@ export class UsersManagerService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/json/userManager/getUnanonymizedUsersBySpecificUser`;
+    let requestUrl = `${this.configuration.basePath}/json/usersManager/getUnanonymizedUsersBySpecificUser`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
