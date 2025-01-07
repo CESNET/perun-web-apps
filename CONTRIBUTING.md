@@ -50,6 +50,10 @@ Use `BREAKING CHANGE:`
 - when functionality is removed
   - e.g. a dialog was removed and some action is no longer possible
 
+## Configuration
+
+Please refer to the main [README](README.md) file.
+
 ## End-to-end tests
 
 Our E2E tests are developing in [Cypress](https://www.cypress.io/). Currently, just the admin-gui app is covered by E2E tests. On the other hand (thanks to [Nx](https://nx.dev/) generators and Nx recommendations for mono repo project architecture) we've established folders containing default configurations for E2E tests dedicated to each application (app name with the postfix `-e2e`), so we are ready to start developing E2E tests for all applications. E2E tests for admin-gui can be found [here](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/tree/main/apps/admin-gui-e2e).
@@ -100,7 +104,7 @@ To run E2E tests locally:
     npm run e2e
     ```
 
-    or (for interactive mode)
+   or (for interactive mode)
 
     ```sh
     npm run e2e-watch
@@ -142,7 +146,7 @@ In the future, scenarios might require testing specific role combinations (e.g. 
 Currently, all tests within a file are grouped into a single `describe` block with several `context` blocks inside it. In the future, additional `describe` blocks might be introduced if necessary. However, the current structure allows all tests to share basic logic in `before/beforeEach` blocks, while the internal structure is managed by contexts. Each `context` can also have its `before/beforeEach`, executed after the `before/beforeEach` from the `describe` block. Contexts primarily serve to group tests related to the same logic.
 
 ![Cypress test file strucutre](./apps/admin-gui/src/assets/img/README/cy_file_structure.png)
-  
+
 #### Cypress custom commands
 
 We use Cypress custom commands to minimize code redundancy and enhance test readability. This feature allows us to define some action in one place and use it across all the tests. All you need to do to create a new custom command is to define the logic in the [commands.ts](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/blob/main/apps/admin-gui-e2e/src/support/commands.ts) file and declare this command in the [index.d.ts](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/-/blob/main/apps/admin-gui-e2e/src/index.d.ts). Once completed, your command becomes universally accessible across all tests. Our login custom command can serve as an inspiration for implementation.
