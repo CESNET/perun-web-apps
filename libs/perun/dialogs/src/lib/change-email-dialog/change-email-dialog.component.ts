@@ -5,6 +5,7 @@ import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/p
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService, NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { emailRegexString } from '@perun-web-apps/perun/utils';
 
 export interface ChangeEmailDialogData {
   userId: number;
@@ -59,9 +60,7 @@ export class ChangeEmailDialogComponent implements OnInit {
     this.loading = true;
     this.emailControl = new UntypedFormControl(null, [
       Validators.required,
-      Validators.pattern(
-        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
-      ),
+      Validators.pattern(emailRegexString),
     ]);
     this.usersManagerService
       .getPendingPreferredEmailChanges(this.data.userId)

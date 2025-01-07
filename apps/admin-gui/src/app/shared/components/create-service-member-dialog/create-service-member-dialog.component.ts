@@ -29,7 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
-import { CustomValidators } from '@perun-web-apps/perun/utils';
+import { CustomValidators, emailRegexString } from '@perun-web-apps/perun/utils';
 import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { MatStepper } from '@angular/material/stepper';
 
@@ -55,15 +55,7 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
   @ViewChild('stepper') stepper: MatStepper;
   firstFormGroup = this._formBuilder.group({
     nameCtrl: ['', Validators.required],
-    emailCtrl: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(
-          /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
-        ),
-      ],
-    ],
+    emailCtrl: ['', [Validators.required, Validators.pattern(emailRegexString)]],
     subjectCtrl: [''],
     issuerCtrl: [''],
   });
