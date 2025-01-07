@@ -86,7 +86,8 @@
                   (itemSelected)="applicationFormItem.perunDestinationAttribute = $event.value; loadWarning(itemType.DESTINATION)"
                   [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DESTINATION_ATTRIBUTE_DESCRIPTION' | translate"
                   [asGroup]="!!data.group"
-                  [type]="itemType.DESTINATION">
+                  [type]="itemType.DESTINATION"
+                  [required]="isApplicationFormItemOfType(typesRequiringDestinationAttr)">
                 </perun-web-apps-selection-item-search-select>
                 <perun-web-apps-alert *ngIf="displayWarningForDestinationAttr" alert_type="warn">
                   {{warningMessage}}
@@ -328,19 +329,24 @@
           [matTooltipDisabled]="!inputFormGroup.invalid && !optionsFormArray.invalid"
           [matTooltipPosition]="'above'"
           matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INVALID_HTML_CONTENT' | translate}}">
-          <button
-            mat-flat-button
-            class="ms-2 mt-auto"
-            color="accent"
-            data-cy="edit-form-item-button-dialog"
-            [disabled]="inputFormGroup.invalid || inputFormGroup.pending || loading || optionsFormArray.invalid
-             || optionsFormArray.pending || (applicationFormItem.required &&
-                    applicationFormItem.perunSourceAttribute === '' &&
-                    applicationFormItem.federationAttribute === '' &&
-                    (applicationFormItem.disabled === 'ALWAYS' || applicationFormItem.hidden === 'ALWAYS'))"
-            (click)="submit()">
-            {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON' | translate}}
-          </button>
+          <div
+            [matTooltipDisabled]="!isApplicationFormItemOfType(typesRequiringDestinationAttr)
+            || (applicationFormItem.perunDestinationAttribute !== '' && applicationFormItem.perunDestinationAttribute !== null)"
+            matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON_DISABLED_TOOLTIP_DESTINATION_MISSING' | translate: {type: applicationFormItem.type} }}">
+            <button
+              mat-flat-button
+              class="ms-2 mt-auto"
+              color="accent"
+              data-cy="edit-form-item-button-dialog"
+              [disabled]="inputFormGroup.invalid | disableSubmitOnAppItemEdit: inputFormGroup.pending:
+              optionsFormArray.invalid: optionsFormArray.pending: loading: applicationFormItem.required:
+              applicationFormItem.perunSourceAttribute: applicationFormItem.federationAttribute:
+              applicationFormItem.disabled: applicationFormItem.hidden: applicationFormItem.type:
+              applicationFormItem.perunDestinationAttribute: typesRequiringDestinationAttr"
+              (click)="submit()">
+              {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON' | translate}}
+            </button>
+          </div>
         </div>
       </div>
     </div>

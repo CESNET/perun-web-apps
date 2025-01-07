@@ -1553,6 +1553,7 @@
       "CANCEL_BUTTON": "Cancel",
       "SUBMIT_BUTTON": "Submit",
       "SUBMIT_BUTTON_DISABLED_TOOLTIP": "This item is required and hidden or disabled, but it has no prefilled value (Source and Federation attributes are empty)",
+      "SUBMIT_BUTTON_DISABLED_TOOLTIP_DESTINATION_MISSING": "Application form item of type {{type}} needs to have destination attribute assigned",
       "BASIC_SETTINGS": "Basic settings",
       "LANGUAGE_CS": "Language: cz",
       "LANGUAGE_EN": "Language: en",
