@@ -55,7 +55,9 @@ export class ImportPublicationsPageComponent implements OnInit {
     true,
     [],
     true,
-    (publication1, publication2) => publication1.id === publication2.id,
+    (publication1, publication2) =>
+      publication1.externalId === publication2.externalId &&
+      publication1.publicationSystemId === publication2.publicationSystemId,
   );
   cachedSubject = new BehaviorSubject(true);
   tableId = TABLE_IMPORT_PUBLICATIONS;
