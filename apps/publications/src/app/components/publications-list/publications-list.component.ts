@@ -14,7 +14,6 @@ import {
   CabinetManagerService,
   Publication,
   PublicationForGUI,
-  RichResource,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
@@ -198,7 +197,7 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
     );
   }
 
-  itemSelectionToggle(item: RichResource): void {
+  itemSelectionToggle(item: PublicationForGUI): void {
     this.selection.toggle(item);
     this.cachedSelection.toggle(item);
   }
