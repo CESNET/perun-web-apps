@@ -199,6 +199,7 @@ import { InvitationRevokeDialogComponent } from './components/dialogs/invitation
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 import { InvitationResendDialogComponent } from './components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
+import { ChangeEmailUserProfileRedirectDialogComponent } from './components/dialogs/change-email-user-profile-redirect-dialog/change-email-user-profile-redirect-dialog.component';
 
 @NgModule({
   imports: [
@@ -490,6 +491,7 @@ import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/ap
     InvitationExtendDateDialogComponent,
     InvitationRevokeDialogComponent,
     InvitationResendDialogComponent,
+    ChangeEmailUserProfileRedirectDialogComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })

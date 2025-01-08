@@ -2874,7 +2874,10 @@
     },
     "OVERVIEW": {
       "GENERAL_SETTINGS": "General settings",
-      "CHANGE_EMAIL": "Change email"
+      "CHANGE_EMAIL": "Change email",
+      "CHANGE_EMAIL_DIALOG_MESSAGE": "Change preferred email functionality has been moved to the user profile application. Do you want to be redirected there?",
+      "CHANGE_EMAIL_DIALOG_REDIRECT": "Redirect",
+      "CHANGE_EMAIL_DIALOG_CANCEL": "Cancel"
     },
     "IDENTITIES": {
       "TITLE": "Identities",
