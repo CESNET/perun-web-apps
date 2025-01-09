@@ -1,5 +1,30 @@
 Upgrade notes
 
+## [18.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.4.0...v18.5.0) (2025-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** removed security teams and related functionality
+
+### Features
+
+* **admin:** check for app items having destination attr assigned ([66de388](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/66de38832c8e86f3d17fe9f6e7010fd7502ddcb7))
+* **admin:** redirect preffered email change to user profile ([2609f1b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2609f1b014146c4bcfee5ad4c97f78b42f2b113a))
+* change and unification of regex to validate mails ([326f3bd](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/326f3bd5a1c05ee99e095d9164d760fe29765486))
+* markdown files with configuration specification ([59422c2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/59422c222c2641a3683a14da940a14e912331938))
+
+
+### Bug Fixes
+
+* **openapi:** fixed typo in manager name ([c2c9a86](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c2c9a866fa59c006c11bb9b6568dadcd5a3aa56d))
+* **publications:** selecting publication would select all items on import ([468342f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/468342f83431295a759b0ee2558ec01537316237))
+
+
+### Others
+
+* **admin:** remove security teams, blacklist and security admin role ([4fbebac](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4fbebac99146e3e1528a35f409d223ca7eaae336))
+
 ## [18.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.3.0...v18.4.0) (2024-12-16)
 
 
