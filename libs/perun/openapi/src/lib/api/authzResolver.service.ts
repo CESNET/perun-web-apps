@@ -43,8 +43,6 @@ import { RichUser } from '../model/richUser';
 // @ts-ignore
 import { RoleManagementRules } from '../model/roleManagementRules';
 // @ts-ignore
-import { SecurityTeam } from '../model/securityTeam';
-// @ts-ignore
 import { SetRoleForGroup } from '../model/setRoleForGroup';
 // @ts-ignore
 import { SetRoleForUser } from '../model/setRoleForUser';
@@ -330,7 +328,7 @@ export class AuthzResolverService {
    * Get all groups of managers (authorizedGroups) for complementaryObject and role
    * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -472,7 +470,7 @@ export class AuthzResolverService {
    * Get all valid user administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role.
    * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility)
    * @param onlyDirectAdmins When true, return only direct users of the complementary object for role
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -624,7 +622,7 @@ export class AuthzResolverService {
    * Get all valid richUser administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role with specified attributes.
    * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility)
    * @param specificAttributes list of specified attributes which are needed in object richUser
    * @param allUserAttributes When true, do not specify attributes through list and return them all in objects richUser. Ignoring list of specific attributes
    * @param onlyDirectAdmins When true, return only direct users of the complementary object for role with specific attributes
@@ -1882,127 +1880,6 @@ export class AuthzResolverService {
     return this.httpClient.get<{
       [key: string]: { [key: string]: { [key: string]: Array<Group> } };
     }>(requestUrl, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * Get all SecurityTeams where the given user (principal if user not sent) has set one of the given roles or the given user is a member of an authorized group with such roles.
-   * @param roles list of role names List&lt;String&gt;
-   * @param user id of User
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getSecurityTeamsWhereUserIsInRoles(
-    roles: Array<string>,
-    user?: number,
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<SecurityTeam>>;
-  public getSecurityTeamsWhereUserIsInRoles(
-    roles: Array<string>,
-    user?: number,
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<SecurityTeam>>>;
-  public getSecurityTeamsWhereUserIsInRoles(
-    roles: Array<string>,
-    user?: number,
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<SecurityTeam>>>;
-  public getSecurityTeamsWhereUserIsInRoles(
-    roles: Array<string>,
-    user?: number,
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    if (roles === null || roles === undefined) {
-      throw new Error(
-        'Required parameter roles was null or undefined when calling getSecurityTeamsWhereUserIsInRoles.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (user !== undefined && user !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'user');
-    }
-    if (roles) {
-      roles.forEach((element) => {
-        localVarQueryParameters = this.addToHttpParams(
-          localVarQueryParameters,
-          <any>element,
-          'roles[]',
-        );
-      });
-    }
-
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/json/authzResolver/getSecurityTeamsWhereUserIsInRoles`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.get<Array<SecurityTeam>>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -4324,7 +4201,7 @@ export class AuthzResolverService {
    * Checks if valid user administrators (for group-based rights, status must be VALID for both Vo and group) for complementary object and role exists.
    * @param role User role
    * @param complementaryObjectId Property id of complementaryObject to get managers for
-   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility | SecurityTeam )
+   * @param complementaryObjectName Property beanName of complementaryObject, meaning object type (supported object types: Group | RichGroup | Vo | Resource | Facility)
    * @param onlyDirectAdmins When true, check only direct users of the complementary object for role
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

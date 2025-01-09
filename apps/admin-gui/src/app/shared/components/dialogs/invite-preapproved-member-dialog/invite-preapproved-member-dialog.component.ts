@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { InvitationsManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { formatDate } from '@angular/common';
+import { emailRegexString } from '@perun-web-apps/perun/utils';
 
 export interface InvitePreapprovedMemberDialogData {
   theme: string;
@@ -18,7 +19,10 @@ export interface InvitePreapprovedMemberDialogData {
   styleUrls: ['./invite-preapproved-member-dialog.component.scss'],
 })
 export class InvitePreapprovedMemberDialogComponent implements OnInit {
-  emailForm = new FormControl('', [Validators.required, Validators.email.bind(this)]);
+  emailForm = new FormControl('', [
+    Validators.required,
+    Validators.pattern(emailRegexString).bind(this),
+  ]);
   languages = ['en'];
   currentLanguage = 'en';
   name = new FormControl('', Validators.required as ValidatorFn);

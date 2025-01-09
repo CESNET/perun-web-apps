@@ -376,7 +376,6 @@ export class RoutePolicyService {
       (facility): boolean =>
         this.authResolver.isAuthorized('getOwners_Facility_policy', [facility]) ||
         this.authResolver.isManagerPagePrivileged(facility) ||
-        this.authResolver.isAuthorized('getAssignedSecurityTeams_Facility_policy', [facility]) ||
         this.authResolver.isAuthorized('getBansForFacility_int_policy', [facility]),
     ],
     [
@@ -387,16 +386,6 @@ export class RoutePolicyService {
     [
       'facilities-settings-managers',
       (facility): boolean => this.authResolver.isManagerPagePrivileged(facility),
-    ],
-    [
-      'facilities-settings-security-teams',
-      (facility): boolean =>
-        this.authResolver.isAuthorized('getAssignedSecurityTeams_Facility_policy', [facility]),
-    ],
-    [
-      'facilities-settings-blacklist',
-      (facility): boolean =>
-        this.authResolver.isAuthorized('getBansForFacility_int_policy', [facility]),
     ],
     [
       'facilities-settings-bans',

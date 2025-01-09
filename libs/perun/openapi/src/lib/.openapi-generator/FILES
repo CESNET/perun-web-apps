@@ -295,7 +295,6 @@ model/richUserExtSource.ts
 model/roleAssignmentType.ts
 model/roleManagementRules.ts
 model/roleObject.ts
-model/securityTeam.ts
 model/service.ts
 model/serviceForGUI.ts
 model/serviceState.ts

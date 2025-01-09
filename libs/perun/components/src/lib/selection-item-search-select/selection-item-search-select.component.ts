@@ -29,6 +29,7 @@ export class SelectionItemSearchSelectComponent implements OnInit {
   @Input() type: ItemType;
   @Input() asGroup = false;
   @Input() hint: string;
+  @Input() required = false;
   @Output() itemSelected = new EventEmitter<SelectionItem>();
 
   items: SelectionItem[] = [];
@@ -61,13 +62,15 @@ export class SelectionItemSearchSelectComponent implements OnInit {
   searchFunction = (item: SelectionItem): string => item.displayName;
 
   createSelectionItems(): void {
-    this.translateService
-      .get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.NO_SELECTED_ITEM')
-      .subscribe((noItem: string) => {
-        const emptyItem: SelectionItem = new SelectionItem(noItem, '');
-        this.items.push(emptyItem);
-        this.item = emptyItem;
-      });
+    if (!this.required) {
+      this.translateService
+        .get('DIALOGS.APPLICATION_FORM_EDIT_ITEM.NO_SELECTED_ITEM')
+        .subscribe((noItem: string) => {
+          const emptyItem: SelectionItem = new SelectionItem(noItem, '');
+          this.items.push(emptyItem);
+          this.item = emptyItem;
+        });
+    }
 
     for (const attribute of this.attributes) {
       const item: SelectionItem = new SelectionItem(

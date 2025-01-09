@@ -4,6 +4,7 @@ import { FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
+import { emailRegexString } from '@perun-web-apps/perun/utils';
 
 export interface InviteMemberDialogData {
   theme: string;
@@ -17,7 +18,10 @@ export interface InviteMemberDialogData {
   styleUrls: ['./invite-member-dialog.component.scss'],
 })
 export class InviteMemberDialogComponent implements OnInit {
-  emailForm = new FormControl('', [Validators.required, Validators.email.bind(this)]);
+  emailForm = new FormControl('', [
+    Validators.required,
+    Validators.pattern(emailRegexString).bind(this),
+  ]);
   languages = ['en'];
   currentLanguage = 'en';
   name = new FormControl('', Validators.required as ValidatorFn);

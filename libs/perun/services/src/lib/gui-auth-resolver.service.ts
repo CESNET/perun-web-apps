@@ -296,7 +296,6 @@ export class GuiAuthResolver {
       'MEMBERSHIP',
       'SERVICEUSER',
       'SELF',
-      'SECURITYADMIN', // SECURITYADMIN might be valid option later on
     ];
 
     this.allRolesManagementRules.forEach((rule) => {

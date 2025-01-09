@@ -79,6 +79,7 @@ import { SelectedPendingInvitation } from './selected-pending-invitation.pipe';
 import { ModifiedNamePipe } from './modified-name.pipe';
 import { GetLabelPipe } from './get-label.pipe';
 import { AppTypeMailTypeMatchPipe } from './app-type-mail-type-match.pipe';
+import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edit';
 
 @NgModule({
   declarations: [
@@ -162,6 +163,7 @@ import { AppTypeMailTypeMatchPipe } from './app-type-mail-type-match.pipe';
     AppTypeMailTypeMatchPipe,
     AppFriendlyNamePipe,
     SelectedPendingInvitation,
+    DisableSubmitOnAppItemEditPipe,
   ],
   exports: [
     ResourceTagsToStringPipe,
@@ -244,6 +246,7 @@ import { AppTypeMailTypeMatchPipe } from './app-type-mail-type-match.pipe';
     AppTypeMailTypeMatchPipe,
     AppFriendlyNamePipe,
     SelectedPendingInvitation,
+    DisableSubmitOnAppItemEditPipe,
   ],
   imports: [CommonModule],
 })

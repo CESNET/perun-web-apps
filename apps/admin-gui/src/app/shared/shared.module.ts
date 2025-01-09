@@ -101,8 +101,6 @@ import { RemoveGroupResourceDialogComponent } from './components/dialogs/remove-
 import { TwoEntityAttributePageComponent } from './components/two-entity-attribute-page/two-entity-attribute-page.component';
 import { AttributeImportDialogComponent } from './components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
 import { HostsListComponent } from './components/hosts-list/hosts-list.component';
-import { BlacklistListComponent } from './components/blacklist-list/blacklist-list.component';
-import { SecurityTeamsListComponent } from './components/security-teams-list/security-teams-list.component';
 import { AddUserExtSourceDialogComponent } from './components/dialogs/add-user-ext-source-dialog/add-user-ext-source-dialog.component';
 import { AddHostDialogComponent } from './components/dialogs/add-host-dialog/add-host-dialog.component';
 import { RemoveHostDialogComponent } from './components/dialogs/remove-host-dialog/remove-host-dialog.component';
@@ -201,6 +199,7 @@ import { InvitationRevokeDialogComponent } from './components/dialogs/invitation
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 import { InvitationResendDialogComponent } from './components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
+import { ChangeEmailUserProfileRedirectDialogComponent } from './components/dialogs/change-email-user-profile-redirect-dialog/change-email-user-profile-redirect-dialog.component';
 
 @NgModule({
   imports: [
@@ -317,8 +316,6 @@ import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/ap
     DestinationListComponent,
     TwoEntityAttributePageComponent,
     HostsListComponent,
-    BlacklistListComponent,
-    SecurityTeamsListComponent,
     ServicesListComponent,
     AttrDefListComponent,
     MemberStatusTooltipPipe,
@@ -403,8 +400,6 @@ import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/ap
     TwoEntityAttributePageComponent,
     AttributeImportDialogComponent,
     HostsListComponent,
-    BlacklistListComponent,
-    SecurityTeamsListComponent,
     AddUserExtSourceDialogComponent,
     AddHostDialogComponent,
     RemoveHostDialogComponent,
@@ -496,6 +491,7 @@ import { ApplicationApproveAnywayDialogComponent } from './components/dialogs/ap
     InvitationExtendDateDialogComponent,
     InvitationRevokeDialogComponent,
     InvitationResendDialogComponent,
+    ChangeEmailUserProfileRedirectDialogComponent,
   ],
   providers: [AnyToStringPipe, ExtSourceTypePipe, ConsentRelatedAttributePipe],
 })

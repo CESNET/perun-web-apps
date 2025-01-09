@@ -12,7 +12,7 @@ import { StoreService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig, parseAttributeFriendlyName } from '@perun-web-apps/perun/utils';
-import { ChangeEmailDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { ChangeEmailUserProfileRedirectDialogComponent } from '../../../../shared/components/dialogs/change-email-user-profile-redirect-dialog/change-email-user-profile-redirect-dialog.component';
 
 @Component({
   selector: 'app-user-overview',
@@ -69,23 +69,9 @@ export class UserOverviewComponent implements OnInit {
 
   changeEmail(): void {
     const config = getDefaultDialogConfig();
-    config.width = '350px';
-    config.data = { userId: this.userID };
+    config.width = '450px';
 
-    const dialogRef = this.dialog.open(ChangeEmailDialogComponent, config);
-
-    dialogRef.afterClosed().subscribe((success) => {
-      if (success) {
-        this.attributeService
-          .getUserAttributeByName(this.userID, Urns.USER_DEF_PREFERRED_MAIL)
-          .subscribe((email) => {
-            this.preferredMail = email;
-            this.handleMailNotDefined();
-
-            this.mailDataSource = new MatTableDataSource<Attribute>([this.preferredMail]);
-          });
-      }
-    });
+    this.dialog.open(ChangeEmailUserProfileRedirectDialogComponent, config);
   }
 
   handleMailNotDefined(): void {
