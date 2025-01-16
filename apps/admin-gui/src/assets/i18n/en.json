@@ -1533,7 +1533,8 @@
       "ERROR_NO_GROUP": "Please choose group",
       "SUCCESS": "Form items copied",
       "PRIVILEGE": "You cannot copy the application form for this combination of organization and group",
-      "NO_FORM": "The selected entity has no form"
+      "NO_FORM": "The selected entity has no form",
+      "NO_SUBMIT_BUTTON": "You can create a submit button manually and then try to copy the form again."
     },
     "APPLICATION_FORM_ADD_ITEM": {
       "TITLE": "Add form item",
