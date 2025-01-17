@@ -73,6 +73,13 @@
           (auxclick)="redirectToUrl(this.otherAppUrls[appLabel.key])">
           <span>{{this.appLabel.value}}</span>
         </button>
+        <button
+          *ngFor="let appLabel of this.otherAppLabelsCustom | keyvalue"
+          mat-menu-item
+          (click)="redirectToUrl(appLabel.key)"
+          (auxclick)="redirectToUrl(appLabel.key)">
+          <span>{{this.appLabel.value}}</span>
+        </button>
       </mat-menu>
 
       <button
