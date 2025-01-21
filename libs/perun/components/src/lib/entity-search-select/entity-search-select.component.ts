@@ -185,7 +185,7 @@ export class EntitySearchSelectComponent<T extends PerunBean>
       return;
     }
     // get the search keyword
-    let search = this.entityFilterCtrl.value as string;
+    let search = (this.entityFilterCtrl.value as string).trim();
     if (!search) {
       this.filteredEntities.next(this.entities.slice());
       this.cd.detectChanges();
