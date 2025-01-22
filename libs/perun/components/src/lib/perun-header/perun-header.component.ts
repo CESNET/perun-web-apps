@@ -40,6 +40,7 @@ export class PerunHeaderComponent implements OnInit {
   logo: SafeHtml;
 
   otherAppLabels: Record<string, string>;
+  otherAppLabelsCustom: Record<string, string>;
   otherApps: AppType[];
   otherAppUrls: Record<string, string> = {};
   linkRoles: string[];
@@ -66,6 +67,10 @@ export class PerunHeaderComponent implements OnInit {
       : {};
     this.otherApps = Object.keys(this.otherAppLabels).map((app) => app as AppType);
 
+    this.otherAppLabelsCustom = this.storeService.getProperty('other_apps_custom')
+      ? this.storeService.getProperty('other_apps_custom')['en'] || {}
+      : {};
+
     this.translateService.onLangChange.subscribe((lang) => {
       this.label = this.storeService.getProperty(
         lang.lang === 'en' ? 'header_label_en' : 'header_label_cs',
@@ -74,6 +79,10 @@ export class PerunHeaderComponent implements OnInit {
         ? this.storeService.getProperty('other_apps')[lang.lang] || {}
         : {};
       this.otherApps = Object.keys(this.otherAppLabels).map((app) => app as AppType);
+
+      this.otherAppLabelsCustom = this.storeService.getProperty('other_apps_custom')
+        ? this.storeService.getProperty('other_apps_custom')[lang.lang] || {}
+        : {};
     });
 
     this.logo = this.sanitizer.bypassSecurityTrustHtml(this.storeService.getProperty('logo'));
