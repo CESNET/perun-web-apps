@@ -1,5 +1,23 @@
 Upgrade notes
 
+## [18.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.5.0...v18.6.0) (2025-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* new `other_apps_custom` config property
+
+### Features
+
+* **admin:** display all rpc errors when copying application form ([cf19878](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/cf1987859842486442e27b16f8c8e2e9396179f9))
+* enable custom other app links ([e96e4be](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e96e4be3f9ce0d6420be282740b60735e5a676d7))
+
+
+### Bug Fixes
+
+* **admin:** anonymize dialog infinite loading ([18fde67](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/18fde67657c3155f24cf22d6682325537194c997))
+* **admin:** trim search strings ([c3d24da](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c3d24da875bddac89ca76a39ea76c4b0891e7ae1))
+
 ## [18.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.4.0...v18.5.0) (2025-01-09)
 
 
