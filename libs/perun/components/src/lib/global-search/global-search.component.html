@@ -1,0 +1,145 @@
+<div class="d-flex flex-row">
+  <button class="search-button ms-auto" mat-icon-button #searchIcon (click)="toggleSearch()">
+    <mat-icon class="small-icon perun-icon" svgIcon="perun-searcher"></mat-icon>
+  </button>
+  <div class="search-container" #container>
+    <form class="custom-form">
+      <mat-form-field
+        class="custom-form w-100 dense-4"
+        subscriptSizing="dynamic"
+        (focusin)="toggleSearch()"
+        (focusout)="focusoutSearch()">
+        <mat-icon matIconPrefix class="perun-icon mx-2" svgIcon="perun-searcher"></mat-icon>
+        <input
+          #input
+          matInput
+          [placeholder]="focusSearch ? '' : ('SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.' + placeholderText) | translate"
+          [formControl]="ctrl"
+          [matAutocomplete]="autoGroup"
+          id="input" />
+        <mat-autocomplete
+          class="mt-2"
+          #autoGroup="matAutocomplete"
+          (optionSelected)="selected($event)">
+          <div *ngIf="loading">
+            <mat-spinner class="mx-auto my-4 opaque"></mat-spinner>
+            <!--    Angular doesn't render autocomplete if no mat-options exist, add dummy hidden one    -->
+            <mat-option hidden="hidden"></mat-option>
+          </div>
+          <div *ngIf="!loading && emptyResult">
+            <div class="d-flex align-content-center align-items-center flex-column mb-2 mt-4">
+              <mat-icon
+                svgIcon="perun-searcher-again"
+                class="again-icon opaque mx-auto mb-4"></mat-icon>
+              <span
+                class="mt-2"
+                >{{'SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.NO_MATCHES' | translate}}</span
+              >
+              <span>{{'SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.TRY_DIFFERENT' | translate}}</span>
+            </div>
+            <!--    Angular doesn't render autocomplete if no mat-options exist, add dummy hidden one    -->
+            <mat-option hidden="hidden"></mat-option>
+          </div>
+          <div *ngIf="queryShort">
+            <div class="d-flex align-content-center align-items-center flex-column my-4">
+              <p>{{'SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.SHORT_QUERY' | translate}}</p>
+            </div>
+            <!--    Angular doesn't render autocomplete if no mat-options exist, add dummy hidden one    -->
+            <mat-option hidden="hidden"></mat-option>
+          </div>
+          <div *ngIf="!loading && !emptyResult && !queryShort">
+            @for (group of groupOptionsObsevable | async; track group) {
+              @if (group.name !== "users" || adminSearch) {
+                <mat-optgroup>
+                  <div class="group-style opaque my-2">
+                    @if (group.name === "USERS") {
+                      <mat-icon class="perun-icon ms-2 me-3 mb-2" svgIcon="perun-user"></mat-icon>
+                    }
+                    @if (group.name === "ORGANIZATIONS") {
+                      <mat-icon class="perun-icon ms-2 me-3 mb-2" svgIcon="perun-vo"></mat-icon>
+                    }
+                    @if (group.name === "GROUPS") {
+                      <mat-icon class="perun-icon ms-2 me-3 mb-2" svgIcon="perun-group"></mat-icon>
+                    }
+                    @if (group.name === "FACILITIES") {
+                      <mat-icon
+                        class="perun-icon ms-2 me-3 mb-2"
+                        svgIcon="perun-facility-white"></mat-icon>
+                    }
+                    <div>
+                      {{('SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.' + group.name) | translate}}
+                    </div>
+                  </div>
+                  @for (item of group.items; track item) {
+                    @if (item.beanName === "User") {
+                      <mat-option
+                        class="ps-5"
+                        [perunWebAppsMiddleClickRouterLink]="['/admin/users', item.id.toString()]"
+                        (auxclick)="$event.preventDefault()"
+                        [value]="item">
+                        <div class="d-flex flex-row">
+                          <div>{{item | userFullName}}</div>
+                          <div *ngIf="adminSearch" class="ms-auto opaque">#{{item.id}}</div>
+                        </div>
+                      </mat-option>
+                    }
+                    @if (item.beanName === "Vo") {
+                      <mat-option
+                        class="ps-5"
+                        [perunWebAppsMiddleClickRouterLink]="['/organizations', item.id.toString()]"
+                        (auxclick)="$event.preventDefault()"
+                        [value]="item">
+                        <div class="d-flex flex-row">
+                          <div>{{item.name}}</div>
+                          <div *ngIf="adminSearch" class="ms-auto opaque">#{{item.id}}</div>
+                        </div>
+                      </mat-option>
+                    }
+                    @if (item.beanName === "Group") {
+                      <mat-option
+                        class="ps-5"
+                        [perunWebAppsMiddleClickRouterLink]="['/organizations', item.voId.toString(),'groups', item.id.toString()]"
+                        (auxclick)="$event.preventDefault()"
+                        [value]="item">
+                        <div class="d-flex flex-row">
+                          <div>{{item.name}}</div>
+                          <div *ngIf="adminSearch" class="ms-auto opaque">#{{item.id}}</div>
+                        </div>
+                        <div class="subtitle opaque">
+                          {{vosById.get(item.voId)?.shortName}}
+                          <span *ngIf="adminSearch">#{{item.voId}}</span>
+                        </div>
+                      </mat-option>
+                    }
+                    @if (item.beanName === "Facility") {
+                      <mat-option
+                        class="ps-5"
+                        [perunWebAppsMiddleClickRouterLink]="['/facilities', item.id.toString()]"
+                        (auxclick)="$event.preventDefault()"
+                        [value]="item">
+                        <div class="d-flex flex-row">
+                          <div>{{item.name}}</div>
+                          <div *ngIf="adminSearch" class="ms-auto opaque">#{{item.id}}</div>
+                        </div>
+                      </mat-option>
+                    }
+                  }
+                  <mat-option
+                    class="ps-5"
+                    *ngIf="hidden.get(group.name)"
+                    [disabled]="group.name === 'GROUPS'"
+                    [value]="group.name + ';' + ctrl.getRawValue()">
+                    <i
+                      [ngClass]="group.name === 'GROUPS' ? '' : 'opaque'"
+                      >{{('SHARED_LIB.PERUN.COMPONENTS.GLOBAL_SEARCH.HIDDEN_' + group.name) | translate}}</i
+                    >
+                  </mat-option>
+                </mat-optgroup>
+              }
+            }
+          </div>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+</div>

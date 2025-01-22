@@ -63,6 +63,7 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
     this.displayedColumns = this.deleteAuth
       ? ['checkbox', 'id', 'hierarchy', 'recent', 'shortName', 'name']
       : ['id', 'recent', 'hierarchy', 'shortName', 'name'];
+
     this.refreshTable();
 
     // Refresh cached data

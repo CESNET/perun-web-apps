@@ -31,3 +31,4 @@ export { HtmlEscapeService } from './lib/html-escape.service';
 export { ExpandedTilesStoreService } from './lib/expanded-tiles-store.service';
 export { MembersListService } from './lib/members-list.service';
 export { ChangeNameService } from './lib/change-name.service';
+export { GlobalSearchValueService } from './lib/global-search-value.service';

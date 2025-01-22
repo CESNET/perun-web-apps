@@ -4,7 +4,8 @@
   class="mt-2 search-field"
   [autoFocus]="true"
   [placeholder]="'ADMIN.USERS.SEARCH_PLACEHOLDER'"
-  (filter)="filterSearchString($event)">
+  (filter)="filterSearchString($event)"
+  [linkGlobalSearch]="true">
 </perun-web-apps-debounce-filter>
 <mat-checkbox (change)="filterUserWithoutVO()" [checked]="usersWithoutVo" color="primary">
   {{'ADMIN.USERS.USERS_WITHOUT_VO' | translate}}
