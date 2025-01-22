@@ -37,6 +37,7 @@ export class ApplicationFormCopyItemsDialogComponent implements OnInit {
   private successMessage: string;
   private privilegeMessage: string;
   private noFormMessage: string;
+  private noSubmitButtonMessage: string;
 
   constructor(
     private dialogRef: MatDialogRef<ApplicationFormCopyItemsDialogComponent>,
@@ -58,6 +59,9 @@ export class ApplicationFormCopyItemsDialogComponent implements OnInit {
     translateService
       .get('DIALOGS.APPLICATION_FORM_COPY_ITEMS.NO_FORM')
       .subscribe((res: string) => (this.noFormMessage = res));
+    translateService
+      .get('DIALOGS.APPLICATION_FORM_COPY_ITEMS.NO_SUBMIT_BUTTON')
+      .subscribe((res: string) => (this.noSubmitButtonMessage = res));
   }
 
   nameFunction: (group: Group) => string = (group: Group) => group.name;
@@ -136,9 +140,16 @@ export class ApplicationFormCopyItemsDialogComponent implements OnInit {
             error: (error: RPCError) => {
               if (error.name === 'FormNotExistsException') {
                 this.notificatorService.showError(this.noFormMessage);
-              }
-              if (error.name === 'PrivilegeException') {
+              } else if (error.name === 'PrivilegeException') {
                 this.notificatorService.showError(this.privilegeMessage);
+              } else if (error.name === 'MissingSubmitButtonException') {
+                this.notificatorService.showError(
+                  error.name,
+                  error,
+                  error.message + ' ' + this.noSubmitButtonMessage,
+                );
+              } else {
+                this.notificatorService.showRPCError(error);
               }
               this.loading = false;
             },

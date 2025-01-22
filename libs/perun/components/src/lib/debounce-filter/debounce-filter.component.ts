@@ -38,7 +38,7 @@ export class DebounceFilterComponent implements OnInit {
       )
       .subscribe((text: string) => {
         if (!this.control.invalid) {
-          this.filter.emit(text);
+          this.filter.emit(text.trim());
         }
       });
   }

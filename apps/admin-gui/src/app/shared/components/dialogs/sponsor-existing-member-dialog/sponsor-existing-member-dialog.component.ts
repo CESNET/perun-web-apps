@@ -131,7 +131,11 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
 
     const attrNames = [Urns.MEMBER_DEF_EXPIRATION, Urns.USER_DEF_PREFERRED_MAIL];
     this.membersService
-      .findCompleteRichMembersForVo(this.data.voId, attrNames, this.searchCtrl.value as string)
+      .findCompleteRichMembersForVo(
+        this.data.voId,
+        attrNames,
+        (this.searchCtrl.value as string).trim(),
+      )
       .subscribe({
         next: (members) => {
           this.members = members;

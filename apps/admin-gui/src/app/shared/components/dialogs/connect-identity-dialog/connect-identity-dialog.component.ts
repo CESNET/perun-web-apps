@@ -106,16 +106,14 @@ export class ConnectIdentityDialogComponent implements OnInit {
     let attributes = [Urns.USER_DEF_ORGANIZATION, Urns.USER_DEF_PREFERRED_MAIL];
     attributes = attributes.concat(this.storeService.getLoginAttributeNames());
     this.userManager
-      .findRichUsersWithAttributes(this.searchCtrl.value as string, attributes)
-      .subscribe(
-        (identities) => {
+      .findRichUsersWithAttributes((this.searchCtrl.value as string).trim(), attributes)
+      .subscribe({
+        next: (identities) => {
           this.identities = this.filterIdentities(identities);
           this.loading = false;
         },
-        () => {
-          this.loading = false;
-        },
-      );
+        error: () => (this.loading = false),
+      });
   }
 
   onKeyInput(event: KeyboardEvent): void {

@@ -60,7 +60,14 @@ Items marked with (#) are likely relevant.
 - (#)`auto_auth_redirect`: boolean, whether the user will be automatically redirected to proxy for authentication after entering the GUI, if set to false, the user will be redirected to the login screen, default: `true`
 
 - `document_title`: An object containing Html Document Title (what will be shown on the tab of the browser e.g.: `Perun Web Gui`) for all supported languages, e.g. `document_title`: `{ "en": "Example title" }`
-
+- (#)`other_apps`: on a first level maps a language (`en`, `cs`, …) to another property. This property defines the labels that are shown in the "more applications" header menu as map `other_app: label`, where `other_app` is one of `admin`, `profile`, `pwdReset`, `consolidator`, `linker` (as defined in `AppType`) and the label is the label to be displayed in the menu
+- `other_apps_custom`: the structure is the same as `other_apps`, however the `other_app` keys are replaced with urls, allowing to link to external applications.
+  - E.g.:
+    ```
+    "en": {
+          "https://www.google.com": "Google"
+        }
+    ```
 - (#)`footer`: an object containing all the columns and copyright, if not filled default configuration is used
 
   - `columns`: array of objects representing each column in the footer
