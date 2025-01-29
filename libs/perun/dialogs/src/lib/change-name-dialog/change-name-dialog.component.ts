@@ -4,6 +4,7 @@ import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/p
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { NotificatorService } from '@perun-web-apps/perun/services';
+import { getElementFromSingleArray } from '@perun-web-apps/perun/utils';
 
 export interface ChangeNameDialogData {
   userId: number;
@@ -87,11 +88,17 @@ export class ChangeNameDialogComponent implements OnInit {
                   this.uesNames.push(displayNameAttr.value as string);
                 }
                 completed++;
+                this.selectedName = getElementFromSingleArray(
+                  this.uesNames.concat(this.data.enableCustomName ? [this.CUSTOM_OPTION] : []),
+                );
                 this.loading = completed !== uesWithLoa.length;
               });
           });
         });
     } else {
+      this.selectedName = getElementFromSingleArray(
+        this.data.enableCustomName ? [this.CUSTOM_OPTION] : [],
+      );
       this.loading = false;
     }
   }

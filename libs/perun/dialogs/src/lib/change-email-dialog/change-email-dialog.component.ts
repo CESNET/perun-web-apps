@@ -5,7 +5,7 @@ import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/p
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService, NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { emailRegexString, getElementFromSingleArray } from '@perun-web-apps/perun/utils';
 
 export interface ChangeEmailDialogData {
   userId: number;
@@ -72,7 +72,6 @@ export class ChangeEmailDialogComponent implements OnInit {
         );
         this.pendingEmailsMessage =
           this.pendingEmailsMessageStart + result + this.pendingEmailsMessageEnd;
-
         if (this.data.enableLinkedEmail) {
           this.usersManagerService
             .getRichUserExtSources(this.data.userId)
@@ -91,11 +90,19 @@ export class ChangeEmailDialogComponent implements OnInit {
                       this.uesEmails.push(mailAttr.value as string);
                     }
                     completed++;
+                    this.selectedEmail = getElementFromSingleArray(
+                      this.uesEmails.concat(
+                        this.data.enableCustomEmail ? [this.CUSTOM_OPTION] : [],
+                      ),
+                    );
                     this.loading = completed !== uesWithLoa.length;
                   });
               });
             });
         } else {
+          this.selectedEmail = getElementFromSingleArray(
+            this.data.enableCustomEmail ? [this.CUSTOM_OPTION] : [],
+          );
           this.loading = false;
         }
       });
