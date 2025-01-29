@@ -73,6 +73,7 @@
       (queryChanged)="nextPage.next($event)"
       (downloadAll)="downloadAll($event)"
       [routeToAdmin]="routeAuth"
+      [disableRouting]="!routeAuth"
       [users]="usersPage$ | async"
       [filter]="searchString"
       [tableId]="tableId"

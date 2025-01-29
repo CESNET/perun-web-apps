@@ -21,6 +21,7 @@ import { UserSettingsLoginsComponent } from './pages/user-detail-page/user-setti
 import { ServiceIdentityAuthenticationComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-authentication.component';
 import { ServiceIdentityCertificatesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-certificates/service-identity-certificates.component';
 import { UserBansComponent } from './pages/user-detail-page/user-bans/user-bans.component';
+import { RouteAuthGuardService } from '../shared/route-auth-guard.service';
 
 const routes: Routes = [
   {
@@ -88,6 +89,8 @@ const routes: Routes = [
   {
     path: 'service-identities/:userId',
     component: ServiceIdentityDetailPageComponent,
+    canActivate: [RouteAuthGuardService],
+    canActivateChild: [RouteAuthGuardService],
     children: [
       {
         path: '',
