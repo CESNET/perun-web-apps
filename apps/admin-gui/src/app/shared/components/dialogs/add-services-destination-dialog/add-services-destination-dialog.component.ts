@@ -35,8 +35,6 @@ export class AddServicesDestinationDialogComponent implements OnInit {
     'user@host-windows',
     'host-windows-proxy',
     'url',
-    'email',
-    'semail',
     'service-specific',
     's3',
     'url-json',
@@ -180,9 +178,6 @@ export class AddServicesDestinationDialogComponent implements OnInit {
   }
 
   getTypeForView(type: string): string {
-    if (type === 'semail') {
-      return 'Send Mail';
-    }
     if (type === 'service-specific') {
       return 'Service Specific';
     }
@@ -207,10 +202,6 @@ export class AddServicesDestinationDialogComponent implements OnInit {
         case 'host':
         case 'host-windows-proxy':
           pattern = this.hostPattern;
-          break;
-        case 'email':
-        case 'semail':
-          pattern = this.emailRegex;
           break;
         case 'url':
           pattern = this.urlPattern;
