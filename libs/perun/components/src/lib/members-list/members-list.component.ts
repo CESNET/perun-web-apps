@@ -62,20 +62,6 @@ export class MembersListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() selection: SelectionModel<RichMember>;
-  @Input() displayedColumns: string[] = [
-    'checkbox',
-    'id',
-    'voId',
-    'userId',
-    'type',
-    'fullName',
-    'status',
-    'groupStatus',
-    'sponsored',
-    'organization',
-    'email',
-    'logins',
-  ];
   @Input() voId: number;
   @Input() groupId: number;
   @Input() selectedGroupStatuses: MemberGroupStatus[] = [];
@@ -100,6 +86,20 @@ export class MembersListComponent implements OnInit, OnChanges {
   expireGroupAuth: boolean;
   expireVoAuth: boolean;
   isMasterCheckboxEnabled: boolean = true;
+  columns: string[] = [
+    'checkbox',
+    'id',
+    'voId',
+    'userId',
+    'type',
+    'fullName',
+    'status',
+    'groupStatus',
+    'sponsored',
+    'organization',
+    'email',
+    'logins',
+  ];
 
   dataSource: MatTableDataSource<MemberWithConsentStatus> | DynamicDataSource<RichMember>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -136,11 +136,11 @@ export class MembersListComponent implements OnInit, OnChanges {
     this.dataSource.filter = value;
   }
 
-  @Input() set displayColumns(columns: string[]) {
+  @Input() set displayedColumns(columns: string[]) {
     if (!this.authResolver.isPerunAdminOrObserver()) {
       columns = columns.filter((column) => column !== 'id');
     }
-    this.displayedColumns = columns;
+    this.columns = columns;
   }
 
   ngOnInit(): void {
@@ -326,7 +326,7 @@ export class MembersListComponent implements OnInit, OnChanges {
   exportDisplayedData(format: string): void {
     if (isDynamicDataSource(this.dataSource)) {
       downloadData(
-        getDataForExport(this.dataSource.data, this.displayedColumns, this.getDataForColumnFun),
+        getDataForExport(this.dataSource.data, this.columns, this.getDataForColumnFun),
         format,
       );
     } else {
@@ -337,7 +337,7 @@ export class MembersListComponent implements OnInit, OnChanges {
           this.dataSource
             .sortData(this.dataSource.filteredData, this.dataSource.sort)
             .slice(start, end),
-          this.displayedColumns,
+          this.columns,
           this.getDataForColumnFun,
         ),
         format,
@@ -354,11 +354,7 @@ export class MembersListComponent implements OnInit, OnChanges {
       });
     } else {
       downloadData(
-        getDataForExport(
-          this.dataSource.filteredData,
-          this.displayedColumns,
-          this.getDataForColumnFun,
-        ),
+        getDataForExport(this.dataSource.filteredData, this.columns, this.getDataForColumnFun),
         format,
       );
     }
@@ -411,13 +407,7 @@ export class MembersListComponent implements OnInit, OnChanges {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
       this.dataSource.filterPredicate = (data: MemberWithConsentStatus, filter: string): boolean =>
-        customDataSourceFilterPredicate(
-          data,
-          filter,
-          this.displayedColumns,
-          this.getDataForColumnFun,
-          true,
-        );
+        customDataSourceFilterPredicate(data, filter, this.columns, this.getDataForColumnFun, true);
       this.dataSource.sortData = (
         data: MemberWithConsentStatus[],
         sort: MatSort,
