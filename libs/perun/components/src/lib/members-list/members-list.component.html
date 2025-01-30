@@ -151,9 +151,9 @@
         <th *matHeaderCellDef mat-header-cell>{{'MEMBERS_LIST.LOGINS' | translate}}</th>
         <td *matCellDef="let member" mat-cell>{{member | memberLogins}}</td>
       </ng-container>
-      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matHeaderRowDef="columns" mat-header-row></tr>
       <tr
-        *matRowDef="let member; columns: displayedColumns;"
+        *matRowDef="let member; columns: columns;"
         [class.cursor-pointer]="!disableRouting"
         [class.italic_font]="member.membershipType === 'INDIRECT'"
         [class.disable-outline]="disableRouting"
