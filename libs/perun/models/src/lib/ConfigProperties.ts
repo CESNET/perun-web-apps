@@ -172,6 +172,7 @@ export interface PerunConfig {
   // Required
   config: string;
   user_deletion_forced?: boolean;
+  notification_tags: Record<string, string[]>;
   // Optional
   display_search?: boolean;
   bulk_bug_report_max_items?: number;

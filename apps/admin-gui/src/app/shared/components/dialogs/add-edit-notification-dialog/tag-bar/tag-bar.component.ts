@@ -1,4 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { StoreService } from '@perun-web-apps/perun/services';
+import { MailType } from '@perun-web-apps/perun/openapi';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-tag-bar',
@@ -6,127 +9,94 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./tag-bar.component.scss'],
 })
 export class TagBarComponent implements OnInit {
-  @Output()
-  addedTag = new EventEmitter<string>();
+  @Input() notificationType: BehaviorSubject<MailType>;
 
-  applicationRelatedTags: string[][] = [];
-  userRelatedTags: string[][] = [];
-  validationLinksUsersTags: string[][] = [];
-  applicationLinksUsersTags: string[][] = [];
-  applicationLinksAdministratorsTags: string[][] = [];
-  perunLinksAdministratorsTags: string[][] = [];
-  userInvitationsTags: string[][] = [];
-  userPreapprovedInvitationsTags: string[][] = [];
+  tagsDescriptionsMappings = new Map<string, string>();
+  notificationTypeAllowedTags: Record<string, string[]>;
+  availableTagsWithDescriptions: string[][];
+
+  constructor(private store: StoreService) {}
 
   ngOnInit(): void {
-    this.getApplicationRelatedTags();
-    this.getUserRelatedTags();
-    this.getValidationLinksUsersTags();
-    this.getApplicationLinksUsersTags();
-    this.getApplicationLinksAdministratorsTags();
-    this.getPerunLinksAdministratorsTags();
-    this.getUserInvitationsTags();
-    this.getUserPreapprovedInvitationsTags();
+    this.notificationTypeAllowedTags = this.store.getProperty('notification_tags');
+    this.getTagsDescriptionsMappings();
+    this.notificationType.subscribe((notificationType) => {
+      this.availableTagsWithDescriptions = this.notificationTypeAllowedTags[notificationType].map(
+        (key) => [key, this.tagsDescriptionsMappings.get(key)],
+      );
+    });
   }
 
-  getApplicationRelatedTags(): void {
-    const tags: string[][] = [];
-    tags.push(['appId', 'APPID_DESCRIPTION']);
-    tags.push(['actor', 'ACTOR_DESCRIPTION']);
-    tags.push(['extSource', 'EXTSOURCE_DESCRIPTION']);
-    tags.push(['voName', 'VONAME_DESCRIPTION']);
-    tags.push(['groupName', 'GROUPNAME_DESCRIPTION']);
-    tags.push(['mailFooter', 'MAILFOOTER_DESCRIPTION']);
-    tags.push(['htmlMailFooter', 'HTMLMAILFOOTER_DESCRIPTION']);
-    tags.push(['errors', 'ERRORS_DESCRIPTION']);
-    tags.push(['customMessage', 'CUSTOMMESSAGE_DESCRIPTION']);
-    tags.push(['autoApproveError', 'AUTOAPPROVEERROR_DESCRIPTION']);
-    tags.push(['fromApp-itemName', 'FROMAPPITEMNAME_DESCRIPTION']);
-    this.applicationRelatedTags = tags;
-  }
+  getTagsDescriptionsMappings(): void {
+    this.tagsDescriptionsMappings.set('appId', 'APPID_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('actor', 'ACTOR_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('extSource', 'EXTSOURCE_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('voName', 'VONAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('groupName', 'GROUPNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('mailFooter', 'MAILFOOTER_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('htmlMailFooter', 'HTMLMAILFOOTER_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('errors', 'ERRORS_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('customMessage', 'CUSTOMMESSAGE_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('autoApproveError', 'AUTOAPPROVEERROR_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('fromApp-itemName', 'FROMAPPITEMNAME_DESCRIPTION');
 
-  getUserRelatedTags(): void {
-    const tags: string[][] = [];
-    tags.push(['firstName', 'FIRSTNAME_DESCRIPTION']);
-    tags.push(['lastName', 'LASTNAME_DESCRIPTION']);
-    tags.push(['displayName', 'DISPLAYNAME_DESCRIPTION']);
-    tags.push(['mail', 'MAIL_DESCRIPTION']);
-    tags.push(['phone', 'PHONE_DESCRIPTION']);
-    tags.push(['login-namespace', 'LOGINNAMESPACE_DESCRIPTION']);
-    tags.push(['membershipExpiration', 'MEMBERSHIPEXPIRATION_DESCRIPTION']);
-    this.userRelatedTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('firstName', 'FIRSTNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('lastName', 'LASTNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('displayName', 'DISPLAYNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('mail', 'MAIL_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('phone', 'PHONE_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('login-namespace', 'LOGINNAMESPACE_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('membershipExpiration', 'MEMBERSHIPEXPIRATION_DESCRIPTION');
 
-  getValidationLinksUsersTags(): void {
-    const tags: string[][] = [];
-    tags.push(['validationLink', 'VALIDATIONLINK_DESCRIPTION']);
-    tags.push(['validationLink-krb', 'VALIDATIONKRB_DESCRIPTION']);
-    tags.push(['validationLink-fed', 'VALIDATIONFED_DESCRIPTION']);
-    tags.push(['validationLink-cert', 'VALIDATIONCERT_DESCRIPTION']);
-    tags.push(['validationLink-non', 'VALIDATIONNON_DESCRIPTION']);
-    tags.push(['redirectUrl', 'REDIRECTURL_DESCRIPTION']);
-    this.validationLinksUsersTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('validationLink', 'VALIDATIONLINK_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('validationLink-krb', 'VALIDATIONKRB_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('validationLink-fed', 'VALIDATIONFED_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('validationLink-cert', 'VALIDATIONCERT_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('validationLink-non', 'VALIDATIONNON_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('redirectUrl', 'REDIRECTURL_DESCRIPTION');
 
-  getApplicationLinksUsersTags(): void {
-    const tags: string[][] = [];
-    tags.push(['appGuiUrl', 'APPGUIURL_DESCRIPTION']);
-    tags.push(['appGuiUrl-krb', 'APPGUIURLKRB_DESCRIPTION']);
-    tags.push(['appGuiUrl-fed', 'APPGUIURLFED_DESCRIPTION']);
-    tags.push(['appGuiUrl-cert', 'APPGUIURLCERT_DESCRIPTION']);
-    tags.push(['appGuiUrl-non', 'APPGUIURLNON_DESCRIPTION']);
-    this.applicationLinksUsersTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('appGuiUrl', 'APPGUIURL_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appGuiUrl-krb', 'APPGUIURLKRB_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appGuiUrl-fed', 'APPGUIURLFED_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appGuiUrl-cert', 'APPGUIURLCERT_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appGuiUrl-non', 'APPGUIURLNON_DESCRIPTION');
 
-  getApplicationLinksAdministratorsTags(): void {
-    const tags: string[][] = [];
-    tags.push(['appDetailUrl', 'APPDETAILURL_DESCRIPTION']);
-    tags.push(['appDetailUrl-krb', 'APPDETAILURLKRB_DESCRIPTION']);
-    tags.push(['appDetailUrl-fed', 'APPDETAILURLFED_DESCRIPTION']);
-    tags.push(['appDetailUrl-cert', 'APPDETAILURLCERT_DESCRIPTION']);
-    tags.push(['appDetailUrl-newGUI', 'APPDETAILURLNEWGUI_DESCRIPTION']);
-    this.applicationLinksAdministratorsTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('appDetailUrl', 'APPDETAILURL_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appDetailUrl-krb', 'APPDETAILURLKRB_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appDetailUrl-fed', 'APPDETAILURLFED_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appDetailUrl-cert', 'APPDETAILURLCERT_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('appDetailUrl-newGUI', 'APPDETAILURLNEWGUI_DESCRIPTION');
 
-  getPerunLinksAdministratorsTags(): void {
-    const tags: string[][] = [];
-    tags.push(['perunGuiUrl', 'PERUNGUIURL_DESCRIPTION']);
-    tags.push(['perunGuiUrl-krb', 'PERUNGUIURLKRB_DESCRIPTION']);
-    tags.push(['perunGuiUrl-fed', 'PERUNGUIURLFED_DESCRIPTION']);
-    tags.push(['perunGuiUrl-cert', 'PERUNGUIURLCERT_DESCRIPTION']);
-    tags.push(['perunGuiUrl-newGUI', 'PERUNGUINEWGUI_DESCRIPTION']);
-    this.perunLinksAdministratorsTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('perunGuiUrl', 'PERUNGUIURL_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('perunGuiUrl-krb', 'PERUNGUIURLKRB_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('perunGuiUrl-fed', 'PERUNGUIURLFED_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('perunGuiUrl-cert', 'PERUNGUIURLCERT_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('perunGuiUrl-newGUI', 'PERUNGUINEWGUI_DESCRIPTION');
 
-  getUserInvitationsTags(): void {
-    const tags: string[][] = [];
-    tags.push(['voName', 'USER_INVITATIONS_VONAME_DESCRIPTION']);
-    tags.push(['groupName', 'USER_INVITATIONS_GROUPNAME_DESCRIPTION']);
-    tags.push(['displayName', 'USER_INVITATIONS_DISPLAYNAME_DESCRIPTION']);
-    tags.push(['mailFooter', 'USER_INVITATIONS_MAILFOOTER_DESCRIPTION']);
-    tags.push(['htmlMailFooter', 'USER_INVITATIONS_HTMLMAILFOOTER_DESCRIPTION']);
-    tags.push(['invitationLink', 'INVITATIONLINK_DESCRIPTION']);
-    tags.push(['invitationLink-krb', 'INVITATIONLINKKRB_DESCRIPTION']);
-    tags.push(['invitationLink-fed', 'INVITATIONLINKFED_DESCRIPTION']);
-    tags.push(['invitationLink-cert', 'INVITATIONLINKCERT_DESCRIPTION']);
-    tags.push(['invitationLink-non', 'INVITATIONLINKNON_DESCRIPTION']);
-    this.userInvitationsTags = tags;
-  }
+    this.tagsDescriptionsMappings.set('displayName', 'USER_INVITATIONS_DISPLAYNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('mailFooter', 'USER_INVITATIONS_MAILFOOTER_DESCRIPTION');
+    this.tagsDescriptionsMappings.set(
+      'htmlMailFooter',
+      'USER_INVITATIONS_HTMLMAILFOOTER_DESCRIPTION',
+    );
+    this.tagsDescriptionsMappings.set('invitationLink', 'INVITATIONLINK_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('invitationLink-krb', 'INVITATIONLINKKRB_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('invitationLink-fed', 'INVITATIONLINKFED_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('invitationLink-cert', 'INVITATIONLINKCERT_DESCRIPTION');
+    this.tagsDescriptionsMappings.set('invitationLink-non', 'INVITATIONLINKNON_DESCRIPTION');
 
-  getUserPreapprovedInvitationsTags(): void {
-    const tags: string[][] = [];
-    tags.push(['voName', 'USER_INVITATIONS_VONAME_DESCRIPTION']);
-    tags.push(['groupName', 'USER_INVITATIONS_GROUPNAME_DESCRIPTION']);
-    tags.push(['displayName', 'USER_INVITATIONS_DISPLAYNAME_DESCRIPTION']);
-    tags.push(['mailFooter', 'USER_INVITATIONS_MAILFOOTER_DESCRIPTION']);
-    tags.push(['htmlMailFooter', 'USER_INVITATIONS_HTMLMAILFOOTER_DESCRIPTION']);
-    tags.push(['preapprovedInvitationLink', 'USER_PREAPPROVED_INVITATIONS_LINK_DESCRIPTION']);
-    tags.push(['expirationDate', 'USER_PREAPPROVED_INVITATIONS_EXPIRATION_DESCRIPTION']);
-    tags.push(['senderName', 'USER_PREAPPROVED_INVITATIONS_SENDER_NAME_DESCRIPTION']);
-    this.userPreapprovedInvitationsTags = tags;
-  }
-
-  addTag(tag: string): void {
-    this.addedTag.emit(tag);
+    this.tagsDescriptionsMappings.set('displayName', 'USER_INVITATIONS_DISPLAYNAME_DESCRIPTION');
+    this.tagsDescriptionsMappings.set(
+      'preapprovedInvitationLink',
+      'USER_PREAPPROVED_INVITATIONS_LINK_DESCRIPTION',
+    );
+    this.tagsDescriptionsMappings.set(
+      'expirationDate',
+      'USER_PREAPPROVED_INVITATIONS_EXPIRATION_DESCRIPTION',
+    );
+    this.tagsDescriptionsMappings.set(
+      'senderName',
+      'USER_PREAPPROVED_INVITATIONS_SENDER_NAME_DESCRIPTION',
+    );
   }
 }

@@ -50,6 +50,20 @@ namespaces: `einfra`, `einfra-services`, `cesnet`, `mu`.
 - `export_limit`: type number, maximum number of entities to be exportable in tables
   - default: 1000
 
+### Notification tags
+- (*)`notification_tags`: A map of available tags for each type of notification for administrator to use. The keys are
+notification types and values are an arrays of allowed tags. The available tags are `appId`, `actor`, `extSource`, `voName`, `groupName`, `mailFooter`, `htmlMailFooter`, `errors`, `customMessage`, `autoApproveError`, `fromApp-itemName`, `firstName`, `lastName`, `displayName`, `mail`, `phone`, `login-namespace`, `membershipExpiration`, `validationLink`, `validationLink-krb`, `validationLink-fed`, `validationLink-cert`, `validationLink-non`, `redirectUrl`, `appGuiUrl`, `appGuiUrl-krb`, `appGuiUrl-fed`, `appGuiUrl-cert`, `appGuiUrl-non`, `appDetailUrl`, `appDetailUrl-krb`, `appDetailUrl-fed`, `appDetailUrl-cert`, `appDetailUrl-newGUI`, `perunGuiUrl`, `perunGuiUrl-krb`, `perunGuiUrl-fed`, `perunGuiUrl-cert`, `perunGuiUrl-newGUI`, `voName`, `groupName`, `displayName`, `mailFooter`, `htmlMailFooter`, `invitationLink`, `invitationLink-krb`, `invitationLink-fed`, `invitationLink-cert`, `invitationLink-non`, `voName`, `groupName`, `displayName`, `mailFooter`, `htmlMailFooter`, `preapprovedInvitationLink`, `expirationDate`, `senderName`.
+
+  - `APP_CREATED_USER`: An array of tags available for created application user notification.
+  - `APPROVABLE_GROUP_APP_USER`: An array of tags available for approvable group application user notification.
+  - `APP_CREATED_VO_ADMIN`: An array of tags available for created application admin notification.
+  - `MAIL_VALIDATION`: An array of tags available for validate mail user notification.
+  - `APP_APPROVED_USER`: An array of tags available for approved application user notification.
+  - `APP_REJECTED_USER`: An array of tags available for rejected application user notification.
+  - `APP_ERROR_VO_ADMIN`: An array of tags available for application error admin notification.
+  - `USER_INVITE`: An array of tags available for invite user notification.
+  - `USER_PRE_APPROVED_INVITE`: An array of tags available for preapproved invite user notification.
+
 ### Styling
 - (#)`logo`: SVG image shown on the top left corner of the website.
 

@@ -1673,6 +1673,7 @@
       "FORMAT_HTML": "HTML",
       "FORMAT_PLAIN": "Plain text",
       "AVAILABLE_TAGS": "Available tags",
+      "TAG_ADDING_DESC": "<b>Drag and drop</b> the tags to place them, click on the tags to see the description.",
       "SUBJECT": "Subject",
       "TEXT": "Text",
       "SHOW_TAGS": "Show tags",
