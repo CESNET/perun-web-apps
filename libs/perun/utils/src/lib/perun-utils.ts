@@ -918,3 +918,7 @@ export function spaceNameValidator(): ValidatorFn {
     return value.trim() !== value ? { spaceName: true } : null;
   };
 }
+
+export function getElementFromSingleArray(options: Array<string>): string | null {
+  return options.length === 1 ? options[0] : null;
+}

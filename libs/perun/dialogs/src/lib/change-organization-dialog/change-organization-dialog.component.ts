@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { NotificatorService } from '@perun-web-apps/perun/services';
+import { getElementFromSingleArray } from '@perun-web-apps/perun/utils';
 
 export interface ChangeOrganizationDialogData {
   userId: number;
@@ -56,9 +57,17 @@ export class ChangeOrganizationDialogComponent implements OnInit {
             }
           });
           this.uesOrganizations = Array.from(new Set(this.uesOrganizations));
+          this.selectedOrganization = getElementFromSingleArray(
+            this.uesOrganizations.concat(
+              this.data.enableCustomOrganization ? [this.CUSTOM_OPTION] : [],
+            ),
+          );
           this.loading = false;
         });
     } else {
+      this.selectedOrganization = getElementFromSingleArray(
+        this.data.enableCustomOrganization ? [this.CUSTOM_OPTION] : [],
+      );
       this.loading = false;
     }
   }
