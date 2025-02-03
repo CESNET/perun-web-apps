@@ -130,7 +130,6 @@
               <perun-web-apps-users-list
                 *perunWebAppsLoader="loading; indicator: spinner"
                 [loading]="loading"
-                [routeToAdmin]="true"
                 [displayColumns]="['user', 'id', 'name']"
                 [disableRouting]="true"
                 [users]="users | async">
