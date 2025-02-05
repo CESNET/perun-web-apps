@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [18.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.6.0...v18.7.0) (2025-02-05)
+
+
+### Features
+
+* **profile:** default selected value when changing user basic attributes ([a276f54](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a276f54e4b2d81a7213bb4917a5ff06c4582cbf4))
+
+
+### Bug Fixes
+
+* **admin:** added route guard to service-account pages ([676bcb8](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/676bcb8bde055867c48b0ebb65f980aa71ca4e2b))
+* hide member IDs for non-PERUNADMIN ([8be53f4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8be53f4b9db302e38badc6f6a34545a5c2dcccec))
+* **profile:** quota change visual adjustment ([bbb1344](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/bbb13444bc49a83dd5177687560e890348565435))
+
 ## [18.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.5.0...v18.6.0) (2025-01-22)
 
 
