@@ -5,7 +5,6 @@
  */
 import {
   Group,
-  Owner,
   RichMember,
   RichUser,
   User,
@@ -205,19 +204,6 @@ export function getRichUserAttribute(user: RichUser, urn: string): Attribute {
   }
 
   return null;
-}
-
-export function parseTechnicalOwnersNames(owners: Owner[]): string {
-  let names = '';
-  for (const owner of owners) {
-    if (owner.type === 'technical') {
-      names += owner.name + ', ';
-    }
-  }
-  if (names.endsWith(', ')) {
-    names = names.substring(0, names.length - 2);
-  }
-  return names;
 }
 
 export async function doAfterDelay(delayMs: number, callback: () => void): Promise<void> {

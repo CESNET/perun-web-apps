@@ -72,7 +72,7 @@
   },
   "FACILITY_MANAGEMENT": {
     "TITLE": "Select facility",
-    "FILTER_PLACEHOLDER": "Filter by name, Id, description, owner, host or destination",
+    "FILTER_PLACEHOLDER": "Filter by name, Id, description, host or destination",
     "CREATE": "Create",
     "CREATE_DISABLED": "Facility creator role is required to create facilities",
     "DELETE": "Delete",
@@ -87,7 +87,6 @@
   },
   "FACILITY_CONFIGURATION": {
     "TITLE": "Configure facility",
-    "OWNERS": "Owners",
     "HOSTS": "Hosts",
     "SERVICES": "Services",
     "SERVICE_CONFIG": "Configure services",
@@ -175,12 +174,6 @@
         "CANCEL": "Cancel",
         "SUCCESS_DELETE": "Attributes deleted successfully",
         "SUCCESS_SAVE": "Attributes saved successfully"
-      },
-      "OWNERS": {
-        "TITLE": "Owners",
-        "ADD": "Add",
-        "DELETE": "Delete",
-        "NO_OWNERS": "This facility does not have any owners"
       },
       "BANS": {
         "TITLE": "Bans",
@@ -1093,7 +1086,6 @@
       "SETTINGS": "Advanced settings",
       "ATTRIBUTES": "Attributes",
       "SERVICE_CONFIG": "Services configuration",
-      "OWNERS": "Owners",
       "MANAGERS": "Managers",
       "SERVICES_DESTINATIONS": "Services destinations",
       "HOSTS": "Hosts",
@@ -1152,7 +1144,6 @@
       "SETTINGS": "Advanced settings",
       "ORGANIZATIONS": "Organizations",
       "SERVICES": "Services",
-      "OWNERS": "Owners",
       "AUDIT_LOG": "Audit log",
       "CONSENT_HUBS": "Consent hubs",
       "SEARCHER": "Searcher",
@@ -2013,21 +2004,6 @@
       "ASK": "Do you want to proceed?",
       "SUCCESS": "Removed hosts."
     },
-    "ADD_OWNERS": {
-      "TITLE": "Add facility owners",
-      "FILTER": "Filter by Id, name, contact or type",
-      "CANCEL": "Cancel",
-      "ADD": "Add",
-      "SUCCESS": "Owners were successfully added"
-    },
-    "REMOVE_OWNERS": {
-      "TITLE": "Remove facility owners",
-      "CANCEL": "Cancel",
-      "DELETE": "Delete",
-      "DESCRIPTION": "Following facility owners will be removed.",
-      "ASK": "Are you sure you want to proceed?",
-      "SUCCESS": "Owners were successfully removed"
-    },
     "CREATE_EDIT_SERVICE": {
       "CREATE_TITLE": "Create service",
       "EDIT_TITLE": "Edit service",
@@ -2083,7 +2059,7 @@
       "SUCCESS": "Created facility.",
       "REQUIRE_NAME": "Facility name can't be empty.",
       "NO_COPY": "--- No copy ---",
-      "HINT": "You can <b>Create & Configure</b> facility (configuration guide allows you to add owners, hosts, services, configure services or change managers. Changes are immediately saved) or just <b>Create</b> empty facility."
+      "HINT": "You can <b>Create & Configure</b> facility (configuration guide allows you to add hosts, services, configure services or change managers. Changes are immediately saved) or just <b>Create</b> empty facility."
     },
     "DELETE_FACILITY": {
       "SUCCESS": "Facility deleted.",
@@ -2451,29 +2427,6 @@
       "EXP_INFO": "The expiration of the original sponsorship will be set if no new date is selected.",
       "SUCCESS": "Members successfully sponsored"
     },
-    "ADD_OWNER": {
-      "TITLE": "Create owner",
-      "NAME": "Name",
-      "FILL_NAME": "Name cannot be empty",
-      "CONTACT": "Contact",
-      "FILL_CONTACT": "Contact cannot be empty",
-      "CONTACT_FORMAT": "Invalid format, e.g. mail@domain.com",
-      "TYPE_LABEL": "Type",
-      "TYPE1": "Administrative",
-      "TYPE2": "Technical",
-      "CANCEL": "Cancel",
-      "TOOLTIP": "Please, fill name and contact",
-      "CREATE": "Create",
-      "SUCCESS": "Owner successfully created"
-    },
-    "DELETE_OWNER": {
-      "TITLE": "Delete owner",
-      "DESCRIPTION": "Selected owners will be deleted.",
-      "ASK": "Are you sure, you want to continue?",
-      "CANCEL": "Cancel",
-      "DELETE": "Delete",
-      "SUCCESS": "Owners successfully removed"
-    },
     "DELETE_ENTITY": {
       "BASIC": "Do you want to {{action}}",
       "ONLY": "only this",
@@ -2772,12 +2725,6 @@
       "EMPTY_SEARCH": "Search field cannot be empty",
       "USERS_WITHOUT_VO": "Search for users without organization"
     },
-    "OWNERS": {
-      "TITLE": "Owners",
-      "ADD": "Create",
-      "DELETE": "Delete",
-      "FILTER": "Filter"
-    },
     "EXT_SOURCES": {
       "TITLE": "External sources",
       "SEARCH": "Search by Id, Name or Type",
@@ -3059,7 +3006,6 @@
         "ID": "Id",
         "NAME": "Name",
         "DESCRIPTION": "Description",
-        "TECHNICAL_OWNERS": "Technical owners",
         "DESTINATIONS": "Destinations",
         "HOSTS": "Hosts",
         "NO_FACILITIES_WARNING": "No facilities found",
@@ -3590,14 +3536,6 @@
         "FOCUS_ON_MFA_DIALOG": {
           "MODAL": "Modal window is opened.",
           "MODAL_WARNING": "Please check your browser settings if no modal window is open."
-        },
-        "OWNERS_LIST": {
-          "ID": "Id",
-          "NAME": "Name",
-          "CONTACT": "Contact",
-          "TYPE": "Type",
-          "NO_OWNERS": "No owners found.",
-          "NO_FILTER_OWNERS": "No owners match the given filter"
         },
         "MAIL_CHANGE_FAILED_DIALOG": {
           "TITLE": "Preferred mail change failed",

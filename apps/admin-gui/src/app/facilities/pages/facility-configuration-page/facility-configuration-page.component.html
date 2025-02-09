@@ -7,13 +7,6 @@
       <perun-web-apps-loading-table></perun-web-apps-loading-table>
     </ng-template>
     <mat-step>
-      <ng-template matStepLabel>{{'FACILITY_CONFIGURATION.OWNERS' | translate}}</ng-template>
-      <ng-template matStepContent>
-        <app-facility-settings-owners (ownerEmitter)="owners = $event">
-        </app-facility-settings-owners>
-      </ng-template>
-    </mat-step>
-    <mat-step>
       <ng-template matStepLabel>{{'FACILITY_CONFIGURATION.HOSTS' | translate}}</ng-template>
       <ng-template matStepContent>
         <app-facility-hosts (hostEmitter)="hosts = $event" [disableRouting]="true">
@@ -141,23 +134,6 @@
         <mat-accordion
           *ngIf="stepper.selectedIndex === stepper.steps.length - 1"
           [@.disabled]="true">
-          <mat-expansion-panel [disabled]="owners.length === 0">
-            <mat-expansion-panel-header [class.cursor-default]="owners.length === 0">
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-owner-grey"></mat-icon>
-                {{'FACILITY_CONFIGURATION.OWNERS' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.OWNERS' | translate}}</h1>
-            <div class="position-relative table-min-height">
-              <perun-web-apps-owners-list
-                *perunWebAppsLoader="processing; indicator: spinner"
-                [loading]="processing"
-                [displayedColumns]="['id', 'name', 'contact', 'type']"
-                [owners]="owners">
-              </perun-web-apps-owners-list>
-            </div>
-          </mat-expansion-panel>
           <mat-expansion-panel [disabled]="hosts.length === 0">
             <mat-expansion-panel-header [class.cursor-default]="hosts.length === 0">
               <mat-panel-title>

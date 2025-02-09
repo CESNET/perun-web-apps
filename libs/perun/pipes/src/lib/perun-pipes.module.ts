@@ -22,7 +22,6 @@ import { MemberOrganizationPipe } from './member-organization.pipe';
 import { MemberStatusDisabledPipe } from './member-status-disabled.pipe';
 import { MemberCheckboxLabelPipe } from './member-checkbox-label.pipe';
 import { ParseDatePipe } from './parse-date.pipe';
-import { TechnicalOwnersPipe } from './technical-owners.pipe';
 import { FilterUniqueObjectsPipe } from './filter-unique-objects.pipe';
 import { ParseGroupNamePipe } from './parse-group-name.pipe';
 import { LocalisedTextPipe } from './localised-text.pipe';
@@ -110,7 +109,6 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     GroupExpirationPipe,
     ParseDatePipe,
     SelectedSponsorPipe,
-    TechnicalOwnersPipe,
     FilterUniqueObjectsPipe,
     ParseGroupNamePipe,
     LocalisedTextPipe,
@@ -194,7 +192,6 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     RemoveGroupTooltipPipe,
     ParseDatePipe,
     SelectedSponsorPipe,
-    TechnicalOwnersPipe,
     FilterUniqueObjectsPipe,
     ParseGroupNamePipe,
     LocalisedTextPipe,

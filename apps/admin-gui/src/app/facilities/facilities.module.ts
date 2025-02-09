@@ -23,7 +23,6 @@ import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { FacilityServiceConfigComponent } from './pages/facility-detail-page/facility-service-config/facility-service-config.component';
 import { FacilitySettingsManagersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-managers/facility-settings-managers.component';
 import { FacilityServicesDestinationsComponent } from './pages/facility-detail-page/facility-services-destinations/facility-services-destinations.component';
-import { FacilitySettingsOwnersComponent } from './pages/facility-detail-page/facility-settings/facility-settings-owners/facility-settings-owners.component';
 import { FacilityHostsComponent } from './pages/facility-detail-page/facility-hosts/facility-hosts.component';
 import { FacilityHostsDetailComponent } from './pages/facility-detail-page/facility-hosts/facility-hosts-detail/facility-hosts-detail.component';
 import { PerunPipesModule, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
@@ -62,7 +61,6 @@ import { ResourceSettingsBansComponent } from './pages/resource-detail-page/reso
     FacilityServiceConfigComponent,
     FacilitySettingsManagersComponent,
     FacilityServicesDestinationsComponent,
-    FacilitySettingsOwnersComponent,
     FacilityHostsComponent,
     FacilityHostsDetailComponent,
     ResourceSettingsManagersComponent,

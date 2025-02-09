@@ -6,7 +6,6 @@ describe('Perun admin management with role Perun admin', () => {
   const dbServiceName2 = 'test_service_db2';
   const dbExtSourceName = 'test_ext_source_db';
   const dbConsentHubName = 'test-e2e-facility-from-db-3';
-  const dbOwnerName = 'DbOwnerTest';
   const loginToBlock = "testLoginToBlock"
   const dbBlockedLogin = "test_blocking_login"
   const dbBlockedLoginListOnly = "test_blocking_login_list"
@@ -307,15 +306,6 @@ describe('Perun admin management with role Perun admin', () => {
     cy.get('[data-cy=searcher-search-button]')
       .click()
     cy.get(`[data-cy=${dbSearcherUserFirstName.toLowerCase()}-td]`)
-      .should('exist');
-  });
-
-  it('test list owners', () => {
-    cy.get('[data-cy=owners]')
-      .click()
-    cy.get('[data-cy=filter-input]')
-      .type(dbOwnerName, {force: true})
-    cy.get(`[data-cy=${dbOwnerName}]`)
       .should('exist');
   });
 });

@@ -104,8 +104,6 @@ import { HostsListComponent } from './components/hosts-list/hosts-list.component
 import { AddUserExtSourceDialogComponent } from './components/dialogs/add-user-ext-source-dialog/add-user-ext-source-dialog.component';
 import { AddHostDialogComponent } from './components/dialogs/add-host-dialog/add-host-dialog.component';
 import { RemoveHostDialogComponent } from './components/dialogs/remove-host-dialog/remove-host-dialog.component';
-import { AddFacilityOwnerDialogComponent } from './components/dialogs/add-facility-owner-dialog/add-facility-owner-dialog.component';
-import { RemoveFacilityOwnerDialogComponent } from './components/dialogs/remove-facility-owner-dialog/remove-facility-owner-dialog.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { CreateEditServiceDialogComponent } from './components/dialogs/create-edit-service-dialog/create-edit-service-dialog.component';
 import { DeleteServiceDialogComponent } from './components/dialogs/delete-service-dialog/delete-service-dialog.component';
@@ -139,8 +137,6 @@ import { SponsorThisMemberDialogComponent } from './components/dialogs/sponsor-t
 import { DeleteServiceFromFacilityComponent } from './components/dialogs/delete-service-from-facility/delete-service-from-facility.component';
 import { DeleteTaskDialogComponent } from './components/dialogs/delete-task-dialog/delete-task-dialog.component';
 import { RemoveExtSourceDialogComponent } from './components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
-import { AddOwnerDialogComponent } from './components/add-owner-dialog/add-owner-dialog.component';
-import { DeleteOwnerDialogComponent } from './components/delete-owner-dialog/delete-owner-dialog.component';
 import { StatisticsCardComponent } from './components/statistics-card/statistics-card.component';
 import { ApplicationFormItemDisabledPipe } from './pipes/application-form-item-disabled.pipe';
 import { ApplicationFormItemHiddenPipe } from './pipes/application-form-item-hidden.pipe';
@@ -403,8 +399,6 @@ import { ChangeEmailUserProfileRedirectDialogComponent } from './components/dial
     AddUserExtSourceDialogComponent,
     AddHostDialogComponent,
     RemoveHostDialogComponent,
-    AddFacilityOwnerDialogComponent,
-    RemoveFacilityOwnerDialogComponent,
     NotFoundPageComponent,
     CreateEditServiceDialogComponent,
     DeleteServiceDialogComponent,
@@ -441,8 +435,6 @@ import { ChangeEmailUserProfileRedirectDialogComponent } from './components/dial
     DeleteServiceFromFacilityComponent,
     RemoveExtSourceDialogComponent,
     DeleteTaskDialogComponent,
-    AddOwnerDialogComponent,
-    DeleteOwnerDialogComponent,
     StatisticsCardComponent,
     ApplicationFormItemDisabledPipe,
     ApplicationFormItemHiddenPipe,

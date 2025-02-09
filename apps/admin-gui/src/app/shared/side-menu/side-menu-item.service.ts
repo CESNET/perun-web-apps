@@ -181,11 +181,6 @@ export class SideMenuItemService {
           activatedRegex: '^/admin/users$',
         },
         {
-          label: 'MENU_ITEMS.ADMIN.OWNERS',
-          url: ['/admin/owners'],
-          activatedRegex: '^/admin/owners$',
-        },
-        {
           label: 'MENU_ITEMS.ADMIN.SERVICES',
           url: [`/admin/services`],
           activatedRegex: '^/admin/services$',
@@ -845,14 +840,6 @@ export class SideMenuItemService {
     if (this.routePolicyService.canNavigate('facilities-settings', facility)) {
       const children: SideMenuLink[] = [];
 
-      // Owners
-      if (this.routePolicyService.canNavigate('facilities-settings-owners', facility)) {
-        children.push({
-          label: 'MENU_ITEMS.FACILITY.OWNERS',
-          url: ['/facilities', facility.id.toString(), 'settings', 'owners'],
-          activatedRegex: '/facilities/\\d+/settings/owners$',
-        });
-      }
       // Managers
       if (this.routePolicyService.canNavigate('facilities-settings-managers', facility)) {
         children.push({

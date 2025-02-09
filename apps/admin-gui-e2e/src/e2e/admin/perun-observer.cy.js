@@ -10,7 +10,6 @@ describe('Perun admin management with role Perun observer', () => {
   const dbSearcherAttrDisplayName = 'login-namespace:einfra';
   const dbSearcherAttrValue = 'e2etestlogin';
   const dbSearcherUserFirstName = 'Test6';
-  const dbOwnerName = 'DbOwnerTest';
   const dbBlockedLoginListOnly = "test_blocking_login_list"
 
   before(() => {
@@ -46,15 +45,6 @@ describe('Perun admin management with role Perun observer', () => {
       .click()
     cy.get('[data-cy=user-name-link]')
       .contains('PerunObserverTest1 PerunObserverTest1');
-  });
-
-  it('test list owners', () => {
-    cy.get('[data-cy=owners]')
-      .click()
-    cy.get('[data-cy=filter-input]')
-      .type(dbOwnerName, {force: true})
-    cy.get(`[data-cy=${dbOwnerName}]`)
-      .should('exist');
   });
 
   it('test service detail', () => {

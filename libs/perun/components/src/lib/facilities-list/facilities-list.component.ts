@@ -7,7 +7,6 @@ import {
   customDataSourceSort,
   downloadData,
   getDataForExport,
-  parseTechnicalOwnersNames,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -35,7 +34,6 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
     'recent',
     'name',
     'description',
-    'technicalOwners',
     'destinations',
     'hosts',
   ];
@@ -71,8 +69,6 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
         return data.facility.name;
       case 'description':
         return data.facility.description;
-      case 'technicalOwners':
-        return parseTechnicalOwnersNames(data.owners);
       case 'recent':
         if (recentIds) {
           if (recentIds.includes(data.facility.id)) {
