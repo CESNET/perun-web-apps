@@ -80,6 +80,16 @@ export class DeleteAttributeDialogComponent implements OnInit {
                 error: () => (this.loading = false),
               });
             break;
+          case 'member':
+            this.attributesManager
+              .removeMemberGroupAttributes(this.data.secondEntityId, this.data.entityId, ids)
+              .subscribe({
+                next: () => {
+                  this.onSuccess();
+                },
+                error: () => (this.loading = false),
+              });
+            break;
           default:
             this.attributesManager.removeGroupAttributes(this.data.entityId, ids).subscribe({
               next: () => {
