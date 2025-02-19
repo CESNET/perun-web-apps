@@ -29,7 +29,6 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
-model/actionType.ts
 model/addUserExtSourceInput.ts
 model/addUserExtSourceWithAttributesInput.ts
 model/appState.ts
@@ -50,7 +49,6 @@ model/attributeAction.ts
 model/attributeDefinition.ts
 model/attributePolicy.ts
 model/attributePolicyCollection.ts
-model/attributeRights.ts
 model/attributeRules.ts
 model/auditEvent.ts
 model/auditMessage.ts
@@ -113,7 +111,6 @@ model/inputAssignResourceTagToResource.ts
 model/inputAssignResourceTagsToResource.ts
 model/inputAttributeDefinition.ts
 model/inputAttributePolicyCollections.ts
-model/inputAttributeRights.ts
 model/inputBlockLogins.ts
 model/inputBlockServicesOnDestinations.ts
 model/inputChangeNonAuthzPasswordByToken.ts

@@ -25,6 +25,7 @@ namespaces: `einfra`, `einfra-services`, `cesnet`, `mu`.
 
 - (#)`other_apps`: on a first level maps a language (`en`, `cs`, …) to another property. This property defines the labels that are shown in the "more applications" menu as map `other_app: label`, where `other_app` is one of `admin`, `profile`, `pwdReset`, `consolidator`, `linker` (as defined in `AppType`) and the label is the label to be displayed in the menu
 
+- `display_search`: enables the experimental global search feature if true. Relevant policies on backend have to also be set up. Disabled by default.
 - `auto_service_access_redirect`: automatically redirects users to `/service-access` to log in, use only when we don’t want users to use OIDC
 
 - `enforce_consents`: boolean indicating if global consent enforcement is enabled. Default: `false`.

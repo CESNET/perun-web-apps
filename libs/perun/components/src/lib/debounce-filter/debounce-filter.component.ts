@@ -11,6 +11,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
 import { UntypedFormControl } from '@angular/forms';
+import { GlobalSearchValueService } from '@perun-web-apps/perun/services';
 
 @Component({
   selector: 'perun-web-apps-debounce-filter',
@@ -22,11 +23,22 @@ export class DebounceFilterComponent implements OnInit {
   @Input() autoFocus = false;
   @Input() control: UntypedFormControl = new UntypedFormControl();
   @Input() error: string;
+  @Input() linkGlobalSearch = false;
   @Output() filter = new EventEmitter<string>();
   @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
 
+  constructor(private globalSearchValueService: GlobalSearchValueService) {}
+
   ngOnInit(): void {
-    if (this.autoFocus) this.input.nativeElement.focus();
+    if (this.linkGlobalSearch) {
+      this.globalSearchValueService.getSearchString().subscribe((searchString: string) => {
+        if (searchString?.length > 0) {
+          this.control.setValue(searchString);
+          this.filter.emit(searchString);
+        }
+      });
+    }
+    if (!this.linkGlobalSearch && this.autoFocus) this.input.nativeElement.focus();
     fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
         map((event: KeyboardEvent) => {
