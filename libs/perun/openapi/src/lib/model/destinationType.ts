@@ -15,8 +15,6 @@
  */
 export type DestinationType =
   | 'host'
-  | 'email'
-  | 'semail'
   | 'url'
   | 'user@host'
   | 'user@host:port'
@@ -28,8 +26,6 @@ export type DestinationType =
 
 export const DestinationType = {
   host: 'host' as DestinationType,
-  email: 'email' as DestinationType,
-  semail: 'semail' as DestinationType,
   url: 'url' as DestinationType,
   userhost: 'user@host' as DestinationType,
   userhostport: 'user@host:port' as DestinationType,
