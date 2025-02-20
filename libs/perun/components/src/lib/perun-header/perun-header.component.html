@@ -24,7 +24,13 @@
     </p>
   </div>
 
-  <div [ngStyle]="{'color': navTextColor}" id="nav-menu-user-info">
+  <div
+    [ngStyle]="{'color': navTextColor, 'width': searchEnabled ? '60%' : 'none'}"
+    id="nav-menu-user-info">
+    <perun-web-apps-global-search
+      class="ms-4 global-search"
+      *ngIf="searchEnabled"
+      [adminSearch]="searchAsAdmin"></perun-web-apps-global-search>
     <div id="nav-menu-language" [ngStyle]="{'color': textColor}" *ngIf="showLanguageMenu">
       <button mat-button [matMenuTriggerFor]="menu">
         <mat-icon [ngStyle]="{'color': iconColor}"> language </mat-icon>

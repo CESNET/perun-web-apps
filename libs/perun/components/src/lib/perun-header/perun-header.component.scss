@@ -15,10 +15,14 @@
   margin-right: 0;
 }
 
-@media (max-width: 570px) {
+@media (max-width: 1200px) {
   .hide-label {
     display: none;
   }
+}
+
+.global-search {
+  flex: auto;
 }
 
 #nav-devel-info {

@@ -110,6 +110,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public createOwner(
     InputCreateOwner: InputCreateOwner,
@@ -220,6 +221,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public deleteOwner(
     owner: number,
@@ -333,6 +335,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public deleteOwners(
     owners: Array<number>,
@@ -450,6 +453,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getAllOwners(
     useNon?: boolean,
@@ -541,6 +545,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getOwnerById(
     id: number,
@@ -646,6 +651,7 @@ export class OwnersManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getOwnerByName(
     owner: string,

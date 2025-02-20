@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AuthService,
+  GuiAuthResolver,
   NotificationStorageService,
   OtherApplicationsService,
   StoreService,
@@ -28,6 +29,7 @@ export class PerunHeaderComponent implements OnInit {
   @Input() disableLogo = false;
   @Input() logoutEnabled: boolean = null;
   @Input() showUserName = true;
+  @Input() showSearch = false;
 
   label = this.storeService.getProperty('header_label_en');
   principal = this.storeService.getPerunPrincipal();
@@ -45,6 +47,8 @@ export class PerunHeaderComponent implements OnInit {
   otherAppUrls: Record<string, string> = {};
   linkRoles: string[];
   activeLink = false;
+  searchEnabled = false;
+  searchAsAdmin = false;
 
   constructor(
     private storeService: StoreService,
@@ -56,6 +60,7 @@ export class PerunHeaderComponent implements OnInit {
     private changeNameService: ChangeNameService,
     public route: ActivatedRoute,
     public authService: AuthService,
+    private guiAuthResolver: GuiAuthResolver,
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +94,11 @@ export class PerunHeaderComponent implements OnInit {
 
     if (this.logoutEnabled === null) {
       this.logoutEnabled = this.storeService.getProperty('log_out_enabled');
+    }
+
+    if (this.showSearch) {
+      this.searchEnabled = this.guiAuthResolver.isAuthorized('globalSearch_String_policy', []);
+      this.searchAsAdmin = this.guiAuthResolver.isPerunAdminOrObserver();
     }
 
     if (this.showOtherApps) {

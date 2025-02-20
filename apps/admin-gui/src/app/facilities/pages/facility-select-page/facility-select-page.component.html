@@ -42,7 +42,8 @@
   <perun-web-apps-debounce-filter
     [autoFocus]="true"
     (filter)="applyFilter($event)"
-    [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'">
+    [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'"
+    [linkGlobalSearch]="true">
   </perun-web-apps-debounce-filter>
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>

@@ -215,6 +215,14 @@ export class CustomIconService {
       name: 'perun-searcher',
     },
     {
+      url: 'assets/img/PerunWebImages/searcher-again.svg',
+      name: 'perun-searcher-again',
+    },
+    {
+      url: 'assets/img/PerunWebImages/searcher-grey.svg',
+      name: 'perun-searcher-black',
+    },
+    {
       url: 'assets/img/PerunWebImages/propagation-blue.svg',
       name: 'perun-hierarchical-inclusion',
     },

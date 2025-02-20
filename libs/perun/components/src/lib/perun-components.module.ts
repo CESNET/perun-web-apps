@@ -125,6 +125,9 @@ import { ApplicationTypeIconComponent } from './application-type-icon/applicatio
 import { ExtSourceSearchSelectComponent } from './ext-source-search-select/ext-source-search-select.component';
 import { InvitationsListComponent } from './invitations-list/invitations-list.component';
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 
 @Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
@@ -195,6 +198,9 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     UiMaterialModule,
     MatBadgeModule,
     PerunTableUtilsModule,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    CdkTrapFocus,
   ],
   declarations: [
     VosListComponent,
@@ -260,6 +266,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     SettingsSSHKeysComponent,
     RoleSearchSelectComponent,
     PerunHeaderComponent,
+    GlobalSearchComponent,
     QueryParamsHandlingDirective,
     BanSpecificationComponent,
     BanOnEntityListComponent,
@@ -283,6 +290,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     ApplicationsListComponent,
     ApplicationTypeIconComponent,
     InvitationsListComponent,
+    GlobalSearchComponent,
   ],
   exports: [
     VosListComponent,
@@ -301,6 +309,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     NotificationComponent,
     AutoFocusDirective,
     UserExtSourcesListComponent,
+    GlobalSearchComponent,
     PasswordResetComponent,
     GroupsTreeComponent,
     ServicesStatusListComponent,

@@ -647,6 +647,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwner(
     facility: number,
@@ -771,6 +772,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnerByFacilityName(
     facility: string,
@@ -895,6 +897,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnerByFacilityNameOwnerName(
     facility: string,
@@ -1019,6 +1022,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnerByOwnerName(
     facility: number,
@@ -1143,6 +1147,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwners(
     facility: number,
@@ -1273,6 +1278,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnersByFacilityName(
     facility: string,
@@ -1403,6 +1409,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnersByFacilityNameOwnerName(
     facility: string,
@@ -1533,6 +1540,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public addFacilityOwnersByOwnerName(
     facility: number,
@@ -2277,6 +2285,134 @@ export class FacilitiesManagerService {
     }
 
     let requestUrl = `${this.configuration.basePath}/urlinjsonout/facilitiesManager/copyAttributes`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<any>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Copy attributes (settings) from source facility to destination facility. You must be facility manager of both.
+   * @param srcFacility source facility id
+   * @param destFacilityName destination facility name
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public copyAttributesByDestinationName(
+    srcFacility: number,
+    destFacilityName: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any>;
+  public copyAttributesByDestinationName(
+    srcFacility: number,
+    destFacilityName: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<any>>;
+  public copyAttributesByDestinationName(
+    srcFacility: number,
+    destFacilityName: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<any>>;
+  public copyAttributesByDestinationName(
+    srcFacility: number,
+    destFacilityName: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (srcFacility === null || srcFacility === undefined) {
+      throw new Error(
+        'Required parameter srcFacility was null or undefined when calling copyAttributesByDestinationName.',
+      );
+    }
+    if (destFacilityName === null || destFacilityName === undefined) {
+      throw new Error(
+        'Required parameter destFacilityName was null or undefined when calling copyAttributesByDestinationName.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (srcFacility !== undefined && srcFacility !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>srcFacility,
+        'srcFacility',
+      );
+    }
+    if (destFacilityName !== undefined && destFacilityName !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>destFacilityName,
+        'destFacilityName',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/urlinjsonout/facilitiesManager/copyAttributes/dest-name`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -3071,6 +3207,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public copyOwners(
     srcFacility: number,
@@ -3199,6 +3336,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public copyOwnersByDestinationName(
     srcFacility: number,
@@ -3327,6 +3465,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public copyOwnersBySourceDestinationNames(
     srcFacilityName: string,
@@ -3455,6 +3594,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public copyOwnersBySourceName(
     srcFacilityName: string,
@@ -8963,6 +9103,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getFacilityOwners(
     facility: number,
@@ -9074,6 +9215,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getFacilityOwnersByFacilityName(
     facility: string,
@@ -9843,6 +9985,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public getOwnerFacilities(
     owner: number,
@@ -10776,6 +10919,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwner(
     facility: number,
@@ -10900,6 +11044,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnerByFacilityName(
     facility: string,
@@ -11024,6 +11169,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnerByFacilityNameOwnerName(
     facility: string,
@@ -11148,6 +11294,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnerByOwnerName(
     facility: number,
@@ -11272,6 +11419,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwners(
     facility: number,
@@ -11402,6 +11550,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnersByFacilityName(
     facility: string,
@@ -11532,6 +11681,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnersByFacilityNameOwnerName(
     facility: string,
@@ -11662,6 +11812,7 @@ export class FacilitiesManagerService {
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
+   * @deprecated
    */
   public removeFacilityOwnersByOwnerName(
     facility: number,

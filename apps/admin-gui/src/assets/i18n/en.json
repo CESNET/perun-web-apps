@@ -3326,6 +3326,21 @@
           "FIND_FACILITY": "Find facility...",
           "NO_FACILITY_FOUND": "No matching facility found"
         },
+        "GLOBAL_SEARCH": {
+          "PLACEHOLDER_SLASH":  "Press '/' to search Perun",
+          "PLACEHOLDER": "Search Perun",
+          "NO_MATCHES": "Your search did not match any entities.",
+          "TRY_DIFFERENT": "Try using a different search string.",
+          "SHORT_QUERY": "Please enter a search string at least 3 symbols long.",
+          "FACILITIES": "Facilities",
+          "GROUPS": "Groups",
+          "USERS": "Users",
+          "ORGANIZATIONS": "Organizations",
+          "HIDDEN_GROUPS": "Some matching groups were hidden.",
+          "HIDDEN_USERS": "Some matching users were hidden. Click here to view all results",
+          "HIDDEN_FACILITIES": "Some matching facilities were hidden. Click here to view all results",
+          "HIDDEN_ORGANIZATIONS": "Some matching organizations were hidden. Click here to view all results"
+        },
         "APP_FORM_ITEM_SEARCH_SELECT": {
           "SELECT_ITEM": "Select item",
           "FIND_ITEM": "Find item...",
