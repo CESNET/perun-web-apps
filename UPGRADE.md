@@ -1,5 +1,17 @@
 Upgrade notes
 
+## [18.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.7.0...v18.8.0) (2025-02-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** set new `show_search` config option to true to enable global search in the Admin GUI app. Use `globalSearch_String_policy` on the backend to configure availability of the feature
+
+### Features
+
+* **admin:** corrected group member attributes set up ([20af3dc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/20af3dc29607ded6a6220c30f4de6a426ffb6fce))
+* **admin:** global search ([59dcd2b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/59dcd2b45da376e1bc9c0bf186c3cd286f9771c9))
+
 ## [18.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.6.0...v18.7.0) (2025-02-05)
 
 
