@@ -136,7 +136,7 @@ export class SponsoredMembersListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     this.setDataSource();

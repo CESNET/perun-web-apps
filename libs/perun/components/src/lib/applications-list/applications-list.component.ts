@@ -111,9 +111,6 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         this.cachedSelection.clear();
       }
     });
-    if (!this.authResolver.isPerunAdminOrObserver()) {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     if (this.loading || !this.displayedColumns.includes('fedInfo')) return;
     const data = this.dataSource.data[0] as RichApplication;
     if (data) {
@@ -140,6 +137,9 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         this.fedAttrs.find((attr) => attr.friendlyName === name)?.displayName || '',
       ),
     );
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 
   isAllSelected(): boolean {

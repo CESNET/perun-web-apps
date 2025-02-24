@@ -106,7 +106,7 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   }
 
   ngOnChanges(): void {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'destinationId');
     }
     this.dataSource = new MatTableDataSource<RichDestination>(this.destinations);

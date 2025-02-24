@@ -47,6 +47,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isLoginScreenShow = this.initAuth.isLoginScreenShown();
     this.isServiceAccess = this.initAuth.isServiceAccessLoginScreenShown();
     sessionStorage.removeItem('baLogout');
+
+    // allow users to see IDs in table by default
+    if (this.authResolver.isPerunAdminOrObserver() && !localStorage.getItem('showIds')) {
+      localStorage.setItem('showIds', 'true');
+    }
+
     const url = location.pathname;
     const disabledUrlsForSelfRole = [
       '/all-publications',

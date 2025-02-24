@@ -41,7 +41,7 @@
             <span attr.data-cy="{{group.name}}" class="me-2">
               {{group.name}}
             </span>
-            <span *ngIf="authResolver.isPerunAdminOrObserver()" class="text-muted">
+            <span *ngIf="localStorage.getItem('showIds') === 'true'" class="text-muted">
               #{{group.id}}
             </span>
           </div>
