@@ -115,11 +115,6 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     const cachedData = this.handlers.get(this.getKey(route));
 
     if (!this.isUserNavigatingBack || !route.component) {
-      if (cachedData) {
-        // destroy detached component which was not re-attached from cache
-        // component in the cache will be replaced with the new one but the old detached component is not destroyed by default
-        cachedData.routeHandle.componentRef.destroy();
-      }
       return false;
     }
 
@@ -155,10 +150,18 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
       }
     }
 
-    this.handlers.set(this.getKey(route), {
-      routeHandle: detachedTree,
-      saveTimeStamp: this.getCurrentTimestamp(),
-    });
+    const cachedData = this.handlers.get(this.getKey(route));
+    if (detachedTree) {
+      if (cachedData && cachedData.routeHandle.componentRef !== detachedTree.componentRef) {
+        // The component cached for this route will be replaced, so destroy it to prevent memory leak
+        cachedData.routeHandle.componentRef.destroy();
+      }
+
+      this.handlers.set(this.getKey(route), {
+        routeHandle: detachedTree,
+        saveTimeStamp: this.getCurrentTimestamp(),
+      });
+    }
   }
 
   setLastNavigationType(type: 'back' | 'direct'): void {
