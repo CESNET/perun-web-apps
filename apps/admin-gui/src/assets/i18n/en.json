@@ -610,6 +610,7 @@
       "SELECTION_APPROVED": "Approved",
       "SELECTION_REJECTED": "Rejected",
       "SHOW_GROUP_APPLICATIONS": "Show group applications",
+      "SHOW_SUBGROUP_APPLICATIONS": "Show subgroup applications",
       "COLUMNS_TOOLTIP": "Detailed application view cannot be customized.",
       "NO_APPLICATION_FOUND": "No applications matching search criteria found.",
       "SHOW_ALL_DETAILS": "Show more details",

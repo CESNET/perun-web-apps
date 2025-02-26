@@ -68,6 +68,9 @@
   <mat-slide-toggle *ngIf="vo" [checked]="showGroupApps" (change)="toggleIncludeGroups()">
     {{'VO_DETAIL.APPLICATION.SHOW_GROUP_APPLICATIONS' | translate}}
   </mat-slide-toggle>
+  <mat-slide-toggle *ngIf="group" [checked]="showSubgroupApps" (change)="toggleIncludeSubGroups()">
+    {{'VO_DETAIL.APPLICATION.SHOW_SUBGROUP_APPLICATIONS' | translate}}
+  </mat-slide-toggle>
 </div>
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
