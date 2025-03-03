@@ -37,6 +37,7 @@ export class AddServicesDestinationDialogComponent implements OnInit {
     'url',
     'service-specific',
     's3',
+    's3-json',
     'url-json',
   ];
   selectedType = 'host';
@@ -64,6 +65,7 @@ export class AddServicesDestinationDialogComponent implements OnInit {
   private s3Pattern = new RegExp(
     "^(https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;()*$']+)/([-a-zA-Z0-9+&@#%?=~_|!:,.;()*$'']+)$",
   );
+  private s3JsonPattern = this.s3Pattern;
   private urlJsonPattern = this.urlPattern;
 
   constructor(
@@ -218,6 +220,9 @@ export class AddServicesDestinationDialogComponent implements OnInit {
           break;
         case 's3':
           pattern = this.s3Pattern;
+          break;
+        case 's3-json':
+          pattern = this.s3JsonPattern;
           break;
         case 'url-json':
           pattern = this.urlJsonPattern;
