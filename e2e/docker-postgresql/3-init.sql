@@ -294,9 +294,6 @@ insert into facilities (id, name) values (nextval('facilities_id_seq'), 'test-e2
 insert into consent_hubs (id, name, enforce_consents) values (nextval('consent_hubs_id_seq'), 'test-e2e-facility-from-db-3', true);
 insert into consent_hubs_facilities (consent_hub_id, facility_id) values (currval('consent_hubs_id_seq'), currval('facilities_id_seq'));
 
--- insert test owners
-insert into owners (id, name, type) values (nextval('owners_id_seq'), 'DbOwnerTest', 'technical');
-
 -- insert test blocked login
 insert into blocked_logins (id, login) values (nextval('blocked_logins_id_seq'), 'test_blocking_login');
 insert into blocked_logins (id, login) values (nextval('blocked_logins_id_seq'), 'test_blocking_login_list');
@@ -457,10 +454,6 @@ insert into groups_resources_state (group_id, resource_id, status) values (currv
 -- set facilityObserver as FACILITYOBSERVER of f-o-test-facility and f-o-facility-manager as FACILITYADMIN of f-o-test-facility
 insert into authz (user_id, role_id, facility_id) values (currval('users_id_seq')-2, 12, currval('facilities_id_seq'));
 insert into authz (user_id, role_id, facility_id) values (currval('users_id_seq'), 5, currval('facilities_id_seq'));
-
--- insert owner and assign to f-o-test-facility
-insert into owners (id, name, type) values (nextval('owners_id_seq'), 'f-o-owner', 'technical');
-insert into facility_owners (facility_id, owner_id) values (currval('facilities_id_seq'), currval('owners_id_seq'));
 
 -- insert service and assign to f-o-test-resource
 insert into services (id, name, script) values (nextval('services_id_seq'), 'f-o-test-service', './f-o-test-service');

@@ -23,12 +23,6 @@ export class AdminOverviewComponent {
       style: 'admin-btn',
     },
     {
-      cssIcon: 'perun-owner-grey',
-      url: '/admin/owners',
-      label: 'MENU_ITEMS.ADMIN.OWNERS',
-      style: 'admin-btn',
-    },
-    {
       cssIcon: 'perun-service',
       url: '/admin/services',
       label: 'MENU_ITEMS.ADMIN.SERVICES',

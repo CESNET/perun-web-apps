@@ -87,12 +87,6 @@
         </th>
         <td *matCellDef="let facility" mat-cell>{{facility.facility.description}}</td>
       </ng-container>
-      <ng-container matColumnDef="technicalOwners">
-        <th *matHeaderCellDef mat-header-cell>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.TECHNICAL_OWNERS' | translate}}
-        </th>
-        <td *matCellDef="let facility" mat-cell>{{facility.owners | technicalOwners}}</td>
-      </ng-container>
       <ng-container matColumnDef="destinations">
         <th *matHeaderCellDef mat-header-cell>
           {{'SHARED.COMPONENTS.FACILITIES_LIST.DESTINATIONS' | translate}}

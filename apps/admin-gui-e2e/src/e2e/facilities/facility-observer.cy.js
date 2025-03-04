@@ -9,7 +9,6 @@ describe('Facility management with role Facility observer', () => {
   const dbDestinationName = 'test-destination-hostname-cz';
   const dbDestinationNameSearch = 'test-destination.hostname.cz';
   const dbHostName = 'test-hostname-cz';
-  const dbOwnerName = 'f-o-owner';
   const dbManagerFirstName = 'f-o-facility-manager-firstname';
   const dbAttributeName = 'uid-namespace';
 
@@ -99,15 +98,6 @@ describe('Facility management with role Facility observer', () => {
   });
 
   context('Advanced settings', () => {
-
-    it('test list owners', () => {
-      cy.get('[data-cy=owners]')
-        .click()
-      cy.get('[data-cy=filter-input]')
-        .type(dbOwnerName, {force: true})
-      cy.get(`[data-cy=${dbOwnerName}]`)
-        .should('exist')
-    });
 
     it('test list managers', () => {
       cy.get('[data-cy=managers]')
