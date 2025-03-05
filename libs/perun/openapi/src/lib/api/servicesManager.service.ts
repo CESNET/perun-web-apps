@@ -777,7 +777,7 @@ export class ServicesManagerService {
    * InvalidDestinationException is thrown when destination value is invalid in given destination type.
    * @param facility id of Facility
    * @param destination string name of destination
-   * @param type Destination type (host,user@host,user@host:port,url,service-specific, s3, url-json)
+   * @param type Destination type (host,user@host,user@host:port,url,service-specific, s3, s3-json, url-json)
    * @param propagationType propagation type (PARALLEL, DUMMY - doesn\&#39;t send data)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
