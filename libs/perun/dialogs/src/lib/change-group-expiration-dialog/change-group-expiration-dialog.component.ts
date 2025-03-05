@@ -46,7 +46,7 @@ export class ChangeGroupExpirationDialogComponent implements OnInit {
     this.expirationAttr = this.data.expirationAttr;
     this.expiration = (this.expirationAttr?.value as string) ?? 'never';
 
-    if (this.data.status === 'VALID') {
+    if (['VALID', 'DISABLED', 'EXPIRED'].includes(this.status)) {
       this.attributesManagerService
         .getGroupAttributeByName(this.data.groupId, Urns.GROUP_DEF_EXPIRATION_RULES)
         .pipe(
@@ -60,7 +60,7 @@ export class ChangeGroupExpirationDialogComponent implements OnInit {
         )
         .subscribe({
           next: (canExtend) => {
-            this.canExtendMembership = canExtend;
+            this.canExtendMembership = Boolean(canExtend);
             this.loading = false;
           },
           error: () => (this.loading = false),

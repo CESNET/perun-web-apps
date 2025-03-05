@@ -47,8 +47,9 @@ export class MemberOverviewGroupsComponent implements OnInit {
       if (this.groups.length !== 0) {
         const initiallySelectedGroup = this.findInitiallySelectedGroupId();
         this.groupIsSelected(initiallySelectedGroup);
+      } else {
+        this.loading = false;
       }
-      this.loading = false;
     });
   }
 
