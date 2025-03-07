@@ -48,7 +48,6 @@ export class GroupsTreeComponent implements OnChanges {
   @Input() displayedColumns = ['nameWithId', 'description', 'menu', 'expiration', 'status'];
   @Input() loading: boolean;
   @ViewChild('scrollViewport', { static: false }) scrollViewport: CdkVirtualScrollViewport;
-
   disabledRouting = false;
   displayButtons = window.innerWidth > 600;
 
@@ -62,7 +61,7 @@ export class GroupsTreeComponent implements OnChanges {
 
   treeFlattener: MatTreeFlattener<TreeGroup, EnrichedGroupNode>;
   dataSource: MatTreeFlatDataSource<TreeGroup, EnrichedGroupNode>;
-
+  protected readonly localStorage = localStorage;
   constructor(
     public cd: ChangeDetectorRef,
     private dialog: MatDialog,

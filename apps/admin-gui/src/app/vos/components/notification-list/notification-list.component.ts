@@ -94,7 +94,7 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
   }
 
   ngOnChanges(): void {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     this.dataSource = new MatTableDataSource<ApplicationMail>(this.applicationMails);

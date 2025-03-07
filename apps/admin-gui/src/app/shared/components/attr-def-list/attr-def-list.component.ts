@@ -134,7 +134,7 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
     !this.consentRelatedPipe.transform(row.namespace, this.serviceEnabled, this.consentRequired);
 
   ngOnChanges(): void {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     this.dataSource = new MatTableDataSource<AttributeDefinition>(this.definitions);

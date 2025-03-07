@@ -13,6 +13,7 @@ import {
   StoreService,
   PreferredLanguageService,
   AuthService,
+  GuiAuthResolver,
 } from '@perun-web-apps/perun/services';
 import { AttributesManagerService, PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private preferredLangService: PreferredLanguageService,
     private titleService: Title,
+    private guiAuthResolverService: GuiAuthResolver,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.getScreenSize();
@@ -64,6 +66,11 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.titleService.setTitle(title);
       this.document.documentElement.lang = langChange.lang;
     });
+
+    // allow users to see IDs in table by default
+    if (this.guiAuthResolverService.isPerunAdminOrObserver() && !localStorage.getItem('showIds')) {
+      localStorage.setItem('showIds', 'true');
+    }
 
     this.isLoginScreenShown = this.initAuth.isLoginScreenShown();
     this.isServiceAccess = this.initAuth.isServiceAccessLoginScreenShown();

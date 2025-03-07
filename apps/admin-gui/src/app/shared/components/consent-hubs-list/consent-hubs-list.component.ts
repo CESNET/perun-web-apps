@@ -74,6 +74,9 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
     if (this.selection) {
       this.cachedSelection = new SelectionModel<ConsentHub>(
         this.selection.isMultipleSelection(),

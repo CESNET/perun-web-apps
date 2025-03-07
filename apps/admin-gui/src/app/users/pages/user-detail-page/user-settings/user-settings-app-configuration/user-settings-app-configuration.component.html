@@ -8,4 +8,11 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-slide-toggle
+    labelPosition="before"
+    class="mt-2 ms-2 w-75"
+    [ngModel]="showIds"
+    (toggleChange)="toggleShowIds()">
+    {{'Show IDs in tables'}}
+  </mat-slide-toggle>
 </div>

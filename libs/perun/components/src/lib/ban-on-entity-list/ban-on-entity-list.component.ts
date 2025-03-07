@@ -107,7 +107,7 @@ export class BanOnEntityListComponent implements OnInit {
   }
 
   @Input() set displayedColumns(columns: BanOnEntityListColumn[]) {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       columns = columns.filter((column) => !column.endsWith('Id'));
     }
     this.columns = columns;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AuditMessage, PaginatedAuditMessages } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -30,7 +30,7 @@ import { MatTableDataSource } from '@angular/material/table';
     },
   ],
 })
-export class AuditMessagesListComponent {
+export class AuditMessagesListComponent implements AfterViewInit {
   @Input() tableId: string;
   @Input() refresh: boolean;
   @Input() loading: boolean;
@@ -86,6 +86,12 @@ export class AuditMessagesListComponent {
         return data.event.message;
       default:
         return '';
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 
