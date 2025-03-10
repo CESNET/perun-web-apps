@@ -5,7 +5,6 @@ import {
   FacilitiesManagerService,
   Facility,
   Host,
-  Owner,
   RichDestination,
   RoleManagementRules,
   Service,
@@ -59,7 +58,6 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
     true,
     (service1, service2) => service1.id === service2.id,
   );
-  owners: Owner[] = [];
   hosts: Host[] = [];
   destinations: RichDestination[] = [];
   destinationServiceMissing = false;

@@ -11,6 +11,10 @@ export class GUIConfigService {
     return localStorage.getItem(key);
   }
 
+  setString(key: string, value: string): void {
+    localStorage.setItem(key, value);
+  }
+
   getNumber(key: string): number {
     return parseInt(localStorage.getItem(key), 10);
   }

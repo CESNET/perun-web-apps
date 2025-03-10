@@ -88,6 +88,7 @@ export class ApplicationActionsComponent implements OnInit {
 
   showAllDetails = false;
   showGroupApps = false;
+  showSubgroupApps = false;
 
   prependColumns = ['checkbox', 'id'];
   groupPrependColumns = ['groupId', 'groupName'];
@@ -132,6 +133,7 @@ export class ApplicationActionsComponent implements OnInit {
           sortColumn: getSortDataColumnQuery(pageQuery.sortColumn),
           searchString: pageQuery.searchString,
           includeGroupApplications: this.showGroupApps,
+          includeSubGroupApplications: this.showSubgroupApps,
           getDetails: this.showAllDetails,
           states: this.currentStates,
           dateFrom: dateToString(this.startDate.value),
@@ -376,6 +378,11 @@ export class ApplicationActionsComponent implements OnInit {
 
   toggleIncludeGroups(): void {
     this.showGroupApps = !this.showGroupApps;
+    this.currentColumns = this.setColumns();
+    this.refreshTable();
+  }
+  toggleIncludeSubGroups(): void {
+    this.showSubgroupApps = !this.showSubgroupApps;
     this.currentColumns = this.setColumns();
     this.refreshTable();
   }

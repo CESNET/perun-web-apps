@@ -135,7 +135,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
   }
 
   @Input() set displayedColumns(columns: string[]) {
-    if (!this.authResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       columns = columns.filter((column) => column !== 'id');
     }
     this.columns = columns;

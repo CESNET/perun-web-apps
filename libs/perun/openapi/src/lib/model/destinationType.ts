@@ -22,6 +22,7 @@ export type DestinationType =
   | 'user@host-windows'
   | 'host-windows-proxy'
   | 's3'
+  | 's3-json'
   | 'url-json';
 
 export const DestinationType = {
@@ -33,5 +34,6 @@ export const DestinationType = {
   userhost_windows: 'user@host-windows' as DestinationType,
   host_windows_proxy: 'host-windows-proxy' as DestinationType,
   s3: 's3' as DestinationType,
+  s3_json: 's3-json' as DestinationType,
   url_json: 'url-json' as DestinationType,
 };

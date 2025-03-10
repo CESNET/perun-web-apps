@@ -168,7 +168,8 @@ export class GroupsPageComponent implements OnInit {
     const registrarUrl = this.store.getProperty('registrar_base_url');
     const group: Group = membership.entity;
     const voShortname = this.vos.find((vo) => vo.id === group.voId).shortName;
-    window.location.href = `${registrarUrl}?vo=${voShortname}&group=${membership.entity.shortName}`;
+
+    window.open(`${registrarUrl}?vo=${voShortname}&group=${membership.entity.shortName}`);
   }
 
   applyFilter(filterValue: string): void {

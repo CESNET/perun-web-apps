@@ -76,22 +76,17 @@ export class CreateFacilityDialogComponent implements OnInit {
   }
 
   private copyFacilitySettings(destFacility: number): void {
-    this.facilitiesManager.copyAttributes(this.srcFacility.id, destFacility).subscribe(
-      () => {
-        this.facilitiesManager.copyManagers(this.srcFacility.id, destFacility).subscribe(
-          () => {
-            this.facilitiesManager.copyOwners(this.srcFacility.id, destFacility).subscribe(
-              () => {
-                this.handleSuccess(destFacility);
-              },
-              () => (this.loading = false),
-            );
+    this.facilitiesManager.copyAttributes(this.srcFacility.id, destFacility).subscribe({
+      next: () => {
+        this.facilitiesManager.copyManagers(this.srcFacility.id, destFacility).subscribe({
+          next: () => {
+            this.handleSuccess(destFacility);
           },
-          () => (this.loading = false),
-        );
+          error: () => (this.loading = false),
+        });
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   private handleSuccess(facilityId: number): void {

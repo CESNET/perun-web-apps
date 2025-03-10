@@ -2,239 +2,246 @@
   <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
 </ng-template>
 <div class="{{theme}} position-relative h-100">
-  <div *perunWebAppsLoader="loading; indicator: spinner" class="h-100 d-flex flex-column">
-    <div *ngIf="data.createMailNotification; else edit">
-      <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TITLE_CREATE' | translate}}</h1>
-    </div>
-    <ng-template #edit>
-      <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TITLE_EDIT' | translate}}</h1>
-    </ng-template>
-
-    <div class="dialog-container" mat-dialog-content>
-      <div [@openClose]="invalidNotification ? 'open' : 'closed'">
-        <perun-web-apps-alert
-          alert_type="error"
-          >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_NOTIFICATION' | translate}}</perun-web-apps-alert
-        >
+  <div *perunWebAppsLoader="loading; indicator: spinner" class="h-100 d-flex flex-row">
+    <div class="h-100 w-100 d-flex flex-column">
+      <div *ngIf="data.createMailNotification; else edit">
+        <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TITLE_CREATE' | translate}}</h1>
       </div>
-      <mat-tab-group color="primary" mat-stretch-tabs="false">
-        <mat-tab label="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.BASIC_SETTINGS' | translate}}">
-          <div class="mt-3 d-flex">
-            <span class="w-25 m-auto fw-bold"
-              >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE' | translate}} :</span
-            >
-            <div class="w-75">
-              <mat-form-field class="w-100">
-                <mat-select
-                  (valueChange)="toggleMailType($event)"
-                  [disabled]="!data.createMailNotification"
-                  (selectionChange)="notificationExist()"
-                  [(value)]="applicationMail.mailType"
-                  disableOptionCentering>
-                  <mat-option value="APP_CREATED_USER">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_CREATED_USER' | translate}}
-                  </mat-option>
-                  <mat-option *ngIf="data.groupId" value="APPROVABLE_GROUP_APP_USER">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APPROVABLE_GROUP_APP_USER' | translate}}
-                  </mat-option>
-                  <mat-option value="APP_CREATED_VO_ADMIN">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_CREATED_VO_ADMIN' | translate}}
-                  </mat-option>
-                  <mat-option value="MAIL_VALIDATION">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_MAIL_VALIDATION' | translate}}
-                  </mat-option>
-                  <mat-option value="APP_APPROVED_USER">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_APPROVED_USER' | translate}}
-                  </mat-option>
-                  <mat-option value="APP_REJECTED_USER">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_REJECTED_USER' | translate}}
-                  </mat-option>
-                  <mat-option value="APP_ERROR_VO_ADMIN">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_ERROR_VO_ADMIN' | translate}}
-                  </mat-option>
-                  <mat-option value="USER_INVITE">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_INVITE' | translate}}
-                  </mat-option>
-                  <mat-option *ngIf="data.groupId" value="USER_PRE_APPROVED_INVITE">
-                    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_PRE_APPROVED_INVITE' | translate}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="d-flex mb-3">
-            <span class="w-25"></span>
-            <div *ngIf="!data.createMailNotification" class="w-75 font-italic text-muted">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE_DESCRIPTION_EDIT' | translate}}
-            </div>
-            <div *ngIf="data.createMailNotification" class="w-75 font-italic text-muted">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE_DESCRIPTION_CREATE' | translate}}
-            </div>
-          </div>
-          <div class="d-flex">
-            <span class="w-25 fw-bold"
-              >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE' | translate}} :</span
-            >
-            <div class="w-75">
-              <mat-form-field class="w-100">
-                <mat-select
-                  [(ngModel)]="applicationMail.appType"
-                  [disabled]="!data.createMailNotification"
-                  (selectionChange)="notificationExist()"
-                  disableOptionCentering>
-                  <mat-option value="INITIAL">
-                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INITIAL' | translate}}
-                  </mat-option>
-                  <mat-option
-                    *ngIf="applicationMail.mailType !== 'USER_INVITE' && applicationMail.mailType !== 'USER_PRE_APPROVED_INVITE'"
-                    value="EXTENSION">
-                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EXTENSION' | translate}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="d-flex mb-3">
-            <span class="w-25"></span>
-            <div *ngIf="!data.createMailNotification" class="w-75 font-italic text-muted">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE_DESCRIPTION_EDIT' | translate}}
-            </div>
-            <div *ngIf="data.createMailNotification" class="w-75 font-italic text-muted">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE_DESCRIPTION_CREATE' | translate}}
-            </div>
-          </div>
-          <div class="d-flex">
-            <span class="w-25 fw-bold"
-              >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SENDING_ENABLED' | translate}} :</span
-            >
-            <div class="w-75">
-              <mat-checkbox [(ngModel)]="applicationMail.send"></mat-checkbox>
-            </div>
-          </div>
-          <div class="d-flex mb-3">
-            <span class="w-25"></span>
-            <div class="w-75 font-italic text-muted">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SENDING_ENABLED_DESCRIPTION' | translate}}
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab
-          *ngFor="let lang of languages"
-          label="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.LANG_' + lang | uppercase | translate}}"
-          [formGroup]="inputFormGroup">
-          <ng-template matTabContent>
-            <perun-web-apps-alert alert_type="info" *ngIf="htmlAuth">
-              <i [innerHTML]="'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_INFO' | translate"></i>
-            </perun-web-apps-alert>
-            <perun-web-apps-alert alert_type="info" *ngIf="!htmlAuth">
-              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_INFO_NOT_AUTHORIZED' | translate}}
-            </perun-web-apps-alert>
-            <mat-tab-group color="primary" mat-stretch-tabs="false">
-              <mat-tab *ngFor="let format of formats" [disabled]="format === 'html' && !htmlAuth">
-                <ng-template mat-tab-label>
-                  <span [ngClass]="{'disabled-label': format === 'html' && !htmlAuth}">
-                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_' + format | uppercase | translate}}
-                  </span>
-                </ng-template>
-                <div class="d-flex w-100">
-                  <div class="pe-2 w-100">
-                    <div class="pt-2">
-                      <button
-                        class="right-button"
-                        (click)="this.showTags = !this.showTags;"
-                        mat-stroked-button>
-                        {{showTags ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
-                        ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SHOW_TAGS' | translate)}}
-                      </button>
-                      <span class="fw-bold pe-2">
-                        {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SUBJECT' | translate}}:
-                      </span>
+      <ng-template #edit>
+        <h1 mat-dialog-title>{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TITLE_EDIT' | translate}}</h1>
+      </ng-template>
 
-                      <mat-form-field
-                        *ngIf="format === 'plain'"
-                        class="w-100"
-                        subscriptSizing="dynamic">
-                        <input
-                          id="{{subjectId}}"
-                          formControlName="{{lang}}-plain-subject"
-                          (focus)="isTextFocused = false"
-                          matInput />
-                      </mat-form-field>
-                      <perun-web-apps-html-content-form-field
-                        *ngIf="format === 'html'"
-                        [inputFormControl]="inputFormGroup.controls[lang + '-html-subject']"
-                        [tagType]="'input'"
-                        [tabId]="subjectId"
-                        [cd]="cd" />
-                    </div>
-                    <div class="fw-bold">
-                      {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
-                    </div>
-
-                    <mat-form-field
-                      *ngIf="format === 'plain'"
-                      class="w-100"
-                      subscriptSizing="dynamic">
-                      <textarea
-                        id="{{textareaId}}"
-                        matInput
-                        formControlName="{{lang}}-plain-text"
-                        (focus)="isTextFocused = true"
-                        rows="17">
-                      </textarea>
-                      <mat-error
-                        *ngIf="inputFormGroup.controls[lang + '-plain-text']?.hasError('missingTags')">
-                        {{inputFormGroup.controls[lang + '-plain-text'].errors?.missingTags | translate}}
-                      </mat-error>
+      <div class="dialog-container" mat-dialog-content>
+        <div class="d-flex flex-row">
+          <div class="d-flex flex-column  w-100">
+            <div [@openClose]="invalidNotification ? 'open' : 'closed'">
+              <perun-web-apps-alert
+                alert_type="error"
+                >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INVALID_NOTIFICATION' | translate}}</perun-web-apps-alert
+              >
+            </div>
+            <mat-tab-group
+              color="primary"
+              mat-stretch-tabs="false"
+              (selectedTabChange)="tabChanged($event)">
+              <mat-tab label="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.BASIC_SETTINGS' | translate}}">
+                <div class="mt-3 d-flex">
+                  <span class="w-25 m-auto fw-bold"
+                    >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE' | translate}} :</span
+                  >
+                  <div class="w-75">
+                    <mat-form-field class="w-100">
+                      <mat-select
+                        (valueChange)="toggleMailType($event)"
+                        [disabled]="!data.createMailNotification"
+                        (selectionChange)="notificationExist()"
+                        [(value)]="applicationMail.mailType"
+                        disableOptionCentering>
+                        <mat-option value="APP_CREATED_USER">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_CREATED_USER' | translate}}
+                        </mat-option>
+                        <mat-option *ngIf="data.groupId" value="APPROVABLE_GROUP_APP_USER">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APPROVABLE_GROUP_APP_USER' | translate}}
+                        </mat-option>
+                        <mat-option value="APP_CREATED_VO_ADMIN">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_CREATED_VO_ADMIN' | translate}}
+                        </mat-option>
+                        <mat-option value="MAIL_VALIDATION">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_MAIL_VALIDATION' | translate}}
+                        </mat-option>
+                        <mat-option value="APP_APPROVED_USER">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_APPROVED_USER' | translate}}
+                        </mat-option>
+                        <mat-option value="APP_REJECTED_USER">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_REJECTED_USER' | translate}}
+                        </mat-option>
+                        <mat-option value="APP_ERROR_VO_ADMIN">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_APP_ERROR_VO_ADMIN' | translate}}
+                        </mat-option>
+                        <mat-option value="USER_INVITE">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_INVITE' | translate}}
+                        </mat-option>
+                        <mat-option *ngIf="data.groupId" value="USER_PRE_APPROVED_INVITE">
+                          {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.MAIL_TYPE_USER_PRE_APPROVED_INVITE' | translate}}
+                        </mat-option>
+                      </mat-select>
                     </mat-form-field>
-                    <perun-web-apps-html-content-form-field
-                      *ngIf="format === 'html'"
-                      [inputFormControl]="inputFormGroup.controls[lang + '-html-text']"
-                      [tagType]="'textarea'"
-                      [tabId]="textareaId"
-                      [cd]="cd"
-                      [minRows]="17" />
                   </div>
-
-                  <mat-divider *ngIf="showTags" class="ms-3 me-3" vertical="true"></mat-divider>
-
-                  <div [@tagsOpenClose]="showTags ? 'open' : 'closed'">
-                    <app-tag-bar (addedTag)="addTag(lang, $event, format)"> </app-tag-bar>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="w-25"></span>
+                  <div *ngIf="!data.createMailNotification" class="w-75 font-italic text-muted">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE_DESCRIPTION_EDIT' | translate}}
+                  </div>
+                  <div *ngIf="data.createMailNotification" class="w-75 font-italic text-muted">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EMAIL_TYPE_DESCRIPTION_CREATE' | translate}}
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <span class="w-25 fw-bold"
+                    >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE' | translate}} :</span
+                  >
+                  <div class="w-75">
+                    <mat-form-field class="w-100">
+                      <mat-select
+                        [(ngModel)]="applicationMail.appType"
+                        [disabled]="!data.createMailNotification"
+                        (selectionChange)="notificationExist()"
+                        disableOptionCentering>
+                        <mat-option value="INITIAL">
+                          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.INITIAL' | translate}}
+                        </mat-option>
+                        <mat-option
+                          *ngIf="applicationMail.mailType !== 'USER_INVITE' && applicationMail.mailType !== 'USER_PRE_APPROVED_INVITE'"
+                          value="EXTENSION">
+                          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.EXTENSION' | translate}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="w-25"></span>
+                  <div *ngIf="!data.createMailNotification" class="w-75 font-italic text-muted">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE_DESCRIPTION_EDIT' | translate}}
+                  </div>
+                  <div *ngIf="data.createMailNotification" class="w-75 font-italic text-muted">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.APPLICATION_TYPE_DESCRIPTION_CREATE' | translate}}
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <span class="w-25 fw-bold"
+                    >{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SENDING_ENABLED' | translate}} :</span
+                  >
+                  <div class="w-75">
+                    <mat-checkbox [(ngModel)]="applicationMail.send"></mat-checkbox>
+                  </div>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="w-25"></span>
+                  <div class="w-75 font-italic text-muted">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SENDING_ENABLED_DESCRIPTION' | translate}}
                   </div>
                 </div>
               </mat-tab>
+              <mat-tab
+                *ngFor="let lang of languages"
+                label="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.LANG_' + lang | uppercase | translate}}"
+                [formGroup]="inputFormGroup">
+                <ng-template matTabContent>
+                  <perun-web-apps-alert alert_type="info" *ngIf="htmlAuth">
+                    <i
+                      [innerHTML]="'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_INFO' | translate"></i>
+                  </perun-web-apps-alert>
+                  <perun-web-apps-alert alert_type="info" *ngIf="!htmlAuth">
+                    {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_INFO_NOT_AUTHORIZED' | translate}}
+                  </perun-web-apps-alert>
+                  <mat-tab-group color="primary" mat-stretch-tabs="false">
+                    <mat-tab
+                      *ngFor="let format of formats"
+                      [disabled]="format === 'html' && !htmlAuth">
+                      <ng-template mat-tab-label>
+                        <span [ngClass]="{'disabled-label': format === 'html' && !htmlAuth}">
+                          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.FORMAT_' + format | uppercase | translate}}
+                        </span>
+                      </ng-template>
+                      <div class="d-flex w-100">
+                        <div class="pe-2 w-100">
+                          <div class="pt-2">
+                            <button
+                              class="right-button"
+                              (click)="this.showTags = !this.showTags;"
+                              mat-stroked-button>
+                              {{showTags ? ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.HIDE_TAGS' | translate) :
+                        ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SHOW_TAGS' | translate)}}
+                            </button>
+                            <span class="fw-bold pe-2">
+                              {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SUBJECT' | translate}}:
+                            </span>
+
+                            <mat-form-field
+                              *ngIf="format === 'plain'"
+                              class="w-100"
+                              subscriptSizing="dynamic">
+                              <input
+                                id="{{subjectId}}"
+                                formControlName="{{lang}}-plain-subject"
+                                matInput />
+                            </mat-form-field>
+                            <perun-web-apps-html-content-form-field
+                              *ngIf="format === 'html'"
+                              [inputFormControl]="inputFormGroup.controls[lang + '-html-subject']"
+                              [tagType]="'input'"
+                              [tabId]="subjectId"
+                              [cd]="cd" />
+                          </div>
+                          <div class="fw-bold">
+                            {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TEXT' | translate}}:
+                          </div>
+
+                          <mat-form-field
+                            *ngIf="format === 'plain'"
+                            class="w-100"
+                            subscriptSizing="dynamic">
+                            <textarea
+                              id="{{textareaId}}"
+                              matInput
+                              formControlName="{{lang}}-plain-text"
+                              rows="17">
+                            </textarea>
+                            <mat-error
+                              *ngIf="inputFormGroup.controls[lang + '-plain-text']?.hasError('missingTags')">
+                              {{inputFormGroup.controls[lang + '-plain-text'].errors?.missingTags | translate}}
+                            </mat-error>
+                          </mat-form-field>
+                          <perun-web-apps-html-content-form-field
+                            *ngIf="format === 'html'"
+                            [inputFormControl]="inputFormGroup.controls[lang + '-html-text']"
+                            [tagType]="'textarea'"
+                            [tabId]="textareaId"
+                            [cd]="cd"
+                            [minRows]="17" />
+                        </div>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </ng-template>
+              </mat-tab>
             </mat-tab-group>
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-    <div class="d-flex mt-auto" mat-dialog-actions>
-      <button (click)="cancel()" class="ms-auto" mat-stroked-button>
-        {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CANCEL_BUTTON' | translate}}
-      </button>
-      <div
-        [matTooltipDisabled]="editAuth && !inputFormGroup.invalid && (!noneFilled || !applicationMail.send)"
-        [matTooltipPosition]="'above'"
-        [matTooltip]="(editAuth | mailNotificationTooltip : inputFormGroup.invalid : (applicationMail.send && noneFilled) : missingTagsErrorExists())">
-        <button
-          (click)="create()"
-          *ngIf="data.createMailNotification"
-          class="ms-2"
-          color="accent"
-          [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
-          mat-flat-button>
-          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
-        </button>
-        <button
-          (click)="save()"
-          *ngIf="!data.createMailNotification"
-          class="ms-2"
-          color="accent"
-          [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
-          mat-flat-button>
-          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
-        </button>
+          </div>
+        </div>
       </div>
+      <div class="d-flex mt-auto" mat-dialog-actions>
+        <button (click)="cancel()" class="ms-auto" mat-stroked-button>
+          {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CANCEL_BUTTON' | translate}}
+        </button>
+        <div
+          [matTooltipDisabled]="editAuth && !inputFormGroup.invalid && (!noneFilled || !applicationMail.send)"
+          [matTooltipPosition]="'above'"
+          [matTooltip]="(editAuth | mailNotificationTooltip : inputFormGroup.invalid : (applicationMail.send && noneFilled) : missingTagsErrorExists())">
+          <button
+            (click)="create()"
+            *ngIf="data.createMailNotification"
+            class="ms-2"
+            color="accent"
+            [disabled]="invalidNotification || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
+            mat-flat-button>
+            {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.CREATE_BUTTON' | translate}}
+          </button>
+          <button
+            (click)="save()"
+            *ngIf="!data.createMailNotification"
+            class="ms-2"
+            color="accent"
+            [disabled]="!editAuth || inputFormGroup.invalid || inputFormGroup.pending || (applicationMail.send && noneFilled)"
+            mat-flat-button>
+            {{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.SAVE_BUTTON' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div [@tagsOpenClose]="showTags ? 'open' : 'closed'" class="ms-4">
+      <app-tag-bar [notificationType]="mailType"> </app-tag-bar>
     </div>
   </div>
 </div>

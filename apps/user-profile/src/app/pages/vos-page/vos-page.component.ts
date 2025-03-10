@@ -65,7 +65,7 @@ export class VosPageComponent implements OnInit {
 
   extendMembership(membership: Membership): void {
     const registrarUrl = this.store.getProperty('registrar_base_url');
-    window.location.href = `${registrarUrl}?vo=${membership.entity.shortName}`;
+    window.open(`${registrarUrl}?vo=${membership.entity.shortName}`);
   }
 
   private fillMemberships(vos: Array<Vo>, memberships: Membership[]): void {

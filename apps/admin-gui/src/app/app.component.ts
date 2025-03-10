@@ -8,7 +8,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CacheHelperService } from './core/services/common/cache-helper.service';
-import { AuthService, InitAuthService, StoreService } from '@perun-web-apps/perun/services';
+import {
+  AuthService,
+  GuiAuthResolver,
+  InitAuthService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
 import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { interval } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -64,6 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     private initAuth: InitAuthService,
     private authService: AuthService,
+    private guiAuthResolverService: GuiAuthResolver,
     private cd: ChangeDetectorRef,
   ) {
     this.cache.init();
@@ -93,6 +99,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isLoginScreenShow = this.initAuth.isLoginScreenShown();
     this.isServiceAccess = this.initAuth.isServiceAccessLoginScreenShown();
     sessionStorage.removeItem('baLogout');
+
+    // allow users to see IDs in table by default
+    if (this.guiAuthResolverService.isPerunAdminOrObserver() && !localStorage.getItem('showIds')) {
+      localStorage.setItem('showIds', 'true');
+    }
 
     if (sessionStorage.getItem('initPage') === null) {
       sessionStorage.setItem('initPage', location.pathname);

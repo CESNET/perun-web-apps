@@ -36,15 +36,6 @@ export class FacilitySettingsOverviewComponent implements OnInit {
   private initItems(): void {
     this.items = [];
 
-    // Owners
-    if (this.routePolicyService.canNavigate('facilities-settings-owners', this.facility)) {
-      this.items.push({
-        cssIcon: 'perun-owner-grey',
-        url: `/facilities/${this.facility.id}/settings/owners`,
-        label: 'MENU_ITEMS.FACILITY.OWNERS',
-        style: 'facility-btn',
-      });
-    }
     // Managers
     if (this.routePolicyService.canNavigate('facilities-settings-managers', this.facility)) {
       this.items.push({

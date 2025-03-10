@@ -777,7 +777,7 @@ export class ServicesManagerService {
    * InvalidDestinationException is thrown when destination value is invalid in given destination type.
    * @param facility id of Facility
    * @param destination string name of destination
-   * @param type Destination type (host,user@host,user@host:port,url,mail,service-specific, s3, url-json)
+   * @param type Destination type (host,user@host,user@host:port,url,service-specific, s3, s3-json, url-json)
    * @param propagationType propagation type (PARALLEL, DUMMY - doesn\&#39;t send data)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1426,7 +1426,7 @@ export class ServicesManagerService {
   /**
    * Block all services currently assigned on this destination. Newly assigned services are still allowed for propagation.
    * @param destination string name of destination
-   * @param destinationType Destination type (like host, user@host, user@host:port, email, service-specific, ...)
+   * @param destinationType Destination type (like host, user@host, user@host:port, service-specific, ...)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1794,7 +1794,7 @@ export class ServicesManagerService {
    * Bans Service on a destination.
    * @param service id of Service
    * @param destination string name of destination
-   * @param destinationType Destination type (like host, user@host, user@host:port, email, service-specific, ...)
+   * @param destinationType Destination type (like host, user@host, user@host:port, service-specific, ...)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -7734,7 +7734,7 @@ export class ServicesManagerService {
   /**
    * Erase all the possible denials on this destination.
    * @param destination string name of destination
-   * @param destinationType Destination type (like host, user@host, user@host:port, email, service-specific, ...)
+   * @param destinationType Destination type (like host, user@host, user@host:port, service-specific, ...)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -8102,7 +8102,7 @@ export class ServicesManagerService {
    * Free the denial of the Service on this destination. If the Service was banned on this destination, it will be freed. In case the Service was not banned on this destination, nothing will happen.
    * @param service id of Service
    * @param destination string name of destination
-   * @param destinationType Destination type (like host, user@host, user@host:port, email, service-specific, ...)
+   * @param destinationType Destination type (like host, user@host, user@host:port, service-specific, ...)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.

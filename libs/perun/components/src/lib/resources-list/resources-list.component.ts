@@ -144,7 +144,7 @@ export class ResourcesListComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.disabledRouting = this.disableRouting;
-    if (!this.guiAuthResolver.isPerunAdminOrObserver()) {
+    if (localStorage.getItem('showIds') !== 'true') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     this.setDataSource();
