@@ -1,5 +1,25 @@
 Upgrade notes
 
+## [18.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.8.0...v18.9.0) (2025-03-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** new `notification_tags` config property
+
+### Features
+
+* **admin:** add s3-json as possible service destination ([ca06673](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ca06673318977abde0a5f6689422dfcf0aa4ea6e))
+* **admin:** allow displaying subgroup applications on group applications page ([fad7825](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/fad782554793ec7dc417840d9b8b9381853945e2))
+* **admin:** notification tags rework ([2534ebc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2534ebc26b7c37b02f390f9cc8e1503c117b184a))
+* allow customization of ID column in tables ([59d4781](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/59d4781338567587f683a8fcd573512d4790ec63))
+
+
+### Bug Fixes
+
+* **admin:** component caching ([6b3f9c4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6b3f9c429dc07a32cc85faef8f36ca4587a93729))
+* **profile:** extending VO/Group membership now opens new tab ([8facc68](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8facc689781f6eb27eaa64e9702a54d32e787539))
+
 ## [18.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.7.0...v18.8.0) (2025-02-21)
 
 
