@@ -176,5 +176,16 @@
     "admin_color": "#c62828",
     "service_color": "#561335"
   },
-  "export_limit": 1000
+  "export_limit": 1000,
+  "notification_tags": {
+    "APP_CREATED_USER": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "firstName", "lastName", "displayName", "mail", "phone", "login-namespace", "membershipExpiration", "appGuiUrl", "appGuiUrl-krb", "appGuiUrl-fed", "appGuiUrl-cert", "appGuiUrl-non"],
+    "APPROVABLE_GROUP_APP_USER": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "firstName", "lastName", "displayName", "mail", "phone", "login-namespace", "membershipExpiration", "appGuiUrl", "appGuiUrl-krb", "appGuiUrl-fed", "appGuiUrl-cert", "appGuiUrl-non"],
+    "APP_CREATED_VO_ADMIN": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "appDetailUrl", "appDetailUrl-krb", "appDetailUrl-fed", "appDetailUrl-cert", "appDetailUrl-newGUI", "perunGuiUrl", "perunGuiUrl-krb", "perunGuiUrl-fed", "perunGuiUrl-cert", "perunGuiUrl-newGUI"],
+    "MAIL_VALIDATION": ["validationLink", "validationLink-krb", "validationLink-fed", "validationLink-cert", "validationLink-non", "redirectUrl", "appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "firstName", "lastName", "displayName", "mail", "phone", "login-namespace"],
+    "APP_APPROVED_USER": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "firstName", "lastName", "displayName", "mail", "phone", "login-namespace", "membershipExpiration"],
+    "APP_REJECTED_USER": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "firstName", "lastName", "displayName", "mail", "phone", "login-namespace", "appGuiUrl", "appGuiUrl-krb", "appGuiUrl-fed", "appGuiUrl-cert", "appGuiUrl-non"],
+    "APP_ERROR_VO_ADMIN": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "appDetailUrl", "appDetailUrl-krb", "appDetailUrl-fed", "appDetailUrl-cert", "appDetailUrl-newGUI", "perunGuiUrl", "perunGuiUrl-krb", "perunGuiUrl-fed", "perunGuiUrl-cert", "perunGuiUrl-newGUI"],
+    "USER_INVITE": ["voName", "groupName", "displayName", "mailFooter", "htmlMailFooter", "invitationLink", "invitationLink-krb", "invitationLink-fed", "invitationLink-cert", "invitationLink-non"],
+    "USER_PRE_APPROVED_INVITE": ["voName", "groupName", "displayName", "mailFooter", "htmlMailFooter", "preapprovedInvitationLink", "expirationDate", "senderName"]
+  }
 }

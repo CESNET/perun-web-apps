@@ -85,15 +85,16 @@ export const fadeIn = trigger('routeAnimations', [
 ]);
 
 export const tagsOpenClose = trigger('tagsOpenClose', [
-  state('open', style({})),
+  state('open', style({ opacity: 1, width: '30%', overflow: 'hidden' })),
   state(
     'closed',
     style({
-      width: '0px',
-      height: '0px',
+      opacity: 0, // Hide visually
+      width: 0,
+      overflow: 'hidden',
     }),
   ),
-  transition('open <=> closed', [animate('.3s ease-in')]),
+  transition('open <=> closed', [animate('.4s ease-in')]),
 ]);
 
 export const switchAnimation = trigger('switchAnimations', [

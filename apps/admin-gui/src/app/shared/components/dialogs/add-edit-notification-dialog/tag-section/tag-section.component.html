@@ -1,16 +1,20 @@
-<div *ngFor="let tag of tags">
-  <div class="d-flex flex-row align-items-center">
-    <button
-      (click)="addTag('{' + tag[0] + '}')"
-      matTooltip="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TAG_HINT' | translate }}"
-      class="tag-text w-5 mt-auto mb-auto me-2"
-      mat-icon-button
-      matTooltipPosition="above">
-      <mat-icon>add_circle</mat-icon>
-    </button>
-    <span>
-      {{'{' + tag[0] + '} = ' + ('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.' + tag[1] | translate)}}
-    </span>
+<div>
+  <div
+    class="mb-2"
+    innerHTML="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TAG_ADDING_DESC' | translate}}"></div>
+  <div *ngFor="let tag of tags">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title draggable="true" (dragstart)="setDraggedText($event, tag[0])">
+          <mat-icon class="handle-icon me-3">drag_indicator</mat-icon>
+          <span class="tag-text-header">{{'{' + tag[0] + '}'}}</span></mat-panel-title
+        >
+      </mat-expansion-panel-header>
+      <span
+        class="tag-text"
+        >{{('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.' + tag[1] | translate)}}</span
+      >
+    </mat-expansion-panel>
+    <mat-divider class="mt-1 mb-1"></mat-divider>
   </div>
-  <mat-divider class="mt-1 mb-1"></mat-divider>
 </div>
