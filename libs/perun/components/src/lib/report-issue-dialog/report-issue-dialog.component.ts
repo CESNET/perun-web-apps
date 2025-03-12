@@ -39,8 +39,9 @@ export class ReportIssueDialogComponent implements OnInit {
           .afterClosed()
           .subscribe(() =>
             this.notificator.showSuccess(
-              (this.translate.instant('DIALOGS.REPORT_ISSUE.SUCCESS') as string) +
-                String(message.ticketNumber),
+              (this.translate.instant(
+                'SHARED_LIB.PERUN.COMPONENTS.REPORT_ISSUE.SUCCESS',
+              ) as string) + String(message.ticketNumber),
             ),
           );
         this.dialogRef.close();
