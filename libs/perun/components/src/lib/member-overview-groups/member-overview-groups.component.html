@@ -11,7 +11,7 @@
       [firstSelectedGroup]="selectedGroup"
       [groups]="groups">
     </perun-web-apps-group-search-select>
-    <perun-web-apps-alert *ngIf="groups.length === 0" alert_type="warn">
+    <perun-web-apps-alert *ngIf="!loading && groups.length === 0" alert_type="warn">
       {{'MEMBER_DETAIL.OVERVIEW.NO_GROUPS_FOUND' | translate}}
     </perun-web-apps-alert>
     <perun-web-apps-membership-status-settings

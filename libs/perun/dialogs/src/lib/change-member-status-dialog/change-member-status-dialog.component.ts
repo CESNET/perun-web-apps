@@ -10,6 +10,8 @@ import {
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { MatSelectChange } from '@angular/material/select';
 import { formatDate } from '@angular/common';
+import { Urns } from '@perun-web-apps/perun/urns';
+import { iif, mergeMap, of, switchMap } from 'rxjs';
 
 export interface ChangeMemberStatusDialogData {
   member: RichMember;
@@ -35,6 +37,8 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
   expirationRequired: boolean;
   maxDate = new Date();
   minDate = new Date();
+  canExtendMembershipGroup = false;
+  canExtendMembershipVo = false;
 
   descriptionTranslations = new Map<string, string>([
     ['VALID', 'DIALOGS.CHANGE_STATUS.VALID_DESCRIPTION'],
@@ -61,16 +65,50 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     if (this.data.groupId) {
       this.theme = 'group-theme';
       this.currentStatus = this.data.member.groupStatus;
       this.statuses = ['VALID', 'EXPIRED'];
+      this.attributeService
+        .getGroupAttributeByName(this.data.groupId, Urns.GROUP_DEF_EXPIRATION_RULES)
+        .pipe(
+          switchMap((attr) => {
+            if (!attr.value) return of(false);
+            return this.groupsManager.canExtendMembershipInGroup(
+              this.data.member.id,
+              this.data.groupId,
+            );
+          }),
+        )
+        .subscribe({
+          next: (canExtend) => {
+            this.canExtendMembershipGroup = Boolean(canExtend);
+            this.loading = false;
+          },
+          error: () => (this.loading = false),
+        });
     } else {
       this.theme = 'vo-theme';
       this.currentStatus = this.data.member.status;
       if (this.currentStatus === 'INVALID') {
         this.statuses = ['VALID', 'EXPIRED'];
       }
+      this.attributeService
+        .getVoAttributeByName(this.data.voId, Urns.VO_DEF_EXPIRATION_RULES)
+        .pipe(
+          switchMap((attr) => {
+            if (!attr.value) return of(false);
+            return this.memberManager.canExtendMembership(this.data.member.id);
+          }),
+        )
+        .subscribe({
+          next: (canExtend) => {
+            this.canExtendMembershipVo = canExtend;
+            this.loading = false;
+          },
+          error: () => (this.loading = false),
+        });
     }
 
     this.statuses = this.statuses.filter((status) => status !== this.currentStatus);
@@ -105,17 +143,20 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
   submit(): void {
     this.loading = true;
     this.data.expirationAttr.value = this.expiration === 'never' ? null : this.expiration;
+    const extend$ = this.memberManager.extendMembership(this.data.member.id);
+    const change$ = this.attributeService.setMemberAttribute({
+      member: this.data.member.id,
+      attribute: this.data.expirationAttr,
+    });
 
-    if (!this.data.groupId) {
+    if (this.data.groupId === null || this.data.groupId === undefined) {
       this.memberManager.setStatus(this.data.member.id, this.newStatus).subscribe({
         next: (member) => {
-          this.attributeService
-            .setMemberAttributes({
-              member: this.data.member.id,
-              attributes: [this.data.expirationAttr],
-            })
+          of(this.expiration)
+            .pipe(mergeMap((exp) => iif(() => exp === 'voRules', extend$, change$)))
             .subscribe({
               next: () => {
+                this.loading = false;
                 this.notificatorService.showInstantSuccess('DIALOGS.CHANGE_STATUS.SUCCESS');
                 this.dialogRef.close(member);
               },
@@ -125,18 +166,24 @@ export class ChangeMemberStatusDialogComponent implements OnInit {
         error: () => (this.loading = false),
       });
     } else {
+      const extendGroup$ = this.groupsManager.extendMembershipInGroup(
+        this.data.member.id,
+        this.data.groupId,
+      );
+      const changeGroup$ = this.attributeService.setMemberGroupAttribute({
+        member: this.data.member.id,
+        group: this.data.groupId,
+        attribute: this.data.expirationAttr,
+      });
       this.groupsManager
         .setGroupsMemberStatus(this.data.member.id, this.data.groupId, this.newStatus)
         .subscribe({
           next: (member) => {
-            this.attributeService
-              .setMemberGroupAttributes({
-                member: this.data.member.id,
-                group: this.data.groupId,
-                attributes: [this.data.expirationAttr],
-              })
+            of(this.expiration)
+              .pipe(mergeMap((exp) => iif(() => exp === 'groupRules', extendGroup$, changeGroup$)))
               .subscribe({
                 next: () => {
+                  this.loading = false;
                   this.notificatorService.showInstantSuccess('DIALOGS.CHANGE_STATUS.SUCCESS');
                   this.dialogRef.close(member);
                 },
