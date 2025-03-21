@@ -67,45 +67,49 @@ export class DeleteEntityDialogComponent implements OnInit {
     if (this.anonymize) {
       this.loading = true;
       const removedOwner = this.entityNames.data[0];
-      this.userManager.getSpecificUsersByUser(removedOwner.id).subscribe({
-        next: (resultSpecificUsers) => {
-          if (resultSpecificUsers.length === 0) this.loading = false;
-          for (let i = 0; i < resultSpecificUsers.length; i++) {
-            const specificUser = resultSpecificUsers[i];
-            this.userManager.getUnanonymizedUsersBySpecificUser(specificUser.id).subscribe({
-              next: (associatedUsers) => {
-                if (associatedUsers.length === 1) {
-                  if (associatedUsers[0].id === removedOwner.id) {
-                    this.lastOwnerAnyServiceAccount ||= true;
+      if (!(removedOwner as User).serviceUser) {
+        this.userManager.getSpecificUsersByUser(removedOwner.id).subscribe({
+          next: (resultSpecificUsers) => {
+            if (resultSpecificUsers.length === 0) this.loading = false;
+            for (let i = 0; i < resultSpecificUsers.length; i++) {
+              const specificUser = resultSpecificUsers[i];
+              this.userManager.getUnanonymizedUsersBySpecificUser(specificUser.id).subscribe({
+                next: (associatedUsers) => {
+                  if (associatedUsers.length === 1) {
+                    if (associatedUsers[0].id === removedOwner.id) {
+                      this.lastOwnerAnyServiceAccount ||= true;
 
-                    const oldServiceAccounts = this.serviceAccountsLeftUnattended.data;
-                    const serviceAccountToAdd =
-                      specificUser.firstName +
-                      (specificUser.middleName ? ' ' + specificUser.middleName : '') +
-                      ' ' +
-                      specificUser.lastName;
-                    this.serviceAccountsLeftUnattended.data = [
-                      ...oldServiceAccounts,
-                      serviceAccountToAdd,
-                    ];
+                      const oldServiceAccounts = this.serviceAccountsLeftUnattended.data;
+                      const serviceAccountToAdd =
+                        specificUser.firstName +
+                        (specificUser.middleName ? ' ' + specificUser.middleName : '') +
+                        ' ' +
+                        specificUser.lastName;
+                      this.serviceAccountsLeftUnattended.data = [
+                        ...oldServiceAccounts,
+                        serviceAccountToAdd,
+                      ];
+                    }
+                    if (i === resultSpecificUsers.length - 1) {
+                      this.loading = false;
+                    }
                   }
+                },
+                error: () => {
                   if (i === resultSpecificUsers.length - 1) {
                     this.loading = false;
                   }
-                }
-              },
-              error: () => {
-                if (i === resultSpecificUsers.length - 1) {
-                  this.loading = false;
-                }
-              },
-            });
-          }
-        },
-        error: () => {
-          this.loading = false;
-        },
-      });
+                },
+              });
+            }
+          },
+          error: () => {
+            this.loading = false;
+          },
+        });
+      } else {
+        this.loading = false;
+      }
     }
   }
 
