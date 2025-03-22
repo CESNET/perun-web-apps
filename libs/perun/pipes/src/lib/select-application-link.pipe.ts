@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Application, Group, Member } from '@perun-web-apps/perun/openapi';
+import { Application, Group, Member, User } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
   name: 'selectApplicationLink',
@@ -12,20 +12,26 @@ export class SelectApplicationLinkPipe implements PipeTransform {
    * @param disableRouting returns null if routing is disabled
    * @param group group if it os a group application
    * @param member member if it should be a link for a member application
+   * @param user user if the link should be determined based on vo/group app
    */
   transform(
     application: Application,
     disableRouting: boolean,
     group: Group,
     member: Member,
+    user: User,
   ): string[] {
     if (disableRouting) return null;
-    if (group) {
+    if (group || (user && application.group)) {
+      let groupToLink = group;
+      if (user) {
+        groupToLink = application.group;
+      }
       return [
         '/organizations',
         String(application.vo.id),
         'groups',
-        String(group.id),
+        String(groupToLink.id),
         'applications',
         String(application.id),
       ];

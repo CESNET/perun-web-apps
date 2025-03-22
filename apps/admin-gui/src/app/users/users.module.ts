@@ -70,6 +70,7 @@ import { ServiceIdentityAuthenticationOverviewComponent } from './pages/user-det
 import { ServiceIdentityCertificatesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-certificates/service-identity-certificates.component';
 import { UserBansComponent } from './pages/user-detail-page/user-bans/user-bans.component';
 import { UserAssignmentsComponent } from './pages/user-detail-page/user-assignments/user-assignments.component';
+import { UserApplicationsComponent } from './pages/user-detail-page/user-applications/user-applications.component';
 @NgModule({
   declarations: [
     UserDetailPageComponent,
@@ -92,6 +93,7 @@ import { UserAssignmentsComponent } from './pages/user-detail-page/user-assignme
     UserFacilitiesComponent,
     UserAccountsComponent,
     UserAssignmentsComponent,
+    UserApplicationsComponent,
     ServiceIdentityDetailPageComponent,
     ServiceIdentityOverviewComponent,
     UserSettingsDataQuotasComponent,
