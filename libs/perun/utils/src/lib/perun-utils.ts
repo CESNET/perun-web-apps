@@ -26,6 +26,7 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from
 import { Urns } from '@perun-web-apps/perun/urns';
 
 export const TABLE_ITEMS_COUNT_OPTIONS = [5, 10, 25, 100, 1000];
+export const EXTSOURCE_IDP = 'cz.metacentrum.perun.core.impl.ExtSourceIdp';
 
 export const emailRegexString =
   /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[!#$%&'*+/=?^_`{|}~\-\x20-\x7E]|\\[!#$%&'*+/=?^_`{|}~\-\x20-\x7E])*")@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
