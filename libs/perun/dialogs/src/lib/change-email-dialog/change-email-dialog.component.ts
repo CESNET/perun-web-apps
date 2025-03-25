@@ -5,7 +5,11 @@ import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/p
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService, NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { emailRegexString, getElementFromSingleArray } from '@perun-web-apps/perun/utils';
+import {
+  emailRegexString,
+  EXTSOURCE_IDP,
+  getElementFromSingleArray,
+} from '@perun-web-apps/perun/utils';
 
 export interface ChangeEmailDialogData {
   userId: number;
@@ -76,7 +80,10 @@ export class ChangeEmailDialogComponent implements OnInit {
           this.usersManagerService
             .getRichUserExtSources(this.data.userId)
             .subscribe((userExtSources) => {
-              const uesWithLoa = userExtSources.filter((ues) => ues.userExtSource.loa > 0);
+              const uesWithLoa = userExtSources.filter(
+                (ues) =>
+                  ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
+              );
               let completed = 0;
               uesWithLoa.forEach((ues) => {
                 this.attributesManagerService

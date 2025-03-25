@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { getElementFromSingleArray } from '@perun-web-apps/perun/utils';
+import { EXTSOURCE_IDP, getElementFromSingleArray } from '@perun-web-apps/perun/utils';
 
 export interface ChangeOrganizationDialogData {
   userId: number;
@@ -44,7 +44,10 @@ export class ChangeOrganizationDialogComponent implements OnInit {
       this.usersManagerService
         .getRichUserExtSources(this.data.userId)
         .subscribe((userExtSources) => {
-          const uesWithLoa = userExtSources.filter((ues) => ues.userExtSource.loa > 0);
+          const uesWithLoa = userExtSources.filter(
+            (ues) =>
+              ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
+          );
           uesWithLoa.forEach((ues) => {
             const organizationAttr = ues.attributes.find(
               (attr) => attr.namespace + ':' + attr.friendlyName === Urns.UES_DEF_ORGANIZATION,
