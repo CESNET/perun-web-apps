@@ -15,6 +15,6 @@ import { ApplicationsPageQuery } from './applicationsPageQuery';
  * input to getPaginatedApplications
  */
 export interface InputGetPaginatedApplications {
-  vo: number;
+  vo?: number;
   query: ApplicationsPageQuery;
 }

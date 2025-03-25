@@ -593,7 +593,7 @@
       }
     },
     "APPLICATION": {
-      "TITLE": "Application",
+      "TITLE": "Applications",
       "FILTER": "Filter",
       "SET_COLUMN_SETTINGS": "Configure column settings",
       "SELECTION_ALL": "All",
@@ -978,7 +978,7 @@
       "FILTER": "Search by name, id, description"
     },
     "APPLICATIONS": {
-      "TITLE": "Application",
+      "TITLE": "Applications",
       "SHOW_ALL_DETAILS": "Show more details",
       "SHOW_LESS_DETAILS": "Show less details",
       "FILTER": "Filter"
@@ -1158,6 +1158,7 @@
       "ORGANIZATIONS": "Organizations",
       "DETAIL": "Detail",
       "ATTRIBUTES": "Attributes",
+      "APPLICATIONS": "Applications",
       "FACILITY_ATTRIBUTES": "Facility attributes",
       "TITLE": "User - ",
       "ROLES": "Roles",

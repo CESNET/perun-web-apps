@@ -1,0 +1,32 @@
+<h1 class="page-subtitle">{{'MEMBER_DETAIL.APPLICATIONS.TITLE' | translate}}</h1>
+<div>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+  <button (click)="showDetails()" *ngIf="!showAllDetails" class="me-2" mat-stroked-button>
+    {{'MEMBER_DETAIL.APPLICATIONS.SHOW_ALL_DETAILS' | translate}}
+  </button>
+  <button (click)="showDetails()" *ngIf="showAllDetails" class="me-2" mat-stroked-button>
+    {{'MEMBER_DETAIL.APPLICATIONS.SHOW_LESS_DETAILS' | translate}}
+  </button>
+  <perun-web-apps-debounce-filter
+    [placeholder]="'MEMBER_DETAIL.APPLICATIONS.FILTER'"
+    (filter)="applyFilter($event)">
+  </perun-web-apps-debounce-filter>
+  <perun-web-apps-application-state-selector (stateChanged)="statesChanged($event)">
+  </perun-web-apps-application-state-selector>
+</div>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative table-min-height">
+  <perun-web-apps-applications-list
+    *perunWebAppsLoader="loading$ | async; indicator: spinner"
+    [loading]="loading$ | async"
+    [tableId]="showAllDetails ? detailTableId : tableId"
+    [user]="user"
+    [displayedColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
+    [applications]="applicationsPage$ | async"
+    (queryChanged)="nextPage.next($event)"
+    (downloadAll)="downloadAll($event)"
+    [filter]="filterValue">
+  </perun-web-apps-applications-list>
+</div>
