@@ -27,6 +27,7 @@ import { UserBansComponent } from '../users/pages/user-detail-page/user-bans/use
 import { AdminBlockedLoginsComponent } from './pages/admin-page/admin-blocked-logins/admin-blocked-logins.component';
 import { UserAssignmentsComponent } from '../users/pages/user-detail-page/user-assignments/user-assignments.component';
 import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.component';
+import { UserApplicationsComponent } from '../users/pages/user-detail-page/user-applications/user-applications.component';
 
 const routes: Routes = [
   {
@@ -140,6 +141,11 @@ const routes: Routes = [
         path: 'bans',
         component: UserBansComponent,
         data: { animation: 'UserBansPage' },
+      },
+      {
+        path: 'applications',
+        component: UserApplicationsComponent,
+        data: { animation: 'UserApplicationsPage' },
       },
       // {
       //   path: 'settings',

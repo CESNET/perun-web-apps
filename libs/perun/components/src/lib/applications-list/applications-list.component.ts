@@ -17,6 +17,7 @@ import {
   Member,
   PaginatedRichApplications,
   RichApplication,
+  User,
 } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -53,6 +54,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   @Input() disableRouting = false;
   @Input() group: Group;
   @Input() member: Member;
+  @Input() user: User;
   @Input() fedAttrs: AttributeDefinition[] = [];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() selection: SelectionModel<Application>;

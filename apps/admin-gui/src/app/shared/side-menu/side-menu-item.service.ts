@@ -656,6 +656,13 @@ export class SideMenuItemService {
       activatedRegex: `${regex}/identities`,
     });
 
+    // APPLICATIONS
+    links.push({
+      label: `MENU_ITEMS.USER.APPLICATIONS`,
+      url: [`${path}/applications`],
+      activatedRegex: `${regex}/applications`,
+    });
+
     // Attributes
     links.push({
       label: 'MENU_ITEMS.MEMBER.ATTRIBUTES',

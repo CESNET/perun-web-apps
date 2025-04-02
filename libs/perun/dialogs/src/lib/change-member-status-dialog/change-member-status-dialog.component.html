@@ -27,11 +27,15 @@
         <i [innerHTML]="changeDescription"></i>
       </div>
       <perun-web-apps-expiration-select
-        *ngIf="expirationRequired"
+        *ngIf="!loading && expirationRequired"
         [allowNever]="newStatus === 'VALID'"
+        [canExtendInGroup]="canExtendMembershipGroup"
+        [canExtendInVo]="canExtendMembershipVo"
+        [theme]="theme"
         [expiration]="expiration"
         [maxDate]="maxDate"
         [minDate]="minDate"
+        [newStatus]="newStatus"
         (expirationSelected)="setExpiration($event)">
       </perun-web-apps-expiration-select>
     </div>

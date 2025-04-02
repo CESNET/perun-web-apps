@@ -107,6 +107,12 @@ export class UserOverviewComponent implements OnInit {
           label: 'MENU_ITEMS.USER.IDENTITIES',
           style: 'user-btn',
         },
+        {
+          cssIcon: 'perun-applications',
+          url: `${urlStart}/applications`,
+          label: 'MENU_ITEMS.USER.APPLICATIONS',
+          style: 'user-btn',
+        },
       );
     } else {
       this.items.push(

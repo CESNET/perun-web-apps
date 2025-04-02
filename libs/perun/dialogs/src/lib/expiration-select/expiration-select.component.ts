@@ -15,8 +15,12 @@ export class ExpirationSelectComponent implements OnInit, OnChanges {
   @Input() canExtendInGroup = false;
   @Input() minDate: Date = null;
   @Input() maxDate: Date = null;
+  @Input() newStatus: string;
+  @Input() theme = 'vo-theme';
   @Output() expirationSelected: EventEmitter<string> = new EventEmitter<string>();
   expirationControl = new FormControl<string>(null);
+  showGroupRules = false;
+  showVoRules = false;
 
   ngOnInit(): void {
     // Set preselected value
@@ -30,6 +34,16 @@ export class ExpirationSelectComponent implements OnInit, OnChanges {
     expDate = expDate ? expDate : defExp;
     // Assume at least one of the candidate values was set
     this.expirationControl.setValue(this.parseDate(expDate));
+    if (this.theme === 'vo-theme') {
+      this.showVoRules =
+        (this.canExtendInVo && (this.newStatus === undefined || this.newStatus === null)) ||
+        this.newStatus === 'VALID';
+    }
+    if (this.theme === 'group-theme') {
+      this.showGroupRules =
+        (this.canExtendInGroup && (this.newStatus === undefined || this.newStatus === null)) ||
+        this.newStatus === 'VALID';
+    }
   }
 
   ngOnChanges(): void {

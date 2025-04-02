@@ -11,6 +11,8 @@ export class ChangeExpirationDialogComponent implements OnInit {
   @Input() currentExpiration: string;
   @Input() canExtendInVo = false;
   @Input() canExtendInGroup = false;
+  @Input() loading = false;
+  @Input() theme = 'vo-theme';
   @Output() expirationChanged: EventEmitter<string> = new EventEmitter<string>();
 
   newExpiration: string;
