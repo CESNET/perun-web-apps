@@ -1,5 +1,20 @@
 Upgrade notes
 
+## [18.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.9.0...v18.10.0) (2025-04-02)
+
+
+### Features
+
+* **admin:** add applications page to PERUNADMIN user detail ([c20705b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c20705bec6bd6083a1724778e25515a033765ee3))
+* **admin:** allow expiration by vo/group rules when changing member status to active ([118e1f7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/118e1f717e98c4bfbfa01f4e928957a168781359))
+
+
+### Bug Fixes
+
+* **admin:** do not check for service users when anonymizing service user ([38dc064](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/38dc064ef5889fe56226761f3ab4990b32947f5f))
+* **lib:** fix wrong translate path for issue report success ([c8eab3f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c8eab3fc6818b496ad666b1cbbd944472c7c9c24))
+* **profile:** allow email, name and organization change only from IDP UES ([e863db9](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e863db96dab0e8d3d8ffc65ffa2ecf6facc732c7))
+
 ## [18.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.8.0...v18.9.0) (2025-03-10)
 
 
