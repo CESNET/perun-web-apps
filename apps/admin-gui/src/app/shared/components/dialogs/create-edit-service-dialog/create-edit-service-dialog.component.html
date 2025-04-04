@@ -71,6 +71,14 @@
           >{{'DIALOGS.CREATE_EDIT_SERVICE.EXPIRED_MEMBERS_VO_HINT' | translate}}</mat-checkbox
         >
       </span>
+      <span class="d-flex align-elements"
+        >{{'DIALOGS.CREATE_EDIT_SERVICE.BANNED_MEMBERS' | translate}}
+        <mat-checkbox
+          class="ms-3"
+          [(ngModel)]="propagateBannedMembers"
+          >{{'DIALOGS.CREATE_EDIT_SERVICE.BANNED_MEMBERS_HINT' | translate}}</mat-checkbox
+        >
+      </span>
     </div>
     <div mat-dialog-actions>
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
