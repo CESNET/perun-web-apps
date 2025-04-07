@@ -62,10 +62,12 @@ export class GlobalSearchComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent): void {
     // Use '/' to focus search bar
-    if (!this.focusSearch && event.key === '/') {
-      event.preventDefault();
-      this.input.nativeElement.focus();
-      this.focusSearch = true;
+    if (document.activeElement === document.body) {
+      if (!this.focusSearch && event.key === '/') {
+        event.preventDefault();
+        this.input.nativeElement.focus();
+        this.focusSearch = true;
+      }
     }
   }
 
