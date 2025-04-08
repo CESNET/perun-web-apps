@@ -123,6 +123,7 @@ export class ServiceDetailPageComponent implements OnInit {
       error: () => (this.service.useExpiredMembers = !this.service.useExpiredMembers),
     });
   }
+
   voPropagationChange(): void {
     this.service.useExpiredVoMembers = !this.service.useExpiredVoMembers;
     this.serviceManager.updateService({ service: this.service }).subscribe({
@@ -132,6 +133,18 @@ export class ServiceDetailPageComponent implements OnInit {
         );
       },
       error: () => (this.service.useExpiredVoMembers = !this.service.useExpiredVoMembers),
+    });
+  }
+
+  bannedPropagationChange(): void {
+    this.service.useBannedMembers = !this.service.useBannedMembers;
+    this.serviceManager.updateService({ service: this.service }).subscribe({
+      next: () => {
+        this.notificator.showSuccess(
+          this.translate.instant('SERVICE_DETAIL.PROPAGATION_CHANGE_SUCCESS_BANNED') as string,
+        );
+      },
+      error: () => (this.service.useBannedMembers = !this.service.useBannedMembers),
     });
   }
 

@@ -66,6 +66,13 @@
           class="mb-25">
           {{'SERVICE_DETAIL.PROPAGATE_VO' | translate}}
         </mat-slide-toggle>
+        <mat-slide-toggle
+          [checked]="service.useBannedMembers"
+          (toggleChange)="bannedPropagationChange()"
+          labelPosition="before"
+          class="mb-25">
+          {{'SERVICE_DETAIL.PROPAGATE_BANNED' | translate}}
+        </mat-slide-toggle>
         <button
           *ngIf="authResolver.isPerunAdmin()"
           (click)="evaluateConsents()"
