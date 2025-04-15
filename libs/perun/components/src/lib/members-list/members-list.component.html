@@ -70,12 +70,15 @@
           {{'MEMBERS_LIST.TYPE' | translate}}
         </th>
         <td *matCellDef="let member" mat-cell>
-          <span [matTooltip]="member.membershipType | memberTypeTooltip">
+          <span [matTooltip]="member | memberTypeTooltip">
             <button
+              mat-icon-button
               (click)="viewMemberGroupTree($event, member)"
-              [disabled]="member.membershipType === 'DIRECT'"
-              mat-icon-button>
-              <mat-icon>{{member.membershipType | memberTypeIcon}}</mat-icon>
+              [disabled]="member.membershipType === 'DIRECT' && !member.dualMembership">
+              <mat-icon *ngIf="member.dualMembership" svgIcon="dual-membership"></mat-icon>
+              <mat-icon *ngIf="!member.dualMembership">
+                {{member.membershipType | memberTypeIcon}}</mat-icon
+              >
             </button>
           </span>
         </td>

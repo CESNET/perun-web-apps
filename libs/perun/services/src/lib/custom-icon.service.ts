@@ -258,6 +258,10 @@ export class CustomIconService {
       url: 'assets/img/PerunWebImages/refresh_page-blue.svg',
       name: 'perun-automated-tasks',
     },
+    {
+      url: 'assets/img/PerunWebImages/double_membership.svg',
+      name: 'dual-membership',
+    },
   ];
 
   constructor(
