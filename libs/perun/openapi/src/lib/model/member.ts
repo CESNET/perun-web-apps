@@ -19,6 +19,7 @@ export interface Member extends Auditable {
   voId?: number;
   status?: string;
   membershipType?: string;
+  dualMembership?: boolean;
   sourceGroupId?: number | null;
   sponsored?: boolean;
   groupStatus?: string;
