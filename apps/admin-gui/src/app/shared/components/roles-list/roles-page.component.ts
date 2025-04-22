@@ -34,6 +34,7 @@ import {
   GuiAuthResolver,
   NotificatorService,
   PerunTranslateService,
+  StoreService,
 } from '@perun-web-apps/perun/services';
 import { DisplayedRolePipe, ManageableEntitiesPipe } from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject, iif, mergeMap, Observable, of } from 'rxjs';
@@ -168,6 +169,7 @@ export class RolesPageComponent implements OnInit {
     private rolePipe: DisplayedRolePipe,
     private guiAuthResolver: GuiAuthResolver,
     private manageableEntities: ManageableEntitiesPipe,
+    private store: StoreService,
   ) {}
 
   get roles(): Map<string, Map<string, number[]>> {

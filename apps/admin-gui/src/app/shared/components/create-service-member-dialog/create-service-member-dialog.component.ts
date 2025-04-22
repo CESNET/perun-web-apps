@@ -102,6 +102,7 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
   successMessageMember = '';
   successMessagePwd = '';
   processing = false;
+  sponsorshipEnabled = false;
   setSponsorshipAuth: boolean;
   findSponsorsAuth: boolean;
   voSponsors: RichUser[] = [];
@@ -134,6 +135,7 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
 
   ngOnInit(): void {
     this.theme = this.data.theme;
+    this.sponsorshipEnabled = this.store.getProperty('enable_sponsorships');
     const user = this.store.getPerunPrincipal().user;
     this.membersManagerService.getMembersByUser(user.id).subscribe((members) => {
       let tempMember: RichMember = {} as RichMember;
@@ -146,16 +148,18 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
       this.assignedMembers.push(tempMember);
     });
 
-    this.setSponsorshipAuth = this.authResolver.isAuthorized(
-      'setSponsorshipForMember_Member_User_LocalDate_policy',
-      [this.data.vo, this.store.getPerunPrincipal().user],
-    );
+    if (this.sponsorshipEnabled) {
+      this.setSponsorshipAuth = this.authResolver.isAuthorized(
+        'setSponsorshipForMember_Member_User_LocalDate_policy',
+        [this.data.vo, this.store.getPerunPrincipal().user],
+      );
 
-    this.findSponsorsAuth = this.findSponsors.findSponsorsAuth(this.data.vo);
-    if (this.findSponsorsAuth) {
-      this.findSponsors.getRichSponsors(this.data.vo.id).subscribe((sponsors) => {
-        this.voSponsors = sponsors;
-      });
+      this.findSponsorsAuth = this.findSponsors.findSponsorsAuth(this.data.vo);
+      if (this.findSponsorsAuth) {
+        this.findSponsors.getRichSponsors(this.data.vo.id).subscribe((sponsors) => {
+          this.voSponsors = sponsors;
+        });
+      }
     }
   }
 

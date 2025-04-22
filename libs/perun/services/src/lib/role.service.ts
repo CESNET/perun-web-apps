@@ -1,24 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Group } from '@perun-web-apps/perun/openapi';
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleService {
+  constructor(private store: StoreService) {}
   prepareRoles(
     roles: { [p: string]: { [p: string]: number[] } },
     names: string[],
   ): Map<string, Map<string, number[]>> {
     const preparedRoles = new Map<string, Map<string, number[]>>();
     names.forEach((roleName) => {
-      const innerMap = new Map<string, Array<number>>();
-      const innerRoles = Object.keys(roles[roleName]);
+      if (
+        !this.store.getProperty('enable_sponsorships') &&
+        roleName !== 'SPONSOR' &&
+        roleName !== 'SPONSORNOCREATERIGHTS' &&
+        roleName !== 'SPONSORSHIP'
+      ) {
+        const innerMap = new Map<string, Array<number>>();
+        const innerRoles = Object.keys(roles[roleName]);
 
-      innerRoles.forEach((innerRole) => {
-        innerMap.set(innerRole, roles[roleName][innerRole]);
-      });
+        innerRoles.forEach((innerRole) => {
+          innerMap.set(innerRole, roles[roleName][innerRole]);
+        });
 
-      preparedRoles.set(roleName, innerMap);
+        preparedRoles.set(roleName, innerMap);
+      }
     });
     return preparedRoles;
   }
