@@ -24,6 +24,7 @@ export class CreateEditServiceDialogComponent implements OnInit {
   status = true;
   propagateExpiredMembers = true;
   propagateExpiredVoMembers = false;
+  propagateBannedMembers = true;
 
   nameControl = new FormControl('', [
     Validators.required,
@@ -59,6 +60,7 @@ export class CreateEditServiceDialogComponent implements OnInit {
       this.status = this.data.service.enabled;
       this.propagateExpiredMembers = this.data.service.useExpiredMembers;
       this.propagateExpiredVoMembers = this.data.service.useExpiredVoMembers;
+      this.propagateBannedMembers = this.data.service.useBannedMembers;
 
       this.title = this.translate.instant('DIALOGS.CREATE_EDIT_SERVICE.EDIT_TITLE') as string;
       this.buttonText = this.translate.instant('DIALOGS.CREATE_EDIT_SERVICE.EDIT') as string;
@@ -81,6 +83,7 @@ export class CreateEditServiceDialogComponent implements OnInit {
           script: this.pathControl.value,
           useExpiredMembers: this.propagateExpiredMembers,
           useExpiredVoMembers: this.propagateExpiredVoMembers,
+          useBannedMembers: this.propagateBannedMembers,
           id: 0,
           beanName: '',
         },
@@ -110,6 +113,7 @@ export class CreateEditServiceDialogComponent implements OnInit {
           script: this.pathControl.value,
           useExpiredMembers: this.propagateExpiredMembers,
           useExpiredVoMembers: this.propagateExpiredVoMembers,
+          useBannedMembers: this.propagateBannedMembers,
           id: this.data.service.id,
           beanName: this.data.service.beanName,
         },

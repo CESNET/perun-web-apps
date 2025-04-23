@@ -206,13 +206,13 @@ export class EditApplicationFormItemDialogComponent implements OnInit {
         this.applicationFormItem.i18n[lang].label = this.inputFormGroup.get(
           `${lang}-plain-label`,
         ).value;
-        this.applicationFormItem.i18n[lang].errorMessage = this.inputFormGroup.get(
-          `${lang}-plain-error-message`,
-        ).value;
-        this.applicationFormItem.i18n[lang].help = this.inputFormGroup.get(
-          `${lang}-plain-help`,
-        ).value;
       }
+      this.applicationFormItem.i18n[lang].errorMessage = this.inputFormGroup.get(
+        `${lang}-plain-error-message`,
+      ).value;
+      this.applicationFormItem.i18n[lang].help = this.inputFormGroup.get(
+        `${lang}-plain-help`,
+      ).value;
     }
 
     this.updateOptions();
