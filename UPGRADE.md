@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [18.11.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.10.0...v18.11.0) (2025-04-23)
+
+
+### Features
+
+* **admin:** allow choice to propagate banned members in service ([c740928](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c740928ae3c77f0e2680d2b512fee20be3bb3a87))
+* **admin:** display a different icon for MEMBERS of both direct/indirect origin ([48abcb1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/48abcb1c1c843d567c277d9481e3d013aa01817c))
+
+
+### Bug Fixes
+
+* **admin:** checkbox app form item help/error labels can be edited ([6a0b5d1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6a0b5d173f29f38d206422c4a3d4ab15cad1223b))
+* **admin:** only focus global search with `/` when nothing else is focused ([4fe9a21](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4fe9a21775b4a8192abc0b5faf05f6eee3d8ea10))
+
 ## [18.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.9.0...v18.10.0) (2025-04-02)
 
 
