@@ -20,10 +20,9 @@ export interface ChangeNameDialogData {
   styleUrls: ['./change-name-dialog.component.scss'],
 })
 export class ChangeNameDialogComponent implements OnInit {
-  uesNames: string[] = [];
-  selectedName: string;
-
   CUSTOM_OPTION = 'CUSTOM_OPTION';
+  uesNames: string[] = [];
+  selectedName = this.CUSTOM_OPTION;
   titleBefore: UntypedFormControl;
   titleAfter: UntypedFormControl;
   firstName: UntypedFormControl;
@@ -43,67 +42,74 @@ export class ChangeNameDialogComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.titleBefore = new UntypedFormControl('', [
-      Validators.pattern('.*[\\S]+.*'),
-      Validators.maxLength(129),
-    ]);
+    this.usersManagerService.getUserById(this.data.userId).subscribe({
+      next: (user) => {
+        this.titleBefore = new UntypedFormControl(user.titleBefore ? user.titleBefore : '', [
+          Validators.pattern('.*[\\S]+.*'),
+          Validators.maxLength(129),
+        ]);
 
-    this.titleAfter = new UntypedFormControl('', [
-      Validators.pattern('.*[\\S]+.*'),
-      Validators.maxLength(129),
-    ]);
+        this.titleAfter = new UntypedFormControl(user.titleAfter ? user.titleAfter : '', [
+          Validators.pattern('.*[\\S]+.*'),
+          Validators.maxLength(129),
+        ]);
 
-    this.firstName = new UntypedFormControl('', [
-      Validators.required,
-      Validators.pattern('.*[\\S]+.*'),
-      Validators.maxLength(129),
-    ]);
+        this.firstName = new UntypedFormControl(user.firstName ? user.firstName : '', [
+          Validators.required,
+          Validators.pattern('.*[\\S]+.*'),
+          Validators.maxLength(129),
+        ]);
 
-    this.middleName = new UntypedFormControl('', [
-      Validators.pattern('.*[\\S]+.*'),
-      Validators.maxLength(129),
-    ]);
+        this.middleName = new UntypedFormControl(user.middleName ? user.middleName : '', [
+          Validators.pattern('.*[\\S]+.*'),
+          Validators.maxLength(129),
+        ]);
 
-    this.lastName = new UntypedFormControl('', [
-      Validators.required,
-      Validators.pattern('.*[\\S]+.*'),
-      Validators.maxLength(129),
-    ]);
+        this.lastName = new UntypedFormControl(user.lastName ? user.lastName : '', [
+          Validators.required,
+          Validators.pattern('.*[\\S]+.*'),
+          Validators.maxLength(129),
+        ]);
 
-    if (this.data.enableLinkedName) {
-      this.usersManagerService
-        .getRichUserExtSources(this.data.userId)
-        .subscribe((userExtSources) => {
-          const uesWithLoa = userExtSources.filter(
-            (ues) =>
-              ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
-          );
-          let completed = 0;
-          uesWithLoa.forEach((ues) => {
-            this.attributesManagerService
-              .getUserExtSourceAttributeByName(ues.userExtSource.id, Urns.UES_DEF_COMMON_NAME)
-              .subscribe((displayNameAttr) => {
-                if (
-                  displayNameAttr?.value &&
-                  displayNameAttr.value !== this.data.currentName &&
-                  !this.uesNames.includes(displayNameAttr.value as string)
-                ) {
-                  this.uesNames.push(displayNameAttr.value as string);
-                }
-                completed++;
-                this.selectedName = getElementFromSingleArray(
-                  this.uesNames.concat(this.data.enableCustomName ? [this.CUSTOM_OPTION] : []),
-                );
-                this.loading = completed !== uesWithLoa.length;
+        if (this.data.enableLinkedName) {
+          this.usersManagerService
+            .getRichUserExtSources(this.data.userId)
+            .subscribe((userExtSources) => {
+              const uesWithLoa = userExtSources.filter(
+                (ues) =>
+                  ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
+              );
+              let completed = 0;
+              uesWithLoa.forEach((ues) => {
+                this.attributesManagerService
+                  .getUserExtSourceAttributeByName(ues.userExtSource.id, Urns.UES_DEF_COMMON_NAME)
+                  .subscribe((displayNameAttr) => {
+                    if (
+                      displayNameAttr?.value &&
+                      displayNameAttr.value !== this.data.currentName &&
+                      !this.uesNames.includes(displayNameAttr.value as string)
+                    ) {
+                      this.uesNames.push(displayNameAttr.value as string);
+                    }
+                    completed++;
+                    this.selectedName = getElementFromSingleArray(
+                      this.uesNames.concat(this.data.enableCustomName ? [this.CUSTOM_OPTION] : []),
+                    );
+                    this.loading = completed !== uesWithLoa.length;
+                  });
               });
-          });
-        });
-    } else {
-      this.selectedName = getElementFromSingleArray(
-        this.data.enableCustomName ? [this.CUSTOM_OPTION] : [],
-      );
-      this.loading = false;
-    }
+            });
+        } else {
+          this.selectedName = getElementFromSingleArray(
+            this.data.enableCustomName ? [this.CUSTOM_OPTION] : [],
+          );
+          this.loading = false;
+        }
+      },
+      error: () => {
+        this.loading = false;
+      },
+    });
   }
 
   onCancel(): void {
