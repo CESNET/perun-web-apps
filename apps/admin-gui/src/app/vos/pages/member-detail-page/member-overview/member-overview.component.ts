@@ -40,6 +40,7 @@ export class MemberOverviewComponent implements OnInit {
   attributes: Map<string, string[]> = new Map<string, string[]>();
   dataSource = new MatTableDataSource<string>();
   displayedColumns = ['attName', 'attValue'];
+  sponsorshipEnabled = false;
   sponsors: Sponsor[] = [];
   sponsorsDataSource = new MatTableDataSource<Sponsor>();
   vo: Vo;
@@ -61,10 +62,12 @@ export class MemberOverviewComponent implements OnInit {
     private storeService: StoreService,
     private routePolicyService: RoutePolicyService,
     private findSponsors: FindSponsorsService,
+    private store: StoreService,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.sponsorshipEnabled = this.store.getProperty('enable_sponsorships');
     this.route.parent.params.subscribe((parentParams) => {
       const memberId = Number(parentParams['memberId']);
       this.attributeNames = this.storeService.getMemberProfileAttributeNames();
@@ -104,7 +107,7 @@ export class MemberOverviewComponent implements OnInit {
               'getGroupRichMembersByIds_int_List<Integer>_List<String>_policy',
               [this.vo],
             );
-            if (this.member.sponsored && this.canReadSponsors) {
+            if (this.sponsorshipEnabled && this.member.sponsored && this.canReadSponsors) {
               this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
                 this.sponsors = sponsors;
                 this.sponsorsDataSource = new MatTableDataSource<Sponsor>(this.sponsors);
@@ -171,6 +174,10 @@ export class MemberOverviewComponent implements OnInit {
   }
 
   private isSponsorButtonEnabled(): void {
+    if (!this.sponsorshipEnabled) {
+      this.sponsorButtonEnabled = false;
+      return;
+    }
     const sponsorIds = this.sponsors.map((sponsor) => sponsor.user.id);
 
     this.membersService.someAvailableSponsorExistsForMember(this.member.id).subscribe({
@@ -259,7 +266,7 @@ export class MemberOverviewComponent implements OnInit {
     this.membersService.getRichMemberWithAttributes(this.member.id).subscribe({
       next: (member) => {
         this.member = member;
-        if (member.sponsored && this.canReadSponsors) {
+        if (this.sponsorshipEnabled && member.sponsored && this.canReadSponsors) {
           this.usersManager.getSponsorsForMember(this.member.id, null).subscribe((sponsors) => {
             this.sponsors = sponsors;
             this.sponsorsDataSource.data = this.sponsors;

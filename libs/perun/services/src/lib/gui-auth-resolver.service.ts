@@ -13,6 +13,7 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { AuthPrivilege, Role } from '@perun-web-apps/perun/models';
+import { StoreService } from './store.service';
 
 type Entity = Vo & Group & Resource & Member & User & Facility;
 
@@ -34,7 +35,10 @@ export class GuiAuthResolver {
   private observableVos: number[] = [];
   private hasGroupInTheseVos: number[] = [];
 
-  constructor(private authzSevice: AuthzResolverService) {}
+  constructor(
+    private authzSevice: AuthzResolverService,
+    private storeService: StoreService,
+  ) {}
 
   init(principal: PerunPrincipal): void {
     this.principal = principal;
@@ -185,7 +189,13 @@ export class GuiAuthResolver {
   assignAvailableRoles(availableRoles: RoleManagementRules[], primaryObject: string): void {
     this.allRolesManagementRules.forEach((rule) => {
       if (rule.primaryObject === primaryObject) {
-        availableRoles.push(rule);
+        if (rule.roleName === 'SPONSOR' || rule.roleName === 'SPONSORNOCREATERIGHTS') {
+          if (this.storeService.getProperty('enable_sponsorships')) {
+            availableRoles.push(rule);
+          }
+        } else {
+          availableRoles.push(rule);
+        }
       }
     });
     availableRoles.sort(this.sortRoles);
@@ -297,6 +307,10 @@ export class GuiAuthResolver {
       'SERVICEUSER',
       'SELF',
     ];
+
+    if (!this.storeService.getProperty('enable_sponsorships')) {
+      ignoredRoles.push('SPONSOR', 'SPONSORNOCREATERIGHTS');
+    }
 
     this.allRolesManagementRules.forEach((rule) => {
       if (

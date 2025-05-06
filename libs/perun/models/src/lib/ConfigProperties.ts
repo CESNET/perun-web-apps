@@ -182,6 +182,7 @@ export interface PerunConfig {
   group_name_error_message?: string;
   group_name_secondary_regex?: string;
   link_to_admin_gui_by_roles?: string[];
+  enable_sponsorships?: boolean;
 
   // User profile specific
   // Required

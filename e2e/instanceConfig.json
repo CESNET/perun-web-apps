@@ -1,3 +1,4 @@
 {
-  "api_url": "http://localhost:8080/ba/rpc"
+  "api_url": "http://localhost:8080/ba/rpc",
+  "enable_sponsorships": true
 }

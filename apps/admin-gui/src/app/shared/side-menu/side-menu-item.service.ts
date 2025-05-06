@@ -461,7 +461,10 @@ export class SideMenuItemService {
     }
 
     // Sponsored members
-    if (this.routePolicyService.canNavigate('organizations-sponsoredMembers', vo)) {
+    if (
+      this.store.getProperty('enable_sponsorships') &&
+      this.routePolicyService.canNavigate('organizations-sponsoredMembers', vo)
+    ) {
       links.push({
         label: 'MENU_ITEMS.VO.SPONSORED_MEMBERS',
         url: [`/organizations/${vo.id}/sponsoredMembers`],

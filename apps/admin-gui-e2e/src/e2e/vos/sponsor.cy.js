@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-
+// TODO this file can be deleted once the whole sponsorship logic is deprecated. The instance config in ../../../../../e2e needs to be modified then as well
 describe('VO management with role Sponsor', () => {
   const dbVoName = 'test-e2e-vo-from-db-7';
   const dbMemberToSponsor = 'MemberToSponsor';

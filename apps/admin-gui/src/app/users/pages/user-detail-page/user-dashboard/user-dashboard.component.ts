@@ -32,7 +32,6 @@ export class UserDashboardComponent implements OnInit {
     'VOADMIN',
     'GROUPADMIN',
     'FACILITYADMIN',
-    'SPONSOR',
     'RESOURCEADMIN',
     'TOPGROUPCREATOR',
     'VOOBSERVER',
@@ -70,6 +69,9 @@ export class UserDashboardComponent implements OnInit {
     this.roles = this.storeService.getPerunPrincipal()?.roles ?? {};
     const allUserRoles = Object.keys(this.roles);
     this.hasOnlyNoRightsRoles = allUserRoles.every((role) => this.noRightsRoles.has(role));
+    if (this.storeService.getProperty('enable_sponsorships')) {
+      this.allowedRoles.push('SPONSOR');
+    }
     this.roleNames = this.allowedRoles.filter((value) => allUserRoles.includes(value));
     this.getDashboardSettings();
   }
