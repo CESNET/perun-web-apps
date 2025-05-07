@@ -195,7 +195,7 @@
       "NOTE": "Note: Entering a custom name will notify user support to verify and approve the change. This may take several days.",
       "WAIT": "User's name change was submitted for user support verification",
       "SUCCESS": "User's name was successfully changed",
-      "NO_LINKED_ACCOUNTS": "No name with required level of assurance and other value than is already set found."
+      "NO_LINKED_ACCOUNTS": "No name with required level of assurance and other value than is already set found in external sources."
     },
     "CHANGE_ORGANIZATION": {
       "TITLE": "Change organization",

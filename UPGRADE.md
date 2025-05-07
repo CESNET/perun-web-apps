@@ -1,5 +1,17 @@
 Upgrade notes
 
+## [18.12.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.11.0...v18.12.0) (2025-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** new `enable_sponsorships` config property enabling sponsored members logic, which is now disabled by default
+
+### Features
+
+* **admin:** make sponsor functionality configurable ([6c671e4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6c671e4a3f9080876714f88fb71c720598187260))
+* **profile:** adjustments to change name dialog ([d2803bf](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d2803bf9d86f54022b140436fd854c53c1b30285))
+
 ## [18.11.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.10.0...v18.11.0) (2025-04-23)
 
 
