@@ -32,6 +32,8 @@ namespaces: `einfra`, `einfra-services`, `cesnet`, `mu`.
 
 - `user_deletion_forced`: boolean, enables user deletion if `true`. Otherwise, default anonymization is used.
 
+- `enable_sponsorships`: boolean, enables the member sponsorship functionality. Disabled by default
+
 - `allow_empty_sponsor_namespace`: type: boolean, if the instance supports empty sponsor namespace
 
 - `member_profile_attributes_friendly_names`: array of attribute friendly names which are displayed in "Personal info" in the member-overview page

@@ -6,6 +6,7 @@ import {
   EntityStorageService,
   GuiAuthResolver,
   RoutePolicyService,
+  StoreService,
 } from '@perun-web-apps/perun/services';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
@@ -31,6 +32,7 @@ export class VoOverviewComponent implements OnInit, DoCheck {
     protected authResolver: GuiAuthResolver,
     private entityStorageService: EntityStorageService,
     private routePolicyService: RoutePolicyService,
+    private store: StoreService,
   ) {}
 
   ngDoCheck(): void {
@@ -92,7 +94,10 @@ export class VoOverviewComponent implements OnInit, DoCheck {
     }
 
     // Sponsored members
-    if (this.routePolicyService.canNavigate('organizations-sponsoredMembers', this.vo)) {
+    if (
+      this.store.getProperty('enable_sponsorships') &&
+      this.routePolicyService.canNavigate('organizations-sponsoredMembers', this.vo)
+    ) {
       this.items.push({
         cssIcon: 'perun-user',
         url: `/organizations/${this.vo.id}/sponsoredMembers`,
