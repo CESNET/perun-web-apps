@@ -17,7 +17,11 @@ import { SelectedPendingInvitation } from '@perun-web-apps/perun/pipes';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 import { InvitationRevokeDialogComponent } from '../../../../shared/components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
-import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import {
+  ApiRequestConfigurationService,
+  EntityStorageService,
+  GuiAuthResolver,
+} from '@perun-web-apps/perun/services';
 import { InvitationResendDialogComponent } from '../../../../shared/components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 
 @Component({
@@ -38,6 +42,7 @@ export class GroupInvitationDetailComponent implements OnInit {
   loading = true;
   invitationId: number;
   senderIdInVo: number;
+  isPerunAdmin = false;
   authRights = {
     revoke: false,
     extend: false,
@@ -45,6 +50,7 @@ export class GroupInvitationDetailComponent implements OnInit {
   };
 
   constructor(
+    private apiService: ApiRequestConfigurationService,
     private authResolver: GuiAuthResolver,
     private route: ActivatedRoute,
     private invitationManager: InvitationsManagerService,
@@ -59,6 +65,7 @@ export class GroupInvitationDetailComponent implements OnInit {
     this.loading = true;
     this.group = this.entityStorageService.getEntity();
     this.setAuthRights();
+    this.isPerunAdmin = this.authResolver.isPerunAdmin();
     this.route.params.subscribe((params) => {
       this.invitationId = Number(params['invitationId']);
       this.invitationManager.getInvitationById(this.invitationId).subscribe({
@@ -79,30 +86,32 @@ export class GroupInvitationDetailComponent implements OnInit {
                       next: (resultCreatedBy: RichUser) => {
                         this.creatorName = this.nameFromRichUser(resultCreatedBy);
 
+                        // Expired invitation check
+                        if (
+                          this.invitation.modifiedByUid < 0 ||
+                          this.invitation.status === InvitationStatus.EXPIRED
+                        ) {
+                          this.modifierName = 'Expiration';
+                          this.loading = false;
+                        } else {
+                          this.userManager
+                            .getRichUserWithAttributes(this.invitation.modifiedByUid)
+                            .subscribe({
+                              next: (resultModifiedBy: RichUser) => {
+                                this.modifierName = this.nameFromRichUser(resultModifiedBy);
+                                this.loading = false;
+                              },
+                              error: () => (this.loading = false),
+                            });
+                        }
+                        // sender might not be a VO member anymore, no need to throw an error though
+                        this.apiService.dontHandleErrorForNext();
                         this.membersService
                           .getMemberByUser(resultVo.id, resultSender.id)
                           .subscribe({
                             next: (resultMember) => {
                               this.senderIdInVo = resultMember.id;
-
-                              // Expired invitation check
-                              if (
-                                this.invitation.modifiedByUid < 0 ||
-                                this.invitation.status === InvitationStatus.EXPIRED
-                              ) {
-                                this.modifierName = 'Expiration';
-                                this.loading = false;
-                              } else {
-                                this.userManager
-                                  .getRichUserWithAttributes(this.invitation.modifiedByUid)
-                                  .subscribe({
-                                    next: (resultModifiedBy: RichUser) => {
-                                      this.modifierName = this.nameFromRichUser(resultModifiedBy);
-                                      this.loading = false;
-                                    },
-                                    error: () => (this.loading = false),
-                                  });
-                              }
+                              this.loading = false;
                             },
                             error: () => (this.loading = false),
                           });
