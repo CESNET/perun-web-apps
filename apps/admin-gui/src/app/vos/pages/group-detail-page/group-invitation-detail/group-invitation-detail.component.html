@@ -106,11 +106,23 @@
         >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.SENT_BY' | translate}}</span
       >:
       <a
+        *ngIf="this.senderIdInVo"
         [perunWebAppsMiddleClickRouterLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
         (auxclick)="$event.preventDefault()"
         [routerLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
         class="group-link"
         >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
+      >
+      <a
+        *ngIf="!this.senderIdInVo && this.isPerunAdmin"
+        [perunWebAppsMiddleClickRouterLink]="['/admin/users', this.invitation.senderId.toString()]"
+        (auxclick)="$event.preventDefault()"
+        [routerLink]="['/admin/users', this.invitation.senderId.toString()]"
+        class="group-link"
+        >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
+      >
+      <span *ngIf="!this.senderIdInVo && !this.isPerunAdmin"
+        >{{this.senderName}} ({{this.invitation?.createdByUid}})</span
       >
     </div>
     <div>
