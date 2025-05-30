@@ -79,6 +79,7 @@ export class BulkInvitePreapprovedMembersDialogComponent implements OnInit {
       group: this.data.groupId,
       expiration: formatDate(this.expirationControl.value, 'yyyy-MM-dd', 'en-GB'),
       language: this.currentLanguage,
+      redirectUrl: this.url.value,
     };
 
     this.invitationsManager.inviteToGroupFromCsv(inputSendInvitationsFromCsv).subscribe({
