@@ -62,7 +62,7 @@ import { TransformMemberStatusPipe } from './transform-member-status.pipe';
 import { ApplicationColumnSelectLabelPipe } from './application-column-select-label.pipe';
 import { SelectedSponsorPipe } from './selected-sponsor.pipe';
 import { GlobalNamespacePipe } from './global-namespace.pipe';
-import { LastSuccessfulPropagationPipe } from './last-successful-propagation.pipe';
+import { LastPropagationPipe } from './last-propagation.pipe';
 import { ActiveSideMenuItemPipe } from './active-side-menu-item.pipe';
 import { ApplicationStatePipe } from './application-state.pipe';
 import { GroupRolePipe } from './group-role.pipe';
@@ -150,7 +150,7 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     TransformMemberStatusPipe,
     ApplicationColumnSelectLabelPipe,
     GlobalNamespacePipe,
-    LastSuccessfulPropagationPipe,
+    LastPropagationPipe,
     ActiveSideMenuItemPipe,
     ApplicationStatePipe,
     GroupRolePipe,
@@ -232,7 +232,7 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     TransformMemberStatusPipe,
     ApplicationColumnSelectLabelPipe,
     GlobalNamespacePipe,
-    LastSuccessfulPropagationPipe,
+    LastPropagationPipe,
     ActiveSideMenuItemPipe,
     ApplicationStatePipe,
     GroupRolePipe,

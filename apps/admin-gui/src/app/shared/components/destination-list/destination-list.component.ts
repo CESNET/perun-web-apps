@@ -19,8 +19,12 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
-import { LastSuccessfulPropagationPipe } from '@perun-web-apps/perun/pipes';
+import {
+  GuiAuthResolver,
+  PerunTranslateService,
+  TableCheckbox,
+} from '@perun-web-apps/perun/services';
+import { LastPropagationPipe } from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -28,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-perun-web-apps-destination-list',
   templateUrl: './destination-list.component.html',
   styleUrls: ['./destination-list.component.scss'],
-  providers: [LastSuccessfulPropagationPipe],
+  providers: [LastPropagationPipe],
 })
 export class DestinationListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
@@ -52,13 +56,16 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<RichDestination>;
+  noTimestampText = '';
+  noTimestampTooltip = '';
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
-    private lastSuccessPipe: LastSuccessfulPropagationPipe,
+    private lastPropagationPipe: LastPropagationPipe,
     private destroyRef: DestroyRef,
+    private translate: PerunTranslateService,
   ) {}
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -80,6 +87,12 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
         }
       });
     }
+    this.noTimestampText = this.translate.instant(
+      'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_TIMESTAMP',
+    );
+    this.noTimestampTooltip = this.translate.instant(
+      'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_TIMESTAMP_TOOLTIP',
+    );
   }
 
   getDataForColumn(data: RichDestination, column: string): string {
@@ -98,8 +111,10 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
         return data.blocked ? 'blocked' : 'allowed';
       case 'propagationType':
         return data.propagationType;
-      case 'lastSuccessfulPropagation':
-        return this.lastSuccessPipe.transform(data.lastSuccessfulPropagation);
+      case 'lastPropagation':
+        return this.lastPropagationPipe.transform(data.lastSuccessfulPropagation);
+      case 'lastAttemptedPropagation':
+        return this.lastPropagationPipe.transform(data.lastAttemptedPropagation);
       default:
         return '';
     }
