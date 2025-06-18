@@ -18,4 +18,5 @@ export interface RichDestination extends Destination {
   service?: Service;
   facility?: Facility;
   lastSuccessfulPropagation?: string;
+  lastAttemptedPropagation?: string;
 }

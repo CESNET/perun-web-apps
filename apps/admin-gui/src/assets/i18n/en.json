@@ -3009,7 +3009,10 @@
         "PROPAGATION_TYPE": "Propagation type",
         "NO_DESTINATIONS": "No destinations found",
         "WARN": "Destination is not properly configured. The service, to which it is connected is not in your service selection",
-        "LAST_SUCCESS": "Last successful propagation"
+        "LAST_SUCCESS": "Last successful propagation",
+        "LAST_ATTEMPT": "Last attempted propagation",
+        "NO_TIMESTAMP": "UNKNOWN",
+        "NO_TIMESTAMP_TOOLTIP": "No recent propagation found."
       },
       "FACILITIES_LIST": {
         "ID": "Id",
