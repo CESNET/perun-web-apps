@@ -26,7 +26,9 @@ export class VoSettingsMemberOrganizationsComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   displayedColumns = ['checkbox', 'id', 'shortName', 'name'];
   filterValue = '';
-  auth = false;
+  routeAuth = false;
+  addAuth = false;
+  removeAuth = false;
   memberVos: Vo[] = [];
 
   constructor(
@@ -40,7 +42,10 @@ export class VoSettingsMemberOrganizationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.auth = this.authResolver.isPerunAdmin();
+    const vo = this.entityStorage.getEntity();
+    this.addAuth = this.authResolver.isAuthorized('result-addMemberVo_Vo_Vo_policy', [vo]);
+    this.removeAuth = this.authResolver.isAuthorized('removeMemberVo_Vo_Vo_policy', [vo]);
+    this.routeAuth = this.authResolver.isPerunAdminOrObserver();
     this.voId = this.entityStorage.getEntity().id;
     this.refresh();
   }

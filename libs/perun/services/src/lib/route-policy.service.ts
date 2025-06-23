@@ -120,10 +120,13 @@ export class RoutePolicyService {
       'organizations-settings-extsources',
       (vo): boolean => this.authResolver.isAuthorized('getVoExtSources_Vo_policy', [vo]),
     ],
-    ['organizations-settings-memberOrganizations', (): boolean => this.authResolver.isPerunAdmin()],
+    [
+      'organizations-settings-memberOrganizations',
+      (vo): boolean => this.authResolver.isAuthorized('getMemberVos_int_policy', [vo]),
+    ],
     [
       'organizations-settings-hierarchicalInclusion',
-      (): boolean => this.authResolver.isPerunAdmin(),
+      (vo): boolean => this.authResolver.isAuthorized('getParentVos_int_policy', [vo]),
     ],
     [
       'organizations-settings-bans',

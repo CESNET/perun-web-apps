@@ -1,7 +1,7 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
 <button
-  *ngIf="auth"
+  *ngIf="addAuth"
   (click)="addMemberOrganization()"
   mat-flat-button
   class="me-2 action-button"
@@ -9,7 +9,7 @@
   {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD' | translate}}
 </button>
 <button
-  *ngIf="auth"
+  *ngIf="removeAuth"
   (click)="removeMemberOrganization()"
   [disabled]="loading || voSelection.selected.length === 0"
   mat-flat-button
@@ -31,7 +31,8 @@
     [selection]="voSelection"
     [cachedSubject]="cachedSubject"
     [filterValue]="filterValue"
-    [disableRouting]="!auth"
+    [disableRouting]="!routeAuth"
+    [disableCheckbox]="!removeAuth"
     [displayedColumns]="displayedColumns">
   </perun-web-apps-vos-list>
 </div>
