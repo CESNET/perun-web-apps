@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [18.13.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.12.0...v18.13.0) (2025-06-23)
+
+
+### Features
+
+* **admin:** improve propagation display ([2e33b2c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2e33b2c63c83e828b991b0c61546ad1beb5220c7))
+
+
+### Bug Fixes
+
+* **admin:** correctly display preapproved invitation for a sender no longer part of VO ([956ab41](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/956ab418fd7dc5ebb5ca5db48bfcf801766ecea7))
+* **admin:** redirect url correctly saves when sending multiple preapproved invitations ([8f26c2b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8f26c2b7d5d23d497d5d697dfdcd2148e1606044))
+
 ## [18.12.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.11.0...v18.12.0) (2025-05-07)
 
 

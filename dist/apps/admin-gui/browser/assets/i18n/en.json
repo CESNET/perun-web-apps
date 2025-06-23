@@ -2369,7 +2369,8 @@
       "ERROR_EMAIL": "Email on this line is invalid",
       "ERROR_NAME": "Name on this line cannot be empty",
       "NAMES_ERROR": "This line cannot be empty",
-      "REDIRECT_URL": "Redirect URL",
+      "REDIRECT_URL": "URL redirect after accepting invitation",
+      "REDIRECT_URL_PLACEHOLDER": "https://www.example.com",
       "HINT": "Each line (in the field below) must have the following format: <br> <b> email;name </b>",
       "SUCCESS": "Members successfully invited.",
       "FINISHED_WITH_ERRORS": "Invites to some of the members couldn't be sent. See the results for more information.",
@@ -3008,7 +3009,10 @@
         "PROPAGATION_TYPE": "Propagation type",
         "NO_DESTINATIONS": "No destinations found",
         "WARN": "Destination is not properly configured. The service, to which it is connected is not in your service selection",
-        "LAST_SUCCESS": "Last successful propagation"
+        "LAST_SUCCESS": "Last successful propagation",
+        "LAST_ATTEMPT": "Last attempted propagation",
+        "NO_TIMESTAMP": "UNKNOWN",
+        "NO_TIMESTAMP_TOOLTIP": "No recent propagation found."
       },
       "FACILITIES_LIST": {
         "ID": "Id",
