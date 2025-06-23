@@ -41,7 +41,7 @@ export * from './lib/transform-member-status.pipe';
 export * from './lib/application-column-select-label.pipe';
 export * from './lib/selected-consent-statuses.pipe';
 export * from './lib/global-namespace.pipe';
-export * from './lib/last-successful-propagation.pipe';
+export * from './lib/last-propagation.pipe';
 export * from './lib/member-type-icon.pipe';
 export * from './lib/member-type-tooltip.pipe';
 export * from './lib/application-state.pipe';

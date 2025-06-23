@@ -40,6 +40,7 @@ export class FacilityServicesDestinationsComponent implements OnInit {
     'status',
     'propagationType',
     'lastSuccessfulPropagation',
+    'lastAttemptedPropagation',
   ];
   @Input()
   configServices: Service[] = [];
