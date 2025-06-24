@@ -30,6 +30,7 @@ export class VosListComponent implements OnInit, OnChanges {
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() displayedColumns: string[] = [];
   @Input() disableRouting = false;
+  @Input() disableCheckbox = false;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() tableId: string;
   @Input() enableMasterCheckbox = false;

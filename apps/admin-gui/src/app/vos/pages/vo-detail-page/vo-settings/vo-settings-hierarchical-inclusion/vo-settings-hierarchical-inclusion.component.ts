@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import {
   EntityStorageService,
+  GuiAuthResolver,
   NotificatorService,
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
@@ -23,6 +24,8 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
   vo: Vo;
   parentVos: Vo[] = [];
   selectedParentVo: Vo;
+  addAuth = false;
+  deleteAuth = false;
   allowedGroups: Group[] = [];
   selected: SelectionModel<Group> = new SelectionModel<Group>(
     true,
@@ -40,6 +43,7 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
     private groupService: GroupsManagerService,
     private notificator: NotificatorService,
     private translate: PerunTranslateService,
+    private authResolver: GuiAuthResolver,
   ) {}
 
   ngOnInit(): void {
@@ -52,10 +56,26 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
       },
       () => (this.loading = false),
     );
+    this.selected.changed.subscribe(() => {
+      this.deleteAuth =
+        this.deleteAuth &&
+        this.selected.selected.filter((group) =>
+          this.authResolver.isAuthorized('group-disallowGroupToHierarchicalVo_Group_Vo_policy', [
+            group,
+          ]),
+        ).length === this.selected.selected.length;
+    });
   }
 
   voSelected(vo: Vo): void {
     this.selectedParentVo = vo;
+    this.addAuth = this.authResolver.isAuthorized('vo-allowGroupToHierarchicalVo_Group_Vo_policy', [
+      vo,
+    ]);
+    this.deleteAuth = this.authResolver.isAuthorized(
+      'vo-disallowGroupToHierarchicalVo_Group_Vo_policy',
+      [vo],
+    );
     this.loadAllowedGroups();
   }
 
