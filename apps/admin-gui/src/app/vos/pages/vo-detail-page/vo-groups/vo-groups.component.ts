@@ -107,6 +107,7 @@ export class VoGroupsComponent implements OnInit {
     startWith(true),
   );
   cacheSubject = new BehaviorSubject(true);
+  resetPagination = new BehaviorSubject(false);
 
   private attrNames = [
     Urns.GROUP_SYNC_ENABLED,
@@ -253,6 +254,7 @@ export class VoGroupsComponent implements OnInit {
   refresh(): void {
     this.loadingSubject$.next(true);
     if (this.showGroupList) {
+      this.resetPagination.next(true);
       this.cacheSubject.next(true);
       this.nextPage.next(this.nextPage.value);
     } else {

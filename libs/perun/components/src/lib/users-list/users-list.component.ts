@@ -72,6 +72,7 @@ export class UsersListComponent implements OnInit, OnChanges {
   @Input() defaultSort: userTableColumn;
   @Input() sortableColumns: userTableColumn[] = ['id', 'name'];
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Input() disableCheckbox = false;
   @Input() directManagerIds: number[] = null;
 
@@ -173,6 +174,11 @@ export class UsersListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.child.paginator.firstPage();
       }
     });
   }

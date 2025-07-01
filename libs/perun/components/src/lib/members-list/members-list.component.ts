@@ -75,6 +75,7 @@ export class MembersListComponent implements OnInit, OnChanges {
   @Input() disableCheckbox = true;
   @Input() loading: boolean;
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
@@ -155,6 +156,11 @@ export class MembersListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.child.paginator.firstPage();
       }
     });
     // without entity beanName the error is thrown e.g. in searcher component

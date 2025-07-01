@@ -23,6 +23,7 @@ export class AdminAuditLogComponent implements OnInit {
   eventOptions: string[] = [];
   eventOptionsForSearchSelect: string[] = [];
   nextPage = new BehaviorSubject<PageQuery>({});
+  resetPagination = new BehaviorSubject(false);
   messagesPage$: Observable<PaginatedAuditMessages> = this.nextPage.pipe(
     switchMap((pageQuery) =>
       this.auditMessagesManagerService.getMessagesPage({
@@ -57,6 +58,7 @@ export class AdminAuditLogComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.resetPagination.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 

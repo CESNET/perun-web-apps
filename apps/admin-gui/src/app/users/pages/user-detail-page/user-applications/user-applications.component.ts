@@ -90,6 +90,7 @@ export class UserApplicationsComponent implements OnInit {
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
   );
   loadingSubject$ = new BehaviorSubject(false);
+  resetPagination = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -114,6 +115,7 @@ export class UserApplicationsComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.resetPagination.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 

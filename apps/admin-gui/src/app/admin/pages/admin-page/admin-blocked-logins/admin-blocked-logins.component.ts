@@ -49,6 +49,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
   blockedLogins: BlockedLogin[] = [];
   nextPage = new BehaviorSubject<PageQuery>({});
+  resetPagination = new BehaviorSubject<boolean>(false);
   blockedLoginsPage$: Observable<PaginatedBlockedLogins> = this.nextPage.pipe(
     switchMap((pageQuery) =>
       this.userManager.getBlockedLoginsPage({
@@ -87,6 +88,7 @@ export class AdminBlockedLoginsComponent implements OnInit {
 
   refreshTable(): void {
     this.cacheSubject.next(true);
+    this.resetPagination.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 
