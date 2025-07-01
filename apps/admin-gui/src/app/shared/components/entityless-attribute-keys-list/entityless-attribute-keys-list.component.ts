@@ -5,7 +5,6 @@ import {
   EventEmitter,
   Inject,
   Input,
-  OnChanges,
   OnInit,
   Output,
   QueryList,
@@ -31,12 +30,17 @@ export interface EntitylessAttributeKeysListData {
   attDef: AttributeDefinition;
 }
 
+export interface ListData {
+  key: string;
+  value: Attribute;
+}
+
 @Component({
   selector: 'app-entityless-attribute-keys-list',
   templateUrl: './entityless-attribute-keys-list.component.html',
   styleUrls: ['./entityless-attribute-keys-list.component.scss'],
 })
-export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, AfterViewInit {
+export class EntitylessAttributeKeysListComponent implements OnInit, AfterViewInit {
   @Input()
   attDef: AttributeDefinition;
   @Input()
@@ -45,21 +49,14 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   switchView: EventEmitter<void> = new EventEmitter<void>();
   @ViewChildren(AttributeValueComponent)
   items: QueryList<AttributeValueComponent>;
-  @ViewChildren(TableWrapperComponent) children: QueryList<TableWrapperComponent>;
-  child: TableWrapperComponent;
+  @ViewChild(TableWrapperComponent) child: TableWrapperComponent;
 
-  records: [string, Attribute][] = [];
+  @ViewChild(MatSort) sort: MatSort;
+  records: ListData[] = [];
   displayedColumns: string[] = ['select', 'key', 'value'];
-  dataSource: MatTableDataSource<[string, Attribute]> = new MatTableDataSource<
-    [string, Attribute]
-  >();
-  selection = new SelectionModel<[string, Attribute]>(
-    true,
-    [],
-    true,
-    ([s1, attr1], [s2, attr2]) => s1 === s2 && attr1.id === attr2.id,
-  );
-  cachedSelection = new SelectionModel<[string, Attribute]>(
+  dataSource: MatTableDataSource<ListData> = new MatTableDataSource<ListData>();
+  selection = new SelectionModel<ListData>(true, [], true, (l1, l2) => l1.key === l2.key);
+  cachedSelection = new SelectionModel<ListData>(
     this.selection.isMultipleSelection(),
     [],
     true,
@@ -68,7 +65,6 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   isAddButtonDisabled = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   loading: boolean;
-  private sort: MatSort;
 
   constructor(
     public dialogRef: MatDialogRef<EntitylessAttributeKeysListComponent>,
@@ -80,57 +76,60 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     private tableCheckbox: TableCheckbox,
   ) {}
 
-  @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
-    this.sort = ms;
-    this.setDataSource();
-  }
-
-  ngOnChanges(): void {
-    this.ngOnInit();
-  }
-
   ngOnInit(): void {
     this.loading = true;
     this.attDef = this.data.attDef;
-    this.attributesManager.getEntitylessKeys(this.attDef.id).subscribe((keys) => {
-      this.attributesManager
-        .getEntitylessAttributesByName(`${this.attDef.namespace}:${this.attDef.friendlyName}`)
-        .subscribe((att) => {
-          let i = 0;
-          this.records = [];
-          for (const key of keys) {
-            this.records.push([key, att[i]]);
-            i++;
-          }
-          this.dataSource = new MatTableDataSource<[string, Attribute]>(this.records);
-          this.setDataSource();
-          this.loading = false;
-        });
-    });
+    this.refreshTable();
+  }
+
+  refreshTable(): void {
+    this.loading = true;
+    this.attributesManager
+      .getEntitylessAttributesWithKeys(`${this.attDef.namespace}:${this.attDef.friendlyName}`)
+      .subscribe((map) => {
+        this.records = [];
+        const keys = Object.keys(map);
+        for (const key of keys) {
+          this.records.push({ key: key, value: map[key] });
+        }
+        this.dataSource = new MatTableDataSource<ListData>(this.records);
+        this.setDataSource();
+        this.loading = false;
+      });
   }
 
   setDataSource(): void {
-    if (!this.child?.paginator) {
-      return;
-    }
     if (this.dataSource) {
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.child.paginator;
+      if (this.child) {
+        this.dataSource.paginator = this.child.paginator;
+      }
     }
   }
 
   onSave(): void {
     this.updateMapAttributes();
+    let i = 0;
+    const length = this.selection.selected.length;
     for (const rec of this.selection.selected) {
+      this.loading = true;
       this.attributesManager
-        .setEntitylessAttribute({ key: rec[0], attribute: rec[1] })
-        .subscribe(() => {
-          this.translate
-            .get('SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.SAVE_SUCCESS')
-            .subscribe((message: string) => {
-              this.notificator.showSuccess(message);
-              this.ngOnInit();
-            });
+        .setEntitylessAttribute({ key: rec.key, attribute: rec.value })
+        .subscribe({
+          next: () => {
+            i += 1;
+            if (i === length) {
+              this.translate
+                .get('SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.SAVE_SUCCESS')
+                .subscribe((message: string) => {
+                  this.notificator.showSuccess(message);
+                  this.refreshTable();
+                });
+            }
+          },
+          error: () => {
+            this.refreshTable();
+          },
         });
     }
     this.selection.clear();
@@ -140,17 +139,22 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   }
 
   onRemove(): void {
+    this.loading = true;
+    let i = 0;
+    const length = this.selection.selected.length;
     for (const rec of this.selection.selected) {
-      this.attributesManager.removeEntitylessAttribute(rec[0], rec[1].id).subscribe(() => {
-        this.translate
-          .get('SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.REMOVE_SUCCESS')
-          .subscribe((message: string) => {
-            this.notificator.showSuccess(message);
-            this.ngOnInit();
-          });
+      this.attributesManager.removeEntitylessAttribute(rec.key, rec.value.id).subscribe(() => {
+        i += 1;
+        if (i === length) {
+          this.translate
+            .get('SHARED.COMPONENTS.ENTITYLESS_ATTRIBUTES_LIST.REMOVE_SUCCESS')
+            .subscribe((message: string) => {
+              this.notificator.showSuccess(message);
+              this.refreshTable();
+            });
+        }
       });
     }
-    this.ngOnInit();
     this.selection.clear();
     this.cachedSelection.clear();
     this.isAddButtonDisabled = false;
@@ -158,8 +162,8 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   }
 
   onAdd(): void {
-    const rec = ['', this.attDef as Attribute] as [string, Attribute];
-    rec[1].value = undefined;
+    const rec = { key: '', value: this.attDef as Attribute } as ListData;
+    rec.value.value = undefined;
     this.records.unshift(rec);
     this.dataSource.data = this.records;
     this.setDataSource();
@@ -195,7 +199,7 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
     );
   }
 
-  onValueChange(record: [string, Attribute]): void {
+  onValueChange(record: ListData): void {
     this.selection.select(record);
     this.cachedSelection.select(record);
   }
@@ -209,14 +213,10 @@ export class EntitylessAttributeKeysListComponent implements OnChanges, OnInit, 
   }
 
   ngAfterViewInit(): void {
-    this.children.changes.subscribe((children: QueryList<TableWrapperComponent>) => {
-      this.child = children.first;
-      this.dataSource.paginator = this.child.paginator;
-    });
     this.setDataSource();
   }
 
-  toggleRow(row: [string, Attribute]): void {
+  toggleRow(row: ListData): void {
     this.selection.toggle(row);
     this.cachedSelection.toggle(row);
   }
