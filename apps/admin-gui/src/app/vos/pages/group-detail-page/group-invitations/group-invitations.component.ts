@@ -45,6 +45,7 @@ export class GroupInvitationsComponent implements OnInit {
     (invitation1, invitation2) => invitation1.id === invitation2.id,
   );
   cacheSubject = new BehaviorSubject(true);
+  resetPagination = new BehaviorSubject(false);
   displayedColumns = [
     'checkbox',
     'id',
@@ -130,6 +131,7 @@ export class GroupInvitationsComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.resetPagination.next(true);
     this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
   }

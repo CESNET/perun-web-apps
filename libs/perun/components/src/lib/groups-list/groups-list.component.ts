@@ -72,6 +72,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
   @Input() noGroupsAlert = 'SHARED_LIB.UI.ALERTS.NO_GROUPS';
   @Input() loading: boolean;
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Output() groupMoved = new EventEmitter<GroupWithStatus>();
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
@@ -158,6 +159,11 @@ export class GroupsListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.tableWrapper.paginator.firstPage();
       }
     });
   }

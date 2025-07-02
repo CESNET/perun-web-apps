@@ -80,6 +80,7 @@ export class DynamicDataSource<T> implements DataSource<T> {
   }
 
   set filter(value: string) {
+    this._paginator.firstPage();
     this._filter.next(value);
   }
   /* eslint-enable @typescript-eslint/member-ordering */

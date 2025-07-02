@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { AuditMessage, PaginatedAuditMessages } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -15,7 +23,7 @@ import { CustomMatPaginator } from '@perun-web-apps/perun/services';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -30,7 +38,7 @@ import { MatTableDataSource } from '@angular/material/table';
     },
   ],
 })
-export class AuditMessagesListComponent implements AfterViewInit {
+export class AuditMessagesListComponent implements OnInit, AfterViewInit {
   @Input() tableId: string;
   @Input() refresh: boolean;
   @Input() loading: boolean;
@@ -43,6 +51,7 @@ export class AuditMessagesListComponent implements AfterViewInit {
     'event.message',
     'detail',
   ];
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Output() loading$: EventEmitter<Observable<boolean>> = new EventEmitter<Observable<boolean>>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{ format: string; length: number }>();
@@ -87,6 +96,14 @@ export class AuditMessagesListComponent implements AfterViewInit {
       default:
         return '';
     }
+  }
+
+  ngOnInit(): void {
+    this.resetPagination?.subscribe((val) => {
+      if (val) {
+        this.tableWrapper.paginator.firstPage();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
