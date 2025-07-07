@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [18.14.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.13.0...v18.14.0) (2025-07-07)
+
+
+### Features
+
+* **admin:** group creator role ([e0035aa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e0035aa15a4f591ef01aff8afb6daaad865d23ef))
+
+
+### Bug Fixes
+
+* **admin:** correctly match keys and values in entityless attributes ([4caacdc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4caacdc5ea9877f4232c83d4e260e0495e6911e4))
+* **admin:** fix who can view member/parent VOs ([135de7f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/135de7fb8f40a6b88e5e0a40f9496a859ff3cf02))
+* **admin:** reset page of paginated lists to 1 when filtering ([5e1a5d5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5e1a5d5d3973d4ed482012e445a2053e90687cb0))
+
 ## [18.13.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.12.0...v18.13.0) (2025-06-23)
 
 
