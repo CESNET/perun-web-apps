@@ -15,6 +15,7 @@
       *perunWebAppsLoader="loading$ | async; indicator: spinner"
       [loading]="loading$ | async"
       (queryChanged)="nextPage.next($event)"
+      [resetPagination]="resetPagination"
       [displayedColumns]="displayedColumns"
       [auditMessages]="messagesPage$ | async"
       [tableId]="tableId"></app-audit-messages-list>

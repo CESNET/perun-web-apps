@@ -3,7 +3,11 @@ import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatStepper } from '@angular/material/stepper';
-import { EntityStorageService, NotificatorService } from '@perun-web-apps/perun/services';
+import {
+  EntityStorageService,
+  GuiAuthResolver,
+  NotificatorService,
+} from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -28,6 +32,7 @@ export class AddMemberOrganizationDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMemberOrganizationDialogComponent>,
     private vosService: VosManagerService,
     private entityStorage: EntityStorageService,
+    private authResolver: GuiAuthResolver,
     private notificator: NotificatorService,
     private translator: TranslateService,
   ) {}
@@ -40,7 +45,12 @@ export class AddMemberOrganizationDialogComponent implements OnInit {
         this.vosService.getAllVos().subscribe(
           (vos) => {
             const memberVoIds: number[] = enrichedVo.memberVos.map((vo) => vo.id);
-            this.vos = vos.filter((vo) => !memberVoIds.includes(vo.id) && vo.id !== this.voId);
+            this.vos = vos.filter(
+              (vo) =>
+                !memberVoIds.includes(vo.id) &&
+                vo.id !== this.voId &&
+                this.authResolver.isAuthorized('operand-addMemberVo_Vo_Vo_policy', [vo]),
+            );
             this.loading = false;
           },
           () => (this.loading = false),

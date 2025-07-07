@@ -159,6 +159,7 @@ export class ApplicationActionsComponent implements OnInit {
   );
   loadingSubject$ = new BehaviorSubject(false);
   cacheSubject = new BehaviorSubject(true);
+  resetPagination = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -201,6 +202,7 @@ export class ApplicationActionsComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.resetPagination.next(true);
     this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
   }
@@ -373,7 +375,6 @@ export class ApplicationActionsComponent implements OnInit {
         ? 'VO_DETAIL.APPLICATION.COLUMNS_TOOLTIP'
         : 'VO_DETAIL.APPLICATION.SET_COLUMN_SETTINGS',
     );
-    this.refreshTable();
   }
 
   toggleIncludeGroups(): void {

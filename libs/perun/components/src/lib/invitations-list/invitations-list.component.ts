@@ -43,6 +43,7 @@ export class InvitationsListComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() selection: SelectionModel<InvitationWithSender>;
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Input() displayedColumns: string[] = [
     'checkbox',
     'id',
@@ -107,6 +108,11 @@ export class InvitationsListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.child.paginator.firstPage();
       }
     });
   }

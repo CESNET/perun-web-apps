@@ -88,6 +88,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
   membersPage$: Observable<PaginatedRichMembers>;
   loadingSubject$ = new BehaviorSubject(false);
   cacheSubject = new BehaviorSubject(true);
+  resetPagination = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -300,6 +301,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
 
   refreshTable(): void {
     this.cacheSubject.next(true);
+    this.resetPagination.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 

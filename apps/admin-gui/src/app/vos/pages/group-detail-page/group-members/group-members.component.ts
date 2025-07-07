@@ -106,6 +106,7 @@ export class GroupMembersComponent implements OnInit {
   membersPage$: Observable<PaginatedRichMembers>;
   loadingSubject$ = new BehaviorSubject(false);
   cacheSubject = new BehaviorSubject(true);
+  resetPagination = new BehaviorSubject(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -409,6 +410,7 @@ export class GroupMembersComponent implements OnInit {
   }
 
   refreshTable(): void {
+    this.resetPagination.next(true);
     this.cacheSubject.next(true);
     this.nextPage.next(this.nextPage.value);
     this.isCopyMembersDisabled();

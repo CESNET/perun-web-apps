@@ -53,7 +53,8 @@
     "FACILITYOBSERVER",
     "TRUSTEDFACILITYADMIN",
     "SPONSOR",
-    "TOPGROUPCREATOR"
+    "TOPGROUPCREATOR",
+    "GROUPCREATOR"
   ],
   "footer": {
     "columns": [

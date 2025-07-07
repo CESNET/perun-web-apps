@@ -2,7 +2,7 @@
 <div class="display-flex">
   <perun-web-apps-refresh-button (click)="loadAllowedGroups()"></perun-web-apps-refresh-button>
   <button
-    [disabled]="loading || !selectedParentVo"
+    [disabled]="loading || !selectedParentVo || !addAuth"
     (click)="addGroupsInclusion()"
     mat-flat-button
     class="me-2 action-button"
@@ -10,7 +10,7 @@
     {{'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.ADD' | translate}}
   </button>
   <button
-    [disabled]="loading || selected.selected.length === 0"
+    [disabled]="loading || selected.selected.length === 0 || !deleteAuth"
     (click)="removeGroupsInclusion()"
     mat-flat-button
     color="warn"

@@ -45,7 +45,7 @@ export class BlockedLoginsListComponent implements OnInit, OnChanges {
   @Input() displayedColumns: string[];
   @Input() loading: boolean;
   @Input() cacheSubject: BehaviorSubject<boolean>;
-
+  @Input() resetPagination: BehaviorSubject<boolean>;
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{
     format: string;
@@ -99,6 +99,11 @@ export class BlockedLoginsListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.child.paginator.firstPage();
       }
     });
   }

@@ -27,6 +27,7 @@
     [applications]="applicationsPage$ | async"
     (queryChanged)="nextPage.next($event)"
     (downloadAll)="downloadAll($event)"
-    [filter]="filterValue">
+    [filter]="filterValue"
+    [resetPagination]="resetPagination">
   </perun-web-apps-applications-list>
 </div>

@@ -58,6 +58,7 @@ export class AdminUsersComponent implements OnInit {
     startWith({ data: [], totalCount: 0, offset: 0, pageSize: 0 }),
   );
   loadingSubject$ = new BehaviorSubject<boolean>(false);
+  resetPagination = new BehaviorSubject<boolean>(false);
   loading$: Observable<boolean> = merge(
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
@@ -99,6 +100,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   refresh(): void {
+    this.resetPagination.next(true);
     this.nextPage.next(this.nextPage.value);
   }
 

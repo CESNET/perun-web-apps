@@ -61,6 +61,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   @Input() loading: boolean;
   @Input() noAppsAlert = 'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND';
   @Input() cacheSubject: BehaviorSubject<boolean>;
+  @Input() resetPagination: BehaviorSubject<boolean>;
 
   @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{ format: string; length: number }>();
@@ -111,6 +112,11 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
     this.cacheSubject?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
       if (val) {
         this.cachedSelection.clear();
+      }
+    });
+    this.resetPagination?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => {
+      if (val) {
+        this.child.paginator.firstPage();
       }
     });
     if (this.loading || !this.displayedColumns.includes('fedInfo')) return;
