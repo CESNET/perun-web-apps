@@ -358,7 +358,13 @@
             "DESCRIPTION": "Do you really want to delete this attribute list value from list?",
             "SUBMIT_BUTTON": "Delete",
             "CANCEL_BUTTON": "Cancel"
-          }
+          },
+          "LESS": "Show less",
+          "MORE": "Show more"
+        },
+        "ATTRIBUTE_VALUE_MAP": {
+          "LESS": "Show less",
+          "MORE": "Show more"
         },
         "ATTRIBUTES_LIST": {
           "FILTER": "Filter by id, name, value or description",
