@@ -1879,6 +1879,13 @@
     "REMOVE_SERVICE_FROM_RESOURCE": {
       "TITLE": "Confirm removal",
       "DESCRIPTION": "Following services will be removed from the resource.",
+      "WARN_LAST_ASSIGNED": "The highlighted services are assigned only to this resource. Removing them will lead to their tasks, task results and destinations to remain on the facility.",
+      "OPTIONAL_REMOVAL": "Do you wish to also delete some of the following?",
+      "OPTIONAL_REMOVAL_EXTRA": "(Only the highlighted services' tasks, results or destinations will be affected.)",
+      "REMOVE_TASK": "Tasks and task results",
+      "REMOVE_TASK_RESULTS": "Task results",
+      "REMOVE_DESTINATIONS": "Destinations",
+      "TOOLTIP": "This service is only assigned to this resource.",
       "ASK": "Do you want to proceed?",
       "CANCEL": "Cancel",
       "DELETE": "Delete",

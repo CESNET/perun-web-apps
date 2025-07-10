@@ -13,10 +13,15 @@
 /**
  * admin roles for a group
  */
-export type GroupAdminRoles = 'GROUPOBSERVER' | 'GROUPMEMBERSHIPMANAGER' | 'GROUPADMIN';
+export type GroupAdminRoles =
+  | 'GROUPOBSERVER'
+  | 'GROUPMEMBERSHIPMANAGER'
+  | 'GROUPADMIN'
+  | 'GROUPCREATOR';
 
 export const GroupAdminRoles = {
   GROUPOBSERVER: 'GROUPOBSERVER' as GroupAdminRoles,
   GROUPMEMBERSHIPMANAGER: 'GROUPMEMBERSHIPMANAGER' as GroupAdminRoles,
   GROUPADMIN: 'GROUPADMIN' as GroupAdminRoles,
+  GROUPCREATOR: 'GROUPCREATOR' as GroupAdminRoles,
 };
