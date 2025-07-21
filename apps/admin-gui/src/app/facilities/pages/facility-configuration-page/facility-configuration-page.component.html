@@ -26,15 +26,6 @@
             (filter)="applyFilter($event)"
             class="filter">
           </perun-web-apps-debounce-filter>
-          <perun-web-apps-service-package-search-select
-            (packageSelected)="packagesSelected($event)"
-            [disableAutoSelect]="true"
-            [selectedPackage]="selectedPackages"
-            [multiple]="true"
-            [servicePackages]="servicePackages"
-            [theme]="'facility-theme'"
-            class="package-search-select">
-          </perun-web-apps-service-package-search-select>
         </div>
         <app-services-list
           (selectionChanged)="singleServiceSelected()"

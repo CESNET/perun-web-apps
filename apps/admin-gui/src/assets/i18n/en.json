@@ -105,7 +105,7 @@
     "ATT_SAVED": "Attributes successfully saved",
     "ATT_REMOVED": "Attributes successfully removed",
     "SERVICES_INFO": "Facility can be preconfigured for selected services, but these services must be assigned to the particular resources. All saved configurations will remain unchanged even after service selection is changed.",
-    "ATT_INFO": "If facility will not have required attributes for some services, these services will be unable to assign to resource.",
+    "ATT_INFO": "If the facility does not have the required attributes for some services, it will not be possible to assign those services to any resources.",
     "EMPTY_REQ_ATT": "Selected services have no required attributes.",
     "SUMMARY_INFO": "Your facility was created and configured. Please <b>check</b> your configurations <b>and finish</b> this configuration guide. To access the services by the users you need to create resources and then configure the services on resource."
   },
@@ -1867,14 +1867,10 @@
     },
     "ASSIGN_SERVICE_TO_RESOURCE": {
       "TITLE": "Assign service",
-      "SELECT_PACKAGE": "Select service package",
-      "SELECT_SERVICE": "Select individual services",
       "FILTER_DESCRIPTION": "Filter services",
-      "ADD_SERVICES": "Add individual services",
-      "ADD_PACKAGE": "Add service package",
+      "ADD_SERVICES": "Add services",
       "CANCEL_BUTTON": "Cancel",
-      "SERVICE_SUCCESS_MESSAGE": "Selected services were assigned to the resource",
-      "PACKAGE_SUCCESS_MESSAGE": "The selected service package was assigned to the resource"
+      "SERVICE_SUCCESS_MESSAGE": "Selected services were assigned to the resource"
     },
     "REMOVE_SERVICE_FROM_RESOURCE": {
       "TITLE": "Confirm removal",
@@ -3253,11 +3249,6 @@
           "SELECT_NAMESPACE": "Select namespace",
           "FIND_NAMESPACE": "Blocked in...",
           "NO_NAMESPACE_FOUND": "No matching namespace found"
-        },
-        "SERVICE_PACKAGE_SEARCH_SELECT": {
-          "SELECT_PACKAGE": "Select service package",
-          "FIND_PACKAGE": "Find service package...",
-          "NO_PACKAGE_FOUND": "No matching service package found"
         },
         "SERVICE_SEARCH_SELECT": {
           "SELECT_SERVICE": "Select service",
