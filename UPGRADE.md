@@ -1,5 +1,28 @@
 Upgrade notes
 
+## [19.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.14.0...v19.0.0) (2025-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* all servicesPackage functionality removed
+
+### Features
+
+* **admin:** add option to remove associated objects when removing services ([fb6e3ab](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/fb6e3abbfd741c51f779446c2b870f7589610956))
+
+
+### Bug Fixes
+
+* **admin:** correctly convert attributes to unique when updating the definition ([7347279](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/7347279bf021f0de1788ad17af83ed2671381028))
+* **admin:** creating new preapproved invitation notification no longer mangles layout ([982fc83](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/982fc83d35586d77fe9f3c56e981867e66e2e8a7))
+* **profile:** missing translations for viewing list/map attribute values ([b114fcc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b114fcc0d842f1c4f59b380ffecfb604cb5b1a2e))
+
+
+### Others
+
+* remove ServicesPackage ([71368be](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/71368be0e0f98623775f0f63bd123eaf1804109c))
+
 ## [18.14.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.13.0...v18.14.0) (2025-07-07)
 
 
