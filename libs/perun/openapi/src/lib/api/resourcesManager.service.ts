@@ -1887,134 +1887,6 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Assign all services from a services package to a resource.
-   * @param resource id of Resource
-   * @param servicesPackage id of ServicesPackage
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public assignServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
-  public assignServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
-  public assignServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
-  public assignServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    if (resource === null || resource === undefined) {
-      throw new Error(
-        'Required parameter resource was null or undefined when calling assignServicesPackage.',
-      );
-    }
-    if (servicesPackage === null || servicesPackage === undefined) {
-      throw new Error(
-        'Required parameter servicesPackage was null or undefined when calling assignServicesPackage.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (resource !== undefined && resource !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>resource,
-        'resource',
-      );
-    }
-    if (servicesPackage !== undefined && servicesPackage !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>servicesPackage,
-        'servicesPackage',
-      );
-    }
-
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/urlinjsonout/resourcesManager/assignServicesPackage`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.post<any>(requestUrl, null, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
    * Copy \&quot;template\&quot; settings from user\&#39;s another existing resource and create new resource with this template. The settings are attributes, services, tags (if exists), groups and their members (if the resources are from the same VO and withGroups is true) Template Resource can be from any of user\&#39;s facilities.
    * @param InputCopyResource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -8590,6 +8462,136 @@ export class ResourcesManagerService {
   }
 
   /**
+   * Returns the services where the resource is the last one on the facility to have them assigned.
+   * @param resource id of Resource
+   * @param services list of Service ids List&lt;Integer&gt;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public isResourceLastAssignedServices(
+    resource: number,
+    services: Array<number>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Service>>;
+  public isResourceLastAssignedServices(
+    resource: number,
+    services: Array<number>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Service>>>;
+  public isResourceLastAssignedServices(
+    resource: number,
+    services: Array<number>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Service>>>;
+  public isResourceLastAssignedServices(
+    resource: number,
+    services: Array<number>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (resource === null || resource === undefined) {
+      throw new Error(
+        'Required parameter resource was null or undefined when calling isResourceLastAssignedServices.',
+      );
+    }
+    if (services === null || services === undefined) {
+      throw new Error(
+        'Required parameter services was null or undefined when calling isResourceLastAssignedServices.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (resource !== undefined && resource !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>resource,
+        'resource',
+      );
+    }
+    if (services) {
+      services.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'services[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/resourcesManager/isResourceLastAssignedServices`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<Service>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Removes all resources tags from a resource.
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -10174,9 +10176,12 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Removes services from a resource.
+   * Removes services from a resource. Optionally also removes tasks, their results or destinations associated with the services on the resource\&#39;s facility. This only happens for services which are not assigned to other resources on the facility.
    * @param resource id of Resource
    * @param services list of Service ids List&lt;Integer&gt;
+   * @param removeTasks whether to also remove associated tasks. This will also remove task results
+   * @param removeTaskResults whether to also remove associated task results
+   * @param removeDestinations whether to also remove associated destinations
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -10184,6 +10189,9 @@ export class ResourcesManagerService {
   public removeServices(
     resource: number,
     services: Array<number>,
+    removeTasks?: boolean,
+    removeTaskResults?: boolean,
+    removeDestinations?: boolean,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -10192,6 +10200,9 @@ export class ResourcesManagerService {
   public removeServices(
     resource: number,
     services: Array<number>,
+    removeTasks?: boolean,
+    removeTaskResults?: boolean,
+    removeDestinations?: boolean,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -10200,6 +10211,9 @@ export class ResourcesManagerService {
   public removeServices(
     resource: number,
     services: Array<number>,
+    removeTasks?: boolean,
+    removeTaskResults?: boolean,
+    removeDestinations?: boolean,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -10208,6 +10222,9 @@ export class ResourcesManagerService {
   public removeServices(
     resource: number,
     services: Array<number>,
+    removeTasks?: boolean,
+    removeTaskResults?: boolean,
+    removeDestinations?: boolean,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -10240,6 +10257,27 @@ export class ResourcesManagerService {
           'services[]',
         );
       });
+    }
+    if (removeTasks !== undefined && removeTasks !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>removeTasks,
+        'removeTasks',
+      );
+    }
+    if (removeTaskResults !== undefined && removeTaskResults !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>removeTaskResults,
+        'removeTaskResults',
+      );
+    }
+    if (removeDestinations !== undefined && removeDestinations !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>removeDestinations,
+        'removeDestinations',
+      );
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -10284,134 +10322,6 @@ export class ResourcesManagerService {
     }
 
     let requestUrl = `${this.configuration.basePath}/urlinjsonout/resourcesManager/removeServices`;
-    if (useNon) {
-      // replace the authentication part of url with 'non' authentication
-      let helperUrl = new URL(requestUrl);
-      let path = helperUrl.pathname.split('/');
-      path[1] = 'non';
-      helperUrl.pathname = path.join('/');
-      requestUrl = helperUrl.toString();
-    }
-    return this.httpClient.post<any>(requestUrl, null, {
-      context: localVarHttpContext,
-      params: localVarQueryParameters,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
-  }
-
-  /**
-   * Remove from resource all services from services package.
-   * @param resource id of Resource
-   * @param servicesPackage id of ServicesPackage
-   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public removeServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any>;
-  public removeServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<any>>;
-  public removeServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<any>>;
-  public removeServicesPackage(
-    resource: number,
-    servicesPackage: number,
-    useNon: boolean = false,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<any> {
-    if (resource === null || resource === undefined) {
-      throw new Error(
-        'Required parameter resource was null or undefined when calling removeServicesPackage.',
-      );
-    }
-    if (servicesPackage === null || servicesPackage === undefined) {
-      throw new Error(
-        'Required parameter servicesPackage was null or undefined when calling removeServicesPackage.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (resource !== undefined && resource !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>resource,
-        'resource',
-      );
-    }
-    if (servicesPackage !== undefined && servicesPackage !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>servicesPackage,
-        'servicesPackage',
-      );
-    }
-
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (BasicAuth) required
-    localVarCredential = this.configuration.lookupCredential('BasicAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
-    }
-
-    // authentication (BearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('BearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let requestUrl = `${this.configuration.basePath}/urlinjsonout/resourcesManager/removeServicesPackage`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);

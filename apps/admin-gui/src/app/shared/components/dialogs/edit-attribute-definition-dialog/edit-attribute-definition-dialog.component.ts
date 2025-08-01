@@ -34,6 +34,7 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
   loading = false;
   showKeys = false;
   attDef: AttributeDefinition = this.data.attDef;
+  initUnique: boolean;
   initReadOperations: boolean;
   initReadGlobal: boolean;
   initWriteOperations: boolean;
@@ -75,6 +76,7 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.dialogRef.addPanelClass('mat-dialog-height-transition');
+    this.initUnique = this.attDef.unique;
     this.attributesManager.getAttributeRules(this.attDef.id).subscribe((attrRights) => {
       this.collections$ = new BehaviorSubject(attrRights.attributePolicyCollections);
       this.initReadOperations = 'READ' in attrRights.criticalActions;
@@ -88,8 +90,12 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
   onSubmit(): void {
     this.loading = true;
     this.updateAttribute();
+    // create a copy in order not to update the unique flag with the first call, would cause an exception in the
+    // value conversion call
+    const dummyAttrDef = { ...this.attDef };
+    dummyAttrDef.unique = this.initUnique;
     this.attributesManager
-      .updateAttributeDefinition({ attributeDefinition: this.attDef })
+      .updateAttributeDefinition({ attributeDefinition: dummyAttrDef })
       .pipe(
         switchMap(() => of(this.collections$.getValue())),
         this.attributeRightsService.filterNullInPolicy(),
@@ -121,6 +127,14 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
             AttributeAction.WRITE,
           ),
         ),
+        switchMap(() => {
+          if (this.initUnique === this.attDef.unique) {
+            return of(null);
+          }
+          return this.attDef.unique
+            ? this.attributesManager.convertAttributeToUnique(this.attDef.id)
+            : this.attributesManager.convertAttributeToNonunique(this.attDef.id);
+        }),
       )
       .subscribe({
         next: () => {
@@ -130,6 +144,8 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
           this.dialogRef.close(true);
         },
         error: (err) => {
+          // as long as the conversion to unique is the last call of the switch map this should be always correct
+          this.attDef.unique = this.initUnique;
           this.loading = false;
           console.error(err);
         },

@@ -188,51 +188,51 @@ export class AttributesManagerService {
 
   /**
    * Converts attribute to nonunique - unmarks unique flag from attribute definition, and deletes all values from a special table with unique constraint that ensures that all values remain unique.
-   * @param attributeDefinition id of AttributeDefinition
+   * @param attrDefId id of AttributeDefinition
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public convertAttributeToNonunique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any>;
   public convertAttributeToNonunique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<any>>;
   public convertAttributeToNonunique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<any>>;
   public convertAttributeToNonunique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (attributeDefinition === null || attributeDefinition === undefined) {
+    if (attrDefId === null || attrDefId === undefined) {
       throw new Error(
-        'Required parameter attributeDefinition was null or undefined when calling convertAttributeToNonunique.',
+        'Required parameter attrDefId was null or undefined when calling convertAttributeToNonunique.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (attributeDefinition !== undefined && attributeDefinition !== null) {
+    if (attrDefId !== undefined && attrDefId !== null) {
       localVarQueryParameters = this.addToHttpParams(
         localVarQueryParameters,
-        <any>attributeDefinition,
-        'attributeDefinition',
+        <any>attrDefId,
+        'attrDefId',
       );
     }
 
@@ -299,51 +299,51 @@ export class AttributesManagerService {
 
   /**
    * Converts attribute to unique - marks its definition as unique and ensures that all its values are unique. Entityless attributes cannot be converted to unique, only attributes attached to PerunBeans or pairs of PerunBeans.
-   * @param attributeDefinition id of AttributeDefinition
+   * @param attrDefId id of AttributeDefinition
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public convertAttributeToUnique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any>;
   public convertAttributeToUnique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<any>>;
   public convertAttributeToUnique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<any>>;
   public convertAttributeToUnique(
-    attributeDefinition: number,
+    attrDefId: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (attributeDefinition === null || attributeDefinition === undefined) {
+    if (attrDefId === null || attrDefId === undefined) {
       throw new Error(
-        'Required parameter attributeDefinition was null or undefined when calling convertAttributeToUnique.',
+        'Required parameter attrDefId was null or undefined when calling convertAttributeToUnique.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (attributeDefinition !== undefined && attributeDefinition !== null) {
+    if (attrDefId !== undefined && attrDefId !== null) {
       localVarQueryParameters = this.addToHttpParams(
         localVarQueryParameters,
-        <any>attributeDefinition,
-        'attributeDefinition',
+        <any>attrDefId,
+        'attrDefId',
       );
     }
 

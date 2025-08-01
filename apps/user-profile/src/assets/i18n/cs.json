@@ -320,7 +320,13 @@
             "DESCRIPTION": "Skutečně chcete vymazat hodnotu atributu se seznamu?",
             "SUBMIT_BUTTON": "Odstranit",
             "CANCEL_BUTTON": "Zrušit"
-          }
+          },
+          "LESS": "Skrýt",
+          "MORE": "Zobrazit více"
+        },
+        "ATTRIBUTE_VALUE_MAP": {
+          "LESS": "Skrýt",
+          "MORE": "Zobrazit více"
         },
         "ATTRIBUTES_LIST": {
           "FILTER": "Filtrovat dle id, jména, hodnoty nebo popisu",

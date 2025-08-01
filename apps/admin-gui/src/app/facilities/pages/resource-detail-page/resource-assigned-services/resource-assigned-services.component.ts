@@ -75,7 +75,7 @@ export class ResourceAssignedServicesComponent implements OnInit {
 
   removeServices(): void {
     const config = getDefaultDialogConfig();
-    config.width = '500px';
+    config.width = '600px';
     config.data = {
       theme: 'resource-theme',
       resourceId: this.resource.id,

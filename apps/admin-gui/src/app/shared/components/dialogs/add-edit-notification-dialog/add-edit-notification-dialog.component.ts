@@ -13,7 +13,7 @@ import {
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { BehaviorSubject, Observable, of, timer } from 'rxjs';
+import { BehaviorSubject, Observable, of, timer, lastValueFrom } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
@@ -24,6 +24,15 @@ export interface ApplicationFormAddEditMailDialogData {
   createMailNotification: boolean;
   applicationMail: ApplicationMail;
   applicationMails: ApplicationMail[];
+}
+// necessary for ESLint bs
+interface Translation {
+  DIALOGS: {
+    NOTIFICATIONS_ADD_EDIT_MAIL: {
+      DEFAULT_PRE_APPROVED_MAIL_TEXT: string;
+      DEFAULT_PRE_APPROVED_MAIL_SUBJECT: string;
+    };
+  };
 }
 
 @Component({
@@ -213,13 +222,18 @@ export class AddEditNotificationDialogComponent implements OnInit {
       this.previousMailType === MailType.USER_PRE_APPROVED_INVITE &&
       mailType !== this.previousMailType
     ) {
-      for (const lang of this.languages) {
-        this.translate.use(lang).subscribe(() => {
-          const defaultMailText = this.translate.instant(
-            'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT',
+      const requests = this.languages.map((lang) =>
+        lastValueFrom(this.translate.getTranslation(lang)),
+      );
+      void Promise.all(requests).then((translations: Translation[]) => {
+        translations.forEach((langTranslations, index) => {
+          const lang = this.languages[index];
+
+          const defaultMailText = String(
+            langTranslations.DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT,
           );
-          const defaultMailSubject = this.translate.instant(
-            'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT',
+          const defaultMailSubject = String(
+            langTranslations.DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT,
           );
           if (this.inputFormGroup.get([`${lang}-plain-text`]).value === defaultMailText) {
             this.inputFormGroup.get([`${lang}-plain-text`]).setValue('');
@@ -228,28 +242,30 @@ export class AddEditNotificationDialogComponent implements OnInit {
             this.inputFormGroup.get([`${lang}-plain-subject`]).setValue('');
           }
         });
-      }
-    }
+      });
+    } else if (mailType === MailType.USER_PRE_APPROVED_INVITE) {
+      const requests = this.languages.map((lang) =>
+        lastValueFrom(this.translate.getTranslation(lang)),
+      );
 
-    this.previousMailType = mailType as MailType;
-    if (mailType === MailType.USER_PRE_APPROVED_INVITE) {
-      for (const lang of this.languages) {
-        if (
-          !this.inputFormGroup.get([`${lang}-plain-text`]).value ||
-          String(this.inputFormGroup.get([`${lang}-plain-text`]).value).length === 0
-        )
-          this.translate.use(lang).subscribe(() => {
-            const defaultMailText = this.translate.instant(
-              'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT',
-            );
-            const defaultMailSubject = this.translate.instant(
-              'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT',
-            );
-            this.inputFormGroup.patchValue({ [`${lang}-plain-text`]: defaultMailText });
-            this.inputFormGroup.patchValue({ [`${lang}-plain-subject`]: defaultMailSubject });
-          });
-      }
+      void Promise.all(requests).then((translations: Translation[]) => {
+        // Process translations for all languages
+        translations.forEach((langTranslations, index) => {
+          const lang = this.languages[index];
+
+          const defaultMailText = String(
+            langTranslations.DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_TEXT,
+          );
+          const defaultMailSubject = String(
+            langTranslations.DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.DEFAULT_PRE_APPROVED_MAIL_SUBJECT,
+          );
+          this.inputFormGroup.patchValue({ [`${lang}-plain-text`]: defaultMailText });
+          this.inputFormGroup.patchValue({ [`${lang}-plain-subject`]: defaultMailSubject });
+        });
+      });
     }
+    this.previousMailType = mailType as MailType;
+
     this.applicationMail.mailType = mailType as MailType;
     this.mailType.next(this.applicationMail.mailType);
   }

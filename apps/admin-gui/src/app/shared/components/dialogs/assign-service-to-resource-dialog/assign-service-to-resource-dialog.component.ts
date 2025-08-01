@@ -6,7 +6,6 @@ import {
   ResourcesManagerService,
   Service,
   ServicesManagerService,
-  ServicesPackage,
 } from '@perun-web-apps/perun/openapi';
 import { TABLE_ASSIGN_SERVICE_TO_RESOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -27,13 +26,6 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
   theme: string;
   unAssignedServices: Service[] = [];
   filteredServices: Service[] = [];
-  servicePackages: ServicesPackage[] = [];
-  selectedPackage: ServicesPackage = {
-    name: 'Not selected',
-    description: '',
-    id: -1,
-    beanName: 'ServicePackage',
-  };
   selection = new SelectionModel<Service>(
     true,
     [],
@@ -60,19 +52,15 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
       .getAssignedServicesToResource(this.data.resourceId)
       .subscribe((assignedServices) => {
         this.servicesManager.getServices().subscribe((allServices) => {
-          this.servicesManager.getServicesPackages().subscribe((packages) => {
-            this.servicePackages.push(this.selectedPackage);
-            this.servicePackages = this.servicePackages.concat(packages);
-            this.unAssignedServices = allServices;
-            for (const assignedService of assignedServices) {
-              for (const allService of allServices) {
-                if (assignedService.id === allService.id) {
-                  this.unAssignedServices.splice(this.unAssignedServices.indexOf(allService), 1);
-                }
+          this.unAssignedServices = allServices;
+          for (const assignedService of assignedServices) {
+            for (const allService of allServices) {
+              if (assignedService.id === allService.id) {
+                this.unAssignedServices.splice(this.unAssignedServices.indexOf(allService), 1);
               }
             }
-            this.loading = false;
-          });
+          }
+          this.loading = false;
         });
       });
   }
@@ -83,58 +71,13 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
 
   onAdd(): void {
     this.loading = true;
-    if (this.selectedPackage.id !== -1) {
-      this.addServicePackage();
-    } else {
-      this.addServices();
-    }
+    this.addServices();
   }
 
   applyFilter(filterValue: string): void {
     this.filterValue = filterValue;
     this.selection.clear();
     this.cachedSubject.next(true);
-  }
-
-  servicePackageSelected(servicesPackage: ServicesPackage): void {
-    this.selectedPackage = servicesPackage;
-    if (servicesPackage.id !== -1) {
-      this.servicesManager
-        .getServicesFromServicesPackage(servicesPackage.id)
-        .subscribe((services) => {
-          this.filteredServices = services;
-        });
-    } else {
-      this.filteredServices = [];
-    }
-  }
-
-  tabChanged(): void {
-    this.selection.clear();
-    this.filterValue = '';
-    this.selectedPackage = this.servicePackages[0];
-  }
-
-  private addServicePackage(): void {
-    this.resourceManager
-      .assignServicesPackage(this.data.resourceId, this.selectedPackage.id)
-      .subscribe({
-        next: () => {
-          this.translate
-            .get('DIALOGS.ASSIGN_SERVICE_TO_RESOURCE.PACKAGE_SUCCESS_MESSAGE')
-            .subscribe((message: string) => {
-              this.notificator.showSuccess(message);
-              if (this.selection.selected.length !== 0) {
-                this.addServices();
-              } else {
-                this.dialogRef.close(true);
-              }
-            });
-        },
-        error: () => {
-          this.loading = false;
-        },
-      });
   }
 
   private addServices(): void {

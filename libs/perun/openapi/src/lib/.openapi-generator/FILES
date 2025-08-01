@@ -138,7 +138,6 @@ model/inputCreatePublicationSystem.ts
 model/inputCreateResourceTagWithResourceTag.ts
 model/inputCreateService.ts
 model/inputCreateServiceUser.ts
-model/inputCreateServicesPackage.ts
 model/inputCreateSponsoredMember.ts
 model/inputCreateSponsoredMemberFromCSV.ts
 model/inputCreateSponsoredMembers.ts
@@ -238,7 +237,6 @@ model/inputUpdatePublicationSystem.ts
 model/inputUpdateResource.ts
 model/inputUpdateResourceTag.ts
 model/inputUpdateService.ts
-model/inputUpdateServicesPackage.ts
 model/inputUpdateUser.ts
 model/inputUpdateVo.ts
 model/inputValidatePreferredEmailChange.ts
@@ -295,7 +293,6 @@ model/roleObject.ts
 model/service.ts
 model/serviceForGUI.ts
 model/serviceState.ts
-model/servicesPackage.ts
 model/setRoleForGroup.ts
 model/setRoleForUser.ts
 model/setRoleWithGroupComplementaryObject.ts
