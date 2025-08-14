@@ -12,7 +12,11 @@
       (auxclick)="$event.preventDefault()"
       queryParamsHandling="merge">
       <div [ngStyle]="{'color': textColor}" class="d-flex flex-row">
-        <mat-icon>{{item.icon}}</mat-icon>
+        <!-- the icon used for roles comes from a different library -->
+        <mat-icon
+          fontSet="{{item.icon==='passkey' ? 'material-symbols-outlined' : 'material-icons'}}">
+          {{item.icon}}
+        </mat-icon>
         <span class="ms-4">
           {{item.external ? (item | localisedText: lang:'label') : item.label | customTranslate: lang | translate}}
         </span>

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { InitAuthService, MfaHandlerService } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  InitAuthService,
+  MfaHandlerService,
+} from '@perun-web-apps/perun/services';
 import { AppConfigService, ColorConfig, EntityColorConfig } from '@perun-web-apps/config';
 import { Location } from '@angular/common';
 
@@ -44,6 +48,7 @@ export class UserProfileConfigService {
     private appConfigService: AppConfigService,
     private location: Location,
     private mfaHandlerService: MfaHandlerService,
+    private guiAuthResolver: GuiAuthResolver,
   ) {}
 
   initialize(): Promise<void> {
@@ -74,6 +79,7 @@ export class UserProfileConfigService {
           return this.initAuthService
             .loadPrincipal()
             .then(() => this.appConfigService.loadAppsConfig())
+            .then(() => this.guiAuthResolver.loadRolesManagementRules())
             .then(() => this.initAuthService.checkRouteGuard());
         } else {
           return this.initAuthService.handleAuthStart();

@@ -4,9 +4,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { SideMenuService } from '../../core/services/common/side-menu.service';
 import { AppComponent } from '../../app.component';
 import { SideMenuItemService } from './side-menu-item.service';
-import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { GuiAuthResolver, OtherApplicationsService } from '@perun-web-apps/perun/services';
 import { rollInOut } from '@perun-web-apps/perun/animations';
-import { ExpandableSectionId } from '@perun-web-apps/perun/models';
+import { AppType, ExpandableSectionId } from '@perun-web-apps/perun/models';
 import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
 
 @Component({
@@ -24,19 +24,24 @@ export class SideMenuComponent implements OnInit {
   facilityItems: SideMenuItem[] = [];
   adminItems: SideMenuItem[] = [];
   homeItems: SideMenuItem[] = [];
-  userItems: SideMenuItem[] = [];
+  settingsItems: SideMenuItem[] = [];
+  serviceIdentitiesItems: SideMenuItem[] = [];
   accessItem: SideMenuItem = this.sideMenuItemService.getAccessManagementItem();
   adminItem: SideMenuItem = this.sideMenuItemService.getAdminItem();
   facilityItem: SideMenuItem = this.sideMenuItemService.getFacilitiesManagementItem();
   homeItem: SideMenuItem = this.sideMenuItemService.getHomeItem();
   userItem: SideMenuItem = this.sideMenuItemService.getUserItem();
+  settingsItem: SideMenuItem = this.sideMenuItemService.getSettingsItem();
+  serviceIdentitiesItem: SideMenuItem = this.sideMenuItemService.getServiceIdentitiesItem();
   mobileView = true;
   adminItemOpened = false;
   userItemOpened = false;
+  settingsItemOpened = false;
 
   constructor(
     private sideMenuService: SideMenuService,
     private sideMenuItemService: SideMenuItemService,
+    private otherAppService: OtherApplicationsService,
     public authResolver: GuiAuthResolver,
   ) {}
 
@@ -105,67 +110,98 @@ export class SideMenuComponent implements OnInit {
     this.sideMenuService.adminItemsChange.subscribe((items) => {
       this.setAdminItems(items);
     });
-    this.sideMenuService.userItemsChange.subscribe((items) => {
-      this.setUserItems(items);
-    });
     this.sideMenuService.homeItemsChange.subscribe((items) => {
       this.setHomeItems(items);
+    });
+    this.sideMenuService.settingsItemsChange.subscribe((items) => {
+      this.setSettingsItems(items);
+    });
+    this.sideMenuService.serviceIdentitiesItemsChange.subscribe((items) => {
+      this.setServiceIdentitiesItems(items);
     });
     this.sideMenuService.resetChange.subscribe(() => {
       this.reset();
     });
   }
 
+  redirectToProfile(): void {
+    window.open(this.otherAppService.getUrlForOtherApplication(AppType.Profile), '_blank');
+  }
+
   private reset(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
+    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.userItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptHome(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
+    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.userItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptFacility(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
+    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
-    SideMenuComponent.setNewItems(this.userItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptAccess(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
+    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.userItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptAdmin(): void {
     this.userItemOpened = false;
+    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.userItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
-  private resetExceptUser(): void {
+  private resetExceptSettings(): void {
+    this.userItemOpened = false;
     this.adminItemOpened = false;
+    SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
+  }
+
+  private resetExceptServiceIdentities(): void {
+    this.adminItemOpened = false;
+    this.userItemOpened = false;
+    this.settingsItemOpened = false;
+    SideMenuComponent.setNewItems(this.homeItems, []);
+    SideMenuComponent.setNewItems(this.adminItems, []);
+    SideMenuComponent.setNewItems(this.accessItems, []);
+    SideMenuComponent.setNewItems(this.settingsItems, []);
+    SideMenuComponent.setNewItems(this.facilityItems, []);
   }
 
   private setHomeItems(items: SideMenuItem[]): void {
@@ -183,17 +219,22 @@ export class SideMenuComponent implements OnInit {
     SideMenuComponent.setNewItems(this.accessItems, items);
   }
 
-  private setUserItems(items: SideMenuItem[]): void {
-    this.userItemOpened = items.length === 0;
-    this.resetExceptUser();
-    SideMenuComponent.setNewItems(this.userItems, items);
-  }
-
   private setAdminItems(items: SideMenuItem[]): void {
     // hide the main Perun admin menu when some sub menu is opened
     this.adminItemOpened = items.length === 0;
     this.resetExceptAdmin();
     SideMenuComponent.setNewItems(this.adminItems, items);
+  }
+
+  private setSettingsItems(items: SideMenuItem[]): void {
+    this.settingsItemOpened = items.length === 0;
+    this.resetExceptSettings();
+    SideMenuComponent.setNewItems(this.settingsItems, items);
+  }
+
+  private setServiceIdentitiesItems(items: SideMenuItem[]): void {
+    this.resetExceptServiceIdentities();
+    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, items);
   }
 }
 

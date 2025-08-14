@@ -1,7 +1,11 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
-import { CheckboxLabelPipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import {
+  CheckboxLabelPipe,
+  CustomTranslatePipe,
+  GetMailFromAttributesPipe,
+} from '@perun-web-apps/perun/pipes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
@@ -22,7 +26,6 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
-import { GetMailFromAttributesPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
   imports: [

@@ -1,0 +1,56 @@
+<div [ngClass]="routeToAdminSection ? [] : classesForGlobalView">
+  @if (!routeToAdminSection) {
+    <perun-web-apps-back-button> </perun-web-apps-back-button>
+
+    <h1 class="page-title d-flex">
+      <mat-icon
+        [ngStyle]="{'color':'black'}"
+        svgIcon="perun-service-identity-black"
+        class="perun-icon icon-scale">
+      </mat-icon>
+      {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.TITLE_NON_ADMIN' | translate}}
+    </h1>
+  } @else {
+    <h1 class="page-subtitle">{{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.TITLE' | translate}}</h1>
+  }
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+  @if (addIdentity) {
+    <button (click)="onAdd()" color="accent" class="me-2 action-button" mat-flat-button>
+      {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.CREATE' | translate}}
+    </button>
+  }
+  @if (removeIdentity) {
+    <button
+      (click)="onRemove()"
+      [disabled]="loading || selection.selected.length === 0"
+      color="warn"
+      class="me-2"
+      mat-flat-button>
+      {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.DELETE' | translate}}
+    </button>
+  }
+  <perun-web-apps-debounce-filter
+    [autoFocus]="true"
+    (filter)="applyFilter($event)"
+    [placeholder]="'FACILITY_MANAGEMENT.FILTER_PLACEHOLDER'"
+    [linkGlobalSearch]="true">
+  </perun-web-apps-debounce-filter>
+
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative table-min-height">
+    <perun-web-apps-users-list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
+      [noUsersFoundLabel]="'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.NO_IDENTITIES' | translate"
+      [routeToAdmin]="routeToAdminSection"
+      [displayColumns]="displayedColumns"
+      [selection]="selection"
+      [tableId]="tableId"
+      [users]="identities"
+      [filter]="filterValue"
+      [cacheSubject]="cacheSubject">
+    </perun-web-apps-users-list>
+  </div>
+</div>

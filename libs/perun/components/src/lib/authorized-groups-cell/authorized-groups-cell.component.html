@@ -1,14 +1,20 @@
 <div class="mt-1">
   @for (group of groups.slice(0, itemsShown); track group) {
     <div class="mb-1">
-      <a
-        class="group-link"
-        [routerLink]="disableRouting ? null : ['/organizations', group.voId, 'groups', group.id]"
-        [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : ['/organizations', group.voId.toString(), 'groups', group.id.toString()]"
-        (auxclick)="$event.preventDefault()"
-        [class.cursor-pointer]="!disableRouting"
-        >{{authzVoNames.get(group.voId) + " : " + group.name}}</a
-      >
+      @if (disableRouting) {
+        <div>
+          {{authzVoNames.get(group.voId) + " : " + group.name}}
+        </div>
+      } @else {
+        <a
+          class="group-link"
+          [routerLink]="['/organizations', group.voId, 'groups', group.id]"
+          [perunWebAppsMiddleClickRouterLink]="['/organizations', group.voId.toString(), 'groups', group.id.toString()]"
+          (auxclick)="$event.preventDefault()"
+          [class.cursor-pointer]="true"
+          >{{authzVoNames.get(group.voId) + " : " + group.name}}</a
+        >
+      }
     </div>
   }
 </div>

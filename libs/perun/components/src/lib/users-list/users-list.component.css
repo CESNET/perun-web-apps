@@ -5,3 +5,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.static-column-size {
+  width: 80px !important;
+}

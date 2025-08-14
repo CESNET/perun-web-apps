@@ -1,0 +1,29 @@
+<h1 class="page-title mt-2">{{'ROLES.TITLE' | customTranslate | translate}}</h1>
+<div class="user-theme">
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'ROLES.USER' | customTranslate | translate}}</h1>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-roles-panels
+        [outerLoading]="this.outerLoading"
+        [roles]="this.roles"
+        [userId]="this.userId"
+        (reload)="getData()"
+        (startLoading)="outerLoading = true;">
+      </perun-web-apps-roles-panels>
+    </div>
+  </div>
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'ROLES.GROUP' | customTranslate | translate}}</h1>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-roles-panels
+        [outerLoading]="this.outerLoading"
+        [roles]="this.indirectRoles"
+        [userId]="this.userId"
+        [userBased]="false"
+        [complementaryObjectsWithAuthzGroups]="this.rolesComplementaryObjectsWithAuthzGroups"
+        (reload)="getData()"
+        (startLoading)="outerLoading = true;">
+      </perun-web-apps-roles-panels>
+    </div>
+  </div>
+</div>
