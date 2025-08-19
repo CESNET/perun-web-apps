@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [19.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.0...v19.0.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* **lib:** fix roles not displaying with enable_sponsorhips ([37e3d58](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/37e3d58ad2fe157f673a78ec5b3e0b179f3568f6))
+
 ## [19.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v18.14.0...v19.0.0) (2025-08-01)
 
 
