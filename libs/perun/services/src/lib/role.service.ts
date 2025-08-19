@@ -15,19 +15,20 @@ export class RoleService {
     names.forEach((roleName) => {
       if (
         !this.store.getProperty('enable_sponsorships') &&
-        roleName !== 'SPONSOR' &&
-        roleName !== 'SPONSORNOCREATERIGHTS' &&
-        roleName !== 'SPONSORSHIP'
+        (roleName === 'SPONSOR' ||
+          roleName === 'SPONSORNOCREATERIGHTS' ||
+          roleName === 'SPONSORSHIP')
       ) {
-        const innerMap = new Map<string, Array<number>>();
-        const innerRoles = Object.keys(roles[roleName]);
-
-        innerRoles.forEach((innerRole) => {
-          innerMap.set(innerRole, roles[roleName][innerRole]);
-        });
-
-        preparedRoles.set(roleName, innerMap);
+        return;
       }
+      const innerMap = new Map<string, Array<number>>();
+      const innerRoles = Object.keys(roles[roleName]);
+
+      innerRoles.forEach((innerRole) => {
+        innerMap.set(innerRole, roles[roleName][innerRole]);
+      });
+
+      preparedRoles.set(roleName, innerMap);
     });
     return preparedRoles;
   }
