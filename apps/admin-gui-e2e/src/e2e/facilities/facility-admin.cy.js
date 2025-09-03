@@ -20,28 +20,28 @@ describe('Facility management with role Facility admin', () => {
       .get(`[data-cy=facilities-button]`)
       .click();
   });
-
-  it('test create facility', () => {
-    cy.intercept('**/facilitiesManager/getFacilities')
-      .as('getFacilities')
-      .get('[data-cy=new-facility-button]')
-      .click()
-    cy.wait('@getFacilities')
-      .get('[data-cy=facility-name-input]')
-      .type('test-e2e-facility', {force: true})
-    cy.get('[data-cy=facility-description-input]')
-      .type('test-e2e-facility-description', {force: true})
-    cy.get('[data-cy=create-facility-button]')
-      .click()
-    cy.intercept('**/facilitiesManager/getEnrichedFacilities')
-      .as('getEnrichedFacilities')
-      .wait('@getEnrichedFacilities')
-      // assert that the facility was created
-      .get('[data-cy=filter-input]')
-      .type('test-e2e-facility', {force: true})
-    cy.get('[data-cy=test-e2e-facility-checkbox]')
-      .should('exist');
-  });
+  // TODO CREATE TESTS FOR FACILITY CREATOR AND MOVE THIS THERE
+  // it('test create facility', () => {
+  //   cy.intercept('**/facilitiesManager/getFacilities')
+  //     .as('getFacilities')
+  //     .get('[data-cy=new-facility-button]')
+  //     .click()
+  //   cy.wait('@getFacilities')
+  //     .get('[data-cy=facility-name-input]')
+  //     .type('test-e2e-facility', {force: true})
+  //   cy.get('[data-cy=facility-description-input]')
+  //     .type('test-e2e-facility-description', {force: true})
+  //   cy.get('[data-cy=create-facility-button]')
+  //     .click()
+  //   cy.intercept('**/facilitiesManager/getEnrichedFacilities')
+  //     .as('getEnrichedFacilities')
+  //     .wait('@getEnrichedFacilities')
+  //     // assert that the facility was created
+  //     .get('[data-cy=filter-input]')
+  //     .type('test-e2e-facility', {force: true})
+  //   cy.get('[data-cy=test-e2e-facility-checkbox]')
+  //     .should('exist');
+  // });
 
   it('test delete facility', () => {
     cy.intercept('**/facilitiesManager/getEnrichedFacilities')

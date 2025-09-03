@@ -73,7 +73,7 @@ describe('Perun admin management with role Perun observer', () => {
     cy.get(`[data-cy=audit-message-detail-button]`)
       .first()
       .click({force: true})
-    cy.get('#mat-tab-label-0-1') // click on Message tab
+    cy.get('#mat-tab-group-0-label-1') // click on Message tab
       .click()
     cy.get(`[data-cy=audit-message-text]`)
       .should('not.be.empty');

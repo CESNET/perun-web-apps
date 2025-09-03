@@ -21,7 +21,8 @@ describe('Facility management with role Facility observer', () => {
       .get(`[data-cy=facilities-button]`)
       .click()
     cy.get('[data-cy=filter-input]')
-      .type(dbFacilityName)
+      // force here only to bypass the label of the filter
+      .type(dbFacilityName, {force: true})
     cy.get(`[data-cy=${dbFacilityName}]`)
       .click();
   });

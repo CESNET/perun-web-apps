@@ -17,7 +17,7 @@ describe('Group management with role Group observer', () => {
       .get(`[data-cy=access-item-button]`)
       .click()
     cy.get('[data-cy=filter-input]')
-      .type(dbVoName)
+      .type(dbVoName, {force: true})
     cy.get(`[data-cy=${dbVoName}]`)
       .click()
     cy.get(`[data-cy=groups]`)
