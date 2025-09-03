@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Type } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'applicationFormItemType',
 })
 export class ApplicationFormItemTypePipe implements PipeTransform {

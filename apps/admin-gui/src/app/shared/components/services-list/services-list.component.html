@@ -17,29 +17,29 @@
       matSortActive="id"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let service" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            attr.data-cy="{{service.name | lowercase}}-checkbox"
-            (change)="$event ? toggleRow(service) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(service) | checkboxLabel | translate: {name: service.name}"
-            [checked]="selection.isSelected(service)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let service" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              attr.data-cy="{{service.name | lowercase}}-checkbox"
+              (change)="$event ? toggleRow(service) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(service) | checkboxLabel | translate: {name: service.name}"
+              [checked]="selection.isSelected(service)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -58,18 +58,20 @@
       <ng-container matColumnDef="enabled">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let service" mat-cell>
-          <mat-icon
-            *ngIf="service.enabled"
-            class="align-bottom green"
-            matTooltip="{{'SHARED.COMPONENTS.SERVICES_LIST.ENABLED' | translate}}">
-            check_circle_outline
-          </mat-icon>
-          <mat-icon
-            *ngIf="!service.enabled"
-            class="align-bottom red"
-            matTooltip="{{'SHARED.COMPONENTS.SERVICES_LIST.DISABLED' | translate}}">
-            block
-          </mat-icon>
+          @if (service.enabled) {
+            <mat-icon
+              class="align-bottom green"
+              matTooltip="{{'SHARED.COMPONENTS.SERVICES_LIST.ENABLED' | translate}}">
+              check_circle_outline
+            </mat-icon>
+          }
+          @if (!service.enabled) {
+            <mat-icon
+              class="align-bottom red"
+              matTooltip="{{'SHARED.COMPONENTS.SERVICES_LIST.DISABLED' | translate}}">
+              block
+            </mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="script">
@@ -98,13 +100,15 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && (this.services !== undefined && this.services.length !== 0)"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
-<perun-web-apps-alert
-  *ngIf="!loading && (this.services === undefined || this.services.length === 0)"
-  alert_type="warn">
-  {{'SHARED.COMPONENTS.SERVICES_LIST.NO_SERVICES_WARNING' | translate}}
-</perun-web-apps-alert>
+@if (
+  dataSource.filteredData.length === 0 && (this.services !== undefined && this.services.length !== 0)
+) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
+@if (!loading && (this.services === undefined || this.services.length === 0)) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.SERVICES_LIST.NO_SERVICES_WARNING' | translate}}
+  </perun-web-apps-alert>
+}

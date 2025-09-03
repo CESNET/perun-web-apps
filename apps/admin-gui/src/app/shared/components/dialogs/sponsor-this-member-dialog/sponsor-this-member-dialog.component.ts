@@ -1,11 +1,18 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   NotificatorService,
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { MembersManagerService, RichMember, User } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
 
 export interface SponsorThisMemberDialogData {
   theme: string;
@@ -13,6 +20,17 @@ export interface SponsorThisMemberDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    ExpirationSelectComponent,
+    TranslateModule,
+    LoaderDirective,
+    ChooseSponsorComponent,
+  ],
+  standalone: true,
   selector: 'app-sponsor-this-member-dialog',
   templateUrl: './sponsor-this-member-dialog.components.html',
   styleUrls: ['./sponsor-this-member-dialog.components.scss'],

@@ -1,8 +1,24 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CabinetManagerService, PublicationSystem } from '@perun-web-apps/perun/openapi';
 import { TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { PublicationSystemsListComponent } from '../../components/publication-systems-list/publication-systems-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    PublicationSystemsListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-publication-systems-page',
   templateUrl: './publication-systems-page.component.html',
   styleUrls: ['./publication-systems-page.component.scss'],

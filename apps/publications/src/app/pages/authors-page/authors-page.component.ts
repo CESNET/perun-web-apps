@@ -1,8 +1,26 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Author, CabinetManagerService } from '@perun-web-apps/perun/openapi';
 import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
+import { AuthorsListComponent } from '../../components/authors-list/authors-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    AuthorsListComponent,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-authors-page',
   templateUrl: './authors-page.component.html',
   styleUrls: ['./authors-page.component.scss'],

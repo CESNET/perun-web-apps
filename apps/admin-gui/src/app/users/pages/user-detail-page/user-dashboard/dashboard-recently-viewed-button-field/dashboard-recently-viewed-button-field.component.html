@@ -1,20 +1,27 @@
-<mat-spinner class="ms-auto me-auto" *ngIf="loading"></mat-spinner>
-<perun-web-apps-alert
-  *ngIf="items.length === 0 && !loading"
-  alert_type="info"
-  >{{'USER_DETAIL.DASHBOARD.NO_RECENTLY_VIEWED' | translate}}</perun-web-apps-alert
->
-<div *ngIf="items.length > 0" class="items-container">
-  <div *ngFor="let item of items" class="item-itself-container" mat-ripple>
-    <a
-      class="{{item.style}} item-itself"
-      [perunWebAppsMiddleClickRouterLink]="[item.url]"
-      (auxclick)="$event.preventDefault()"
-      [routerLink]="item.url"
-      matTooltip="{{item.tooltip}}">
-      <span class="item-type">{{item.type}}</span>
-      <mat-icon [svgIcon]="item.cssIcon" class="item-pic perun-icon"></mat-icon>
-      <p class="truncate">{{item.label}}</p>
-    </a>
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+}
+@if (items.length === 0 && !loading) {
+  <perun-web-apps-alert
+    alert_type="info"
+    >{{'USER_DETAIL.DASHBOARD.NO_RECENTLY_VIEWED' | translate}}</perun-web-apps-alert
+  >
+}
+@if (items.length > 0) {
+  <div class="items-container">
+    @for (item of items; track item) {
+      <div class="item-itself-container" mat-ripple>
+        <a
+          class="{{item.style}} item-itself"
+          [perunWebAppsMiddleClickRouterLink]="[item.url]"
+          (auxclick)="$event.preventDefault()"
+          [routerLink]="item.url"
+          matTooltip="{{item.tooltip}}">
+          <span class="item-type">{{item.type}}</span>
+          <mat-icon [svgIcon]="item.cssIcon" class="item-pic perun-icon"></mat-icon>
+          <p class="truncate">{{item.label}}</p>
+        </a>
+      </div>
+    }
   </div>
-</div>
+}

@@ -1,11 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 export interface NoServiceDialogData {
   theme: string;
 }
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatDialogModule, TranslateModule],
+  standalone: true,
   selector: 'app-no-service-dialog',
   templateUrl: './no-service-dialog.component.html',
   styleUrls: ['./no-service-dialog.component.scss'],

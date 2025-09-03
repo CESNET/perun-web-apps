@@ -1,3 +1,10 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { IsAuthorizedPipe, ParseDatePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   Member,
@@ -6,15 +13,21 @@ import {
   UsersManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import {
   GuiAuthResolver,
   NotificatorService,
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ChangeSponsorshipExpirationDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 export interface EditMemberSponsorsDialogData {
   theme: string;
   sponsors: Sponsor[];
@@ -22,6 +35,21 @@ export interface EditMemberSponsorsDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    ParseDatePipe,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+    UserFullNamePipe,
+    IsAuthorizedPipe,
+  ],
+  standalone: true,
   selector: 'app-edit-member-sponsors-dialog',
   templateUrl: './edit-member-sponsors-dialog.component.html',
   styleUrls: ['./edit-member-sponsors-dialog.component.scss'],

@@ -10,32 +10,36 @@
         </app-one-entity-attribute-page>
       </ng-template>
     </mat-tab>
-    <mat-tab *ngIf="memberGroupAttAuth">
-      <ng-template matTabLabel>
-        {{'MEMBER_DETAIL.ENTITY' | translate}}
-        -
-        {{'GROUP_DETAIL.ENTITY' | translate}}
-      </ng-template>
-      <ng-template matTabContent>
-        <app-two-entity-attribute-page
-          [firstEntity]="'member'"
-          [firstEntityId]="member.id"
-          [secondEntity]="'group'"></app-two-entity-attribute-page>
-      </ng-template>
-    </mat-tab>
-    <mat-tab *ngIf="memberResourceAttAuth">
-      <ng-template matTabLabel>
-        {{'MEMBER_DETAIL.ENTITY' | translate}}
-        -
-        {{'RESOURCE_DETAIL.ENTITY' | translate}}
-      </ng-template>
-      <ng-template matTabContent>
-        <app-two-entity-attribute-page
-          [firstEntity]="'member'"
-          [firstEntityId]="member.id"
-          [secondEntity]="'resource'"></app-two-entity-attribute-page>
-      </ng-template>
-    </mat-tab>
+    @if (memberGroupAttAuth) {
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{'MEMBER_DETAIL.ENTITY' | translate}}
+          -
+          {{'GROUP_DETAIL.ENTITY' | translate}}
+        </ng-template>
+        <ng-template matTabContent>
+          <app-two-entity-attribute-page
+            [firstEntity]="'member'"
+            [firstEntityId]="member.id"
+            [secondEntity]="'group'"></app-two-entity-attribute-page>
+        </ng-template>
+      </mat-tab>
+    }
+    @if (memberResourceAttAuth) {
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{'MEMBER_DETAIL.ENTITY' | translate}}
+          -
+          {{'RESOURCE_DETAIL.ENTITY' | translate}}
+        </ng-template>
+        <ng-template matTabContent>
+          <app-two-entity-attribute-page
+            [firstEntity]="'member'"
+            [firstEntityId]="member.id"
+            [secondEntity]="'resource'"></app-two-entity-attribute-page>
+        </ng-template>
+      </mat-tab>
+    }
     <mat-tab class="mb-2">
       <ng-template matTabLabel>
         {{'ADMIN_USER.ENTITY' | translate}}
@@ -45,18 +49,20 @@
         </app-one-entity-attribute-page>
       </ng-template>
     </mat-tab>
-    <mat-tab *ngIf="userFacilityAttAuth">
-      <ng-template matTabLabel>
-        {{'ADMIN_USER.ENTITY' | translate}}
-        -
-        {{'FACILITY_DETAIL.ENTITY' | translate}}
-      </ng-template>
-      <ng-template matTabContent>
-        <app-two-entity-attribute-page
-          [firstEntity]="'user'"
-          [firstEntityId]="member.userId"
-          [secondEntity]="'facility'"></app-two-entity-attribute-page>
-      </ng-template>
-    </mat-tab>
+    @if (userFacilityAttAuth) {
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{'ADMIN_USER.ENTITY' | translate}}
+          -
+          {{'FACILITY_DETAIL.ENTITY' | translate}}
+        </ng-template>
+        <ng-template matTabContent>
+          <app-two-entity-attribute-page
+            [firstEntity]="'user'"
+            [firstEntityId]="member.userId"
+            [secondEntity]="'facility'"></app-two-entity-attribute-page>
+        </ng-template>
+      </mat-tab>
+    }
   </mat-tab-group>
 </div>

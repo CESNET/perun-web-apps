@@ -3,15 +3,19 @@
   [class.error]="data.type === 'error'"
   [class.success]="data.type === 'success'">
   <div class="notification-container" (click)="!alreadyClosed ? closeSelf(): ''">
-    <div *ngIf="data.icon !== null" class="notification-icon">
-      <mat-icon>{{data.icon}}</mat-icon>
-    </div>
+    @if (data.icon !== null) {
+      <div class="notification-icon">
+        <mat-icon>{{data.icon}}</mat-icon>
+      </div>
+    }
     <div class="notification-text clickable" data-cy="notification-message">
       {{data.title | translate}}
     </div>
-    <div class="ms-3 me-3 mt-auto mb-auto" *ngIf="inDialog">
-      {{showTimestamp()}}
-    </div>
+    @if (inDialog) {
+      <div class="ms-3 me-3 mt-auto mb-auto">
+        {{showTimestamp()}}
+      </div>
+    }
     <div class="notification-action mt-auto mb-auto" (click)="doAction()" [hidden]="alreadyPressed">
       {{data.actionText}}
     </div>

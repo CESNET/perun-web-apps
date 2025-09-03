@@ -1,3 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import {
@@ -12,8 +19,20 @@ import {
   TABLE_USER_DETAIL_MEMBER_GROUPS,
 } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    GroupsListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-groups',
   templateUrl: './user-groups.component.html',
   styleUrls: ['./user-groups.component.scss'],

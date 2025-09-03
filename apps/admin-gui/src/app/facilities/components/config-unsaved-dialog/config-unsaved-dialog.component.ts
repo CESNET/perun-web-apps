@@ -1,11 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 export interface ConfigUnsavedDialogData {
   theme: string;
 }
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatDialogModule, TranslateModule],
+  standalone: true,
   selector: 'app-config-unsaved-dialog',
   templateUrl: './config-unsaved-dialog.component.html',
   styleUrls: ['./config-unsaved-dialog.component.scss'],

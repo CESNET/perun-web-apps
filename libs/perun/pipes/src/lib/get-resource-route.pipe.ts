@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { RichResource } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'getResourceRoute',
   pure: true,
 })

@@ -10,9 +10,11 @@
           <ng-content></ng-content>
         </mat-step>
         <mat-step [label]="'DIALOGS.ADD_BAN.SPECIFICATION' | translate">
-          <perun-web-apps-alert *ngIf="ban" [alert_type]="'info'">
-            {{'DIALOGS.ADD_BAN.ALREADY_BANNED' | translate}}
-          </perun-web-apps-alert>
+          @if (ban) {
+            <perun-web-apps-alert [alert_type]="'info'">
+              {{'DIALOGS.ADD_BAN.ALREADY_BANNED' | translate}}
+            </perun-web-apps-alert>
+          }
           <perun-web-apps-ban-specification
             [description]="ban?.description"
             [validity]="ban?.validityTo">
@@ -21,32 +23,29 @@
       </mat-stepper>
     </div>
     <div mat-dialog-actions>
-      <button mat-stroked-button class="ms-auto me-2" (click)="cancel.emit()">
+      <button mat-stroked-button class="ms-auto me-2" (click)="cancelled.emit()">
         {{'DIALOGS.ADD_BAN.CANCEL' | translate}}
       </button>
-      <button
-        *ngIf="stepper.selectedIndex !== stepper?._steps?.length - 1"
-        mat-flat-button
-        class="me-2"
-        color="accent"
-        (click)="stepper.next()"
-        [disabled]="disabled">
-        {{'DIALOGS.ADD_BAN.NEXT' | translate}}
-      </button>
-      <button
-        *ngIf="stepper.selectedIndex === stepper?._steps?.length - 1"
-        mat-stroked-button
-        class="me-2"
-        (click)="stepper.previous()">
-        {{'DIALOGS.ADD_BAN.BACK' | translate}}
-      </button>
-      <button
-        *ngIf="stepper.selectedIndex === stepper?._steps?.length - 1"
-        mat-flat-button
-        color="accent"
-        (click)="addBan()">
-        {{(!ban ? 'DIALOGS.ADD_BAN.ADD' : 'DIALOGS.ADD_BAN.UPDATE') | translate}}
-      </button>
+      @if (stepper.selectedIndex !== stepper?._steps?.length - 1) {
+        <button
+          mat-flat-button
+          class="me-2"
+          color="accent"
+          (click)="stepper.next()"
+          [disabled]="disabled">
+          {{'DIALOGS.ADD_BAN.NEXT' | translate}}
+        </button>
+      }
+      @if (stepper.selectedIndex === stepper?._steps?.length - 1) {
+        <button mat-stroked-button class="me-2" (click)="stepper.previous()">
+          {{'DIALOGS.ADD_BAN.BACK' | translate}}
+        </button>
+      }
+      @if (stepper.selectedIndex === stepper?._steps?.length - 1) {
+        <button mat-flat-button color="accent" (click)="addBan()">
+          {{(!ban ? 'DIALOGS.ADD_BAN.ADD' : 'DIALOGS.ADD_BAN.UPDATE') | translate}}
+        </button>
+      }
     </div>
   </div>
 </div>

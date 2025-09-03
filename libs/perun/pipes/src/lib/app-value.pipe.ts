@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ApplicationFormItemData } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'parseAppValue',
 })
 export class AppValuePipe implements PipeTransform {

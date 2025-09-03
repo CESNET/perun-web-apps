@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/perun/animations/src",
   "prefix": "perun-web-apps",
+  "tags": [],
+  "generators": {
+    "@nx/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -16,11 +22,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/perun/animations"]
     }
-  },
-  "generators": {
-    "@nx/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": []
+  }
 }

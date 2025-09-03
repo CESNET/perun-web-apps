@@ -1,3 +1,8 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AttributesManagerService,
@@ -12,10 +17,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveUserExtSourceDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { LinkerResult, OpenLinkerService } from '@perun-web-apps/lib-linker';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { UserExtSourcesListComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    CustomTranslatePipe,
+    TranslateModule,
+    MatTooltip,
+    UserExtSourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-identities-page',
   templateUrl: './identities-page.component.html',
   styleUrls: ['./identities-page.component.scss'],

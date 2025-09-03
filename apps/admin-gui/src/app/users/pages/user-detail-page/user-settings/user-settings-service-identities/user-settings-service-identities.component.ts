@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
@@ -9,9 +12,25 @@ import { ConnectIdentityDialogComponent } from '../../../../../shared/components
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  RefreshButtonComponent,
+  UsersListComponent,
+} from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    UsersListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-settings-service-identities',
   templateUrl: './user-settings-service-identities.component.html',
   styleUrls: ['./user-settings-service-identities.component.scss'],

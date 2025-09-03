@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 
-@Pipe({ name: 'selectedConsentStatuses' })
+@Pipe({
+  standalone: true,
+  name: 'selectedConsentStatuses',
+})
 export class SelectedConsentStatusesPipe implements PipeTransform {
   constructor(private translateService: PerunTranslateService) {}
 

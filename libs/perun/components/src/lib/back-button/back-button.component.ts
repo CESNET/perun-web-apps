@@ -1,8 +1,14 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, CommonModule } from '@angular/common';
 import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule, MatTooltip],
+  standalone: true,
   selector: 'perun-web-apps-back-button',
   templateUrl: './back-button.component.html',
   styleUrls: ['./back-button.component.scss'],

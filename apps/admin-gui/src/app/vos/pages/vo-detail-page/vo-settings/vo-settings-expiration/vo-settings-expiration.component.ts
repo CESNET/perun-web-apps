@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { openClose } from '@perun-web-apps/perun/animations';
 import {
@@ -9,8 +10,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Attribute, AttributesManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ExpirationSettingsComponent } from '../../../../components/expiration-settings/expiration-settings.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [CommonModule, LoaderDirective, ExpirationSettingsComponent, LoadingTableComponent],
+  standalone: true,
   selector: 'app-vo-settings-expiration',
   templateUrl: './vo-settings-expiration.component.html',
   styleUrls: ['./vo-settings-expiration.component.scss'],

@@ -1,7 +1,13 @@
+import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   Group,
   GroupsManagerService,
@@ -10,7 +16,8 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_ASSIGN_GROUP_TO_RESOURCE_DIALOG } from '@perun-web-apps/config/table-config';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AssignGroupToResourceDialogData {
   theme: string;
@@ -19,6 +26,23 @@ export interface AssignGroupToResourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    GroupsListComponent,
+    MatStepLabel,
+    LoaderDirective,
+    MatStep,
+    MatStepper,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-assign-group-to-resource-dialog',
   templateUrl: './assign-group-to-resource-dialog.component.html',
   styleUrls: ['./assign-group-to-resource-dialog.component.scss'],

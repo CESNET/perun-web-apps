@@ -1,12 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
 import { AuthzResolverService, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { AddRoleDialogData, AddRoleForm } from '../add-role-dialog.component';
+import {
+  AddRoleDialogComponent,
+  AddRoleDialogData,
+  AddRoleForm,
+} from '../add-role-dialog.component';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [CommonModule, AddRoleDialogComponent],
+  standalone: true,
   selector: 'app-add-user-role-dialog',
   templateUrl: './add-user-role-dialog.component.html',
   styleUrls: ['./add-user-role-dialog.component.scss'],

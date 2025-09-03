@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { formatDate } from '@angular/common';
 
 @Pipe({
+  standalone: true,
   name: 'parseDate',
 })
 export class ParseDatePipe implements PipeTransform {

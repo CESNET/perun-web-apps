@@ -1,21 +1,24 @@
 <div>
   <h1 class="page-subtitle">{{'ADMIN.CONSENT_HUBS.TITLE' | translate}}</h1>
-  <perun-web-apps-alert *ngIf="!globalForceConsents" alert_type="warn">
-    {{'ADMIN.CONSENT_HUBS.GLOBAL_DISABLED' | translate}}
-  </perun-web-apps-alert>
+  @if (!globalForceConsents) {
+    <perun-web-apps-alert alert_type="warn">
+      {{'ADMIN.CONSENT_HUBS.GLOBAL_DISABLED' | translate}}
+    </perun-web-apps-alert>
+  }
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <span
     [matTooltipDisabled]="globalForceConsents"
     matTooltip="{{'ADMIN.CONSENT_HUBS.TOOLTIP' | translate}}">
-    <button
-      *ngIf="authResolver.isPerunAdmin()"
-      (click)="evaluateConsents()"
-      [disabled]="!globalForceConsents || loading || selection.selected.length === 0"
-      color="accent"
-      class="action-button me-2"
-      mat-flat-button>
-      {{'ADMIN.CONSENT_HUBS.EVALUATE_CONSENTS' | translate}}
-    </button>
+    @if (authResolver.isPerunAdmin()) {
+      <button
+        (click)="evaluateConsents()"
+        [disabled]="!globalForceConsents || loading || selection.selected.length === 0"
+        color="accent"
+        class="action-button me-2"
+        mat-flat-button>
+        {{'ADMIN.CONSENT_HUBS.EVALUATE_CONSENTS' | translate}}
+      </button>
+    }
   </span>
   <perun-web-apps-debounce-filter
     [placeholder]="'ADMIN.CONSENT_HUBS.SEARCH'"

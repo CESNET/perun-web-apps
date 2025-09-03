@@ -1,4 +1,8 @@
-<mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-<div *ngIf="!loading">
-  <perun-web-apps-menu-buttons-field [items]="navItems"></perun-web-apps-menu-buttons-field>
-</div>
+@if (loading) {
+  <mat-spinner class="me-auto ms-auto"></mat-spinner>
+}
+@if (!loading) {
+  <div>
+    <perun-web-apps-menu-buttons-field [items]="navItems"></perun-web-apps-menu-buttons-field>
+  </div>
+}

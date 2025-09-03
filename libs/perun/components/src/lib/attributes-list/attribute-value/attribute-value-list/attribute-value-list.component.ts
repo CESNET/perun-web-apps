@@ -1,8 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Attribute } from '@perun-web-apps/perun/openapi';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AttributeValueListEditDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { AttributeValueListDeleteDialogComponent } from '@perun-web-apps/perun/dialogs';
@@ -10,6 +17,19 @@ import { getDefaultDialogConfig, isVirtualAttribute } from '@perun-web-apps/peru
 import { ShowValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TranslateModule,
+    MatTooltip,
+    MatChipsModule,
+    CdkDropList,
+    CdkDrag,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attribute-value-list',
   templateUrl: './attribute-value-list.component.html',
   styleUrls: ['./attribute-value-list.component.scss'],

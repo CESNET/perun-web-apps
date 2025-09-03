@@ -1,9 +1,13 @@
-<h1 *ngIf="this.isMyProfile" class="page-subtitle">
-  {{'SHARED_LIB.PERUN.ORGANIZATIONS.YOU_ARE_MEMBER' | translate}}
-</h1>
-<h1 *ngIf="!this.isMyProfile" class="page-subtitle">
-  {{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_MEMBER' | translate}}
-</h1>
+@if (this.isMyProfile) {
+  <h1 class="page-subtitle">
+    {{'SHARED_LIB.PERUN.ORGANIZATIONS.YOU_ARE_MEMBER' | translate}}
+  </h1>
+}
+@if (!this.isMyProfile) {
+  <h1 class="page-subtitle">
+    {{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_MEMBER' | translate}}
+  </h1>
+}
 <perun-web-apps-refresh-button (refresh)="refreshMemberTable()"></perun-web-apps-refresh-button>
 <perun-web-apps-debounce-filter
   (filter)="applyMemberFilter($event)"
@@ -20,24 +24,26 @@
   </perun-web-apps-vos-list>
 </div>
 
-<div *ngIf="!this.isMyProfile" class="mt-5">
-  <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_ADMIN' | translate}}</h1>
-  <perun-web-apps-refresh-button (refresh)="refreshAdminTable()"></perun-web-apps-refresh-button>
-  <perun-web-apps-debounce-filter
-    (filter)="applyAdminFilter($event)"
-    [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'">
-  </perun-web-apps-debounce-filter>
-  <div class="position-relative table-min-height">
-    <perun-web-apps-vos-list
-      *perunWebAppsLoader="adminRefresh; indicator: spinner"
-      [loading]="adminRefresh"
-      [displayedColumns]="displayedColumns"
-      [tableId]="adminTableId"
-      [filterValue]="adminFilterValue"
-      [vos]="vosWhereIsAdmin">
-    </perun-web-apps-vos-list>
+@if (!this.isMyProfile) {
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_ADMIN' | translate}}</h1>
+    <perun-web-apps-refresh-button (refresh)="refreshAdminTable()"></perun-web-apps-refresh-button>
+    <perun-web-apps-debounce-filter
+      (filter)="applyAdminFilter($event)"
+      [placeholder]="'SHARED_LIB.PERUN.ORGANIZATIONS.FILTER'">
+    </perun-web-apps-debounce-filter>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-vos-list
+        *perunWebAppsLoader="adminRefresh; indicator: spinner"
+        [loading]="adminRefresh"
+        [displayedColumns]="displayedColumns"
+        [tableId]="adminTableId"
+        [filterValue]="adminFilterValue"
+        [vos]="vosWhereIsAdmin">
+      </perun-web-apps-vos-list>
+    </div>
   </div>
-</div>
+}
 
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>

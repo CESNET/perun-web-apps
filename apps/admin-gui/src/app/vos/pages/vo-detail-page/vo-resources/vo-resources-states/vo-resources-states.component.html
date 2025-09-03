@@ -12,9 +12,11 @@
       <span class="badge bg-danger ms-2">{{errorPropagation.length}}</span>
     </ng-template>
     <ng-template matTabContent>
-      <perun-web-apps-alert *ngIf=" !loading && errorPropagation.length === 0" alert_type="warn">
-        {{'VO_DETAIL.RESOURCES.STATES.NO_RESOURCES_IN_ERROR' | translate}}
-      </perun-web-apps-alert>
+      @if (!loading && errorPropagation.length === 0) {
+        <perun-web-apps-alert alert_type="warn">
+          {{'VO_DETAIL.RESOURCES.STATES.NO_RESOURCES_IN_ERROR' | translate}}
+        </perun-web-apps-alert>
+      }
 
       <app-state-tab [loading]="loading" [propagation]="errorPropagation"> </app-state-tab>
     </ng-template>
@@ -26,9 +28,11 @@
     </ng-template>
 
     <ng-template matTabContent>
-      <perun-web-apps-alert *ngIf="!loading && okPropagation.length === 0" alert_type="warn">
-        {{'VO_DETAIL.RESOURCES.STATES.NO_RESOURCES_IN_OK' | translate}}
-      </perun-web-apps-alert>
+      @if (!loading && okPropagation.length === 0) {
+        <perun-web-apps-alert alert_type="warn">
+          {{'VO_DETAIL.RESOURCES.STATES.NO_RESOURCES_IN_OK' | translate}}
+        </perun-web-apps-alert>
+      }
 
       <app-state-tab [loading]="loading" [propagation]="okPropagation"> </app-state-tab>
     </ng-template>

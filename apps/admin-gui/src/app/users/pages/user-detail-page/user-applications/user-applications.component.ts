@@ -1,3 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  ApplicationsListComponent,
+  ApplicationStateSelectorComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   TABLE_MEMBER_APPLICATIONS_DETAILED,
@@ -21,8 +30,22 @@ import {
   getSortDataColumnQuery,
 } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, PerunTranslateService } from '@perun-web-apps/perun/services';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    ApplicationStateSelectorComponent,
+    LoadingTableComponent,
+    ApplicationsListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-user-applications',
   templateUrl: './user-applications.component.html',
   styleUrls: ['./user-applications.component.scss'],

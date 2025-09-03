@@ -5,26 +5,33 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{ data.title | translate }}</h1>
     <div mat-dialog-content>
-      <div *ngIf="data.action==='RESEND'">
-        <perun-web-apps-alert *ngIf="!loading && displayedMailTypes.length === 0" alert_type="warn">
-          {{'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_ALERT' | translate}}
-        </perun-web-apps-alert>
-        {{'DIALOGS.RE_SEND_NOTIFICATION.SELECT' | translate}}:
-        <mat-form-field class="w-100">
-          <mat-select [(value)]="mailType" disableOptionCentering>
-            <mat-option *ngFor="let mailType of displayedMailTypes" [value]="mailType">
-              {{('DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.' + mailType) | translate}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div *ngIf="mailType === 'APP_REJECTED_USER'">
-          {{'DIALOGS.RE_SEND_NOTIFICATION.REASON' | translate}}:
+      @if (data.action==='RESEND') {
+        <div>
+          @if (!loading && displayedMailTypes.length === 0) {
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_ALERT' | translate}}
+            </perun-web-apps-alert>
+          }
+          {{'DIALOGS.RE_SEND_NOTIFICATION.SELECT' | translate}}:
           <mat-form-field class="w-100">
-            <textarea [(ngModel)]="reason" matInput></textarea>
+            <mat-select [(value)]="mailType" disableOptionCentering>
+              @for (mailType of displayedMailTypes; track mailType) {
+                <mat-option [value]="mailType">
+                  {{('DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.' + mailType) | translate}}
+                </mat-option>
+              }
+            </mat-select>
           </mat-form-field>
+          @if (mailType === 'APP_REJECTED_USER') {
+            <div>
+              {{'DIALOGS.RE_SEND_NOTIFICATION.REASON' | translate}}:
+              <mat-form-field class="w-100">
+                <textarea [(ngModel)]="reason" matInput></textarea>
+              </mat-form-field>
+            </div>
+          }
         </div>
-      </div>
+      }
 
       <perun-web-apps-alert alert_type="warn">
         {{ data.description | translate: {count: data.selectedApplications.length} }}
@@ -43,31 +50,29 @@
       <button class="ms-auto me-2" mat-stroked-button (click)="onCancel()">
         {{'VO_DETAIL.APPLICATION.DIALOG.CANCEL' | translate}}
       </button>
-      <button
-        *ngIf="data.action !== 'RESEND'"
-        color="accent"
-        class="me-2"
-        mat-flat-button
-        (click)="onConfirm()">
-        {{data.confirmButtonLabel | translate}}
-      </button>
-      <span
-        *ngIf="data.action === 'RESEND'"
-        [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_TOOLTIP' | translate"
-        [matTooltipDisabled]="loading ||  displayedMailTypes.length > 0">
+      @if (data.action !== 'RESEND') {
+        <button color="accent" class="me-2" mat-flat-button (click)="onConfirm()">
+          {{data.confirmButtonLabel | translate}}
+        </button>
+      }
+      @if (data.action === 'RESEND') {
         <span
-          [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.MISSING_TYPE_TOOLTIP' | translate"
-          [matTooltipDisabled]="displayedMailTypes.length === 0 || (data.selectedApplications | appMatchMailType: appMails : mailType)">
-          <button
-            color="accent"
-            class="me-2"
-            mat-flat-button
-            [disabled]="loading ||  displayedMailTypes.length === 0 || !(data.selectedApplications | appMatchMailType: appMails : mailType)"
-            (click)="onConfirm()">
-            {{data.confirmButtonLabel | translate}}
-          </button>
+          [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_TOOLTIP' | translate"
+          [matTooltipDisabled]="loading ||  displayedMailTypes.length > 0">
+          <span
+            [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.MISSING_TYPE_TOOLTIP' | translate"
+            [matTooltipDisabled]="displayedMailTypes.length === 0 || (data.selectedApplications | appMatchMailType: appMails : mailType)">
+            <button
+              color="accent"
+              class="me-2"
+              mat-flat-button
+              [disabled]="loading ||  displayedMailTypes.length === 0 || !(data.selectedApplications | appMatchMailType: appMails : mailType)"
+              (click)="onConfirm()">
+              {{data.confirmButtonLabel | translate}}
+            </button>
+          </span>
         </span>
-      </span>
+      }
     </div>
   </div>
 </div>

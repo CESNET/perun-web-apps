@@ -1,11 +1,29 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { enableFormControl } from '@perun-web-apps/perun/utils';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
 import { MembersManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService } from '@perun-web-apps/perun/services';
+import { LoginForNamespaceComponent } from '../login-for-namespace/login-for-namespace.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltip,
+    LoginForNamespaceComponent,
+    PasswordFormComponent,
+  ],
+  standalone: true,
   selector: 'app-login-password-form-with-generate-option',
   templateUrl: './login-password-form-with-generate-option.component.html',
   styleUrls: ['./login-password-form-with-generate-option.component.scss'],

@@ -1,40 +1,47 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 member-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
-  <div *ngIf="!loading && vo !== undefined && member !== undefined">
-    <div class="d-flex page-title-headtitle">
-      <mat-icon
-        matTooltip="{{'MEMBER_DETAIL.ENTITY' | translate}}"
-        [ngStyle]="{'color':'black'}"
-        class="perun-icon perun-icon-detail"
-        [svgIcon]="svgIcon">
-      </mat-icon>
-      <div class="page-title-block">
-        <div class="page-title-headline d-flex align-items-center">
-          <a
-            attr.data-cy="{{member.user.firstName}}-firstName"
-            class="member-link"
-            [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString(), 'members', member.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/organizations', vo.id, 'members', member.id]">
-            {{fullName}}
-          </a>
-          <span class="text-muted"> &nbsp;#{{member.id}} </span>
+  @if (loading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
+  @if (!loading && vo !== undefined && member !== undefined) {
+    <div>
+      <div class="d-flex page-title-headtitle">
+        <mat-icon
+          matTooltip="{{'MEMBER_DETAIL.ENTITY' | translate}}"
+          [ngStyle]="{'color':'black'}"
+          class="perun-icon perun-icon-detail"
+          [svgIcon]="svgIcon">
+        </mat-icon>
+        <div class="page-title-block">
+          <div class="page-title-headline d-flex align-items-center">
+            <a
+              attr.data-cy="{{member.user.firstName}}-firstName"
+              class="member-link"
+              [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString(), 'members', member.id.toString()]"
+              (auxclick)="$event.preventDefault()"
+              [routerLink]="['/organizations', vo.id, 'members', member.id]">
+              {{fullName}}
+            </a>
+            <span class="text-muted"> &nbsp;#{{member.id}} </span>
+          </div>
+          <span class="mt-1 entity-info">
+            {{'MEMBER_DETAIL.ENTITY' | translate}}, {{'MEMBER_DETAIL.USER_ID' | translate}}:
+            @if (isAuthorized) {
+              <a
+                class="member-link"
+                [perunWebAppsMiddleClickRouterLink]="['/admin', 'users', member.userId.toString()]"
+                (auxclick)="$event.preventDefault()"
+                [routerLink]="['/admin', 'users', member.userId]">
+                {{member.userId}}
+              </a>
+            }
+            @if (!isAuthorized) {
+              <span>{{member.userId}}</span>
+            }
+          </span>
         </div>
-        <span class="mt-1 entity-info">
-          {{'MEMBER_DETAIL.ENTITY' | translate}}, {{'MEMBER_DETAIL.USER_ID' | translate}}:
-          <a
-            class="member-link"
-            *ngIf="isAuthorized"
-            [perunWebAppsMiddleClickRouterLink]="['/admin', 'users', member.userId.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/admin', 'users', member.userId]">
-            {{member.userId}}
-          </a>
-          <span *ngIf="!isAuthorized">{{member.userId}}</span>
-        </span>
       </div>
+      <app-animated-router-outlet></app-animated-router-outlet>
     </div>
-    <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
+  }
 </div>

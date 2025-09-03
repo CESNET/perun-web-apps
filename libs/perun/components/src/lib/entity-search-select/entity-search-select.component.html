@@ -8,13 +8,17 @@
       (closed)="closeChange()"
       [formControl]="entitiesCtrl"
       [multiple]="multiple">
-      <mat-select-trigger *ngIf="multiple">
-        {{multipleSelectedText()}}
-      </mat-select-trigger>
-      <mat-select-trigger *ngIf="!multiple && entitiesCtrl?.value">
-        {{mainTextFunction(entitiesCtrl?.value)}}
-        <span class="text-muted">{{secondaryTextFunction(entitiesCtrl?.value)}}</span>
-      </mat-select-trigger>
+      @if (multiple) {
+        <mat-select-trigger>
+          {{multipleSelectedText()}}
+        </mat-select-trigger>
+      }
+      @if (!multiple && entitiesCtrl?.value) {
+        <mat-select-trigger>
+          {{mainTextFunction(entitiesCtrl?.value)}}
+          <span class="text-muted">{{secondaryTextFunction(entitiesCtrl?.value)}}</span>
+        </mat-select-trigger>
+      }
       <mat-option>
         <ngx-mat-select-search
           data-cy="find-input"
@@ -24,17 +28,20 @@
           [formControl]="entityFilterCtrl">
         </ngx-mat-select-search>
       </mat-option>
-      <mat-option
-        class="selected-options-bottom"
-        *ngIf="entitiesCtrl?.value"
-        [value]="entitiesCtrl?.value"
-        (onSelectionChange)="onChange($event)">
-        {{mainTextFunction(entitiesCtrl?.value)}}
-        <span class="text-muted">{{secondaryTextFunction(entitiesCtrl?.value)}}</span>
-        <span *ngIf="displayStatus" class="{{colorByStatus(entitiesCtrl?.value)}}">
-          {{statusTextFunction(entitiesCtrl?.value) ? '('+statusTextFunction(entitiesCtrl?.value)+')' : ''}}
-        </span>
-      </mat-option>
+      @if (entitiesCtrl?.value) {
+        <mat-option
+          class="selected-options-bottom"
+          [value]="entitiesCtrl?.value"
+          (onSelectionChange)="onChange($event)">
+          {{mainTextFunction(entitiesCtrl?.value)}}
+          <span class="text-muted">{{secondaryTextFunction(entitiesCtrl?.value)}}</span>
+          @if (displayStatus) {
+            <span class="{{colorByStatus(entitiesCtrl?.value)}}">
+              {{statusTextFunction(entitiesCtrl?.value) ? '('+statusTextFunction(entitiesCtrl?.value)+')' : ''}}
+            </span>
+          }
+        </mat-option>
+      }
       <cdk-virtual-scroll-viewport
         itemSize="48"
         [style.height.px]="getViewportHeight()"
@@ -48,18 +55,23 @@
           (onSelectionChange)="onChange($event)">
           {{mainTextFunction(entity)}}
           <span class="text-muted">{{secondaryTextFunction(entity)}}</span>
-          <span *ngIf="displayStatus" class="{{colorByStatus(entity)}}">
-            {{statusTextFunction(entity) ? '('+statusTextFunction(entity)+')' : ''}}
-          </span>
+          @if (displayStatus) {
+            <span class="{{colorByStatus(entity)}}">
+              {{statusTextFunction(entity) ? '('+statusTextFunction(entity)+')' : ''}}
+            </span>
+          }
         </mat-option>
       </cdk-virtual-scroll-viewport>
     </mat-select>
-    <mat-hint *ngIf="hint?.length !== 0">{{hint}}</mat-hint>
+    @if (hint?.length !== 0) {
+      <mat-hint>{{hint}}</mat-hint>
+    }
   </mat-form-field>
 
-  <perun-web-apps-deselect-button
-    *ngIf="!disableDeselectButton"
-    [isDisabled]="selectedEntities.length === 0"
-    (deselect)="deselectEvent()">
-  </perun-web-apps-deselect-button>
+  @if (!disableDeselectButton) {
+    <perun-web-apps-deselect-button
+      [isDisabled]="selectedEntities.length === 0"
+      (deselect)="deselectEvent()">
+    </perun-web-apps-deselect-button>
+  }
 </div>

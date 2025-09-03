@@ -1,3 +1,8 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FacilitiesManagerService,
@@ -9,11 +14,12 @@ import {
   Vo,
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { FormControl, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export enum EditFacilityResourceGroupVoDialogOptions {
   FACILITY,
@@ -32,6 +38,18 @@ export interface EditFacilityResourceGroupVoDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-edit-facility-resource-group-vo-dialog',
   templateUrl: './edit-facility-resource-group-vo-dialog.component.html',
   styleUrls: ['./edit-facility-resource-group-vo-dialog.component.scss'],

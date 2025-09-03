@@ -1,9 +1,28 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  FacilitiesListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TABLE_ADMIN_FACILITIES } from '@perun-web-apps/config/table-config';
 import { EnrichedFacility, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    FacilitiesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-facilities',
   templateUrl: './user-facilities.component.html',
   styleUrls: ['./user-facilities.component.scss'],

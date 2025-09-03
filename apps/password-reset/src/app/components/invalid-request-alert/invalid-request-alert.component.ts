@@ -1,7 +1,11 @@
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+  imports: [CommonModule, UiAlertsModule],
+  standalone: true,
   selector: 'perun-web-apps-invalid-request-alert',
   templateUrl: './invalid-request-alert.component.html',
   styleUrls: ['./invalid-request-alert.component.scss'],

@@ -1,3 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  VosListComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
@@ -6,8 +13,20 @@ import {
   TABLE_USER_PROFILE_MEMBER_SELECT,
 } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    VosListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-organizations',
   templateUrl: './user-organizations.component.html',
   styleUrls: ['./user-organizations.component.scss'],

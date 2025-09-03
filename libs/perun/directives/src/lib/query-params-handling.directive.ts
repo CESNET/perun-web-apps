@@ -2,6 +2,7 @@ import { Directive, OnChanges } from '@angular/core';
 import { QueryParamsHandling, RouterLink } from '@angular/router';
 
 @Directive({
+  standalone: true,
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'tr[routerLink], a[routerLink]',
 })

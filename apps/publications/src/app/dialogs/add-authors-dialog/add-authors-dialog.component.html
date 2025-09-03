@@ -27,20 +27,24 @@
       <ng-template #searchSpinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-      <div class="position-relative table-min-height" *ngIf="firstSearchDone">
-        <perun-web-apps-authors-list
-          *perunWebAppsLoader="searchLoading; indicator: searchSpinner"
-          [loading]="searchLoading"
-          [authors]="authors"
-          [selection]="selection"
-          [disableRouting]="true"
-          [tableId]="tableIdAuthors"
-          [displayedColumns]="['select', 'id', 'name', 'organization', 'email']">
-        </perun-web-apps-authors-list>
-      </div>
-      <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
-        {{'DIALOGS.ADD_AUTHORS.SEARCH_INFO' | translate}}
-      </perun-web-apps-alert>
+      @if (firstSearchDone) {
+        <div class="position-relative table-min-height">
+          <perun-web-apps-authors-list
+            *perunWebAppsLoader="searchLoading; indicator: searchSpinner"
+            [loading]="searchLoading"
+            [authors]="authors"
+            [selection]="selection"
+            [disableRouting]="true"
+            [tableId]="tableIdAuthors"
+            [displayedColumns]="['select', 'id', 'name', 'organization', 'email']">
+          </perun-web-apps-authors-list>
+        </div>
+      }
+      @if (!firstSearchDone) {
+        <perun-web-apps-alert alert_type="info">
+          {{'DIALOGS.ADD_AUTHORS.SEARCH_INFO' | translate}}
+        </perun-web-apps-alert>
+      }
     </div>
 
     <div mat-dialog-actions>

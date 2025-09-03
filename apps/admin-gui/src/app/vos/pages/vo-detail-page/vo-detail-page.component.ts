@@ -1,6 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.service';
 import { fadeIn } from '@perun-web-apps/perun/animations';
 import { EnrichedVo, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
@@ -21,8 +30,23 @@ import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
 import { takeUntil } from 'rxjs/operators';
 import { QueryParamsRouterService } from '../../../shared/query-params-router.service';
 import { EntityPathParam } from '@perun-web-apps/perun/models';
+import { RelatedVosComponent } from '../../components/related-vos/related-vos.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    PerunSharedComponentsModule,
+    AnimatedRouterOutletComponent,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    RelatedVosComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-detail-page',
   templateUrl: './vo-detail-page.component.html',
   styleUrls: ['./vo-detail-page.component.scss'],

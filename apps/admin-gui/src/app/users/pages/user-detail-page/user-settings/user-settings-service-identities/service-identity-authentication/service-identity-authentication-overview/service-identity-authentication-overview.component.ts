@@ -1,9 +1,13 @@
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { User } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent],
+  standalone: true,
   selector: 'app-service-identity-authentication-overview',
   templateUrl: './service-identity-authentication-overview.component.html',
   styleUrls: ['./service-identity-authentication-overview.component.scss'],

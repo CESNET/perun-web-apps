@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  ResourcesListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesManagerService, RichResource, Vo } from '@perun-web-apps/perun/openapi';
@@ -9,8 +17,21 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    ResourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-resources-preview',
   templateUrl: './vo-resources-preview.component.html',
   styleUrls: ['./vo-resources-preview.component.scss'],

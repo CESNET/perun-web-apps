@@ -1,5 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   InputCreateSponsoredMemberFromCSV,
   MembersManagerService,
@@ -11,11 +21,21 @@ import {
   SponsoredMembersPdfService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { formatDate, CommonModule } from '@angular/common';
 import { downloadData, emailRegexString } from '@perun-web-apps/perun/utils';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { Subject } from 'rxjs';
+import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
+import { AssignGroupsSponsoredMembersComponent } from '../../assign-groups-sponsored-members/assign-groups-sponsored-members-component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 interface MemberData {
   name: string;
@@ -38,6 +58,29 @@ interface OutputSponsoredMember {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    ExpirationSelectComponent,
+    MatMenuModule,
+    TranslateModule,
+    MatStepLabel,
+    ChooseSponsorComponent,
+    MatStepper,
+    AssignGroupsSponsoredMembersComponent,
+    MatStep,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-generate-sponsored-members-dialog',
   templateUrl: './generate-sponsored-members-dialog.component.html',
   styleUrls: ['./generate-sponsored-members-dialog.component.scss'],

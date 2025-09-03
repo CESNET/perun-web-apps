@@ -1,13 +1,35 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { AttributeForExportData } from '@perun-web-apps/perun/models';
 import { AttributeRightsService, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { switchMap } from 'rxjs/operators';
 import { of, zip } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-attribute-import-dialog',
   templateUrl: './attribute-import-dialog.component.html',
   styleUrls: ['./attribute-import-dialog.component.scss'],

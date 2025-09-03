@@ -1,11 +1,27 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
 import { ApiRequestConfigurationService, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ChangePasswordDialogData {
   namespace: string;
@@ -13,6 +29,20 @@ export interface ChangePasswordDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    PasswordFormComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-password-dialog',
   templateUrl: './change-password-dialog.component.html',
   styleUrls: ['./change-password-dialog.component.css'],

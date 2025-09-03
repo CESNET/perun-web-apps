@@ -1,11 +1,19 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, ValidatorFn, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { FormControl, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { InvitationsManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { formatDate } from '@angular/common';
+import { formatDate, CommonModule } from '@angular/common';
 import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface InvitePreapprovedMemberDialogData {
   theme: string;
@@ -14,6 +22,21 @@ export interface InvitePreapprovedMemberDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-invite-preapproved-member-dialog',
   templateUrl: './invite-preapproved-member-dialog.component.html',
   styleUrls: ['./invite-preapproved-member-dialog.component.scss'],

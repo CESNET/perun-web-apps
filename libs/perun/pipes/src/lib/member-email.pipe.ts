@@ -3,6 +3,7 @@ import { parseEmail } from '@perun-web-apps/perun/utils';
 import { RichMember } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'memberEmail',
 })
 export class MemberEmailPipe implements PipeTransform {

@@ -22,15 +22,16 @@
       {{'VO_MANAGEMENT.CREATE_VO' | translate}}
     </button>
   </span>
-  <button
-    (click)="onRemoveVo()"
-    *ngIf="deleteAuth"
-    [disabled]="selection.selected.length === 0"
-    class="me-2"
-    color="warn"
-    mat-flat-button>
-    {{'VO_MANAGEMENT.REMOVE_VO' | translate}}
-  </button>
+  @if (deleteAuth) {
+    <button
+      (click)="onRemoveVo()"
+      [disabled]="selection.selected.length === 0"
+      class="me-2"
+      color="warn"
+      mat-flat-button>
+      {{'VO_MANAGEMENT.REMOVE_VO' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     [autoFocus]="true"
     (filter)="applyFilter($event)"

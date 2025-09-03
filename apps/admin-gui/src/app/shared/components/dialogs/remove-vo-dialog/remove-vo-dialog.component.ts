@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { DeleteDialogResult } from '@perun-web-apps/perun/dialogs';
+import { DeleteDialogResult, DeleteEntityDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 export interface RemoveVoDialogData {
   vos: Vo[];
@@ -12,6 +13,8 @@ export interface RemoveVoDialogData {
 }
 
 @Component({
+  imports: [CommonModule, DeleteEntityDialogComponent],
+  standalone: true,
   selector: 'app-remove-vo-dialog',
   templateUrl: './remove-vo-dialog.component.html',
   styleUrls: ['./remove-vo-dialog.component.scss'],

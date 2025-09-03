@@ -4,9 +4,8 @@ import { AuthService } from '@perun-web-apps/perun/services';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, AuthCallbackComponent],
   providers: [AuthService],
   exports: [AuthCallbackComponent],
-  declarations: [AuthCallbackComponent],
 })
 export class CoreModule {}

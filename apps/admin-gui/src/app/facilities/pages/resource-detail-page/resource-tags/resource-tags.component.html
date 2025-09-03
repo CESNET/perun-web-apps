@@ -1,32 +1,27 @@
 <h1 class="page-subtitle">{{'RESOURCE_DETAIL.TAGS.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="updateData()"></perun-web-apps-refresh-button>
-<button
-  *ngIf="createAuth"
-  (click)="create()"
-  class="me-2 action-button"
-  color="accent"
-  mat-flat-button>
-  {{'VO_DETAIL.RESOURCES.TAGS.CREATE_BUTTON' | translate}}
-</button>
+@if (createAuth) {
+  <button (click)="create()" class="me-2 action-button" color="accent" mat-flat-button>
+    {{'VO_DETAIL.RESOURCES.TAGS.CREATE_BUTTON' | translate}}
+  </button>
+}
 
-<button
-  *ngIf="addAuth"
-  (click)="addTag()"
-  class="me-2 action-button"
-  color="accent"
-  mat-flat-button>
-  {{'RESOURCE_DETAIL.TAGS.ADD_BUTTON' | translate}}
-</button>
+@if (addAuth) {
+  <button (click)="addTag()" class="me-2 action-button" color="accent" mat-flat-button>
+    {{'RESOURCE_DETAIL.TAGS.ADD_BUTTON' | translate}}
+  </button>
+}
 
-<button
-  *ngIf="removeAuth"
-  (click)="removeTags()"
-  class="me-2"
-  color="warn"
-  [disabled]="loading || selection.selected.length === 0"
-  mat-flat-button>
-  {{'RESOURCE_DETAIL.TAGS.REMOVE_BUTTON' | translate}}
-</button>
+@if (removeAuth) {
+  <button
+    (click)="removeTags()"
+    class="me-2"
+    color="warn"
+    [disabled]="loading || selection.selected.length === 0"
+    mat-flat-button>
+    {{'RESOURCE_DETAIL.TAGS.REMOVE_BUTTON' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'RESOURCE_DETAIL.TAGS.SEARCH'">

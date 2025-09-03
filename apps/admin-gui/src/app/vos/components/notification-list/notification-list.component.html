@@ -13,28 +13,28 @@
       matSort
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggle(row) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: getMailType(row)}"
-            [checked]="selection.isSelected(row)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggle(row) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: getMailType(row)}"
+              [checked]="selection.isSelected(row)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TABLE_EMAIL_ID' | translate}}
@@ -54,18 +54,17 @@
           {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TABLE_APPLICATION_TYPE' | translate}}
         </th>
         <td *matCellDef="let applicationMail" mat-cell>
-          <div
-            *ngIf="applicationMail.appType === 'INITIAL'; else extension"
-            class="d-flex align-items-center">
-            <mat-icon matTooltip="Initial" matTooltipPosition="above">arrow_right_alt</mat-icon>
-            {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TABLE_APPLICATION_TYPE_INITIAL' | translate}}
-          </div>
-          <ng-template #extension>
+          @if (applicationMail.appType === 'INITIAL') {
+            <div class="d-flex align-items-center">
+              <mat-icon matTooltip="Initial" matTooltipPosition="above">arrow_right_alt</mat-icon>
+              {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TABLE_APPLICATION_TYPE_INITIAL' | translate}}
+            </div>
+          } @else {
             <div class="d-flex align-items-center">
               <mat-icon matTooltip="Extension" matTooltipPosition="above">cached</mat-icon>
               {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TABLE_APPLICATION_TYPE_EXTENSION' | translate}}
             </div>
-          </ng-template>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="send">
@@ -97,6 +96,8 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && this.applicationMails.length === 0" alert_type="warn">
-  {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.NO_EMAILS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && this.applicationMails.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.NO_EMAILS' | translate}}
+  </perun-web-apps-alert>
+}

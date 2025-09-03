@@ -1,5 +1,20 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {
   Author,
   CabinetManagerService,
@@ -20,12 +35,23 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { MatTabGroup } from '@angular/material/tabs';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MatStepper } from '@angular/material/stepper';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatStep,
+  MatStepLabel,
+  MatStepper,
+  MatStepperNext,
+  MatStepperPrevious,
+} from '@angular/material/stepper';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { BehaviorSubject } from 'rxjs';
+import { AddAuthorsComponent } from '../../../components/add-authors/add-authors.component';
+import { PublicationDetailComponent } from '../../publication-detail/publication-detail.component';
+import { PublicationsListComponent } from '../../../components/publications-list/publications-list.component';
+import { AddThanksComponent } from '../../../components/add-thanks/add-thanks.component';
+import { PublicationTabLabelPipe } from '@perun-web-apps/perun/pipes';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -40,6 +66,32 @@ export const YEAR_MODE_FORMATS = {
 };
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    UiAlertsModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatStepLabel,
+    AddAuthorsComponent,
+    PublicationDetailComponent,
+    MatStepperNext,
+    PublicationsListComponent,
+    AddThanksComponent,
+    MatStep,
+    MatStepper,
+    MatStepperPrevious,
+    PublicationTabLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-create-single-publication-page',
   templateUrl: './create-single-publication-page.component.html',
   styleUrls: ['./create-single-publication-page.component.scss'],

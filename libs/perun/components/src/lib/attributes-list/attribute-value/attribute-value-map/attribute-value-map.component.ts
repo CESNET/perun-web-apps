@@ -1,3 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +13,18 @@ import { ShowValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { getDefaultDialogConfig, isVirtualAttribute } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attribute-value-map',
   templateUrl: './attribute-value-map.component.html',
   styleUrls: ['./attribute-value-map.component.scss'],

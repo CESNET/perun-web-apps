@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ResourceTag } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'resourceTagsToString',
 })
 export class ResourceTagsToStringPipe implements PipeTransform {

@@ -1,5 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpirationSelectComponent } from '../expiration-select/expiration-select.component';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MemberStatusPipe } from '@perun-web-apps/perun/pipes';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Attribute,
   AttributesManagerService,
@@ -8,10 +15,11 @@ import {
   RichMember,
 } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
-import { MatSelectChange } from '@angular/material/select';
-import { formatDate } from '@angular/common';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { formatDate, CommonModule } from '@angular/common';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { iif, mergeMap, of, switchMap } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ChangeMemberStatusDialogData {
   member: RichMember;
@@ -21,6 +29,20 @@ export interface ChangeMemberStatusDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDialogModule,
+    MemberStatusPipe,
+    LoadingDialogComponent,
+    ExpirationSelectComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-member-status-dialog',
   templateUrl: './change-member-status-dialog.component.html',
   styleUrls: ['./change-member-status-dialog.component.scss'],

@@ -1,3 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDivider } from '@angular/material/divider';
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,7 +15,7 @@ import {
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AddApplicationFormItemDialogComponent } from '../../../../../shared/components/dialogs/add-application-form-item-dialog/add-application-form-item-dialog.component';
 import { EditApplicationFormItemDialogComponent } from '../../../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationFormCopyItemsDialogComponent } from '../../../../../shared/components/dialogs/application-form-copy-items-dialog/application-form-copy-items-dialog.component';
@@ -22,8 +30,26 @@ import {
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { ApplicationFormListComponent } from '../../../../components/application-form-list/application-form-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    UiAlertsModule,
+    RefreshButtonComponent,
+    MatDivider,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    ApplicationFormListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-settings-application-form',
   templateUrl: './group-settings-application-form.component.html',
   styleUrls: ['./group-settings-application-form.component.scss'],

@@ -1,6 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-advanced-filter',
   templateUrl: './advanced-filter.component.html',
   styleUrls: ['./advanced-filter.component.scss'],

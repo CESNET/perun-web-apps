@@ -1,12 +1,13 @@
-<div
-  *ngIf="displayWarning"
-  class="beta-warning text-truncate"
-  matTooltipPosition="below"
-  matTooltip="{{ warningMessage }}">
-  <mat-icon>alert</mat-icon>
-  {{ warningMessage }}
-</div>
-<ng-template [ngIf]="!isLoginScreenShown && !isServiceAccess && isLoggedIn()">
+@if (displayWarning) {
+  <div
+    class="beta-warning text-truncate"
+    matTooltipPosition="below"
+    matTooltip="{{ warningMessage }}">
+    <mat-icon>alert</mat-icon>
+    {{ warningMessage }}
+  </div>
+}
+@if (!isLoginScreenShown && !isServiceAccess && isLoggedIn()) {
   <perun-web-apps-notificator [displayWarning]="displayWarning"></perun-web-apps-notificator>
   <div class="app-min-width">
     <perun-web-apps-header
@@ -33,17 +34,17 @@
           <perun-web-apps-breadcrumbs></perun-web-apps-breadcrumbs>
           <router-outlet></router-outlet>
         </div>
-
         <div #footer>
           <perun-web-apps-footer></perun-web-apps-footer>
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>
-</ng-template>
-<perun-web-apps-login-screen-base
-  *ngIf="isLoginScreenShown || isServiceAccess || !isLoggedIn()"
-  [application]="'user-profile'"
-  [displayWarning]="displayWarning"
-  [headerTitle]="headerLabel">
-</perun-web-apps-login-screen-base>
+}
+@if (isLoginScreenShown || isServiceAccess || !isLoggedIn()) {
+  <perun-web-apps-login-screen-base
+    [application]="'user-profile'"
+    [displayWarning]="displayWarning"
+    [headerTitle]="headerLabel">
+  </perun-web-apps-login-screen-base>
+}

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 /* eslint-disable
    @typescript-eslint/no-explicit-any,
    @typescript-eslint/no-unsafe-member-access,
@@ -10,9 +11,16 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from '@perun-web-apps/perun/openapi';
 import { CopyrightItem, FooterColumn } from '@perun-web-apps/perun/models';
+import {
+  FooterLogoPathPipe,
+  LocalisedLinkPipe,
+  LocalisedTextPipe,
+} from '@perun-web-apps/perun/pipes';
 declare let require: any;
 
 @Component({
+  imports: [CommonModule, LocalisedTextPipe, LocalisedLinkPipe, FooterLogoPathPipe],
+  standalone: true,
   selector: 'perun-web-apps-footer',
   templateUrl: './perun-footer.component.html',
   styleUrls: ['./perun-footer.component.scss'],

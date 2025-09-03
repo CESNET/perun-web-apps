@@ -1,9 +1,14 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface DeleteAttributeDefinitionDialogData {
   attributes: AttributeDefinition[];
@@ -11,6 +16,17 @@ export interface DeleteAttributeDefinitionDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-delete-attribute-definition-dialog',
   templateUrl: './delete-attribute-definition-dialog.component.html',
   styleUrls: ['./delete-attribute-definition-dialog.component.scss'],

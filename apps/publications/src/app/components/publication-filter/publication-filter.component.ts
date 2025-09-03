@@ -1,9 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CabinetManagerService, Category } from '@perun-web-apps/perun/openapi';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { formatDate } from '@angular/common';
+import { formatDate, CommonModule } from '@angular/common';
+import { YearRangeComponent } from '../year-range/year-range.component';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -27,6 +34,18 @@ export interface FilterPublication {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    YearRangeComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-publication-filter',
   templateUrl: './publication-filter.component.html',
   styleUrls: ['./publication-filter.component.scss'],

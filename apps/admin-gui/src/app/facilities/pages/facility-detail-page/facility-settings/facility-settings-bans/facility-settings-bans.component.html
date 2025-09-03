@@ -3,18 +3,21 @@
 </h1>
 
 <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
-<button (click)="add()" *ngIf="addAuth" class="me-2 action-button" color="accent" mat-flat-button>
-  {{'FACILITY_DETAIL.SETTINGS.BANS.ADD' | translate}}
-</button>
-<button
-  *ngIf="removeAuth"
-  (click)="remove()"
-  color="warn"
-  [disabled]="loading || selection.selected.length === 0"
-  class="me-2"
-  mat-flat-button>
-  {{'FACILITY_DETAIL.SETTINGS.BANS.REMOVE' | translate}}
-</button>
+@if (addAuth) {
+  <button (click)="add()" class="me-2 action-button" color="accent" mat-flat-button>
+    {{'FACILITY_DETAIL.SETTINGS.BANS.ADD' | translate}}
+  </button>
+}
+@if (removeAuth) {
+  <button
+    (click)="remove()"
+    color="warn"
+    [disabled]="loading || selection.selected.length === 0"
+    class="me-2"
+    mat-flat-button>
+    {{'FACILITY_DETAIL.SETTINGS.BANS.REMOVE' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'FACILITY_DETAIL.SETTINGS.BANS.FILTER'"

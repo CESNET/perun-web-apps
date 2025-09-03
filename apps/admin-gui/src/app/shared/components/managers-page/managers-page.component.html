@@ -17,45 +17,47 @@
       <perun-web-apps-refresh-button
         (refresh)="refreshUsers()"
         class="mt-2"></perun-web-apps-refresh-button>
-      <button
-        *ngIf="manageAuth && !configMode"
-        (click)="addManager()"
-        color="accent"
-        class="me-2 action-button"
-        data-cy="add-manager-button"
-        mat-flat-button>
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.ADD' | translate}}
-      </button>
+      @if (manageAuth && !configMode) {
+        <button
+          (click)="addManager()"
+          color="accent"
+          class="me-2 action-button"
+          data-cy="add-manager-button"
+          mat-flat-button>
+          {{'SHARED.COMPONENTS.MANAGERS_PAGE.ADD' | translate}}
+        </button>
+      }
 
-      <button
-        *ngIf="manageAuth && !configMode"
-        (click)="removeManager()"
-        color="warn"
-        [disabled]="loading || selectionUsers.selected.length === 0"
-        data-cy="remove-manager-button"
-        class="me-2"
-        mat-flat-button>
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.REMOVE' | translate}}
-      </button>
+      @if (manageAuth && !configMode) {
+        <button
+          (click)="removeManager()"
+          color="warn"
+          [disabled]="loading || selectionUsers.selected.length === 0"
+          data-cy="remove-manager-button"
+          class="me-2"
+          mat-flat-button>
+          {{'SHARED.COMPONENTS.MANAGERS_PAGE.REMOVE' | translate}}
+        </button>
+      }
 
       <mat-form-field data-cy="role-filter" class="me-2 mt-2">
         <mat-label>{{'SHARED.COMPONENTS.MANAGERS_PAGE.SELECT_ROLE' | translate}}</mat-label>
         <mat-select (selectionChange)="refreshUsers(true)" [(value)]="selectedRole">
-          <mat-option
-            attr.data-cy="{{role.roleName | lowercase}}"
-            *ngFor="let role of availableRoles"
-            [value]="role.roleName">
-            {{role | displayedRole}}
-          </mat-option>
+          @for (role of availableRoles; track role) {
+            <mat-option attr.data-cy="{{role.roleName | lowercase}}" [value]="role.roleName">
+              {{role | displayedRole}}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
-      <mat-slide-toggle
-        *ngIf="complementaryObject.beanName.includes('Group')"
-        (change)="showIndirectAdmins = !showIndirectAdmins; refreshUsers()"
-        [checked]="showIndirectAdmins">
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_DERIVED_ADMINS' | translate}}
-      </mat-slide-toggle>
+      @if (complementaryObject.beanName.includes('Group')) {
+        <mat-slide-toggle
+          (change)="showIndirectAdmins = !showIndirectAdmins; refreshUsers()"
+          [checked]="showIndirectAdmins">
+          {{'SHARED.COMPONENTS.MANAGERS_PAGE.SHOW_DERIVED_ADMINS' | translate}}
+        </mat-slide-toggle>
+      }
 
       <div class="position-relative table-min-height">
         <perun-web-apps-users-list
@@ -84,33 +86,29 @@
       <perun-web-apps-refresh-button
         (refresh)="refreshGroups()"
         class="mt-2"></perun-web-apps-refresh-button>
-      <button
-        *ngIf="manageAuth && !configMode"
-        (click)="addGroup()"
-        color="accent"
-        class="me-2 action-button"
-        mat-flat-button>
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.ADD' | translate}}
-      </button>
+      @if (manageAuth && !configMode) {
+        <button (click)="addGroup()" color="accent" class="me-2 action-button" mat-flat-button>
+          {{'SHARED.COMPONENTS.MANAGERS_PAGE.ADD' | translate}}
+        </button>
+      }
 
-      <button
-        *ngIf="manageAuth && !configMode"
-        (click)="removeGroup()"
-        [disabled]="loading || selectionGroups.selected.length === 0"
-        class="me-2"
-        color="warn"
-        mat-flat-button>
-        {{'SHARED.COMPONENTS.MANAGERS_PAGE.REMOVE' | translate}}
-      </button>
+      @if (manageAuth && !configMode) {
+        <button
+          (click)="removeGroup()"
+          [disabled]="loading || selectionGroups.selected.length === 0"
+          class="me-2"
+          color="warn"
+          mat-flat-button>
+          {{'SHARED.COMPONENTS.MANAGERS_PAGE.REMOVE' | translate}}
+        </button>
+      }
 
       <mat-form-field class="me-2 mt-2">
         <mat-label>{{'SHARED.COMPONENTS.MANAGERS_PAGE.SELECT_ROLE' | translate}}</mat-label>
         <mat-select (selectionChange)="refreshGroups()" [(value)]="selectedRole">
-          <mat-option
-            *ngFor="let role of availableRoles"
-            [value]="role.roleName"
-            >{{role | displayedRole}}</mat-option
-          >
+          @for (role of availableRoles; track role) {
+            <mat-option [value]="role.roleName">{{role | displayedRole}}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
@@ -131,6 +129,8 @@
   </mat-tab>
 </mat-tab-group>
 
-<perun-web-apps-alert *ngIf="availableRoles.length === 0" alert_type="warn">
-  {{'SHARED.COMPONENTS.MANAGERS_PAGE.NO_AVAILABLE_ROLES' | translate}}
-</perun-web-apps-alert>
+@if (availableRoles.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.MANAGERS_PAGE.NO_AVAILABLE_ROLES' | translate}}
+  </perun-web-apps-alert>
+}

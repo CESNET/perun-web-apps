@@ -4,7 +4,7 @@
   [theme]="data.theme"
   [ban]="ban"
   (add)="submitBan($event)"
-  (cancel)="cancel()">
+  (cancelled)="cancel()">
   <perun-web-apps-debounce-filter
     (filter)="setFilter($event)"
     [placeholder]="'DIALOGS.ADD_BAN.FILTER'"></perun-web-apps-debounce-filter>

@@ -3,45 +3,50 @@
   <perun-web-apps-debounce-filter
     [placeholder]="'SERVICES.FILTER' | customTranslate | translate"
     (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
-  <mat-spinner class="ms-auto me-auto" *ngIf="outerLoading"></mat-spinner>
-  <mat-accordion *ngIf="!outerLoading">
-    <mat-expansion-panel (opened)="getUserData()">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{'PRIVACY.USER_INFO' | customTranslate | translate}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ng-template matExpansionPanelContent>
-        <div class="position-relative table-min-height">
-          <perun-web-apps-attributes-list
-            *perunWebAppsLoader="innerLoading; indicator: spinner"
-            [loading]="innerLoading"
-            [attributes]="attributes"
-            [readonly]="true"
-            [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
-        </div>
+  @if (outerLoading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
+  @if (!outerLoading) {
+    <mat-accordion>
+      <mat-expansion-panel (opened)="getUserData()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{'PRIVACY.USER_INFO' | customTranslate | translate}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <div class="position-relative table-min-height">
+            <perun-web-apps-attributes-list
+              *perunWebAppsLoader="innerLoading; indicator: spinner"
+              [loading]="innerLoading"
+              [attributes]="attributes"
+              [readonly]="true"
+              [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+      @for (vo of filteredVos; track vo) {
+        <mat-expansion-panel (opened)="getMemberData(vo)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{'PRIVACY.DATA' | customTranslate | translate}}{{vo.name}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <div class="position-relative table-min-height">
+              <perun-web-apps-attributes-list
+                *perunWebAppsLoader="innerLoading; indicator: spinner"
+                [loading]="innerLoading"
+                [attributes]="attributes"
+                [readonly]="true"
+                [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
+            </div>
+          </ng-template>
+        </mat-expansion-panel>
+      }
+      <ng-template #spinner>
+        <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMemberData(vo)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{'PRIVACY.DATA' | customTranslate | translate}}{{vo.name}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ng-template matExpansionPanelContent>
-        <div class="position-relative table-min-height">
-          <perun-web-apps-attributes-list
-            *perunWebAppsLoader="innerLoading; indicator: spinner"
-            [loading]="innerLoading"
-            [attributes]="attributes"
-            [readonly]="true"
-            [hiddenColumns]="hiddenColumns"></perun-web-apps-attributes-list>
-        </div>
-      </ng-template>
-    </mat-expansion-panel>
-    <ng-template #spinner>
-      <perun-web-apps-loading-table></perun-web-apps-loading-table>
-    </ng-template>
-  </mat-accordion>
+    </mat-accordion>
+  }
 </div>

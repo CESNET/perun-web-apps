@@ -2,15 +2,19 @@
   <mat-form-field class="grow-item">
     <mat-label>{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.ROLE' | translate}}</mat-label>
     <mat-select [(ngModel)]="policy.role" (selectionChange)="changeRole($event)">
-      <mat-option *ngFor="let role of roles | async" [value]="role.roleName">
-        {{role | displayedRole}}
-      </mat-option>
+      @for (role of roles | async; track role) {
+        <mat-option [value]="role.roleName">
+          {{role | displayedRole}}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label>{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.ENTITY' | translate}}</mat-label>
     <mat-select [(ngModel)]="policy.object">
-      <mat-option *ngFor="let obj of objects | async" [value]="obj">{{obj}}</mat-option>
+      @for (obj of objects | async; track obj) {
+        <mat-option [value]="obj">{{obj}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <button

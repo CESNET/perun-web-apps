@@ -3,6 +3,7 @@ import { GroupWithStatus } from '@perun-web-apps/perun/models';
 import { isGroupSynchronized } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'groupCheckboxTooltip',
 })
 export class GroupCheckboxTooltipPipe implements PipeTransform {

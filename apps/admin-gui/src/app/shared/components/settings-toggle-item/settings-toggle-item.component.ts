@@ -1,8 +1,12 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { openClose } from '@perun-web-apps/perun/animations';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
+  imports: [CommonModule, MatSlideToggleModule, FormsModule, ReactiveFormsModule],
+  standalone: true,
   selector: 'app-settings-toggle-item',
   templateUrl: './settings-toggle-item.component.html',
   styleUrls: ['./settings-toggle-item.component.scss'],

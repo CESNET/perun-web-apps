@@ -1,9 +1,14 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { ActivatedRoute } from '@angular/router';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent, MatProgressSpinnerModule],
+  standalone: true,
   selector: 'app-user-settings-overview',
   templateUrl: './user-settings-overview.component.html',
   styleUrls: ['./user-settings-overview.component.scss'],

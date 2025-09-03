@@ -1,9 +1,13 @@
+import { ManagersPageComponent } from '../../../../../shared/components/managers-page/managers-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleManagementRules, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, ManagersPageComponent],
+  standalone: true,
   selector: 'app-vo-settings-managers',
   templateUrl: './vo-settings-managers.component.html',
   styleUrls: ['./vo-settings-managers.component.scss'],

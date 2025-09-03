@@ -8,9 +8,13 @@
   </div>
 
   <div class="toggles">
-    <div class="spinner-container" *ngIf="loading">
-      <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
-    </div>
+    @if (loading) {
+      <div class="spinner-container">
+        @if (loading) {
+          <mat-spinner class="ms-auto me-auto"></mat-spinner>
+        }
+      </div>
+    }
     <mat-slide-toggle
       [disabled]="loading"
       labelPosition="before"

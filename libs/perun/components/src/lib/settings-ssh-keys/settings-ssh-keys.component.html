@@ -6,25 +6,27 @@
   {{'SHARED_LIB.PERUN.COMPONENTS.SSH_KEYS.NEW_KEY'|customTranslate | translate}}
 </button>
 <mat-list>
-  <mat-list-item *ngFor="let key of userKeys" class="dark-hover-list-item w-auto" matRipple>
-    <div class="d-flex flex-row">
-      <p (click)="showWholeKey(key)" class="truncate center-content cursor-pointer">{{key}}</p>
-      <button
-        [cdkCopyToClipboard]="key"
-        class="ms-auto center-content"
-        color="accent"
-        mat-icon-button
-        matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SSH_KEYS.COPY_TOOLTIP' | customTranslate | translate}}">
-        <mat-icon> file_copy </mat-icon>
-      </button>
-      <button
-        (click)="removeKey(key)"
-        class="ms-2 center-content"
-        color="warn"
-        mat-icon-button
-        matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SSH_KEYS.REMOVE_TOOLTIP' | customTranslate | translate}}">
-        <mat-icon> delete </mat-icon>
-      </button>
-    </div>
-  </mat-list-item>
+  @for (key of userKeys; track key) {
+    <mat-list-item class="dark-hover-list-item w-auto" matRipple>
+      <div class="d-flex flex-row">
+        <p (click)="showWholeKey(key)" class="truncate center-content cursor-pointer">{{key}}</p>
+        <button
+          [cdkCopyToClipboard]="key"
+          class="ms-auto center-content"
+          color="accent"
+          mat-icon-button
+          matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SSH_KEYS.COPY_TOOLTIP' | customTranslate | translate}}">
+          <mat-icon> file_copy </mat-icon>
+        </button>
+        <button
+          (click)="removeKey(key)"
+          class="ms-2 center-content"
+          color="warn"
+          mat-icon-button
+          matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SSH_KEYS.REMOVE_TOOLTIP' | customTranslate | translate}}">
+          <mat-icon> delete </mat-icon>
+        </button>
+      </div>
+    </mat-list-item>
+  }
 </mat-list>

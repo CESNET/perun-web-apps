@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { FooterColumn, FooterElement } from '@perun-web-apps/perun/models';
 
 @Pipe({
+  standalone: true,
   name: 'localisedText',
 })
 export class LocalisedTextPipe implements PipeTransform {

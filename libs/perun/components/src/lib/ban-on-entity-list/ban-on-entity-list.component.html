@@ -15,29 +15,30 @@
       matSortActive="recent"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            *ngIf="selection.isMultipleSelection()"
-            (change)="$event ? masterToggle(selected.all) : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let ban" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="toggleRow(ban)"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(ban) | checkboxLabel | translate: {name: ban.name}"
-            [checked]="selection.isSelected(ban)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            @if (selection.isMultipleSelection()) {
+              <mat-checkbox
+                (change)="$event ? masterToggle(selected.all) : null"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                color="primary">
+              </mat-checkbox>
+            }
+          </th>
+          <td *matCellDef="let ban" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="toggleRow(ban)"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(ban) | checkboxLabel | translate: {name: ban.name}"
+              [checked]="selection.isSelected(ban)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="banId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{'SHARED_LIB.PERUN.COMPONENTS.BAN_ON_ENTITY_LIST.BAN_ID_HEADER' | translate}}
@@ -89,13 +90,14 @@
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let ban">
-          <button
-            *ngIf="[(ban.vo ?? ban.resource ?? ban.facility)] | isAuthorized : updatePolicy"
-            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.BAN_ON_ENTITY_LIST.UPDATE_BAN' | translate}}"
-            mat-icon-button
-            (click)="updateBan.emit(ban)">
-            <mat-icon>edit</mat-icon>
-          </button>
+          @if ([(ban.vo ?? ban.resource ?? ban.facility)] | isAuthorized : updatePolicy) {
+            <button
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.BAN_ON_ENTITY_LIST.UPDATE_BAN' | translate}}"
+              mat-icon-button
+              (click)="updateBan.emit(ban)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
         </td>
       </ng-container>
       <tr *matHeaderRowDef="columns" mat-header-row></tr>
@@ -104,6 +106,8 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && dataSource.filteredData.length === 0" alert_type="warn">
-  {{'SHARED_LIB.PERUN.COMPONENTS.BAN_ON_ENTITY_LIST.NO_BANS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && dataSource.filteredData.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.PERUN.COMPONENTS.BAN_ON_ENTITY_LIST.NO_BANS' | translate}}
+  </perun-web-apps-alert>
+}

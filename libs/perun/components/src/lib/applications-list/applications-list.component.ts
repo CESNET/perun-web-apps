@@ -1,3 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  ApplicationStatePipe,
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+  SelectApplicationLinkPipe,
+  UserFullNamePipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -26,7 +40,7 @@ import {
   getDataForExport,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
   GuiAuthResolver,
   TableCheckbox,
@@ -34,12 +48,40 @@ import {
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getExportDataForColumn, getSortDataColumn } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { AppFriendlyNamePipe } from '@perun-web-apps/perun/pipes';
+import { AppFedInfoParsePipe } from '@perun-web-apps/perun/pipes';
+import { AppValuePipe } from '@perun-web-apps/perun/pipes';
+import { ApplicationTypeIconComponent } from '../application-type-icon/application-type-icon.component';
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    ApplicationStatePipe,
+    UserFullNamePipe,
+    SelectApplicationLinkPipe,
+    MasterCheckboxLabelPipe,
+    MultiWordDataCyPipe,
+    AppFriendlyNamePipe,
+    AppFedInfoParsePipe,
+    AppValuePipe,
+    ApplicationTypeIconComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-applications-list',
   templateUrl: './applications-list.component.html',
   styleUrls: ['./applications-list.component.css'],

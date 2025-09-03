@@ -1,3 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -16,15 +23,40 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_GROUP_MANAGERS_PAGE } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReloadEntityDetailService } from '../../../core/services/common/reload-entity-detail.service';
 import { AuthPrivilege } from '@perun-web-apps/perun/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  RefreshButtonComponent,
+  UsersListComponent,
+  GroupsListComponent,
+} from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    UiAlertsModule,
+    RefreshButtonComponent,
+    MatTabsModule,
+    TranslateModule,
+    UsersListComponent,
+    GroupsListComponent,
+    LoaderDirective,
+    DisplayedRolePipe,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-managers-page',
   templateUrl: './managers-page.component.html',
   styleUrls: ['./managers-page.component.scss'],

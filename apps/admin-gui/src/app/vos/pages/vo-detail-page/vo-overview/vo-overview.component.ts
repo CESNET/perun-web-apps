@@ -1,3 +1,9 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  MenuButtonsFieldComponent,
+  ExpandableTilesComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { SideMenuService } from '../../../../core/services/common/side-menu.service';
@@ -11,6 +17,13 @@ import {
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [
+    CommonModule,
+    MenuButtonsFieldComponent,
+    ExpandableTilesComponent,
+    MatProgressSpinnerModule,
+  ],
+  standalone: true,
   selector: 'app-vo-overview',
   templateUrl: './vo-overview.component.html',
   styleUrls: ['./vo-overview.component.scss'],

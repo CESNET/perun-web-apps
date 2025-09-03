@@ -1,3 +1,18 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { RecentlyViewedIconComponent } from '../recently-viewed-icon/recently-viewed-icon.component';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  GetResourceRoutePipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -8,8 +23,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Group, RichResource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -24,8 +39,33 @@ import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
+import { GroupResourceStatusComponent } from '../group-resource-status/group-resource-status.component';
+import { ResourceTagsToStringPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RecentlyViewedIconComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    MasterCheckboxLabelPipe,
+    CheckboxLabelPipe,
+    AuthorizedGroupsCellComponent,
+    GroupResourceStatusComponent,
+    ResourceTagsToStringPipe,
+    GetResourceRoutePipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-resources-list',
   templateUrl: './resources-list.component.html',
   styleUrls: ['./resources-list.component.scss'],

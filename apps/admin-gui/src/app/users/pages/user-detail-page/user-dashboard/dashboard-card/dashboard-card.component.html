@@ -9,41 +9,49 @@
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
-  <div *ngIf="primaryObject === 'Vo'" class="position-relative table-min-height">
-    <perun-web-apps-vos-list
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      [displayedColumns]="['id', 'recent', 'shortName', 'name']"
-      [recentIds]="this.recentIds"
-      [vos]="this.objects">
-    </perun-web-apps-vos-list>
-  </div>
-  <div *ngIf="primaryObject === 'Group'" class="position-relative table-min-height">
-    <perun-web-apps-groups-list
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      [displayedColumns]="['id', 'recent', 'vo', 'name', 'description']"
-      [groups]="this.objects"
-      [recentIds]="recentIds">
-    </perun-web-apps-groups-list>
-  </div>
-  <div *ngIf="primaryObject === 'Resource'" class="position-relative table-min-height">
-    <perun-web-apps-resources-list
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      [displayedColumns]="['id', 'recent', 'name', 'vo', 'facility']"
-      [resources]="this.objects"
-      [recentIds]="recentIds"
-      [routingVo]="true">
-    </perun-web-apps-resources-list>
-  </div>
-  <div *ngIf="primaryObject === 'Facility'" class="position-relative table-min-height">
-    <perun-web-apps-facilities-list
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      [displayedColumns]="['id', 'recent', 'name', 'description']"
-      [facilities]="this.objects"
-      [recentIds]="recentIds">
-    </perun-web-apps-facilities-list>
-  </div>
+  @if (primaryObject === 'Vo') {
+    <div class="position-relative table-min-height">
+      <perun-web-apps-vos-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [displayedColumns]="['id', 'recent', 'shortName', 'name']"
+        [recentIds]="this.recentIds"
+        [vos]="this.objects">
+      </perun-web-apps-vos-list>
+    </div>
+  }
+  @if (primaryObject === 'Group') {
+    <div class="position-relative table-min-height">
+      <perun-web-apps-groups-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [displayedColumns]="['id', 'recent', 'vo', 'name', 'description']"
+        [groups]="this.objects"
+        [recentIds]="recentIds">
+      </perun-web-apps-groups-list>
+    </div>
+  }
+  @if (primaryObject === 'Resource') {
+    <div class="position-relative table-min-height">
+      <perun-web-apps-resources-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [displayedColumns]="['id', 'recent', 'name', 'vo', 'facility']"
+        [resources]="this.objects"
+        [recentIds]="recentIds"
+        [routingVo]="true">
+      </perun-web-apps-resources-list>
+    </div>
+  }
+  @if (primaryObject === 'Facility') {
+    <div class="position-relative table-min-height">
+      <perun-web-apps-facilities-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [displayedColumns]="['id', 'recent', 'name', 'description']"
+        [facilities]="this.objects"
+        [recentIds]="recentIds">
+      </perun-web-apps-facilities-list>
+    </div>
+  }
 </div>

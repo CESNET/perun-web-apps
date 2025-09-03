@@ -1,12 +1,18 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Attribute,
   AttributesManagerService,
   MembersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface PasswordResetRequestDialogData {
   userId: number;
@@ -15,6 +21,17 @@ export interface PasswordResetRequestDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-password-reset-request-dialog',
   templateUrl: './password-reset-request-dialog.component.html',
   styleUrls: ['./password-reset-request-dialog.component.scss'],

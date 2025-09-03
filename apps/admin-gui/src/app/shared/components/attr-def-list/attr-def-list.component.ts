@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -10,8 +20,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AttributeDefinition, RichDestination } from '@perun-web-apps/perun/openapi';
 import { EditAttributeDefinitionDialogComponent } from '../dialogs/edit-attribute-definition-dialog/edit-attribute-definition-dialog.component';
@@ -28,8 +38,29 @@ import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { ConsentRelatedAttributePipe } from '../../pipes/consent-related-attribute.pipe';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { NameSpaceToDefPipe } from '../../pipes/name-space-to-def.pipe';
+import { AttributeTypeCleanPipe } from '../../pipes/attribute-type-clean.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CheckboxLabelPipe,
+    ConsentRelatedAttributePipe,
+    MultiWordDataCyPipe,
+    NameSpaceToDefPipe,
+    MasterCheckboxLabelPipe,
+    AttributeTypeCleanPipe,
+  ],
+  standalone: true,
   selector: 'app-attr-def-list',
   templateUrl: './attr-def-list.component.html',
   styleUrls: ['./attr-def-list.component.scss'],

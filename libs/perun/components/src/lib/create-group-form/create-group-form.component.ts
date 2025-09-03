@@ -1,9 +1,26 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Group } from '@perun-web-apps/perun/openapi';
+import { GroupSearchSelectComponent } from '../group-search-select/group-search-select.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslateModule,
+    GroupSearchSelectComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-create-group-form',
   templateUrl: './create-group-form.component.html',
   styleUrls: ['./create-group-form.component.css'],

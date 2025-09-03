@@ -1,11 +1,25 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ApiRequestConfigurationService, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consent, ConsentsManagerService } from '@perun-web-apps/perun/openapi';
 import { RPCError } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    CustomTranslatePipe,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-consent-request',
   templateUrl: './consent-request.component.html',
   styleUrls: ['./consent-request.component.scss'],

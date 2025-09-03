@@ -1,8 +1,21 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-year-range',
   templateUrl: './year-range.component.html',
   styleUrls: ['./year-range.component.scss'],

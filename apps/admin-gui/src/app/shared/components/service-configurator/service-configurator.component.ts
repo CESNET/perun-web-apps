@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   Attribute,
@@ -15,12 +19,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 // eslint-disable-next-line
-import { CreateAttributeDialogComponent } from '../../../../../../apps/admin-gui/src/app/shared/components/dialogs/create-attribute-dialog/create-attribute-dialog.component';
+import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 
 export type ServiceSelectValue = 'ALL' | 'NOT_SELECTED';
 
 @Component({
-  selector: 'perun-web-apps-service-configurator',
+  imports: [CommonModule, MatButtonModule, MatTabsModule, TranslateModule, AttributesListComponent],
+  standalone: true,
+  selector: 'app-perun-web-apps-service-configurator',
   templateUrl: './service-configurator.component.html',
   styleUrls: ['./service-configurator.component.scss'],
 })

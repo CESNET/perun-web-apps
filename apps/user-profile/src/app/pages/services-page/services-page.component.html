@@ -5,25 +5,27 @@
     (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
 
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let vo of filteredVos" (opened)="getMemberData(vo)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{vo.name}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ng-template matExpansionPanelContent>
-        <ng-template #spinner>
-          <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    @for (vo of filteredVos; track vo) {
+      <mat-expansion-panel (opened)="getMemberData(vo)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{vo.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <ng-template #spinner>
+            <perun-web-apps-loading-table></perun-web-apps-loading-table>
+          </ng-template>
+          <div class="position-relative table-min-height">
+            <perun-web-apps-resources-list
+              *perunWebAppsLoader="loading; indicator: spinner"
+              [loading]="loading"
+              [resources]="resources"
+              [displayedColumns]="['name', 'description']"
+              [disableRouting]="true"></perun-web-apps-resources-list>
+          </div>
         </ng-template>
-        <div class="position-relative table-min-height">
-          <perun-web-apps-resources-list
-            *perunWebAppsLoader="loading; indicator: spinner"
-            [loading]="loading"
-            [resources]="resources"
-            [displayedColumns]="['name', 'description']"
-            [disableRouting]="true"></perun-web-apps-resources-list>
-        </div>
-      </ng-template>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
+    }
   </mat-accordion>
 </div>

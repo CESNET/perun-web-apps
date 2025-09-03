@@ -1,10 +1,17 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, ValidatorFn, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { FormControl, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface InviteMemberDialogData {
   theme: string;
@@ -13,6 +20,19 @@ export interface InviteMemberDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-invite-member-dialog',
   templateUrl: './invite-member-dialog.component.html',
   styleUrls: ['./invite-member-dialog.component.scss'],

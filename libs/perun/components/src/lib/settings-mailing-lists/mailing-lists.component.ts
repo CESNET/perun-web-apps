@@ -1,5 +1,11 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DebounceFilterComponent } from '../debounce-filter/debounce-filter.component';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy, CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import {
   Attribute,
@@ -14,10 +20,21 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { StoreService, NotificatorService } from '@perun-web-apps/perun/services';
 import { compareFnName } from '@perun-web-apps/perun/utils';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-mailing-lists',
   templateUrl: './mailing-lists.component.html',
   styleUrls: ['./mailing-lists.component.scss'],

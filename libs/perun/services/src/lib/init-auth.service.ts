@@ -102,7 +102,7 @@ export class InitAuthService {
             }
             if (!this.oauthService.hasValidAccessToken()) {
               if (!this.isPotentiallyValidPath(currentPathname)) {
-                return Promise.reject('Invalid path');
+                return Promise.reject(new Error('Invalid path'));
               }
 
               sessionStorage.setItem('auth:redirect', currentPathname);

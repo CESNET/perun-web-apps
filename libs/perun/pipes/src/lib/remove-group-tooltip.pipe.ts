@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Group } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'removeGroupTooltip',
 })
 export class RemoveGroupTooltipPipe implements PipeTransform {

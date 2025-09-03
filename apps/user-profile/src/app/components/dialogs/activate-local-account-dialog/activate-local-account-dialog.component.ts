@@ -1,12 +1,20 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { FormBuilder, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService, NotificatorService } from '@perun-web-apps/perun/services';
 import { switchMap } from 'rxjs/operators';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ActivateLocalAccountData {
   userId: number;
@@ -14,6 +22,18 @@ export interface ActivateLocalAccountData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    LoadingDialogComponent,
+    TranslateModule,
+    PasswordFormComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-activate-authentication-local-account-dialog',
   templateUrl: './activate-local-account-dialog.component.html',
   styleUrls: ['./activate-local-account-dialog.component.scss'],

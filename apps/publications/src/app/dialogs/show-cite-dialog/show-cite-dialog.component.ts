@@ -1,8 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { PublicationForGUI } from '@perun-web-apps/perun/openapi';
 import { Clipboard } from '@angular/cdk/clipboard';
 @Component({
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-show-cite-dialog',
   templateUrl: './show-cite-dialog.component.html',
   styleUrls: ['./show-cite-dialog.component.scss'],

@@ -1,6 +1,23 @@
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { openClose, tagsOpenClose } from '@perun-web-apps/perun/animations';
 import {
   ApplicationMail,
@@ -15,7 +32,11 @@ import {
 } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, Observable, of, timer, lastValueFrom } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { TagBarComponent } from './tag-bar/tag-bar.component';
+import { MailNotificationTooltipPipe } from '@perun-web-apps/perun/pipes';
 
 export interface ApplicationFormAddEditMailDialogData {
   theme: string;
@@ -36,6 +57,27 @@ interface Translation {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTabsModule,
+    TranslateModule,
+    MatTooltip,
+    HtmlContentFormFieldComponent,
+    LoaderDirective,
+    TagBarComponent,
+    MailNotificationTooltipPipe,
+  ],
+  standalone: true,
   selector: 'app-add-edit-notification-dialog',
   templateUrl: './add-edit-notification-dialog.component.html',
   styleUrls: ['./add-edit-notification-dialog.component.scss'],

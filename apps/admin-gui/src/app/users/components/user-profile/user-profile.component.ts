@@ -1,11 +1,31 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { PerunPrincipal, User } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, StoreService } from '@perun-web-apps/perun/services';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { EntityPathParam } from '@perun-web-apps/perun/models';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    PerunSharedComponentsModule,
+    AnimatedRouterOutletComponent,
+    RouterModule,
+    TranslateModule,
+    MatTooltip,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],

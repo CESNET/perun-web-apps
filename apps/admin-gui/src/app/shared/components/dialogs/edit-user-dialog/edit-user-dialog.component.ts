@@ -1,9 +1,13 @@
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 export interface EditUserDialogData {
   theme: string;
@@ -11,6 +15,16 @@ export interface EditUserDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-edit-user-dialog',
   templateUrl: './edit-user-dialog.component.html',
   styleUrls: ['./edit-user-dialog.component.scss'],

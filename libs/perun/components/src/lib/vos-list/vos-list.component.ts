@@ -1,6 +1,19 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { RecentlyViewedIconComponent } from '../recently-viewed-icon/recently-viewed-icon.component';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EnrichedVo, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -14,8 +27,27 @@ import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RecentlyViewedIconComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    MasterCheckboxLabelPipe,
+    AuthorizedGroupsCellComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-vos-list',
   templateUrl: './vos-list.component.html',
   styleUrls: ['./vos-list.component.scss'],

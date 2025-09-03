@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { RichGroup } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'groupExpiration',
 })
 export class GroupExpirationPipe implements PipeTransform {

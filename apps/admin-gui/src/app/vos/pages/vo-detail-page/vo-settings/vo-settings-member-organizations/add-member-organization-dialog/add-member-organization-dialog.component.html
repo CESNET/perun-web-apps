@@ -56,29 +56,29 @@
           {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.CANCEL' | translate}}
         </button>
         <div class="ms-auto">
-          <button
-            *ngIf="stepper !== undefined && stepper.selectedIndex !== 0"
-            (click)="stepperPrevious()"
-            [disabled]="loading"
-            mat-stroked-button>
-            {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.BACK' | translate}}
-          </button>
-          <button
-            *ngIf="stepper?.selectedIndex !== 1"
-            (click)="stepperNext()"
-            [disabled]="voSelection.selected.length === 0 || loading"
-            color="accent"
-            mat-flat-button>
-            {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.NEXT' | translate}}
-          </button>
-          <button
-            *ngIf="stepper?.selectedIndex === 1"
-            (click)="addMemberOrganization()"
-            [disabled]="loading"
-            color="accent"
-            mat-flat-button>
-            {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.ADD' | translate}}
-          </button>
+          @if (stepper !== undefined && stepper.selectedIndex !== 0) {
+            <button (click)="stepperPrevious()" [disabled]="loading" mat-stroked-button>
+              {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.BACK' | translate}}
+            </button>
+          }
+          @if (stepper?.selectedIndex !== 1) {
+            <button
+              (click)="stepperNext()"
+              [disabled]="voSelection.selected.length === 0 || loading"
+              color="accent"
+              mat-flat-button>
+              {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.NEXT' | translate}}
+            </button>
+          }
+          @if (stepper?.selectedIndex === 1) {
+            <button
+              (click)="addMemberOrganization()"
+              [disabled]="loading"
+              color="accent"
+              mat-flat-button>
+              {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD_MEMBER_ORGANIZATION.ADD' | translate}}
+            </button>
+          }
         </div>
       </div>
     </div>

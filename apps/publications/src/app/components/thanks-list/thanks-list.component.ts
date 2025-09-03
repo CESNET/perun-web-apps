@@ -1,3 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,7 +17,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Owner, ThanksForGUI } from '@perun-web-apps/perun/openapi';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -17,13 +26,26 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MasterCheckboxLabelPipe,
+    CheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-thanks-list',
   templateUrl: './thanks-list.component.html',
   styleUrls: ['./thanks-list.component.scss'],

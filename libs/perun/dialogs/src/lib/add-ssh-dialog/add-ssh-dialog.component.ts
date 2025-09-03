@@ -1,7 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 export interface AddSshDialogData {
   attribute: Attribute;
@@ -9,6 +15,17 @@ export interface AddSshDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-add-ssh-dialog',
   templateUrl: './add-ssh-dialog.component.html',
   styleUrls: ['./add-ssh-dialog.component.scss'],

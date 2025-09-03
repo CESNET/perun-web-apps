@@ -1,7 +1,8 @@
 @use '@angular/material' as mat;
-@use '@material/textfield';
-
-textfield.$minimum-height-for-filled-label: 2px;
+// TODO CHECK WHETHER THIS BREAKS ANYTHING
+//@use '@material/textfield';
+//
+//textfield.$minimum-height-for-filled-label: 2px;
 
 .dense-4 {
   @include mat.all-component-densities(-4);

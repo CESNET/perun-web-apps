@@ -1,5 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { openClose } from '@perun-web-apps/perun/animations';
 import {
   DestinationPropagationType,
@@ -9,8 +17,16 @@ import {
   Service,
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { AbstractControl, UntypedFormControl, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddServicesDestinationDialogData {
   facility: Facility;
@@ -19,6 +35,21 @@ export interface AddServicesDestinationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-add-services-destination-dialog',
   templateUrl: './add-services-destination-dialog.component.html',
   styleUrls: ['./add-services-destination-dialog.component.scss'],

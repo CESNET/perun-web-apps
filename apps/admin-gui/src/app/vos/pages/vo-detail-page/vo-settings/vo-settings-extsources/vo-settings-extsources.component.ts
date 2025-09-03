@@ -1,3 +1,6 @@
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ExtSource, ExtSourcesManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -8,13 +11,27 @@ import {
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TABLE_VO_EXTSOURCES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveExtSourceDialogComponent } from '../../../../../shared/components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
 import { BehaviorSubject } from 'rxjs';
+import { ExtSourcesListComponent } from '../../../../../shared/components/ext-sources-list/ext-sources-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    ExtSourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-extsources',
   templateUrl: './vo-settings-extsources.component.html',
   styleUrls: ['./vo-settings-extsources.component.scss'],

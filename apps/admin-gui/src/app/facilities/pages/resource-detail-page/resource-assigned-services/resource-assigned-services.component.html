@@ -1,22 +1,20 @@
 <h1 class="page-subtitle">{{'RESOURCE_DETAIL.ASSIGNED_SERVICES.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="loadAllServices()"></perun-web-apps-refresh-button>
-<button
-  (click)="addService()"
-  *ngIf="assignServiceAuth"
-  class="action-button me-2"
-  color="accent"
-  mat-flat-button>
-  {{'RESOURCE_DETAIL.ASSIGNED_SERVICES.ADD_SERVICE' | translate}}
-</button>
-<button
-  [disabled]="loading || selected.selected.length === 0"
-  class="me-2"
-  color="warn"
-  (click)="removeServices()"
-  *ngIf="removeServiceAuth"
-  mat-flat-button>
-  {{'RESOURCE_DETAIL.ASSIGNED_SERVICES.REMOVE_SERVICE' | translate}}
-</button>
+@if (assignServiceAuth) {
+  <button (click)="addService()" class="action-button me-2" color="accent" mat-flat-button>
+    {{'RESOURCE_DETAIL.ASSIGNED_SERVICES.ADD_SERVICE' | translate}}
+  </button>
+}
+@if (removeServiceAuth) {
+  <button
+    [disabled]="loading || selected.selected.length === 0"
+    class="me-2"
+    color="warn"
+    (click)="removeServices()"
+    mat-flat-button>
+    {{'RESOURCE_DETAIL.ASSIGNED_SERVICES.REMOVE_SERVICE' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'RESOURCE_DETAIL.ASSIGNED_SERVICES.FILTER_SERVICES'">

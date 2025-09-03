@@ -1,5 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, DestroyRef, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   BlockedLogin,
   InvitationsManagerService,
@@ -22,14 +28,33 @@ import {
   getDataForExport,
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
-import { formatDate } from '@angular/common';
+import { formatDate, CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { InvitationExtendDateDialogComponent } from '../../../../shared/components/dialogs/invitation-extend-date-dialog/invitation-extend-date-dialog.component';
 import { InvitationRevokeDialogComponent } from '../../../../shared/components/dialogs/invitation-revoke-dialog/invitation-revoke-dialog.component';
 import { SelectedPendingInvitation } from '@perun-web-apps/perun/pipes';
 import { InvitationResendDialogComponent } from '../../../../shared/components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { InvitationsListComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    SelectedPendingInvitation,
+    LoadingTableComponent,
+    InvitationsListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-group-invitations',
   templateUrl: './group-invitations.component.html',
   styleUrls: ['./group-invitations.component.scss'],

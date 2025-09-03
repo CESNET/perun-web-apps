@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -8,8 +9,13 @@ import {
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Attribute, AttributesManagerService, Group } from '@perun-web-apps/perun/openapi';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { ExpirationSettingsComponent } from '../../../../components/expiration-settings/expiration-settings.component';
 
 @Component({
+  imports: [CommonModule, LoaderDirective, LoadingTableComponent, ExpirationSettingsComponent],
+  standalone: true,
   selector: 'app-group-settings-expiration',
   templateUrl: './group-settings-expiration.component.html',
   styleUrls: ['./group-settings-expiration.component.scss'],

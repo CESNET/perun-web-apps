@@ -1,187 +1,186 @@
 <h2 class="page-subtitle">
   {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.TITLE' | translate}}
-  <span *ngIf="!loading" class="text-muted"> #{{invitation.id}}</span>
+  @if (!loading) {
+    <span class="text-muted"> #{{invitation.id}}</span>
+  }
 </h2>
 
 <mat-divider class="mb-2"></mat-divider>
 
-<mat-spinner *ngIf="loading" class="ms-auto me-auto"> </mat-spinner>
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
 
-<div *ngIf="!loading">
-  <div *ngIf="this.invitation?.status === InvitationStatus.PENDING">
-    <button
-      (click)="onInvitationResend()"
-      *ngIf="authRights.resend"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RESEND' | translate}}
-    </button>
-
-    <button
-      (click)="onInvitationExtendDate()"
-      *ngIf="authRights.extend"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.EXTEND_EXPIRATION_DATE' | translate}}
-    </button>
-
-    <button
-      (click)="onInvitationRevoke()"
-      *ngIf="authRights.revoke"
-      class="me-2"
-      color="warn"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REVOKE' | translate}}
-    </button>
-  </div>
-
-  <span class="fw-bold">
-    {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.INVITATION_FOR_GROUP' | translate}} </span
-  >: {{this.group?.name}}
-
-  <span class="fw-bold">
-    {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.INVITATION_IN_VO' | translate}} </span
-  >: {{this.vo?.name}}
-
+@if (!loading) {
   <div>
+    @if (this.invitation?.status === InvitationStatus.PENDING) {
+      <div>
+        @if (authRights.resend) {
+          <button (click)="onInvitationResend()" class="me-2" color="accent" mat-flat-button>
+            {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RESEND' | translate}}
+          </button>
+        }
+        @if (authRights.extend) {
+          <button (click)="onInvitationExtendDate()" class="me-2" color="accent" mat-flat-button>
+            {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.EXTEND_EXPIRATION_DATE' | translate}}
+          </button>
+        }
+        @if (authRights.revoke) {
+          <button (click)="onInvitationRevoke()" class="me-2" color="warn" mat-flat-button>
+            {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REVOKE' | translate}}
+          </button>
+        }
+      </div>
+    }
     <span class="fw-bold">
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.STATUS' | translate}} </span
-    >:
-    <span>
-      {{this.invitation?.status}}
-    </span>
-  </div>
-  <div>
+      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.INVITATION_FOR_GROUP' | translate}} </span
+    >: {{this.group?.name}}
     <span class="fw-bold">
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.LANGUAGE' | translate}} </span
-    >:
-    <span>
-      {{ this.invitation?.language }}
-    </span>
-  </div>
-  <div>
-    <span class="fw-bold">
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.EXPIRATION_DATE' | translate}} </span
-    >:
-    <span>
-      {{ this.invitation?.expiration | date:'d.M.y' }}
-    </span>
-  </div>
-  <div>
-    <span class="fw-bold">
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REDIRECT_URL' | translate}} </span
-    >:
-    <span>
-      {{ this.invitation?.redirectUrl ? this.invitation?.redirectUrl : ''}}
-    </span>
-  </div>
-
-  <div class="card p-4 mt-2 mb-4">
-    <mat-card-title class="fw-bold">
-      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.TITLE' | translate}}
-    </mat-card-title>
+      {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.INVITATION_IN_VO' | translate}} </span
+    >: {{this.vo?.name}}
     <div>
+      <span class="fw-bold">
+        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.STATUS' | translate}} </span
+      >:
       <span>
-        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.NAME' | translate}}:
-        {{this.invitation?.receiverName}}
+        {{this.invitation?.status}}
       </span>
     </div>
-    <div
-      class="mb-2
+    <div>
+      <span class="fw-bold">
+        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.LANGUAGE' | translate}} </span
+      >:
+      <span>
+        {{ this.invitation?.language }}
+      </span>
+    </div>
+    <div>
+      <span class="fw-bold">
+        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.EXPIRATION_DATE' | translate}} </span
+      >:
+      <span>
+        {{ this.invitation?.expiration | date:'d.M.y' }}
+      </span>
+    </div>
+    <div>
+      <span class="fw-bold">
+        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REDIRECT_URL' | translate}} </span
+      >:
+      <span>
+        {{ this.invitation?.redirectUrl ? this.invitation?.redirectUrl : ''}}
+      </span>
+    </div>
+    <div class="card p-4 mt-2 mb-4">
+      <mat-card-title class="fw-bold">
+        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.TITLE' | translate}}
+      </mat-card-title>
+      <div>
+        <span>
+          {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.NAME' | translate}}:
+          {{this.invitation?.receiverName}}
+        </span>
+      </div>
+      <div
+        class="mb-2
     ">
-      <span>
-        {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.EMAIL' | translate}}:
-        {{this.invitation?.receiverEmail}}
-      </span>
-    </div>
-
-    <mat-divider class="mb-2"></mat-divider>
-
-    <div>
-      <i class="material-icons align-text-top">redo</i>
-      <span
-        class="fw-bold"
-        >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.SENT_BY' | translate}}</span
-      >:
-      <a
-        *ngIf="this.senderIdInVo"
-        [perunWebAppsMiddleClickRouterLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
-        (auxclick)="$event.preventDefault()"
-        [routerLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
-        class="group-link"
-        >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
-      >
-      <a
-        *ngIf="!this.senderIdInVo && this.isPerunAdmin"
-        [perunWebAppsMiddleClickRouterLink]="['/admin/users', this.invitation.senderId.toString()]"
-        (auxclick)="$event.preventDefault()"
-        [routerLink]="['/admin/users', this.invitation.senderId.toString()]"
-        class="group-link"
-        >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
-      >
-      <span *ngIf="!this.senderIdInVo && !this.isPerunAdmin"
-        >{{this.senderName}} ({{this.invitation?.createdByUid}})</span
-      >
-    </div>
-    <div>
-      <mat-card-title class="fw-bold"> Created by </mat-card-title>: {{this.creatorName}}
+        <span>
+          {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.RECEIVER.EMAIL' | translate}}:
+          {{this.invitation?.receiverEmail}}
+        </span>
+      </div>
+      <mat-divider class="mb-2"></mat-divider>
+      <div>
+        <i class="material-icons align-text-top">redo</i>
+        <span
+          class="fw-bold"
+          >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.SENT_BY' | translate}}</span
+        >:
+        @if (this.senderIdInVo) {
+          <a
+            [perunWebAppsMiddleClickRouterLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
+            (auxclick)="$event.preventDefault()"
+            [routerLink]="['/organizations', this.invitation.voId.toString(), 'members', this.senderIdInVo.toString()]"
+            class="group-link"
+            >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
+          >
+        }
+        @if (!this.senderIdInVo && this.isPerunAdmin) {
+          <a
+            [perunWebAppsMiddleClickRouterLink]="['/admin/users', this.invitation.senderId.toString()]"
+            (auxclick)="$event.preventDefault()"
+            [routerLink]="['/admin/users', this.invitation.senderId.toString()]"
+            class="group-link"
+            >{{this.senderName}} ({{this.invitation?.createdByUid}})</a
+          >
+        }
+        @if (!this.senderIdInVo && !this.isPerunAdmin) {
+          <span>{{this.senderName}} ({{this.invitation?.createdByUid}})</span>
+        }
+      </div>
+      <div>
+        <mat-card-title class="fw-bold"> Created by </mat-card-title>: {{this.creatorName}}
+        <div>
+          <span
+            class="fw-bold"
+            >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
+          >: {{this.invitation?.createdAt | date:'d.M.y H:mm:ss'}}
+        </div>
+      </div>
       <div>
         <span
           class="fw-bold"
-          >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
-        >: {{this.invitation?.createdAt | date:'d.M.y H:mm:ss'}}
+          >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.TOKEN' | translate}}</span
+        >: {{this.invitation?.token}}
       </div>
-    </div>
-    <div>
-      <span class="fw-bold">{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.TOKEN' | translate}}</span
-      >: {{this.invitation?.token}}
-    </div>
-    <div *ngIf="this.invitation?.applicationId !== null">
-      <span
-        class="fw-bold"
-        >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.APPLICATION' | translate}}</span
-      >:
-      <a
-        [perunWebAppsMiddleClickRouterLink]="['/organizations', this.invitation.voId.toString(), 'groups', this.invitation.groupId.toString(), 'applications', this.invitation.applicationId.toString()]"
-        (auxclick)="$event.preventDefault()"
-        [routerLink]="['/organizations', this.invitation.voId.toString(), 'groups', this.invitation.groupId.toString(), 'applications', this.invitation.applicationId.toString()]"
-        class="group-link"
-        >{{this.invitation?.applicationId}}</a
-      >
-    </div>
-
-    <div *ngIf="this.invitation?.status === InvitationStatus.REVOKED" class="card p-3 mt-2">
-      <mat-card-title
-        ><i class="material-icons red align-text-top">clear</i>
-        <span class="fw-bold">
-          {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REVOKED_BY' | translate}} </span
-        >: {{this.modifierName}}</mat-card-title
-      >
-      <div>
-        <span
-          class="fw-bold"
-          >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
-        >: {{this.invitation?.modifiedAt | date:'d.M.y H:mm:ss'}}
-      </div>
-    </div>
-
-    <div
-      *ngIf="this.invitation?.status === InvitationStatus.PENDING || this.invitation?.status === InvitationStatus.ACCEPTED || this.invitation?.status === InvitationStatus.UNSENT"
-      class="card p-3 mt-2">
-      <mat-card-title
-        ><i class="material-icons orange align-text-top">info</i>
-        <span class="fw-bold">
-          {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.LAST_MODIFIED_BY' | translate}} </span
-        >: {{this.modifierName}}</mat-card-title
-      >
-      <div>
-        <span
-          class="fw-bold"
-          >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
-        >: {{this.invitation?.modifiedAt | date:'d.M.y H:mm:ss'}}
-      </div>
+      @if (this.invitation?.applicationId !== null) {
+        <div>
+          <span
+            class="fw-bold"
+            >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.APPLICATION' | translate}}</span
+          >:
+          <a
+            [perunWebAppsMiddleClickRouterLink]="['/organizations', this.invitation.voId.toString(), 'groups', this.invitation.groupId.toString(), 'applications', this.invitation.applicationId.toString()]"
+            (auxclick)="$event.preventDefault()"
+            [routerLink]="['/organizations', this.invitation.voId.toString(), 'groups', this.invitation.groupId.toString(), 'applications', this.invitation.applicationId.toString()]"
+            class="group-link"
+            >{{this.invitation?.applicationId}}</a
+          >
+        </div>
+      }
+      @if (this.invitation?.status === InvitationStatus.REVOKED) {
+        <div class="card p-3 mt-2">
+          <mat-card-title
+            ><i class="material-icons red align-text-top">clear</i>
+            <span class="fw-bold">
+              {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.REVOKED_BY' | translate}} </span
+            >: {{this.modifierName}}</mat-card-title
+          >
+          <div>
+            <span
+              class="fw-bold"
+              >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
+            >: {{this.invitation?.modifiedAt | date:'d.M.y H:mm:ss'}}
+          </div>
+        </div>
+      }
+      @if (
+        this.invitation?.status === InvitationStatus.PENDING || this.invitation?.status === InvitationStatus.ACCEPTED || this.invitation?.status === InvitationStatus.UNSENT
+      ) {
+        <div class="card p-3 mt-2">
+          <mat-card-title
+            ><i class="material-icons orange align-text-top">info</i>
+            <span class="fw-bold">
+              {{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.LAST_MODIFIED_BY' | translate}} </span
+            >: {{this.modifierName}}</mat-card-title
+          >
+          <div>
+            <span
+              class="fw-bold"
+              >{{'GROUP_DETAIL.INVITATIONS.INVITATION_DETAIL.DATE' | translate}}</span
+            >: {{this.invitation?.modifiedAt | date:'d.M.y H:mm:ss'}}
+          </div>
+        </div>
+      }
     </div>
   </div>
-</div>
+}

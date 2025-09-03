@@ -1,8 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { TaskResult, TasksManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface DeleteTaskResultDialogData {
   theme: string;
@@ -10,6 +15,16 @@ export interface DeleteTaskResultDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-delete-task-result-dialog',
   templateUrl: './delete-task-result-dialog.component.html',
   styleUrls: ['./delete-task-result-dialog.component.scss'],

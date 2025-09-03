@@ -27,12 +27,14 @@
     </span>
   </mat-radio-group>
 </div>
-<div *ngIf="groupAssignment === 'none'">
+@if (groupAssignment === 'none') {
+<div>
   <perun-web-apps-alert class="mt-4" alert_type="info"
     >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DONT_ASSIGN_INFO' | translate}}</perun-web-apps-alert
   >
 </div>
-<div *ngIf="groupAssignment === 'new'">
+} @if (groupAssignment === 'new') {
+<div>
   <h5 class="mt-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.CREATE_NEW_GROUP' | translate}}</h5>
   <perun-web-apps-create-group-form
     (asSubgroupChanged)="onAsSubgroupChange($event)"
@@ -42,7 +44,8 @@
     [voGroups]="allVoGroups">
   </perun-web-apps-create-group-form>
 </div>
-<div *ngIf="groupAssignment === 'existing'">
+} @if (groupAssignment === 'existing') {
+<div>
   <h5 class="mt-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SELECT_EXISTING_GROUPS' | translate}}</h5>
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
@@ -58,3 +61,4 @@
     [tableId]="tableId">
   </perun-web-apps-groups-list>
 </div>
+}

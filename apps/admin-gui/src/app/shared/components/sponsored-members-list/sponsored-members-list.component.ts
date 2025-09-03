@@ -1,3 +1,21 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+  MemberEmailPipe,
+  MemberLoginsPipe,
+  ParseDatePipe,
+  UserFullNamePipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -15,8 +33,8 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -33,8 +51,32 @@ import { GuiAuthResolver, StoreService, TableCheckbox } from '@perun-web-apps/pe
 import { PasswordResetRequestDialogComponent } from '../dialogs/password-reset-request-dialog/password-reset-request-dialog.component';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SelectedSponsorPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    ParseDatePipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CheckboxLabelPipe,
+    UserFullNamePipe,
+    MemberLoginsPipe,
+    MasterCheckboxLabelPipe,
+    MemberEmailPipe,
+    SelectedSponsorPipe,
+  ],
+  standalone: true,
   selector: 'app-sponsored-members-list',
   templateUrl: './sponsored-members-list.component.html',
   styleUrls: ['./sponsored-members-list.component.scss'],

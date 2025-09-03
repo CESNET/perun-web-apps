@@ -1,196 +1,224 @@
 <h2 class="page-subtitle">
   {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TITLE' | translate}}
-  <span *ngIf="!!application" class="text-muted"> #{{application.id}} </span>
+  @if (!!application) {
+    <span class="text-muted"> #{{application.id}} </span>
+  }
 </h2>
 <mat-divider class="mb-4"></mat-divider>
 
-<mat-spinner *ngIf="loading" class="ms-auto me-auto"> </mat-spinner>
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
 
-<div *ngIf="!loading">
-  <button
-    (click)="verifyApplication()"
-    color="accent"
-    *ngIf="this.application.state === 'NEW' && verifyAuth"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
-  </button>
-  <button
-    (click)="approveApplication()"
-    color="accent"
-    *ngIf="(this.application.state === 'VERIFIED' || this.application.state === 'NEW') && approveAuth"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
-  </button>
-  <button
-    (click)="rejectApplication()"
-    color="warn"
-    *ngIf="(this.application.state === 'VERIFIED' || this.application.state === 'NEW') && rejectAuth"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
-  </button>
-  <button
-    (click)="deleteApplication()"
-    color="warn"
-    *ngIf="(this.application.state === 'REJECTED' || this.application.state === 'NEW') && deleteAuth"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
-  </button>
-  <button (click)="resendNotification()" *ngIf="resendAuth" class="me-2" mat-stroked-button>
-    <i class="material-icons"> mail_outline </i>
-    {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
-  </button>
-
-  <div *ngIf="!application.group">
-    <span
-      class="fw-bold"
-      >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_VO' | translate}}</span
-    >: {{this.application.vo.name}}
-  </div>
-  <div *ngIf="application.group">
-    <span
-      class="fw-bold"
-      >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_GROUP' | translate}}</span
-    >: {{this.application.group.name}}
-
-    <span
-      class="fw-bold"
-      >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_IN_VO' | translate}}</span
-    >: {{this.application.vo.name}}
-  </div>
-
+@if (!loading) {
   <div>
-    <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.STATE' | translate}}</span
-    >: <span [outerHTML]="this.application.state | applicationState"></span>
-  </div>
-  <div>
-    <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TYPE' | translate}}</span
-    >:
-    <span *ngIf="application.type === 'INITIAL'">
-      <mat-icon class="align-bottom">arrow_right_alt</mat-icon>
-      Initial
-    </span>
-    <span *ngIf="application.type === 'EXTENSION'">
-      <mat-icon class="align-bottom">restore</mat-icon>
-      Extension
-    </span>
-    <span *ngIf="application.type === 'EMBEDDED'">
-      <mat-icon class="align-bottom">nat</mat-icon>
-      Embedded
-    </span>
-  </div>
-
-  <div *ngIf="this.invitation && application.state === 'APPROVED'" class="card p-3 mt-2">
-    <mat-card-title
-      ><i class="material-icons green align-text-top">done</i>
-      <a
-        class="group-link"
-        [routerLink]="['/organizations', application.vo.id, 'groups', application.group.id, 'invitations', invitation.id]"
-        [perunWebAppsMiddleClickRouterLink]="['/organizations', application.vo.id.toString(), 'groups', application.group.id.toString(), 'invitations', invitation.id.toString()]"
-        >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.PREAPPROVED' | translate}}</a
-      ></mat-card-title
-    >
+    @if (this.application.state === 'NEW' && verifyAuth) {
+      <button (click)="verifyApplication()" color="accent" class="me-2" mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
+      </button>
+    }
+    @if (
+      (this.application.state === 'VERIFIED' || this.application.state === 'NEW') && approveAuth
+    ) {
+      <button (click)="approveApplication()" color="accent" class="me-2" mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
+      </button>
+    }
+    @if (
+      (this.application.state === 'VERIFIED' || this.application.state === 'NEW') && rejectAuth
+    ) {
+      <button (click)="rejectApplication()" color="warn" class="me-2" mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
+      </button>
+    }
+    @if (
+      (this.application.state === 'REJECTED' || this.application.state === 'NEW') && deleteAuth
+    ) {
+      <button (click)="deleteApplication()" color="warn" class="me-2" mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
+      </button>
+    }
+    @if (resendAuth) {
+      <button (click)="resendNotification()" class="me-2" mat-stroked-button>
+        <i class="material-icons"> mail_outline </i>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
+      </button>
+    }
+    @if (!application.group) {
+      <div>
+        <span
+          class="fw-bold"
+          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_VO' | translate}}</span
+        >: {{this.application.vo.name}}
+      </div>
+    }
+    @if (application.group) {
+      <div>
+        <span
+          class="fw-bold"
+          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_GROUP' | translate}}</span
+        >: {{this.application.group.name}}
+        <span
+          class="fw-bold"
+          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_IN_VO' | translate}}</span
+        >: {{this.application.vo.name}}
+      </div>
+    }
     <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
-      >: {{invitation.createdBy | modifiedName}}
-    </div>
-    <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-      >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
-    </div>
-  </div>
-
-  <div *ngIf="this.application.state === 'REJECTED'" class="card p-3 mt-2">
-    <mat-card-title
-      ><i class="material-icons red align-text-top">clear</i>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
-      {{application.modifiedBy | modifiedName}}</mat-card-title
-    >
-    <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-      >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
-    </div>
-  </div>
-
-  <div *ngIf="this.application.state === 'APPROVED' && !this.invitation" class="card p-3 mt-2">
-    <mat-card-title
-      ><i class="material-icons green align-text-top">done</i>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
-      {{application.modifiedBy | modifiedName}}</mat-card-title
-    >
-    <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-      >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
-    </div>
-  </div>
-
-  <div
-    *ngIf="this.application.state !== 'APPROVED' && this.application.state !== 'REJECTED' && this.application.autoApproveError"
-    class="card p-3 mt-2">
-    <h5 class="fw-bold">
-      <i class="material-icons orange">warning</i>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.AUTO_APPROVE_FAILURE' | translate}}:
-    </h5>
-    <div>{{this.application.autoApproveError}}</div>
-  </div>
-
-  <div class="card p-4 mt-2">
-    <mat-card-title
-      ><i class="material-icons align-text-top">redo</i>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate}}:
-      {{application.user === null ? application.createdBy.slice(application.createdBy.lastIndexOf('=') + 1, application.createdBy.length) : application.user | userFullName}}</mat-card-title
-    >
-
-    <div *ngIf="userMail">
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.MAIL' | translate}}</span
-      >: {{this.userMail}}
+      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.STATE' | translate}}</span
+      >: <span [outerHTML]="this.application.state | applicationState"></span>
     </div>
     <div>
-      <span
-        class="fw-bold"
-        attr.data-cy="{{this.application.extSourceName | lowercase}}-application-extsource"
-        >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EXT_SRC' | translate}}</span
-      >: {{this.application.extSourceName}}
+      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TYPE' | translate}}</span
+      >:
+      @if (application.type === 'INITIAL') {
+        <span>
+          <mat-icon class="align-bottom">arrow_right_alt</mat-icon>
+          Initial
+        </span>
+      }
+      @if (application.type === 'EXTENSION') {
+        <span>
+          <mat-icon class="align-bottom">restore</mat-icon>
+          Extension
+        </span>
+      }
+      @if (application.type === 'EMBEDDED') {
+        <span>
+          <mat-icon class="align-bottom">nat</mat-icon>
+          Embedded
+        </span>
+      }
     </div>
-    <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.LOA' | translate}}</span
-      >: {{this.application.extSourceLoa}}
-    </div>
-    <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-      >: {{this.application.createdAt | date:'d.M.y H:mm:ss'}}
-    </div>
+    @if (this.invitation && application.state === 'APPROVED') {
+      <div class="card p-3 mt-2">
+        <mat-card-title
+          ><i class="material-icons green align-text-top">done</i>
+          <a
+            class="group-link"
+            [routerLink]="['/organizations', application.vo.id, 'groups', application.group.id, 'invitations', invitation.id]"
+            [perunWebAppsMiddleClickRouterLink]="['/organizations', application.vo.id.toString(), 'groups', application.group.id.toString(), 'invitations', invitation.id.toString()]"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.PREAPPROVED' | translate}}</a
+          ></mat-card-title
+        >
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
+          >: {{invitation.createdBy | modifiedName}}
+        </div>
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+        </div>
+      </div>
+    }
+    @if (this.application.state === 'REJECTED') {
+      <div class="card p-3 mt-2">
+        <mat-card-title
+          ><i class="material-icons red align-text-top">clear</i>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
+          {{application.modifiedBy | modifiedName}}</mat-card-title
+        >
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+        </div>
+      </div>
+    }
+    @if (this.application.state === 'APPROVED' && !this.invitation) {
+      <div class="card p-3 mt-2">
+        <mat-card-title
+          ><i class="material-icons green align-text-top">done</i>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
+          {{application.modifiedBy | modifiedName}}</mat-card-title
+        >
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+        </div>
+      </div>
+    }
+    @if (
+      this.application.state !== 'APPROVED' && this.application.state !== 'REJECTED' && this.application.autoApproveError
+    ) {
+      <div class="card p-3 mt-2">
+        <h5 class="fw-bold">
+          <i class="material-icons orange">warning</i>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.AUTO_APPROVE_FAILURE' | translate}}:
+        </h5>
+        <div>{{this.application.autoApproveError}}</div>
+      </div>
+    }
+    <div class="card p-4 mt-2">
+      <mat-card-title
+        ><i class="material-icons align-text-top">redo</i>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate}}:
+        {{application.user === null ? application.createdBy.slice(application.createdBy.lastIndexOf('=') + 1, application.createdBy.length) : application.user | userFullName}}</mat-card-title
+      >
 
-    <table *ngIf="userData.length !== 0" [dataSource]="dataSource" class="w-100" mat-table>
-      <ng-container matColumnDef="label">
-        <th *matHeaderCellDef mat-header-cell></th>
-        <td *matCellDef="let userData" class="fw-bold" mat-cell>
-          {{userData.formItem | getLabel}}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="value">
-        <th *matHeaderCellDef mat-header-cell></th>
-        <td *matCellDef="let userData" class="word-break-all" mat-cell>
-          <div class="d-flex align-items-center">
-            {{userData.value}}
-            <button
-              *ngIf="(application.state === 'NEW' || application.state === 'VERIFIED') &&
-            userData.formItem.type !== 'EMBEDDED_GROUP_APPLICATION'"
-              (click)="editApplicationData(userData)"
-              aria-label="Edit Application data"
-              matTooltip="{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EDIT' | translate}}"
-              mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-        </td>
-      </ng-container>
+      @if (userMail) {
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.MAIL' | translate}}</span
+          >: {{this.userMail}}
+        </div>
+      }
+      <div>
+        <span
+          class="fw-bold"
+          attr.data-cy="{{this.application.extSourceName | lowercase}}-application-extsource"
+          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EXT_SRC' | translate}}</span
+        >: {{this.application.extSourceName}}
+      </div>
+      <div>
+        <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.LOA' | translate}}</span
+        >: {{this.application.extSourceLoa}}
+      </div>
+      <div>
+        <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+        >: {{this.application.createdAt | date:'d.M.y H:mm:ss'}}
+      </div>
 
-      <tr *matHeaderRowDef="displayedColumns" class="h-50" mat-header-row></tr>
-      <tr *matRowDef="let userData; columns: displayedColumns;" mat-row></tr>
-    </table>
+      @if (userData.length !== 0) {
+        <table [dataSource]="dataSource" class="w-100" mat-table>
+          <ng-container matColumnDef="label">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let userData" class="fw-bold" mat-cell>
+              {{userData.formItem | getLabel}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let userData" class="word-break-all" mat-cell>
+              <div class="d-flex align-items-center">
+                {{userData.value}}
+                @if (
+                  (application.state === 'NEW' || application.state === 'VERIFIED') &&
+                                                      userData.formItem.type !== 'EMBEDDED_GROUP_APPLICATION'
+                ) {
+                  <button
+                    (click)="editApplicationData(userData)"
+                    aria-label="Edit Application data"
+                    matTooltip="{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EDIT' | translate}}"
+                    mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </td>
+          </ng-container>
+          <tr *matHeaderRowDef="displayedColumns" class="h-50" mat-header-row></tr>
+          <tr *matRowDef="let userData; columns: displayedColumns;" mat-row></tr>
+        </table>
+      }
+    </div>
   </div>
-</div>
+}

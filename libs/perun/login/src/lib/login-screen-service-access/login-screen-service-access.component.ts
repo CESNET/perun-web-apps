@@ -1,10 +1,28 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, InitAuthService } from '@perun-web-apps/perun/services';
+import { MatButton } from '@angular/material/button';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    TranslateModule,
+    MatButton,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-login-screen-service-access',
   templateUrl: './login-screen-service-access.component.html',
   styleUrls: ['./login-screen-service-access.component.css'],

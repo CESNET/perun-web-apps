@@ -1,5 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 export interface ShowValueDialogData {
   title: string;
@@ -7,6 +12,15 @@ export interface ShowValueDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatInputModule,
+    CdkCopyToClipboard,
+    MatDialogModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-show-value-dialog',
   templateUrl: './show-value-dialog.component.html',
   styleUrls: ['./show-value-dialog.component.scss'],

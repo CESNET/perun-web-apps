@@ -1,7 +1,21 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attribute-critical-operations-checkboxes',
   templateUrl: './attribute-critical-operations-checkboxes.component.html',
   styleUrls: ['./attribute-critical-operations-checkboxes.component.scss'],

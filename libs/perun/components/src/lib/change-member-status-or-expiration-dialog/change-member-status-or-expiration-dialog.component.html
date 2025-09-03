@@ -1,13 +1,16 @@
 <div class="{{theme}}">
   <div class="dialog-container" mat-dialog-content>
-    <perun-web-apps-member-overview-membership *ngIf="!groupId" [member]="member" [voId]="voId">
-    </perun-web-apps-member-overview-membership>
-    <perun-web-apps-member-overview-groups
-      *ngIf="groupId"
-      [member]="member"
-      [voId]="voId"
-      [requiresGroupSelect]="false">
-    </perun-web-apps-member-overview-groups>
+    @if (!groupId) {
+      <perun-web-apps-member-overview-membership [member]="member" [voId]="voId">
+      </perun-web-apps-member-overview-membership>
+    }
+    @if (groupId) {
+      <perun-web-apps-member-overview-groups
+        [member]="member"
+        [voId]="voId"
+        [requiresGroupSelect]="false">
+      </perun-web-apps-member-overview-groups>
+    }
   </div>
   <div mat-dialog-actions>
     <button (click)="close()" class="ms-auto" mat-stroked-button>

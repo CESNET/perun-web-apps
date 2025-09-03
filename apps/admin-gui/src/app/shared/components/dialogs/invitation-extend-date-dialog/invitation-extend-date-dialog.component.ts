@@ -1,10 +1,16 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { InvitationsManagerService, InvitationWithSender } from '@perun-web-apps/perun/openapi';
-import { FormControl, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { formatDate, CommonModule } from '@angular/common';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface DialogData {
   theme: string;
@@ -12,6 +18,19 @@ export interface DialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-invitation-extend-date-dialog.component',
   templateUrl: './invitation-extend-date-dialog.component.html',
   styleUrls: ['./invitation-extend-date-dialog.component.scss'],

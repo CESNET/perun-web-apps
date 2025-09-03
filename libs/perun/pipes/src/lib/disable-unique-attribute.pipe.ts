@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'disableUniqueAttribute',
 })
 export class DisableUniqueAttributePipe implements PipeTransform {

@@ -6,8 +6,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, MatDialogModule, MatButtonModule],
-  declarations: [SessionExpirationDialogComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MatDialogModule,
+    MatButtonModule,
+    SessionExpirationDialogComponent,
+  ],
   exports: [SessionExpirationDialogComponent],
 })
 export class PerunSessionExpirationModule {}

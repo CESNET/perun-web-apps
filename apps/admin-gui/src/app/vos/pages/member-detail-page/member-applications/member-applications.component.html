@@ -1,12 +1,16 @@
 <h1 class="page-subtitle">{{'MEMBER_DETAIL.APPLICATIONS.TITLE' | translate}}</h1>
 <div>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button (click)="showDetails()" *ngIf="!showAllDetails" class="me-2" mat-stroked-button>
-    {{'MEMBER_DETAIL.APPLICATIONS.SHOW_ALL_DETAILS' | translate}}
-  </button>
-  <button (click)="showDetails()" *ngIf="showAllDetails" class="me-2" mat-stroked-button>
-    {{'MEMBER_DETAIL.APPLICATIONS.SHOW_LESS_DETAILS' | translate}}
-  </button>
+  @if (!showAllDetails) {
+    <button (click)="showDetails()" class="me-2" mat-stroked-button>
+      {{'MEMBER_DETAIL.APPLICATIONS.SHOW_ALL_DETAILS' | translate}}
+    </button>
+  }
+  @if (showAllDetails) {
+    <button (click)="showDetails()" class="me-2" mat-stroked-button>
+      {{'MEMBER_DETAIL.APPLICATIONS.SHOW_LESS_DETAILS' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     [placeholder]="'MEMBER_DETAIL.APPLICATIONS.FILTER'"
     (filter)="applyFilter($event)">

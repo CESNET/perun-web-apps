@@ -1,3 +1,6 @@
+import { AddBanDialogComponent } from '../add-ban-dialog/add-ban-dialog.component';
+import { DebounceFilterComponent, MembersListComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -25,8 +28,19 @@ import {
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    AddBanDialogComponent,
+    MembersListComponent,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-add-vo-ban-dialog',
   templateUrl: './add-vo-ban-dialog.component.html',
   styleUrls: ['./add-vo-ban-dialog.component.scss'],

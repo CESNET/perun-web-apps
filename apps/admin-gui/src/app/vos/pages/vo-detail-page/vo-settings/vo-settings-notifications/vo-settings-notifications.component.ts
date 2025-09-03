@@ -1,8 +1,11 @@
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { DeleteNotificationDialogComponent } from '../../../../../shared/components/dialogs/delete-notification-dialog/delete-notification-dialog.component';
 import {
   EntityStorageService,
@@ -23,8 +26,21 @@ import {
 import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { TABLE_VO_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { NotificationListComponent } from '../../../../components/notification-list/notification-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    NotificationListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-notifications',
   templateUrl: './vo-settings-notifications.component.html',
   styleUrls: ['./vo-settings-notifications.component.scss'],

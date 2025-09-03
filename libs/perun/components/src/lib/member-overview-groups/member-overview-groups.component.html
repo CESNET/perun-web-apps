@@ -5,25 +5,29 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <perun-web-apps-group-search-select
-      *ngIf="requiresGroupSelect"
-      (groupSelected)="groupIsSelected($event)"
-      [firstSelectedGroup]="selectedGroup"
-      [groups]="groups">
-    </perun-web-apps-group-search-select>
-    <perun-web-apps-alert *ngIf="!loading && groups.length === 0" alert_type="warn">
-      {{'MEMBER_DETAIL.OVERVIEW.NO_GROUPS_FOUND' | translate}}
-    </perun-web-apps-alert>
-    <perun-web-apps-membership-status-settings
-      *ngIf="groups.length !== 0 && selectedMember"
-      [status]="selectedMember.groupStatus"
-      [editStatusAuth]="editAuth"
-      [editExpirationAuth]="editAuth"
-      [expiration]="expiration"
-      [showExpiration]="showExpiration"
-      (changeStatus)="changeStatus()"
-      (changeExpiration)="changeExpiration()">
-    </perun-web-apps-membership-status-settings>
+    @if (requiresGroupSelect) {
+      <perun-web-apps-group-search-select
+        (groupSelected)="groupIsSelected($event)"
+        [firstSelectedGroup]="selectedGroup"
+        [groups]="groups">
+      </perun-web-apps-group-search-select>
+    }
+    @if (!loading && groups.length === 0) {
+      <perun-web-apps-alert alert_type="warn">
+        {{'MEMBER_DETAIL.OVERVIEW.NO_GROUPS_FOUND' | translate}}
+      </perun-web-apps-alert>
+    }
+    @if (groups.length !== 0 && selectedMember) {
+      <perun-web-apps-membership-status-settings
+        [status]="selectedMember.groupStatus"
+        [editStatusAuth]="editAuth"
+        [editExpirationAuth]="editAuth"
+        [expiration]="expiration"
+        [showExpiration]="showExpiration"
+        (changeStatus)="changeStatus()"
+        (changeExpiration)="changeExpiration()">
+      </perun-web-apps-membership-status-settings>
+    }
   </mat-card-content>
 </div>
 <ng-template #spinner>

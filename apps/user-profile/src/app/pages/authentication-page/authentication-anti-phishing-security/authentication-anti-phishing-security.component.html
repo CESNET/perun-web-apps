@@ -2,7 +2,9 @@
 <div class="mb-5">
   <h1 class="page-subtitle">{{'AUTHENTICATION.TITLE_TEXT' | customTranslate | translate}}</h1>
   <p>{{'AUTHENTICATION.ANTI_PHISHING_INFO_TEXT' | customTranslate | translate}}</p>
-  <h4 *ngIf="textAtt" class="security-text">{{textAtt.value}}</h4>
+  @if (textAtt) {
+    <h4 class="security-text">{{textAtt.value}}</h4>
+  }
   <button (click)="onAddAttribute()" class="me-2 action-button" color="accent" mat-flat-button>
     {{'AUTHENTICATION.NEW_TEXT' | customTranslate | translate}}
   </button>

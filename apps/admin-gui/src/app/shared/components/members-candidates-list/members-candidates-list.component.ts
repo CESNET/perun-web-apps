@@ -1,3 +1,18 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CheckboxLabelPipe,
+  DisabledCandidateTooltipPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+  MemberStatusIconColorPipe,
+  MemberStatusIconPipe,
+  UserFullNamePipe,
+  UserVoPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,8 +22,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Attribute, Candidate, MemberCandidate, RichUser } from '@perun-web-apps/perun/openapi';
 import {
@@ -31,6 +46,27 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MemberStatusIconPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CheckboxLabelPipe,
+    MemberStatusIconColorPipe,
+    UserFullNamePipe,
+    DisabledCandidateTooltipPipe,
+    MasterCheckboxLabelPipe,
+    DisabledCandidatePipe,
+    UserVoPipe,
+    MemberTypePipe,
+  ],
+  standalone: true,
   selector: 'app-members-candidates-list',
   templateUrl: './members-candidates-list.component.html',
   styleUrls: ['./members-candidates-list.component.scss'],

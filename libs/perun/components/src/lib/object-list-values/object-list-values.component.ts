@@ -1,7 +1,14 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Destination, Host } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatIconModule, TranslateModule, MatTooltip],
+  standalone: true,
   selector: 'perun-web-apps-object-list-values',
   templateUrl: './object-list-values.component.html',
   styleUrls: ['./object-list-values.component.css'],

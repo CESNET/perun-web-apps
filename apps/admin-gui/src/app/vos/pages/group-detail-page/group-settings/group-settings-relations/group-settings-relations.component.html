@@ -9,19 +9,20 @@
     mat-flat-button>
     {{'GROUP_DETAIL.SETTINGS.RELATIONS.CREATE' | translate}}
   </button>
-  <span
-    *ngIf="{removeAuth: removeAuth$ | async} as auth"
-    matTooltip="{{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE_TOOLTIP' | translate}}"
-    [matTooltipDisabled]="loading || selection.selected.length === 0 || auth.removeAuth">
-    <button
-      [disabled]="loading || selection.selected.length === 0 || !auth.removeAuth || reverse"
-      class="me-2"
-      color="warn"
-      (click)="onDelete()"
-      mat-flat-button>
-      {{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE' | translate}}
-    </button>
-  </span>
+  @if ({removeAuth: removeAuth$ | async}; as auth) {
+    <span
+      matTooltip="{{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE_TOOLTIP' | translate}}"
+      [matTooltipDisabled]="loading || selection.selected.length === 0 || auth.removeAuth">
+      <button
+        [disabled]="loading || selection.selected.length === 0 || !auth.removeAuth || reverse"
+        class="me-2"
+        color="warn"
+        (click)="onDelete()"
+        mat-flat-button>
+        {{'GROUP_DETAIL.SETTINGS.RELATIONS.DELETE' | translate}}
+      </button>
+    </span>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'GROUP_DETAIL.SETTINGS.RELATIONS.FILTER'"></perun-web-apps-debounce-filter>

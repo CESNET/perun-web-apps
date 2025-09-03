@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NotificationData } from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +10,8 @@ import { doAfterDelay, getDefaultDialogConfig } from '@perun-web-apps/perun/util
 import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 @Component({
+  imports: [CommonModule, MatIconModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],

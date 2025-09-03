@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  GroupsListComponent,
+  RefreshButtonComponent,
+  VoSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import {
@@ -13,8 +21,21 @@ import { AddGroupHierarchicalIncludeDialogComponent } from '../../../../../share
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { TABLE_HIERARCHICAL_INCLUSION } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    GroupsListComponent,
+    VoSearchSelectComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-hierarchical-inclusion',
   templateUrl: './vo-settings-hierarchical-inclusion.component.html',
   styleUrls: ['./vo-settings-hierarchical-inclusion.component.scss'],

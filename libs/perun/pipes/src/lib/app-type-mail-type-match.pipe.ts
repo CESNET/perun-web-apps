@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Application, ApplicationMail, AppType, MailType } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'appMatchMailType',
 })
 export class AppTypeMailTypeMatchPipe implements PipeTransform {

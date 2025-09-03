@@ -1,3 +1,6 @@
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -10,15 +13,33 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { UntypedFormControl } from '@angular/forms';
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GroupResourceStatus, PerunBean } from '@perun-web-apps/perun/openapi';
 import { GroupWithStatus, ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { MatOptionSelectionChange } from '@angular/material/core';
+import { MatSelectSearchComponent } from 'ngx-mat-select-search';
+import { DeselectButtonComponent } from '../deselect-button/deselect-button.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatSelectSearchComponent,
+    DeselectButtonComponent,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualScrollViewport,
+    CdkVirtualForOf,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-entity-search-select',
   templateUrl: './entity-search-select.component.html',
   styleUrls: ['./entity-search-select.component.css'],

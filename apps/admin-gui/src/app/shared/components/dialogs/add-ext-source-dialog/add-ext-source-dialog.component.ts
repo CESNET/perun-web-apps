@@ -1,10 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { TABLE_ADD_EXTSOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { ExtSourcesListComponent } from '../../ext-sources-list/ext-sources-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 export interface AddExtSourceDialogData {
   voId: number;
@@ -14,6 +21,17 @@ export interface AddExtSourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    ExtSourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-add-ext-source-dialog',
   templateUrl: './add-ext-source-dialog.component.html',
   styleUrls: ['./add-ext-source-dialog.component.scss'],

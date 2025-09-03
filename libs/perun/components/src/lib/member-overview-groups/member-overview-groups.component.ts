@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
   Attribute,
@@ -14,8 +19,22 @@ import {
   ChangeMemberStatusDialogComponent,
 } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { MembershipStatusSettingsComponent } from '../membership-status-settings/membership-status-settings.component';
+import { GroupSearchSelectComponent } from '../group-search-select/group-search-select.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MembershipStatusSettingsComponent,
+    GroupSearchSelectComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-member-overview-groups',
   templateUrl: './member-overview-groups.component.html',
   styleUrls: ['./member-overview-groups.component.css'],

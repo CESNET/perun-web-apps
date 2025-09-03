@@ -1,13 +1,21 @@
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UsersListComponent, userTableColumn } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddUserServiceIdentityData {
   userId: number;
@@ -17,6 +25,22 @@ export interface AddUserServiceIdentityData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    UsersListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-connect-identity-dialog',
   templateUrl: './connect-identity-dialog.component.html',
   styleUrls: ['./connect-identity-dialog.component.scss'],

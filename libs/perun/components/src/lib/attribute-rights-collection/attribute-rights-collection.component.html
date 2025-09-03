@@ -1,26 +1,32 @@
-<div *ngIf="collection" class="collection">
-  <div class="column role-selection">
-    <div *ngFor="let item of collection.policies; index as i">
-      <perun-web-apps-attribute-rights-item [policy]="item" (policyRemoved)="removePolicy(i)">
-      </perun-web-apps-attribute-rights-item>
-      <div *ngIf="i !== collection.policies.length -1" class="divider">
-        {{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.AND'  | translate}}
-      </div>
+@if (collection) {
+  <div class="collection">
+    <div class="column role-selection">
+      @for (item of collection.policies; track item; let i = $index) {
+        <div>
+          <perun-web-apps-attribute-rights-item [policy]="item" (policyRemoved)="removePolicy(i)">
+          </perun-web-apps-attribute-rights-item>
+          @if (i !== collection.policies.length -1) {
+            <div class="divider">
+              {{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.AND'  | translate}}
+            </div>
+          }
+        </div>
+      }
+    </div>
+    <div class="column controls">
+      <button
+        mat-icon-button
+        (click)="removeCollection()"
+        matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.REMOVE_COLLECTION' | translate}}">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        color="accent"
+        mat-icon-button
+        (click)="addPolicy()"
+        matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.ADD_RULE' | translate}}">
+        <mat-icon>add_circle</mat-icon>
+      </button>
     </div>
   </div>
-  <div class="column controls">
-    <button
-      mat-icon-button
-      (click)="removeCollection()"
-      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.REMOVE_COLLECTION' | translate}}">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button
-      color="accent"
-      mat-icon-button
-      (click)="addPolicy()"
-      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_RIGHTS.ADD_RULE' | translate}}">
-      <mat-icon>add_circle</mat-icon>
-    </button>
-  </div>
-</div>
+}

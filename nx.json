@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "master"
-  },
   "cli": {
     "analytics": "4943eaad-16db-431b-972e-d43fa4fcbbd0"
   },
@@ -64,5 +61,6 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
   },
-  "parallel": 1
+  "parallel": 1,
+  "defaultBase": "master"
 }

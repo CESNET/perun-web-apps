@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ApplicationFormItem } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'getLabel',
 })
 export class GetLabelPipe implements PipeTransform {

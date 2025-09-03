@@ -5,34 +5,30 @@
     <h1>{{'MAIN_MENU.PROFILE' | translate}}</h1>
     <p>{{'MAIN_MENU.PROFILE_DESC' | translate}}</p>
   </a>
-  <a
-    *ngIf="authResolver.isVoAdmin() || authResolver.isVoObserver() ||authResolver.isOrganizationMembershipManager()"
-    class="main-menu-button vo-btn"
-    [routerLink]="['organizations']"
-    mat-ripple>
-    <mat-icon [svgIcon]="'perun-vo'" class="item-pic perun-icon"></mat-icon>
-    <!--    <img src="assets/img/PerunWebImages/vo-white.svg">-->
-    <h1>{{'MAIN_MENU.ACCESS' | translate}}</h1>
-    <p>{{'MAIN_MENU.ACCESS_DESC' | translate}}</p>
-  </a>
-  <a
-    *ngIf="authResolver.canManageFacilities()"
-    [routerLink]="['facilities']"
-    class="main-menu-button facility-btn"
-    mat-ripple>
-    <mat-icon [svgIcon]="'perun-manage-facility'" class="item-pic perun-icon"></mat-icon>
-    <!--    <img src="assets/img/PerunWebImages/manage_facility_white.svg">-->
-    <h1>{{'MAIN_MENU.FACILITIES' | translate}}</h1>
-    <p>{{'MAIN_MENU.FACILITIES_DESC' | translate}}</p>
-  </a>
-  <a
-    *ngIf="authResolver.isPerunAdminOrObserver()"
-    class="main-menu-button admin-btn"
-    [routerLink]="['admin']"
-    mat-ripple>
-    <mat-icon [svgIcon]="'perun-perun-admin'" class="item-pic perun-icon"></mat-icon>
-    <!--    <img src="assets/img/PerunWebImages/perun_admin-white.svg">-->
-    <h1>{{'MAIN_MENU.ADMIN' | translate}}</h1>
-    <p>{{'MAIN_MENU.ADMIN_DESC' | translate}}</p>
-  </a>
+  @if (
+    authResolver.isVoAdmin() || authResolver.isVoObserver() ||authResolver.isOrganizationMembershipManager()
+  ) {
+    <a class="main-menu-button vo-btn" [routerLink]="['organizations']" mat-ripple>
+      <mat-icon [svgIcon]="'perun-vo'" class="item-pic perun-icon"></mat-icon>
+      <!--    <img src="assets/img/PerunWebImages/vo-white.svg">-->
+      <h1>{{'MAIN_MENU.ACCESS' | translate}}</h1>
+      <p>{{'MAIN_MENU.ACCESS_DESC' | translate}}</p>
+    </a>
+  }
+  @if (authResolver.canManageFacilities()) {
+    <a [routerLink]="['facilities']" class="main-menu-button facility-btn" mat-ripple>
+      <mat-icon [svgIcon]="'perun-manage-facility'" class="item-pic perun-icon"></mat-icon>
+      <!--    <img src="assets/img/PerunWebImages/manage_facility_white.svg">-->
+      <h1>{{'MAIN_MENU.FACILITIES' | translate}}</h1>
+      <p>{{'MAIN_MENU.FACILITIES_DESC' | translate}}</p>
+    </a>
+  }
+  @if (authResolver.isPerunAdminOrObserver()) {
+    <a class="main-menu-button admin-btn" [routerLink]="['admin']" mat-ripple>
+      <mat-icon [svgIcon]="'perun-perun-admin'" class="item-pic perun-icon"></mat-icon>
+      <!--    <img src="assets/img/PerunWebImages/perun_admin-white.svg">-->
+      <h1>{{'MAIN_MENU.ADMIN' | translate}}</h1>
+      <p>{{'MAIN_MENU.ADMIN_DESC' | translate}}</p>
+    </a>
+  }
 </div>

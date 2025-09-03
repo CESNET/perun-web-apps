@@ -1,3 +1,12 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AnimatedRouterOutletComponent } from '../../../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { fadeIn } from '@perun-web-apps/perun/animations';
 import {
@@ -5,7 +14,7 @@ import {
   Service,
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { SideMenuService } from '../../../../../core/services/common/side-menu.service';
 import { SideMenuItemService } from '../../../../../shared/side-menu/side-menu-item.service';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -23,7 +32,7 @@ import {
   DeleteServiceDialogComponent,
   DeleteServiceDialogData,
 } from '../../../../../shared/components/dialogs/delete-service-dialog/delete-service-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   UniversalConfirmationItemsDialogComponent,
   UniversalConfirmationItemsDialogData,
@@ -31,6 +40,20 @@ import {
 import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MiddleClickRouterLinkDirective,
+    PerunSharedComponentsModule,
+    AnimatedRouterOutletComponent,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'app-service-detail-page',
   templateUrl: './service-detail-page.component.html',
   styleUrls: ['./service-detail-page.component.scss'],

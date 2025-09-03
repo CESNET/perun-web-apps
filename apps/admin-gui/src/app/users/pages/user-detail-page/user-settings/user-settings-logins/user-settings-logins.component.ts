@@ -1,11 +1,22 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PasswordResetComponent } from '@perun-web-apps/perun/components';
+import { PasswordResetComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { SetLoginDialogComponent } from '../../../../../shared/components/set-login-dialog/set-login-dialog.component';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    PasswordResetComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-user-settings-logins',
   templateUrl: './user-settings-logins.component.html',
   styleUrls: ['./user-settings-logins.component.scss'],

@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RichDestination, Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -15,8 +19,22 @@ import {
   RemoveDestinationDialogData,
 } from '../../../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
 import { BehaviorSubject } from 'rxjs';
+import { DestinationListComponent } from '../../../../../../shared/components/destination-list/destination-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    DestinationListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-service-destinations',
   templateUrl: './service-destinations.component.html',
   styleUrls: ['./service-destinations.component.scss'],

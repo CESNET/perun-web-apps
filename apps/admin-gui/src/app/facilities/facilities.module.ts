@@ -43,7 +43,16 @@ import { FacilitySettingsBansComponent } from './pages/facility-detail-page/faci
 import { ResourceSettingsBansComponent } from './pages/resource-detail-page/resource-settings/resource-settings-bans/resource-settings-bans.component';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    FacilitiesRoutingModule,
+    SharedModule,
+    UiAlertsModule,
+    UiLoadersModule,
+    PerunSharedComponentsModule,
+    PerunPipesModule,
+    UsersModule,
+    AdminModule,
     FacilitySelectPageComponent,
     FacilityDetailPageComponent,
     FacilityOverviewComponent,
@@ -76,17 +85,6 @@ import { ResourceSettingsBansComponent } from './pages/resource-detail-page/reso
     CancelConfigurationDialogComponent,
     FacilitySettingsBansComponent,
     ResourceSettingsBansComponent,
-  ],
-  imports: [
-    CommonModule,
-    FacilitiesRoutingModule,
-    SharedModule,
-    UiAlertsModule,
-    UiLoadersModule,
-    PerunSharedComponentsModule,
-    PerunPipesModule,
-    UsersModule,
-    AdminModule,
   ],
   providers: [UserFullNamePipe],
 })

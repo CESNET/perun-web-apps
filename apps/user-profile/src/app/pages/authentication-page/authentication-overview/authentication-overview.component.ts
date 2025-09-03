@@ -1,9 +1,31 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatRipple } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { PerunTranslateService, StoreService } from '@perun-web-apps/perun/services';
 import { TabItem } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    CustomTranslatePipe,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    MatNavList,
+    MatListItem,
+    MatProgressSpinnerModule,
+    MatRipple,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-authentication-overview',
   templateUrl: './authentication-overview.component.html',
   styleUrls: ['./authentication-overview.component.scss'],

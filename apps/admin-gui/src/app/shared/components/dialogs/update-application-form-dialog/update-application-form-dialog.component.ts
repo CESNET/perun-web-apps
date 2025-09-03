@@ -1,7 +1,17 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ApplicationForm, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
-import { FormControl, FormArray, Validators } from '@angular/forms';
+import { FormControl, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface UpdateApplicationFormDialogData {
   entity: string;
@@ -11,6 +21,21 @@ export interface UpdateApplicationFormDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-update-application-form-dialog',
   templateUrl: './update-application-form-dialog.component.html',
   styleUrls: ['./update-application-form-dialog.component.scss'],

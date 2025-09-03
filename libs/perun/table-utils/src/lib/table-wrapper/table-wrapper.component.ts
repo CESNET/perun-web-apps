@@ -1,3 +1,6 @@
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -11,11 +14,21 @@ import {
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   MatPaginator,
   PageEvent,
+  MatPaginatorModule,
 } from '@angular/material/paginator';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { TableOptionsComponent } from '../table-options/table-options.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    TableOptionsComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-table-wrapper',
   templateUrl: './table-wrapper.component.html',
   styleUrls: ['./table-wrapper.component.scss'],

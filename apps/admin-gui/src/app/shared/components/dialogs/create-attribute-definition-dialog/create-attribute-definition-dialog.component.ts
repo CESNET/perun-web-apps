@@ -1,16 +1,22 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   AttributeAction,
   AttributeDefinition,
   AttributePolicyCollection,
   AttributesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, of, zip } from 'rxjs';
 import { AttributeRightsService, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   AttributeDefinitionType,
   AttributeEntity,
@@ -19,8 +25,30 @@ import {
 } from '@perun-web-apps/perun/models';
 import { DisableUniqueAttributePipe } from '@perun-web-apps/perun/pipes';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { AttributeRightsTabGroupComponent } from '@perun-web-apps/perun/components';
+import { AttributeCriticalOperationsCheckboxesComponent } from '@perun-web-apps/perun/components';
+import { AttributeUniqueCheckboxComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AttributeTypeCleanPipe } from '../../../pipes/attribute-type-clean.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    AttributeRightsTabGroupComponent,
+    AttributeCriticalOperationsCheckboxesComponent,
+    AttributeUniqueCheckboxComponent,
+    LoaderDirective,
+    AttributeTypeCleanPipe,
+  ],
+  standalone: true,
   selector: 'app-create-attribute-definition-dialog',
   templateUrl: './create-attribute-definition-dialog.component.html',
   styleUrls: ['./create-attribute-definition-dialog.component.scss'],

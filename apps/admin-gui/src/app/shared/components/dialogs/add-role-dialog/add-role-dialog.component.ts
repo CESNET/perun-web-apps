@@ -1,5 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   EnrichedFacility,
   FacilitiesManagerService,
@@ -13,10 +17,23 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ToEnrichedFacilityPipe } from '@perun-web-apps/perun/pipes';
-import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import {
+  ExtractFacilityPipe,
+  ManageableEntitiesPipe,
+  ToEnrichedFacilityPipe,
+  UnassignedRolePipe,
+} from '@perun-web-apps/perun/pipes';
+import {
+  DebounceFilterComponent,
+  FacilitiesListComponent,
+  GroupsListComponent,
+  ResourcesListComponent,
+  VosListComponent,
+} from '@perun-web-apps/perun/components';
 import { combineLatestWith } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { RoleSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddRoleDialogData {
   entityId: number;
@@ -29,6 +46,25 @@ export interface AddRoleForm {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    ResourcesListComponent,
+    GroupsListComponent,
+    FacilitiesListComponent,
+    VosListComponent,
+    RoleSearchSelectComponent,
+    LoaderDirective,
+    ExtractFacilityPipe,
+    UnassignedRolePipe,
+    ManageableEntitiesPipe,
+    ToEnrichedFacilityPipe,
+  ],
+  standalone: true,
   selector: 'app-add-role-dialog',
   templateUrl: './add-role-dialog.component.html',
   styleUrls: ['./add-role-dialog.component.scss'],

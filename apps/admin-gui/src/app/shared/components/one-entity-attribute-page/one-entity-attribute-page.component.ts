@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -6,11 +11,31 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dialog/create-attribute-dialog.component';
 import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
-import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import {
+  AttributesListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
 import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    AttributesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-one-entity-attribute-page',
   templateUrl: './one-entity-attribute-page.component.html',
   styleUrls: ['./one-entity-attribute-page.component.css'],

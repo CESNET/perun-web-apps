@@ -1,10 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { GroupsManagerService, RichGroup } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { getAttribute } from '@perun-web-apps/perun/utils';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { formatDate } from '@angular/common';
+import { formatDate, CommonModule } from '@angular/common';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export type SyncType = 'BASIC' | 'STRUCTURED';
 
@@ -14,6 +20,17 @@ export interface GroupSyncDetailDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-group-sync-detail-dialog',
   templateUrl: './group-sync-detail-dialog.component.html',
   styleUrls: ['./group-sync-detail-dialog.component.scss'],

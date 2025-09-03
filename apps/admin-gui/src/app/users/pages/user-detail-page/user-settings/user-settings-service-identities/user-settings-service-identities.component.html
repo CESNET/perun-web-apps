@@ -1,22 +1,20 @@
 <h1 class="page-subtitle">{{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-<button
-  *ngIf="addIdentity"
-  (click)="onAdd()"
-  color="accent"
-  class="me-2 action-button"
-  mat-flat-button>
-  {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.CREATE' | translate}}
-</button>
-<button
-  *ngIf="removeIdentity"
-  (click)="onRemove()"
-  [disabled]="loading || selection.selected.length === 0"
-  color="warn"
-  class="me-2"
-  mat-flat-button>
-  {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.DELETE' | translate}}
-</button>
+@if (addIdentity) {
+  <button (click)="onAdd()" color="accent" class="me-2 action-button" mat-flat-button>
+    {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.CREATE' | translate}}
+  </button>
+}
+@if (removeIdentity) {
+  <button
+    (click)="onRemove()"
+    [disabled]="loading || selection.selected.length === 0"
+    color="warn"
+    class="me-2"
+    mat-flat-button>
+    {{'USER_DETAIL.SETTINGS.SERVICE_IDENTITIES.DELETE' | translate}}
+  </button>
+}
 
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>

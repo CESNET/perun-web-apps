@@ -2,15 +2,16 @@
   [ngStyle]="{'background': bgColor}"
   class="sticky-top header-container mat-elevation-z3">
   <div id="nav-menu-icons">
-    <button
-      (click)="onToggleSidenav()"
-      *ngIf="showToggle"
-      [ngStyle]="{'color': iconColor}"
-      aria-label="Menu"
-      matTooltip="{{'NAV.MENU' | translate}}"
-      mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
+    @if (showToggle) {
+      <button
+        (click)="onToggleSidenav()"
+        [ngStyle]="{'color': iconColor}"
+        aria-label="Menu"
+        matTooltip="{{'NAV.MENU' | translate}}"
+        mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
 
     <a
       [innerHTML]="logo"
@@ -27,74 +28,78 @@
   <div
     [ngStyle]="{'color': navTextColor, 'width': searchEnabled ? '60%' : 'none'}"
     id="nav-menu-user-info">
-    <perun-web-apps-global-search
-      class="ms-4 global-search"
-      *ngIf="searchEnabled"
-      [adminSearch]="searchAsAdmin"></perun-web-apps-global-search>
-    <div id="nav-menu-language" [ngStyle]="{'color': textColor}" *ngIf="showLanguageMenu">
-      <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon [ngStyle]="{'color': iconColor}"> language </mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="changeLanguage()">
-          {{'HEADER.LANGUAGE' | translate}}
+    @if (searchEnabled) {
+      <perun-web-apps-global-search
+        class="ms-4 global-search"
+        [adminSearch]="searchAsAdmin"></perun-web-apps-global-search>
+    }
+    @if (showLanguageMenu) {
+      <div id="nav-menu-language" [ngStyle]="{'color': textColor}">
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon [ngStyle]="{'color': iconColor}"> language </mat-icon>
         </button>
-      </mat-menu>
-    </div>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="changeLanguage()">
+            {{'HEADER.LANGUAGE' | translate}}
+          </button>
+        </mat-menu>
+      </div>
+    }
 
-    <span
-      *ngIf="showUserName && principal?.user !== null"
-      [ngStyle]="{'color': textColor}"
-      class="d-none d-lg-inline displayed-name me-1">
-      {{principal.user | userFullName}}
-    </span>
+    @if (showUserName && principal?.user !== null) {
+      <span [ngStyle]="{'color': textColor}" class="d-none d-lg-inline displayed-name me-1">
+        {{principal.user | userFullName}}
+      </span>
+    }
 
-    <button
-      *ngIf="showNotifications"
-      [matTooltip]="'NAV.NOTIFICATIONS_TOOLTIP'|translate"
-      (click)="showNotificationHistory()"
-      mat-icon-button>
-      <mat-icon
-        [ngStyle]="{'color': iconColor}"
-        matBadge="{{getNewNotificationsCount() > 5 ? '5+' : getNewNotificationsCount()}}"
-        [matBadgeHidden]="getNewNotificationsCount() === 0"
-        matBadgeColor="warn">
-        {{getNewNotificationsCount() ? 'notifications_active' : 'notifications'}}
-      </mat-icon>
-    </button>
+    @if (showNotifications) {
+      <button
+        [matTooltip]="'NAV.NOTIFICATIONS_TOOLTIP'|translate"
+        (click)="showNotificationHistory()"
+        mat-icon-button>
+        <mat-icon
+          [ngStyle]="{'color': iconColor}"
+          matBadge="{{getNewNotificationsCount() > 5 ? '5+' : getNewNotificationsCount()}}"
+          [matBadgeHidden]="getNewNotificationsCount() === 0"
+          matBadgeColor="warn">
+          {{getNewNotificationsCount() ? 'notifications_active' : 'notifications'}}
+        </mat-icon>
+      </button>
+    }
 
     <div class="d-flex flex-nowrap align-items-center">
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="appsMenu"
-        *ngIf="(otherAppUrls | keyvalue)?.length && showOtherApps"
-        [matTooltip]="'NAV.OTHER_APPLICATIONS' | translate">
-        <mat-icon [ngStyle]="{'color': iconColor}"> apps </mat-icon>
-      </button>
+      @if ((otherAppUrls | keyvalue)?.length && showOtherApps) {
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="appsMenu"
+          [matTooltip]="'NAV.OTHER_APPLICATIONS' | translate">
+          <mat-icon [ngStyle]="{'color': iconColor}"> apps </mat-icon>
+        </button>
+      }
       <mat-menu #appsMenu="matMenu">
-        <button
-          *ngFor="let appLabel of this.otherAppLabels | keyvalue"
-          mat-menu-item
-          (click)="redirectToUrl(this.otherAppUrls[appLabel.key])"
-          (auxclick)="redirectToUrl(this.otherAppUrls[appLabel.key])">
-          <span>{{this.appLabel.value}}</span>
-        </button>
-        <button
-          *ngFor="let appLabel of this.otherAppLabelsCustom | keyvalue"
-          mat-menu-item
-          (click)="redirectToUrl(appLabel.key)"
-          (auxclick)="redirectToUrl(appLabel.key)">
-          <span>{{this.appLabel.value}}</span>
-        </button>
+        @for (appLabel of this.otherAppLabels | keyvalue; track appLabel) {
+          <button
+            mat-menu-item
+            (click)="redirectToUrl(this.otherAppUrls[appLabel.key])"
+            (auxclick)="redirectToUrl(this.otherAppUrls[appLabel.key])">
+            <span>{{appLabel.value}}</span>
+          </button>
+        }
+        @for (appLabel of this.otherAppLabelsCustom | keyvalue; track appLabel) {
+          <button
+            mat-menu-item
+            (click)="redirectToUrl(appLabel.key)"
+            (auxclick)="redirectToUrl(appLabel.key)">
+            <span>{{appLabel.value}}</span>
+          </button>
+        }
       </mat-menu>
 
-      <button
-        mat-icon-button
-        *ngIf="logoutEnabled"
-        (click)="onLogOut()"
-        [matTooltip]="'NAV.LOGOUT'|translate">
-        <mat-icon>logout</mat-icon>
-      </button>
+      @if (logoutEnabled) {
+        <button mat-icon-button (click)="onLogOut()" [matTooltip]="'NAV.LOGOUT'|translate">
+          <mat-icon>logout</mat-icon>
+        </button>
+      }
     </div>
   </div>
 </mat-toolbar>

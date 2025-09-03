@@ -5,9 +5,11 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.REMOVE_GROUPS.TITLE' | translate}}</h1>
     <div mat-dialog-content>
-      <perun-web-apps-alert *ngIf="doLastWarning" alert_type="warn">
-        {{warningMessage | translate}}
-      </perun-web-apps-alert>
+      @if (doLastWarning) {
+        <perun-web-apps-alert alert_type="warn">
+          {{warningMessage | translate}}
+        </perun-web-apps-alert>
+      }
       <p>
         {{'DIALOGS.REMOVE_GROUPS.DESCRIPTION' | translate}}
       </p>

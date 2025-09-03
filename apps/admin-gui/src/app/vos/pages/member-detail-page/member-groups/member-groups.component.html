@@ -1,26 +1,24 @@
 <h1 class="page-subtitle">{{'MEMBER_DETAIL.GROUPS.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-<button
-  *ngIf="addAuth"
-  (click)="addGroup()"
-  color="accent"
-  class="me-2 action-button"
-  mat-flat-button>
-  {{'MEMBER_DETAIL.GROUPS.ADD' | translate}}
-</button>
-<span
-  *ngIf="{removeAuth: removeAuth$ | async} as auth"
-  [matTooltipDisabled]="auth.removeAuth"
-  matTooltip="{{'MEMBER_DETAIL.GROUPS.REMOVE_PERMISSION_HINT' | translate}}">
-  <button
-    class="me-2"
-    color="warn"
-    (click)="removeGroup()"
-    [disabled]="selection.selected.length === 0 || !auth.removeAuth"
-    mat-flat-button>
-    {{'MEMBER_DETAIL.GROUPS.REMOVE' | translate}}
+@if (addAuth) {
+  <button (click)="addGroup()" color="accent" class="me-2 action-button" mat-flat-button>
+    {{'MEMBER_DETAIL.GROUPS.ADD' | translate}}
   </button>
-</span>
+}
+@if ({removeAuth: removeAuth$ | async}; as auth) {
+  <span
+    [matTooltipDisabled]="auth.removeAuth"
+    matTooltip="{{'MEMBER_DETAIL.GROUPS.REMOVE_PERMISSION_HINT' | translate}}">
+    <button
+      class="me-2"
+      color="warn"
+      (click)="removeGroup()"
+      [disabled]="selection.selected.length === 0 || !auth.removeAuth"
+      mat-flat-button>
+      {{'MEMBER_DETAIL.GROUPS.REMOVE' | translate}}
+    </button>
+  </span>
+}
 
 <app-group-roles-filter
   [hidden]="true"
@@ -45,21 +43,23 @@
   <perun-web-apps-loading-table></perun-web-apps-loading-table>
 </ng-template>
 <div class="position-relative table-min-height">
-  <div *ngIf="!showGroupList">
-    <perun-web-apps-groups-tree
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      (refreshTable)="refreshTable()"
-      (changeExpiration)="changeExpiration($event)"
-      [expandAll]="filtering"
-      [disableRouting]="!routeAuth"
-      [groups]="groups"
-      [selection]="selection"
-      [filterValue]="filterValue"
-      [displayedColumns]="['nameWithId', 'description', 'expiration', 'status']"
-      theme="member-theme">
-    </perun-web-apps-groups-tree>
-  </div>
+  @if (!showGroupList) {
+    <div>
+      <perun-web-apps-groups-tree
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        (refreshTable)="refreshTable()"
+        (changeExpiration)="changeExpiration($event)"
+        [expandAll]="filtering"
+        [disableRouting]="!routeAuth"
+        [groups]="groups"
+        [selection]="selection"
+        [filterValue]="filterValue"
+        [displayedColumns]="['nameWithId', 'description', 'expiration', 'status']"
+        theme="member-theme">
+      </perun-web-apps-groups-tree>
+    </div>
+  }
   <div [hidden]="!showGroupList">
     <perun-web-apps-groups-list
       #list

@@ -1,3 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { OneEntityAttributePageComponent } from '../../../../shared/components/one-entity-attribute-page/one-entity-attribute-page.component';
+import { TwoEntityAttributePageComponent } from '../../../../shared/components/two-entity-attribute-page/two-entity-attribute-page.component';
+import { LoaderDirective, MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   GroupsManagerService,
@@ -7,11 +16,35 @@ import {
   UsersManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { compareFnName } from '@perun-web-apps/perun/utils';
+import {
+  GroupsListComponent,
+  MemberOverviewMembershipComponent,
+  VoSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    MiddleClickRouterLinkDirective,
+    OneEntityAttributePageComponent,
+    TwoEntityAttributePageComponent,
+    MatTabsModule,
+    RouterModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    GroupsListComponent,
+    MemberOverviewMembershipComponent,
+    VoSearchSelectComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-user-accounts',
   templateUrl: './user-accounts.component.html',
   styleUrls: ['./user-accounts.component.css'],

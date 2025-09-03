@@ -1,26 +1,29 @@
 <div class="{{data.theme}}">
   <div mat-dialog-title class="mb-2">
-    <h3 *ngIf="applicationFailures.length === 1; else elseFailBlock">
-      {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_SINGULAR' | translate: {count: applicationFailures.length} }}
-    </h3>
-    <ng-template #elseFailBlock>
+    @if (applicationFailures.length === 1) {
+      <h3>
+        {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_SINGULAR' | translate: {count: applicationFailures.length} }}
+      </h3>
+    } @else {
       <h3>
         {{ 'VO_DETAIL.APPLICATION.ERROR.' + data.action | translate: {count: applicationFailures.length} }}
       </h3>
-    </ng-template>
+    }
     <div class="font-italic text-muted">
       {{
-          applicationSuccesses.length === 1 ?
-            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_SINGULAR' | translate : {count: applicationSuccesses.length}) :
-            ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action | translate : {count: applicationSuccesses.length})
+      applicationSuccesses.length === 1 ?
+      ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action + '_SINGULAR' | translate : {count: applicationSuccesses.length}) :
+      ('VO_DETAIL.APPLICATION.SUCCESS.' + data.action | translate : {count: applicationSuccesses.length})
       }}
     </div>
   </div>
 
   <div mat-dialog-content>
-    <perun-web-apps-alert alert_type="info" *ngIf="cantBeApprovedPresent">
-      <i [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.CANT_BE_APPROVED' | translate"></i>
-    </perun-web-apps-alert>
+    @if (cantBeApprovedPresent) {
+      <perun-web-apps-alert alert_type="info">
+        <i [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.CANT_BE_APPROVED' | translate"></i>
+      </perun-web-apps-alert>
+    }
     <perun-web-apps-alert alert_type="error">
       <div
         [innerHTML]="'VO_DETAIL.APPLICATION.ERROR.' + data.action + '_DESCRIPTION' | translate"></div>

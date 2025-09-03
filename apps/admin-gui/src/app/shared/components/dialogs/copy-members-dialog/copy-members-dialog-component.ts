@@ -1,6 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Group, GroupsManagerService, RichGroup, RichMember } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { TABLE_VO_GROUPS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps/perun/utils';
@@ -10,6 +19,7 @@ import {
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface CopyMembersDialogData {
   theme: string;
@@ -18,6 +28,22 @@ export interface CopyMembersDialogData {
   voId: number;
 }
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-copy-members-dialog',
   templateUrl: './copy-members-dialog-component.html',
   styleUrls: ['./copy-members-dialog-component.scss'],

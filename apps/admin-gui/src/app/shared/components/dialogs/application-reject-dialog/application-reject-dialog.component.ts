@@ -1,8 +1,15 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface DialogData {
   applicationId: number;
@@ -10,6 +17,19 @@ export interface DialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-application-reject-dialog',
   templateUrl: './application-reject-dialog.component.html',
   styleUrls: ['./application-reject-dialog.component.scss'],

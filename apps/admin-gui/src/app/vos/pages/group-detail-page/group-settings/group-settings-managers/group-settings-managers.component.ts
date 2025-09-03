@@ -1,8 +1,12 @@
+import { ManagersPageComponent } from '../../../../../shared/components/managers-page/managers-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Group, RoleManagementRules } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, ManagersPageComponent],
+  standalone: true,
   selector: 'app-group-settings-managers',
   templateUrl: './group-settings-managers.component.html',
   styleUrls: ['./group-settings-managers.component.scss'],

@@ -12,7 +12,7 @@ import {
   User,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { AuthPrivilege, Role } from '@perun-web-apps/perun/models';
+import { AuthPrivilege, Role, RPCError } from '@perun-web-apps/perun/models';
 import { StoreService } from './store.service';
 
 type Entity = Vo & Group & Resource & Member & User & Facility;
@@ -181,7 +181,7 @@ export class GuiAuthResolver {
           this.allRolesManagementRules = allRules;
           resolve();
         },
-        (error) => reject(error),
+        (error: RPCError) => reject(error),
       );
     });
   }

@@ -1,3 +1,6 @@
+import { AddBanDialogComponent } from '../add-ban-dialog/add-ban-dialog.component';
+import { DebounceFilterComponent, MembersListComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BanOnResource, ResourcesManagerService, RichMember } from '@perun-web-apps/perun/openapi';
@@ -7,6 +10,8 @@ import { NotificatorService, StoreService } from '@perun-web-apps/perun/services
 import { BanForm, AddBanData } from '../add-ban-dialog/add-ban-dialog.component';
 
 @Component({
+  imports: [CommonModule, DebounceFilterComponent, AddBanDialogComponent, MembersListComponent],
+  standalone: true,
   selector: 'app-add-resource-ban-dialog',
   templateUrl: './add-resource-ban-dialog.component.html',
   styleUrls: ['./add-resource-ban-dialog.component.scss'],

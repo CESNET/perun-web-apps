@@ -1,8 +1,22 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDivider } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ResourceState, Task } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatExpansionModule,
+    MatDivider,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-state-tab',
   templateUrl: './state-tab.component.html',
   styleUrls: ['./state-tab.component.scss'],

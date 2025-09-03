@@ -1,8 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { RichDestination, ServicesManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { DestinationListComponent } from '../../destination-list/destination-list.component';
 
 export interface RemoveDestinationDialogData {
   destinations: RichDestination[];
@@ -10,6 +17,17 @@ export interface RemoveDestinationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    DestinationListComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-remove-destination-dialog',
   templateUrl: './remove-destination-dialog.component.html',
   styleUrls: ['./remove-destination-dialog.component.scss'],

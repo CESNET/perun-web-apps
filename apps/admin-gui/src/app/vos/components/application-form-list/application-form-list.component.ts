@@ -1,3 +1,10 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -8,16 +15,42 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DeleteApplicationFormItemDialogComponent } from '../../../shared/components/dialogs/delete-application-form-item-dialog/delete-application-form-item-dialog.component';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { EditApplicationFormItemDialogComponent } from '../../../shared/components/dialogs/edit-application-form-item-dialog/edit-application-form-item-dialog.component';
 import { ApplicationForm, ApplicationFormItem } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Router } from '@angular/router';
+import {
+  AttributeValueListComponent,
+  AttributeValueMapComponent,
+} from '@perun-web-apps/perun/components';
+import { ApplicationFormItemTypePipe } from '../../../shared/pipes/application-form-item-type.pipe';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { SanitizeHtmlPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    MatTableModule,
+    TranslateModule,
+    MatTooltip,
+    CdkDropList,
+    AttributeValueMapComponent,
+    CdkDrag,
+    AttributeValueListComponent,
+    ApplicationFormItemTypePipe,
+    MultiWordDataCyPipe,
+    SanitizeHtmlPipe,
+  ],
+  standalone: true,
   selector: 'app-application-form-list',
   templateUrl: './application-form-list.component.html',
   styleUrls: ['./application-form-list.component.scss'],

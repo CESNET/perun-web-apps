@@ -4,6 +4,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { getAttribute } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'groupSyncIcon',
 })
 export class GroupSyncIconPipe implements PipeTransform {

@@ -1,3 +1,7 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig, isVirtualAttribute } from '@perun-web-apps/perun/utils';
@@ -5,6 +9,8 @@ import { ShowValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  standalone: true,
   selector: 'perun-web-apps-attribute-value-integer',
   templateUrl: './attribute-value-integer.component.html',
   styleUrls: ['./attribute-value-integer.component.css'],

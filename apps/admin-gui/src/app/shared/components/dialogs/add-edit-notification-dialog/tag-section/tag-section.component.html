@@ -2,19 +2,21 @@
   <div
     class="mb-2"
     innerHTML="{{'DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.TAG_ADDING_DESC' | translate}}"></div>
-  <div *ngFor="let tag of tags">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title draggable="true" (dragstart)="setDraggedText($event, tag[0])">
-          <mat-icon class="handle-icon me-3">drag_indicator</mat-icon>
-          <span class="tag-text-header">{{'{' + tag[0] + '}'}}</span></mat-panel-title
+  @for (tag of tags; track tag) {
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title draggable="true" (dragstart)="setDraggedText($event, tag[0])">
+            <mat-icon class="handle-icon me-3">drag_indicator</mat-icon>
+            <span class="tag-text-header">{{'{' + tag[0] + '}'}}</span></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <span
+          class="tag-text"
+          >{{('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.' + tag[1] | translate)}}</span
         >
-      </mat-expansion-panel-header>
-      <span
-        class="tag-text"
-        >{{('DIALOGS.NOTIFICATIONS_ADD_EDIT_MAIL.' + tag[1] | translate)}}</span
-      >
-    </mat-expansion-panel>
-    <mat-divider class="mt-1 mb-1"></mat-divider>
-  </div>
+      </mat-expansion-panel>
+      <mat-divider class="mt-1 mb-1"></mat-divider>
+    </div>
+  }
 </div>

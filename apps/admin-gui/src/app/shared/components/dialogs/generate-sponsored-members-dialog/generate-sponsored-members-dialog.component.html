@@ -5,209 +5,231 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.TITLE' | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
-      <perun-web-apps-alert alert_type="error" *ngIf="this.functionalityNotSupported">
-        {{'DIALOGS.CREATE_SPONSORED_MEMBER.FUNCTIONALITY_NOT_SUPPORTED' | translate}}
-      </perun-web-apps-alert>
-      <mat-stepper
-        #stepper
-        *ngIf='state === "user-input" && namespaceRules.length !== 0'
-        [linear]="true">
-        <mat-step [stepControl]="usersInfoFormGroup">
-          <ng-template
-            matStepLabel
-            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_LABEL' | translate}}</ng-template
-          >
-          <h5 class="mt-2">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_INFO' | translate}}</h5>
-          <form [formGroup]="usersInfoFormGroup" class="flex-container mt-2">
-            <mat-form-field>
-              <mat-label>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMESPACE' | translate}}</mat-label>
-              <mat-select data-cy="namespace-filter" formControlName="namespace" required>
-                <mat-option
-                  *ngFor="let namespc of namespaceOptions"
-                  [value]="namespc"
-                  attr.data-cy="{{namespc}}">
-                  {{namespc}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="usersInfoFormGroup.hasError('required', 'namespace')">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMESPACE_ERROR' | translate}}
-              </mat-error>
-            </mat-form-field>
-            <div>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.HINT'| translate}}</div>
-            <div class="fw-bold">
-              {{this.getSelectedNamespaceRules().csvGenHeaderDescription}}
+      @if (this.functionalityNotSupported) {
+        <perun-web-apps-alert alert_type="error">
+          {{'DIALOGS.CREATE_SPONSORED_MEMBER.FUNCTIONALITY_NOT_SUPPORTED' | translate}}
+        </perun-web-apps-alert>
+      }
+      @if (state === "user-input" && namespaceRules.length !== 0) {
+        <mat-stepper #stepper [linear]="true">
+          <mat-step [stepControl]="usersInfoFormGroup">
+            <ng-template
+              matStepLabel
+              >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_LABEL' | translate}}</ng-template
+            >
+            <h5 class="mt-2">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.USERS_INFO' | translate}}</h5>
+            <form [formGroup]="usersInfoFormGroup" class="flex-container mt-2">
+              <mat-form-field>
+                <mat-label
+                  >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMESPACE' | translate}}</mat-label
+                >
+                <mat-select data-cy="namespace-filter" formControlName="namespace" required>
+                  @for (namespc of namespaceOptions; track namespc) {
+                    <mat-option [value]="namespc" attr.data-cy="{{namespc}}">
+                      {{namespc}}
+                    </mat-option>
+                  }
+                </mat-select>
+                @if (usersInfoFormGroup.hasError('required', 'namespace')) {
+                  <mat-error>
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMESPACE_ERROR' | translate}}
+                  </mat-error>
+                }
+              </mat-form-field>
+              <div>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.HINT'| translate}}</div>
+              <div class="fw-bold">
+                {{this.getSelectedNamespaceRules().csvGenHeaderDescription}}
+              </div>
+              <mat-form-field class="pt-2">
+                <mat-label
+                  >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.INSERT_HERE'| translate}}</mat-label
+                >
+                <textarea
+                  data-cy="csv-input"
+                  cols="50"
+                  class="md-textarea form-control"
+                  id="voGenerateSponsoredMembers"
+                  name="voGenerateSponsoredMembers"
+                  formControlName="sponsoredMembers"
+                  matInput
+                  placeholder="{{this.getSelectedNamespaceRules().csvGenPlaceholder}}"
+                  rows="8">
+                </textarea>
+                @if (usersInfoFormGroup.hasError('required', 'sponsoredMembers')) {
+                  <mat-error>
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMES_ERROR' | translate}}
+                  </mat-error>
+                }
+                @if (usersInfoFormGroup.hasError('invalidFormat', 'sponsoredMembers')) {
+                  <mat-error>
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_FORMAT'| translate}}:
+                    {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidFormat').value}}
+                  </mat-error>
+                }
+                @if (usersInfoFormGroup.hasError('invalidEmail', 'sponsoredMembers')) {
+                  <mat-error>
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_EMAIL'| translate}}:
+                    {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidEmail').value}}
+                  </mat-error>
+                }
+                @if (usersInfoFormGroup.hasError('invalidLogin', 'sponsoredMembers')) {
+                  <mat-error>
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_LOGIN'| translate}}:
+                    {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidLogin').value}}
+                  </mat-error>
+                }
+              </mat-form-field>
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template
+              matStepLabel
+              >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_LABEL' | translate}}</ng-template
+            >
+            <div class="mt-2">
+              <h5 class="mb-4">
+                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_MANAGEMENT' | translate}}
+              </h5>
+              @if (getSelectedNamespaceRules().namespaceName === 'No namespace') {
+                <perun-web-apps-alert alert_type="info">
+                  {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NO_NAMESPACE_PASSWORD_INFO' | translate}}
+                </perun-web-apps-alert>
+              }
+              @if (getSelectedNamespaceRules().namespaceName !== 'No namespace') {
+                <mat-radio-group [(ngModel)]="passwordReset">
+                  <mat-radio-button value="generate">
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.GENERATE_PASSWORD' | translate}}
+                  </mat-radio-button>
+                  <mat-radio-button value="reset">
+                    {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_RESET' | translate}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              }
+              @if (passwordReset === 'reset') {
+                <mat-form-field class="w-100">
+                  <mat-label>{{'DIALOGS.INVITE_MEMBER.LANGUAGE' | translate}}</mat-label>
+                  <mat-select [(value)]="currentLanguage">
+                    @for (lang of languages; track lang) {
+                      <mat-option value="{{lang}}">
+                        {{'SHARED_LIB.LANGUAGES.'+lang | uppercase | translate}}
+                      </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
             </div>
-            <mat-form-field class="pt-2">
-              <mat-label>{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.INSERT_HERE'| translate}}</mat-label>
-              <textarea
-                data-cy="csv-input"
-                cols="50"
-                class="md-textarea form-control"
-                id="voGenerateSponsoredMembers"
-                name="voGenerateSponsoredMembers"
-                formControlName="sponsoredMembers"
-                matInput
-                placeholder="{{this.getSelectedNamespaceRules().csvGenPlaceholder}}"
-                rows="8">
-              </textarea>
-              <mat-error *ngIf="usersInfoFormGroup.hasError('required', 'sponsoredMembers')">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NAMES_ERROR' | translate}}
-              </mat-error>
-              <mat-error *ngIf="usersInfoFormGroup.hasError('invalidFormat', 'sponsoredMembers')">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_FORMAT'| translate}}:
-                {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidFormat').value}}
-              </mat-error>
-              <mat-error *ngIf="usersInfoFormGroup.hasError('invalidEmail', 'sponsoredMembers')">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_EMAIL'| translate}}:
-                {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidEmail').value}}
-              </mat-error>
-              <mat-error *ngIf="usersInfoFormGroup.hasError('invalidLogin', 'sponsoredMembers')">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.ERROR_LOGIN'| translate}}:
-                {{usersInfoFormGroup.get('sponsoredMembers').getError('invalidLogin').value}}
-              </mat-error>
-            </mat-form-field>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template
-            matStepLabel
-            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_LABEL' | translate}}</ng-template
-          >
-          <div class="mt-2">
-            <h5 class="mb-4">
-              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_MANAGEMENT' | translate}}
-            </h5>
-            <perun-web-apps-alert
-              alert_type="info"
-              *ngIf="getSelectedNamespaceRules().namespaceName === 'No namespace'">
-              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NO_NAMESPACE_PASSWORD_INFO' | translate}}
-            </perun-web-apps-alert>
-            <mat-radio-group
-              *ngIf="getSelectedNamespaceRules().namespaceName !== 'No namespace'"
-              [(ngModel)]="passwordReset">
-              <mat-radio-button value="generate">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.GENERATE_PASSWORD' | translate}}
-              </mat-radio-button>
-              <mat-radio-button value="reset">
-                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.PASSWORD_RESET' | translate}}
-              </mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field class="w-100" *ngIf="passwordReset === 'reset'">
-              <mat-label>{{'DIALOGS.INVITE_MEMBER.LANGUAGE' | translate}}</mat-label>
-              <mat-select [(value)]="currentLanguage">
-                <mat-option *ngFor="let lang of languages" value="{{lang}}">
-                  {{'SHARED_LIB.LANGUAGES.'+lang | uppercase | translate}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </mat-step>
-
-        <mat-step>
-          <ng-template
-            matStepLabel
-            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_LABEL' | translate}}</ng-template
-          >
-          <div class="dialog-container">
-            <h5 class="mt-2">
-              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_TITLE' | translate}}
-            </h5>
-            <app-choose-sponsor
+          </mat-step>
+          <mat-step>
+            <ng-template
+              matStepLabel
+              >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_LABEL' | translate}}</ng-template
+            >
+            <div class="dialog-container">
+              <h5 class="mt-2">
+                {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SPONSORSHIP_TITLE' | translate}}
+              </h5>
+              <app-choose-sponsor
+                [voId]="data.voId"
+                [voSponsors]="voSponsors"
+                [customTitle]="'DIALOGS.GENERATE_SPONSORED_MEMBERS.SELECT_SPONSOR'"
+                (sponsorTypeSelected)="sponsorType = $event"
+                (sponsorSelected)="selectedSponsor = $event">
+              </app-choose-sponsor>
+              <h6 class="mt-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.EXPIRATION' | translate}}</h6>
+              <perun-web-apps-expiration-select
+                [minDate]="minDate"
+                (expirationSelected)="setExpiration($event)"
+                class="mt-2">
+              </perun-web-apps-expiration-select>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template
+              matStepLabel
+              >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.GROUPS_LABEL' | translate}}</ng-template
+            >
+            <app-assign-groups-sponsored-members-component
+              (groupsToAdd)="onGenerate($event)"
+              (submitAllowed)="submitAllowed = $event"
               [voId]="data.voId"
-              [voSponsors]="voSponsors"
-              [customTitle]="'DIALOGS.GENERATE_SPONSORED_MEMBERS.SELECT_SPONSOR'"
-              (sponsorTypeSelected)="sponsorType = $event"
-              (sponsorSelected)="selectedSponsor = $event">
-            </app-choose-sponsor>
-
-            <h6 class="mt-4">{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.EXPIRATION' | translate}}</h6>
-            <perun-web-apps-expiration-select
-              [minDate]="minDate"
-              (expirationSelected)="setExpiration($event)"
-              class="mt-2">
-            </perun-web-apps-expiration-select>
-          </div>
-        </mat-step>
-
-        <mat-step>
-          <ng-template
-            matStepLabel
-            >{{'DIALOGS.GENERATE_SPONSORED_MEMBERS.GROUPS_LABEL' | translate}}</ng-template
-          >
-          <app-assign-groups-sponsored-members-component
-            (groupsToAdd)="onGenerate($event)"
-            (submitAllowed)="submitAllowed = $event"
-            [voId]="data.voId"
-            [submit]="groupsToAssign.asObservable()"></app-assign-groups-sponsored-members-component>
-        </mat-step>
-      </mat-stepper>
-      <div *ngIf='state === "results"'>
-        <perun-web-apps-alert *ngIf="this.finishedWithErrors === false" [alert_type]="'success'">
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SUCCESS' | translate}}
-        </perun-web-apps-alert>
-        <perun-web-apps-alert *ngIf="this.finishedWithErrors" [alert_type]="'warn'">
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.FINISHED_WITH_ERRORS' | translate}}
-        </perun-web-apps-alert>
-      </div>
+              [submit]="groupsToAssign.asObservable()"></app-assign-groups-sponsored-members-component>
+          </mat-step>
+        </mat-stepper>
+      }
+      @if (state === "results") {
+        <div>
+          @if (this.finishedWithErrors === false) {
+            <perun-web-apps-alert [alert_type]="'success'">
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SUCCESS' | translate}}
+            </perun-web-apps-alert>
+          }
+          @if (this.finishedWithErrors) {
+            <perun-web-apps-alert [alert_type]="'warn'">
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.FINISHED_WITH_ERRORS' | translate}}
+            </perun-web-apps-alert>
+          }
+        </div>
+      }
     </div>
-    <div
-      *ngIf="functionalityNotSupported || stepper !== undefined && state !== 'results'"
-      mat-dialog-actions
-      class="justify-content-end">
-      <div>
-        <button (click)="onCancel()" mat-stroked-button class="me-2">
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.CANCEL' | translate}}
-        </button>
-        <button
-          (click)="stepperPrevious()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex !== 0"
-          class="ms-auto"
-          mat-stroked-button>
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.BACK' | translate}}
-        </button>
-        <button
-          data-cy="next-button"
-          (click)="stepperNext()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1"
-          [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
-          [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
-          [disabled]="getStepperNextConditions()"
-          color="accent"
-          mat-flat-button>
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NEXT' | translate}}
-        </button>
-        <button
-          data-cy="submit-button"
-          (click)="onSubmit()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex === stepper._steps.length -1"
-          [disabled]="!submitAllowed"
-          color="accent"
-          mat-flat-button>
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SUBMIT' | translate}}
-        </button>
-      </div>
-    </div>
-    <div *ngIf='state === "results"' mat-dialog-actions class="justify-content-end">
-      <div>
-        <button (click)="onClose()" mat-stroked-button data-cy="close-button" class="me-2">
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.CLOSE' | translate}}
-        </button>
-        <button
-          [matMenuTriggerFor]="menu"
-          color="accent"
-          class="ms-auto dropdown-toggle"
-          mat-flat-button>
-          {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD' | translate}}
-        </button>
-        <mat-menu #menu="matMenu">
-          <button (click)="generatePdf()" mat-menu-item>
-            {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD_PDF' | translate}}
+    @if (functionalityNotSupported || stepper !== undefined && state !== 'results') {
+      <div mat-dialog-actions class="justify-content-end">
+        <div>
+          <button (click)="onCancel()" mat-stroked-button class="me-2">
+            {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.CANCEL' | translate}}
           </button>
-          <button (click)="downloadCsv()" mat-menu-item>
-            {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD_CSV' | translate}}
-          </button>
-        </mat-menu>
+          @if (stepper !== undefined && stepper.selectedIndex !== 0) {
+            <button (click)="stepperPrevious()" class="ms-auto" mat-stroked-button>
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.BACK' | translate}}
+            </button>
+          }
+          @if (stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1) {
+            <button
+              data-cy="next-button"
+              (click)="stepperNext()"
+              [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
+              [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
+              [disabled]="getStepperNextConditions()"
+              color="accent"
+              mat-flat-button>
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.NEXT' | translate}}
+            </button>
+          }
+          @if (stepper !== undefined && stepper.selectedIndex === stepper._steps.length -1) {
+            <button
+              data-cy="submit-button"
+              (click)="onSubmit()"
+              [disabled]="!submitAllowed"
+              color="accent"
+              mat-flat-button>
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.SUBMIT' | translate}}
+            </button>
+          }
+        </div>
       </div>
-    </div>
+    }
+    @if (state === "results") {
+      <div mat-dialog-actions class="justify-content-end">
+        <div>
+          <button (click)="onClose()" mat-stroked-button data-cy="close-button" class="me-2">
+            {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.CLOSE' | translate}}
+          </button>
+          <button
+            [matMenuTriggerFor]="menu"
+            color="accent"
+            class="ms-auto dropdown-toggle"
+            mat-flat-button>
+            {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD' | translate}}
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="generatePdf()" mat-menu-item>
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD_PDF' | translate}}
+            </button>
+            <button (click)="downloadCsv()" mat-menu-item>
+              {{'DIALOGS.GENERATE_SPONSORED_MEMBERS.DOWNLOAD_CSV' | translate}}
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    }
   </div>
 </div>

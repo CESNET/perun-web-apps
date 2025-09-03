@@ -1,10 +1,17 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { FormControl, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface CreateServiceDialogData {
   theme: string;
@@ -12,6 +19,20 @@ export interface CreateServiceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-create-service-dialog',
   templateUrl: './create-edit-service-dialog.component.html',
   styleUrls: ['./create-edit-service-dialog.component.scss'],

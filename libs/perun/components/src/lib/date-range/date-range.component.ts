@@ -1,7 +1,19 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-date-range',
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss'],

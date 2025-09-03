@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Group, RegistrarManagerService, Type } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -8,8 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddGroupToGroupRegistrationComponent } from '../../../../../shared/components/dialogs/add-group-to-group-registration/add-group-to-group-registration.component';
+import { ApplicationFormManageGroupsComponent } from '../../../../components/application-form-manage-groups/application-form-manage-groups.component';
 
 @Component({
+  imports: [CommonModule, ApplicationFormManageGroupsComponent],
+  standalone: true,
   selector: 'app-group-settings-manage-embedded-groups',
   templateUrl: './group-settings-manage-embedded-groups.component.html',
   styleUrls: ['./group-settings-manage-embedded-groups.component.scss'],

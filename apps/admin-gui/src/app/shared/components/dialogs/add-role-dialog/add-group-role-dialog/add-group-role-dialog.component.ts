@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
@@ -6,9 +7,15 @@ import {
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
-import { AddRoleDialogData, AddRoleForm } from '../add-role-dialog.component';
+import {
+  AddRoleDialogComponent,
+  AddRoleDialogData,
+  AddRoleForm,
+} from '../add-role-dialog.component';
 
 @Component({
+  imports: [CommonModule, AddRoleDialogComponent],
+  standalone: true,
   selector: 'app-add-group-role-dialog',
   templateUrl: './add-group-role-dialog.component.html',
   styleUrls: ['./add-group-role-dialog.component.scss'],

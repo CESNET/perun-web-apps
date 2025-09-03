@@ -14,29 +14,30 @@
       matSortActive="createdAt"
       matSortDirection="desc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="checkbox"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            *ngIf="selection.isMultipleSelection()"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(row) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: ''}"
-            [checked]="selection.isSelected(row)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="checkbox">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            @if (selection.isMultipleSelection()) {
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                color="primary">
+              </mat-checkbox>
+            }
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(row) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: ''}"
+              [checked]="selection.isSelected(row)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'APPLICATIONS_LIST.ID' | translate}}
@@ -85,19 +86,23 @@
       </ng-container>
 
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-      <div *ngIf="clickable">
-        <tr
-          (click)="openExceptionDetail(appErrorPair)"
-          *matRowDef="let appErrorPair; columns: this.displayedColumns;"
-          class="cursor-pointer dark-hover-list-item"
-          mat-row></tr>
-      </div>
-      <div *ngIf="!clickable">
-        <tr
-          *matRowDef="let appErrorPair; columns: this.displayedColumns;"
-          class="dark-hover-list-item"
-          mat-row></tr>
-      </div>
+      @if (clickable) {
+        <div>
+          <tr
+            (click)="openExceptionDetail(appErrorPair)"
+            *matRowDef="let appErrorPair; columns: this.displayedColumns;"
+            class="cursor-pointer dark-hover-list-item"
+            mat-row></tr>
+        </div>
+      }
+      @if (!clickable) {
+        <div>
+          <tr
+            *matRowDef="let appErrorPair; columns: this.displayedColumns;"
+            class="dark-hover-list-item"
+            mat-row></tr>
+        </div>
+      }
     </table>
   </perun-web-apps-table-wrapper>
 </div>

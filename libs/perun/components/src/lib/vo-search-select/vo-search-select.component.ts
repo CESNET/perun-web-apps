@@ -1,8 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { EntitySearchSelectComponent } from '../entity-search-select/entity-search-select.component';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { Vo } from '@perun-web-apps/perun/openapi';
 import { compareFnName } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [CommonModule, EntitySearchSelectComponent, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-vo-search-select',
   templateUrl: './vo-search-select.component.html',
   styleUrls: ['./vo-search-select.component.css'],

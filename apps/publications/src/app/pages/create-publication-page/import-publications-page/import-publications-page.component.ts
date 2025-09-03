@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   CabinetManagerService,
@@ -6,18 +16,21 @@ import {
   PublicationForGUI,
   PublicationSystem,
 } from '@perun-web-apps/perun/openapi';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_IMPORT_PUBLICATIONS } from '@perun-web-apps/config/table-config';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UniversalConfirmationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { BehaviorSubject } from 'rxjs';
+import { PublicationsListComponent } from '../../../components/publications-list/publications-list.component';
+import { PublicationDetailComponent } from '../../publication-detail/publication-detail.component';
+import { YearRangeComponent } from '../../../components/year-range/year-range.component';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -32,6 +45,25 @@ export const YEAR_MODE_FORMATS = {
 };
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    UiAlertsModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    PublicationsListComponent,
+    PublicationDetailComponent,
+    YearRangeComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-import-publications-page',
   templateUrl: './import-publications-page.component.html',
   styleUrls: ['./import-publications-page.component.scss'],

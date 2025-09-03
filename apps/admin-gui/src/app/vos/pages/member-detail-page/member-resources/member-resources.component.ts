@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  ResourcesListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   Member,
@@ -12,8 +20,21 @@ import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddMemberToResourceDialogComponent } from '../../../../shared/components/dialogs/add-member-to-resource-dialog/add-member-to-resource-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    ResourcesListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-member-resources',
   templateUrl: './member-resources.component.html',
   styleUrls: ['./member-resources.component.scss'],

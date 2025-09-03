@@ -9,45 +9,48 @@
     [matTooltipDisabled]="!((loading$ | async) || !(selection | selectedPendingInvitation))
     || this.selection.selected.length === 0"
     matTooltip="{{'GROUP_DETAIL.INVITATIONS.RESEND_DISABLED' | translate}}">
-    <button
-      [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
-      (click)="onInvitationResend()"
-      *ngIf="authRights.resend"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.RESEND' | translate}}
-    </button>
+    @if (authRights.resend) {
+      <button
+        [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
+        (click)="onInvitationResend()"
+        class="me-2"
+        color="accent"
+        mat-flat-button>
+        {{'GROUP_DETAIL.INVITATIONS.RESEND' | translate}}
+      </button>
+    }
   </span>
 
   <span
     [matTooltipDisabled]="!((loading$ | async) || !(selection | selectedPendingInvitation))
     || this.selection.selected.length === 0"
     matTooltip="{{'GROUP_DETAIL.INVITATIONS.EXTEND_DISABLED' | translate}}">
-    <button
-      [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
-      (click)="onInvitationExtendDate()"
-      *ngIf="authRights.extend"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.EXTEND_EXPIRATION_DATE' | translate}}
-    </button>
+    @if (authRights.extend) {
+      <button
+        [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
+        (click)="onInvitationExtendDate()"
+        class="me-2"
+        color="accent"
+        mat-flat-button>
+        {{'GROUP_DETAIL.INVITATIONS.EXTEND_EXPIRATION_DATE' | translate}}
+      </button>
+    }
   </span>
 
   <span
     [matTooltipDisabled]="!((loading$ | async) || !(selection | selectedPendingInvitation))
     || this.selection.selected.length === 0"
     matTooltip="{{'GROUP_DETAIL.INVITATIONS.REVOKE_DISABLED' | translate}}">
-    <button
-      [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
-      (click)="onInvitationRevoke()"
-      *ngIf="authRights.revoke"
-      class="me-2"
-      color="warn"
-      mat-flat-button>
-      {{'GROUP_DETAIL.INVITATIONS.REVOKE' | translate}}
-    </button>
+    @if (authRights.revoke) {
+      <button
+        [disabled]="(loading$ | async) || !(selection | selectedPendingInvitation)"
+        (click)="onInvitationRevoke()"
+        class="me-2"
+        color="warn"
+        mat-flat-button>
+        {{'GROUP_DETAIL.INVITATIONS.REVOKE' | translate}}
+      </button>
+    }
   </span>
 
   <mat-form-field class="me-2 fix-select">
@@ -56,12 +59,9 @@
       <mat-select-trigger>
         {{displaySelectedStatuses()}}
       </mat-select-trigger>
-      <mat-option
-        class="group-theme"
-        *ngFor="let status of statusList"
-        [value]="status"
-        >{{status}}</mat-option
-      >
+      @for (status of statusList; track status) {
+        <mat-option class="group-theme" [value]="status">{{status}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
 

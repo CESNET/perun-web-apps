@@ -1,10 +1,17 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { ResourcesManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { VoSearchSelectComponent } from '@perun-web-apps/perun/components';
 
 export interface CreateResourceDialogData {
   theme: string;
@@ -12,6 +19,19 @@ export interface CreateResourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    VoSearchSelectComponent,
+  ],
+  standalone: true,
   selector: 'app-create-resource-dialog',
   templateUrl: './create-resource-dialog.component.html',
   styleUrls: ['./create-resource-dialog.component.scss'],

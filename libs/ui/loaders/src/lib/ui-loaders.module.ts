@@ -7,8 +7,14 @@ import { LoadingDialogComponent } from './loading-dialog/loading-dialog.componen
 import { LogoutLoaderComponent } from './logout-loader/logout-loader.component';
 
 @NgModule({
-  imports: [MatIconModule, CommonModule, MatProgressSpinnerModule],
-  declarations: [LoadingTableComponent, LoadingDialogComponent, LogoutLoaderComponent],
+  imports: [
+    MatIconModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    LoadingTableComponent,
+    LoadingDialogComponent,
+    LogoutLoaderComponent,
+  ],
   exports: [LoadingTableComponent, LoadingDialogComponent, LogoutLoaderComponent],
 })
 export class UiLoadersModule {}

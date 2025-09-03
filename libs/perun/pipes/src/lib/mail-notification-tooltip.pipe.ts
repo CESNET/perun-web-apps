@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 
 @Pipe({
+  standalone: true,
   name: 'mailNotificationTooltip',
 })
 export class MailNotificationTooltipPipe implements PipeTransform {

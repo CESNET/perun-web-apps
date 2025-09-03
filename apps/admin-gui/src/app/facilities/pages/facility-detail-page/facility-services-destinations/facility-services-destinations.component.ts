@@ -1,3 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -18,8 +24,24 @@ import {
 import { AddServicesDestinationDialogComponent } from '../../../../shared/components/dialogs/add-services-destination-dialog/add-services-destination-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
+import { DestinationListComponent } from '../../../../shared/components/destination-list/destination-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    DestinationListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-facility-services-destinations',
   templateUrl: './facility-services-destinations.component.html',
   styleUrls: ['./facility-services-destinations.component.scss'],

@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import {
   AuthzResolverService,
@@ -23,8 +29,24 @@ import { CopySponsoredMembersDialogComponent } from '../../../../../shared/compo
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { SponsoredMembersListComponent } from '../../../../../shared/components/sponsored-members-list/sponsored-members-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+    SponsoredMembersListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-sponsored-members',
   templateUrl: './vo-settings-sponsored-members.component.html',
   styleUrls: ['./vo-settings-sponsored-members.component.scss'],

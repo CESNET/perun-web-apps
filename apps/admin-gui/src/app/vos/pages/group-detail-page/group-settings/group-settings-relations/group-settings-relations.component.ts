@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -11,8 +21,23 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-settings-relations',
   templateUrl: './group-settings-relations.component.html',
   styleUrls: ['./group-settings-relations.component.scss'],
