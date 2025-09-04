@@ -154,6 +154,15 @@
         <th *matHeaderCellDef mat-header-cell>{{'MEMBERS_LIST.LOGINS' | translate}}</th>
         <td *matCellDef="let member" mat-cell>{{member | memberLogins}}</td>
       </ng-container>
+      <ng-container matColumnDef="consentStatus">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'CONSENTS.STATUS' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let member">
+          <perun-web-apps-consent-status
+            [consentStatus]="member.consent"></perun-web-apps-consent-status>
+        </td>
+      </ng-container>
       <tr *matHeaderRowDef="columns" mat-header-row></tr>
       <tr
         *matRowDef="let member; columns: columns;"
