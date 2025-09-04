@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [19.0.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.1...v19.0.2) (2025-09-04)
+
+
+### Bug Fixes
+
+* **admin:** correctly display consents column on member lists ([0bd5b22](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0bd5b22ceaf4b01f98ea89e77ea693e5c83b7b02))
+
 ## [19.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.0...v19.0.1) (2025-08-19)
 
 
