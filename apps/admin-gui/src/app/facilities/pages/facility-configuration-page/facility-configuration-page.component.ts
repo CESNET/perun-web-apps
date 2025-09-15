@@ -60,7 +60,7 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
   destinationServiceMissing = false;
   availableRoles: RoleManagementRules[] = [];
   filterValue = '';
-  ATTRIBUTES_IDX = 3;
+  ATTRIBUTES_IDX = 2;
   serviceControl: UntypedFormControl = new UntypedFormControl(false, Validators.requiredTrue);
   attributesControl: UntypedFormControl = new UntypedFormControl(true, Validators.requiredTrue);
   private allowNavigate = false;
@@ -70,9 +70,9 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
   private servicesPerPackage: Map<number, Set<number>> = new Map<number, Set<number>>();
   private saveMsg = '';
   private removeMsg = '';
-  private BEFORE_OPTIONAL_IDX = 2;
-  private DESTINATIONS_IDX = 4;
-  private AFTER_OPTIONAL_IDX = 5;
+  private BEFORE_OPTIONAL_IDX = 1;
+  private DESTINATIONS_IDX = 3;
+  private AFTER_OPTIONAL_IDX = 4;
 
   constructor(
     private attributesManager: AttributesManagerService,
