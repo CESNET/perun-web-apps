@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
@@ -5,6 +10,7 @@ import {
   UntypedFormGroup,
   ValidationErrors,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import {
   MembersManagerService,
@@ -16,6 +22,15 @@ import { debounceTime, map, switchMap, take } from 'rxjs/operators';
 import { enableFormControl } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-login-for-namespace',
   templateUrl: './login-for-namespace.component.html',
   styleUrls: ['./login-for-namespace.component.scss'],
@@ -64,10 +79,7 @@ export class LoginForNamespaceComponent implements OnInit {
 
   parseNamespaceRules(): void {
     for (const rule of this.namespaceRules) {
-      if (
-        this.filteredNamespaces === null ||
-        !this.filteredNamespaces.includes(rule.namespaceName)
-      ) {
+      if (!this.filteredNamespaces?.includes(rule.namespaceName)) {
         this.namespaceOptions.push(rule.namespaceName);
 
         const fieldTypes = { login: 'disabled' };

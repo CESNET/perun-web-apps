@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,8 +15,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   Application,
   CantBeApprovedException,
@@ -30,6 +38,18 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ApplicationApproveAnywayDialogComponent } from '../dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MasterCheckboxLabelPipe,
+    CheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'app-application-operation-error-list',
   templateUrl: './application-operation-error-list.component.html',
   styleUrls: ['./application-operation-error-list.component.scss'],

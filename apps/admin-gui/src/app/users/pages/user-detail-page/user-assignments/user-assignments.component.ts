@@ -1,3 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TwoEntityAttributePageComponent } from '../../../../shared/components/two-entity-attribute-page/two-entity-attribute-page.component';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -9,8 +15,25 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { compareFnName } from '@perun-web-apps/perun/utils';
+import { FacilitySearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ResourcesListComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    TwoEntityAttributePageComponent,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    FacilitySearchSelectComponent,
+    LoaderDirective,
+    ResourcesListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-user-assignments',
   templateUrl: './user-assignments.component.html',
   styleUrls: ['./user-assignments.component.scss'],

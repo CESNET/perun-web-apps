@@ -1,44 +1,46 @@
 <div>
   <h1 class="page-subtitle">{{title | translate}}</h1>
-  <perun-web-apps-alert *ngIf="title.includes('CONFIG')" alert_type="info">
-    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.DESTINATIONS_INFO' | translate}}
-  </perun-web-apps-alert>
+  @if (title.includes('CONFIG')) {
+    <perun-web-apps-alert alert_type="info">
+      {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.DESTINATIONS_INFO' | translate}}
+    </perun-web-apps-alert>
+  }
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="addAuth"
-    (click)="addDestination()"
-    color="accent"
-    class="me-2 action-button"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ADD' | translate}}
-  </button>
-  <button
-    *ngIf="removeAuth"
-    (click)="removeDestination()"
-    class="me-2"
-    color="warn"
-    [disabled]="loading || selected.selected.length === 0"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.REMOVE' | translate}}
-  </button>
-  <button
-    *ngIf="allowAuth"
-    (click)="onAllow()"
-    class="me-2"
-    [disabled]="loading || selected.selected.length === 0 || allSelectedAllowed()"
-    mat-stroked-button>
-    <mat-icon> check_circle_outline </mat-icon>
-    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ALLOW' | translate}}
-  </button>
-  <button
-    *ngIf="blockAuth"
-    (click)="onBlock()"
-    class="me-2"
-    [disabled]="loading || selected.selected.length === 0 || allSelectedBlocked()"
-    mat-stroked-button>
-    <mat-icon> block </mat-icon>
-    {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.BLOCK' | translate}}
-  </button>
+  @if (addAuth) {
+    <button (click)="addDestination()" color="accent" class="me-2 action-button" mat-flat-button>
+      {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ADD' | translate}}
+    </button>
+  }
+  @if (removeAuth) {
+    <button
+      (click)="removeDestination()"
+      class="me-2"
+      color="warn"
+      [disabled]="loading || selected.selected.length === 0"
+      mat-flat-button>
+      {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.REMOVE' | translate}}
+    </button>
+  }
+  @if (allowAuth) {
+    <button
+      (click)="onAllow()"
+      class="me-2"
+      [disabled]="loading || selected.selected.length === 0 || allSelectedAllowed()"
+      mat-stroked-button>
+      <mat-icon> check_circle_outline </mat-icon>
+      {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.ALLOW' | translate}}
+    </button>
+  }
+  @if (blockAuth) {
+    <button
+      (click)="onBlock()"
+      class="me-2"
+      [disabled]="loading || selected.selected.length === 0 || allSelectedBlocked()"
+      mat-stroked-button>
+      <mat-icon> block </mat-icon>
+      {{'FACILITY_DETAIL.SERVICES_DESTINATIONS.BLOCK' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'FACILITY_DETAIL.SERVICES_DESTINATIONS.FILTER'"></perun-web-apps-debounce-filter>

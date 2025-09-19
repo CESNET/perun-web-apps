@@ -3,6 +3,7 @@ import { PerunTranslateService } from '@perun-web-apps/perun/services';
 import { Member } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'memberTypeTooltip',
 })
 export class MemberTypeTooltipPipe implements PipeTransform {

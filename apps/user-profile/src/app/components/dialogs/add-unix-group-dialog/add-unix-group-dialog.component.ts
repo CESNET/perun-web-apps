@@ -1,7 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddUnixGroupDialogData {
   userId: number;
@@ -10,6 +18,19 @@ export interface AddUnixGroupDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-add-unix-group-dialog',
   templateUrl: './add-unix-group-dialog.component.html',
   styleUrls: ['./add-unix-group-dialog.component.scss'],

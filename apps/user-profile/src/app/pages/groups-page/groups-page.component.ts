@@ -1,3 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AttributesManagerService,
@@ -8,14 +15,37 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { UntypedFormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteModule,
+} from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Membership } from '../../components/membership-list/membership-list.component';
+import {
+  Membership,
+  MembershipListComponent,
+} from '../../components/membership-list/membership-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MembershipListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-groups-page',
   templateUrl: './groups-page.component.html',
   styleUrls: ['./groups-page.component.scss'],

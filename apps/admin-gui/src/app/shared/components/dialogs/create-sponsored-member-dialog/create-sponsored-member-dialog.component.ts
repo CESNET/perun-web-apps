@@ -1,3 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -6,7 +18,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   GroupsManagerService,
   InputCreateSponsoredMember,
@@ -21,11 +33,18 @@ import {
   FindSponsorsService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomValidators, emailRegexString, enableFormControl } from '@perun-web-apps/perun/utils';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
-import { MatStepper } from '@angular/material/stepper';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { Subject } from 'rxjs';
+import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
+import { AssignGroupsSponsoredMembersComponent } from '../../assign-groups-sponsored-members/assign-groups-sponsored-members-component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 export interface CreateSponsoredMemberDialogData {
   entityId?: number;
@@ -34,6 +53,31 @@ export interface CreateSponsoredMemberDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    ExpirationSelectComponent,
+    TranslateModule,
+    MatTooltip,
+    MatStepLabel,
+    ChooseSponsorComponent,
+    MatStep,
+    PasswordFormComponent,
+    MatStepper,
+    AssignGroupsSponsoredMembersComponent,
+    LoaderDirective,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'app-create-sponsored-member-dialog',
   templateUrl: './create-sponsored-member-dialog.component.html',
   styleUrls: ['./create-sponsored-member-dialog.component.scss'],

@@ -1,3 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -10,11 +22,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AddEditNotificationDialogComponent } from '../../../shared/components/dialogs/add-edit-notification-dialog/add-edit-notification-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { GuiAuthResolver, NotificatorService, TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   ApplicationMail,
@@ -25,8 +37,28 @@ import { getDefaultDialogConfig, TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-ap
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AppMailSendingDisabledPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CheckboxLabelPipe,
+    MasterCheckboxLabelPipe,
+    AppMailSendingDisabledPipe,
+  ],
+  standalone: true,
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
   styleUrls: ['./notification-list.component.scss'],

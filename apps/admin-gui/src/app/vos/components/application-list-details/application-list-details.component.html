@@ -80,12 +80,12 @@
         <td *matCellDef="let application" mat-cell>{{application.modifiedAt | date: 'd.M.y'}}</td>
       </ng-container>
 
-      <ng-container
-        *ngFor="let disCol of addedColumns; let colIndex = index"
-        [matColumnDef]="disCol">
-        <th *matHeaderCellDef mat-header-cell>{{disCol}}</th>
-        <td *matCellDef="let application" mat-cell>{{application[disCol]}}</td>
-      </ng-container>
+      @for (disCol of addedColumns; track disCol; let colIndex = $index) {
+        <ng-container [matColumnDef]="disCol">
+          <th *matHeaderCellDef mat-header-cell>{{disCol}}</th>
+          <td *matCellDef="let application" mat-cell>{{application[disCol]}}</td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="fedInfo">
         <th *matHeaderCellDef mat-header-cell>{{'APPLICATIONS_LIST.FEDINFO' | translate}}</th>
@@ -104,14 +104,18 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="this.dataSource.data.length === 0" alert_type="warn">
-  {{'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND' | translate}}
-</perun-web-apps-alert>
+@if (this.dataSource.data.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'VO_DETAIL.APPLICATION.NO_APPLICATION_FOUND' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && table.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && table.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+}

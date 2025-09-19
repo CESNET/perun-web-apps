@@ -1,3 +1,8 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { PerunFooterComponent, PerunHeaderComponent } from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -20,13 +25,31 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { NewVersionDialogComponent } from './shared/components/dialogs/new-version-dialog/new-version-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NavigationStart, Params, Router } from '@angular/router';
+import { NavigationStart, Params, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { NotificatorComponent } from '@perun-web-apps/perun/components';
+import { NgScrollbar } from 'ngx-scrollbar';
+import { SideMenuComponent } from './shared/side-menu/side-menu.component';
+import { LoginScreenBaseComponent } from '@perun-web-apps/perun/login';
 
 // eslint-disable-next-line
 declare let require: any;
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    PerunFooterComponent,
+    PerunHeaderComponent,
+    MatSidenavModule,
+    RouterModule,
+    MatTooltip,
+    NotificatorComponent,
+    NgScrollbar,
+    SideMenuComponent,
+    LoginScreenBaseComponent,
+  ],
+  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

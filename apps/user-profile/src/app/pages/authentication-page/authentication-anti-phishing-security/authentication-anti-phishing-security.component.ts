@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -12,6 +16,8 @@ import {
 import { Observable, Subject } from 'rxjs';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, CustomTranslatePipe, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-authentication-anti-phishing-security',
   templateUrl: './authentication-anti-phishing-security.component.html',
   styleUrls: ['./authentication-anti-phishing-security.component.scss'],

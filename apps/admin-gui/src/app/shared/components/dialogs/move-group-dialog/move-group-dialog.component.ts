@@ -1,6 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { openClose } from '@perun-web-apps/perun/animations';
@@ -9,9 +18,10 @@ import {
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode, RPCError } from '@perun-web-apps/perun/models';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface MoveGroupDialogData {
   group: GroupFlatNode;
@@ -19,6 +29,23 @@ export interface MoveGroupDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-move-group-dialog',
   templateUrl: './move-group-dialog.component.html',
   styleUrls: ['./move-group-dialog.component.scss'],

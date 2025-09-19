@@ -73,6 +73,9 @@
       "@perun-web-apps/perun/services": [
         "libs/perun/services/src/index.ts"
       ],
+      "@perun-web-apps/perun/shared": [
+        "apps/admin-gui/src/app/shared/index.ts"
+      ],
       "@perun-web-apps/perun/session-expiration": [
         "libs/perun/session-expiration/src/index.ts"
       ],

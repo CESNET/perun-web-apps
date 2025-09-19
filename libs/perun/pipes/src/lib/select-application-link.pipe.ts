@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Application, Group, Member, User } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'selectApplicationLink',
 })
 export class SelectApplicationLinkPipe implements PipeTransform {

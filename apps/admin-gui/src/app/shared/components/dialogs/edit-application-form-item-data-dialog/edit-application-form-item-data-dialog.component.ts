@@ -1,14 +1,20 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   ApplicationFormItem,
   ApplicationFormItemData,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { emailRegexString } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface EditApplicationFormItemDataDialogData {
   theme: string;
@@ -17,6 +23,18 @@ export interface EditApplicationFormItemDataDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-edit-application-form-item-data-dialog',
   templateUrl: './edit-application-form-item-data-dialog.component.html',
   styleUrls: ['./edit-application-form-item-data-dialog.component.scss'],

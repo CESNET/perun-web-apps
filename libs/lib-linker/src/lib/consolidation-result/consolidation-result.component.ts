@@ -1,8 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
 import { LinkerResult } from '../models/LinkerResult';
 import { StoreService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MatIconModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-consolidation-result',
   templateUrl: './consolidation-result.component.html',
   styleUrls: ['./consolidation-result.component.scss'],

@@ -17,16 +17,20 @@
       matSortDisableClear>
       <ng-container matColumnDef="checkbox">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <span
-            *ngIf="enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length} as selected">
-            <mat-checkbox
-              (change)="masterToggle()"
-              [checked]="selection.hasValue() && selected.all"
-              [indeterminate]="selection.hasValue() && !selected.all"
-              [aria-label]="selected.all | masterCheckboxLabel | translate"
-              color="primary">
-            </mat-checkbox>
-          </span>
+          @if (
+            enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length};
+            as selected
+          ) {
+            <span>
+              <mat-checkbox
+                (change)="masterToggle()"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                color="primary">
+              </mat-checkbox>
+            </span>
+          }
         </th>
         <td *matCellDef="let vo" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
@@ -55,9 +59,9 @@
       <ng-container matColumnDef="hierarchy">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let vo" mat-cell>
-          <mat-icon
-            *ngIf="vo?.memberVos?.length !== 0"
-            [svgIcon]="'perun-hierarchical-vo'"></mat-icon>
+          @if (vo?.memberVos?.length !== 0) {
+            <mat-icon [svgIcon]="'perun-hierarchical-vo'"></mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="shortName">
@@ -104,13 +108,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && vos.length !== 0"
-  alert_type="warn"
-  data-cy="no-filter-result">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && vos.length !== 0) {
+  <perun-web-apps-alert alert_type="warn" data-cy="no-filter-result">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && vos.length === 0" alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_ORGANIZATIONS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && vos.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_ORGANIZATIONS' | translate}}
+  </perun-web-apps-alert>
+}

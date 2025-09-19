@@ -1,3 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CheckboxLabelPipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,10 +13,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Attribute, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -19,6 +25,7 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { ValidateExpirationPipe } from '../../pipes/validate-expiration.pipe';
 
 export interface Membership {
   entity: Vo | Group;
@@ -26,6 +33,20 @@ export interface Membership {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    ValidateExpirationPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-membership-list',
   templateUrl: './membership-list.component.html',
   styleUrls: ['./membership-list.component.scss'],

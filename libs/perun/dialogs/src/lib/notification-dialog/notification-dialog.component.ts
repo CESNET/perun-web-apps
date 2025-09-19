@@ -1,10 +1,20 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { NotificationData } from '@perun-web-apps/perun/models';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BugReportDialogComponent } from '../bug-report-dialog/bug-report-dialog.component';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatDialogModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-notification-dialog',
   templateUrl: './notification-dialog.component.html',
   styleUrls: ['./notification-dialog.component.scss'],

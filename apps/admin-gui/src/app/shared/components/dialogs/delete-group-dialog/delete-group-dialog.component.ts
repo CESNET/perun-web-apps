@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
-import { DeleteDialogResult } from '@perun-web-apps/perun/dialogs';
+import { DeleteDialogResult, DeleteEntityDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 export interface DeleteGroupDialogData {
   theme: string;
@@ -13,6 +14,8 @@ export interface DeleteGroupDialogData {
 }
 
 @Component({
+  imports: [CommonModule, DeleteEntityDialogComponent],
+  standalone: true,
   selector: 'app-delete-group-dialog',
   templateUrl: './delete-group-dialog.component.html',
   styleUrls: ['./delete-group-dialog.component.scss'],

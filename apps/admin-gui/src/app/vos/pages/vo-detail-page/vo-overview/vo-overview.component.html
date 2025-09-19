@@ -1,14 +1,18 @@
-<mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-<div *ngIf="!loading">
-  <perun-web-apps-menu-buttons-field [items]="items"></perun-web-apps-menu-buttons-field>
-  <perun-web-apps-expandable-tiles
-    [items]="resourcesItems"
-    [title]="'MENU_ITEMS.VO.RESOURCES'"
-    [sectionId]="'resourcesExpandable'">
-  </perun-web-apps-expandable-tiles>
-  <perun-web-apps-expandable-tiles
-    [items]="settingsItems"
-    [title]="'MENU_ITEMS.VO.SETTINGS'"
-    [sectionId]="'settings'">
-  </perun-web-apps-expandable-tiles>
-</div>
+@if (loading) {
+  <mat-spinner class="me-auto ms-auto"></mat-spinner>
+}
+@if (!loading) {
+  <div>
+    <perun-web-apps-menu-buttons-field [items]="items"></perun-web-apps-menu-buttons-field>
+    <perun-web-apps-expandable-tiles
+      [items]="resourcesItems"
+      [title]="'MENU_ITEMS.VO.RESOURCES'"
+      [sectionId]="'resourcesExpandable'">
+    </perun-web-apps-expandable-tiles>
+    <perun-web-apps-expandable-tiles
+      [items]="settingsItems"
+      [title]="'MENU_ITEMS.VO.SETTINGS'"
+      [sectionId]="'settings'">
+    </perun-web-apps-expandable-tiles>
+  </div>
+}

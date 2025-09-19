@@ -1,5 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { openClose } from '@perun-web-apps/perun/animations';
 import {
   Group,
@@ -10,6 +14,9 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { compareFnName } from '@perun-web-apps/perun/utils';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { VoSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { GroupSearchSelectComponent } from '@perun-web-apps/perun/components';
 
 export interface NotificationsCopyMailsDialogData {
   theme: string;
@@ -18,6 +25,17 @@ export interface NotificationsCopyMailsDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    VoSearchSelectComponent,
+    GroupSearchSelectComponent,
+  ],
+  standalone: true,
   selector: 'app-notifications-copy-mails-dialog',
   templateUrl: './notifications-copy-mails-dialog.component.html',
   styleUrls: ['./notifications-copy-mails-dialog.component.scss'],

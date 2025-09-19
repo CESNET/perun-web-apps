@@ -1,37 +1,42 @@
-<div *ngIf="user !== undefined" class="container-fluid ps-xl-5 pe-xl-5 user-theme">
-  <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div class="d-flex page-title-headtitle">
-    <mat-icon
-      matTooltip="{{'MENU_ITEMS.USER.ENTITY' | translate}}"
-      [ngStyle]="{'color':'black'}"
-      class="perun-icon perun-icon-detail"
-      svgIcon="perun-service-identity">
-    </mat-icon>
-    <div class="page-title-block">
-      <div class="page-title-headline d-flex align-items-center">
-        <a
-          [perunWebAppsMiddleClickRouterLink]="['/myProfile/service-identities', user.id.toString()]"
-          (auxclick)="$event.preventDefault()"
-          [routerLink]="['/myProfile/service-identities', user.id]"
-          class="user-link">
-          {{user | userFullName}}
-        </a>
-        <span class="text-muted"> &nbsp;#{{user.id}} </span>
-        <button
-          (click)="editUser()"
-          *ngIf="authResolver.isPerunAdmin()"
-          mat-icon-button
-          matTooltip="{{'MENU_ITEMS.USER.EDIT' | translate}}">
-          <mat-icon>edit</mat-icon>
-        </button>
+@if (user !== undefined) {
+  <div class="container-fluid ps-xl-5 pe-xl-5 user-theme">
+    <perun-web-apps-back-button> </perun-web-apps-back-button>
+    @if (loading) {
+      <mat-spinner class="me-auto ms-auto"></mat-spinner>
+    }
+    <div class="d-flex page-title-headtitle">
+      <mat-icon
+        matTooltip="{{'MENU_ITEMS.USER.ENTITY' | translate}}"
+        [ngStyle]="{'color':'black'}"
+        class="perun-icon perun-icon-detail"
+        svgIcon="perun-service-identity">
+      </mat-icon>
+      <div class="page-title-block">
+        <div class="page-title-headline d-flex align-items-center">
+          <a
+            [perunWebAppsMiddleClickRouterLink]="['/myProfile/service-identities', user.id.toString()]"
+            (auxclick)="$event.preventDefault()"
+            [routerLink]="['/myProfile/service-identities', user.id]"
+            class="user-link">
+            {{user | userFullName}}
+          </a>
+          <span class="text-muted"> &nbsp;#{{user.id}} </span>
+          @if (authResolver.isPerunAdmin()) {
+            <button
+              (click)="editUser()"
+              mat-icon-button
+              matTooltip="{{'MENU_ITEMS.USER.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+        </div>
+        <div>{{'ADMIN_USER.UUID' | translate}}: {{user.uuid}}</div>
+        <span class="mt-1 entity-info">
+          {{'MENU_ITEMS.USER.ENTITY' | translate}}, {{'MENU_ITEMS.USER.USER_TYPE' | translate}}:
+          {{getUserType()}}
+        </span>
       </div>
-      <div>{{'ADMIN_USER.UUID' | translate}}: {{user.uuid}}</div>
-      <span class="mt-1 entity-info">
-        {{'MENU_ITEMS.USER.ENTITY' | translate}}, {{'MENU_ITEMS.USER.USER_TYPE' | translate}}:
-        {{getUserType()}}
-      </span>
     </div>
+    <app-animated-router-outlet></app-animated-router-outlet>
   </div>
-  <app-animated-router-outlet></app-animated-router-outlet>
-</div>
+}

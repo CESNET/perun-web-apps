@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'validateExpiration',
   pure: true,
 })

@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  PerunSharedComponentsModule,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { EnrichedFacility, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
@@ -11,8 +21,23 @@ import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { IsAuthorizedPipe } from '@perun-web-apps/perun/pipes';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    PerunSharedComponentsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    IsAuthorizedPipe,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-facility-select-page',
   templateUrl: './facility-select-page.component.html',
   styleUrls: ['./facility-select-page.component.scss'],

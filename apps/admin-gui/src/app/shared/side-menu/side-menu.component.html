@@ -5,37 +5,44 @@
     [item]="accessItem"
     [root]="true"
     data-cy="access-item-button"></app-side-menu-item>
-  <div *ngFor="let item of accessItems; let i = index" @rollInOut class="overflow-hidden">
-    <app-side-menu-item [item]="item" [showLinks]="i === accessItems.length - 1">
-    </app-side-menu-item>
-  </div>
+  @for (item of accessItems; track item; let i = $index) {
+    <div @rollInOut class="overflow-hidden">
+      <app-side-menu-item [item]="item" [showLinks]="i === accessItems.length - 1">
+      </app-side-menu-item>
+    </div>
+  }
 
-  <app-side-menu-item
-    *ngIf="authResolver.canManageFacilities()"
-    [item]="facilityItem"
-    [root]="true"
-    data-cy="facilities-button">
-  </app-side-menu-item>
-  <div *ngFor="let item of facilityItems; let i = index" @rollInOut class="overflow-hidden">
-    <app-side-menu-item [item]="item" [showLinks]="i === facilityItems.length - 1">
+  @if (authResolver.canManageFacilities()) {
+    <app-side-menu-item [item]="facilityItem" [root]="true" data-cy="facilities-button">
     </app-side-menu-item>
-  </div>
+  }
+  @for (item of facilityItems; track item; let i = $index) {
+    <div @rollInOut class="overflow-hidden">
+      <app-side-menu-item [item]="item" [showLinks]="i === facilityItems.length - 1">
+      </app-side-menu-item>
+    </div>
+  }
 
   <app-side-menu-item [item]="userItem" [showLinks]="userItemOpened" [root]="true">
   </app-side-menu-item>
-  <div *ngFor="let item of userItems; let i = index" @rollInOut class="overflow-hidden">
-    <app-side-menu-item [item]="item" [showLinks]="i === userItems.length - 1">
-    </app-side-menu-item>
-  </div>
+  @for (item of userItems; track item; let i = $index) {
+    <div @rollInOut class="overflow-hidden">
+      <app-side-menu-item [item]="item" [showLinks]="i === userItems.length - 1">
+      </app-side-menu-item>
+    </div>
+  }
 
-  <app-side-menu-item
-    *ngIf="authResolver.isPerunAdminOrObserver()"
-    [item]="adminItem"
-    [showLinks]="adminItemOpened"
-    [root]="true"
-    data-cy="admin-button">
-  </app-side-menu-item>
-  <div *ngFor="let item of adminItems; let i = index" @rollInOut class="overflow-hidden">
-    <app-side-menu-item [item]="item" [showLinks]="true"> </app-side-menu-item>
-  </div>
+  @if (authResolver.isPerunAdminOrObserver()) {
+    <app-side-menu-item
+      [item]="adminItem"
+      [showLinks]="adminItemOpened"
+      [root]="true"
+      data-cy="admin-button">
+    </app-side-menu-item>
+  }
+  @for (item of adminItems; track item; let i = $index) {
+    <div @rollInOut class="overflow-hidden">
+      <app-side-menu-item [item]="item" [showLinks]="true"> </app-side-menu-item>
+    </div>
+  }
 </div>

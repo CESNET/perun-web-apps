@@ -1,4 +1,4 @@
-export interface RPCError {
+export interface RPCError extends Error {
   errorId: string;
   message: string;
   name: string;

@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { FooterElement } from '@perun-web-apps/perun/models';
 
 @Pipe({
+  standalone: true,
   name: 'localisedLink',
 })
 export class LocalisedLinkPipe implements PipeTransform {

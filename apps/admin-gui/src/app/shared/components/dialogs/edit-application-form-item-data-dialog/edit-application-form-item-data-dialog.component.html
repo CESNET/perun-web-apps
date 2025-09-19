@@ -7,22 +7,29 @@
       {{'DIALOGS.EDIT_APPLICATION_FORM_ITEM_DATA.TITLE' | translate}} {{itemName}}
     </h1>
     <div class="dialog-container" mat-dialog-content>
-      <mat-form-field *ngIf="emailControl !== null">
-        <mat-label>{{itemName}}</mat-label>
-        <input [formControl]="emailControl" matInput required />
-        <mat-error
-          *ngIf="emailControl.invalid"
-          >{{'DIALOGS.EDIT_APPLICATION_FORM_ITEM_DATA.INVALID_EMAIL' | translate}}</mat-error
-        >
-      </mat-form-field>
+      @if (emailControl !== null) {
+        <mat-form-field>
+          <mat-label>{{itemName}}</mat-label>
+          <input [formControl]="emailControl" matInput required />
+          @if (emailControl.invalid) {
+            <mat-error
+              >{{'DIALOGS.EDIT_APPLICATION_FORM_ITEM_DATA.INVALID_EMAIL' | translate}}</mat-error
+            >
+          }
+        </mat-form-field>
+      }
 
-      <mat-form-field *ngIf="inputControl !== null">
-        <mat-label>{{itemName}}</mat-label>
-        <input [formControl]="inputControl" matInput required type="text" />
-        <mat-error *ngIf="inputControl.invalid">
-          {{'DIALOGS.EDIT_APPLICATION_FORM_ITEM_DATA.EMPTY_INPUT' | translate}}</mat-error
-        >
-      </mat-form-field>
+      @if (inputControl !== null) {
+        <mat-form-field>
+          <mat-label>{{itemName}}</mat-label>
+          <input [formControl]="inputControl" matInput required type="text" />
+          @if (inputControl.invalid) {
+            <mat-error>
+              {{'DIALOGS.EDIT_APPLICATION_FORM_ITEM_DATA.EMPTY_INPUT' | translate}}</mat-error
+            >
+          }
+        </mat-form-field>
+      }
     </div>
 
     <div mat-dialog-actions>

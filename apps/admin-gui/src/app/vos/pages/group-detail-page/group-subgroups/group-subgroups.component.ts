@@ -1,3 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupRolesFilterComponent } from '../../../../shared/components/group-roles-filter/group-roles-filter.component';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  GroupsTreeComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -19,7 +31,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_GROUP_SUBGROUPS } from '@perun-web-apps/config/table-config';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
@@ -27,8 +39,27 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    GroupRolesFilterComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    GroupsTreeComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-subgroups',
   templateUrl: './group-subgroups.component.html',
   styleUrls: ['./group-subgroups.component.scss'],

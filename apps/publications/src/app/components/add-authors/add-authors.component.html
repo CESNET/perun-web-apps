@@ -1,21 +1,19 @@
 <div class="'user-theme'">
-  <button
-    *ngIf="!publication.locked"
-    mat-flat-button
-    color="accent"
-    class="me-2 action-button"
-    (click)="onAddAuthors()">
-    {{'PUBLICATION_DETAIL.ADD' | translate}}
-  </button>
-  <button
-    *ngIf="!publication.locked && !similarityCheck"
-    mat-flat-button
-    color="warn"
-    class="me-2"
-    [disabled]="selection.selected.length === 0 || publication.locked || loading"
-    (click)="onRemoveAuthors()">
-    {{'PUBLICATION_DETAIL.REMOVE' | translate}}
-  </button>
+  @if (!publication.locked) {
+    <button mat-flat-button color="accent" class="me-2 action-button" (click)="onAddAuthors()">
+      {{'PUBLICATION_DETAIL.ADD' | translate}}
+    </button>
+  }
+  @if (!publication.locked && !similarityCheck) {
+    <button
+      mat-flat-button
+      color="warn"
+      class="me-2"
+      [disabled]="selection.selected.length === 0 || publication.locked || loading"
+      (click)="onRemoveAuthors()">
+      {{'PUBLICATION_DETAIL.REMOVE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'PUBLICATION_DETAIL.FILTER'"></perun-web-apps-debounce-filter>

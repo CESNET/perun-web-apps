@@ -1,7 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
+  imports: [CommonModule, MatCardModule, MatTableModule, TranslateModule],
+  standalone: true,
   selector: 'app-statistics-card',
   templateUrl: './statistics-card.component.html',
   styleUrls: ['./statistics-card.component.scss'],

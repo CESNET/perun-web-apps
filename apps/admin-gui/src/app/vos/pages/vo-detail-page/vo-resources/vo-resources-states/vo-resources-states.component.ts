@@ -1,10 +1,25 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { ResourceState, TasksManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { StateTabComponent } from './state-tab/state-tab.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    RefreshButtonComponent,
+    MatTabsModule,
+    TranslateModule,
+    StateTabComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-resources-states',
   templateUrl: './vo-resources-states.component.html',
   styleUrls: ['./vo-resources-states.component.scss'],

@@ -1,3 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import {
+  FacilitiesListComponent,
+  MembersListComponent,
+  ResourcesListComponent,
+  UsersListComponent,
+  VoSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import {
   AttributeDefinition,
@@ -19,8 +30,22 @@ import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { compareFnName } from '@perun-web-apps/perun/utils';
+import { AttributeSearchSelectComponent } from '@perun-web-apps/perun/components';
 
 @Component({
+  imports: [
+    CommonModule,
+    MembersListComponent,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    AttributeSearchSelectComponent,
+    UsersListComponent,
+    FacilitiesListComponent,
+    ResourcesListComponent,
+    VoSearchSelectComponent,
+  ],
+  standalone: true,
   selector: 'app-admin-searcher',
   templateUrl: './admin-searcher.component.html',
   styleUrls: ['./admin-searcher.component.scss'],

@@ -1,9 +1,21 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { GroupsManagerService, TasksManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatSlideToggleModule,
+    UiAlertsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-admin-tasks',
   templateUrl: './admin-tasks.component.html',
   styleUrls: ['./admin-tasks.component.scss'],

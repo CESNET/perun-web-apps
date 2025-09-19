@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Author } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'authorsSeparatedByComma',
 })
 export class AuthorsSeparatedByCommaPipe implements PipeTransform {

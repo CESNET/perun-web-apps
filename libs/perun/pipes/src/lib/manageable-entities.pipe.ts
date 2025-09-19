@@ -4,6 +4,7 @@ import { PerunBean, RoleManagementRules } from '@perun-web-apps/perun/openapi';
 import { AuthPrivilege } from '@perun-web-apps/perun/models';
 
 @Pipe({
+  standalone: true,
   name: 'manageableEntities',
 })
 export class ManageableEntitiesPipe implements PipeTransform {

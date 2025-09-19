@@ -4,6 +4,7 @@ import { Destination, Host } from '@perun-web-apps/perun/openapi';
 type FacilityObjects = Host | Destination;
 
 @Pipe({
+  standalone: true,
   name: 'filterUniqueObjects',
 })
 export class FilterUniqueObjectsPipe implements PipeTransform {

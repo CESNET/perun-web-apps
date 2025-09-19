@@ -1,36 +1,39 @@
 <perun-web-apps-notificator></perun-web-apps-notificator>
-<div *ngIf="!isLoginScreenShow && !isServiceAccess && !isServiceLogin()" class="app-min-width">
-  <perun-web-apps-header
-    (sidenavToggle)="sidenav.toggle()"
-    [ngClass]="!principal ? 'header-index' : ''"></perun-web-apps-header>
-  <mat-sidenav-container autosize="true">
-    <mat-sidenav
-      #sidenav
-      [mode]="sidebarMode"
-      [ngStyle]="{'background': sideMenuBgColor}"
-      [opened]="!isMobile()"
-      class="side-menu-size"
-      fixedInViewport
-      fixedTopGap="64">
-      <perun-web-apps-side-menu
-        [sideNav]="sidenav"
-        class="overflow-hidden"></perun-web-apps-side-menu>
-    </mat-sidenav>
-    <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
-      <div [ngStyle]="{'min-height': contentHeight}" id="content-wrap">
-        <!--      <perun-web-apps-breadcrumbs></perun-web-apps-breadcrumbs>-->
-        <router-outlet></router-outlet>
-      </div>
-
-      <div #footer>
-        <perun-web-apps-footer></perun-web-apps-footer>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<div *ngIf="isLoginScreenShow || isServiceAccess || isServiceLogin()">
-  <perun-web-apps-login-screen-base
-    [application]="'publications'"
-    [headerTitle]="'HEADER.TITLE' | translate">
-  </perun-web-apps-login-screen-base>
-</div>
+@if (!isLoginScreenShow && !isServiceAccess && !isServiceLogin()) {
+  <div class="app-min-width">
+    <perun-web-apps-header
+      (sidenavToggle)="sidenav.toggle()"
+      [ngClass]="!principal ? 'header-index' : ''"></perun-web-apps-header>
+    <mat-sidenav-container autosize="true">
+      <mat-sidenav
+        #sidenav
+        [mode]="sidebarMode"
+        [ngStyle]="{'background': sideMenuBgColor}"
+        [opened]="!isMobile()"
+        class="side-menu-size"
+        fixedInViewport
+        fixedTopGap="64">
+        <perun-web-apps-side-menu
+          [sideNav]="sidenav"
+          class="overflow-hidden"></perun-web-apps-side-menu>
+      </mat-sidenav>
+      <mat-sidenav-content [ngStyle]="{'background': contentBackgroundColor}" id="content-inner">
+        <div [ngStyle]="{'min-height': contentHeight}" id="content-wrap">
+          <!--      <perun-web-apps-breadcrumbs></perun-web-apps-breadcrumbs>-->
+          <router-outlet></router-outlet>
+        </div>
+        <div #footer>
+          <perun-web-apps-footer></perun-web-apps-footer>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+}
+@if (isLoginScreenShow || isServiceAccess || isServiceLogin()) {
+  <div>
+    <perun-web-apps-login-screen-base
+      [application]="'publications'"
+      [headerTitle]="'HEADER.TITLE' | translate">
+    </perun-web-apps-login-screen-base>
+  </div>
+}

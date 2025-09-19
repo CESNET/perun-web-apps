@@ -1,10 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { AuthzResolverService, Group, PerunBean } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveGroupDialogData {
   complementaryObject: PerunBean;
@@ -15,6 +21,17 @@ export interface RemoveGroupDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-remove-group-manager-dialog',
   templateUrl: './remove-group-manager-dialog.component.html',
   styleUrls: ['./remove-group-manager-dialog.component.scss'],

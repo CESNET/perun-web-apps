@@ -1,18 +1,40 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemovePublicationDialogComponent } from '../../dialogs/remove-publication-dialog/remove-publication-dialog.component';
-import { FilterPublication } from '../../components/publication-filter/publication-filter.component';
+import {
+  FilterPublication,
+  PublicationFilterComponent,
+} from '../../components/publication-filter/publication-filter.component';
 import { CabinetManagerService, PublicationForGUI } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Filter } from '../Filter';
 import { BehaviorSubject } from 'rxjs';
+import { PublicationsListComponent } from '../../components/publications-list/publications-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    PublicationsListComponent,
+    LoaderDirective,
+    PublicationFilterComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-all-publications-page',
   templateUrl: './all-publications-page.component.html',
   styleUrls: ['./all-publications-page.component.scss'],

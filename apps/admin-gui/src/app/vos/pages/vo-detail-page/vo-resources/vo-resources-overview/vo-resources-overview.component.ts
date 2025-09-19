@@ -1,3 +1,5 @@
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../../../core/services/common/side-menu.service';
 import { MenuItem } from '@perun-web-apps/perun/models';
@@ -9,6 +11,8 @@ import {
 } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent],
+  standalone: true,
   selector: 'app-vo-resources-overview',
   templateUrl: './vo-resources-overview.component.html',
   styleUrls: ['./vo-resources-overview.component.scss'],

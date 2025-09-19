@@ -2,47 +2,50 @@
   {{ 'CONSENTS.TITLE' | customTranslate | translate }}
 </h1>
 <div class="user-theme">
-  <div *ngIf="!loading && unsignedConsents.length !== 0">
-    <div class="page-subtitle">
-      {{ 'CONSENTS.UNSIGNED_CONSENTS' | customTranslate | translate }}
+  @if (!loading && unsignedConsents.length !== 0) {
+    <div>
+      <div class="page-subtitle">
+        {{ 'CONSENTS.UNSIGNED_CONSENTS' | customTranslate | translate }}
+      </div>
+      <perun-web-apps-debounce-filter
+        [placeholder]="'CONSENTS.FILTER' | customTranslate | translate"
+        (filter)="applyFilterUnsigned($event)">
+      </perun-web-apps-debounce-filter>
+      <perun-web-apps-consents-list
+        [loading]="loading"
+        [consents]="unsignedConsents"
+        [filterValue]="filterValueUnsigned"
+        [tableId]="'TABLE_USER_CONSENTS'"
+        (grantConsent)="grantConsent($event)"
+        (rejectConsent)="rejectConsent($event)"
+        [displayedColumns]="['status', 'name']"></perun-web-apps-consents-list>
+      <!--    <button mat-flat-button color="accent" class="mt-3" (click)="grantAll()">-->
+      <!--      {{ 'CONSENTS.GRANT_ALL' | customTranslate | translate }}-->
+      <!--    </button>-->
     </div>
+  }
 
-    <perun-web-apps-debounce-filter
-      [placeholder]="'CONSENTS.FILTER' | customTranslate | translate"
-      (filter)="applyFilterUnsigned($event)">
-    </perun-web-apps-debounce-filter>
-
-    <perun-web-apps-consents-list
-      [loading]="loading"
-      [consents]="unsignedConsents"
-      [filterValue]="filterValueUnsigned"
-      [tableId]="'TABLE_USER_CONSENTS'"
-      (grantConsent)="grantConsent($event)"
-      (rejectConsent)="rejectConsent($event)"
-      [displayedColumns]="['status', 'name']"></perun-web-apps-consents-list>
-
-    <!--    <button mat-flat-button color="accent" class="mt-3" (click)="grantAll()">-->
-    <!--      {{ 'CONSENTS.GRANT_ALL' | customTranslate | translate }}-->
-    <!--    </button>-->
-  </div>
-
-  <div *ngIf="!loading">
-    <div class="page-subtitle mt-4">
-      {{ 'CONSENTS.PROCESSED_CONSENTS' | customTranslate | translate }}
+  @if (!loading) {
+    <div>
+      <div class="page-subtitle mt-4">
+        {{ 'CONSENTS.PROCESSED_CONSENTS' | customTranslate | translate }}
+      </div>
+      <perun-web-apps-debounce-filter
+        [placeholder]="'CONSENTS.FILTER' | customTranslate | translate"
+        (filter)="applyFilterSigned($event)">
+      </perun-web-apps-debounce-filter>
+      <perun-web-apps-consents-list
+        [loading]="loading"
+        [consents]="signedConsents"
+        [tableId]="'TABLE_USER_CONSENTS'"
+        [filterValue]="filterValueSigned"
+        (grantConsent)="grantConsent($event)"
+        (rejectConsent)="rejectConsent($event)"
+        [displayedColumns]="['status', 'name']"></perun-web-apps-consents-list>
     </div>
-    <perun-web-apps-debounce-filter
-      [placeholder]="'CONSENTS.FILTER' | customTranslate | translate"
-      (filter)="applyFilterSigned($event)">
-    </perun-web-apps-debounce-filter>
-    <perun-web-apps-consents-list
-      [loading]="loading"
-      [consents]="signedConsents"
-      [tableId]="'TABLE_USER_CONSENTS'"
-      [filterValue]="filterValueSigned"
-      (grantConsent)="grantConsent($event)"
-      (rejectConsent)="rejectConsent($event)"
-      [displayedColumns]="['status', 'name']"></perun-web-apps-consents-list>
-  </div>
+  }
 
-  <mat-spinner class="ms-auto me-auto" *ngIf="loading"></mat-spinner>
+  @if (loading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
 </div>

@@ -19,18 +19,20 @@
             </perun-web-apps-facility-search-select>
           </div>
           <div class="input-style">
-            <perun-web-apps-resource-search-select
-              (resourceSelected)="setResource($event);
+            @if (!processing) {
+              <perun-web-apps-resource-search-select
+                (resourceSelected)="setResource($event);
                          stepper.selected.completed = true"
-              *ngIf="!processing"
-              [disableAutoSelect]="true"
-              [required]="true"
-              [resource]="selectedResource"
-              [resources]="filteredResources">
-            </perun-web-apps-resource-search-select>
-            <perun-web-apps-resource-search-select
-              *ngIf="processing"
-              [resources]="[]"></perun-web-apps-resource-search-select>
+                [disableAutoSelect]="true"
+                [required]="true"
+                [resource]="selectedResource"
+                [resources]="filteredResources">
+              </perun-web-apps-resource-search-select>
+            }
+            @if (processing) {
+              <perun-web-apps-resource-search-select
+                [resources]="[]"></perun-web-apps-resource-search-select>
+            }
           </div>
           <div>
             <span
@@ -41,7 +43,9 @@
           </div>
           <div>
             <span class="fw-bold">{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.SERVICES' | translate}}</span>
-            <div *ngFor="let service of services" class="ms-5">{{service.name}}</div>
+            @for (service of services; track service) {
+              <div class="ms-5">{{service.name}}</div>
+            }
           </div>
         </mat-step>
         <mat-step>
@@ -65,9 +69,11 @@
               [selection]="selectedGroups">
             </perun-web-apps-groups-list>
           </div>
-          <perun-web-apps-alert *ngIf="groups.length === 0 && !processing" alert_type="warn">
-            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.NO_GROUPS' | translate}}
-          </perun-web-apps-alert>
+          @if (groups.length === 0 && !processing) {
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.NO_GROUPS' | translate}}
+            </perun-web-apps-alert>
+          }
         </mat-step>
       </mat-stepper>
     </div>
@@ -76,32 +82,32 @@
         <button (click)="onCancel()" mat-stroked-button class="me-2">
           {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.CANCEL' | translate}}
         </button>
-        <button
-          (click)="stepperPrevious()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex !== 0"
-          class="ms-auto"
-          mat-stroked-button>
-          {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.BACK' | translate}}
-        </button>
-        <button
-          (click)="stepperNext(); loadGroups()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1"
-          [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
-          [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
-          [disabled]="selectedResource === null || processing || loading"
-          color="accent"
-          mat-flat-button>
-          {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.CONTINUE' | translate}}
-        </button>
-        <button
-          (click)="onFinish()"
-          *ngIf="stepper !== undefined && stepper.selectedIndex === stepper._steps.length -1"
-          [disabled]="selectedGroups.selected.length === 0 || processing"
-          class="ms-2"
-          color="accent"
-          mat-flat-button>
-          {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.SUBMIT' | translate}}
-        </button>
+        @if (stepper !== undefined && stepper.selectedIndex !== 0) {
+          <button (click)="stepperPrevious()" class="ms-auto" mat-stroked-button>
+            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.BACK' | translate}}
+          </button>
+        }
+        @if (stepper !== undefined && stepper.selectedIndex !== stepper._steps.length - 1) {
+          <button
+            (click)="stepperNext(); loadGroups()"
+            [class.ms-2]="stepper !== undefined && stepper.selectedIndex !== 0"
+            [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
+            [disabled]="selectedResource === null || processing || loading"
+            color="accent"
+            mat-flat-button>
+            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.CONTINUE' | translate}}
+          </button>
+        }
+        @if (stepper !== undefined && stepper.selectedIndex === stepper._steps.length -1) {
+          <button
+            (click)="onFinish()"
+            [disabled]="selectedGroups.selected.length === 0 || processing"
+            class="ms-2"
+            color="accent"
+            mat-flat-button>
+            {{'DIALOGS.ADD_MEMBER_TO_RESOURCE.SUBMIT' | translate}}
+          </button>
+        }
       </div>
     </div>
   </div>

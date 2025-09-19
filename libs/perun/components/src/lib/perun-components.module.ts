@@ -111,7 +111,7 @@ import { AuditLogSearchSelectComponent } from './audit-log-search-select/audit-l
 import { AddSshDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RemoveStringValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { ShowSshDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { ShowNotificationHistoryDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { ShowNotificationHistoryDialogComponent } from './show-notification-history-dialog/show-notification-history-dialog.component';
 import { ApplicationStateSelectorComponent } from './application-state-selector/application-state-selector.component';
 import { AuthorizedGroupsCellComponent } from './authorized-groups-cell/authorized-groups-cell.component';
 import { StringSearchSelectComponent } from './string-search-select/string-search-select.component';
@@ -200,8 +200,6 @@ export const APP_DATE_FORMATS: MatDateFormats = {
     MatAutocompleteTrigger,
     MatAutocomplete,
     CdkTrapFocus,
-  ],
-  declarations: [
     VosListComponent,
     GroupsListComponent,
     GroupMenuComponent,

@@ -1,3 +1,12 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  NotificatorComponent,
+  PerunFooterComponent,
+  PerunHeaderComponent,
+} from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -9,18 +18,35 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  InitAuthService,
-  StoreService,
-  PreferredLanguageService,
   AuthService,
   GuiAuthResolver,
+  InitAuthService,
+  PreferredLanguageService,
+  StoreService,
 } from '@perun-web-apps/perun/services';
 import { AttributesManagerService, PerunPrincipal } from '@perun-web-apps/perun/openapi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { LoginScreenBaseComponent } from '@perun-web-apps/perun/login';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    PerunFooterComponent,
+    PerunHeaderComponent,
+    MatSidenavModule,
+    RouterModule,
+    MatTooltip,
+    LoginScreenBaseComponent,
+    NotificatorComponent,
+    BreadcrumbsComponent,
+    SideMenuComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

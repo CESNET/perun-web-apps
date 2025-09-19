@@ -1,10 +1,26 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatListModule, MatNavList, MatListItem } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SideMenuItem, SideMenuItemsService } from '../../services/side-menu-items.service';
+import { MatRipple } from '@angular/material/core';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatListModule,
+    RouterModule,
+    MatNavList,
+    MatListItem,
+    TranslateModule,
+    MatRipple,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],

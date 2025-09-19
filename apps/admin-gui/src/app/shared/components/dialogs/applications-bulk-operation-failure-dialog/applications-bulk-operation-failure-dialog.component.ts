@@ -1,9 +1,19 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { Application, PerunException } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BugReportDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { ApplicationOperationErrorListComponent } from '../../application-operation-error-list/application-operation-error-list.component';
 
 interface ApplicationsBulkOperationFailureDialogData {
   theme: string;
@@ -13,6 +23,15 @@ interface ApplicationsBulkOperationFailureDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    TranslateModule,
+    ApplicationOperationErrorListComponent,
+  ],
+  standalone: true,
   selector: 'app-applications-bulk-operation-failure-dialog',
   templateUrl: './applications-bulk-operation-failure-dialog.component.html',
   styleUrls: ['./applications-bulk-operation-failure-dialog.component.scss'],

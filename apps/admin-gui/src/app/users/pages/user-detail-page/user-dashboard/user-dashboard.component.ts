@@ -1,3 +1,9 @@
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import {
@@ -7,13 +13,31 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { SideMenuService } from '../../../../core/services/common/side-menu.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MailChangeFailedDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { DashboardRecentlyViewedButtonFieldComponent } from './dashboard-recently-viewed-button-field/dashboard-recently-viewed-button-field.component';
+import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
+    RouterModule,
+    TranslateModule,
+    UserFullNamePipe,
+    DashboardRecentlyViewedButtonFieldComponent,
+    DashboardCardComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss'],

@@ -1,5 +1,9 @@
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ApiRequestConfigurationService,
@@ -24,8 +28,22 @@ import { TABLE_GROUP_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table
 import { Urns } from '@perun-web-apps/perun/urns';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { NotificationListComponent } from '../../../../components/notification-list/notification-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    NotificationListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-settings-notifications',
   templateUrl: './group-settings-notifications.component.html',
   styleUrls: ['./group-settings-notifications.component.scss'],

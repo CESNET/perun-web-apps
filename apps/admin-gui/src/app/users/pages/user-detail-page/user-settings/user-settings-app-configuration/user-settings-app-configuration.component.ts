@@ -1,8 +1,24 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { GUIConfigService, PREF_PAGE_SIZE } from '@perun-web-apps/config/table-config';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-user-settings-app-configuration',
   templateUrl: './user-settings-app-configuration.component.html',
   styleUrls: ['./user-settings-app-configuration.component.scss'],

@@ -1,3 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -19,7 +30,7 @@ import {
   getSortDataColumn,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   InvitationWithSender,
@@ -27,12 +38,27 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    MasterCheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-invitations-list',
   templateUrl: './invitations-list.component.html',
   styleUrls: ['./invitations-list.component.scss'],

@@ -17,28 +17,28 @@
       matSortActive="name"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let sponsoredMember" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(sponsoredMember) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(sponsoredMember) | checkboxLabel | translate: {name: sponsoredMember.member.user | userFullName}"
-            [checked]="selection.isSelected(sponsoredMember)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let sponsoredMember" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(sponsoredMember) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(sponsoredMember) | checkboxLabel | translate: {name: sponsoredMember.member.user | userFullName}"
+              [checked]="selection.isSelected(sponsoredMember)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -75,9 +75,9 @@
           {{'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.SPONSORS' | translate}}
         </th>
         <td *matCellDef="let sponsoredMember" mat-cell>
-          <span *ngFor="let sponsor of sponsoredMember.sponsors">
-            {{sponsor.user | userFullName}}<br />
-          </span>
+          @for (sponsor of sponsoredMember.sponsors; track sponsor) {
+            <span> {{sponsor.user | userFullName}}<br /> </span>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="expiration">
@@ -103,21 +103,23 @@
             mat-icon-button>
             <mat-icon>edit</mat-icon>
           </button>
-          <span *ngIf="passwdResetAuth(sponsoredMember)">
-            <button
-              attr.data-cy="{{sponsoredMember.member.user.firstName}}-reset-passwd-button"
-              (mouseenter)="disableRouting = true"
-              (mouseleave)="disableRouting = routingStrategy"
-              class="dark-hover-list-item"
-              (click)="resetPassword(sponsoredMember)"
-              [disabled]="loading"
-              [matTooltipPosition]="'above'"
-              [matTooltip]="'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.PASSWORD_RESET' | translate"
-              aria-label="sponsors of member"
-              mat-icon-button>
-              <mat-icon>vpn_key</mat-icon>
-            </button>
-          </span>
+          @if (passwdResetAuth(sponsoredMember)) {
+            <span>
+              <button
+                attr.data-cy="{{sponsoredMember.member.user.firstName}}-reset-passwd-button"
+                (mouseenter)="disableRouting = true"
+                (mouseleave)="disableRouting = routingStrategy"
+                class="dark-hover-list-item"
+                (click)="resetPassword(sponsoredMember)"
+                [disabled]="loading"
+                [matTooltipPosition]="'above'"
+                [matTooltip]="'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.PASSWORD_RESET' | translate"
+                aria-label="sponsors of member"
+                mat-icon-button>
+                <mat-icon>vpn_key</mat-icon>
+              </button>
+            </span>
+          }
         </td>
       </ng-container>
 
@@ -135,12 +137,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && sponsoredMembers.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && sponsoredMembers.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!tableLoading && sponsoredMembers.length === 0" alert_type="warn">
-  {{'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.NO_SPONSORED_MEMBERS_WARNING' | translate}}
-</perun-web-apps-alert>
+@if (!tableLoading && sponsoredMembers.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.SPONSORED_MEMBERS_LIST.NO_SPONSORED_MEMBERS_WARNING' | translate}}
+  </perun-web-apps-alert>
+}

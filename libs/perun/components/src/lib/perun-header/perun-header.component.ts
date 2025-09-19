@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AuthService,
@@ -7,15 +13,32 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
-import { ShowNotificationHistoryDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { AppType } from '@perun-web-apps/perun/models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ChangeNameService } from '@perun-web-apps/perun/services';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { MatBadge } from '@angular/material/badge';
+import { GlobalSearchComponent } from '../global-search/global-search.component';
+import { ShowNotificationHistoryDialogComponent } from '../show-notification-history-dialog/show-notification-history-dialog.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
+    RouterModule,
+    TranslateModule,
+    MatTooltip,
+    UserFullNamePipe,
+    MatBadge,
+    GlobalSearchComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-header',
   templateUrl: './perun-header.component.html',
   styleUrls: ['./perun-header.component.scss'],

@@ -1,9 +1,16 @@
+import {
+  MenuButtonsFieldComponent,
+  ExpandableTilesComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 import { User } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent, ExpandableTilesComponent],
+  standalone: true,
   selector: 'app-service-identity-overview',
   templateUrl: './service-identity-overview.component.html',
   styleUrls: ['./service-identity-overview.component.css'],

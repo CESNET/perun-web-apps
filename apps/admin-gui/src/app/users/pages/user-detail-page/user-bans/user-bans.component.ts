@@ -1,3 +1,5 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   EnrichedBanOnFacility,
@@ -9,15 +11,32 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
-import { BanOnEntityListColumn, EnrichedBan } from '@perun-web-apps/perun/components';
+import {
+  BanOnEntityListColumn,
+  EnrichedBan,
+  DebounceFilterComponent,
+  BanOnEntityListComponent,
+} from '@perun-web-apps/perun/components';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdateVoBanDialogComponent } from '../../../../shared/components/dialogs/update-vo-ban-dialog/update-vo-ban-dialog.component';
 import { UpdateResourceBanDialogComponent } from '../../../../shared/components/dialogs/update-resource-ban-dialog/update-resource-ban-dialog.component';
 import { UpdateFacilityBanDialogComponent } from '../../../../shared/components/dialogs/update-facility-ban-dialog/update-facility-ban-dialog.component';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    MatTabsModule,
+    TranslateModule,
+    BanOnEntityListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-bans',
   templateUrl: './user-bans.component.html',
   styleUrls: ['./user-bans.component.scss'],

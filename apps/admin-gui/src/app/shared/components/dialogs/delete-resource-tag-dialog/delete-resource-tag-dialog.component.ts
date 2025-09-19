@@ -1,7 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface DeleteResourceTagDialogDialogData {
   theme: string;
@@ -10,6 +15,16 @@ export interface DeleteResourceTagDialogDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-delete-resource-tag-dialog',
   templateUrl: './delete-resource-tag-dialog.component.html',
   styleUrls: ['./delete-resource-tag-dialog.component.scss'],

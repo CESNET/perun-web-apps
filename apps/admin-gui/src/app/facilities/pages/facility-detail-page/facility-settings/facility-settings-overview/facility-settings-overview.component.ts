@@ -1,3 +1,6 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { FacilitiesManagerService, Facility } from '@perun-web-apps/perun/openapi';
@@ -8,6 +11,8 @@ import {
 } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent, MatProgressSpinnerModule],
+  standalone: true,
   selector: 'app-facility-settings-overview',
   templateUrl: './facility-settings-overview.component.html',
   styleUrls: ['./facility-settings-overview.component.scss'],

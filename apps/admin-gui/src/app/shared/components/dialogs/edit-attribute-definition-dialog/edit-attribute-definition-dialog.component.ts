@@ -1,7 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { AttributeRightsService, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   AttributeAction,
   AttributeDefinition,
@@ -16,14 +24,40 @@ import { TABLE_ENTITYLESS_ATTRIBUTE_KEYS } from '@perun-web-apps/config/table-co
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
+import { ServicesListComponent } from '../../services-list/services-list.component';
+import { AttributeUniqueCheckboxComponent } from '@perun-web-apps/perun/components';
+import { AttributeRightsTabGroupComponent } from '@perun-web-apps/perun/components';
+import { AttributeCriticalOperationsCheckboxesComponent } from '@perun-web-apps/perun/components';
+import { EntitylessAttributeKeysListComponent } from '../../entityless-attribute-keys-list/entityless-attribute-keys-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface EditAttributeDefinitionDialogData {
   attDef: AttributeDefinition;
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    MatExpansionModule,
+    TranslateModule,
+    MatTooltip,
+    ServicesListComponent,
+    AttributeUniqueCheckboxComponent,
+    AttributeRightsTabGroupComponent,
+    AttributeCriticalOperationsCheckboxesComponent,
+    EntitylessAttributeKeysListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-edit-attribute-definition-dialog',
   templateUrl: './edit-attribute-definition-dialog.component.html',
   styleUrls: ['./edit-attribute-definition-dialog.component.scss'],

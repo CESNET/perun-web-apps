@@ -1,23 +1,21 @@
 <div>
   <h1 class="page-subtitle">{{'VO_DETAIL.SETTINGS.EXT_SOURCES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="addAuth"
-    (click)="onAdd()"
-    class="me-2 action-button"
-    color="accent"
-    mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.EXT_SOURCES.ADD' | translate}}
-  </button>
-  <button
-    *ngIf="removeAuth"
-    (click)="onRemove()"
-    [disabled]="loading || selection.selected.length === 0"
-    class="me-2"
-    color="warn"
-    mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.EXT_SOURCES.REMOVE' | translate}}
-  </button>
+  @if (addAuth) {
+    <button (click)="onAdd()" class="me-2 action-button" color="accent" mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.EXT_SOURCES.ADD' | translate}}
+    </button>
+  }
+  @if (removeAuth) {
+    <button
+      (click)="onRemove()"
+      [disabled]="loading || selection.selected.length === 0"
+      class="me-2"
+      color="warn"
+      mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.EXT_SOURCES.REMOVE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'VO_DETAIL.SETTINGS.EXT_SOURCES.FILTER'"></perun-web-apps-debounce-filter>

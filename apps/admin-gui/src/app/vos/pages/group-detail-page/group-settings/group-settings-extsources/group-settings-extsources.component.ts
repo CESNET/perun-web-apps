@@ -1,3 +1,6 @@
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TABLE_GROUP_EXTSOURCES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { ExtSource, ExtSourcesManagerService, Group } from '@perun-web-apps/perun/openapi';
@@ -8,13 +11,27 @@ import {
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddExtSourceDialogComponent } from '../../../../../shared/components/dialogs/add-ext-source-dialog/add-ext-source-dialog.component';
 import { RemoveExtSourceDialogComponent } from '../../../../../shared/components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ExtSourcesListComponent } from '../../../../../shared/components/ext-sources-list/ext-sources-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    ExtSourcesListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-settings-extsources',
   templateUrl: './group-settings-extsources.component.html',
   styleUrls: ['./group-settings-extsources.component.scss'],

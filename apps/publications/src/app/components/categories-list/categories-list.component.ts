@@ -1,3 +1,10 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,7 +16,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Category } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -20,15 +27,30 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateRankDialogComponent } from '../../dialogs/update-rank-dialog/update-rank-dialog.component';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CheckboxLabelPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss'],

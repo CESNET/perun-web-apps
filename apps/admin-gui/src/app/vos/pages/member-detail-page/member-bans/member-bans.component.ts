@@ -1,3 +1,5 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   EnrichedBanOnVo,
@@ -6,12 +8,27 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
-import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
+import {
+  BanOnEntityListColumn,
+  BanOnEntityListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UpdateVoBanDialogComponent } from '../../../../shared/components/dialogs/update-vo-ban-dialog/update-vo-ban-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    BanOnEntityListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-member-bans',
   templateUrl: './member-bans.component.html',
   styleUrls: ['./member-bans.component.scss'],

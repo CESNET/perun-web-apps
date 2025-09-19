@@ -8,7 +8,7 @@ import { LoginScreenComponent } from '@perun-web-apps/perun/login';
 import { LoginScreenServiceAccessComponent } from '@perun-web-apps/perun/login';
 import { LogoutLoaderComponent } from '@perun-web-apps/ui/loaders';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',

@@ -1,14 +1,15 @@
 <h1 class="page-subtitle">{{'RESOURCE_DETAIL.ASSIGNED_GROUPS.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="loadAllGroups()"></perun-web-apps-refresh-button>
-<button
-  (click)="addGroup()"
-  *ngIf="guiAuthResolver.isAuthorized('getAllGroups_Vo_policy',[resource])"
-  class="action-button"
-  color="accent"
-  mat-flat-button
-  data-cy="add-group-button">
-  {{'RESOURCE_DETAIL.ASSIGNED_GROUPS.ADD_GROUP' | translate}}
-</button>
+@if (guiAuthResolver.isAuthorized('getAllGroups_Vo_policy',[resource])) {
+  <button
+    (click)="addGroup()"
+    class="action-button"
+    color="accent"
+    mat-flat-button
+    data-cy="add-group-button">
+    {{'RESOURCE_DETAIL.ASSIGNED_GROUPS.ADD_GROUP' | translate}}
+  </button>
+}
 <button
   (click)="removeGroups()"
   [disabled]="loading || selected.selected.length === 0 || !canRemoveGroups()"

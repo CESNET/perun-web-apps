@@ -1,22 +1,35 @@
 <mat-form-field class="w-100" subscriptSizing="dynamic">
-  <mat-label *ngIf="label">{{label | translate}}</mat-label>
-  <textarea
-    *ngIf="tagType === 'textarea'"
-    id="{{tabId}}"
-    [formControl]="inputFormControl"
-    matInput
-    cdkTextareaAutosize
-    [cdkAutosizeMinRows]="minRows">
-  </textarea>
-  <input *ngIf="tagType === 'input'" id="{{tabId}}" [formControl]="inputFormControl" matInput />
-  <mat-spinner *ngIf="inputFormControl?.pending" matSuffix [diameter]="18" class="input-spinner" />
-  <mat-hint *ngIf="warningMessage === '' && !inputFormControl?.pending">
-    {{hint | translate}}
-  </mat-hint>
-  <mat-error *ngIf="inputFormControl?.invalid">
-    {{inputFormControl?.hasError('missingTags') ? (inputFormControl.errors?.missingTags | translate) : inputFormControl.errors?.invalidHtmlContent}}
-  </mat-error>
-  <mat-hint class="warning-color" *ngIf="warningMessage !== '' && !inputFormControl?.pending">
-    {{warningMessage}}
-  </mat-hint>
+  @if (label) {
+    <mat-label>{{label | translate}}</mat-label>
+  }
+  @if (tagType === 'textarea') {
+    <textarea
+      id="{{tabId}}"
+      [formControl]="inputFormControl"
+      matInput
+      cdkTextareaAutosize
+      [cdkAutosizeMinRows]="minRows">
+    </textarea>
+  }
+  @if (tagType === 'input') {
+    <input id="{{tabId}}" [formControl]="inputFormControl" matInput />
+  }
+  @if (inputFormControl?.pending) {
+    <mat-spinner matSuffix [diameter]="18" class="input-spinner" />
+  }
+  @if (warningMessage === '' && !inputFormControl?.pending) {
+    <mat-hint>
+      {{hint | translate}}
+    </mat-hint>
+  }
+  @if (inputFormControl?.invalid) {
+    <mat-error>
+      {{inputFormControl?.hasError('missingTags') ? (inputFormControl.errors?.missingTags | translate) : inputFormControl.errors?.invalidHtmlContent}}
+    </mat-error>
+  }
+  @if (warningMessage !== '' && !inputFormControl?.pending) {
+    <mat-hint class="warning-color">
+      {{warningMessage}}
+    </mat-hint>
+  }
 </mat-form-field>

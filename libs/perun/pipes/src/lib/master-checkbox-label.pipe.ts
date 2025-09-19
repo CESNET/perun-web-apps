@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
+  standalone: true,
   name: 'masterCheckboxLabel',
 })
 export class MasterCheckboxLabelPipe implements PipeTransform {

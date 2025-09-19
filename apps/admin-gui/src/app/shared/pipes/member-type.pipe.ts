@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { MemberCandidate } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'memberType',
 })
 export class MemberTypePipe implements PipeTransform {

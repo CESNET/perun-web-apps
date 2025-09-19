@@ -1,6 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MembersManagerService, MemberWithSponsors, User } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   FindSponsorsService,
   GuiAuthResolver,
@@ -12,6 +21,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { BehaviorSubject } from 'rxjs';
+import { SponsoredMembersListComponent } from '../../sponsored-members-list/sponsored-members-list.component';
+import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { UserSearchSelectComponent } from '@perun-web-apps/perun/components';
 
 export interface CopySponsoredMembersDialogData {
   voId: number;
@@ -19,6 +32,25 @@ export interface CopySponsoredMembersDialogData {
   findSponsorsAuth: boolean;
 }
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    ExpirationSelectComponent,
+    TranslateModule,
+    SponsoredMembersListComponent,
+    ChooseSponsorComponent,
+    LoaderDirective,
+    UserSearchSelectComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-copy-sponsored-members-dialog',
   templateUrl: './copy-sponsored-members-dialog.component.html',
   styleUrls: ['./copy-sponsored-members-dialog.component.scss'],

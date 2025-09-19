@@ -10,14 +10,18 @@ import { UserNotAllowedAccessComponent } from './user-not-allowed-access/user-no
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [CommonModule, MatDialogModule, MatButtonModule, TranslateModule, MatIconModule],
-  exports: [
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    TranslateModule,
+    MatIconModule,
     ServerDownDialogComponent,
     UserDontExistDialogComponent,
     UserNotAllowedAccessComponent,
     PreventProxyOverloadDialogComponent,
   ],
-  declarations: [
+  exports: [
     ServerDownDialogComponent,
     UserDontExistDialogComponent,
     UserNotAllowedAccessComponent,

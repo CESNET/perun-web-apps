@@ -1,59 +1,67 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 vo-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner class="ms-auto me-auto" *ngIf="loading"></mat-spinner>
-  <div *ngIf="!loading && vo !== undefined">
-    <div class="d-flex page-title-headtitle">
-      <mat-icon
-        matTooltip="{{ 'VO_DETAIL.ENTITY' | translate }}"
-        [ngStyle]="{'color':'black'}"
-        [svgIcon]="enrichedVo.memberVos.length !== 0 ? 'perun-hierarchical-vo' :'perun-vo-black'"
-        class="perun-icon perun-icon-detail">
-      </mat-icon>
-      <div class="page-title-block">
-        <div class="page-title-headline d-flex align-items-center">
-          <a
-            class="vo-link"
-            [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/organizations/', vo.id]"
-            [queryParams]="route.snapshot.queryParams"
-            data-cy="vo-name-link">
-            {{vo.name}}
-          </a>
-          <span class="text-muted"> &nbsp;#{{vo.id}} </span>
-          <button
-            *ngIf="editAuth"
-            mat-icon-button
-            aria-label="Edit Vo"
-            (click)="editVo()"
-            matTooltip="{{'VO_DETAIL.EDIT' | translate}}">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="removeAuth"
-            mat-icon-button
-            aria-label="Remove Vo"
-            data-cy="delete-vo"
-            matTooltip="{{'VO_DETAIL.DELETE' | translate}}"
-            (click)="removeVo()">
-            <mat-icon>delete_forever</mat-icon>
-          </button>
+  @if (loading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
+  @if (!loading && vo !== undefined) {
+    <div>
+      <div class="d-flex page-title-headtitle">
+        <mat-icon
+          matTooltip="{{ 'VO_DETAIL.ENTITY' | translate }}"
+          [ngStyle]="{'color':'black'}"
+          [svgIcon]="enrichedVo.memberVos.length !== 0 ? 'perun-hierarchical-vo' :'perun-vo-black'"
+          class="perun-icon perun-icon-detail">
+        </mat-icon>
+        <div class="page-title-block">
+          <div class="page-title-headline d-flex align-items-center">
+            <a
+              class="vo-link"
+              [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString()]"
+              (auxclick)="$event.preventDefault()"
+              [routerLink]="['/organizations/', vo.id]"
+              [queryParams]="route.snapshot.queryParams"
+              data-cy="vo-name-link">
+              {{vo.name}}
+            </a>
+            <span class="text-muted"> &nbsp;#{{vo.id}} </span>
+            @if (editAuth) {
+              <button
+                mat-icon-button
+                aria-label="Edit Vo"
+                (click)="editVo()"
+                matTooltip="{{'VO_DETAIL.EDIT' | translate}}">
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            @if (removeAuth) {
+              <button
+                mat-icon-button
+                aria-label="Remove Vo"
+                data-cy="delete-vo"
+                matTooltip="{{'VO_DETAIL.DELETE' | translate}}"
+                (click)="removeVo()">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            }
+          </div>
+          <div>{{'VO_DETAIL.UUID' | translate}}: {{vo.uuid}}</div>
+          <span class="mt-1 entity-info">
+            {{'VO_DETAIL.ENTITY' | translate}}, {{'VO_DETAIL.SHORT_NAME' | translate}}:
+            {{vo.shortName + ((enrichedVo.memberVos.length + enrichedVo.parentVos.length) ? ',' : '')}}
+            @if (enrichedVo.memberVos.length !== 0) {
+              <app-related-vos
+                [title]="'VO_DETAIL.RELATED_VOS.MEMBER_VOS'"
+                [vos]="enrichedVo.memberVos"></app-related-vos>
+            }
+            @if (enrichedVo.parentVos.length !== 0) {
+              <app-related-vos
+                [title]="'VO_DETAIL.RELATED_VOS.PARENT_VOS'"
+                [vos]="enrichedVo.parentVos"></app-related-vos>
+            }
+          </span>
         </div>
-        <div>{{'VO_DETAIL.UUID' | translate}}: {{vo.uuid}}</div>
-        <span class="mt-1 entity-info">
-          {{'VO_DETAIL.ENTITY' | translate}}, {{'VO_DETAIL.SHORT_NAME' | translate}}:
-          {{vo.shortName + ((enrichedVo.memberVos.length + enrichedVo.parentVos.length) ? ',' : '')}}
-          <app-related-vos
-            *ngIf="enrichedVo.memberVos.length !== 0"
-            [title]="'VO_DETAIL.RELATED_VOS.MEMBER_VOS'"
-            [vos]="enrichedVo.memberVos"></app-related-vos>
-          <app-related-vos
-            *ngIf="enrichedVo.parentVos.length !== 0"
-            [title]="'VO_DETAIL.RELATED_VOS.PARENT_VOS'"
-            [vos]="enrichedVo.parentVos"></app-related-vos>
-        </span>
       </div>
+      <app-animated-router-outlet></app-animated-router-outlet>
     </div>
-    <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
+  }
 </div>

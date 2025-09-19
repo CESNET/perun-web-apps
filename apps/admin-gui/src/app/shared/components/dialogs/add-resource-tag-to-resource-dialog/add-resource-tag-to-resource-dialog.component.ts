@@ -1,8 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { TABLE_ADD_RESOURCES_TAGS_TO_RESOURCE } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
+import { ResourcesTagsListComponent } from '../../resources-tags-list/resources-tags-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddResourceTagToResourceDialogData {
   theme: string;
@@ -12,6 +18,16 @@ export interface AddResourceTagToResourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    TranslateModule,
+    ResourcesTagsListComponent,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-add-resource-tag-to-resource-dialog',
   templateUrl: './add-resource-tag-to-resource-dialog.component.html',
   styleUrls: ['./add-resource-tag-to-resource-dialog.component.scss'],

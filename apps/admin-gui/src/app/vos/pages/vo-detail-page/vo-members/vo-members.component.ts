@@ -1,3 +1,17 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  MembersListComponent,
+} from '@perun-web-apps/perun/components';
+import { MemberStatusPipe } from '@perun-web-apps/perun/pipes';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -27,7 +41,7 @@ import {
   VoMemberStatuses,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import {
   downloadData,
@@ -44,8 +58,28 @@ import { concatMap, map, tap } from 'rxjs/operators';
 import { MembersListService } from '@perun-web-apps/perun/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MemberStatusPipe,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MembersListComponent,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-members',
   templateUrl: './vo-members.component.html',
   styleUrls: ['./vo-members.component.scss'],

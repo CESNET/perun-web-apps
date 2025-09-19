@@ -1,3 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,8 +20,8 @@ import {
 } from '@angular/core';
 import { Host } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -22,8 +33,25 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MasterCheckboxLabelPipe,
+    CheckboxLabelPipe,
+    MultiWordDataCyPipe,
+  ],
+  standalone: true,
   selector: 'app-hosts-list',
   templateUrl: './hosts-list.component.html',
   styleUrls: ['./hosts-list.component.css'],

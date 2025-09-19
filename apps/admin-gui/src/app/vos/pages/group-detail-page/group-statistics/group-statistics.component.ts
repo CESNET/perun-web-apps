@@ -1,8 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { StatisticsCardComponent } from '../../../../shared/components/statistics-card/statistics-card.component';
 
 @Component({
+  imports: [CommonModule, MatProgressSpinnerModule, TranslateModule, StatisticsCardComponent],
+  standalone: true,
   selector: 'app-group-statistics',
   templateUrl: './group-statistics.component.html',
   styleUrls: ['./group-statistics.component.scss'],

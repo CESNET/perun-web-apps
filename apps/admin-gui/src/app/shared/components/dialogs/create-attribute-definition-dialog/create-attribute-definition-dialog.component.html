@@ -13,12 +13,16 @@
             formControlName="friendlyName"
             data-cy="attribute-friendly-name-input"
             required />
-          <mat-error *ngIf="attributeControl.hasError('spaceName', 'friendlyName')">
-            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-          </mat-error>
-          <mat-error *ngIf="attributeControl.hasError('required', 'friendlyName')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('spaceName', 'friendlyName')) {
+            <mat-error>
+              {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+            </mat-error>
+          }
+          @if (attributeControl.hasError('required', 'friendlyName')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.DISPLAY_NAME' | translate}}</mat-label>
@@ -27,12 +31,16 @@
             formControlName="displayName"
             data-cy="attribute-display-name-input"
             required />
-          <mat-error *ngIf="attributeControl.hasError('spaceName', 'displayName')">
-            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-          </mat-error>
-          <mat-error *ngIf="attributeControl.hasError('required', 'displayName')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('spaceName', 'displayName')) {
+            <mat-error>
+              {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+            </mat-error>
+          }
+          @if (attributeControl.hasError('required', 'displayName')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.DESCRIPTION' | translate}}</mat-label>
@@ -43,18 +51,24 @@
             data-cy="attribute-description-input"
             required>
           </textarea>
-          <mat-error *ngIf="attributeControl.hasError('required', 'description')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('required', 'description')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ENTITY' | translate}}</mat-label>
           <mat-select formControlName="entity" data-cy="attribute-entity-input" required>
-            <mat-option *ngFor="let entity of entities" [value]="entity">{{entity}}</mat-option>
+            @for (entity of entities; track entity) {
+              <mat-option [value]="entity">{{entity}}</mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="attributeControl.hasError('required', 'entity')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('required', 'entity')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.DEFINITION' | translate}}</mat-label>
@@ -62,24 +76,30 @@
             formControlName="definitionType"
             data-cy="attribute-definition-type-input"
             required>
-            <mat-option *ngFor="let defType of definitionTypes" [value]="defType"
-              >{{defType}}
-            </mat-option>
+            @for (defType of definitionTypes; track defType) {
+              <mat-option [value]="defType">{{defType}} </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="attributeControl.hasError('required', 'definitionType')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('required', 'definitionType')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.VALUE_TYPE' | translate}}</mat-label>
           <mat-select formControlName="valueType" data-cy="attribute-value-type-input" required>
-            <mat-option *ngFor="let valType of valueTypes" [value]="valType">
-              {{valType | attributeTypeClean}}
-            </mat-option>
+            @for (valType of valueTypes; track valType) {
+              <mat-option [value]="valType">
+                {{valType | attributeTypeClean}}
+              </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="attributeControl.hasError('required', 'valueType')">
-            {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-          </mat-error>
+          @if (attributeControl.hasError('required', 'valueType')) {
+            <mat-error>
+              {{'DIALOGS.CREATE_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+            </mat-error>
+          }
         </mat-form-field>
       </form>
 

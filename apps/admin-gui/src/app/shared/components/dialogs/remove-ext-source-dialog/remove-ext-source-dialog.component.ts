@@ -1,9 +1,14 @@
+import { MatTableModule } from '@angular/material/table';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveExtSourceDialogData {
   voId: number;
@@ -13,6 +18,16 @@ export interface RemoveExtSourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-remove-ext-source-dialog',
   templateUrl: './remove-ext-source-dialog.component.html',
   styleUrls: ['./remove-ext-source-dialog.component.scss'],

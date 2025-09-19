@@ -1,29 +1,31 @@
 <div>
   <h1 class="page-subtitle">{{'VO_DETAIL.GROUPS.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refresh()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="createAuth"
-    (click)="onCreateGroup()"
-    color="accent"
-    class="me-2 action-button"
-    data-cy="create-group-button"
-    mat-flat-button>
-    {{'VO_DETAIL.GROUPS.CREATE_GROUP' | translate}}
-  </button>
-  <span
-    *ngIf="{removeAuth: removeAuth$  | async} as auth"
-    [matTooltipDisabled]="auth.removeAuth"
-    matTooltip="{{'VO_DETAIL.GROUPS.DELETE_PERMISSION_HINT' | translate}}">
+  @if (createAuth) {
     <button
-      (click)="deleteGroup()"
-      color="warn"
-      [disabled]="(loading$ | async) || selected.selected.length === 0 || !auth.removeAuth"
-      data-cy="delete-group-button"
-      class="me-2"
+      (click)="onCreateGroup()"
+      color="accent"
+      class="me-2 action-button"
+      data-cy="create-group-button"
       mat-flat-button>
-      {{'VO_DETAIL.GROUPS.DELETE_GROUP' | translate}}
+      {{'VO_DETAIL.GROUPS.CREATE_GROUP' | translate}}
     </button>
-  </span>
+  }
+  @if ({removeAuth: removeAuth$  | async}; as auth) {
+    <span
+      [matTooltipDisabled]="auth.removeAuth"
+      matTooltip="{{'VO_DETAIL.GROUPS.DELETE_PERMISSION_HINT' | translate}}">
+      <button
+        (click)="deleteGroup()"
+        color="warn"
+        [disabled]="(loading$ | async) || selected.selected.length === 0 || !auth.removeAuth"
+        data-cy="delete-group-button"
+        class="me-2"
+        mat-flat-button>
+        {{'VO_DETAIL.GROUPS.DELETE_GROUP' | translate}}
+      </button>
+    </span>
+  }
 
   <app-group-roles-filter
     [theme]="'vo-theme'"
@@ -44,42 +46,46 @@
     >{{'VO_DETAIL.GROUPS.LIST_VIEW' | translate}}
   </label>
   <div class="mt-3 position-relative table-min-height">
-    <div *ngIf="!showGroupList">
-      <perun-web-apps-groups-tree
-        *perunWebAppsLoader="loading$ | async; indicator: spinner"
-        [loading]="loading$ | async"
-        (moveGroup)="onMoveGroup($event)"
-        (refreshTable)="refresh()"
-        [displayedColumns]="['nameWithId', 'description', 'menu']"
-        [expandAll]="filtering"
-        [disableRouting]="!routeAuth"
-        [groups]="groups"
-        [selection]="selected"
-        [filterValue]="filterValue"
-        [vo]="vo"
-        theme="vo-theme">
-      </perun-web-apps-groups-tree>
-    </div>
-    <div *ngIf="showGroupList">
-      <perun-web-apps-groups-list
-        *perunWebAppsLoader="loading$ | async; indicator: spinner"
-        [loading]="loading$ | async"
-        (groupMoved)="onMoveGroup($event)"
-        (queryChanged)="nextPage.next($event)"
-        (refreshTable)="refresh()"
-        (downloadAll)="downloadAll($event)"
-        [disableMembers]="true"
-        [displayedColumns]="displayedColumns"
-        [disableRouting]="!routeAuth"
-        [groups]="groupPage$ | async"
-        [selection]="selected"
-        [filter]="filterValue"
-        [tableId]="tableId"
-        [cacheSubject]="cacheSubject"
-        [resetPagination]="resetPagination"
-        theme="vo-theme">
-      </perun-web-apps-groups-list>
-    </div>
+    @if (!showGroupList) {
+      <div>
+        <perun-web-apps-groups-tree
+          *perunWebAppsLoader="loading$ | async; indicator: spinner"
+          [loading]="loading$ | async"
+          (moveGroup)="onMoveGroup($event)"
+          (refreshTable)="refresh()"
+          [displayedColumns]="['nameWithId', 'description', 'menu']"
+          [expandAll]="filtering"
+          [disableRouting]="!routeAuth"
+          [groups]="groups"
+          [selection]="selected"
+          [filterValue]="filterValue"
+          [vo]="vo"
+          theme="vo-theme">
+        </perun-web-apps-groups-tree>
+      </div>
+    }
+    @if (showGroupList) {
+      <div>
+        <perun-web-apps-groups-list
+          *perunWebAppsLoader="loading$ | async; indicator: spinner"
+          [loading]="loading$ | async"
+          (groupMoved)="onMoveGroup($event)"
+          (queryChanged)="nextPage.next($event)"
+          (refreshTable)="refresh()"
+          (downloadAll)="downloadAll($event)"
+          [disableMembers]="true"
+          [displayedColumns]="displayedColumns"
+          [disableRouting]="!routeAuth"
+          [groups]="groupPage$ | async"
+          [selection]="selected"
+          [filter]="filterValue"
+          [tableId]="tableId"
+          [cacheSubject]="cacheSubject"
+          [resetPagination]="resetPagination"
+          theme="vo-theme">
+        </perun-web-apps-groups-list>
+      </div>
+    }
   </div>
 </div>
 <ng-template #spinner>

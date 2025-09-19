@@ -1,9 +1,18 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { downloadData, emailRegexString } from '@perun-web-apps/perun/utils';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { InputInvitationsFromCsv, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface BulkInviteMembersDialogData {
   theme: string;
@@ -17,6 +26,20 @@ interface OutputData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-bulk-invite-members-dialog',
   templateUrl: './bulk-invite-members-dialog.component.html',
   styleUrls: ['./bulk-invite-members-dialog.component.scss'],

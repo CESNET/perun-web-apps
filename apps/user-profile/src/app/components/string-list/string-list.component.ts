@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,14 +13,25 @@ import {
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { downloadData, getDataForExport } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
+import { CheckboxLabelPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    TableWrapperComponent,
+    MatTableModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-string-list',
   templateUrl: './string-list.component.html',
   styleUrls: ['./string-list.component.scss'],

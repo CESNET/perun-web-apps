@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   Attribute,
@@ -5,10 +8,12 @@ import {
   GroupsManagerService,
   MembersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { iif, mergeMap, of, switchMap } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ChangeExpirationDialogComponent } from '../change-expiration-dialog/change-expiration-dialog.component';
 
 export interface ChangeGroupExpirationDialogData {
   groupId: number;
@@ -18,6 +23,15 @@ export interface ChangeGroupExpirationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    ChangeExpirationDialogComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-group-expiration-dialog',
   templateUrl: './change-group-expiration-dialog.component.html',
   styleUrls: ['./change-group-expiration-dialog.component.scss'],

@@ -1,3 +1,6 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from '@perun-web-apps/perun/models';
@@ -5,6 +8,8 @@ import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, RoutePolicyService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent, MatProgressSpinnerModule],
+  standalone: true,
   selector: 'app-vo-settings-overview',
   templateUrl: './vo-settings-overview.component.html',
   styleUrls: ['./vo-settings-overview.component.scss'],

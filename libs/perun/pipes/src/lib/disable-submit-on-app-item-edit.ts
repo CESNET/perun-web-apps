@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Type } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'disableSubmitOnAppItemEdit',
 })
 export class DisableSubmitOnAppItemEditPipe implements PipeTransform {

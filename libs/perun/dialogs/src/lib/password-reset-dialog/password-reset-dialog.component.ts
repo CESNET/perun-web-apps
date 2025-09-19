@@ -1,16 +1,30 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   ApiRequestConfigurationService,
   NotificatorService,
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
 import { PasswordLabels } from '@perun-web-apps/perun/models';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ResetPasswordDialogData {
   namespace: string;
@@ -18,6 +32,17 @@ export interface ResetPasswordDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    PasswordFormComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-password-reset-dialog',
   templateUrl: './password-reset-dialog.component.html',
   styleUrls: ['./password-reset-dialog.component.scss'],

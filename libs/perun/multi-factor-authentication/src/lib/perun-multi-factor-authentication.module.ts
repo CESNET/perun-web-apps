@@ -17,8 +17,10 @@ import { NoMfaTokensDialogComponent } from './no-mfa-tokens-dialog/no-mfa-tokens
     MatButtonModule,
     UiAlertsModule,
     MatIconModule,
+    MfaRequiredDialogComponent,
+    FocusOnMfaWindowComponent,
+    NoMfaTokensDialogComponent,
   ],
-  declarations: [MfaRequiredDialogComponent, FocusOnMfaWindowComponent, NoMfaTokensDialogComponent],
   exports: [MfaRequiredDialogComponent, FocusOnMfaWindowComponent, NoMfaTokensDialogComponent],
 })
 export class PerunMultiFactorAuthenticationModule {}

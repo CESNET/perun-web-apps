@@ -1,3 +1,8 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   ExtSource,
@@ -5,17 +10,32 @@ import {
   UserExtSource,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Observable } from 'rxjs';
+import { ExtSourceSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 interface AddUserExtSourceDialogData {
   userId: number;
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    ExtSourceSearchSelectComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-add-user-ext-source-dialog',
   templateUrl: './add-user-ext-source-dialog.component.html',
   styleUrls: ['./add-user-ext-source-dialog.component.scss'],

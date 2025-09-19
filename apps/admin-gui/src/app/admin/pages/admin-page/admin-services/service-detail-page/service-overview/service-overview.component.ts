@@ -1,9 +1,13 @@
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import { Service } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent],
+  standalone: true,
   selector: 'app-service-overview',
   templateUrl: './service-overview.component.html',
   styleUrls: ['./service-overview.component.scss'],

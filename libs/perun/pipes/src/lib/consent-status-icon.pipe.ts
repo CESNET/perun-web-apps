@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Consent } from '@perun-web-apps/perun/openapi';
 
-@Pipe({ name: 'consentStatusIcon' })
+@Pipe({
+  standalone: true,
+  name: 'consentStatusIcon',
+})
 export class ConsentStatusIconPipe implements PipeTransform {
   transform(userId: number, consents: Consent[]): string {
     if (!consents || consents.length === 0) return;

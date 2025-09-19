@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   Group,
@@ -6,6 +7,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AddGroupToRegistrationComponent } from '../add-group-to-registration/add-group-to-registration.component';
 
 export interface AddGroupToGroupRegistrationDialogData {
   theme: string;
@@ -15,6 +17,8 @@ export interface AddGroupToGroupRegistrationDialogData {
 }
 
 @Component({
+  imports: [CommonModule, AddGroupToRegistrationComponent],
+  standalone: true,
   selector: 'app-add-group-to-group-registration',
   templateUrl: './add-group-to-group-registration.component.html',
   styleUrls: ['./add-group-to-group-registration.component.scss'],

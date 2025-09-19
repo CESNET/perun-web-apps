@@ -1,3 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,8 +18,8 @@ import {
 } from '@angular/core';
 import { ExtSource, UserExtSource } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -22,8 +31,23 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ExtSourceTypePipe } from '../../pipes/ext-source-type.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    MasterCheckboxLabelPipe,
+    ExtSourceTypePipe,
+  ],
+  standalone: true,
   selector: 'app-ext-sources-list',
   templateUrl: './ext-sources-list.component.html',
   styleUrls: ['./ext-sources-list.component.scss'],

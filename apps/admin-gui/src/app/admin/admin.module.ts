@@ -25,7 +25,15 @@ import { AdminBlockedLoginsComponent } from './pages/admin-page/admin-blocked-lo
 import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.component';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    SharedModule,
+    UiAlertsModule,
+    UiLoadersModule,
+    PerunSharedComponentsModule,
+    PerunPipesModule,
+    UsersModule,
     AdminPageComponent,
     AdminOverviewComponent,
     AdminAttributesComponent,
@@ -42,16 +50,6 @@ import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.
     AdminSearcherComponent,
     AdminBlockedLoginsComponent,
     AdminTasksComponent,
-  ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    SharedModule,
-    UiAlertsModule,
-    UiLoadersModule,
-    PerunSharedComponentsModule,
-    PerunPipesModule,
-    UsersModule,
   ],
 })
 export class AdminModule {}

@@ -15,39 +15,43 @@
       matSortActive="displayName"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length :canBeSelected} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <span
-            [matTooltipDisabled]="isMasterCheckboxEnabled"
-            [matTooltip]="'ADMIN.ATTRIBUTES.MASTER_CHECKBOX_TOOLTIP' | translate">
+      @if (
+        {all: dataSource | isAllSelected: selection.selected.length :canBeSelected};
+        as selected
+      ) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <span
+              [matTooltipDisabled]="isMasterCheckboxEnabled"
+              [matTooltip]="'ADMIN.ATTRIBUTES.MASTER_CHECKBOX_TOOLTIP' | translate">
+              @if (selection.isMultipleSelection()) {
+                <mat-checkbox
+                  (change)="$event ? masterToggle() : null"
+                  [aria-label]="selected.all | masterCheckboxLabel | translate"
+                  [checked]="selection.hasValue() && selected.all"
+                  [indeterminate]="selection.hasValue() && !selected.all"
+                  [disabled]="!isMasterCheckboxEnabled"
+                  color="primary">
+                </mat-checkbox>
+              }
+            </span>
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
             <mat-checkbox
-              (change)="$event ? masterToggle() : null"
-              [aria-label]="selected.all | masterCheckboxLabel | translate"
-              [checked]="selection.hasValue() && selected.all"
-              [indeterminate]="selection.hasValue() && !selected.all"
-              [disabled]="!isMasterCheckboxEnabled"
-              *ngIf="selection.isMultipleSelection()"
+              attr.data-cy="{{row.displayName | multiWordDataCy}}-checkbox"
+              (change)="$event ? toggleRow(row) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.displayName}"
+              [checked]="selection.isSelected(row)"
+              [disabled]="row.namespace | consentRelatedAttribute:serviceEnabled:consentRequired"
+              [matTooltip]="'ADMIN.ATTRIBUTES.CONSENT_RELATED_DISABLED' | translate"
+              [matTooltipDisabled]="!(row.namespace | consentRelatedAttribute:serviceEnabled:consentRequired)"
+              matTooltipPosition="left"
               color="primary">
             </mat-checkbox>
-          </span>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            attr.data-cy="{{row.displayName | multiWordDataCy}}-checkbox"
-            (change)="$event ? toggleRow(row) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.displayName}"
-            [checked]="selection.isSelected(row)"
-            [disabled]="row.namespace | consentRelatedAttribute:serviceEnabled:consentRequired"
-            [matTooltip]="'ADMIN.ATTRIBUTES.CONSENT_RELATED_DISABLED' | translate"
-            [matTooltipDisabled]="!(row.namespace | consentRelatedAttribute:serviceEnabled:consentRequired)"
-            matTooltipPosition="left"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'ADMIN.ATTRIBUTES.TABLE_ATTR_ID' | translate}}
@@ -109,12 +113,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && definitions.length === 0" alert_type="warn">
-  {{'ADMIN.ATTRIBUTES.NO_ATTRIBUTES' | translate}}
-</perun-web-apps-alert>
+@if (!loading && definitions.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'ADMIN.ATTRIBUTES.NO_ATTRIBUTES' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && definitions.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && definitions.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}

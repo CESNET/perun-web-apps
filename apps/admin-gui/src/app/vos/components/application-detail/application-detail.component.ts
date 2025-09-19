@@ -1,8 +1,16 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApplicationReSendNotificationDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-dialog/application-re-send-notification-dialog.component';
 import { ApplicationRejectDialogComponent } from '../../../shared/components/dialogs/application-reject-dialog/application-reject-dialog.component';
 import {
@@ -25,8 +33,29 @@ import { EditApplicationFormItemDataDialogComponent } from '../../../shared/comp
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { ApplicationApproveAnywayDialogComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
+import { GetLabelPipe } from '@perun-web-apps/perun/pipes';
+import { ModifiedNamePipe } from '@perun-web-apps/perun/pipes';
+import { ApplicationStatePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    MatDivider,
+    MatCardModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    GetLabelPipe,
+    ModifiedNamePipe,
+    UserFullNamePipe,
+    ApplicationStatePipe,
+  ],
+  standalone: true,
   selector: 'app-application-detail',
   templateUrl: './application-detail.component.html',
   styleUrls: ['./application-detail.component.scss'],

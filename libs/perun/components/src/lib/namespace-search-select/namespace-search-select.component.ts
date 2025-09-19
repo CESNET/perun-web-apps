@@ -1,7 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { EntitySearchSelectComponent } from '../entity-search-select/entity-search-select.component';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { GlobalNamespacePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [CommonModule, EntitySearchSelectComponent, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-namespace-search-select',
   templateUrl: './namespace-search-select.component.html',
   styleUrls: ['./namespace-search-select.component.scss'],

@@ -1,5 +1,9 @@
+import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Group,
   GroupsManagerService,
@@ -8,9 +12,10 @@ import {
   RichGroup,
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddMemberGroupDialogData {
   theme: string;
@@ -19,6 +24,17 @@ export interface AddMemberGroupDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    GroupsListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-add-member-group-dialog',
   templateUrl: './add-member-group-dialog.component.html',
   styleUrls: ['./add-member-group-dialog.component.scss'],

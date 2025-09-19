@@ -1,22 +1,24 @@
 <h1 class="page-subtitle">{{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.TITLE' | translate}}</h1>
 <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
-<button
-  *ngIf="addAuth"
-  (click)="addMemberOrganization()"
-  mat-flat-button
-  class="me-2 action-button"
-  color="accent">
-  {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD' | translate}}
-</button>
-<button
-  *ngIf="removeAuth"
-  (click)="removeMemberOrganization()"
-  [disabled]="loading || voSelection.selected.length === 0"
-  mat-flat-button
-  color="warn"
-  class="me-2">
-  {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.REMOVE' | translate}}
-</button>
+@if (addAuth) {
+  <button
+    (click)="addMemberOrganization()"
+    mat-flat-button
+    class="me-2 action-button"
+    color="accent">
+    {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.ADD' | translate}}
+  </button>
+}
+@if (removeAuth) {
+  <button
+    (click)="removeMemberOrganization()"
+    [disabled]="loading || voSelection.selected.length === 0"
+    mat-flat-button
+    color="warn"
+    class="me-2">
+    {{'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.REMOVE' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'VO_DETAIL.SETTINGS.MEMBER_ORGANIZATIONS.FILTER'"></perun-web-apps-debounce-filter>

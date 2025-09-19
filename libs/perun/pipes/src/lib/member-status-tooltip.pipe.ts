@@ -4,6 +4,7 @@ import { isMemberIndirectString, parseMemberStatus } from '@perun-web-apps/perun
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
+  standalone: true,
   name: 'memberStatusTooltip',
 })
 export class MemberStatusTooltipPipe implements PipeTransform {

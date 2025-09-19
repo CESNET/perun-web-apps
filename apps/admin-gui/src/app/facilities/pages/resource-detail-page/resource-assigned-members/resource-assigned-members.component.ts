@@ -1,3 +1,12 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  MembersListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -15,10 +24,26 @@ import {
 } from '@perun-web-apps/perun/services';
 import { MemberWithConsentStatus } from '@perun-web-apps/perun/models';
 import { ConsentStatusIconPipe, SelectedConsentStatusesPipe } from '@perun-web-apps/perun/pipes';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MembersListComponent,
+    TranslateModule,
+    LoaderDirective,
+    SelectedConsentStatusesPipe,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-resource-assigned-members',
   templateUrl: './resource-assigned-members.component.html',
   styleUrls: ['./resource-assigned-members.component.scss'],

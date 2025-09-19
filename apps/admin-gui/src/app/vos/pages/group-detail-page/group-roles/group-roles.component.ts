@@ -1,3 +1,5 @@
+import { RolesPageComponent } from '../../../../shared/components/roles-list/roles-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { AuthzResolverService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, RoleService } from '@perun-web-apps/perun/services';
@@ -5,6 +7,8 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
+  imports: [CommonModule, RolesPageComponent],
+  standalone: true,
   selector: 'app-group-roles',
   templateUrl: './group-roles.component.html',
   styleUrls: ['./group-roles.component.scss'],

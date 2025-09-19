@@ -1,8 +1,20 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import {
+  MemberOverviewMembershipComponent,
+  MenuButtonsFieldComponent,
+} from '@perun-web-apps/perun/components';
+import { ParseDatePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem, Role } from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PasswordResetRequestDialogComponent } from '../../../../shared/components/dialogs/password-reset-request-dialog/password-reset-request-dialog.component';
 import {
   Attribute,
@@ -22,8 +34,27 @@ import {
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditMemberSponsorsDialogComponent } from '../../../../shared/components/dialogs/edit-member-sponsors-dialog/edit-member-sponsors-dialog.component';
 import { SponsorThisMemberDialogComponent } from '../../../../shared/components/dialogs/sponsor-this-member-dialog/sponsor-this-member-dialog.component';
+import { MemberOverviewGroupsComponent } from '@perun-web-apps/perun/components';
+import { AttributeFriendlyNamePipe } from '../../../../shared/pipes/attribute-friendly-name.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    ParseDatePipe,
+    MenuButtonsFieldComponent,
+    MatCardModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    MemberOverviewGroupsComponent,
+    MemberOverviewMembershipComponent,
+    UserFullNamePipe,
+    AttributeFriendlyNamePipe,
+  ],
+  standalone: true,
   selector: 'app-member-overview',
   templateUrl: './member-overview.component.html',
   styleUrls: ['./member-overview.component.scss'],

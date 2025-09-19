@@ -1,9 +1,22 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { AbstractControl, UntypedFormControl, ValidatorFn, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { AutoFocusDirective, LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddHostDialogData {
   theme: string;
@@ -11,6 +24,20 @@ export interface AddHostDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    AutoFocusDirective,
+  ],
+  standalone: true,
   selector: 'app-add-host-dialog',
   templateUrl: './add-host-dialog.component.html',
   styleUrls: ['./add-host-dialog.component.scss'],

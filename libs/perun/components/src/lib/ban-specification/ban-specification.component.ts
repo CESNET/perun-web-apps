@@ -1,11 +1,27 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { formatDate, CommonModule } from '@angular/common';
 
 // This date (1. Jan 2999) is set by backend as a 'never' expire option
 export const BAN_EXPIRATION_NEVER = new Date(32472140400000).valueOf();
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    FormsModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-ban-specification',
   templateUrl: './ban-specification.component.html',
   styleUrls: ['./ban-specification.component.scss'],

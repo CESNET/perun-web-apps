@@ -4,42 +4,37 @@
     <mat-form-field>
       <mat-label>{{'DIALOGS.EDIT_USER.TITLE_BEFORE' | translate}}</mat-label>
       <input matInput [formControl]="titleBefore" />
-      <mat-error
-        *ngIf="titleBefore.invalid"
-        >{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error
-      >
+      @if (titleBefore.invalid) {
+        <mat-error>{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{'DIALOGS.EDIT_USER.TITLE_AFTER' | translate}}</mat-label>
       <input matInput [formControl]="titleAfter" />
-      <mat-error
-        *ngIf="titleAfter.invalid"
-        >{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error
-      >
+      @if (titleAfter.invalid) {
+        <mat-error>{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{'DIALOGS.EDIT_USER.FIRST_NAME' | translate}}</mat-label>
       <input matInput [formControl]="firstName" data-cy="user-first-name-input" required />
-      <mat-error
-        *ngIf="firstName.invalid"
-        >{{'DIALOGS.EDIT_USER.ERROR_FIRST_NAME' | translate}}</mat-error
-      >
+      @if (firstName.invalid) {
+        <mat-error>{{'DIALOGS.EDIT_USER.ERROR_FIRST_NAME' | translate}}</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{'DIALOGS.EDIT_USER.MIDDLE_NAME' | translate}}</mat-label>
       <input matInput [formControl]="middleName" />
-      <mat-error
-        *ngIf="middleName.invalid"
-        >{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error
-      >
+      @if (middleName.invalid) {
+        <mat-error>{{'DIALOGS.EDIT_USER.ERROR_LENGTH'  | translate}}</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{'DIALOGS.EDIT_USER.LAST_NAME' | translate}}</mat-label>
       <input matInput [formControl]="lastName" required />
-      <mat-error
-        *ngIf="lastName.invalid"
-        >{{'DIALOGS.EDIT_USER.ERROR_LAST_NAME'  | translate}}</mat-error
-      >
+      @if (lastName.invalid) {
+        <mat-error>{{'DIALOGS.EDIT_USER.ERROR_LAST_NAME'  | translate}}</mat-error>
+      }
     </mat-form-field>
   </div>
   <div mat-dialog-actions>

@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
 import { TABLE_FACILITY_ALLOWED_USERS } from '@perun-web-apps/config/table-config';
 import {
@@ -23,7 +28,7 @@ import {
   NotificatorService,
 } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { PageQuery, RPCError, UserWithConsentStatus } from '@perun-web-apps/perun/models';
@@ -35,10 +40,40 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog } from '@angular/material/dialog';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  ServiceSearchSelectComponent,
+  UsersListComponent,
+} from '@perun-web-apps/perun/components';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AdvancedFilterComponent } from '@perun-web-apps/perun/components';
+import { VoSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { ResourceSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    AdvancedFilterComponent,
+    VoSearchSelectComponent,
+    ResourceSearchSelectComponent,
+    ServiceSearchSelectComponent,
+    LoadingTableComponent,
+    UsersListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-facility-allowed-users',
   templateUrl: './facility-allowed-users.component.html',
   styleUrls: ['./facility-allowed-users.component.scss'],

@@ -1,31 +1,39 @@
 <div class="p-4 m-3 card" [ngStyle]="{'background-color': color }">
   <div class="d-flex pb-5 flex-row">
     <div>
-      <mat-icon *ngIf="result !== 'OK'" class="mat-icon-war me-4"> {{icon}} </mat-icon>
-      <mat-icon
-        *ngIf="result === 'OK'"
-        svgIcon="perun-verify-grey"
-        class="perun-icon perun-icon-detail">
-      </mat-icon>
+      @if (result !== 'OK') {
+        <mat-icon class="mat-icon-war me-4"> {{icon}} </mat-icon>
+      }
+      @if (result === 'OK') {
+        <mat-icon svgIcon="perun-verify-grey" class="perun-icon perun-icon-detail"> </mat-icon>
+      }
     </div>
     <div class="ms-5">
       <h1>
         {{('SHARED_LIB.CONSOLIDATOR.' + result + '_TITLE') | translate}}
       </h1>
-      <h5 *ngIf="!(userMail && result === 'OK')">
-        {{('SHARED_LIB.CONSOLIDATOR.' + result + '_SUBTITLE') | translate}}
-        <span *ngIf="result === 'UNKNOWN_ERROR'">
-          {{supportMail}}
-        </span>
-        <span *ngIf="result === 'MESSAGE_SENT_TO_SUPPORT'">
+      @if (!(userMail && result === 'OK')) {
+        <h5>
+          {{('SHARED_LIB.CONSOLIDATOR.' + result + '_SUBTITLE') | translate}}
+          @if (result === 'UNKNOWN_ERROR') {
+            <span>
+              {{supportMail}}
+            </span>
+          }
+          @if (result === 'MESSAGE_SENT_TO_SUPPORT') {
+            <span>
+              {{userMail}}
+            </span>
+          }
+        </h5>
+      }
+      @if (userMail && result === 'OK') {
+        <h5>
+          {{'SHARED_LIB.CONSOLIDATOR.OK_SUBTITLE_WITH_MAIL_1' | translate}}
           {{userMail}}
-        </span>
-      </h5>
-      <h5 *ngIf="userMail && result === 'OK'">
-        {{'SHARED_LIB.CONSOLIDATOR.OK_SUBTITLE_WITH_MAIL_1' | translate}}
-        {{userMail}}
-        {{'SHARED_LIB.CONSOLIDATOR.OK_SUBTITLE_WITH_MAIL_2' | translate}}
-      </h5>
+          {{'SHARED_LIB.CONSOLIDATOR.OK_SUBTITLE_WITH_MAIL_2' | translate}}
+        </h5>
+      }
     </div>
   </div>
   <ng-content></ng-content>

@@ -1,6 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   Application,
   Group,
@@ -25,6 +32,17 @@ import {
 import { InvitationResendDialogComponent } from '../../../../shared/components/dialogs/invitation-resend-dialog/invitation-resend-dialog.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    MatDivider,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-group-invitation-detail',
   templateUrl: './group-invitation-detail.component.html',
   styleUrls: ['./group-invitation-detail.component.scss'],

@@ -5,26 +5,26 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.UPDATE_APPLICATION_FORM.TITLE' | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
-      <div
-        *ngFor="let control of formArray.controls; let i = index; trackBy: trackByIndex"
-        class="d-flex flex-row align-items-center">
-        <mat-form-field class="w-100 mb-n2">
-          <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.MODULE_NAME' | translate}}</mat-label>
-          <input [formControl]="control" matInput />
-          <mat-error
-            *ngIf="control.hasError('pattern')"
-            >{{'DIALOGS.UPDATE_APPLICATION_FORM.COMMA_ERROR' | translate}}</mat-error
-          >
-        </mat-form-field>
-        <button
-          *ngIf="formArray.length > 1"
-          color="warn"
-          (click)="removeModule(i)"
-          [matTooltip]="'DIALOGS.UPDATE_APPLICATION_FORM.REMOVE_MODULE_TOOLTIP' | translate"
-          mat-icon-button>
-          <mat-icon>remove_circle</mat-icon>
-        </button>
-      </div>
+      @for (control of formArray.controls; track trackByIndex(i, control); let i = $index) {
+        <div class="d-flex flex-row align-items-center">
+          <mat-form-field class="w-100 mb-n2">
+            <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.MODULE_NAME' | translate}}</mat-label>
+            <input [formControl]="control" matInput />
+            @if (control.hasError('pattern')) {
+              <mat-error>{{'DIALOGS.UPDATE_APPLICATION_FORM.COMMA_ERROR' | translate}}</mat-error>
+            }
+          </mat-form-field>
+          @if (formArray.length > 1) {
+            <button
+              color="warn"
+              (click)="removeModule(i)"
+              [matTooltip]="'DIALOGS.UPDATE_APPLICATION_FORM.REMOVE_MODULE_TOOLTIP' | translate"
+              mat-icon-button>
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          }
+        </div>
+      }
 
       <div class="d-flex justify-content-center mb-3">
         <button
@@ -64,21 +64,23 @@
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="entity === 'group' && autoRegistrationEnabled">
-        <mat-form-field class="w-100">
-          <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.EMBEDDED' | translate}}:</mat-label>
-          <mat-select [(value)]="embeddedState" disableOptionCentering>
-            <mat-option
-              value="auto"
-              >{{'DIALOGS.UPDATE_APPLICATION_FORM.AUTOMATIC' | translate}}</mat-option
-            >
-            <mat-option
-              value="manual"
-              >{{'DIALOGS.UPDATE_APPLICATION_FORM.MANUAL' | translate}}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-      </div>
+      @if (entity === 'group' && autoRegistrationEnabled) {
+        <div>
+          <mat-form-field class="w-100">
+            <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.EMBEDDED' | translate}}:</mat-label>
+            <mat-select [(value)]="embeddedState" disableOptionCentering>
+              <mat-option
+                value="auto"
+                >{{'DIALOGS.UPDATE_APPLICATION_FORM.AUTOMATIC' | translate}}</mat-option
+              >
+              <mat-option
+                value="manual"
+                >{{'DIALOGS.UPDATE_APPLICATION_FORM.MANUAL' | translate}}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      }
     </div>
     <div mat-dialog-actions>
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>

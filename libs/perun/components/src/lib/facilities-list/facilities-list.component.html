@@ -19,16 +19,20 @@
       matSortDisableClear>
       <ng-container matColumnDef="select">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <span
-            *ngIf="enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length} as selected">
-            <mat-checkbox
-              (change)="masterToggle()"
-              [checked]="selection.hasValue() && selected.all"
-              [indeterminate]="selection.hasValue() && !selected.all"
-              [aria-label]="selected.all | masterCheckboxLabel | translate"
-              color="primary">
-            </mat-checkbox>
-          </span>
+          @if (
+            enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length};
+            as selected
+          ) {
+            <span>
+              <mat-checkbox
+                (change)="masterToggle()"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                color="primary">
+              </mat-checkbox>
+            </span>
+          }
         </th>
         <td *matCellDef="let facility" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
@@ -124,12 +128,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && facilities.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && facilities.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && facilities.length === 0" alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FACILITIES' | translate}}
-</perun-web-apps-alert>
+@if (!loading && facilities.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FACILITIES' | translate}}
+  </perun-web-apps-alert>
+}

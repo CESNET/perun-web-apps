@@ -1,5 +1,12 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   AuthzResolverService,
   Facility,
@@ -7,8 +14,9 @@ import {
   RichResource,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveRoleDialogData {
   role: string;
@@ -19,6 +27,19 @@ export interface RemoveRoleDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-remove-role-dialog',
   templateUrl: './remove-role-dialog.component.html',
   styleUrls: ['./remove-role-dialog.component.scss'],

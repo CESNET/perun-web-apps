@@ -1,22 +1,20 @@
 <h1 class="page-subtitle">{{'USER_DETAIL.IDENTITIES.TITLE'|translate}}</h1>
 <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-<button
-  *ngIf="authResolver.isPerunAdmin()"
-  (click)="addIdentity()"
-  class="me-2 action-button"
-  color="accent"
-  mat-flat-button>
-  {{'USER_DETAIL.IDENTITIES.ADD'|translate}}
-</button>
-<button
-  *ngIf="authResolver.isPerunAdmin()"
-  (click)="removeIdentity()"
-  [disabled]="loading || selection.selected.length === 0"
-  class="me-2"
-  color="warn"
-  mat-flat-button>
-  {{'USER_DETAIL.IDENTITIES.REMOVE'|translate}}
-</button>
+@if (authResolver.isPerunAdmin()) {
+  <button (click)="addIdentity()" class="me-2 action-button" color="accent" mat-flat-button>
+    {{'USER_DETAIL.IDENTITIES.ADD'|translate}}
+  </button>
+}
+@if (authResolver.isPerunAdmin()) {
+  <button
+    (click)="removeIdentity()"
+    [disabled]="loading || selection.selected.length === 0"
+    class="me-2"
+    color="warn"
+    mat-flat-button>
+    {{'USER_DETAIL.IDENTITIES.REMOVE'|translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'USER_DETAIL.IDENTITIES.FILTER_PLACEHOLDER'">

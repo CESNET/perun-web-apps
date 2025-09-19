@@ -1,3 +1,12 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Resource, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
@@ -11,8 +20,22 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { Urns } from '@perun-web-apps/perun/urns';
 import { GroupWithStatus } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-resource-groups',
   templateUrl: './resource-groups.component.html',
   styleUrls: ['./resource-groups.component.scss'],

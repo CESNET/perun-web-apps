@@ -27,13 +27,16 @@
             [class.align-elements]="[sponsor.user, vo] | isAuthorized: 'updateSponsorshipValidity_Member_User_LocalDate'"
             mat-cell>
             <span>{{sponsor.validityTo | parseDate}}</span>
-            <button
-              *ngIf="[sponsor.user, vo] | isAuthorized: 'updateSponsorshipValidity_Member_User_LocalDate'"
-              (click)="changeExpiration(sponsor)"
-              matTooltip="{{'DIALOGS.EDIT_MEMBER_SPONSORS.CHANGE_EXPIRATION' | translate}}"
-              mat-icon-button>
-              <mat-icon> today </mat-icon>
-            </button>
+            @if (
+              [sponsor.user, vo] | isAuthorized: 'updateSponsorshipValidity_Member_User_LocalDate'
+            ) {
+              <button
+                (click)="changeExpiration(sponsor)"
+                matTooltip="{{'DIALOGS.EDIT_MEMBER_SPONSORS.CHANGE_EXPIRATION' | translate}}"
+                mat-icon-button>
+                <mat-icon> today </mat-icon>
+              </button>
+            }
           </td>
         </ng-container>
         <ng-container matColumnDef="remove">
@@ -50,15 +53,12 @@
                 [disabled]="!([member] | isAuthorized: 'sponsored-removeSponsor_Member_User_policy') || !([sponsor.user] | isAuthorized: 'sponsor-removeSponsor_Member_User_policy')"
                 matTooltip="{{'DIALOGS.EDIT_MEMBER_SPONSORS.REMOVE_SPONSOR' | translate}}"
                 mat-icon-button>
-                <mat-icon
-                  *ngIf="!sponsorsToRemove.has(sponsor.user.id)"
-                  class="icn-delete"
-                  color="warn"
-                  >clear</mat-icon
-                >
-                <mat-icon *ngIf="sponsorsToRemove.has(sponsor.user.id)"
-                  >settings_backup_restore</mat-icon
-                >
+                @if (!sponsorsToRemove.has(sponsor.user.id)) {
+                  <mat-icon class="icn-delete" color="warn">clear</mat-icon>
+                }
+                @if (sponsorsToRemove.has(sponsor.user.id)) {
+                  <mat-icon>settings_backup_restore</mat-icon>
+                }
               </button>
             </div>
           </td>

@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  NotificatorComponent,
+  PerunFooterComponent,
+  PerunHeaderComponent,
+} from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -8,10 +16,24 @@ import {
   ViewChild,
 } from '@angular/core';
 import { GuiAuthResolver, InitAuthService, StoreService } from '@perun-web-apps/perun/services';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
+import { LoginScreenBaseComponent } from '@perun-web-apps/perun/login';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    PerunFooterComponent,
+    PerunHeaderComponent,
+    MatSidenavModule,
+    RouterModule,
+    TranslateModule,
+    NotificatorComponent,
+    LoginScreenBaseComponent,
+    SideMenuComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

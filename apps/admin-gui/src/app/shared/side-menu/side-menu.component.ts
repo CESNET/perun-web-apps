@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SideMenuService } from '../../core/services/common/side-menu.service';
@@ -6,8 +7,11 @@ import { SideMenuItemService } from './side-menu-item.service';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { rollInOut } from '@perun-web-apps/perun/animations';
 import { ExpandableSectionId } from '@perun-web-apps/perun/models';
+import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
 
 @Component({
+  imports: [CommonModule, SideMenuItemComponent],
+  standalone: true,
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],

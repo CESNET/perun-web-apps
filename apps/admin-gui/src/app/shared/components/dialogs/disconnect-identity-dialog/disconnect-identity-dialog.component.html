@@ -9,12 +9,16 @@
       <div class="fw-bold">
         {{'DIALOGS.DISCONNECT_IDENTITY.ASK' | translate}}
       </div>
-      <perun-web-apps-alert *ngIf="disconnectingLastOwner" alert_type="warn">
-        {{'DIALOGS.DISCONNECT_IDENTITY.WARNING_LAST_USER' | translate}}
-      </perun-web-apps-alert>
-      <perun-web-apps-alert *ngIf="disconnectingSelf" alert_type="warn">
-        {{'DIALOGS.DISCONNECT_IDENTITY.WARNING_DISCONNECT_YOURSELF' | translate}}
-      </perun-web-apps-alert>
+      @if (disconnectingLastOwner) {
+        <perun-web-apps-alert alert_type="warn">
+          {{'DIALOGS.DISCONNECT_IDENTITY.WARNING_LAST_USER' | translate}}
+        </perun-web-apps-alert>
+      }
+      @if (disconnectingSelf) {
+        <perun-web-apps-alert alert_type="warn">
+          {{'DIALOGS.DISCONNECT_IDENTITY.WARNING_DISCONNECT_YOURSELF' | translate}}
+        </perun-web-apps-alert>
+      }
       <table [dataSource]="dataSource" class="w-100" mat-table>
         <ng-container matColumnDef="name">
           <th *matHeaderCellDef mat-header-cell></th>

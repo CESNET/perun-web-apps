@@ -1,3 +1,5 @@
+import { ManagersPageComponent } from '../../../../../shared/components/managers-page/managers-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import {
   FacilitiesManagerService,
@@ -7,6 +9,8 @@ import {
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, ManagersPageComponent],
+  standalone: true,
   selector: 'app-perun-web-apps-facility-settings-managers',
   templateUrl: './facility-settings-managers.component.html',
   styleUrls: ['./facility-settings-managers.component.scss'],

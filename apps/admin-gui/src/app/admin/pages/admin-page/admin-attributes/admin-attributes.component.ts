@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -12,8 +16,22 @@ import { TABLE_ADMIN_ATTRIBUTES } from '@perun-web-apps/config/table-config';
 import { AttributeImportDialogComponent } from '../../../../shared/components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
+import { AttrDefListComponent } from '../../../../shared/components/attr-def-list/attr-def-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    AttrDefListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-admin-attributes',
   templateUrl: './admin-attributes.component.html',
   styleUrls: ['./admin-attributes.component.scss'],

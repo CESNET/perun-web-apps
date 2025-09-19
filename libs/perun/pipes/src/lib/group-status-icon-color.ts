@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'groupStatusIconColor' })
+@Pipe({
+  standalone: true,
+  name: 'groupStatusIconColor',
+})
 export class GroupStatusIconColorPipe implements PipeTransform {
   transform(status: string, membershipType: boolean, isMembersGroup?: boolean): string {
     let color: string;

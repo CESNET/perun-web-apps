@@ -3,6 +3,7 @@ import { parseOrganization } from '@perun-web-apps/perun/utils';
 import { RichMember } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'memberOrganization',
 })
 export class MemberOrganizationPipe implements PipeTransform {

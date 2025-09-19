@@ -1,9 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { MailType } from '@perun-web-apps/perun/openapi';
 import { BehaviorSubject } from 'rxjs';
+import { TagSectionComponent } from '../tag-section/tag-section.component';
+import { CdkScrollable } from '@angular/cdk/overlay';
 
 @Component({
+  imports: [CommonModule, CdkScrollable, TagSectionComponent],
+  standalone: true,
   selector: 'app-tag-bar',
   templateUrl: './tag-bar.component.html',
   styleUrls: ['./tag-bar.component.scss'],

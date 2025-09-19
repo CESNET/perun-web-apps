@@ -1,3 +1,17 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  ParseDatePipe,
+  MemberStatusIconPipe,
+  GroupStatusIconColorPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -21,7 +35,15 @@ import {
   EditFacilityResourceGroupVoDialogComponent,
   EditFacilityResourceGroupVoDialogOptions,
 } from '@perun-web-apps/perun/dialogs';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
+import { GroupExpirationPipe } from '@perun-web-apps/perun/pipes';
+import { FindAttributePipe } from '@perun-web-apps/perun/pipes';
+import { CanManageGroupPipe } from '@perun-web-apps/perun/pipes';
+import { GroupMenuComponent } from '../group-menu/group-menu.component';
 
 interface EnrichedGroupNode extends GroupFlatNode {
   fullName: string;
@@ -29,6 +51,28 @@ interface EnrichedGroupNode extends GroupFlatNode {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    ParseDatePipe,
+    MemberStatusIconPipe,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    TranslateModule,
+    MatTooltip,
+    GroupStatusIconColorPipe,
+    GroupExpirationPipe,
+    FindAttributePipe,
+    CanManageGroupPipe,
+    GroupMenuComponent,
+    CdkVirtualForOf,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualScrollViewport,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-groups-tree',
   templateUrl: './groups-tree.component.html',
   styleUrls: ['./groups-tree.component.scss'],

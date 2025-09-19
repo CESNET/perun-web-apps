@@ -1,24 +1,22 @@
 <div class="user-theme">
   <h1 class="page-subtitle">{{'CATEGORIES_PAGE.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="addAuth"
-    mat-flat-button
-    color="accent"
-    (click)="addCategory()"
-    class="me-2 action-button">
-    {{'CATEGORIES_PAGE.CREATE' | translate}}
-  </button>
+  @if (addAuth) {
+    <button mat-flat-button color="accent" (click)="addCategory()" class="me-2 action-button">
+      {{'CATEGORIES_PAGE.CREATE' | translate}}
+    </button>
+  }
 
-  <button
-    mat-flat-button
-    color="warn"
-    class="me-2"
-    *ngIf="removeAuth"
-    [disabled]="!selected.selected.length || loading"
-    (click)="removeCategory()">
-    {{'CATEGORIES_PAGE.REMOVE' | translate}}
-  </button>
+  @if (removeAuth) {
+    <button
+      mat-flat-button
+      color="warn"
+      class="me-2"
+      [disabled]="!selected.selected.length || loading"
+      (click)="removeCategory()">
+      {{'CATEGORIES_PAGE.REMOVE' | translate}}
+    </button>
+  }
 
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"

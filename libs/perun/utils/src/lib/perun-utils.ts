@@ -875,7 +875,7 @@ export function isMemberIndirectString(member: RichMember): string {
   }
   const attr = member.memberAttributes?.find((obj) => obj.friendlyName === 'isLifecycleAlterable');
   if (attr) {
-    return !attr.value ? 'UNALTERABLE' : 'DIRECT' ?? 'DIRECT';
+    return !attr.value ? 'UNALTERABLE' : 'DIRECT';
   }
   return 'UNKNOWN';
 }

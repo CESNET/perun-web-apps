@@ -1,6 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { StoreService } from '@perun-web-apps/perun/services';
 
 interface Format {
@@ -14,6 +21,18 @@ export interface InputData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-export-table-dialog',
   templateUrl: './export-table-dialog.component.html',
   styleUrls: ['./export-table-dialog.component.scss'],

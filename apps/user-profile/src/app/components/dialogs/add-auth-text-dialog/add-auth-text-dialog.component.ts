@@ -1,6 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { StoreService } from '@perun-web-apps/perun/services';
 import words from './words.json';
 
@@ -10,6 +18,19 @@ export interface AddAuthTextDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-add-auth-text-dialog',
   templateUrl: './add-auth-text-dialog.component.html',
   styleUrls: ['./add-auth-text-dialog.component.scss'],

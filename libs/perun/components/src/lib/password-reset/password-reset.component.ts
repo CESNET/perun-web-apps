@@ -1,7 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSortModule } from '@angular/material/sort';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, StoreService } from '@perun-web-apps/perun/services';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ChangePasswordDialogComponent } from '@perun-web-apps/perun/dialogs';
@@ -9,6 +15,16 @@ import { PasswordResetDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-password-reset',
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.scss'],

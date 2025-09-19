@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'selectedRoleFilterValues' })
+@Pipe({
+  standalone: true,
+  name: 'selectedRoleFilterValues',
+})
 export class SelectedRoleFilterValuesPipe implements PipeTransform {
   transform(selectedValues: string[], totalCount: number): string {
     switch (selectedValues.length) {

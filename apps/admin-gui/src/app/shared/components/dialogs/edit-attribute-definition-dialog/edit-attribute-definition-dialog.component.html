@@ -3,115 +3,119 @@
 </ng-template>
 <div class="admin-theme position-relative">
   <div *perunWebAppsLoader="loading; indicator: spinner">
-    <div *ngIf="!showKeys">
-      <h1 mat-dialog-title>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.TITLE' | translate}}</h1>
-      <div mat-dialog-content>
-        <form [formGroup]="attributeControl" class="fields-container">
-          <mat-form-field>
-            <mat-label>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.DISPLAY_NAME' | translate}}</mat-label>
-            <input matInput data-cy="display-name-input" formControlName="name" required />
-            <mat-error *ngIf="attributeControl.hasError('spaceName', 'name')">
-              {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-            </mat-error>
-            <mat-error *ngIf="attributeControl.hasError('required', 'name')">
-              {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.DESCRIPTION' | translate}}</mat-label>
-            <textarea
-              matInput
-              formControlName="description"
-              cdkTextareaAutosize
-              required></textarea>
-            <mat-error *ngIf="attributeControl.hasError('required', 'description')">
-              {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
-            </mat-error>
-          </mat-form-field>
-        </form>
-
-        <label class="urn-name">
-          {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN' | translate}}
-        </label>
-        <div class="urn-row">
-          {{urn}}
-          <mat-icon
-            class="copy-urn"
-            matSuffix
-            (click)="copyUrn()"
-            matTooltip="{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN_TOOLTIP' | translate}}"
-            >content_copy</mat-icon
-          >
+    @if (!showKeys) {
+      <div>
+        <h1 mat-dialog-title>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.TITLE' | translate}}</h1>
+        <div mat-dialog-content>
+          <form [formGroup]="attributeControl" class="fields-container">
+            <mat-form-field>
+              <mat-label
+                >{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.DISPLAY_NAME' | translate}}</mat-label
+              >
+              <input matInput data-cy="display-name-input" formControlName="name" required />
+              @if (attributeControl.hasError('spaceName', 'name')) {
+                <mat-error>
+                  {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+                </mat-error>
+              }
+              @if (attributeControl.hasError('required', 'name')) {
+                <mat-error>
+                  {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.DESCRIPTION' | translate}}</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                cdkTextareaAutosize
+                required></textarea>
+              @if (attributeControl.hasError('required', 'description')) {
+                <mat-error>
+                  {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.ERROR_FIELD_EMPTY' | translate}}
+                </mat-error>
+              }
+            </mat-form-field>
+          </form>
+          <label class="urn-name">
+            {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN' | translate}}
+          </label>
+          <div class="urn-row">
+            {{urn}}
+            <mat-icon
+              class="copy-urn"
+              matSuffix
+              (click)="copyUrn()"
+              matTooltip="{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN_TOOLTIP' | translate}}"
+              >content_copy</mat-icon
+            >
+          </div>
+          <perun-web-apps-attribute-unique-checkbox [attDef]="attDef">
+          </perun-web-apps-attribute-unique-checkbox>
+          <perun-web-apps-attribute-critical-operations-checkboxes
+            [attDef]="attDef"
+            [readOperation]="initReadOperations"
+            [readGlobal]="initReadGlobal"
+            [writeOperation]="initWriteOperations"
+            [writeGlobal]="initWriteGlobal"
+            (readOperationChanged)="finalReadOperations=$event"
+            (readGlobalChanged)="finalReadGlobal=$event"
+            (writeOperationChanged)="finalWriteOperations=$event"
+            (writeGlobalChanged)="finalWriteGlobal=$event">
+          </perun-web-apps-attribute-critical-operations-checkboxes>
+          <perun-web-apps-attribute-rights-tab-group
+            [attDef]="attDef"
+            [collections]="collections$ | async">
+          </perun-web-apps-attribute-rights-tab-group>
+          <mat-accordion>
+            <mat-expansion-panel class="mt-4 mb-4">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SERVICES' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-services-list
+                [loading]="loading"
+                [disableRouting]="true"
+                [displayedColumns]="['id', 'name', 'enabled', 'script']"
+                [services]="this.services$ | async">
+              </app-services-list>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
-
-        <perun-web-apps-attribute-unique-checkbox [attDef]="attDef">
-        </perun-web-apps-attribute-unique-checkbox>
-
-        <perun-web-apps-attribute-critical-operations-checkboxes
-          [attDef]="attDef"
-          [readOperation]="initReadOperations"
-          [readGlobal]="initReadGlobal"
-          [writeOperation]="initWriteOperations"
-          [writeGlobal]="initWriteGlobal"
-          (readOperationChanged)="finalReadOperations=$event"
-          (readGlobalChanged)="finalReadGlobal=$event"
-          (writeOperationChanged)="finalWriteOperations=$event"
-          (writeGlobalChanged)="finalWriteGlobal=$event">
-        </perun-web-apps-attribute-critical-operations-checkboxes>
-
-        <perun-web-apps-attribute-rights-tab-group
-          [attDef]="attDef"
-          [collections]="collections$ | async">
-        </perun-web-apps-attribute-rights-tab-group>
-
-        <mat-accordion>
-          <mat-expansion-panel class="mt-4 mb-4">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SERVICES' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-services-list
-              [loading]="loading"
-              [disableRouting]="true"
-              [displayedColumns]="['id', 'name', 'enabled', 'script']"
-              [services]="this.services$ | async">
-            </app-services-list>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <div mat-dialog-actions>
+          @if (attDef?.entity === 'entityless') {
+            <button (click)="switchShowKeys()" mat-stroked-button>
+              {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SHOW_KEYS' | translate}}
+            </button>
+          }
+          <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+            {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.CANCEL' | translate}}
+          </button>
+          <button (click)="onCopy()" class="ms-2" mat-stroked-button>
+            {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FOR_IMPORT' | translate}}
+          </button>
+          <button
+            class="ms-2"
+            color="accent"
+            mat-flat-button
+            (click)="onSubmit()"
+            [disabled]="loading || attributeControl.invalid">
+            {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.CONFIRM' | translate}}
+          </button>
+        </div>
       </div>
+    }
 
-      <div mat-dialog-actions>
-        <button
-          *ngIf="attDef?.entity === 'entityless'"
-          (click)="switchShowKeys()"
-          mat-stroked-button>
-          {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.SHOW_KEYS' | translate}}
-        </button>
-        <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
-          {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.CANCEL' | translate}}
-        </button>
-        <button (click)="onCopy()" class="ms-2" mat-stroked-button>
-          {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.COPY_FOR_IMPORT' | translate}}
-        </button>
-        <button
-          class="ms-2"
-          color="accent"
-          mat-flat-button
-          (click)="onSubmit()"
-          [disabled]="loading || attributeControl.invalid">
-          {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.CONFIRM' | translate}}
-        </button>
+    @if (showKeys) {
+      <div>
+        <app-entityless-attribute-keys-list
+          (switchView)="switchShowKeys()"
+          [attDef]="attDef"
+          [tableId]="tableId">
+        </app-entityless-attribute-keys-list>
       </div>
-    </div>
-
-    <div *ngIf="showKeys">
-      <app-entityless-attribute-keys-list
-        (switchView)="switchShowKeys()"
-        [attDef]="attDef"
-        [tableId]="tableId">
-      </app-entityless-attribute-keys-list>
-    </div>
+    }
   </div>
 </div>

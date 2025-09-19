@@ -1,14 +1,29 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { AuditEvent, AuditMessage } from '@perun-web-apps/perun/openapi';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { ParseEventNamePipe } from '../../../pipes/parse-event-name.pipe';
 
 export interface AuditMessageDetailDialogData {
   message: AuditMessage;
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule,
+    TranslateModule,
+    ParseEventNamePipe,
+  ],
+  standalone: true,
   selector: 'app-audit-message-detail-dialog',
   templateUrl: './audit-message-detail-dialog.component.html',
   styleUrls: ['./audit-message-detail-dialog.component.scss'],

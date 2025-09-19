@@ -1,7 +1,24 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
 import { AttributeAction, AttributePolicyCollection } from '@perun-web-apps/perun/openapi';
+import { AttributeRightsCollectionComponent } from '../attribute-rights-collection/attribute-rights-collection.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    UiAlertsModule,
+    TranslateModule,
+    MatTooltip,
+    AttributeRightsCollectionComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attribute-rights-tab',
   templateUrl: './attribute-rights-tab.component.html',
   styleUrls: ['./attribute-rights-tab.component.scss'],

@@ -22,12 +22,13 @@
       </mat-form-field>
     </div>
 
-    <perun-web-apps-table-options
-      (exportDisplayedData)="exportDisplayedData.emit($event)"
-      (exportAllData)="exportAllData.emit($event)"
-      [dataLength]="dataLength"
-      [displayedLength]="(this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) < this.pageSize ? (this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) : this.pageSize "
-      *ngIf="!hideExport"></perun-web-apps-table-options>
+    @if (!hideExport) {
+      <perun-web-apps-table-options
+        (exportDisplayedData)="exportDisplayedData.emit($event)"
+        (exportAllData)="exportAllData.emit($event)"
+        [dataLength]="dataLength"
+        [displayedLength]="(this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) < this.pageSize ? (this.paginator.length - this.paginator.pageSize * this.paginator.pageIndex) : this.pageSize "></perun-web-apps-table-options>
+    }
   </div>
   <div class="overflow-auto border-top table-height" #table>
     <ng-content></ng-content>

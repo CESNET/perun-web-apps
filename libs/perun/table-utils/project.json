@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/perun/table-utils/src",
   "projectType": "library",
+  "tags": [],
   "generators": {},
   "targets": {
     "lint": {
@@ -16,6 +17,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/perun/table-utils"]
     }
-  },
-  "tags": []
+  }
 }

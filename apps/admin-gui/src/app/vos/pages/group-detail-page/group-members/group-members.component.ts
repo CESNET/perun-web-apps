@@ -1,3 +1,18 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  MembersListComponent,
+} from '@perun-web-apps/perun/components';
+import { MemberStatusPipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -30,7 +45,7 @@ import {
   isGroupSynchronized,
 } from '@perun-web-apps/perun/utils';
 import { InviteMemberDialogComponent } from '../../../../shared/components/dialogs/invite-member-dialog/invite-member-dialog.component';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { GroupAddMemberDialogComponent } from '../../../components/group-add-member-dialog/group-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
@@ -43,8 +58,33 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvitePreapprovedMemberDialogComponent } from '../../../../shared/components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
 import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
+import { GroupMembersActionButtonDisabledPipe } from '@perun-web-apps/perun/pipes';
+import { GroupMembersActionButtonDisabledTooltipPipe } from '@perun-web-apps/perun/pipes';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    MemberStatusPipe,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MembersListComponent,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+    GroupMembersActionButtonDisabledPipe,
+    GroupMembersActionButtonDisabledTooltipPipe,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-group-members',
   templateUrl: './group-members.component.html',
   styleUrls: ['./group-members.component.scss'],

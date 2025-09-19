@@ -1,3 +1,8 @@
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FacilitiesManagerService,
@@ -11,17 +16,31 @@ import {
   ServicesManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { UntypedFormControl } from '@angular/forms';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { ServiceConfiguratorComponent } from '../../../../shared/components/service-configurator/service-configurator.component';
 
 export type ServiceSelectValue = 'ALL' | 'NOT_SELECTED';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    TranslateModule,
+    ServiceConfiguratorComponent,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'app-facility-service-config',
   templateUrl: './facility-service-config.component.html',
   styleUrls: ['./facility-service-config.component.scss'],

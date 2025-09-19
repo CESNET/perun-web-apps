@@ -1,3 +1,7 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
   AuthzResolverService,
@@ -9,8 +13,26 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { VosListComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { GroupsListComponent, ResourcesListComponent } from '@perun-web-apps/perun/components';
+import { FacilitiesListComponent } from '@perun-web-apps/perun/components';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    TranslateModule,
+    MatTooltip,
+    LoadingTableComponent,
+    VosListComponent,
+    LoaderDirective,
+    GroupsListComponent,
+    ResourcesListComponent,
+    FacilitiesListComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-dashboard-card',
   templateUrl: './dashboard-card.component.html',
   styleUrls: ['./dashboard-card.component.css'],

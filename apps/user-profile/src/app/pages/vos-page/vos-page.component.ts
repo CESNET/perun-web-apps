@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   MembersManagerService,
@@ -6,9 +10,24 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { Membership } from '../../components/membership-list/membership-list.component';
+import {
+  Membership,
+  MembershipListComponent,
+} from '../../components/membership-list/membership-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    TranslateModule,
+    MembershipListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-vos-page',
   templateUrl: './vos-page.component.html',
   styleUrls: ['./vos-page.component.scss'],

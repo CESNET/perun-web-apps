@@ -1,5 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 interface BreadcrumbItem {
@@ -8,6 +10,8 @@ interface BreadcrumbItem {
 }
 
 @Component({
+  imports: [CommonModule, RouterModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],

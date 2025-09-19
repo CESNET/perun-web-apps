@@ -1,493 +1,543 @@
 <h1 class="page-subtitle">
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_PAGE.TITLE' | translate}}
 </h1>
-<mat-spinner *ngIf="loading" class="ms-auto me-auto"> </mat-spinner>
-<div *ngIf="!loading">
-  <div class="w-100 mb-2">
-    <button (click)="switchToInitial()" *ngIf="!initialPage" class="me-2" mat-stroked-button>
-      <i class="material-icons">arrow_right_alt</i>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_PAGE.SWITCH_INITIAL' | translate}}
-    </button>
-    <button (click)="switchToExtension()" *ngIf="initialPage" class="me-2" mat-stroked-button>
-      <i class="material-icons">cached</i>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_PAGE.SWITCH_EXTENSION' | translate}}
-    </button>
-
-    <mat-form-field>
-      <mat-label>{{'DIALOGS.PASSWORD_RESET_REQUEST.LANGUAGE'|translate}}</mat-label>
-      <mat-select [(value)]="currentLanguage">
-        <mat-option *ngFor="let lang of languages" [value]="lang">
-          {{'SHARED_LIB.LANGUAGES.' + lang | uppercase | translate}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="card mb-4 p-5">
-    <div *ngFor="let applicationFormItem of applicationFormItems">
-      <div *ngIf="isValid(applicationFormItem)" class="mb-2">
-        <div
-          *ngIf="(applicationFormItem.type === 'TEXTFIELD' ||
-                                   applicationFormItem.type === 'VALIDATED_EMAIL' ||
-                                   applicationFormItem.type === 'USERNAME') &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <input
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                class="w-100"
-                type="text" />
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'PASSWORD' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <input
-                class="mb-1 w-100"
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                type="text" /><br />
-              <input
-                class="w-100"
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                type="text" />
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'RADIO' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <form class="w-50">
-              <div *ngFor="let item of getLocalizedOptions(applicationFormItem)">
-                <input
-                  name="temp"
-                  [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                  type="radio" />
-                {{item}}<br />
-              </div>
-              <input
-                type="reset"
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                value="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_SELECTION' | translate}}" /><!--tlacitko-->
-            </form>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type ==='HEADING' && applicationFormItem.hidden !== 'ALWAYS'">
-          <span [innerHTML]="getLocalizedLabel(applicationFormItem)"></span>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'HTML_COMMENT' && applicationFormItem.hidden !== 'ALWAYS'">
-          <span [innerHTML]="getLocalizedLabel(applicationFormItem) | sanitizeHtml"></span>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'SELECTIONBOX' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <select [disabled]="applicationFormItem.disabled === 'ALWAYS'" class="w-100">
-                <option *ngFor="let item of getLocalizedOptions(applicationFormItem)">
-                  {{item}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'TEXTAREA' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <textarea
-              [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-              class="w-50"></textarea>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'COMBOBOX' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <select
-                [(ngModel)]="mapForCombobox[applicationFormItem.id]"
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                class="w-100">
-                <option selected value="true">
-                  {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.OTHER_VALUE' | translate}}
-                </option>
-                <option *ngFor="let item of getLocalizedOptions(applicationFormItem)" value="false">
-                  {{item}}
-                </option>
-              </select>
-              <div *ngIf="mapForCombobox[applicationFormItem.id] === 'true'" class="w-100">
-                <form>
-                  <input type="text" />
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'CHECKBOX' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span [innerHTML]="getLocalizedLabel(applicationFormItem)" class="w-50"></span>
-            <div class="w-50">
-              <form class="w-100">
-                <div *ngFor="let item of getLocalizedOptions(applicationFormItem)">
-                  <input [disabled]="applicationFormItem.disabled === 'ALWAYS'" type="checkbox" />
-                  <span [innerHTML]="item"> </span>
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
+@if (!loading) {
+  <div>
+    <div class="w-100 mb-2">
+      @if (!initialPage) {
+        <button (click)="switchToInitial()" class="me-2" mat-stroked-button>
+          <i class="material-icons">arrow_right_alt</i>
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_PAGE.SWITCH_INITIAL' | translate}}
+        </button>
+      }
+      @if (initialPage) {
+        <button (click)="switchToExtension()" class="me-2" mat-stroked-button>
+          <i class="material-icons">cached</i>
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_PAGE.SWITCH_EXTENSION' | translate}}
+        </button>
+      }
+      <mat-form-field>
+        <mat-label>{{'DIALOGS.PASSWORD_RESET_REQUEST.LANGUAGE'|translate}}</mat-label>
+        <mat-select [(value)]="currentLanguage">
+          @for (lang of languages; track lang) {
+            <mat-option [value]="lang">
+              {{'SHARED_LIB.LANGUAGES.' + lang | uppercase | translate}}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="card mb-4 p-5">
+      @for (applicationFormItem of applicationFormItems; track applicationFormItem) {
+        <div>
+          @if (isValid(applicationFormItem)) {
+            <div class="mb-2">
+              @if (
+                (applicationFormItem.type === 'TEXTFIELD' ||
+                applicationFormItem.type === 'VALIDATED_EMAIL' ||
+                applicationFormItem.type === 'USERNAME') &&
+                applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <input
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        class="w-100"
+                        type="text" />
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
                 </div>
-              </form>
+              }
+              @if (
+                applicationFormItem.type === 'PASSWORD' &&
+                    applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <input
+                        class="mb-1 w-100"
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        type="text" /><br />
+                      <input
+                        class="w-100"
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        type="text" />
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'RADIO' &&
+                          applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <form class="w-50">
+                      @for (item of getLocalizedOptions(applicationFormItem); track item) {
+                        <div>
+                          <input
+                            name="temp"
+                            [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                            type="radio" />
+                          {{item}}<br />
+                        </div>
+                      }
+                      <input
+                        type="reset"
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        value="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_SELECTION' | translate}}" /><!--tlacitko-->
+                    </form>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type ==='HEADING' && applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div>
+                  <span [innerHTML]="getLocalizedLabel(applicationFormItem)"></span>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'HTML_COMMENT' && applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div>
+                  <span [innerHTML]="getLocalizedLabel(applicationFormItem) | sanitizeHtml"></span>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'SELECTIONBOX' &&
+                              applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <select [disabled]="applicationFormItem.disabled === 'ALWAYS'" class="w-100">
+                        @for (item of getLocalizedOptions(applicationFormItem); track item) {
+                          <option>
+                            {{item}}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'TEXTAREA' &&
+                                  applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <textarea
+                      [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                      class="w-50"></textarea>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'COMBOBOX' &&
+                                      applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <select
+                        [(ngModel)]="mapForCombobox[applicationFormItem.id]"
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        class="w-100">
+                        <option selected value="true">
+                          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.OTHER_VALUE' | translate}}
+                        </option>
+                        @for (item of getLocalizedOptions(applicationFormItem); track item) {
+                          <option value="false">
+                            {{item}}
+                          </option>
+                        }
+                      </select>
+                      @if (mapForCombobox[applicationFormItem.id] === 'true') {
+                        <div class="w-100">
+                          <form>
+                            <input type="text" />
+                          </form>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'CHECKBOX' &&
+                                          applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span [innerHTML]="getLocalizedLabel(applicationFormItem)" class="w-50"></span>
+                    <div class="w-50">
+                      <form class="w-100">
+                        @for (item of getLocalizedOptions(applicationFormItem); track item) {
+                          <div>
+                            <input
+                              [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                              type="checkbox" />
+                            <span [innerHTML]="item"> </span>
+                          </div>
+                        }
+                      </form>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' &&
+                                              applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <form class="w-100">
+                        <input
+                          [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                          type="checkbox" />
+                        example group1 <br />
+                        <input
+                          [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                          type="checkbox" />
+                        example group2 <br />
+                        <input
+                          [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                          type="checkbox" />
+                        example group3
+                      </form>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'SUBMIT_BUTTON' &&
+                                                  applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <button
+                    [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                    color="accent"
+                    mat-flat-button>
+                    {{getLocalizedLabel(applicationFormItem)}}
+                  </button>
+                  @if (applicationFormItem.disabled !== 'NEVER') {
+                    <mat-icon
+                      class="pointer left"
+                      [matTooltip]="disabledTooltip(applicationFormItem)"
+                      >lock</mat-icon
+                    >
+                  }
+                  @if (applicationFormItem.hidden !== 'NEVER') {
+                    <mat-icon class="pointer left" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                      >visibility_off</mat-icon
+                    >
+                  }
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'AUTO_SUBMIT_BUTTON' &&
+                                                      applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div>
+                  <button
+                    [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                    color="accent"
+                    mat-flat-button>
+                    {{getLocalizedLabel(applicationFormItem)}}
+                  </button>
+                  @if (applicationFormItem.disabled !== 'NEVER') {
+                    <mat-icon
+                      class="pointer left"
+                      [matTooltip]="disabledTooltip(applicationFormItem)"
+                      >lock</mat-icon
+                    >
+                  }
+                  @if (applicationFormItem.hidden !== 'NEVER') {
+                    <mat-icon class="pointer left" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                      >visibility_off</mat-icon
+                    >
+                  }
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'TIMEZONE' &&
+                                                          applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div class="d-flex">
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <select
+                        [disabled]="applicationFormItem.disabled === 'ALWAYS'"
+                        id="timezone-offset"
+                        class="w-100"
+                        name="timezone_offset">
+                        <option selected="selected" value="-12:00">
+                          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NOT_SELECTED' | translate}}
+                        </option>
+                        <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
+                        <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
+                        <option value="-10:00">(GMT -10:00) Hawaii</option>
+                        <option value="-09:50">(GMT -9:30) Taiohae</option>
+                        <option value="-09:00">(GMT -9:00) Alaska</option>
+                        <option value="-08:00">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                        <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                        <option value="-06:00">
+                          (GMT -6:00) Central Time (US &amp; Canada), Mexico City
+                        </option>
+                        <option value="-05:00">
+                          (GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima
+                        </option>
+                        <option value="-04:50">(GMT -4:30) Caracas</option>
+                        <option value="-04:00">
+                          (GMT -4:00) Atlantic Time (Canada), Caracas, La Paz
+                        </option>
+                        <option value="-03:50">(GMT -3:30) Newfoundland</option>
+                        <option value="-03:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                        <option value="-02:00">(GMT -2:00) Mid-Atlantic</option>
+                        <option value="-01:00">(GMT -1:00) Azores, Cape Verde Islands</option>
+                        <option value="+00:00">
+                          (GMT) Western Europe Time, London, Lisbon, Casablanca
+                        </option>
+                        <option value="+01:00">
+                          (GMT +1:00) Brussels, Copenhagen, Madrid, Paris
+                        </option>
+                        <option value="+02:00">(GMT +2:00) Kaliningrad, South Africa</option>
+                        <option value="+03:00">
+                          (GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg
+                        </option>
+                        <option value="+03:50">(GMT +3:30) Tehran</option>
+                        <option value="+04:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                        <option value="+04:50">(GMT +4:30) Kabul</option>
+                        <option value="+05:00">
+                          (GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent
+                        </option>
+                        <option value="+05:50">
+                          (GMT +5:30) Bombay, Calcutta, Madras, New Delhi
+                        </option>
+                        <option value="+05:75">(GMT +5:45) Kathmandu, Pokhara</option>
+                        <option value="+06:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                        <option value="+06:50">(GMT +6:30) Yangon, Mandalay</option>
+                        <option value="+07:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                        <option value="+08:00">
+                          (GMT +8:00) Beijing, Perth, Singapore, Hong Kong
+                        </option>
+                        <option value="+08:75">(GMT +8:45) Eucla</option>
+                        <option value="+09:00">
+                          (GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk
+                        </option>
+                        <option value="+09:50">(GMT +9:30) Adelaide, Darwin</option>
+                        <option value="+10:00">
+                          (GMT +10:00) Eastern Australia, Guam, Vladivostok
+                        </option>
+                        <option value="+10:50">(GMT +10:30) Lord Howe Island</option>
+                        <option value="+11:00">
+                          (GMT +11:00) Magadan, Solomon Islands, New Caledonia
+                        </option>
+                        <option value="+11:50">(GMT +11:30) Norfolk Island</option>
+                        <option value="+12:00">
+                          (GMT +12:00) Auckland, Wellington, Fiji, Kamchatka
+                        </option>
+                        <option value="+12:75">(GMT +12:45) Chatham Islands</option>
+                        <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
+                        <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'LIST_INPUT_BOX' &&
+                                                              applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div>
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <perun-web-apps-attribute-value-list
+                        [attribute]="{id: 0, beanName: 'Attribute', namespace: '', value: ['Example 1', 'Example 2']}">
+                      </perun-web-apps-attribute-value-list>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
+              @if (
+                applicationFormItem.type === 'MAP_INPUT_BOX' &&
+                                                                  applicationFormItem.hidden !== 'ALWAYS'
+              ) {
+                <div>
+                  <div class="w-50 d-flex">
+                    <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
+                    <div class="w-50">
+                      <perun-web-apps-attribute-value-map
+                        [attribute]="{id: 0, beanName: 'Attribute', namespace: '', value: {key1: 'value 1', key2: 'value 2'}}">
+                      </perun-web-apps-attribute-value-map>
+                    </div>
+                  </div>
+                  <div class="w-50 d-flex left">
+                    @if (applicationFormItem.disabled !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="disabledTooltip(applicationFormItem)"
+                        >lock</mat-icon
+                      >
+                    }
+                    @if (applicationFormItem.hidden !== 'NEVER') {
+                      <mat-icon class="pointer" [matTooltip]="hiddenTooltip(applicationFormItem)"
+                        >visibility_off</mat-icon
+                      >
+                    }
+                    <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
+                  </div>
+                </div>
+              }
             </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
+          }
         </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'EMBEDDED_GROUP_APPLICATION' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <form class="w-100">
-                <input [disabled]="applicationFormItem.disabled === 'ALWAYS'" type="checkbox" />
-                example group1 <br />
-                <input [disabled]="applicationFormItem.disabled === 'ALWAYS'" type="checkbox" />
-                example group2 <br />
-                <input [disabled]="applicationFormItem.disabled === 'ALWAYS'" type="checkbox" />
-                example group3
-              </form>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'SUBMIT_BUTTON' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <button
-            [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-            color="accent"
-            mat-flat-button>
-            {{getLocalizedLabel(applicationFormItem)}}
-          </button>
-          <mat-icon
-            class="pointer left"
-            *ngIf="applicationFormItem.disabled !== 'NEVER'"
-            [matTooltip]="disabledTooltip(applicationFormItem)"
-            >lock</mat-icon
-          >
-          <mat-icon
-            class="pointer left"
-            *ngIf="applicationFormItem.hidden !== 'NEVER'"
-            [matTooltip]="hiddenTooltip(applicationFormItem)"
-            >visibility_off</mat-icon
-          >
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'AUTO_SUBMIT_BUTTON' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'">
-          <button
-            [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-            color="accent"
-            mat-flat-button>
-            {{getLocalizedLabel(applicationFormItem)}}
-          </button>
-          <mat-icon
-            class="pointer left"
-            *ngIf="applicationFormItem.disabled !== 'NEVER'"
-            [matTooltip]="disabledTooltip(applicationFormItem)"
-            >lock</mat-icon
-          >
-          <mat-icon
-            class="pointer left"
-            *ngIf="applicationFormItem.hidden !== 'NEVER'"
-            [matTooltip]="hiddenTooltip(applicationFormItem)"
-            >visibility_off</mat-icon
-          >
-        </div>
-
-        <div
-          *ngIf="applicationFormItem.type === 'TIMEZONE' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'"
-          class="d-flex">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <select
-                [disabled]="applicationFormItem.disabled === 'ALWAYS'"
-                id="timezone-offset"
-                class="w-100"
-                name="timezone_offset">
-                <option selected="selected" value="-12:00">
-                  {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NOT_SELECTED' | translate}}
-                </option>
-                <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
-                <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
-                <option value="-10:00">(GMT -10:00) Hawaii</option>
-                <option value="-09:50">(GMT -9:30) Taiohae</option>
-                <option value="-09:00">(GMT -9:00) Alaska</option>
-                <option value="-08:00">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
-                <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
-                <option value="-06:00">
-                  (GMT -6:00) Central Time (US &amp; Canada), Mexico City
-                </option>
-                <option value="-05:00">
-                  (GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima
-                </option>
-                <option value="-04:50">(GMT -4:30) Caracas</option>
-                <option value="-04:00">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
-                <option value="-03:50">(GMT -3:30) Newfoundland</option>
-                <option value="-03:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
-                <option value="-02:00">(GMT -2:00) Mid-Atlantic</option>
-                <option value="-01:00">(GMT -1:00) Azores, Cape Verde Islands</option>
-                <option value="+00:00">
-                  (GMT) Western Europe Time, London, Lisbon, Casablanca
-                </option>
-                <option value="+01:00">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
-                <option value="+02:00">(GMT +2:00) Kaliningrad, South Africa</option>
-                <option value="+03:00">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
-                <option value="+03:50">(GMT +3:30) Tehran</option>
-                <option value="+04:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
-                <option value="+04:50">(GMT +4:30) Kabul</option>
-                <option value="+05:00">
-                  (GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent
-                </option>
-                <option value="+05:50">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
-                <option value="+05:75">(GMT +5:45) Kathmandu, Pokhara</option>
-                <option value="+06:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
-                <option value="+06:50">(GMT +6:30) Yangon, Mandalay</option>
-                <option value="+07:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
-                <option value="+08:00">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
-                <option value="+08:75">(GMT +8:45) Eucla</option>
-                <option value="+09:00">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
-                <option value="+09:50">(GMT +9:30) Adelaide, Darwin</option>
-                <option value="+10:00">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
-                <option value="+10:50">(GMT +10:30) Lord Howe Island</option>
-                <option value="+11:00">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
-                <option value="+11:50">(GMT +11:30) Norfolk Island</option>
-                <option value="+12:00">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
-                <option value="+12:75">(GMT +12:45) Chatham Islands</option>
-                <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
-                <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
-              </select>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-        <div
-          *ngIf="applicationFormItem.type === 'LIST_INPUT_BOX' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <perun-web-apps-attribute-value-list
-                [attribute]="{id: 0, beanName: 'Attribute', namespace: '', value: ['Example 1', 'Example 2']}">
-              </perun-web-apps-attribute-value-list>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-        <div
-          *ngIf="applicationFormItem.type === 'MAP_INPUT_BOX' &&
-                                   applicationFormItem.hidden !== 'ALWAYS'">
-          <div class="w-50 d-flex">
-            <span class="w-50">{{getLocalizedLabel(applicationFormItem)}}</span>
-            <div class="w-50">
-              <perun-web-apps-attribute-value-map
-                [attribute]="{id: 0, beanName: 'Attribute', namespace: '', value: {key1: 'value 1', key2: 'value 2'}}">
-              </perun-web-apps-attribute-value-map>
-            </div>
-          </div>
-          <div class="w-50 d-flex left">
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.disabled !== 'NEVER'"
-              [matTooltip]="disabledTooltip(applicationFormItem)"
-              >lock</mat-icon
-            >
-            <mat-icon
-              class="pointer"
-              *ngIf="applicationFormItem.hidden !== 'NEVER'"
-              [matTooltip]="hiddenTooltip(applicationFormItem)"
-              >visibility_off</mat-icon
-            >
-            <span class="ms-2">{{getLocalizedHint(applicationFormItem)}}</span>
-          </div>
-        </div>
-      </div>
+      }
     </div>
   </div>
-</div>
+}

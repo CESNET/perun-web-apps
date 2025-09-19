@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  UserExtSourcesListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   RegistrarManagerService,
@@ -13,8 +21,21 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveUserExtSourceDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { TABLE_USER_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    UserExtSourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-identities',
   templateUrl: './user-identities.component.html',
   styleUrls: ['./user-identities.component.scss'],

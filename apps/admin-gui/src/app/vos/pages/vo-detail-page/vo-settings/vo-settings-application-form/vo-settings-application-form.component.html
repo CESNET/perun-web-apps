@@ -1,37 +1,41 @@
 <h1 class="page-subtitle">
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
 </h1>
-<mat-spinner *ngIf="loadingHeader" class="ms-auto me-auto"> </mat-spinner>
+@if (loadingHeader) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
 <div>
-  <div *ngIf="!loadingHeader" class="d-flex w-75">
-    <div>
-      <div class="fw-bold">
-        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
-        {{applicationForm.moduleClassNames}}
-      </div>
+  @if (!loadingHeader) {
+    <div class="d-flex w-75">
       <div>
-        <span
-          class="fw-bold"
-          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
-        >:
-
-        <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
-        {{applicationForm.automaticApproval ?
-        ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
-        ,
-
-        <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
-        {{applicationForm.automaticApprovalExtension ?
-        ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
-        <button *ngIf="editAuth" (click)="settings()" class="ms-3 action-button" mat-stroked-button>
-          <i class="material-icons align-middle">edit</i>
-          <span class="align-middle">
-            {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
-          </span>
-        </button>
+        <div class="fw-bold">
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
+          {{applicationForm.moduleClassNames}}
+        </div>
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
+          >:
+          <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
+          {{applicationForm.automaticApproval ?
+            ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+          ,
+          <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
+          {{applicationForm.automaticApprovalExtension ?
+            ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+          @if (editAuth) {
+            <button (click)="settings()" class="ms-3 action-button" mat-stroked-button>
+              <i class="material-icons align-middle">edit</i>
+              <span class="align-middle">
+                {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
+              </span>
+            </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  }
 
   <mat-divider class="mb-2 mt-2"></mat-divider>
 
@@ -39,35 +43,39 @@
     <perun-web-apps-refresh-button
       (refresh)="this.updateFormItems()"></perun-web-apps-refresh-button>
 
-    <button
-      *ngIf="editAuth"
-      [disabled]="loadingTable"
-      (click)="add()"
-      color="accent"
-      class="me-2 action-button"
-      data-cy="add-form-item"
-      mat-flat-button>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
-    </button>
+    @if (editAuth) {
+      <button
+        [disabled]="loadingTable"
+        (click)="add()"
+        color="accent"
+        class="me-2 action-button"
+        data-cy="add-form-item"
+        mat-flat-button>
+        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
+      </button>
+    }
 
-    <button
-      *ngIf="editAuth"
-      (click)="save()"
-      color="accent"
-      [disabled]="!itemsChanged"
-      data-cy="save-application-form"
-      class="me-2"
-      mat-flat-button>
-      <i class="material-icons">save</i>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
-    </button>
+    @if (editAuth) {
+      <button
+        (click)="save()"
+        color="accent"
+        [disabled]="!itemsChanged"
+        data-cy="save-application-form"
+        class="me-2"
+        mat-flat-button>
+        <i class="material-icons">save</i>
+        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+      </button>
+    }
 
-    <button (click)="copy()" *ngIf="editAuth" class="me-2 action-button" mat-stroked-button>
-      <i class="material-icons align-middle">file_copy</i>
-      <span class="align-middle">
-        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.COPY_VO_BUTTON' | translate}}
-      </span>
-    </button>
+    @if (editAuth) {
+      <button (click)="copy()" class="me-2 action-button" mat-stroked-button>
+        <i class="material-icons align-middle">file_copy</i>
+        <span class="align-middle">
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.COPY_VO_BUTTON' | translate}}
+        </span>
+      </button>
+    }
 
     <button (click)="preview()" mat-stroked-button>
       <i class="material-icons">search</i>
@@ -85,9 +93,11 @@
     <!--    </button>-->
   </div>
 
-  <perun-web-apps-alert *ngIf="editAuth" alert_type="info">
-    {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
-  </perun-web-apps-alert>
+  @if (editAuth) {
+    <perun-web-apps-alert alert_type="info">
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
+    </perun-web-apps-alert>
+  }
 
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>

@@ -2,7 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 
-@Pipe({ name: 'lastPropagation' })
+@Pipe({
+  standalone: true,
+  name: 'lastPropagation',
+})
 export class LastPropagationPipe implements PipeTransform {
   constructor(private translate: PerunTranslateService) {}
 

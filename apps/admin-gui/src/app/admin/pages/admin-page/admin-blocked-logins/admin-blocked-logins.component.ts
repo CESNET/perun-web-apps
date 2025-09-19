@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  BlockedLoginsListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   BlockedLogin,
@@ -21,8 +29,23 @@ import { FormControl } from '@angular/forms';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { PageQuery } from '@perun-web-apps/perun/models';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
+import { NamespaceSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    NamespaceSearchSelectComponent,
+    BlockedLoginsListComponent,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-admin-blocked-logins',
   templateUrl: './admin-blocked-logins.component.html',
   styleUrls: ['./admin-blocked-logins.component.scss'],

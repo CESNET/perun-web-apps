@@ -1,112 +1,115 @@
 <div>
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.SERVICE_CONFIG.TITLE' | translate}}</h1>
-  <div *ngIf="!!facility" class="col-12 col-lg-6 mb-2">
-    <mat-form-field *ngIf="(services !== undefined)" class="w-100">
-      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.SERVICE_SELECT' | translate}}</mat-label>
-      <input
-        (keyup)="updatedSerVal($event)"
-        matInput
-        [formControl]="serviceField"
-        [matAutocomplete]="auto"
-        type="text" />
-      <mat-autocomplete
-        [displayWith]="serviceDisplayFn.bind(this)"
-        #auto="matAutocomplete"
-        autoActiveFirstOption>
-        <mat-option
-          (onSelectionChange)="onSelectedService('NOT_SELECTED')"
-          [value]="'NOT_SELECTED'">
-          {{'FACILITY_DETAIL.SERVICE_CONFIG.NOT_SELECTED' | translate}}
-        </mat-option>
-        <mat-option (onSelectionChange)="onSelectedService('ALL')" [value]="'ALL'">
-          {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL' | translate}}
-        </mat-option>
-        <mat-option
-          *ngFor="let s of filteredServices | async"
-          (onSelectionChange)="onSelectedService(s)"
-          [value]="s">
-          {{s.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-checkbox (change)="onOfferAllServices($event)">
-      {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL_SERVICES' | translate}}
-    </mat-checkbox>
-    <mat-form-field *ngIf="(resources !== undefined) && (resources.length !== 0)" class="w-100">
-      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.RES_SELECT' | translate}}</mat-label>
-      <input
-        (keyup)="updatedResVal($event)"
-        [formControl]="resourceField"
-        matInput
-        [matAutocomplete]="auto"
-        type="text" />
-      <mat-autocomplete
-        [displayWith]="resourceDisplayFn.bind(this)"
-        #auto="matAutocomplete"
-        autoActiveFirstOption>
-        <mat-option
-          *ngFor="let r of filteredResources | async"
-          (onSelectionChange)="onSelectedResource(r)"
-          [value]="r">
-          {{r.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field
-      *ngIf="(selectedResource !== undefined) && (groups !== undefined) && (groups.length !== 0)"
-      class="w-100">
-      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.GROUP_SELECT' | translate}}</mat-label>
-      <input
-        (keyup)="updatedGroupVal($event)"
-        [formControl]="groupField"
-        matInput
-        [matAutocomplete]="auto"
-        type="text" />
-      <mat-autocomplete
-        [displayWith]="groupDisplayFn.bind(this)"
-        #auto="matAutocomplete"
-        [ngClass]=""
-        autoActiveFirstOption>
-        <mat-option
-          *ngFor="let g of filteredGroups | async"
-          (onSelectionChange)="onSelectedGroup(g)"
-          [value]="g">
-          {{g.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <!--    <mat-form-field class="w-100">-->
-    <!--      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT' | translate}}</mat-label>-->
-    <!--      <mat-select [(value)]="voId" [disabled]="selectedResource === undefined">-->
-    <!--        <mat-option [value]="-1" *ngIf="!!vos">-->
-    <!--          {{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT_DEFAULT' | translate}}-->
-    <!--        </mat-option>-->
-    <!--      </mat-select>-->
-    <!--    </mat-form-field>-->
-    <mat-form-field
-      *ngIf="(selectedGroup !== undefined) && (members !== undefined) && (members.length !== 0)"
-      class="w-100">
-      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.MEMBER_SELECT' | translate}}</mat-label>
-      <input [matAutocomplete]="auto" matInput [formControl]="memberField" type="text" />
-      <mat-autocomplete
-        [displayWith]="memberDisplayFn.bind(this)"
-        #auto="matAutocomplete"
-        autoActiveFirstOption>
-        <mat-option
-          *ngFor="let m of filteredMembers | async"
-          (onSelectionChange)="onSelectedMember(m)"
-          [value]="m">
-          {{m.user | userFullName}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </div>
-  <perun-web-apps-service-configurator
-    *ngIf="!!facility"
-    [facility]="facility"
-    [resource]="selectedResource"
-    [group]="selectedGroup"
-    [member]="selectedMember"
-    [service]="selectedService">
-  </perun-web-apps-service-configurator>
+  @if (!!facility) {
+    <div class="col-12 col-lg-6 mb-2">
+      @if ((services !== undefined)) {
+        <mat-form-field class="w-100">
+          <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.SERVICE_SELECT' | translate}}</mat-label>
+          <input
+            (keyup)="updatedSerVal($event)"
+            matInput
+            [formControl]="serviceField"
+            [matAutocomplete]="auto"
+            type="text" />
+          <mat-autocomplete
+            [displayWith]="serviceDisplayFn.bind(this)"
+            #auto="matAutocomplete"
+            autoActiveFirstOption>
+            <mat-option
+              (onSelectionChange)="onSelectedService('NOT_SELECTED')"
+              [value]="'NOT_SELECTED'">
+              {{'FACILITY_DETAIL.SERVICE_CONFIG.NOT_SELECTED' | translate}}
+            </mat-option>
+            <mat-option (onSelectionChange)="onSelectedService('ALL')" [value]="'ALL'">
+              {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL' | translate}}
+            </mat-option>
+            @for (s of filteredServices | async; track s) {
+              <mat-option (onSelectionChange)="onSelectedService(s)" [value]="s">
+                {{s.name}}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      }
+      <mat-checkbox (change)="onOfferAllServices($event)">
+        {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL_SERVICES' | translate}}
+      </mat-checkbox>
+      @if ((resources !== undefined) && (resources.length !== 0)) {
+        <mat-form-field class="w-100">
+          <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.RES_SELECT' | translate}}</mat-label>
+          <input
+            (keyup)="updatedResVal($event)"
+            [formControl]="resourceField"
+            matInput
+            [matAutocomplete]="auto"
+            type="text" />
+          <mat-autocomplete
+            [displayWith]="resourceDisplayFn.bind(this)"
+            #auto="matAutocomplete"
+            autoActiveFirstOption>
+            @for (r of filteredResources | async; track r) {
+              <mat-option (onSelectionChange)="onSelectedResource(r)" [value]="r">
+                {{r.name}}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      }
+      @if ((selectedResource !== undefined) && (groups !== undefined) && (groups.length !== 0)) {
+        <mat-form-field class="w-100">
+          <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.GROUP_SELECT' | translate}}</mat-label>
+          <input
+            (keyup)="updatedGroupVal($event)"
+            [formControl]="groupField"
+            matInput
+            [matAutocomplete]="auto"
+            type="text" />
+          <mat-autocomplete
+            [displayWith]="groupDisplayFn.bind(this)"
+            #auto="matAutocomplete"
+            [ngClass]=""
+            autoActiveFirstOption>
+            @for (g of filteredGroups | async; track g) {
+              <mat-option (onSelectionChange)="onSelectedGroup(g)" [value]="g">
+                {{g.name}}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      }
+      <!--    <mat-form-field class="w-100">-->
+      <!--      <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT' | translate}}</mat-label>-->
+      <!--      <mat-select [(value)]="voId" [disabled]="selectedResource === undefined">-->
+      <!--        <mat-option [value]="-1" *ngIf="!!vos">-->
+      <!--          {{'FACILITY_DETAIL.SERVICE_CONFIG.VO_SELECT_DEFAULT' | translate}}-->
+      <!--        </mat-option>-->
+      <!--      </mat-select>-->
+      <!--    </mat-form-field>-->
+      @if ((selectedGroup !== undefined) && (members !== undefined) && (members.length !== 0)) {
+        <mat-form-field class="w-100">
+          <mat-label>{{'FACILITY_DETAIL.SERVICE_CONFIG.MEMBER_SELECT' | translate}}</mat-label>
+          <input [matAutocomplete]="auto" matInput [formControl]="memberField" type="text" />
+          <mat-autocomplete
+            [displayWith]="memberDisplayFn.bind(this)"
+            #auto="matAutocomplete"
+            autoActiveFirstOption>
+            @for (m of filteredMembers | async; track m) {
+              <mat-option (onSelectionChange)="onSelectedMember(m)" [value]="m">
+                {{m.user | userFullName}}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      }
+    </div>
+  }
+  @if (!!facility) {
+    <app-perun-web-apps-service-configurator
+      [facility]="facility"
+      [resource]="selectedResource"
+      [group]="selectedGroup"
+      [member]="selectedMember"
+      [service]="selectedService">
+    </app-perun-web-apps-service-configurator>
+  }
 </div>

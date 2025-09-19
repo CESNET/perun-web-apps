@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   exports: [AlertComponent],
-  imports: [MatIconModule, CommonModule],
-  declarations: [AlertComponent],
+  imports: [MatIconModule, CommonModule, AlertComponent],
 })
 export class UiAlertsModule {}

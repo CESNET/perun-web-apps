@@ -15,29 +15,30 @@
       matSortActive="name"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            *ngIf="selection.isMultipleSelection()"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let author" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(author) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(author) | checkboxLabel | translate: {name: author | userFullName}"
-            [checked]="selection.isSelected(author)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            @if (selection.isMultipleSelection()) {
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                color="primary">
+              </mat-checkbox>
+            }
+          </th>
+          <td *matCellDef="let author" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(author) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(author) | checkboxLabel | translate: {name: author | userFullName}"
+              [checked]="selection.isSelected(author)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>{{'AUTHORS_LIST.ID' | translate}}</th>
         <td *matCellDef="let author" class="static-column-size" mat-cell>{{author.id}}</td>
@@ -78,12 +79,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="authors.length !== 0 && dataSource.filteredData.length === 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (authors.length !== 0 && dataSource.filteredData.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && authors.length === 0" alert_type="warn">
-  {{'AUTHORS_LIST.NO_AUTHORS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && authors.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'AUTHORS_LIST.NO_AUTHORS' | translate}}
+  </perun-web-apps-alert>
+}

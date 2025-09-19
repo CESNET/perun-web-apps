@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,11 +12,13 @@ import {
 } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { MatInput } from '@angular/material/input';
-import { UntypedFormControl } from '@angular/forms';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { GlobalSearchValueService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-debounce-filter',
   templateUrl: './debounce-filter.component.html',
   styleUrls: ['./debounce-filter.component.scss'],

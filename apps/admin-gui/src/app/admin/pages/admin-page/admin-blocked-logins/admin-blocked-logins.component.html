@@ -3,25 +3,27 @@
 <div class="align-elements">
   <div>
     <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-    <button
-      (click)="block()"
-      color="accent"
-      class="me-2 action-button"
-      data-cy="block-logins-button"
-      mat-flat-button
-      *ngIf="isAdmin">
-      {{'ADMIN.BLOCKED_LOGINS.BLOCK' | translate}}
-    </button>
-    <button
-      *ngIf="isAdmin"
-      (click)="unblock()"
-      class="me-2"
-      color="warn"
-      data-cy="unblock-logins-button"
-      mat-flat-button
-      [disabled]="(loading$ | async) || selection.selected.length === 0">
-      {{'ADMIN.BLOCKED_LOGINS.UNBLOCK' | translate}}
-    </button>
+    @if (isAdmin) {
+      <button
+        (click)="block()"
+        color="accent"
+        class="me-2 action-button"
+        data-cy="block-logins-button"
+        mat-flat-button>
+        {{'ADMIN.BLOCKED_LOGINS.BLOCK' | translate}}
+      </button>
+    }
+    @if (isAdmin) {
+      <button
+        (click)="unblock()"
+        class="me-2"
+        color="warn"
+        data-cy="unblock-logins-button"
+        mat-flat-button
+        [disabled]="(loading$ | async) || selection.selected.length === 0">
+        {{'ADMIN.BLOCKED_LOGINS.UNBLOCK' | translate}}
+      </button>
+    }
   </div>
 
   <perun-web-apps-namespace-search-select

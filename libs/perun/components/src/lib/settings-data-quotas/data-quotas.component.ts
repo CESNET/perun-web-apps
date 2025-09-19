@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DebounceFilterComponent } from '../debounce-filter/debounce-filter.component';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreService, EntityStorageService } from '@perun-web-apps/perun/services';
 import {
@@ -14,6 +22,17 @@ import { RequestChangeDataQuotaDialogComponent } from '@perun-web-apps/perun/dia
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-data-quotas',
   templateUrl: './data-quotas.component.html',
   styleUrls: ['./data-quotas.component.scss'],

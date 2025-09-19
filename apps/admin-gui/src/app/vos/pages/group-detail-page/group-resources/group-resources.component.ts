@@ -1,3 +1,7 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -11,13 +15,31 @@ import { AddGroupResourceDialogComponent } from '../../../../shared/components/d
 import { RemoveGroupResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { ResourcesListComponent } from '@perun-web-apps/perun/components';
+import {
+  ResourcesListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    ResourcesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-group-resources',
   templateUrl: './group-resources.component.html',
   styleUrls: ['./group-resources.component.scss'],

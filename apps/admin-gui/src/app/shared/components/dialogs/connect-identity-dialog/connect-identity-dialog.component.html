@@ -24,21 +24,25 @@
         <ng-template #searchSpinner>
           <perun-web-apps-loading-table></perun-web-apps-loading-table>
         </ng-template>
-        <div class="position-relative table-min-height" *ngIf="firstSearchDone">
-          <perun-web-apps-users-list
-            *perunWebAppsLoader="loading; indicator: searchSpinner"
-            [loading]="loading"
-            [displayColumns]="displayedColumns"
-            [selection]="selection"
-            [tableId]="tableId"
-            [disableRouting]="true"
-            [users]="identities"
-            [noUsersFoundLabel]="'DIALOGS.CONNECT_IDENTITY.NO_IDENTITIES' | translate">
-          </perun-web-apps-users-list>
-        </div>
-        <perun-web-apps-alert *ngIf="!firstSearchDone" alert_type="info">
-          {{'DIALOGS.CONNECT_IDENTITY.SEARCH_HINT' | translate}}
-        </perun-web-apps-alert>
+        @if (firstSearchDone) {
+          <div class="position-relative table-min-height">
+            <perun-web-apps-users-list
+              *perunWebAppsLoader="loading; indicator: searchSpinner"
+              [loading]="loading"
+              [displayColumns]="displayedColumns"
+              [selection]="selection"
+              [tableId]="tableId"
+              [disableRouting]="true"
+              [users]="identities"
+              [noUsersFoundLabel]="'DIALOGS.CONNECT_IDENTITY.NO_IDENTITIES' | translate">
+            </perun-web-apps-users-list>
+          </div>
+        }
+        @if (!firstSearchDone) {
+          <perun-web-apps-alert alert_type="info">
+            {{'DIALOGS.CONNECT_IDENTITY.SEARCH_HINT' | translate}}
+          </perun-web-apps-alert>
+        }
       </div>
       <div mat-dialog-actions>
         <button (click)="onCancel()" class="ms-auto" mat-stroked-button>

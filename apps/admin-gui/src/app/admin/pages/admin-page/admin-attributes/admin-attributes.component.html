@@ -1,33 +1,32 @@
 <div>
   <h1 class="page-subtitle">{{'ADMIN.ATTRIBUTES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="onCreate()"
-    class="me-2 action-button"
-    color="accent"
-    data-cy="new-attr-definition-button"
-    mat-flat-button>
-    {{'ADMIN.ATTRIBUTES.CREATE' | translate}}
-  </button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="onImport()"
-    class="me-2 action-button"
-    color="accent"
-    mat-flat-button>
-    {{'ADMIN.ATTRIBUTES.IMPORT' | translate}}
-  </button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="onDelete()"
-    color="warn"
-    [disabled]="loading || selected.selected.length === 0"
-    class="me-2"
-    data-cy="delete-attr-definition-button"
-    mat-flat-button>
-    {{'ADMIN.ATTRIBUTES.DELETE' | translate}}
-  </button>
+  @if (authResolver.isPerunAdmin()) {
+    <button
+      (click)="onCreate()"
+      class="me-2 action-button"
+      color="accent"
+      data-cy="new-attr-definition-button"
+      mat-flat-button>
+      {{'ADMIN.ATTRIBUTES.CREATE' | translate}}
+    </button>
+  }
+  @if (authResolver.isPerunAdmin()) {
+    <button (click)="onImport()" class="me-2 action-button" color="accent" mat-flat-button>
+      {{'ADMIN.ATTRIBUTES.IMPORT' | translate}}
+    </button>
+  }
+  @if (authResolver.isPerunAdmin()) {
+    <button
+      (click)="onDelete()"
+      color="warn"
+      [disabled]="loading || selected.selected.length === 0"
+      class="me-2"
+      data-cy="delete-attr-definition-button"
+      mat-flat-button>
+      {{'ADMIN.ATTRIBUTES.DELETE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'ADMIN.ATTRIBUTES.SEARCH'"></perun-web-apps-debounce-filter>

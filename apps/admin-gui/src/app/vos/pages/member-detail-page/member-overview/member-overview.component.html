@@ -1,138 +1,147 @@
-<mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-<div *ngIf="!loading">
-  <div class="member-cards">
-    <div class="align-cards">
-      <mat-card appearance="outlined" class="mat-elevation-z3">
-        <mat-card-header>
-          <mat-card-title>
-            <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.PERSONAL' | translate}}</h1>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <table [dataSource]="dataSource" mat-table>
-            <ng-container matColumnDef="attName">
-              <th *matHeaderCellDef mat-header-cell></th>
-              <td *matCellDef="let attribute" class="fw-bold" mat-cell>
-                <span *ngIf="attributes.get(attribute)[0] !== null">
-                  {{attributes.get(attribute)[0]}}:
-                </span>
-                <span *ngIf="attributes.get(attribute)[0] === null">
-                  {{attribute | attributeFriendlyName}}:
-                </span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="attValue">
-              <th *matHeaderCellDef mat-header-cell></th>
-              <td *matCellDef="let attribute" class="column-center" mat-cell>
-                {{attributes.get(attribute)[1]}}
-              </td>
-            </ng-container>
-            <tr *matRowDef="let attribute; columns: displayedColumns;" mat-row></tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="align-cards">
-      <mat-card appearance="outlined" class="mat-elevation-z3 membership-card">
-        <perun-web-apps-member-overview-membership
-          class="column-center"
-          [member]="member"
-          [voId]="vo.id">
-        </perun-web-apps-member-overview-membership>
-      </mat-card>
-      <mat-card
-        *ngIf="canReadGroups"
-        appearance="outlined"
-        class="mat-elevation-z3 membership-card mt-4">
-        <perun-web-apps-member-overview-groups
-          [member]="member"
-          [voId]="vo.id"></perun-web-apps-member-overview-groups>
-      </mat-card>
-    </div>
-    <div class="align-cards">
-      <mat-card appearance="outlined" *ngIf="pwdResetAuth" class="mat-elevation-z3">
-        <mat-card-header>
-          <mat-card-title>
-            <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.RESET_PASSWORD' | translate}}</h1>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="column-center">
-          <div
-            [matTooltipDisabled]="logins.length>0"
-            [matTooltip]="'MEMBER_DETAIL.OVERVIEW.RESET_DISABLED' | translate">
-            <button
-              (click)="requestPwdReset()"
-              class="action-button"
-              color="accent"
-              [disabled]="!logins.length"
-              mat-flat-button>
-              {{'MEMBER_DETAIL.OVERVIEW.SEND_REQUEST'|translate}}
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card *ngIf="sponsorshipEnabled" appearance="outlined" class="mat-elevation-z3 mt-4">
-        <mat-card-header>
-          <mat-card-title>
-            <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.SPONSORSHIP' | translate}}</h1>
-          </mat-card-title>
-          <mat-card-subtitle class="mt-n3">
-            {{(member.sponsored ? 'MEMBER_DETAIL.OVERVIEW.SPONSORED_BY' : 'MEMBER_DETAIL.OVERVIEW.NOT_SPONSORED') | translate}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="column-center">
-          <div *ngIf="member.sponsored && this.canReadSponsors" class="mt-3">
-            <h6 class="d-flex align-items-center">
-              {{'MEMBER_DETAIL.OVERVIEW.SPONSORS' | translate}}:
-              <button
-                (click)="changeSponsors()"
-                class="ms-auto mt-n2"
-                matTooltip="{{'MEMBER_DETAIL.OVERVIEW.EDIT_SPONSORS' | translate}}"
-                mat-icon-button>
-                <mat-icon>edit</mat-icon>
-              </button>
-            </h6>
-            <table [dataSource]="sponsorsDataSource" class="w-100" mat-table>
-              <ng-container matColumnDef="sponsors">
-                <th *matHeaderCellDef mat-header-cell>
-                  {{'MEMBER_DETAIL.OVERVIEW.SPONSOR_NAME' | translate}}
-                </th>
-                <td *matCellDef="let sponsor" mat-cell>
-                  {{sponsor.user | userFullName}}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="expiration">
-                <th *matHeaderCellDef mat-header-cell>
-                  {{'MEMBER_DETAIL.OVERVIEW.EXPIRATION_TABLE' | translate}}
-                </th>
-                <td *matCellDef="let sponsor" mat-cell>
-                  <span class="font-italic">{{sponsor.validityTo | parseDate}}</span>
-                </td>
-              </ng-container>
-              <tr *matHeaderRowDef="['sponsors', 'expiration']" mat-header-row></tr>
-              <tr *matRowDef="let sponsor; columns: ['sponsors', 'expiration'];" mat-row></tr>
-            </table>
-          </div>
-          <span
-            matTooltip="{{'MEMBER_DETAIL.OVERVIEW.NO_SPONSORS' | translate}}"
-            [matTooltipDisabled]="sponsorButtonEnabled"
-            matTooltipPosition="above">
-            <button
-              (click)="sponsorThisMember()"
-              [disabled]="!sponsorButtonEnabled"
-              class="action-button mt-3"
-              color="accent"
-              mat-flat-button>
-              {{'MEMBER_DETAIL.OVERVIEW.SPONSOR_MEMBER'|translate}}
-            </button>
-          </span>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
+@if (loading) {
+  <mat-spinner class="me-auto ms-auto"></mat-spinner>
+}
+@if (!loading) {
   <div>
-    <perun-web-apps-menu-buttons-field [items]="navItems"></perun-web-apps-menu-buttons-field>
+    <div class="member-cards">
+      <div class="align-cards">
+        <mat-card appearance="outlined" class="mat-elevation-z3">
+          <mat-card-header>
+            <mat-card-title>
+              <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.PERSONAL' | translate}}</h1>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table [dataSource]="dataSource" mat-table>
+              <ng-container matColumnDef="attName">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td *matCellDef="let attribute" class="fw-bold" mat-cell>
+                  @if (attributes.get(attribute)[0] !== null) {
+                    <span> {{attributes.get(attribute)[0]}}: </span>
+                  }
+                  @if (attributes.get(attribute)[0] === null) {
+                    <span> {{attribute | attributeFriendlyName}}: </span>
+                  }
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="attValue">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td *matCellDef="let attribute" class="column-center" mat-cell>
+                  {{attributes.get(attribute)[1]}}
+                </td>
+              </ng-container>
+              <tr *matRowDef="let attribute; columns: displayedColumns;" mat-row></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="align-cards">
+        <mat-card appearance="outlined" class="mat-elevation-z3 membership-card">
+          <perun-web-apps-member-overview-membership
+            class="column-center"
+            [member]="member"
+            [voId]="vo.id">
+          </perun-web-apps-member-overview-membership>
+        </mat-card>
+        @if (canReadGroups) {
+          <mat-card appearance="outlined" class="mat-elevation-z3 membership-card mt-4">
+            <perun-web-apps-member-overview-groups
+              [member]="member"
+              [voId]="vo.id"></perun-web-apps-member-overview-groups>
+          </mat-card>
+        }
+      </div>
+      <div class="align-cards">
+        @if (pwdResetAuth) {
+          <mat-card appearance="outlined" class="mat-elevation-z3">
+            <mat-card-header>
+              <mat-card-title>
+                <h1 class="page-subtitle">
+                  {{'MEMBER_DETAIL.OVERVIEW.RESET_PASSWORD' | translate}}
+                </h1>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="column-center">
+              <div
+                [matTooltipDisabled]="logins.length>0"
+                [matTooltip]="'MEMBER_DETAIL.OVERVIEW.RESET_DISABLED' | translate">
+                <button
+                  (click)="requestPwdReset()"
+                  class="action-button"
+                  color="accent"
+                  [disabled]="!logins.length"
+                  mat-flat-button>
+                  {{'MEMBER_DETAIL.OVERVIEW.SEND_REQUEST'|translate}}
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+        @if (sponsorshipEnabled) {
+          <mat-card appearance="outlined" class="mat-elevation-z3 mt-4">
+            <mat-card-header>
+              <mat-card-title>
+                <h1 class="page-subtitle">{{'MEMBER_DETAIL.OVERVIEW.SPONSORSHIP' | translate}}</h1>
+              </mat-card-title>
+              <mat-card-subtitle class="mt-n3">
+                {{(member.sponsored ? 'MEMBER_DETAIL.OVERVIEW.SPONSORED_BY' : 'MEMBER_DETAIL.OVERVIEW.NOT_SPONSORED') | translate}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="column-center">
+              @if (member.sponsored && this.canReadSponsors) {
+                <div class="mt-3">
+                  <h6 class="d-flex align-items-center">
+                    {{'MEMBER_DETAIL.OVERVIEW.SPONSORS' | translate}}:
+                    <button
+                      (click)="changeSponsors()"
+                      class="ms-auto mt-n2"
+                      matTooltip="{{'MEMBER_DETAIL.OVERVIEW.EDIT_SPONSORS' | translate}}"
+                      mat-icon-button>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </h6>
+                  <table [dataSource]="sponsorsDataSource" class="w-100" mat-table>
+                    <ng-container matColumnDef="sponsors">
+                      <th *matHeaderCellDef mat-header-cell>
+                        {{'MEMBER_DETAIL.OVERVIEW.SPONSOR_NAME' | translate}}
+                      </th>
+                      <td *matCellDef="let sponsor" mat-cell>
+                        {{sponsor.user | userFullName}}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="expiration">
+                      <th *matHeaderCellDef mat-header-cell>
+                        {{'MEMBER_DETAIL.OVERVIEW.EXPIRATION_TABLE' | translate}}
+                      </th>
+                      <td *matCellDef="let sponsor" mat-cell>
+                        <span class="font-italic">{{sponsor.validityTo | parseDate}}</span>
+                      </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="['sponsors', 'expiration']" mat-header-row></tr>
+                    <tr *matRowDef="let sponsor; columns: ['sponsors', 'expiration'];" mat-row></tr>
+                  </table>
+                </div>
+              }
+              <span
+                matTooltip="{{'MEMBER_DETAIL.OVERVIEW.NO_SPONSORS' | translate}}"
+                [matTooltipDisabled]="sponsorButtonEnabled"
+                matTooltipPosition="above">
+                <button
+                  (click)="sponsorThisMember()"
+                  [disabled]="!sponsorButtonEnabled"
+                  class="action-button mt-3"
+                  color="accent"
+                  mat-flat-button>
+                  {{'MEMBER_DETAIL.OVERVIEW.SPONSOR_MEMBER'|translate}}
+                </button>
+              </span>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+    <div>
+      <perun-web-apps-menu-buttons-field [items]="navItems"></perun-web-apps-menu-buttons-field>
+    </div>
   </div>
-</div>
+}

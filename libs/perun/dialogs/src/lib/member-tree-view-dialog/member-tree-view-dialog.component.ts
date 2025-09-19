@@ -1,10 +1,21 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { Group, GroupsManagerService, RichMember } from '@perun-web-apps/perun/openapi';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { UntypedFormControl } from '@angular/forms';
+import { MatTreeModule, MatTreeNestedDataSource } from '@angular/material/tree';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { parseFullName } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ParseGroupNamePipe } from '@perun-web-apps/perun/pipes';
 
 export interface MemberTreeViewDialogData {
   member: RichMember;
@@ -22,6 +33,23 @@ interface GroupNode {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+    MatTreeModule,
+    ParseGroupNamePipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-member-tree-view-dialog',
   templateUrl: './member-tree-view-dialog.component.html',
   styleUrls: ['./member-tree-view-dialog.component.scss'],

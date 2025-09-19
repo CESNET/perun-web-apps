@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "libs/perun/multi-factor-authentication/src",
   "prefix": "perun-web-apps",
+  "tags": [],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
@@ -15,6 +16,5 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
-  },
-  "tags": []
+  }
 }

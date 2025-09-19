@@ -1,3 +1,14 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -9,6 +20,7 @@ import {
 } from '@angular/core';
 import { openClose } from '@perun-web-apps/perun/animations';
 import { Attribute } from '@perun-web-apps/perun/openapi';
+import { SettingsToggleItemComponent } from '../../../shared/components/settings-toggle-item/settings-toggle-item.component';
 
 export class ExpirationAttrValue {
   period?: string;
@@ -43,6 +55,22 @@ export interface ExpirationConfiguration {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltip,
+    SettingsToggleItemComponent,
+  ],
+  standalone: true,
   selector: 'app-expiration-settings',
   templateUrl: './expiration-settings.component.html',
   styleUrls: ['./expiration-settings.component.scss'],

@@ -1,3 +1,7 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { PerunFooterComponent, PerunHeaderComponent } from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -20,8 +24,21 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { parseQueryParams } from '@perun-web-apps/perun/utils';
 import { PasswordAction } from '@perun-web-apps/perun/models';
+import { PasswordResetPageComponent } from './pages/password-reset-page/password-reset-page.component';
+import { LoginScreenBaseComponent, PerunLoginModule } from '@perun-web-apps/perun/login';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    PerunFooterComponent,
+    PerunHeaderComponent,
+    MatTooltip,
+    PasswordResetPageComponent,
+    LoginScreenBaseComponent,
+    PerunLoginModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

@@ -1,20 +1,27 @@
 <form class="d-flex w-100">
   <div class="w-100">
     <div class="me-5">
-      <div *ngFor="let object of objects.slice(0, itemsShown)" class="d-flex mb-1">
-        {{object[paramName]}}
-      </div>
+      @for (object of objects.slice(0, itemsShown); track object) {
+        <div class="d-flex mb-1">
+          {{object[paramName]}}
+        </div>
+      }
     </div>
     <div>
-      <button
-        *ngIf="objects.length > defaultItemsShown"
-        mat-icon-button
-        (click)="onShowChange()"
-        [matTooltip]="(showMore ? 'SHARED_LIB.PERUN.COMPONENTS.OBJECT_LIST_VALUES.LESS' : 'SHARED_LIB.PERUN.COMPONENTS.OBJECT_LIST_VALUES.MORE') | translate"
-        [matTooltipPosition]="'above'">
-        <mat-icon *ngIf="!showMore">more_horiz</mat-icon>
-        <mat-icon *ngIf="showMore">keyboard_arrow_up</mat-icon>
-      </button>
+      @if (objects.length > defaultItemsShown) {
+        <button
+          mat-icon-button
+          (click)="onShowChange()"
+          [matTooltip]="(showMore ? 'SHARED_LIB.PERUN.COMPONENTS.OBJECT_LIST_VALUES.LESS' : 'SHARED_LIB.PERUN.COMPONENTS.OBJECT_LIST_VALUES.MORE') | translate"
+          [matTooltipPosition]="'above'">
+          @if (!showMore) {
+            <mat-icon>more_horiz</mat-icon>
+          }
+          @if (showMore) {
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          }
+        </button>
+      }
     </div>
   </div>
 </form>

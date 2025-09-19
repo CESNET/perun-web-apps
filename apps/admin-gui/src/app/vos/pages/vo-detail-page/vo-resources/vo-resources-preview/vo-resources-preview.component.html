@@ -1,15 +1,16 @@
 <div>
   <h1 class="page-subtitle">{{'VO_DETAIL.RESOURCES.LIST.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="removeAuth"
-    class="me-2"
-    color="warn"
-    (click)="deleteSelectedResources()"
-    [disabled]="selected.selected.length === 0 || loading"
-    mat-flat-button>
-    {{'VO_DETAIL.RESOURCES.LIST.DELETE' | translate}}
-  </button>
+  @if (removeAuth) {
+    <button
+      class="me-2"
+      color="warn"
+      (click)="deleteSelectedResources()"
+      [disabled]="selected.selected.length === 0 || loading"
+      mat-flat-button>
+      {{'VO_DETAIL.RESOURCES.LIST.DELETE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.RESOURCES_LIST.TABLE_SEARCH'"></perun-web-apps-debounce-filter>

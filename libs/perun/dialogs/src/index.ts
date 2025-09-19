@@ -25,10 +25,10 @@ export * from './lib/request-change-data-quota-dialog/request-change-data-quota-
 export * from './lib/add-ssh-dialog/add-ssh-dialog.component';
 export * from './lib/remove-string-value-dialog/remove-string-value-dialog.component';
 export * from './lib/show-ssh-dialog/show-ssh-dialog.component';
-export * from './lib/show-notification-history-dialog/show-notification-history-dialog.component';
 export * from './lib/delete-user-dialog/delete-user-dialog.component';
 export * from './lib/password-reset-dialog/password-reset-dialog.component';
 export * from './lib/bug-report-dialog/bug-report-dialog.component';
 export * from './lib/remove-role-dialog/remove-role-dialog.component';
 export * from './lib/change-name-dialog/change-name-dialog.component';
 export * from './lib/change-organization-dialog/change-organization-dialog.component';
+export * from './lib/expiration-select/expiration-select.component';

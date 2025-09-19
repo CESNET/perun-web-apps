@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { ParseDatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
 import {
   AfterViewInit,
   Component,
@@ -22,12 +26,25 @@ import { AuditMessageDetailDialogComponent } from '../dialogs/audit-message-deta
 import { CustomMatPaginator } from '@perun-web-apps/perun/services';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { formatDate } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
+import { formatDate, CommonModule } from '@angular/common';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ParseEventNamePipe } from '../../pipes/parse-event-name.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    ParseDatePipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    ParseEventNamePipe,
+  ],
+  standalone: true,
   selector: 'app-audit-messages-list',
   templateUrl: './audit-messages-list.component.html',
   styleUrls: ['./audit-messages-list.component.scss'],

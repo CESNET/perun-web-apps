@@ -1,35 +1,39 @@
 <div class="flex-container">
-  <span
-    class="status-change"
-    (click)="changeStatus()"
-    *ngIf="status === 'ACTIVE'"
-    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.ACTIVE' | translate}}"
-    matTooltipPosition="above"
-    attr.data-cy="{{groupName}}-active">
-    <mat-icon class="green">check_circle_outline</mat-icon>
-  </span>
-  <span
-    class="status-change"
-    (click)="changeStatus()"
-    *ngIf="status === 'INACTIVE'"
-    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.INACTIVE' | translate}}"
-    matTooltipPosition="above"
-    attr.data-cy="{{groupName}}-inactive">
-    <mat-icon class="grey">block</mat-icon>
-  </span>
-  <span
-    class="status-change"
-    (click)="changeStatus()"
-    *ngIf="status === 'FAILED'"
-    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.FAILED' | translate}}: {{this.failureCause}}"
-    matTooltipPosition="above">
-    <mat-icon class="red">report</mat-icon>
-  </span>
-  <span
-    class="status-change"
-    *ngIf="status === 'PROCESSING'"
-    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.PROCESSING' | translate}}"
-    matTooltipPosition="above">
-    <mat-icon class="black">autorenew</mat-icon>
-  </span>
+  @if (status === 'ACTIVE') {
+    <span
+      class="status-change"
+      (click)="changeStatus()"
+      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.ACTIVE' | translate}}"
+      matTooltipPosition="above"
+      attr.data-cy="{{groupName}}-active">
+      <mat-icon class="green">check_circle_outline</mat-icon>
+    </span>
+  }
+  @if (status === 'INACTIVE') {
+    <span
+      class="status-change"
+      (click)="changeStatus()"
+      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.INACTIVE' | translate}}"
+      matTooltipPosition="above"
+      attr.data-cy="{{groupName}}-inactive">
+      <mat-icon class="grey">block</mat-icon>
+    </span>
+  }
+  @if (status === 'FAILED') {
+    <span
+      class="status-change"
+      (click)="changeStatus()"
+      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.FAILED' | translate}}: {{this.failureCause}}"
+      matTooltipPosition="above">
+      <mat-icon class="red">report</mat-icon>
+    </span>
+  }
+  @if (status === 'PROCESSING') {
+    <span
+      class="status-change"
+      matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_RESOURCE_STATUS.PROCESSING' | translate}}"
+      matTooltipPosition="above">
+      <mat-icon class="black">autorenew</mat-icon>
+    </span>
+  }
 </div>

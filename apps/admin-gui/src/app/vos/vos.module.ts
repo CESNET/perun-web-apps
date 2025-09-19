@@ -91,9 +91,6 @@ import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
     MatSortModule,
     CdkCopyToClipboard,
     PerunTableUtilsModule,
-  ],
-  exports: [],
-  declarations: [
     VoSelectPageComponent,
     VoDetailPageComponent,
     GroupDetailPageComponent,
@@ -165,5 +162,6 @@ import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
     GroupInvitationsComponent,
     GroupInvitationDetailComponent,
   ],
+  exports: [],
 })
 export class VosModule {}

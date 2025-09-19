@@ -1,5 +1,7 @@
+import { EntitySearchSelectComponent } from '../entity-search-select/entity-search-select.component';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 
 export class SelectionItem {
@@ -19,6 +21,8 @@ export enum ItemType {
 }
 
 @Component({
+  imports: [CommonModule, EntitySearchSelectComponent, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-selection-item-search-select',
   templateUrl: './selection-item-search-select.component.html',
   styleUrls: ['./selection-item-search-select.component.scss'],

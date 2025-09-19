@@ -1,6 +1,7 @@
 import { Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
+  standalone: true,
   selector: '[perunWebAppsAutoFocus]',
 })
 export class AutoFocusDirective implements OnInit {

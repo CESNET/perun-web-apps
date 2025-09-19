@@ -1,9 +1,25 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Role } from '@perun-web-apps/perun/models';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { User } from '@perun-web-apps/perun/openapi';
+import { UserSearchSelectComponent } from '@perun-web-apps/perun/components';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltip,
+    UserSearchSelectComponent,
+  ],
+  standalone: true,
   selector: 'app-choose-sponsor',
   templateUrl: './choose-sponsor.component.html',
   styleUrls: ['./choose-sponsor.component.scss'],

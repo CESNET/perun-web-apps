@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  PerunSharedComponentsModule,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { AfterViewChecked, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { EnrichedVo, VosManagerService } from '@perun-web-apps/perun/openapi';
@@ -16,8 +26,21 @@ import { RPCError } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    PerunSharedComponentsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-select-page',
   templateUrl: './vo-select-page.component.html',
   styleUrls: ['./vo-select-page.component.scss'],

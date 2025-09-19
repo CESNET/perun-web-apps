@@ -1,3 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
@@ -14,7 +21,12 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
-import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import {
+  AttributesListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  ResourceSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteAttributeDialogComponent } from '../dialogs/delete-attribute-dialog/delete-attribute-dialog.component';
 import {
@@ -28,8 +40,35 @@ import { CreateAttributeDialogComponent } from '../dialogs/create-attribute-dial
 import { Urns } from '@perun-web-apps/perun/urns';
 import { GroupWithStatus, ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
+import { GroupSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { FacilitySearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { UserSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { MemberSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    GroupSearchSelectComponent,
+    FacilitySearchSelectComponent,
+    LoaderDirective,
+    UserSearchSelectComponent,
+    AttributesListComponent,
+    ResourceSearchSelectComponent,
+    MemberSearchSelectComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-two-entity-attribute-page',
   templateUrl: './two-entity-attribute-page.component.html',
   styleUrls: ['./two-entity-attribute-page.component.scss'],

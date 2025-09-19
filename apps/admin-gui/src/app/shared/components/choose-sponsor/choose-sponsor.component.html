@@ -22,11 +22,13 @@
     </span>
   </mat-radio-group>
 
-  <div *ngIf="sponsorType === 'other'">
-    <perun-web-apps-user-search-select
-      (userSelected)="selectSponsor($event)"
-      [disableAutoSelect]="true"
-      [users]="voSponsors">
-    </perun-web-apps-user-search-select>
-  </div>
+  @if (sponsorType === 'other') {
+    <div>
+      <perun-web-apps-user-search-select
+        (userSelected)="selectSponsor($event)"
+        [disableAutoSelect]="true"
+        [users]="voSponsors">
+      </perun-web-apps-user-search-select>
+    </div>
+  }
 </div>

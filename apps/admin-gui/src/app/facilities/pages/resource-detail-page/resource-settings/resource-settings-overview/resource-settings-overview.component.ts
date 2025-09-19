@@ -1,3 +1,6 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from '@perun-web-apps/perun/models';
@@ -9,6 +12,8 @@ import {
 } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent, MatProgressSpinnerModule],
+  standalone: true,
   selector: 'app-resource-settings-overview',
   templateUrl: './resource-settings-overview.component.html',
   styleUrls: ['./resource-settings-overview.component.scss'],

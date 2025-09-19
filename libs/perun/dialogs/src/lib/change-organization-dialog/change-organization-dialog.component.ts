@@ -1,8 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { EXTSOURCE_IDP, getElementFromSingleArray } from '@perun-web-apps/perun/utils';
 
@@ -15,6 +24,21 @@ export interface ChangeOrganizationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-organization-dialog',
   templateUrl: './change-organization-dialog.component.html',
   styleUrls: ['./change-organization-dialog.component.scss'],

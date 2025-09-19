@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { EnrichedFacility, Facility } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'extractFacility',
 })
 export class ExtractFacilityPipe implements PipeTransform {

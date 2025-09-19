@@ -1,10 +1,39 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationFormItem } from '@perun-web-apps/perun/openapi';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { StoreService } from '@perun-web-apps/perun/services';
+import {
+  AttributeValueListComponent,
+  AttributeValueMapComponent,
+} from '@perun-web-apps/perun/components';
+import { SanitizeHtmlPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    AttributeValueListComponent,
+    AttributeValueMapComponent,
+    SanitizeHtmlPipe,
+  ],
+  standalone: true,
   selector: 'app-application-form-preview',
   templateUrl: './application-form-preview.component.html',
   styleUrls: ['./application-form-preview.component.scss'],

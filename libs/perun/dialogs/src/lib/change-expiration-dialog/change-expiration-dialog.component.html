@@ -7,17 +7,18 @@
       {{currentExpiration | parseDate}}
     </p>
     <p>{{'DIALOGS.CHANGE_EXPIRATION.SELECT_NEW' | translate}}</p>
-    <perun-web-apps-expiration-select
-      *ngIf="!loading"
-      [expiration]="currentExpiration"
-      [allowNever]="status === 'VALID'"
-      [canExtendInVo]="canExtendInVo"
-      [canExtendInGroup]="canExtendInGroup"
-      [minDate]="minDate"
-      [maxDate]="maxDate"
-      [theme]="theme"
-      (expirationSelected)="setExpiration($event)">
-    </perun-web-apps-expiration-select>
+    @if (!loading) {
+      <perun-web-apps-expiration-select
+        [expiration]="currentExpiration"
+        [allowNever]="status === 'VALID'"
+        [canExtendInVo]="canExtendInVo"
+        [canExtendInGroup]="canExtendInGroup"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [theme]="theme"
+        (expirationSelected)="setExpiration($event)">
+      </perun-web-apps-expiration-select>
+    }
   </div>
   <div mat-dialog-actions>
     <button (click)="onCancel()" class="ms-auto me-2" mat-stroked-button>

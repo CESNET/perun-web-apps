@@ -1,3 +1,8 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FacilitiesManagerService,
@@ -14,15 +19,31 @@ import {
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { DeleteTaskResultDialogComponent } from '../../../../shared/components/dialogs/delete-task-result-dialog/delete-task-result-dialog.component';
 import { DeleteServiceFromFacilityComponent } from '../../../../shared/components/dialogs/delete-service-from-facility/delete-service-from-facility.component';
 import { DeleteTaskDialogComponent } from '../../../../shared/components/dialogs/delete-task-dialog/delete-task-dialog.component';
 import { BehaviorSubject } from 'rxjs';
+import { ServicesStatusListComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+    ServicesStatusListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-facility-service-status',
   templateUrl: './facility-service-status.component.html',
   styleUrls: ['./facility-service-status.component.scss'],

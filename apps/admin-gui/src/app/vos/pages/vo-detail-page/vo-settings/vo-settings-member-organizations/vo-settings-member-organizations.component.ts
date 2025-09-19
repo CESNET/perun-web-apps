@@ -1,3 +1,10 @@
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  VosListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,10 +18,23 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { ReloadEntityDetailService } from '../../../../../core/services/common/reload-entity-detail.service';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    VosListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-member-organizations',
   templateUrl: './vo-settings-member-organizations.component.html',
   styleUrls: ['./vo-settings-member-organizations.component.scss'],

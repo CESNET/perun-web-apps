@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -20,6 +21,7 @@ import { AddMemberService, FailedCandidate } from '../add-member.service';
 import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { AddMemberDialogComponent } from '../../../shared/components/dialogs/add-member-dialog/add-member-dialog.component';
 
 export interface GroupAddMemberData {
   group: Group;
@@ -27,6 +29,8 @@ export interface GroupAddMemberData {
 }
 
 @Component({
+  imports: [CommonModule, AddMemberDialogComponent],
+  standalone: true,
   selector: 'app-group-add-member-dialog',
   templateUrl: './group-add-member-dialog.component.html',
   styleUrls: ['./group-add-member-dialog.component.scss'],

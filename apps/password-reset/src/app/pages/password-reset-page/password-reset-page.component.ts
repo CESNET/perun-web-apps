@@ -1,10 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { PasswordAction } from '@perun-web-apps/perun/models';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
+import { InvalidRequestAlertComponent } from '../../components/invalid-request-alert/invalid-request-alert.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    TranslateModule,
+    PasswordResetFormComponent,
+    InvalidRequestAlertComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-password-reset-page',
   templateUrl: './password-reset-page.component.html',
   styleUrls: ['./password-reset-page.component.scss'],

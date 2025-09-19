@@ -69,15 +69,16 @@
             mat-flat-button>
             {{'FACILITY_CONFIGURATION.SAVE' | translate}}
           </button>
-          <perun-web-apps-service-search-select
-            *ngIf="stepper.selectedIndex === ATTRIBUTES_IDX"
-            (serviceSelected)="filterAttributes($event)"
-            [disableAutoSelect]="true"
-            [services]="selection.selected"
-            [multiple]="true"
-            [theme]="'facility-theme'"
-            class="service-search-select">
-          </perun-web-apps-service-search-select>
+          @if (stepper.selectedIndex === ATTRIBUTES_IDX) {
+            <perun-web-apps-service-search-select
+              (serviceSelected)="filterAttributes($event)"
+              [disableAutoSelect]="true"
+              [services]="selection.selected"
+              [multiple]="true"
+              [theme]="'facility-theme'"
+              class="service-search-select">
+            </perun-web-apps-service-search-select>
+          }
         </div>
         <div class="position-relative table-min-height">
           <perun-web-apps-attributes-list
@@ -122,98 +123,98 @@
         <perun-web-apps-alert alert_type="info">
           <i [innerHTML]="'FACILITY_CONFIGURATION.SUMMARY_INFO' | translate"></i>
         </perun-web-apps-alert>
-        <mat-accordion
-          *ngIf="stepper.selectedIndex === stepper.steps.length - 1"
-          [@.disabled]="true">
-          <mat-expansion-panel [disabled]="hosts.length === 0">
-            <mat-expansion-panel-header [class.cursor-default]="hosts.length === 0">
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-hosts"></mat-icon>
-                {{'FACILITY_CONFIGURATION.HOSTS' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.HOSTS' | translate}}</h1>
-            <div class="position-relative table-min-height">
-              <app-hosts-list
-                *perunWebAppsLoader="processing; indicator: spinner"
+        @if (stepper.selectedIndex === stepper.steps.length - 1) {
+          <mat-accordion [@.disabled]="true">
+            <mat-expansion-panel [disabled]="hosts.length === 0">
+              <mat-expansion-panel-header [class.cursor-default]="hosts.length === 0">
+                <mat-panel-title>
+                  <mat-icon class="me-2" svgIcon="perun-hosts"></mat-icon>
+                  {{'FACILITY_CONFIGURATION.HOSTS' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.HOSTS' | translate}}</h1>
+              <div class="position-relative table-min-height">
+                <app-hosts-list
+                  *perunWebAppsLoader="processing; indicator: spinner"
+                  [loading]="processing"
+                  [disableRouting]="true"
+                  [displayedColumns]="['id', 'name']"
+                  [hosts]="hosts">
+                </app-hosts-list>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel [disabled]="selection.selected.length === 0">
+              <mat-expansion-panel-header [class.cursor-default]="selection.selected.length === 0">
+                <mat-panel-title>
+                  <mat-icon class="me-2" svgIcon="perun-service"></mat-icon>
+                  {{'FACILITY_CONFIGURATION.SERVICES' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.SERVICES' | translate}}</h1>
+              <app-services-list
                 [loading]="processing"
                 [disableRouting]="true"
-                [displayedColumns]="['id', 'name']"
-                [hosts]="hosts">
-              </app-hosts-list>
-            </div>
-          </mat-expansion-panel>
-          <mat-expansion-panel [disabled]="selection.selected.length === 0">
-            <mat-expansion-panel-header [class.cursor-default]="selection.selected.length === 0">
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-service"></mat-icon>
-                {{'FACILITY_CONFIGURATION.SERVICES' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.SERVICES' | translate}}</h1>
-            <app-services-list
-              [loading]="processing"
-              [disableRouting]="true"
-              [displayedColumns]="['id', 'name', 'enabled', 'script', 'description']"
-              [services]="selection.selected">
-            </app-services-list>
-          </mat-expansion-panel>
-          <mat-expansion-panel
-            (opened)="getNonEmptyAttributes()"
-            [disabled]="selection.selected.length === 0">
-            <mat-expansion-panel-header [class.cursor-default]="selection.selected.length === 0">
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-hosts"></mat-icon>
-                {{'FACILITY_CONFIGURATION.SERVICE_CONFIG' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.ATTS' | translate}}</h1>
-            <perun-web-apps-attributes-list
-              [loading]="processing"
-              [displayedColumns]="['id', 'displayName', 'value', 'description']"
-              [attributes]="filteredAttributes"
-              [emptyListText]="'FACILITY_CONFIGURATION.EMPTY_REQ_ATT'">
-            </perun-web-apps-attributes-list>
-          </mat-expansion-panel>
-          <mat-expansion-panel
-            [(expanded)]="destinationServiceMissing"
-            [disabled]="selection.selected.length === 0 && destinations.length === 0">
-            <mat-expansion-panel-header
-              [class.cursor-default]="selection.selected.length === 0 && destinations.length === 0">
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-service_destination"></mat-icon>
-                {{'FACILITY_CONFIGURATION.DESTINATION_CONFIG' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.DESTINATION' | translate}}</h1>
-            <div class="position-relative table-min-height">
-              <app-perun-web-apps-destination-list
-                *perunWebAppsLoader="processing; indicator: spinner"
+                [displayedColumns]="['id', 'name', 'enabled', 'script', 'description']"
+                [services]="selection.selected">
+              </app-services-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel
+              (opened)="getNonEmptyAttributes()"
+              [disabled]="selection.selected.length === 0">
+              <mat-expansion-panel-header [class.cursor-default]="selection.selected.length === 0">
+                <mat-panel-title>
+                  <mat-icon class="me-2" svgIcon="perun-hosts"></mat-icon>
+                  {{'FACILITY_CONFIGURATION.SERVICE_CONFIG' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.ATTS' | translate}}</h1>
+              <perun-web-apps-attributes-list
                 [loading]="processing"
-                [destinations]="destinations"
-                [displayedColumns]="['destinationId', 'service', 'warn', 'destination', 'type', 'propagationType']"
-                [services]="serviceIds">
-              </app-perun-web-apps-destination-list>
-            </div>
-          </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon class="me-2" svgIcon="perun-manager"></mat-icon>
-                {{'FACILITY_CONFIGURATION.MANAGERS' | translate}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-managers-page
-              [complementaryObject]="facility"
-              [configMode]="true"
-              [disableRouting]="true"
-              [availableRoles]="availableRoles"
-              [complementaryObjectType]="'Facility'"
-              [displayedGroupColumns]="['id', 'vo', 'name', 'description']"
-              [displayedUserColumns]="['id', 'name', 'email', 'logins', 'organization']">
-            </app-managers-page>
-          </mat-expansion-panel>
-        </mat-accordion>
+                [displayedColumns]="['id', 'displayName', 'value', 'description']"
+                [attributes]="filteredAttributes"
+                [emptyListText]="'FACILITY_CONFIGURATION.EMPTY_REQ_ATT'">
+              </perun-web-apps-attributes-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel
+              [(expanded)]="destinationServiceMissing"
+              [disabled]="selection.selected.length === 0 && destinations.length === 0">
+              <mat-expansion-panel-header
+                [class.cursor-default]="selection.selected.length === 0 && destinations.length === 0">
+                <mat-panel-title>
+                  <mat-icon class="me-2" svgIcon="perun-service_destination"></mat-icon>
+                  {{'FACILITY_CONFIGURATION.DESTINATION_CONFIG' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.DESTINATION' | translate}}</h1>
+              <div class="position-relative table-min-height">
+                <app-perun-web-apps-destination-list
+                  *perunWebAppsLoader="processing; indicator: spinner"
+                  [loading]="processing"
+                  [destinations]="destinations"
+                  [displayedColumns]="['destinationId', 'service', 'warn', 'destination', 'type', 'propagationType']"
+                  [services]="serviceIds">
+                </app-perun-web-apps-destination-list>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon class="me-2" svgIcon="perun-manager"></mat-icon>
+                  {{'FACILITY_CONFIGURATION.MANAGERS' | translate}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-managers-page
+                [complementaryObject]="facility"
+                [configMode]="true"
+                [disableRouting]="true"
+                [availableRoles]="availableRoles"
+                [complementaryObjectType]="'Facility'"
+                [displayedGroupColumns]="['id', 'vo', 'name', 'description']"
+                [displayedUserColumns]="['id', 'name', 'email', 'logins', 'organization']">
+              </app-managers-page>
+            </mat-expansion-panel>
+          </mat-accordion>
+        }
       </ng-template>
     </mat-step>
   </mat-stepper>
@@ -221,29 +222,25 @@
     <button (click)="onCancel()" mat-stroked-button>
       {{'FACILITY_CONFIGURATION.CANCEL' | translate}}
     </button>
-    <button
-      *ngIf="stepper !== undefined && stepper.selectedIndex !== 0"
-      (click)="back()"
-      class="ms-auto me-2"
-      mat-stroked-button>
-      {{'FACILITY_CONFIGURATION.BACK' | translate}}
-    </button>
-    <button
-      *ngIf="stepper !== undefined && stepper.selectedIndex !== stepper.steps.length - 1"
-      (click)="next()"
-      [class.me-2]="stepper !== undefined && stepper.selectedIndex !== 0"
-      [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
-      color="accent"
-      mat-flat-button>
-      {{'FACILITY_CONFIGURATION.NEXT' | translate}}
-    </button>
-    <button
-      *ngIf="stepper !== undefined && stepper.selectedIndex === stepper.steps.length -1"
-      (click)="onFinish()"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'FACILITY_CONFIGURATION.FINISH' | translate}}
-    </button>
+    @if (stepper !== undefined && stepper.selectedIndex !== 0) {
+      <button (click)="back()" class="ms-auto me-2" mat-stroked-button>
+        {{'FACILITY_CONFIGURATION.BACK' | translate}}
+      </button>
+    }
+    @if (stepper !== undefined && stepper.selectedIndex !== stepper.steps.length - 1) {
+      <button
+        (click)="next()"
+        [class.me-2]="stepper !== undefined && stepper.selectedIndex !== 0"
+        [class.ms-auto]="!(stepper !== undefined && stepper.selectedIndex !== 0)"
+        color="accent"
+        mat-flat-button>
+        {{'FACILITY_CONFIGURATION.NEXT' | translate}}
+      </button>
+    }
+    @if (stepper !== undefined && stepper.selectedIndex === stepper.steps.length -1) {
+      <button (click)="onFinish()" class="me-2" color="accent" mat-flat-button>
+        {{'FACILITY_CONFIGURATION.FINISH' | translate}}
+      </button>
+    }
   </div>
 </div>

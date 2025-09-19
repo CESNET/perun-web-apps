@@ -1,10 +1,15 @@
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RichResource, RTMessagesManagerService, User, Vo } from '@perun-web-apps/perun/openapi';
-import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { UserFullNamePipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 export interface RequestChangeDataQuotaDialogData {
   vo: Vo;
@@ -14,6 +19,18 @@ export interface RequestChangeDataQuotaDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-request-change-data-quota-dialog',
   templateUrl: './request-change-data-quota-dialog.component.html',
   styleUrls: ['./request-change-data-quota-dialog.component.scss'],

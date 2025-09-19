@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -9,7 +17,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BehaviorSubject, catchError, filter, finalize, of, switchMap, tap } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import {
   Group,
@@ -18,9 +26,13 @@ import {
   Vo,
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteModule,
+} from '@angular/material/autocomplete';
 import { Router } from '@angular/router';
 import { GlobalSearchValueService } from '@perun-web-apps/perun/services';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 export interface SearchGroup {
   name: string;
@@ -28,6 +40,20 @@ export interface SearchGroup {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MiddleClickRouterLinkDirective,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-global-search',
   templateUrl: './global-search.component.html',
   styleUrls: ['./global-search.component.scss'],

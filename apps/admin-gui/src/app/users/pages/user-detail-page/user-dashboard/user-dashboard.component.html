@@ -10,72 +10,87 @@
         >
       </div>
       <div class="text-bigger mt-1 mb-1">{{'USER_DETAIL.DASHBOARD.SHOW_ROLES' | translate}}</div>
-      <div *ngFor="let roleName of this.roleNames">
-        <mat-checkbox
-          [checked]="this.isRoleShowed(roleName)"
-          (change)="$event ? changeRoleView(roleName) : null"
-          >{{'USER_DETAIL.DASHBOARD.CARD_TITLE_' + this.roleName | translate}}</mat-checkbox
-        >
-      </div>
+      @for (roleName of this.roleNames; track roleName) {
+        <div>
+          <mat-checkbox
+            [checked]="this.isRoleShowed(roleName)"
+            (change)="$event ? changeRoleView(roleName) : null"
+            >{{'USER_DETAIL.DASHBOARD.CARD_TITLE_' + roleName | translate}}</mat-checkbox
+          >
+        </div>
+      }
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div *ngIf="user !== undefined" class="container-fluid ps-xl-5 pe-xl-5 user-theme">
-      <h1 class="page-title d-flex">
-        <mat-icon class="home-image perun-icon" svgIcon="perun-home-white"></mat-icon>
-        <span class="pt-1" data-cy="dashboard-welcome"
-          >{{'USER_DETAIL.DASHBOARD.TITLE' | translate}} {{this.user | userFullName}}</span
-        >
-        <button
-          (click)="this.rightSettingOpened = true"
-          *ngIf="!hasOnlyNoRightsRoles"
-          class="ms-auto text-bigger"
-          mat-stroked-button>
-          <mat-icon>settings</mat-icon>
-        </button>
-      </h1>
-
-      <div *ngIf="hasOnlyNoRightsRoles">
-        <div class="card m-3 p-4">
-          <div class="text-align">
-            {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES' | translate}}
-          </div>
-          <div class="text-align pt-3 mt-2">
-            {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES_PROFILE' | translate}}
-          </div>
-          <div class="mx-auto pt-3">
+    @if (user !== undefined) {
+      <div class="container-fluid ps-xl-5 pe-xl-5 user-theme">
+        <h1 class="page-title d-flex">
+          <mat-icon class="home-image perun-icon" svgIcon="perun-home-white"></mat-icon>
+          <span class="pt-1" data-cy="dashboard-welcome"
+            >{{'USER_DETAIL.DASHBOARD.TITLE' | translate}} {{this.user | userFullName}}</span
+          >
+          @if (!hasOnlyNoRightsRoles) {
             <button
-              [routerLink]="['/myProfile']"
-              queryParamsHandling="merge"
-              class="ms-2 mt-2"
-              color="accent"
-              mat-flat-button>
-              {{'USER_DETAIL.DASHBOARD.GO_TO_USER_PROFILE' | translate}}
+              (click)="this.rightSettingOpened = true"
+              class="ms-auto text-bigger"
+              mat-stroked-button>
+              <mat-icon>settings</mat-icon>
             </button>
+          }
+        </h1>
+        @if (hasOnlyNoRightsRoles) {
+          <div>
+            <div class="card m-3 p-4">
+              <div class="text-align">
+                {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES' | translate}}
+              </div>
+              <div class="text-align pt-3 mt-2">
+                {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES_PROFILE' | translate}}
+              </div>
+              <div class="mx-auto pt-3">
+                <button
+                  [routerLink]="['/myProfile']"
+                  queryParamsHandling="merge"
+                  class="ms-2 mt-2"
+                  color="accent"
+                  mat-flat-button>
+                  {{'USER_DETAIL.DASHBOARD.GO_TO_USER_PROFILE' | translate}}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        }
+        @if (!hasOnlyNoRightsRoles) {
+          <div>
+            @if (recentlyViewedShow) {
+              <span>
+                <div class="page-subtitle">
+                  {{'USER_DETAIL.DASHBOARD.RECENTLY_VIEWED' | translate}}
+                </div>
+                <app-perun-web-apps-dashboard-recently-viewed-button-field></app-perun-web-apps-dashboard-recently-viewed-button-field>
+              </span>
+            }
+            @if (rolesToHide.toString() !== roleNames.toString()) {
+              <div class="page-subtitle my-4">
+                {{'USER_DETAIL.DASHBOARD.MANAGEABLE_ENTITIES' | translate}}
+              </div>
+            }
+            <div>
+              @for (roleName of this.roleNames; track roleName) {
+                <div class="mb-3">
+                  @if (this.isRoleShowed(roleName)) {
+                    <app-perun-web-apps-dashboard-card
+                      [roleName]="roleName"
+                      [role]="this.roles[roleName]">
+                    </app-perun-web-apps-dashboard-card>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
-      <div *ngIf="!hasOnlyNoRightsRoles">
-        <span *ngIf="recentlyViewedShow">
-          <div class="page-subtitle">
-            {{'USER_DETAIL.DASHBOARD.RECENTLY_VIEWED' | translate}}
-          </div>
-          <app-perun-web-apps-dashboard-recently-viewed-button-field></app-perun-web-apps-dashboard-recently-viewed-button-field>
-        </span>
-        <div *ngIf="rolesToHide.toString() !== roleNames.toString()" class="page-subtitle my-4">
-          {{'USER_DETAIL.DASHBOARD.MANAGEABLE_ENTITIES' | translate}}
-        </div>
-        <div>
-          <div *ngFor="let roleName of this.roleNames" class="mb-3">
-            <app-perun-web-apps-dashboard-card
-              *ngIf="this.isRoleShowed(roleName)"
-              [roleName]="roleName"
-              [role]="this.roles[roleName]">
-            </app-perun-web-apps-dashboard-card>
-          </div>
-        </div>
-      </div>
-    </div>
+    }
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -4,6 +4,7 @@ import { RichMember } from '@perun-web-apps/perun/openapi';
 import { isMemberIndirectString } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'memberCheckboxLabel',
 })
 export class MemberCheckboxLabelPipe implements PipeTransform {

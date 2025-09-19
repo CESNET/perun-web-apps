@@ -8,28 +8,30 @@
       <p>
         {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.DESCRIPTION' | translate}}
       </p>
-      <div *ngIf="servicesLastAssignedIds.length > 0" class="mb-2">
-        <perun-web-apps-alert alert_type="warn">
-          {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.WARN_LAST_ASSIGNED' | translate}}
-        </perun-web-apps-alert>
-        <p>
-          {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.OPTIONAL_REMOVAL' | translate}}
-        </p>
-        <p class="small mt-0">
-          {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.OPTIONAL_REMOVAL_EXTRA' | translate}}
-        </p>
-        <div class="flex-column d-flex">
-          <mat-checkbox [(ngModel)]="removeTask" (change)="removeTaskResults = false">
-            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_TASK' | translate}}
-          </mat-checkbox>
-          <mat-checkbox [(ngModel)]="removeTaskResults" [disabled]="removeTask">
-            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_TASK_RESULTS' | translate}}
-          </mat-checkbox>
-          <mat-checkbox [(ngModel)]="removeDestinations">
-            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_DESTINATIONS' | translate}}
-          </mat-checkbox>
+      @if (servicesLastAssignedIds.length > 0) {
+        <div class="mb-2">
+          <perun-web-apps-alert alert_type="warn">
+            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.WARN_LAST_ASSIGNED' | translate}}
+          </perun-web-apps-alert>
+          <p>
+            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.OPTIONAL_REMOVAL' | translate}}
+          </p>
+          <p class="small mt-0">
+            {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.OPTIONAL_REMOVAL_EXTRA' | translate}}
+          </p>
+          <div class="flex-column d-flex">
+            <mat-checkbox [(ngModel)]="removeTask" (change)="removeTaskResults = false">
+              {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_TASK' | translate}}
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="removeTaskResults" [disabled]="removeTask">
+              {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_TASK_RESULTS' | translate}}
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="removeDestinations">
+              {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.REMOVE_DESTINATIONS' | translate}}
+            </mat-checkbox>
+          </div>
         </div>
-      </div>
+      }
 
       <div class="fw-bold">
         {{'DIALOGS.REMOVE_SERVICE_FROM_RESOURCE.ASK' | translate}}
@@ -44,9 +46,9 @@
             [matTooltipDisabled]="!servicesLastAssignedIds.includes(service.id)">
             <div class="d-flex align-items-center">
               {{service.name}}
-              <mat-icon class="ms-2" *ngIf="servicesLastAssignedIds.includes(service.id)"
-                >warning</mat-icon
-              >
+              @if (servicesLastAssignedIds.includes(service.id)) {
+                <mat-icon class="ms-2">warning</mat-icon>
+              }
             </div>
           </td>
         </ng-container>

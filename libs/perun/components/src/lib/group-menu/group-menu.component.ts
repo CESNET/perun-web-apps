@@ -1,8 +1,31 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { GroupSyncIconColorPipe } from '@perun-web-apps/perun/pipes';
+import { GroupSyncToolTipPipe } from '@perun-web-apps/perun/pipes';
+import { GroupSyncIconPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    CdkCopyToClipboard,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+    GroupSyncIconColorPipe,
+    GroupSyncToolTipPipe,
+    GroupSyncIconPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-group-menu',
   templateUrl: './group-menu.component.html',
   styleUrls: ['./group-menu.component.scss'],

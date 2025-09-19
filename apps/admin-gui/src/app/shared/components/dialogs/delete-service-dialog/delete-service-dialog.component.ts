@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { MatTableDataSource } from '@angular/material/table';
-import { DeleteDialogResult } from '@perun-web-apps/perun/dialogs';
+import { DeleteDialogResult, DeleteEntityDialogComponent } from '@perun-web-apps/perun/dialogs';
 
 export interface DeleteServiceDialogData {
   theme: string;
@@ -11,6 +12,8 @@ export interface DeleteServiceDialogData {
 }
 
 @Component({
+  imports: [CommonModule, DeleteEntityDialogComponent],
+  standalone: true,
   selector: 'app-delete-service-dialog',
   templateUrl: './delete-service-dialog.component.html',
   styleUrls: ['./delete-service-dialog.component.scss'],

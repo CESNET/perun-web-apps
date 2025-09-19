@@ -1,3 +1,5 @@
+import { UpdateBanDialogComponent } from '../update-ban-dialog/update-ban-dialog.component';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
@@ -6,6 +8,8 @@ import { UpdateBanData } from '../update-ban-dialog/update-ban-dialog.component'
 import { BanForm } from '../add-ban-dialog/add-ban-dialog.component';
 
 @Component({
+  imports: [CommonModule, UpdateBanDialogComponent],
+  standalone: true,
   selector: 'app-update-facility-ban-dialog',
   templateUrl: './update-facility-ban-dialog.component.html',
   styleUrls: ['./update-facility-ban-dialog.component.scss'],

@@ -2,13 +2,13 @@
   "name": "consolidator",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/consolidator/src",
+  "prefix": "perun-web-apps",
   "generators": {
     "@nx/angular:component": {
       "style": "scss"
     }
   },
-  "sourceRoot": "apps/consolidator/src",
-  "prefix": "perun-web-apps",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -94,7 +94,8 @@
           "buildTarget": "consolidator:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

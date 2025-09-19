@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import {
+  MenuButtonsFieldComponent,
+  ExpandableTilesComponent,
+} from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 import {
@@ -7,7 +17,7 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +25,18 @@ import { getDefaultDialogConfig, parseAttributeFriendlyName } from '@perun-web-a
 import { ChangeEmailUserProfileRedirectDialogComponent } from '../../../../shared/components/dialogs/change-email-user-profile-redirect-dialog/change-email-user-profile-redirect-dialog.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MenuButtonsFieldComponent,
+    ExpandableTilesComponent,
+    MatCardModule,
+    MatTableModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'app-user-overview',
   templateUrl: './user-overview.component.html',
   styleUrls: ['./user-overview.component.scss'],

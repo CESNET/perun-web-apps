@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Group } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -6,8 +16,23 @@ import { Observable } from 'rxjs';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-application-form-manage-groups',
   templateUrl: './application-form-manage-groups.component.html',
   styleUrls: ['./application-form-manage-groups.component.css'],

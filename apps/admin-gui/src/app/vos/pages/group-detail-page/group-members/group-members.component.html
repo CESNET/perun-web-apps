@@ -1,89 +1,97 @@
 <h1 class="page-subtitle">{{'GROUP_DETAIL.MEMBERS.TITLE' | translate}}</h1>
-<perun-web-apps-alert *ngIf="synchEnabled" alert_type="warn">
-  {{'GROUP_DETAIL.MEMBERS.ACTIONS_DISABLED' | translate}}
-</perun-web-apps-alert>
+@if (synchEnabled) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'GROUP_DETAIL.MEMBERS.ACTIONS_DISABLED' | translate}}
+  </perun-web-apps-alert>
+}
 <div class="align-elements">
   <perun-web-apps-refresh-button (click)="refreshTable()"></perun-web-apps-refresh-button>
   <span
     [matTooltipDisabled]="!(group | groupMembersActionButtonDisabled: 'add')"
     [matTooltipPosition]="'above'"
     matTooltip="{{group | groupMembersActionButtonDisabledTooltip: 'add' | translate}}">
-    <button
-      (click)="onAddMember()"
-      *ngIf="addAuth"
-      [disabled]="(group | groupMembersActionButtonDisabled: 'add')"
-      class="me-2 action-button"
-      color="accent"
-      data-cy="add-members"
-      mat-flat-button>
-      {{'GROUP_DETAIL.MEMBERS.ADD_MEMBER' | translate}}
-    </button>
+    @if (addAuth) {
+      <button
+        (click)="onAddMember()"
+        [disabled]="(group | groupMembersActionButtonDisabled: 'add')"
+        class="me-2 action-button"
+        color="accent"
+        data-cy="add-members"
+        mat-flat-button>
+        {{'GROUP_DETAIL.MEMBERS.ADD_MEMBER' | translate}}
+      </button>
+    }
   </span>
   <span
     [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled))"
     [matTooltipPosition]="'above'"
     matTooltip="{{inviteDisabled && preApprovedInviteDisabled ? ('GROUP_DETAIL.MEMBERS.INVITE_BUTTON_DISABLED' | translate) : (group | groupMembersActionButtonDisabledTooltip | translate)}}">
-    <button
-      *ngIf="inviteAuth"
-      [disabled]="(group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled)"
-      [matMenuTriggerFor]="menu"
-      class="me-2 dropdown-toggle"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.MEMBERS.INVITE' | translate}}
-    </button>
+    @if (inviteAuth) {
+      <button
+        [disabled]="(group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled)"
+        [matMenuTriggerFor]="menu"
+        class="me-2 dropdown-toggle"
+        color="accent"
+        mat-flat-button>
+        {{'GROUP_DETAIL.MEMBERS.INVITE' | translate}}
+      </button>
+    }
     <mat-menu #menu="matMenu">
       <span
         [matTooltipDisabled]="!inviteDisabled"
         [matTooltipPosition]="'right'"
         matTooltip="{{'GROUP_DETAIL.MEMBERS.INVITE_DISABLED' | translate}}">
-        <button
-          (click)="onInviteMember()"
-          *ngIf="inviteAuth"
-          [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
-          class="action-button"
-          mat-menu-item>
-          {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
-        </button>
+        @if (inviteAuth) {
+          <button
+            (click)="onInviteMember()"
+            [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+            class="action-button"
+            mat-menu-item>
+            {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
+          </button>
+        }
       </span>
       <span
         [matTooltipDisabled]="!preApprovedInviteDisabled"
         [matTooltipPosition]="'right'"
         matTooltip="{{'GROUP_DETAIL.MEMBERS.PREAPPROVED_INVITE_DISABLED' | translate}}">
-        <button
-          (click)="onInvitePreapprovedMember()"
-          *ngIf="preApprovedInviteAuth"
-          [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
-          class="action-button"
-          mat-menu-item>
-          {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
-        </button>
+        @if (preApprovedInviteAuth) {
+          <button
+            (click)="onInvitePreapprovedMember()"
+            [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+            class="action-button"
+            mat-menu-item>
+            {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
+          </button>
+        }
       </span>
       <span
         [matTooltipDisabled]="!inviteDisabled"
         [matTooltipPosition]="'right'"
         matTooltip="{{'GROUP_DETAIL.MEMBERS.INVITE_DISABLED' | translate}}">
-        <button
-          *ngIf="inviteAuth"
-          (click)="onBulkInvite()"
-          [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
-          class="action-button"
-          mat-menu-item>
-          {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
-        </button>
+        @if (inviteAuth) {
+          <button
+            (click)="onBulkInvite()"
+            [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+            class="action-button"
+            mat-menu-item>
+            {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
+          </button>
+        }
       </span>
       <span
         [matTooltipDisabled]="!preApprovedInviteDisabled"
         [matTooltipPosition]="'right'"
         matTooltip="{{'GROUP_DETAIL.MEMBERS.PREAPPROVED_INVITE_DISABLED' | translate}}">
-        <button
-          *ngIf="preApprovedInviteAuth"
-          (click)="onBulkPreapprovedInvite()"
-          [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
-          class="action-button"
-          mat-menu-item>
-          {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
-        </button>
+        @if (preApprovedInviteAuth) {
+          <button
+            (click)="onBulkPreapprovedInvite()"
+            [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+            class="action-button"
+            mat-menu-item>
+            {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
+          </button>
+        }
       </span>
     </mat-menu>
   </span>
@@ -91,46 +99,49 @@
     [matTooltipDisabled]="!copyInvitationDisabled"
     [matTooltipPosition]="'above'"
     matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate}}">
-    <button
-      *ngIf="inviteAuth"
-      (click)="copyInvitationLink()"
-      [disabled]="(group | groupMembersActionButtonDisabled) || copyInvitationDisabled"
-      class="me-2"
-      mat-stroked-button>
-      <mat-icon>file_copy</mat-icon>
-      <span class="ms-1">
-        {{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK' | translate}}
-      </span>
-    </button>
+    @if (inviteAuth) {
+      <button
+        (click)="copyInvitationLink()"
+        [disabled]="(group | groupMembersActionButtonDisabled) || copyInvitationDisabled"
+        class="me-2"
+        mat-stroked-button>
+        <mat-icon>file_copy</mat-icon>
+        <span class="ms-1">
+          {{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK' | translate}}
+        </span>
+      </button>
+    }
   </span>
   <span
     [matTooltipDisabled]="!copyDisabled"
     [matTooltipPosition]="'above'"
     matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_MEMBERS_DISABLED' | translate}}">
-    <button
-      (click)="onCopyMembers()"
-      *ngIf="copyAuth"
-      [disabled]="copyDisabled"
-      class="me-2"
-      color="accent"
-      mat-flat-button>
-      {{'GROUP_DETAIL.MEMBERS.COPY_MEMBERS' | translate}}
-    </button>
+    @if (copyAuth) {
+      <button
+        (click)="onCopyMembers()"
+        [disabled]="copyDisabled"
+        class="me-2"
+        color="accent"
+        mat-flat-button>
+        {{'GROUP_DETAIL.MEMBERS.COPY_MEMBERS' | translate}}
+      </button>
+    }
   </span>
   <span
     [matTooltipDisabled]="!(group | groupMembersActionButtonDisabled)"
     [matTooltipPosition]="'above'"
     matTooltip="{{group | groupMembersActionButtonDisabledTooltip | translate}}">
-    <button
-      (click)="onRemoveMembers()"
-      *ngIf="removeAuth"
-      [disabled]="(loading$ | async) || selection.isEmpty() || (group | groupMembersActionButtonDisabled)"
-      class="me-2"
-      color="warn"
-      data-cy="remove-members"
-      mat-flat-button>
-      {{'GROUP_DETAIL.MEMBERS.REMOVE_MEMBERS' | translate}}
-    </button>
+    @if (removeAuth) {
+      <button
+        (click)="onRemoveMembers()"
+        [disabled]="(loading$ | async) || selection.isEmpty() || (group | groupMembersActionButtonDisabled)"
+        class="me-2"
+        color="warn"
+        data-cy="remove-members"
+        mat-flat-button>
+        {{'GROUP_DETAIL.MEMBERS.REMOVE_MEMBERS' | translate}}
+      </button>
+    }
   </span>
   <mat-form-field class="me-2 fix-select">
     <mat-label>{{'GROUP_DETAIL.MEMBERS.FILTER_STATUS' | translate}}</mat-label>
@@ -138,12 +149,9 @@
       <mat-select-trigger>
         {{displaySelectedStatuses() | memberStatus}}
       </mat-select-trigger>
-      <mat-option
-        class="group-theme"
-        *ngFor="let status of statusList"
-        [value]="status"
-        >{{status | memberStatus}}</mat-option
-      >
+      @for (status of statusList; track status) {
+        <mat-option class="group-theme" [value]="status">{{status | memberStatus}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <mat-form-field class="me-2 fix-select">
@@ -152,12 +160,9 @@
       <mat-select-trigger>
         {{displaySelectedGroupStatuses() | memberStatus}}
       </mat-select-trigger>
-      <mat-option
-        class="group-theme"
-        *ngFor="let status of groupStatusList"
-        [value]="status"
-        >{{status | memberStatus}}</mat-option
-      >
+      @for (status of groupStatusList; track status) {
+        <mat-option class="group-theme" [value]="status">{{status | memberStatus}}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
 

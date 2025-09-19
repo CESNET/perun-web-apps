@@ -7,30 +7,32 @@
     <div mat-dialog-content>
       <p>{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DESCRIPTION' | translate}}</p>
       <div>
-        <mat-checkbox
-          *ngIf="taskId !== null"
-          (change)="change($event)"
-          class="right-space"
-          color="warn"
-          [checked]="taskChecked"
-          [disabled]="checkboxesDisabled"
-          [matTooltipDisabled]="!checkboxesDisabled"
-          id="task"
-          matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
-          {{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOX_TASK_AND_TASK_RESULTS' | translate}}
-        </mat-checkbox>
-        <mat-checkbox
-          *ngIf="taskId !== null"
-          (change)="change($event)"
-          class="right-space"
-          color="warn"
-          [checked]="taskResultsChecked"
-          [disabled]="checkboxesDisabled"
-          [matTooltipDisabled]="!checkboxesDisabled"
-          id="taskResults"
-          matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
-          {{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOX_TASK_RESULTS' | translate}}
-        </mat-checkbox>
+        @if (taskId !== null) {
+          <mat-checkbox
+            (change)="change($event)"
+            class="right-space"
+            color="warn"
+            [checked]="taskChecked"
+            [disabled]="checkboxesDisabled"
+            [matTooltipDisabled]="!checkboxesDisabled"
+            id="task"
+            matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
+            {{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOX_TASK_AND_TASK_RESULTS' | translate}}
+          </mat-checkbox>
+        }
+        @if (taskId !== null) {
+          <mat-checkbox
+            (change)="change($event)"
+            class="right-space"
+            color="warn"
+            [checked]="taskResultsChecked"
+            [disabled]="checkboxesDisabled"
+            [matTooltipDisabled]="!checkboxesDisabled"
+            id="taskResults"
+            matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
+            {{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOX_TASK_RESULTS' | translate}}
+          </mat-checkbox>
+        }
         <mat-checkbox
           (change)="change($event)"
           [disabled]="checkboxesDisabled"

@@ -8,8 +8,11 @@ import { SimilarIdentityFriendlyNamesStringPipe } from './pipes/similar-identity
 import { ConsolidationResultComponent } from './consolidation-result/consolidation-result.component';
 
 @NgModule({
-  imports: [CommonModule, UiMaterialModule, TranslateModule, PerunPipesModule],
-  declarations: [
+  imports: [
+    CommonModule,
+    UiMaterialModule,
+    TranslateModule,
+    PerunPipesModule,
     FocusOnLinkerDialogComponent,
     SimilarIdentityFriendlyNamesStringPipe,
     ConsolidationResultComponent,

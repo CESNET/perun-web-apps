@@ -1,3 +1,6 @@
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
   CabinetManagerService,
@@ -7,14 +10,27 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TABLE_PUBLICATION_THANKS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddThanksDialogComponent } from '../../dialogs/add-thanks-dialog/add-thanks-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { BehaviorSubject } from 'rxjs';
+import { ThanksListComponent } from '../thanks-list/thanks-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    ThanksListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-add-thanks',
   templateUrl: './add-thanks.component.html',
   styleUrls: ['./add-thanks.component.scss'],

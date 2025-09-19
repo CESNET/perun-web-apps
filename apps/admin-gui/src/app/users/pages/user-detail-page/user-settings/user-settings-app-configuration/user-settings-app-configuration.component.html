@@ -3,9 +3,11 @@
   <mat-form-field class="w-100">
     <mat-label>{{'USER_DETAIL.SETTINGS.GUI_CONFIG.PREF_TABLE_PAGE_SIZE' | translate}}</mat-label>
     <mat-select [(value)]="preferredTablePageSize" (valueChange)="updatePreferredTablePageSize()">
-      <mat-option *ngFor="let value of tablePageSizeOptions" [value]="value">
-        {{value}}
-      </mat-option>
+      @for (value of tablePageSizeOptions; track value) {
+        <mat-option [value]="value">
+          {{value}}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <mat-slide-toggle

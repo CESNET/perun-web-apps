@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   Attribute,
@@ -8,9 +13,23 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { UserFullNamePipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    AttributesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-privacy-page',
   templateUrl: './privacy-page.component.html',
   styleUrls: ['./privacy-page.component.scss'],

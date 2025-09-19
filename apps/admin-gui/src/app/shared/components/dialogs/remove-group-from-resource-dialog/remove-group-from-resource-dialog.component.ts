@@ -1,9 +1,13 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Group, ResourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveGroupFromResourceDialogData {
   resourceId: number;
@@ -12,6 +16,16 @@ export interface RemoveGroupFromResourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-remove-group-from-resource-dialog',
   templateUrl: './remove-group-from-resource-dialog.component.html',
   styleUrls: ['./remove-group-from-resource-dialog.component.scss'],

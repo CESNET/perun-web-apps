@@ -1,89 +1,100 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 group-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div *ngIf="!loading && vo !== undefined && group !== undefined">
-    <div class="d-flex page-title-headtitle">
-      <mat-icon
-        matTooltip="{{'GROUP_DETAIL.ENTITY' | translate}}"
-        [ngStyle]="{'color':'black'}"
-        class="perun-icon perun-icon-detail"
-        svgIcon="perun-group-black">
-      </mat-icon>
-      <div class="page-title-block">
-        <div class="page-title-headline d-flex align-items-center">
-          <a
-            attr.data-cy="{{group.shortName}}-shortName"
-            class="group-link"
-            [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString(), 'groups', group.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/organizations', vo.id, 'groups', group.id]"
-            [queryParams]="route.snapshot.queryParams">
-            {{group.shortName}}
-          </a>
-          <span class="text-muted"> &nbsp;#{{group.id}} </span>
-          <button
-            [cdkCopyToClipboard]="group.name"
-            [matTooltipPosition]="'below'"
-            mat-icon-button
-            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}">
-            <mat-icon> file_copy </mat-icon>
-          </button>
-          <button
-            *ngIf="group.name !== 'members' && editAuth"
-            (click)="editGroup()"
-            aria-label="Edit group"
-            matTooltip="{{'GROUP_DETAIL.EDIT' | translate}}"
-            mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="group.name !== 'members' && deleteAuth"
-            (click)="deleteGroup()"
-            matTooltip="{{'GROUP_DETAIL.DELETE' | translate}}"
-            mat-icon-button>
-            <mat-icon>delete_forever</mat-icon>
-          </button>
-        </div>
-        <div>{{'GROUP_DETAIL.UUID' | translate}}: {{group.uuid}}</div>
-        <span class="mt-1 entity-info">
-          {{'GROUP_DETAIL.ENTITY' | translate}}, {{'GROUP_DETAIL.VO_NAME' | translate}}:
-          <a
-            data-cy="vo-link"
-            class="group-link"
-            [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/organizations', vo.id]"
-            [queryParams]="route.snapshot.queryParams"
-            >{{vo.name}}</a
-          >, {{'GROUP_DETAIL.DESCRIPTION' | translate}}: {{group.description}}
-          <span *ngIf="syncEnabled">
-            , {{'GROUP_DETAIL.SYNCHRONIZATION' | translate}}:
-            <button
-              (click)="onSyncDetail()"
-              *ngIf="syncAuth"
-              [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
-              [matTooltipPosition]="'above'"
-              [matTooltip]="group | groupSyncToolTip | translate"
-              class="align-middle"
-              mat-icon-button>
-              <mat-icon class="{{group | groupSyncIconColor}} align-top">
-                {{group | groupSyncIcon}}
-              </mat-icon>
-            </button>
-          </span>
-          <p *ngIf="parentGroup">
-            {{'GROUP_DETAIL.SUBGROUP_INFO' | translate}}
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading && vo !== undefined && group !== undefined) {
+    <div>
+      <div class="d-flex page-title-headtitle">
+        <mat-icon
+          matTooltip="{{'GROUP_DETAIL.ENTITY' | translate}}"
+          [ngStyle]="{'color':'black'}"
+          class="perun-icon perun-icon-detail"
+          svgIcon="perun-group-black">
+        </mat-icon>
+        <div class="page-title-block">
+          <div class="page-title-headline d-flex align-items-center">
             <a
+              attr.data-cy="{{group.shortName}}-shortName"
               class="group-link"
-              [perunWebAppsMiddleClickRouterLink]="['/organizations', parentGroup.voId.toString(), 'groups', parentGroup.id.toString()]"
+              [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString(), 'groups', group.id.toString()]"
               (auxclick)="$event.preventDefault()"
-              [routerLink]="['/organizations', parentGroup.voId, 'groups', parentGroup.id]">
-              {{parentGroup.name}}
+              [routerLink]="['/organizations', vo.id, 'groups', group.id]"
+              [queryParams]="route.snapshot.queryParams">
+              {{group.shortName}}
             </a>
-          </p>
-        </span>
+            <span class="text-muted"> &nbsp;#{{group.id}} </span>
+            <button
+              [cdkCopyToClipboard]="group.name"
+              [matTooltipPosition]="'below'"
+              mat-icon-button
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}">
+              <mat-icon> file_copy </mat-icon>
+            </button>
+            @if (group.name !== 'members' && editAuth) {
+              <button
+                (click)="editGroup()"
+                aria-label="Edit group"
+                matTooltip="{{'GROUP_DETAIL.EDIT' | translate}}"
+                mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            @if (group.name !== 'members' && deleteAuth) {
+              <button
+                (click)="deleteGroup()"
+                matTooltip="{{'GROUP_DETAIL.DELETE' | translate}}"
+                mat-icon-button>
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            }
+          </div>
+          <div>{{'GROUP_DETAIL.UUID' | translate}}: {{group.uuid}}</div>
+          <span class="mt-1 entity-info">
+            {{'GROUP_DETAIL.ENTITY' | translate}}, {{'GROUP_DETAIL.VO_NAME' | translate}}:
+            <a
+              data-cy="vo-link"
+              class="group-link"
+              [perunWebAppsMiddleClickRouterLink]="['/organizations', vo.id.toString()]"
+              (auxclick)="$event.preventDefault()"
+              [routerLink]="['/organizations', vo.id]"
+              [queryParams]="route.snapshot.queryParams"
+              >{{vo.name}}</a
+            >, {{'GROUP_DETAIL.DESCRIPTION' | translate}}: {{group.description}}
+            @if (syncEnabled) {
+              <span>
+                , {{'GROUP_DETAIL.SYNCHRONIZATION' | translate}}:
+                @if (syncAuth) {
+                  <button
+                    (click)="onSyncDetail()"
+                    [disabled]="(group | groupSyncIcon) === 'sync_disabled'"
+                    [matTooltipPosition]="'above'"
+                    [matTooltip]="group | groupSyncToolTip | translate"
+                    class="align-middle"
+                    mat-icon-button>
+                    <mat-icon class="{{group | groupSyncIconColor}} align-top">
+                      {{group | groupSyncIcon}}
+                    </mat-icon>
+                  </button>
+                }
+              </span>
+            }
+            @if (parentGroup) {
+              <p>
+                {{'GROUP_DETAIL.SUBGROUP_INFO' | translate}}
+                <a
+                  class="group-link"
+                  [perunWebAppsMiddleClickRouterLink]="['/organizations', parentGroup.voId.toString(), 'groups', parentGroup.id.toString()]"
+                  (auxclick)="$event.preventDefault()"
+                  [routerLink]="['/organizations', parentGroup.voId, 'groups', parentGroup.id]">
+                  {{parentGroup.name}}
+                </a>
+              </p>
+            }
+          </span>
+        </div>
       </div>
+      <app-animated-router-outlet></app-animated-router-outlet>
     </div>
-    <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
+  }
 </div>

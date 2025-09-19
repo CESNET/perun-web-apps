@@ -1,8 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDivider } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { InitAuthService, StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, RichUserExtSource, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getAttribute, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { RemoveUserExtSourceDialogComponent } from '@perun-web-apps/perun/dialogs';
@@ -26,6 +33,17 @@ interface UserProfile {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDivider,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-list-of-identities',
   templateUrl: './list-of-identities.component.html',
   styleUrls: ['./list-of-identities.component.css'],
@@ -145,7 +163,7 @@ export class ListOfIdentitiesComponent implements OnInit, OnChanges {
         currentItem = currentItem[0] as object;
       }
     }
-    return String(currentItem);
+    return String(currentItem); // eslint-disable-line @typescript-eslint/no-base-to-string
   }
 
   getUserName(userProfile: UserProfile): string {

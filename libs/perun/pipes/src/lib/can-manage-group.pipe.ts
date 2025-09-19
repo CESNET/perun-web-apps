@@ -3,6 +3,7 @@ import { Group } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Pipe({
+  standalone: true,
   name: 'canManageGroup',
 })
 export class CanManageGroupPipe implements PipeTransform {

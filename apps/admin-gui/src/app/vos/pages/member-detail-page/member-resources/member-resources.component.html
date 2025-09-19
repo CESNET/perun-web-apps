@@ -1,14 +1,11 @@
 <div>
   <h1 class="page-subtitle">{{ 'MEMBER_DETAIL.RESOURCES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="addAuth"
-    (click)="addResource()"
-    class="action-button me-2"
-    color="accent"
-    mat-flat-button>
-    {{ 'MEMBER_DETAIL.RESOURCES.ADD' | translate}}
-  </button>
+  @if (addAuth) {
+    <button (click)="addResource()" class="action-button me-2" color="accent" mat-flat-button>
+      {{ 'MEMBER_DETAIL.RESOURCES.ADD' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'MEMBER_DETAIL.RESOURCES.FILTER'">

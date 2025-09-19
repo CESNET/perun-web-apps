@@ -1,12 +1,19 @@
-<div *ngIf="items.length !== 0 && {expanded: expanded | async} as ex" class="mt-4">
-  <button mat-button (click)="toggle()">
-    <div class="d-flex align-items-center justify-content-start">
-      <span class="fs-5">{{title | translate}}</span>
-      <mat-icon *ngIf="ex.expanded">keyboard_arrow_down</mat-icon>
-      <mat-icon *ngIf="!ex.expanded">keyboard_arrow_right</mat-icon>
-    </div>
-  </button>
-  <mat-divider class="max-divider-width mb-3"></mat-divider>
-  <perun-web-apps-menu-buttons-field *ngIf="ex.expanded" [items]="items">
-  </perun-web-apps-menu-buttons-field>
-</div>
+@if (items.length !== 0 && {expanded: expanded | async}; as ex) {
+  <div class="mt-4">
+    <button mat-button (click)="toggle()">
+      <div class="d-flex align-items-center justify-content-start">
+        <span class="fs-5">{{title | translate}}</span>
+        @if (ex.expanded) {
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+        @if (!ex.expanded) {
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        }
+      </div>
+    </button>
+    <mat-divider class="max-divider-width mb-3"></mat-divider>
+    @if (ex.expanded) {
+      <perun-web-apps-menu-buttons-field [items]="items"> </perun-web-apps-menu-buttons-field>
+    }
+  </div>
+}

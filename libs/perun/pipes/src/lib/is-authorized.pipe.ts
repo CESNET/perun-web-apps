@@ -3,6 +3,7 @@ import { PerunBean } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 @Pipe({
+  standalone: true,
   name: 'isAuthorized',
 })
 export class IsAuthorizedPipe implements PipeTransform {

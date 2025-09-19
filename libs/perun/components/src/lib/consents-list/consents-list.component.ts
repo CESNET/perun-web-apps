@@ -1,3 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe, IsAllSelectedPipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,7 +15,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -18,15 +24,30 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Consent } from '@perun-web-apps/perun/openapi';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { ConsentStatusComponent } from '../consent-status/consent-status.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    ConsentStatusComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-consents-list',
   templateUrl: './consents-list.component.html',
   styleUrls: ['./consents-list.component.css'],

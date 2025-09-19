@@ -4,19 +4,22 @@
 
 <div class="w-100 d-flex">
   <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
-  <button (click)="add()" *ngIf="addAuth" class="me-2 action-button" color="accent" mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.ADD' | translate}}
-  </button>
+  @if (addAuth) {
+    <button (click)="add()" class="me-2 action-button" color="accent" mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.ADD' | translate}}
+    </button>
+  }
 
-  <button
-    *ngIf="removeAuth"
-    (click)="remove()"
-    color="warn"
-    [disabled]="selection.selected.length === 0 || loading"
-    class="me-2"
-    mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
-  </button>
+  @if (removeAuth) {
+    <button
+      (click)="remove()"
+      color="warn"
+      [disabled]="selection.selected.length === 0 || loading"
+      class="me-2"
+      mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
+    </button>
+  }
 
   <button (click)="changeEmailFooter()" class="me-2 action-button" mat-stroked-button>
     <i class="material-icons align-middle">email</i>
@@ -25,12 +28,14 @@
     </span>
   </button>
 
-  <button (click)="copy()" *ngIf="copyAuth" class="action-button" mat-stroked-button>
-    <i class="material-icons align-middle">file_copy</i>
-    <span class="align-middle">
-      {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.COPY_FROM_VO' | translate}}
-    </span>
-  </button>
+  @if (copyAuth) {
+    <button (click)="copy()" class="action-button" mat-stroked-button>
+      <i class="material-icons align-middle">file_copy</i>
+      <span class="align-middle">
+        {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.COPY_FROM_VO' | translate}}
+      </span>
+    </button>
+  }
 </div>
 
 <ng-template #spinner>

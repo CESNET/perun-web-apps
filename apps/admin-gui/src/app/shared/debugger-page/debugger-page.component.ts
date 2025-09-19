@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { PerunPrincipal } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule],
+  standalone: true,
   selector: 'app-debugger-page',
   templateUrl: './debugger-page.component.html',
   styleUrls: ['./debugger-page.component.scss'],

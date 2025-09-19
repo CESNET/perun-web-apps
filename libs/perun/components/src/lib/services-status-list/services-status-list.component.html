@@ -17,36 +17,40 @@
       matSortDirection="asc"
       matSortDisableClear
       class="w-100">
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th mat-header-cell *matHeaderCellDef class="align-checkbox">
-          <mat-checkbox
-            color="primary"
-            (change)="$event ? masterToggle() : null; this.selectionChange.emit()"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            [aria-label]="selected.all | masterCheckboxLabel | translate">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let serviceState" class="static-column-size align-checkbox">
-          <mat-checkbox
-            color="primary"
-            (click)="$event.stopPropagation()"
-            (change)="$event ? toggleRow(serviceState) : null; this.selectionChange.emit()"
-            [checked]="selection.isSelected(serviceState)"
-            [aria-label]="selection.isSelected(serviceState) | checkboxLabel | translate: {name: serviceState.service.name}">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef class="align-checkbox">
+            <mat-checkbox
+              color="primary"
+              (change)="$event ? masterToggle() : null; this.selectionChange.emit()"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              [aria-label]="selected.all | masterCheckboxLabel | translate">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let serviceState" class="static-column-size align-checkbox">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? toggleRow(serviceState) : null; this.selectionChange.emit()"
+              [checked]="selection.isSelected(serviceState)"
+              [aria-label]="selection.isSelected(serviceState) | checkboxLabel | translate: {name: serviceState.service.name}">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="task.id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.TASK_ID' | translate}}
         </th>
         <td mat-cell class="static-column-size" *matCellDef="let serviceState">
-          <div *ngIf="serviceState.task">{{serviceState.task.id}}</div>
-          <div *ngIf="!serviceState.task">0</div>
+          @if (serviceState.task) {
+            <div>{{serviceState.task.id}}</div>
+          }
+          @if (!serviceState.task) {
+            <div>0</div>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="service.name">
@@ -63,12 +67,13 @@
         </th>
         <td mat-cell *matCellDef="let serviceState">
           {{serviceState.status}}
-          <mat-icon
-            *ngIf="!serviceState.hasDestinations"
-            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NO_DESTINATIONS_TOOLTIP' | translate"
-            class="align-text-bottom ms-1">
-            warning
-          </mat-icon>
+          @if (!serviceState.hasDestinations) {
+            <mat-icon
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NO_DESTINATIONS_TOOLTIP' | translate"
+              class="align-text-bottom ms-1">
+              warning
+            </mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="blocked">
@@ -84,12 +89,16 @@
           {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.STARTED' | translate}}
         </th>
         <td mat-cell *matCellDef="let serviceState">
-          <div *ngIf="serviceState.task && serviceState.task.startTime">
-            {{serviceState.task.startTime | date:'d.M.y H:mm:ss'}}
-          </div>
-          <div *ngIf="!serviceState.task || !serviceState.task.startTime">
-            {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NOT_YET' | translate}}
-          </div>
+          @if (serviceState.task && serviceState.task.startTime) {
+            <div>
+              {{serviceState.task.startTime | date:'d.M.y H:mm:ss'}}
+            </div>
+          }
+          @if (!serviceState.task || !serviceState.task.startTime) {
+            <div>
+              {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NOT_YET' | translate}}
+            </div>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="task.endTime">
@@ -97,12 +106,16 @@
           {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.ENDED' | translate}}
         </th>
         <td mat-cell *matCellDef="let serviceState">
-          <div *ngIf="serviceState.task && serviceState.task.endTime">
-            {{serviceState.task.endTime | date:'d.M.y H:mm:ss'}}
-          </div>
-          <div *ngIf="!serviceState.task || !serviceState.task.endTime">
-            {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NOT_YET' | translate}}
-          </div>
+          @if (serviceState.task && serviceState.task.endTime) {
+            <div>
+              {{serviceState.task.endTime | date:'d.M.y H:mm:ss'}}
+            </div>
+          }
+          @if (!serviceState.task || !serviceState.task.endTime) {
+            <div>
+              {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NOT_YET' | translate}}
+            </div>
+          }
         </td>
       </ng-container>
 
@@ -123,12 +136,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && servicesStatus.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && servicesStatus.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && servicesStatus.length === 0" alert_type="warn">
-  {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NO_SERVICES_STATUS_WARNING' | translate}}
-</perun-web-apps-alert>
+@if (!loading && servicesStatus.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.PERUN.COMPONENTS.SERVICES_STATUS_LIST.NO_SERVICES_STATUS_WARNING' | translate}}
+  </perun-web-apps-alert>
+}
