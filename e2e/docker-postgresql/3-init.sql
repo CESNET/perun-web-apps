@@ -79,6 +79,7 @@ insert into vos (id, name, short_name) values (nextval('vos_id_seq'), 'test-e2e-
 insert into vo_ext_sources (vo_id, ext_sources_id) values (currval('vos_id_seq'), currval('ext_sources_id_seq')-1);
 insert into application_form (id, vo_id) values (nextval('application_form_id_seq'), currval('vos_id_seq'));
 insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 0, 'TEXTFIELD', 'input-test');
+insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 1, 'AUTO_SUBMIT_BUTTON', 'submit-button');
 
 -- insert vo members and groups
 insert into members (id, user_id, vo_id) values (nextval('members_id_seq'), currval('users_id_seq')-1, currval('vos_id_seq'));
@@ -137,6 +138,7 @@ insert into groups (id, parent_group_id, name, vo_id) values (nextval('groups_id
 -- insert group application form and application form item
 insert into application_form (id, vo_id, group_id) values (nextval('application_form_id_seq'), currval('vos_id_seq'), currval('groups_id_seq')-1);
 insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 0, 'TEXTFIELD', 'input-test');
+insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 1, 'AUTO_SUBMIT_BUTTON', 'submit-button');
 
 
 -- set User6 and User7 as GROUPADMIN of test-group-from-db-2
@@ -287,7 +289,7 @@ insert into services (id, name, script) values (nextval('services_id_seq'), 'tes
 insert into ext_sources (id, name, type) values (nextval('ext_sources_id_seq'), 'test_ext_source_db', 'cz.metacentrum.perun.core.impl.ExtSourceInternal');
 
 -- insert test auditer log message
-insert into auditer_log (id, msg, actor) values (nextval('auditer_log_id_seq'), 'test_audit_message', 'test_actor');
+insert into auditer_log (id, msg, actor) values (nextval('auditer_log_id_seq'), '{"name": "test_audit_message"}', 'test_actor');
 
 -- insert test facility and consent hub
 insert into facilities (id, name) values (nextval('facilities_id_seq'), 'test-e2e-facility-from-db-3');
@@ -415,6 +417,7 @@ insert into authz (user_id, role_id, vo_id, group_id) values (currval('users_id_
 -- insert group application form, application form item and vo member's application
 insert into application_form (id, vo_id, group_id) values (nextval('application_form_id_seq'), currval('vos_id_seq'), currval('groups_id_seq'));
 insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 0, 'TEXTFIELD', 'g-o-input-test');
+insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 1, 'SUBMIT_BUTTON', 'submit-button');
 insert into application (id, vo_id, user_id, apptype, extSourceName, extSourceType, fed_info, state, extSourceLoa, group_id) values (nextval('application_id_seq'), currval('vos_id_seq'), currval('users_id_seq')-1, 'INITIAL', 'INTERNAL', 'cz.metacentrum.perun.core.impl.ExtSourceInternal', '', 'VERIFIED', 0, currval('groups_id_seq'));
 
 /**********************************************************************************************************************
@@ -539,6 +542,7 @@ insert into vos (id, name, short_name) values (nextval('vos_id_seq'), 'vo-observ
 insert into vo_ext_sources (vo_id, ext_sources_id) values (currval('vos_id_seq'), 1);
 insert into application_form (id, vo_id) values (nextval('application_form_id_seq'), currval('vos_id_seq'));
 insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 0, 'TEXTFIELD', 'input-test');
+insert into application_form_items (id, form_id, ordnum, type, shortname) values (nextval('application_form_items_id_seq'), currval('application_form_id_seq'), 1, 'SUBMIT_BUTTON', 'submit-button');
 insert into application (id, vo_id, apptype, state) values (nextval('application_id_seq'), currval('vos_id_seq'), 'EXTENSION', 'VERIFIED');
 
 -- insert vo-observer-user3 as vo and group member
