@@ -730,7 +730,9 @@
         "APPROVE_MESSAGE": "Application was approved",
         "VERIFY_MESSAGE": "Application was verified",
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
-        "EDIT": "Edit"
+        "EDIT": "Edit",
+        "MODIFIED_NAME_NOT_AVAILABLE": "N/A",
+        "MODIFIED_NAME_REGISTRAR": "Automatically approved"
       }
     },
     "STATISTICS": {

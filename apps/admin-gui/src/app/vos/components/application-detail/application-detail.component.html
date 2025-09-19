@@ -105,7 +105,7 @@
           <span
             class="fw-bold"
             >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
-          >: {{invitation.createdBy | modifiedName}}
+          >: {{invitation.senderName}}
         </div>
         <div>
           <span
@@ -120,7 +120,7 @@
         <mat-card-title
           ><i class="material-icons red align-text-top">clear</i>
           {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
-          {{application.modifiedBy | modifiedName}}</mat-card-title
+          {{application.modifiedByDisplayName | modifiedName}}</mat-card-title
         >
         <div>
           <span
@@ -135,7 +135,7 @@
         <mat-card-title
           ><i class="material-icons green align-text-top">done</i>
           {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
-          {{application.modifiedBy | modifiedName}}</mat-card-title
+          {{application.modifiedByDisplayName | modifiedName}}</mat-card-title
         >
         <div>
           <span
