@@ -23,7 +23,8 @@
     </div>
   }
 
-  <app-side-menu-item [item]="userItem" (click)="redirectToProfile()"> </app-side-menu-item>
+  <app-side-menu-item [item]="userItem" [root]="true" (click)="redirectToProfile()">
+  </app-side-menu-item>
 
   @if (authResolver.isPerunAdminOrObserver()) {
     <app-side-menu-item

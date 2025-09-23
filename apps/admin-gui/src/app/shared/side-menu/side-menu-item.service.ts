@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SideMenuLink, SideMenuItem } from './side-menu.component';
+import { SideMenuItem, SideMenuLink } from './side-menu.component';
 import {
   ApiRequestConfigurationService,
   GuiAuthResolver,
@@ -88,6 +88,7 @@ export class SideMenuItemService {
       colorClass: 'base-item-color-activated',
       icon: 'perun-user',
       baseColorClass: 'base-item-color',
+      baseColorClassRegex: 'IMPOSSIBLE REGEX',
       linksClass: 'dark-item-links',
       backgroundColorCss: this.theme.sidemenu_bg_color,
       textColorCss: this.theme.sidemenu_text_color,
