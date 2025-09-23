@@ -245,7 +245,6 @@ export class InitAuthService {
       '/home',
       '/organizations',
       '/facilities',
-      '/myProfile',
       '/admin',
       '/login',
       '/service-access',

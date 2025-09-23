@@ -19,11 +19,11 @@ import { GUIConfigService, PREF_PAGE_SIZE } from '@perun-web-apps/config/table-c
     TranslateModule,
   ],
   standalone: true,
-  selector: 'app-user-settings-app-configuration',
-  templateUrl: './user-settings-app-configuration.component.html',
-  styleUrls: ['./user-settings-app-configuration.component.scss'],
+  selector: 'app-gui-configuration',
+  templateUrl: './gui-configuration.component.html',
+  styleUrls: ['./gui-configuration.component.scss'],
 })
-export class UserSettingsAppConfigurationComponent implements OnInit {
+export class GuiConfigurationComponent implements OnInit {
   tablePageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   preferredTablePageSize: number;
   showIds: boolean;

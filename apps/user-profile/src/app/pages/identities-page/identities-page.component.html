@@ -69,6 +69,22 @@
       [displayedColumns]="displayedColumnsOther"
       [disableRouting]="true"></perun-web-apps-user-ext-sources-list>
   </div>
+
+  <h1 class="page-title mt-5">
+    {{'IDENTITIES.SERVICE' | customTranslate | translate}}
+  </h1>
+  <div class="position-relative table-min-height">
+    <perun-web-apps-users-list
+      *perunWebAppsLoader="loading; indicator: spinner"
+      [loading]="loading"
+      [noUsersFoundLabel]="'IDENTITIES.NO_SERVICE_ACCOUNTS' | translate"
+      [displayColumns]="displayedColumnsService"
+      [selection]="serviceIdentitiesSelection"
+      [users]="serviceIdentities"
+      [disableCheckbox]="true"
+      [disableRouting]="true">
+    </perun-web-apps-users-list>
+  </div>
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>

@@ -66,7 +66,7 @@ export class ServiceIdentityDetailPageComponent implements OnInit {
           this.user = user;
 
           const userItem = this.sideMenuItemService.parseServiceIdentity(user);
-          this.sideMenuService.setUserItems([userItem]);
+          this.sideMenuService.setServiceIdentitiesItems([userItem]);
           this.loading = false;
         },
         error: () => (this.loading = false),

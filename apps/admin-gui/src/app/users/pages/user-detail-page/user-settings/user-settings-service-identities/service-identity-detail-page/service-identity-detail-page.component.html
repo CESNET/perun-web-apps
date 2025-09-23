@@ -1,9 +1,9 @@
-@if (user !== undefined) {
-  <div class="container-fluid ps-xl-5 pe-xl-5 user-theme">
-    <perun-web-apps-back-button> </perun-web-apps-back-button>
-    @if (loading) {
-      <mat-spinner class="me-auto ms-auto"></mat-spinner>
-    }
+<div class="container-fluid ps-xl-5 pe-xl-5 user-theme">
+  <perun-web-apps-back-button> </perun-web-apps-back-button>
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading && user !== undefined) {
     <div class="d-flex page-title-headtitle">
       <mat-icon
         matTooltip="{{'MENU_ITEMS.USER.ENTITY' | translate}}"
@@ -14,9 +14,9 @@
       <div class="page-title-block">
         <div class="page-title-headline d-flex align-items-center">
           <a
-            [perunWebAppsMiddleClickRouterLink]="['/myProfile/service-identities', user.id.toString()]"
+            [perunWebAppsMiddleClickRouterLink]="['/service-identities', user.id.toString()]"
             (auxclick)="$event.preventDefault()"
-            [routerLink]="['/myProfile/service-identities', user.id]"
+            [routerLink]="['/service-identities', user.id]"
             class="user-link">
             {{user | userFullName}}
           </a>
@@ -38,5 +38,5 @@
       </div>
     </div>
     <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
-}
+  }
+</div>

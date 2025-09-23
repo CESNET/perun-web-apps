@@ -33,7 +33,7 @@
           <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
             <span
               [matTooltipDisabled]="!(disableCheckbox && !directManagerIds?.includes(row.id))"
-              [matTooltip]="'MANAGERS_LIST.INDIRECT_DISABLED_TOOLTIP' | translate">
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.INDIRECT_DISABLED_TOOLTIP' | translate">
               <mat-checkbox
                 (change)="$event ? toggleRow(row) : null"
                 (click)="$event.stopPropagation()"
@@ -51,13 +51,14 @@
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let user" class="static-column-size" mat-cell>
           @if (!user.serviceUser) {
-            <mat-icon class="align-bottom" matTooltip="{{'MANAGERS_LIST.PERSON' | translate}}">
+            <mat-icon
+              class="align-bottom"
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.PERSON' | translate}}">
               account_circle
             </mat-icon>
-          }
-          @if (user.serviceUser) {
+          } @else {
             <mat-icon
-              matTooltip="{{'MANAGERS_LIST.SERVICE' | translate}}"
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SERVICE_ACCOUNTS_LIST.SERVICE' | translate}}"
               [svgIcon]="svgIcon"
               class="align-bottom perun-icon">
             </mat-icon>
@@ -70,7 +71,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('id')">
-          {{'MANAGERS_LIST.ID' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.ID' | translate}}
         </th>
         <td *matCellDef="let user" class="static-column-size" mat-cell>
           {{user.id}}
@@ -82,7 +83,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('name')">
-          {{'MANAGERS_LIST.NAME' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.SERVICE_ACCOUNTS_LIST.NAME' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell attr.data-cy="{{user.firstName | lowercase}}-td">
           {{user | userFullName}}
@@ -94,7 +95,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('organization')">
-          {{'MANAGERS_LIST.ORGANIZATION' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.ORGANIZATION' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userVo}}</td>
       </ng-container>
@@ -104,7 +105,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('email')">
-          {{'MANAGERS_LIST.EMAIL' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.EMAIL' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userEmail}}</td>
       </ng-container>
@@ -114,7 +115,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('logins')">
-          {{'MANAGERS_LIST.LOGINS' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.LOGINS' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userLogins}}</td>
       </ng-container>
@@ -136,8 +137,8 @@
       <tr
         *matRowDef="let user; columns: displayedColumns;"
         [class.cursor-pointer]="!disableRouting"
-        [routerLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/myProfile/service-identities', user.id])"
-        [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/myProfile/service-identities', user.id])"
+        [routerLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/service-identities', user.id])"
+        [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/service-identities', user.id])"
         class="dark-hover-list-item"
         mat-row></tr>
     </table>

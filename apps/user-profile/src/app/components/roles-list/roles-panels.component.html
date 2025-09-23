@@ -1,0 +1,136 @@
+@if (outerLoading) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+}
+<div class="mt-3">
+  @if (!outerLoading && roles.size > 0) {
+    <mat-accordion>
+      @for (role of allRules; track role) {
+        <mat-expansion-panel
+          [expanded]="this.currentlyOpenPanel === role.roleName"
+          [hideToggle]="isRoleExpandable(role)"
+          (closed)="onPanelClosed(role.roleName)"
+          (opened)="onPanelOpen(role, panel)"
+          #panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p class="mt-auto mb-auto">{{role | displayedRole}}</p>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            @if (panel.expanded) {
+              <div class="position-relative">
+                @if (role.primaryObject === 'Vo' || role.roleName === 'MEMBERSHIP') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_VOS_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-vos-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [loading]="loading"
+                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'shortName'] : (userBased ? ['name', 'shortName'] : ['name', 'shortName', 'authzGroup'])"
+                        [vos]="vos | async"
+                        [disableRouting]="true"
+                        [disableCheckbox]="true"
+                        [authzVoNames]="voNames"
+                        [voWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('vo')">
+                      </perun-web-apps-vos-list>
+                    </div>
+                  </div>
+                }
+                @if (role.primaryObject === 'Group' || role.roleName === 'MEMBERSHIP') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_GROUPS_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-groups-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [loading]="loading"
+                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['vo', 'name', 'description'] : (userBased ? ['vo', 'name', 'description'] : ['vo', 'name', 'description', 'authzGroup'])"
+                        [groups]="groups | async"
+                        [disableRouting]="true"
+                        [disableHeadCheckbox]="true"
+                        [authzVoNames]="voNames"
+                        [groupWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('group')">
+                      </perun-web-apps-groups-list>
+                    </div>
+                  </div>
+                }
+                @if (role.primaryObject === 'Resource' || role.roleName === 'MEMBERSHIP') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_RESOURCES_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-resources-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [resources]="resources | async"
+                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'vo', 'facility', 'description'] : (userBased ? ['name', 'vo', 'facility', 'description'] : ['name', 'vo', 'facility', 'description', 'authzGroup'])"
+                        [authzVoNames]="voNames"
+                        [disableRouting]="true"
+                        [loading]="loading"
+                        [resourceWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('resource')">
+                      </perun-web-apps-resources-list>
+                    </div>
+                  </div>
+                }
+                @if (role.primaryObject === 'Facility' || role.roleName === 'MEMBERSHIP') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_FACILITIES_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-facilities-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [loading]="loading"
+                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'description'] : (userBased ? ['name', 'description'] : ['name', 'description', 'authzGroup'])"
+                        [facilities]="facilities | async"
+                        [disableRouting]="true"
+                        [authzVoNames]="voNames"
+                        [facilityWithAuthzGroupPairs]="_complementaryObjectsWithAuthzGroups?.get(role.roleName)?.get('facility')">
+                      </perun-web-apps-facilities-list>
+                    </div>
+                  </div>
+                }
+                @if (role.roleName === 'SPONSORSHIP') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_MEMBERS_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-members-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [loading]="loading"
+                        [disableRouting]="true"
+                        [disableCheckbox]="true"
+                        [displayedColumns]="['fullName']"
+                        [members]="members | async" />
+                    </div>
+                  </div>
+                }
+                @if (role.roleName === 'SELF') {
+                  <div class="mb-3">
+                    {{('ROLES.' + role.roleName + '_USERS_SELF') | translate}}
+                    <div class="position-relative table-min-height">
+                      <perun-web-apps-users-list
+                        *perunWebAppsLoader="loading; indicator: spinner"
+                        [loading]="loading"
+                        [displayColumns]="['user', 'name']"
+                        [disableCheckbox]="true"
+                        [disableRouting]="true"
+                        [users]="users | async">
+                      </perun-web-apps-users-list>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </ng-template>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  }
+</div>
+
+@if (!outerLoading && roles.size === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'ROLES.NO_ROLES' | translate}}
+  </perun-web-apps-alert>
+}
+
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

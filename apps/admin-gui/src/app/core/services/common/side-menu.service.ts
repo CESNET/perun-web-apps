@@ -8,9 +8,12 @@ export class SideMenuService {
   @Output() accessItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
   @Output() facilityItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
   @Output() adminItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
-  @Output() userItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
   @Output() resetChange: EventEmitter<void> = new EventEmitter<void>();
   @Output() homeItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
+  @Output() settingsItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<SideMenuItem[]>();
+  @Output() serviceIdentitiesItemsChange: EventEmitter<SideMenuItem[]> = new EventEmitter<
+    SideMenuItem[]
+  >();
 
   setHomeItems(items: SideMenuItem[]): void {
     this.homeItemsChange.emit(items);
@@ -28,8 +31,12 @@ export class SideMenuService {
     this.adminItemsChange.emit(items);
   }
 
-  setUserItems(items: SideMenuItem[]): void {
-    this.userItemsChange.emit(items);
+  setSettingsItems(items: SideMenuItem[]): void {
+    this.settingsItemsChange.emit(items);
+  }
+
+  setServiceIdentitiesItems(items: SideMenuItem[]): void {
+    this.serviceIdentitiesItemsChange.emit(items);
   }
 
   reset(): void {

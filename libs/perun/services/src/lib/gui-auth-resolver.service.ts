@@ -34,6 +34,7 @@ export class GuiAuthResolver {
   private editableGroups: number[] = [];
   private observableVos: number[] = [];
   private hasGroupInTheseVos: number[] = [];
+  private hasServiceIdentities: boolean = false;
 
   constructor(
     private authzSevice: AuthzResolverService,
@@ -43,6 +44,7 @@ export class GuiAuthResolver {
   init(principal: PerunPrincipal): void {
     this.principal = principal;
     this.initData(principal);
+    this.setHasServiceIdentities();
   }
 
   setPerunPolicies(policies: PerunPolicy[]): void {
@@ -117,6 +119,10 @@ export class GuiAuthResolver {
 
   isThisVoAdmin(id: number): boolean {
     return this.editableVos.includes(id) || this.isPerunAdmin();
+  }
+
+  getHasServiceIdentities(): boolean {
+    return this.hasServiceIdentities;
   }
 
   isGroupAdmin(): boolean {
@@ -569,5 +575,11 @@ export class GuiAuthResolver {
       }
     }
     return false;
+  }
+
+  private setHasServiceIdentities(): void {
+    const identities: number[] = this.principal.roles.SELF.User;
+    this.hasServiceIdentities =
+      identities.filter((userId) => userId !== this.principal.userId).length > 0;
   }
 }

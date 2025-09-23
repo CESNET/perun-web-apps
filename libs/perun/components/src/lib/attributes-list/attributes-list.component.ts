@@ -71,6 +71,7 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   @Input() displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   @Input() filterValue = '';
   @Input() filterEmpty = false;
+  @Input() filterFalse = false;
   @Input() tableId: string;
   @Input() readonly = false;
   @Input() hiddenColumns: string[] = [];
@@ -150,6 +151,11 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
         }
         return true;
       });
+      if (this.filterFalse) {
+        filteredAttributes = filteredAttributes.filter(
+          (attribute) => attribute.type !== 'java.lang.Boolean' || attribute.value !== false,
+        );
+      }
     }
 
     filteredAttributes = filterCoreAttributes(filteredAttributes);

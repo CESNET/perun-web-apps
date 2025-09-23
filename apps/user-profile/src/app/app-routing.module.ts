@@ -28,6 +28,8 @@ import { AuthenticationMfaSettingsComponent } from './pages/authentication-page/
 import { AuthenticationAntiPhishingSecurityComponent } from './pages/authentication-page/authentication-anti-phishing-security/authentication-anti-phishing-security.component';
 import { AuthenticationAccountActivationComponent } from './pages/authentication-page/authentication-account-activation/authentication-account-activation.component';
 import { PasswordResetComponent, SettingsSSHKeysComponent } from '@perun-web-apps/perun/components';
+import { BansPageComponent } from './pages/bans-page/bans-page.component';
+import { RolesPageComponent } from './pages/roles-page/roles-page.component';
 
 const routes: Routes = [
   {
@@ -76,6 +78,16 @@ const routes: Routes = [
         path: 'organizations',
         component: VosPageComponent,
         data: { breadcrumb: 'MENU_ITEMS.VOS' },
+      },
+      {
+        path: 'bans',
+        component: BansPageComponent,
+        data: { breadcrumb: 'MENU_ITEMS.BANS' },
+      },
+      {
+        path: 'roles',
+        component: RolesPageComponent,
+        data: { breadcrumb: 'MENU_ITEMS.ROLES' },
       },
       {
         path: 'privacy',

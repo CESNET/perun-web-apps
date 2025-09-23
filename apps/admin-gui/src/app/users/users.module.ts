@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UsersRoutingModule } from './users-routing.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,18 +39,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { ConfigTableConfigModule } from '@perun-web-apps/config/table-config';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
-import { UserDetailPageComponent } from './pages/user-detail-page/user-detail-page.component';
 import { UserOverviewComponent } from './pages/user-detail-page/user-overview/user-overview.component';
 import { UserGroupsComponent } from './pages/user-detail-page/user-groups/user-groups.component';
-import { UserSettingsComponent } from './pages/user-detail-page/user-settings/user-settings.component';
 import { UserOrganizationsComponent } from './pages/user-detail-page/user-organizations/user-organizations.component';
 import { UserAttributesComponent } from './pages/user-detail-page/user-attributes/user-attributes.component';
-import { UserSettingsOverviewComponent } from './pages/user-detail-page/user-settings/user-settings-overview/user-settings-overview.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UserRolesComponent } from './pages/user-detail-page/user-settings/user-roles/user-roles.component';
-import { UserSettingsAppConfigurationComponent } from './pages/user-detail-page/user-settings/user-settings-app-configuration/user-settings-app-configuration.component';
 import { UserDashboardComponent } from './pages/user-detail-page/user-dashboard/user-dashboard.component';
-import { UserSettingsServiceIdentitiesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/user-settings-service-identities.component';
+import { ServiceIdentitySelectPageComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-select-page.component';
 import { UserIdentitiesComponent } from './pages/user-detail-page/user-identities/user-identities.component';
 import { UserResourcesComponent } from './pages/user-detail-page/user-resources/user-resources.component';
 import { UserSettingsAssociatedUsersComponent } from './pages/user-detail-page/user-settings/user-settings-associated-users/user-settings-associated-users.component';
@@ -60,22 +54,22 @@ import { DashboardCardComponent } from './pages/user-detail-page/user-dashboard/
 import { DashboardRecentlyViewedButtonFieldComponent } from './pages/user-detail-page/user-dashboard/dashboard-recently-viewed-button-field/dashboard-recently-viewed-button-field.component';
 import { UserFacilitiesComponent } from './pages/user-detail-page/user-facilities/user-facilities.component';
 import { UserAccountsComponent } from './pages/user-detail-page/user-accounts/user-accounts.component';
-import { ServiceIdentityDetailPageComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-detail-page/service-identity-detail-page.component';
-import { ServiceIdentityOverviewComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-detail-page/service-identity-overview/service-identity-overview.component';
-import { UserSettingsDataQuotasComponent } from './pages/user-detail-page/user-settings/user-settings-data-quotas/user-settings-data-quotas.component';
-import { UserSettingsMailingListsComponent } from './pages/user-detail-page/user-settings/user-settings-mailing-lists/user-settings-mailing-lists.component';
-import { UserSettingsLoginsComponent } from './pages/user-detail-page/user-settings/user-settings-logins/user-settings-logins.component';
-import { ServiceIdentityAuthenticationComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-authentication.component';
-import { ServiceIdentityAuthenticationOverviewComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-authentication-overview/service-identity-authentication-overview.component';
-import { ServiceIdentityCertificatesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-certificates/service-identity-certificates.component';
 import { UserBansComponent } from './pages/user-detail-page/user-bans/user-bans.component';
 import { UserAssignmentsComponent } from './pages/user-detail-page/user-assignments/user-assignments.component';
 import { UserApplicationsComponent } from './pages/user-detail-page/user-applications/user-applications.component';
+import { ServiceIdentityDetailPageComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-detail-page/service-identity-detail-page.component';
+import { ServiceIdentityOverviewComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-detail-page/service-identity-overview/service-identity-overview.component';
+import { ServiceIdentityAuthenticationComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-authentication.component';
+import { ServiceIdentityAuthenticationOverviewComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-authentication-overview/service-identity-authentication-overview.component';
+import { ServiceIdentityCertificatesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-certificates/service-identity-certificates.component';
+import { UserSettingsDataQuotasComponent } from './pages/user-detail-page/user-settings/user-settings-data-quotas/user-settings-data-quotas.component';
+import { UserSettingsMailingListsComponent } from './pages/user-detail-page/user-settings/user-settings-mailing-lists/user-settings-mailing-lists.component';
+import { UserSettingsLoginsComponent } from './pages/user-detail-page/user-settings/user-settings-logins/user-settings-logins.component';
+import { UsersRoutingModule } from './users-routing.module';
+
 @NgModule({
-  exports: [UserDetailPageComponent],
   imports: [
     CommonModule,
-    UsersRoutingModule,
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
@@ -114,23 +108,18 @@ import { UserApplicationsComponent } from './pages/user-detail-page/user-applica
     ScrollingModule,
     UiAlertsModule,
     UiLoadersModule,
+    UsersRoutingModule,
     MatBadgeModule,
     PerunSharedComponentsModule,
     ConfigTableConfigModule,
     PerunPipesModule,
     SharedModule,
-    UserDetailPageComponent,
     UserOverviewComponent,
     UserGroupsComponent,
-    UserSettingsComponent,
     UserOrganizationsComponent,
     UserAttributesComponent,
-    UserSettingsOverviewComponent,
-    UserProfileComponent,
     UserRolesComponent,
-    UserSettingsAppConfigurationComponent,
     UserDashboardComponent,
-    UserSettingsServiceIdentitiesComponent,
     UserIdentitiesComponent,
     UserResourcesComponent,
     UserSettingsAssociatedUsersComponent,
@@ -149,6 +138,31 @@ import { UserApplicationsComponent } from './pages/user-detail-page/user-applica
     ServiceIdentityAuthenticationOverviewComponent,
     ServiceIdentityCertificatesComponent,
     UserBansComponent,
+    UserOverviewComponent,
+    UserGroupsComponent,
+    UserOrganizationsComponent,
+    UserAttributesComponent,
+    UserRolesComponent,
+    UserDashboardComponent,
+    ServiceIdentitySelectPageComponent,
+    UserIdentitiesComponent,
+    UserResourcesComponent,
+    UserSettingsAssociatedUsersComponent,
+    DashboardCardComponent,
+    DashboardRecentlyViewedButtonFieldComponent,
+    UserFacilitiesComponent,
+    UserAccountsComponent,
+    UserAssignmentsComponent,
+    UserApplicationsComponent,
+    UserBansComponent,
+    ServiceIdentityDetailPageComponent,
+    ServiceIdentityOverviewComponent,
+    UserSettingsDataQuotasComponent,
+    UserSettingsMailingListsComponent,
+    UserSettingsLoginsComponent,
+    ServiceIdentityAuthenticationComponent,
+    ServiceIdentityAuthenticationOverviewComponent,
+    ServiceIdentityCertificatesComponent,
   ],
 })
 export class UsersModule {

@@ -43,7 +43,6 @@ export class UserOrganizationsComponent implements OnInit {
   displayedColumns = ['id', 'name'];
   adminTableId = TABLE_USER_PROFILE_ADMIN_SELECT;
   memberTableId = TABLE_USER_PROFILE_MEMBER_SELECT;
-  isMyProfile: boolean;
 
   constructor(
     private usersService: UsersManagerService,
@@ -53,11 +52,7 @@ export class UserOrganizationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if ((this.isMyProfile = this.route.snapshot.data.showPrincipal as boolean)) {
-      this.userId = this.store.getPerunPrincipal().user.id;
-    } else {
-      this.route.parent.params.subscribe((params) => (this.userId = Number(params['userId'])));
-    }
+    this.route.parent.params.subscribe((params) => (this.userId = Number(params['userId'])));
     this.refreshAdminTable();
     this.refreshMemberTable();
   }

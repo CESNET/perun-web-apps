@@ -1,0 +1,46 @@
+<h1 class="page-title mt-2">{{'BANS.TITLE' | customTranslate | translate}}</h1>
+<div class="user-theme">
+  <perun-web-apps-debounce-filter
+    [placeholder]="'BANS.FILTER'"
+    (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
+
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'BANS.ORGANIZATIONS' | customTranslate | translate}}</h1>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-ban-on-entity-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [bans]="voBans"
+        [displayedColumns]="displayedColumns"
+        [filter]="filterValue">
+      </perun-web-apps-ban-on-entity-list>
+    </div>
+  </div>
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'BANS.RESOURCES' | customTranslate | translate}}</h1>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-ban-on-entity-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [bans]="resourceBans"
+        [displayedColumns]="displayedColumns"
+        [filter]="filterValue">
+      </perun-web-apps-ban-on-entity-list>
+    </div>
+  </div>
+  <div class="mt-5">
+    <h1 class="page-subtitle">{{'BANS.FACILITIES' | customTranslate | translate}}</h1>
+    <div class="position-relative table-min-height">
+      <perun-web-apps-ban-on-entity-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [bans]="facilityBans"
+        [displayedColumns]="displayedColumns"
+        [filter]="filterValue">
+      </perun-web-apps-ban-on-entity-list>
+    </div>
+  </div>
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+</div>

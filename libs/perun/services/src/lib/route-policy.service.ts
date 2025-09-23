@@ -396,7 +396,7 @@ export class RoutePolicyService {
         this.authResolver.isAuthorized('getBansForUser_int_policy', [facility]),
     ],
     [
-      'myProfile-service-identities',
+      'service-identities',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         // cannot use getUserById, since the policies are too broad
@@ -405,77 +405,42 @@ export class RoutePolicyService {
       },
     ],
     [
-      'myProfile-service-identities-organizations',
+      'service-identities-associated-users',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
       },
     ],
     [
-      'myProfile-service-identities-groups',
+      'service-identities-mailing-lists',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
       },
     ],
     [
-      'myProfile-service-identities-attributes',
+      'service-identities-data-quotas',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
       },
     ],
     [
-      'myProfile-service-identities-roles',
+      'service-identities-authentication-logins',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
       },
     ],
     [
-      'myProfile-service-identities-bans',
+      'service-identities-authentication-certificates',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
       },
     ],
     [
-      'myProfile-service-identities-associated-users',
-      (user): boolean => {
-        const entity = { beanName: 'User', id: user.id };
-        return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
-      },
-    ],
-    [
-      'myProfile-service-identities-mailing-lists',
-      (user): boolean => {
-        const entity = { beanName: 'User', id: user.id };
-        return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
-      },
-    ],
-    [
-      'myProfile-service-identities-data-quotas',
-      (user): boolean => {
-        const entity = { beanName: 'User', id: user.id };
-        return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
-      },
-    ],
-    [
-      'myProfile-service-identities-authentication-logins',
-      (user): boolean => {
-        const entity = { beanName: 'User', id: user.id };
-        return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
-      },
-    ],
-    [
-      'myProfile-service-identities-authentication-certificates',
-      (user): boolean => {
-        const entity = { beanName: 'User', id: user.id };
-        return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);
-      },
-    ],
-    [
-      'myProfile-service-identities-authentication-ssh-keys',
+      'service-identities-authentication-ssh-keys',
       (user): boolean => {
         const entity = { beanName: 'User', id: user.id };
         return this.authResolver.isAuthorized('getVosWhereUserIsAdmin_User_policy', [entity]);

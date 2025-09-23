@@ -9,7 +9,7 @@ import { UserOverviewComponent } from '../users/pages/user-detail-page/user-over
 import { UserAttributesComponent } from '../users/pages/user-detail-page/user-attributes/user-attributes.component';
 import { AdminExtSourcesComponent } from './pages/admin-page/admin-ext-sources/admin-ext-sources.component';
 import { UserRolesComponent } from '../users/pages/user-detail-page/user-settings/user-roles/user-roles.component';
-import { UserSettingsServiceIdentitiesComponent } from '../users/pages/user-detail-page/user-settings/user-settings-service-identities/user-settings-service-identities.component';
+import { ServiceIdentitySelectPageComponent } from '../users/pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-select-page.component';
 import { UserIdentitiesComponent } from '../users/pages/user-detail-page/user-identities/user-identities.component';
 import { AdminServicesComponent } from './pages/admin-page/admin-services/admin-services.component';
 import { IdentityDetailComponent } from '../shared/components/identity-detail/identity-detail.component';
@@ -129,7 +129,7 @@ const routes: Routes = [
       },
       {
         path: 'service-identities',
-        component: UserSettingsServiceIdentitiesComponent,
+        component: ServiceIdentitySelectPageComponent,
         data: { animation: 'UserServiceIdentities' },
       },
       {

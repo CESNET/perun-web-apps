@@ -75,7 +75,7 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (window.location.pathname.startsWith('/myProfile')) {
+    if (window.location.pathname.startsWith('/service-identities')) {
       this.userId = this.entityStorageService.getEntity().id;
     } else {
       this.userId = this.store.getPerunPrincipal().userId;

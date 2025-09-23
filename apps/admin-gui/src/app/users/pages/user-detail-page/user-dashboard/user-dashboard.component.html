@@ -39,55 +39,41 @@
             </button>
           }
         </h1>
+
         @if (hasOnlyNoRightsRoles) {
           <div>
             <div class="card m-3 p-4">
               <div class="text-align">
                 {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES' | translate}}
               </div>
-              <div class="text-align pt-3 mt-2">
-                {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES_PROFILE' | translate}}
-              </div>
-              <div class="mx-auto pt-3">
-                <button
-                  [routerLink]="['/myProfile']"
-                  queryParamsHandling="merge"
-                  class="ms-2 mt-2"
-                  color="accent"
-                  mat-flat-button>
-                  {{'USER_DETAIL.DASHBOARD.GO_TO_USER_PROFILE' | translate}}
-                </button>
-              </div>
             </div>
           </div>
         }
         @if (!hasOnlyNoRightsRoles) {
+          @if (recentlyViewedShow) {
+            <span>
+              <div class="page-subtitle">
+                {{'USER_DETAIL.DASHBOARD.RECENTLY_VIEWED' | translate}}
+              </div>
+              <app-perun-web-apps-dashboard-recently-viewed-button-field></app-perun-web-apps-dashboard-recently-viewed-button-field>
+            </span>
+          }
+          @if (rolesToHide.toString() !== roleNames.toString()) {
+            <div class="page-subtitle my-4">
+              {{'USER_DETAIL.DASHBOARD.MANAGEABLE_ENTITIES' | translate}}
+            </div>
+          }
           <div>
-            @if (recentlyViewedShow) {
-              <span>
-                <div class="page-subtitle">
-                  {{'USER_DETAIL.DASHBOARD.RECENTLY_VIEWED' | translate}}
-                </div>
-                <app-perun-web-apps-dashboard-recently-viewed-button-field></app-perun-web-apps-dashboard-recently-viewed-button-field>
-              </span>
-            }
-            @if (rolesToHide.toString() !== roleNames.toString()) {
-              <div class="page-subtitle my-4">
-                {{'USER_DETAIL.DASHBOARD.MANAGEABLE_ENTITIES' | translate}}
+            @for (roleName of this.roleNames; track roleName) {
+              <div class="mb-3">
+                @if (this.isRoleShowed(roleName)) {
+                  <app-perun-web-apps-dashboard-card
+                    [roleName]="roleName"
+                    [role]="this.roles[roleName]">
+                  </app-perun-web-apps-dashboard-card>
+                }
               </div>
             }
-            <div>
-              @for (roleName of this.roleNames; track roleName) {
-                <div class="mb-3">
-                  @if (this.isRoleShowed(roleName)) {
-                    <app-perun-web-apps-dashboard-card
-                      [roleName]="roleName"
-                      [role]="this.roles[roleName]">
-                    </app-perun-web-apps-dashboard-card>
-                  }
-                </div>
-              }
-            </div>
           </div>
         }
       </div>

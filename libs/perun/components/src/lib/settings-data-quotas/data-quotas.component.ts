@@ -7,7 +7,6 @@ import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { StoreService, EntityStorageService } from '@perun-web-apps/perun/services';
 import {
   AttributesManagerService,
   MembersManagerService,
@@ -48,13 +47,11 @@ export class DataQuotasComponent implements OnInit {
   loading: boolean;
 
   constructor(
-    private store: StoreService,
     private usersManagerService: UsersManagerService,
     private membersService: MembersManagerService,
     private resourcesManagerService: ResourcesManagerService,
     private attributesManagerService: AttributesManagerService,
     private dialog: MatDialog,
-    private entityStorageService: EntityStorageService,
   ) {}
 
   ngOnInit(): void {

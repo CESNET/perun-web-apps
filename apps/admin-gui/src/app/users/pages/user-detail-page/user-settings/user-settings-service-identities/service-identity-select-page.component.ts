@@ -1,10 +1,10 @@
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -12,13 +12,16 @@ import { ConnectIdentityDialogComponent } from '../../../../../shared/components
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { SideMenuService } from '../../../../../core/services/common/side-menu.service';
 import {
   userTableColumn,
   RefreshButtonComponent,
   UsersListComponent,
+  PerunSharedComponentsModule,
 } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   imports: [
@@ -29,13 +32,15 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
     UsersListComponent,
     LoaderDirective,
     LoadingTableComponent,
+    PerunSharedComponentsModule,
+    MatIcon,
   ],
   standalone: true,
-  selector: 'app-user-settings-service-identities',
-  templateUrl: './user-settings-service-identities.component.html',
-  styleUrls: ['./user-settings-service-identities.component.scss'],
+  selector: 'app-user-service-identity-select-page',
+  templateUrl: './service-identity-select-page.component.html',
+  styleUrls: ['./service-identity-select-page.component.scss'],
 })
-export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy {
+export class ServiceIdentitySelectPageComponent implements OnInit, OnDestroy, AfterViewChecked {
   loading = false;
   selection = new SelectionModel<RichUser>(
     false,
@@ -54,11 +59,13 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
   targetDescription = 'SERVICE';
   subscription: Subscription;
   cacheSubject = new BehaviorSubject(true);
+  filterValue = '';
+  classesForGlobalView = ['container-fluid', 'ps-xl-5', 'pe-xl-5', 'user-theme'];
 
   constructor(
+    private sideMenuService: SideMenuService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private router: Router,
     private userManager: UsersManagerService,
     public authResolver: GuiAuthResolver,
     private store: StoreService,
@@ -82,6 +89,10 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
       this.setAuthRights();
       this.refreshTable();
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.sideMenuService.setFacilityMenuItems([]);
   }
 
   refreshTable(): void {
@@ -140,5 +151,10 @@ export class UserSettingsServiceIdentitiesComponent implements OnInit, OnDestroy
         this.refreshTable();
       }
     });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.filterValue = filterValue;
+    this.refreshTable();
   }
 }

@@ -27,19 +27,19 @@ export class ServiceIdentityAuthenticationOverviewComponent implements OnInit {
     this.navItems = [
       {
         cssIcon: 'perun-logins',
-        url: `/myProfile/service-identities/${this.serviceAccount.id}/authentication/logins`,
+        url: `/service-identities/${this.serviceAccount.id}/authentication/logins`,
         label: 'MENU_ITEMS.USER.LOGINS',
         style: 'user-btn',
       },
       {
         cssIcon: 'perun-certificates',
-        url: `/myProfile/service-identities/${this.serviceAccount.id}/authentication/certificates`,
+        url: `/service-identities/${this.serviceAccount.id}/authentication/certificates`,
         label: 'MENU_ITEMS.USER.CERTIFICATES',
         style: 'user-btn',
       },
       {
         cssIcon: 'perun-key',
-        url: `/myProfile/service-identities/${this.serviceAccount.id}/authentication/ssh-keys`,
+        url: `/service-identities/${this.serviceAccount.id}/authentication/ssh-keys`,
         label: 'MENU_ITEMS.USER.SSH_KEYS',
         style: 'user-btn',
       },
