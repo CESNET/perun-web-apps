@@ -1,4 +1,4 @@
-@for (item of menuItems; track item) {
+@for (item of menuItems; track item.label) {
   <span class="custom-breadcrumb">
     <a [routerLink]="item.routerLink" class="breadcrumb-text">{{item.label | translate}}</a>
   </span>
