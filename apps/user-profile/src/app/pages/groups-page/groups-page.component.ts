@@ -110,10 +110,9 @@ export class GroupsPageComponent implements OnInit {
       j--;
       this.groupService.getMemberGroups(memberId).subscribe((groups) => {
         // finish when the user has no group membership
-        if (groups.length === 0) {
-          this.initialLoading = false;
-          this.loading = false;
-          return;
+        if (groups.length === 0 && j === 0) {
+          // if last group, there won't be a chance to call `addToLists` in the attribute call
+          this.addToLists(true);
         }
         i += groups.length;
         groups.forEach((group) => {
@@ -127,8 +126,7 @@ export class GroupsPageComponent implements OnInit {
                   (att) => att.friendlyName === 'groupMembershipExpiration',
                 ),
               });
-              this.loading = i !== 0 && j !== 0;
-              if (i === 0 && j === 0) this.addToLists();
+              if (i === 0 && j === 0) this.addToLists(true);
             });
         });
       });
@@ -216,9 +214,10 @@ export class GroupsPageComponent implements OnInit {
     return this.vos.filter((option) => option.name.toLowerCase().includes(voFilterValue));
   }
 
-  private addToLists(): void {
+  private addToLists(disableLoading = false): void {
     this.userMemberships = this.userMembershipsTemp;
     this.adminMemberships = this.adminMembershipsTemp;
     this.initialLoading = false;
+    if (disableLoading) this.loading = false;
   }
 }
