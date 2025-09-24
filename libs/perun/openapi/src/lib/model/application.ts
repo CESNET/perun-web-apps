@@ -28,7 +28,10 @@ export interface Application {
   user?: User;
   createdBy?: string;
   createdAt?: string;
+  createdByUid?: number | null;
   modifiedBy?: string;
   modifiedAt?: string;
+  modifiedByUid?: number | null;
+  modifiedByDisplayName?: string | null;
   autoApproveError?: string;
 }

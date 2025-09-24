@@ -22,8 +22,8 @@ import {
   Application,
   ApplicationFormItemData,
   CantBeApprovedException,
-  Invitation,
   InvitationsManagerService,
+  InvitationWithSender,
   MembersManagerService,
   RegistrarManagerService,
   UsersManagerService,
@@ -75,7 +75,7 @@ export class ApplicationDetailComponent implements OnInit {
   rejectAuth: boolean;
   deleteAuth: boolean;
   resendAuth: boolean;
-  invitation: Invitation = null;
+  invitation: InvitationWithSender = null;
 
   constructor(
     private registrarManager: RegistrarManagerService,
@@ -122,15 +122,17 @@ export class ApplicationDetailComponent implements OnInit {
               this.dataSource = new MatTableDataSource<ApplicationFormItemData>(this.userData);
               this.setAuthRights();
               if (this.application.group && this.application.state === 'APPROVED') {
-                this.invitationsManager.getInvitationByApplication(this.application.id).subscribe({
-                  next: (invitation) => {
-                    this.invitation = invitation;
-                    this.loading = false;
-                  },
-                  error: () => {
-                    this.loading = false;
-                  },
-                });
+                this.invitationsManager
+                  .getInvitationWithSenderByApplication(this.application.id)
+                  .subscribe({
+                    next: (invitation) => {
+                      this.invitation = invitation;
+                      this.loading = false;
+                    },
+                    error: () => {
+                      this.loading = false;
+                    },
+                  });
               } else {
                 this.loading = false;
               }
