@@ -1,5 +1,5 @@
 <mat-nav-list class="pt-0">
-  @for (item of items; track item) {
+  @for (item of items; track item.label) {
     <mat-list-item
       (click)="shouldHideMenu()"
       [class.activated]="isActive(item.activatedRegex)"

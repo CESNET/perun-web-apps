@@ -111,8 +111,8 @@
           {{'PUBLICATIONS_LIST.TABLE_THANKEDTO' | translate}}
         </th>
         <td *matCellDef="let publication" class="static-column-size" mat-cell>
-          @for (owner of publication.thanks; track owner) {
-            <span> {{owner.ownerName}}<br /> </span>
+          @for (thanks of publication.thanks; track thanks) {
+            <span> {{thanks.ownerName}}<br /> </span>
           }
         </td>
       </ng-container>

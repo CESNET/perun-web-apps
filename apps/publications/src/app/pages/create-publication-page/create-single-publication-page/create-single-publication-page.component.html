@@ -58,7 +58,7 @@
             <mat-form-field>
               <mat-label>{{'CREATE_SINGLE_PUBLICATION.CATEGORY' | translate}}</mat-label>
               <mat-select required formControlName="category">
-                @for (cat of categories; track cat) {
+                @for (cat of categories; track cat.id) {
                   <mat-option [value]="cat">
                     {{cat.name}}
                   </mat-option>

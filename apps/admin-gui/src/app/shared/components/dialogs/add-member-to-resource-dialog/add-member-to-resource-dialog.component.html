@@ -43,7 +43,7 @@
           </div>
           <div>
             <span class="fw-bold">{{ 'DIALOGS.ADD_MEMBER_TO_RESOURCE.SERVICES' | translate}}</span>
-            @for (service of services; track service) {
+            @for (service of services; track service.id) {
               <div class="ms-5">{{service.name}}</div>
             }
           </div>

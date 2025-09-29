@@ -32,7 +32,7 @@
           {{'PRIVACY.FILTER_EMPTY' | translate}}
         </mat-slide-toggle>
         <div class="position-relative table-min-height">
-          @for (vo of filteredVos; track vo) {
+          @for (vo of filteredVos; track vo.id) {
             <mat-expansion-panel (opened)="getMemberData(vo)">
               <mat-expansion-panel-header>
                 <mat-panel-title>

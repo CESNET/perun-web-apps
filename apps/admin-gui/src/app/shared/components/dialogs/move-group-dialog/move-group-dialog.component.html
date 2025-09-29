@@ -38,7 +38,7 @@
             required />
           <!--suppress AngularInvalidExpressionResultType -->
           <mat-autocomplete #groupSelectAutocomplete="matAutocomplete" [displayWith]="displayFn">
-            @for (group of filteredGroups | async; track group) {
+            @for (group of filteredGroups | async; track group.id) {
               <mat-option (click)="selectedGroup = group" [value]="group">
                 <span>{{group.name}}</span>
               </mat-option>

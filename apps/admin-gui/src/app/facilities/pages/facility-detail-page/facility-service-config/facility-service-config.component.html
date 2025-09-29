@@ -23,7 +23,7 @@
             <mat-option (onSelectionChange)="onSelectedService('ALL')" [value]="'ALL'">
               {{'FACILITY_DETAIL.SERVICE_CONFIG.ALL' | translate}}
             </mat-option>
-            @for (s of filteredServices | async; track s) {
+            @for (s of filteredServices | async; track s.id) {
               <mat-option (onSelectionChange)="onSelectedService(s)" [value]="s">
                 {{s.name}}
               </mat-option>
@@ -47,7 +47,7 @@
             [displayWith]="resourceDisplayFn.bind(this)"
             #auto="matAutocomplete"
             autoActiveFirstOption>
-            @for (r of filteredResources | async; track r) {
+            @for (r of filteredResources | async; track r.id) {
               <mat-option (onSelectionChange)="onSelectedResource(r)" [value]="r">
                 {{r.name}}
               </mat-option>
@@ -69,7 +69,7 @@
             #auto="matAutocomplete"
             [ngClass]=""
             autoActiveFirstOption>
-            @for (g of filteredGroups | async; track g) {
+            @for (g of filteredGroups | async; track g.id) {
               <mat-option (onSelectionChange)="onSelectedGroup(g)" [value]="g">
                 {{g.name}}
               </mat-option>
@@ -93,7 +93,7 @@
             [displayWith]="memberDisplayFn.bind(this)"
             #auto="matAutocomplete"
             autoActiveFirstOption>
-            @for (m of filteredMembers | async; track m) {
+            @for (m of filteredMembers | async; track m.id) {
               <mat-option (onSelectionChange)="onSelectedMember(m)" [value]="m">
                 {{m.user | userFullName}}
               </mat-option>

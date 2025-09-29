@@ -31,7 +31,7 @@
       </mat-form-field>
     </div>
     <div class="card mb-4 p-5">
-      @for (applicationFormItem of applicationFormItems; track applicationFormItem) {
+      @for (applicationFormItem of applicationFormItems; track applicationFormItem.id) {
         <div>
           @if (isValid(applicationFormItem)) {
             <div class="mb-2">

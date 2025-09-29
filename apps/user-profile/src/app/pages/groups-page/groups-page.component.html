@@ -15,7 +15,7 @@
         [displayWith]="displayFn"
         (optionSelected)="filterByVo($event)">
         <mat-option value="all">{{'GROUPS.ALL' | customTranslate | translate}}</mat-option>
-        @for (vo of vos; track vo) {
+        @for (vo of vos; track vo.id) {
           <mat-option [value]="vo">
             {{vo.name}}
           </mat-option>

@@ -27,7 +27,7 @@
       [ngStyle]="{'background': linkBgColor}"
       class="side-menu-link {{item.linksClass}}"
       @rollInOut>
-      @for (link of item.links; track link) {
+      @for (link of item.links; track link.label) {
         <div>
           <a
             (click)="navigateOrExpandSideMenu(link, $event)"

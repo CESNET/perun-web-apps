@@ -21,7 +21,7 @@
               >{{'DIALOGS.ADD_SERVICE_DESTINATION.NO_SERVICE' | translate}}</mat-option
             >
           }
-          @for (service of services; track service) {
+          @for (service of services; track service.id) {
             <mat-option [value]="service">
               {{service.name}}
             </mat-option>
