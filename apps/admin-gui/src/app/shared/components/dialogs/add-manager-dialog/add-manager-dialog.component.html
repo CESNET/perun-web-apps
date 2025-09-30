@@ -6,7 +6,7 @@
       <mat-form-field class="me-2">
         <mat-label>{{'SHARED.COMPONENTS.MANAGERS_PAGE.SELECT_ROLE' | translate}}</mat-label>
         <mat-select [(value)]="selectedRole">
-          @for (role of availableRoles; track role) {
+          @for (role of availableRoles; track role.roleName) {
             <mat-option [value]="role.roleName">
               {{role | displayedRole}}
             </mat-option>

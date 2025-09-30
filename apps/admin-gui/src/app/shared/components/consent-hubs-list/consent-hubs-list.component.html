@@ -71,7 +71,7 @@
           {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.FACILITIES' | translate}}
         </th>
         <td *matCellDef="let consentHub" mat-cell>
-          @for (facility of consentHub.facilities; track facility) {
+          @for (facility of consentHub.facilities; track facility.id) {
             <span>
               {{facility.name}}
               <span class="text-muted"> #{{facility.id}}</span>

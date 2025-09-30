@@ -5,7 +5,7 @@
     <mat-label>{{'FACILITY_DETAIL.ALLOWED_GROUPS.SHOW_VOS_GROUPS' | translate}}</mat-label>
     <mat-select (selectionChange)="showGroup()" [(value)]="selected">
       <mat-option value="all">{{'FACILITY_DETAIL.ALLOWED_GROUPS.ALL' | translate}}</mat-option>
-      @for (vo of vos; track vo) {
+      @for (vo of vos; track vo.id) {
         <mat-option [value]="vo.id">
           {{vo.name}}
         </mat-option>

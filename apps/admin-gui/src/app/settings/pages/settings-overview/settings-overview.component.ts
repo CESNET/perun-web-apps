@@ -3,7 +3,7 @@ import { MenuItem } from '@perun-web-apps/perun/models';
 import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
 
 @Component({
-  selector: 'app-admin-overview',
+  selector: 'app-settings-overview',
   templateUrl: './settings-overview.component.html',
   styleUrls: ['./settings-overview.component.scss'],
   imports: [MenuButtonsFieldComponent],

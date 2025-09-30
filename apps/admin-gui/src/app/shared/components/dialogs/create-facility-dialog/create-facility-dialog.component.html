@@ -27,7 +27,7 @@
           <mat-option (click)="srcFacility = null">
             {{'DIALOGS.CREATE_FACILITY.NO_COPY' | translate}}
           </mat-option>
-          @for (facility of facilities; track facility) {
+          @for (facility of facilities; track facility.id) {
             <mat-option (click)="srcFacility = facility" [value]="facility">
               {{facility.name}}
             </mat-option>
