@@ -60,6 +60,7 @@ import { AttributeTypeCleanPipe } from '../../pipes/attribute-type-clean.pipe';
     MasterCheckboxLabelPipe,
     AttributeTypeCleanPipe,
   ],
+  providers: [ConsentRelatedAttributePipe],
   standalone: true,
   selector: 'app-attr-def-list',
   templateUrl: './attr-def-list.component.html',

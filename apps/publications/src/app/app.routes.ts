@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { NoPreloading, RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AllPublicationsPageComponent } from './pages/all-publications-page/all-publications-page.component';
 import { MyPublicationsPageComponent } from './pages/my-publications-page/my-publications-page.component';
 import { CreatePublicationPageComponent } from './pages/create-publication-page/create-publication-page.component';
@@ -16,7 +15,7 @@ import { CreateSinglePublicationPageComponent } from './pages/create-publication
 import { ImportPublicationsPageComponent } from './pages/create-publication-page/import-publications-page/import-publications-page.component';
 import { LogoutLoaderComponent } from '@perun-web-apps/ui/loaders';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'all-publications',
@@ -83,14 +82,3 @@ const routes: Routes = [
     component: PublicationSystemsPageComponent,
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: NoPreloading,
-      scrollPositionRestoration: 'enabled',
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

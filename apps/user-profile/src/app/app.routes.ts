@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { IdentitiesPageComponent } from './pages/identities-page/identities-page.component';
 import { GroupsPageComponent } from './pages/groups-page/groups-page.component';
@@ -31,7 +30,7 @@ import { PasswordResetComponent, SettingsSSHKeysComponent } from '@perun-web-app
 import { BansPageComponent } from './pages/bans-page/bans-page.component';
 import { RolesPageComponent } from './pages/roles-page/roles-page.component';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'profile',
@@ -188,13 +187,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules,
-      scrollPositionRestoration: 'enabled',
-    }),
-  ],
-})
-export class AppRoutingModule {}

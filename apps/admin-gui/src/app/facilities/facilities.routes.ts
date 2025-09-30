@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { FacilitySelectPageComponent } from './pages/facility-select-page/facility-select-page.component';
 import { FacilityDetailPageComponent } from './pages/facility-detail-page/facility-detail-page.component';
 import { FacilityOverviewComponent } from './pages/facility-detail-page/facility-overview/facility-overview.component';
@@ -32,7 +31,7 @@ import { RouteAuthGuardService } from '../shared/route-auth-guard.service';
 import { FacilitySettingsBansComponent } from './pages/facility-detail-page/facility-settings/facility-settings-bans/facility-settings-bans.component';
 import { ResourceSettingsBansComponent } from './pages/resource-detail-page/resource-settings/resource-settings-bans/resource-settings-bans.component';
 
-const routes: Routes = [
+export const facilitiesRoutes: Routes = [
   {
     path: '',
     component: FacilitySelectPageComponent,
@@ -186,9 +185,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class FacilitiesRoutingModule {}

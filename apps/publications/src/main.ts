@@ -25,16 +25,16 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UiMaterialModule } from '@perun-web-apps/ui/material';
 import { GeneralModule } from '@perun-web-apps/general';
-import { AppRoutingModule } from './app/app-routing.module';
+import { appRoutes } from './app/app.routes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
 import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
 import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatTabsModule } from '@angular/material/tabs';
 import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideRouter } from '@angular/router';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -90,7 +90,6 @@ bootstrapApplication(AppComponent, {
       GeneralModule,
       ApiModule,
       HttpClientModule,
-      AppRoutingModule,
       UiAlertsModule,
       UiLoadersModule,
       PerunPipesModule,
@@ -98,9 +97,9 @@ bootstrapApplication(AppComponent, {
       MatTabsModule,
       PerunUtilsModule,
       OAuthModule.forRoot(),
-      PerunSharedComponentsModule,
       PerunTableUtilsModule,
     ),
+    provideRouter(appRoutes),
     CustomIconService,
     {
       provide: APP_INITIALIZER,
