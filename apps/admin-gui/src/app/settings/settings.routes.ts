@@ -1,11 +1,10 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { SettingsComponent } from './pages/settings.component';
 import { RouteAuthGuardService } from '../shared/route-auth-guard.service';
 import { SettingsOverviewComponent } from './pages/settings-overview/settings-overview.component';
 import { GuiConfigurationComponent } from './pages/gui-configuration/gui-configuration.component';
 
-const routes: Routes = [
+export const settingsRoutes: Routes = [
   {
     path: '',
     component: SettingsComponent,
@@ -24,9 +23,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class SettingsRoutingModule {}

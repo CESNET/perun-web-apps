@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { SettingsSSHKeysComponent } from '@perun-web-apps/perun/components';
 import { ServiceIdentitySelectPageComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-select-page.component';
 import { ServiceIdentityDetailPageComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-detail-page/service-identity-detail-page.component';
@@ -13,7 +12,7 @@ import { ServiceIdentityAuthenticationComponent } from './pages/user-detail-page
 import { ServiceIdentityCertificatesComponent } from './pages/user-detail-page/user-settings/user-settings-service-identities/service-identity-authentication/service-identity-certificates/service-identity-certificates.component';
 import { RouteAuthGuardService } from '../shared/route-auth-guard.service';
 
-const routes: Routes = [
+export const usersRoutes: Routes = [
   {
     path: '',
     component: ServiceIdentitySelectPageComponent,
@@ -65,9 +64,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class UsersRoutingModule {}

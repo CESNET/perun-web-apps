@@ -12,7 +12,7 @@ import { AppComponent } from './app/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
-import { AppRoutingModule } from './app/app-routing.module';
+import { appRoutes } from './app/app.routes';
 import { UiMaterialModule } from '@perun-web-apps/ui/material';
 import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +33,7 @@ import {
 import { ConsolidatorConfigService } from './app/services/consolidator-config.service';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideRouter } from '@angular/router';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -79,7 +80,6 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       ApiModule,
-      AppRoutingModule,
       UiMaterialModule,
       PerunLoginModule,
       MatIconModule,
@@ -98,6 +98,7 @@ bootstrapApplication(AppComponent, {
         },
       }),
     ),
+    provideRouter(appRoutes),
     CustomIconService,
     {
       provide: APP_INITIALIZER,

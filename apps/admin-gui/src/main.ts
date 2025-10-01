@@ -3,14 +3,12 @@ import { AppComponent } from './app/app.component';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, forwardRef, Provider } from '@angular/core';
-import { AppRoutingModule } from './app/app-routing.module';
-import { SharedModule } from './app/shared/shared.module';
+import { appRoutes } from './app/app.routes';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule } from './app/core/core.module';
-import { RouteReuseStrategy } from '@angular/router';
+import { provideRouter, RouteReuseStrategy } from '@angular/router';
 import { CacheRouteReuseStrategy } from './app/core/services/common/cache-route-reuse-strategy';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -75,9 +73,6 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       BrowserModule,
       HttpClientModule,
-      SharedModule,
-      CoreModule,
-      AppRoutingModule,
       MatIconModule,
       GeneralModule,
       TranslateModule.forRoot({
@@ -93,6 +88,7 @@ bootstrapApplication(AppComponent, {
       NgScrollbarModule,
       OAuthModule.forRoot(),
     ),
+    provideRouter(appRoutes),
     AdminGuiConfigService,
     {
       provide: APP_INITIALIZER,

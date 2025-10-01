@@ -24,11 +24,10 @@ import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AppRoutingModule } from './app/app-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import { provideRouter, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
@@ -56,6 +55,7 @@ import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatMenuModule } from '@angular/material/menu';
 import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespace-password-form';
 import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
+import { appRoutes } from './app/app.routes';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -109,7 +109,6 @@ bootstrapApplication(AppComponent, {
           deps: [HttpClient],
         },
       }),
-      AppRoutingModule,
       MatIconModule,
       MatSidenavModule,
       MatListModule,
@@ -146,6 +145,7 @@ bootstrapApplication(AppComponent, {
       PerunNamespacePasswordFormModule,
       PerunTableUtilsModule,
     ),
+    provideRouter(appRoutes),
     CustomIconService,
     {
       provide: APP_INITIALIZER,

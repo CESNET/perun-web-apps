@@ -1,6 +1,5 @@
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { VoSelectPageComponent } from './pages/vo-select-page/vo-select-page.component';
-import { NgModule } from '@angular/core';
 import { GroupDetailPageComponent } from './pages/group-detail-page/group-detail-page.component';
 import { MemberDetailPageComponent } from './pages/member-detail-page/member-detail-page.component';
 import { VoOverviewComponent } from './pages/vo-detail-page/vo-overview/vo-overview.component';
@@ -70,7 +69,7 @@ import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail
 import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
 import { GroupInvitationDetailComponent } from './pages/group-detail-page/group-invitation-detail/group-invitation-detail.component';
 
-const routes: Routes = [
+export const vosRoutes: Routes = [
   {
     path: '',
     component: VoSelectPageComponent,
@@ -425,9 +424,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class VosRoutingModule {}

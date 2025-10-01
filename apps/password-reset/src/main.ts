@@ -24,13 +24,14 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { GeneralModule } from '@perun-web-apps/general';
-import { AppRoutingModule } from './app/app-routing.module';
+import { appRoutes } from './app/app.routes';
 import { UiMaterialModule } from '@perun-web-apps/ui/material';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
 import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespace-password-form';
 import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
 import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -86,7 +87,6 @@ bootstrapApplication(AppComponent, {
       GeneralModule,
       ApiModule,
       HttpClientModule,
-      AppRoutingModule,
       UiMaterialModule,
       UiAlertsModule,
       UiLoadersModule,
@@ -94,6 +94,7 @@ bootstrapApplication(AppComponent, {
       OAuthModule.forRoot(),
       PerunSharedComponentsModule,
     ),
+    provideRouter(appRoutes),
     CustomIconService,
     {
       provide: APP_INITIALIZER,

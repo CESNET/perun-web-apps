@@ -1,5 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminOverviewComponent } from './pages/admin-page/admin-overview/admin-overview.component';
 import { AdminAttributesComponent } from './pages/admin-page/admin-attributes/admin-attributes.component';
@@ -29,7 +28,7 @@ import { UserAssignmentsComponent } from '../users/pages/user-detail-page/user-a
 import { AdminTasksComponent } from './pages/admin-page/admin-tasks/admin-tasks.component';
 import { UserApplicationsComponent } from '../users/pages/user-detail-page/user-applications/user-applications.component';
 
-const routes: Routes = [
+export const adminRoutes: Routes = [
   {
     path: '',
     component: AdminPageComponent,
@@ -183,9 +182,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AdminRoutingModule {}
