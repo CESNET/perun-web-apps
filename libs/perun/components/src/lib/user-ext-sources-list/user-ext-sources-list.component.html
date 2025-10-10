@@ -89,12 +89,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && userExtSources.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && userExtSources.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && userExtSources.length === 0" alert_type="warn">
-  {{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.NO_IDENTITIES' | customTranslate | translate}}
-</perun-web-apps-alert>
+@if (!loading && userExtSources.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.NO_IDENTITIES' | customTranslate | translate}}
+  </perun-web-apps-alert>
+}

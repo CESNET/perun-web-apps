@@ -8,13 +8,14 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_FACILITY.NAME' | translate}}</mat-label>
         <input matInput required data-cy="facility-name-input" [formControl]="nameControl" />
-        <mat-error *ngIf="nameControl.errors?.['spaceName']">
-          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-        </mat-error>
-        <mat-error
-          *ngIf="!nameControl.errors?.['spaceName']"
-          >{{"DIALOGS.CREATE_FACILITY.REQUIRE_NAME" | translate}}</mat-error
-        >
+        @if (nameControl.errors?.['spaceName']) {
+          <mat-error>
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
+        }
+        @if (!nameControl.errors?.['spaceName']) {
+          <mat-error>{{"DIALOGS.CREATE_FACILITY.REQUIRE_NAME" | translate}}</mat-error>
+        }
       </mat-form-field>
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_FACILITY.DESCRIPTION' | translate}}</mat-label>
@@ -26,12 +27,11 @@
           <mat-option (click)="srcFacility = null">
             {{'DIALOGS.CREATE_FACILITY.NO_COPY' | translate}}
           </mat-option>
-          <mat-option
-            (click)="srcFacility = facility"
-            *ngFor="let facility of facilities"
-            [value]="facility">
-            {{facility.name}}
-          </mat-option>
+          @for (facility of facilities; track facility.id) {
+            <mat-option (click)="srcFacility = facility" [value]="facility">
+              {{facility.name}}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
       <perun-web-apps-alert alert_type="info">

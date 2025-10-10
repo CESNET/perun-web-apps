@@ -1,9 +1,15 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveUserServiceIdentityDialogData {
   theme: string;
@@ -15,6 +21,18 @@ export interface RemoveUserServiceIdentityDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    UserFullNamePipe,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-disconnect-identity-dialog',
   templateUrl: './disconnect-identity-dialog.component.html',
   styleUrls: ['./disconnect-identity-dialog.component.scss'],

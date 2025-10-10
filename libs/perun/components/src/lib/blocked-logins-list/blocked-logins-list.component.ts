@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -9,7 +13,12 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { GlobalNamespacePipe } from '@perun-web-apps/perun/pipes';
+import {
+  CheckboxLabelPipe,
+  GlobalNamespacePipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -19,15 +28,29 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BlockedLogin, PaginatedBlockedLogins } from '@perun-web-apps/perun/openapi';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    CheckboxLabelPipe,
+    GlobalNamespacePipe,
+    MasterCheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-logins-list',
   templateUrl: './blocked-logins-list.component.html',
   styleUrls: ['./blocked-logins-list.component.scss'],

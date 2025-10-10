@@ -1,15 +1,39 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AnimatedRouterOutletComponent } from '../../../../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SideMenuService } from '../../../../../../core/services/common/side-menu.service';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { SideMenuItemService } from '../../../../../../shared/side-menu/side-menu-item.service';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditUserDialogComponent } from '../../../../../../shared/components/dialogs/edit-user-dialog/edit-user-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityPathParam } from '@perun-web-apps/perun/models';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    PerunSharedComponentsModule,
+    AnimatedRouterOutletComponent,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'app-service-identity-detail-page',
   templateUrl: './service-identity-detail-page.component.html',
   styleUrls: ['./service-identity-detail-page.component.css'],
@@ -42,7 +66,7 @@ export class ServiceIdentityDetailPageComponent implements OnInit {
           this.user = user;
 
           const userItem = this.sideMenuItemService.parseServiceIdentity(user);
-          this.sideMenuService.setUserItems([userItem]);
+          this.sideMenuService.setServiceIdentitiesItems([userItem]);
           this.loading = false;
         },
         error: () => (this.loading = false),

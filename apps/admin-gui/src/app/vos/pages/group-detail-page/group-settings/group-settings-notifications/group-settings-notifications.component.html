@@ -1,69 +1,71 @@
 <h1 class="page-subtitle">
   {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.TITLE' | translate}}
 </h1>
-<div *ngIf="!noApplicationForm">
-  <div class="w-100 d-flex">
-    <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
-    <button
-      *ngIf="addAuth"
-      (click)="add()"
-      color="accent"
-      class="me-2 action-button"
-      mat-flat-button>
-      {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.ADD' | translate}}
-    </button>
-
-    <button
-      *ngIf="removeAuth"
-      (click)="remove()"
-      color="warn"
-      [disabled]="selection.selected.length === 0 || loading"
-      class="me-2"
-      mat-flat-button>
-      {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
-    </button>
-
-    <button (click)="changeEmailFooter()" class="me-2 action-button" mat-stroked-button>
-      <i class="material-icons align-middle">email</i>
-      <span class="align-middle">
-        {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.EMAIL_FOOTER' | translate}}
-      </span>
-    </button>
-
-    <button (click)="copy()" *ngIf="copyAuth" class="action-button" mat-stroked-button>
-      <i class="material-icons align-middle">file_copy</i>
-      <span class="align-middle">
-        {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.COPY_FROM_VO' | translate}}
-      </span>
-    </button>
+@if (!noApplicationForm) {
+  <div>
+    <div class="w-100 d-flex">
+      <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
+      @if (addAuth) {
+        <button (click)="add()" color="accent" class="me-2 action-button" mat-flat-button>
+          {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.ADD' | translate}}
+        </button>
+      }
+      @if (removeAuth) {
+        <button
+          (click)="remove()"
+          color="warn"
+          [disabled]="selection.selected.length === 0 || loading"
+          class="me-2"
+          mat-flat-button>
+          {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.REMOVE' | translate}}
+        </button>
+      }
+      <button (click)="changeEmailFooter()" class="me-2 action-button" mat-stroked-button>
+        <i class="material-icons align-middle">email</i>
+        <span class="align-middle">
+          {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.EMAIL_FOOTER' | translate}}
+        </span>
+      </button>
+      @if (copyAuth) {
+        <button (click)="copy()" class="action-button" mat-stroked-button>
+          <i class="material-icons align-middle">file_copy</i>
+          <span class="align-middle">
+            {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.COPY_FROM_VO' | translate}}
+          </span>
+        </button>
+      }
+    </div>
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative table-min-height">
+      <app-notification-list
+        *perunWebAppsLoader="loading; indicator: spinner"
+        [loading]="loading"
+        [disableSend]="!addAuth"
+        [displayedColumns]="displayedColumns"
+        (selectionChange)="changeSelection($event)"
+        (refreshTable)="refresh()"
+        [applicationMails]="applicationMails"
+        [groupId]="group.id"
+        [selection]="selection"
+        [cachedSubject]="cachedSubject"
+        [tableId]="tableId"
+        [theme]="'group-theme'">
+      </app-notification-list>
+    </div>
   </div>
-
-  <ng-template #spinner>
-    <perun-web-apps-loading-table></perun-web-apps-loading-table>
-  </ng-template>
-  <div class="position-relative table-min-height">
-    <app-notification-list
-      *perunWebAppsLoader="loading; indicator: spinner"
-      [loading]="loading"
-      [disableSend]="!addAuth"
-      [displayedColumns]="displayedColumns"
-      (selectionChange)="changeSelection($event)"
-      (refreshTable)="refresh()"
-      [applicationMails]="applicationMails"
-      [groupId]="group.id"
-      [selection]="selection"
-      [cachedSubject]="cachedSubject"
-      [tableId]="tableId"
-      [theme]="'group-theme'">
-    </app-notification-list>
+}
+@if (noApplicationForm && !loading) {
+  <div>
+    <perun-web-apps-alert
+      alert_type="warn"
+      >{{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.NO_APPLICATION_FORM' | translate}}</perun-web-apps-alert
+    >
+    @if (createFormAuth) {
+      <button (click)="createEmptyApplicationForm()" mat-stroked-button>
+        {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.CREATE_APPLICATION_FORM' | translate}}
+      </button>
+    }
   </div>
-</div>
-<div *ngIf="noApplicationForm && !loading">
-  <perun-web-apps-alert
-    alert_type="warn"
-    >{{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.NO_APPLICATION_FORM' | translate}}</perun-web-apps-alert
-  >
-  <button (click)="createEmptyApplicationForm()" *ngIf="createFormAuth" mat-stroked-button>
-    {{'GROUP_DETAIL.SETTINGS.NOTIFICATIONS.CREATE_APPLICATION_FORM' | translate}}
-  </button>
-</div>
+}

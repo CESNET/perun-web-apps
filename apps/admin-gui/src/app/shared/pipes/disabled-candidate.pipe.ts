@@ -3,6 +3,7 @@ import { MemberCandidate } from '@perun-web-apps/perun/openapi';
 import { AddMemberService } from '../../vos/components/add-member.service';
 
 @Pipe({
+  standalone: true,
   name: 'disabledCandidate',
 })
 export class DisabledCandidatePipe implements PipeTransform {

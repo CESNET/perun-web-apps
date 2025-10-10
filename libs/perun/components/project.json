@@ -4,6 +4,10 @@
   "projectType": "library",
   "sourceRoot": "libs/perun/components/src",
   "prefix": "perun-web-apps",
+  "tags": [],
+  "generators": {
+    "@nx/angular:component": {}
+  },
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -16,9 +20,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/perun/components"]
     }
-  },
-  "generators": {
-    "@nx/angular:component": {}
-  },
-  "tags": []
+  }
 }

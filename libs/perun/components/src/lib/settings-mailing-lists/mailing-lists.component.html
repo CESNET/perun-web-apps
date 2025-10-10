@@ -5,43 +5,50 @@
   [placeholder]="'SHARED_LIB.PERUN.COMPONENTS.OPT_OUT_MAILING_LISTS.FILTER' | customTranslate | translate"
   (filter)="applyFilter($event)"></perun-web-apps-debounce-filter>
 <mat-accordion>
-  <mat-expansion-panel
-    *ngFor="let vo of filteredVos"
-    (closed)="deselectVo()"
-    (afterExpand)="changeSelectedVo(vo)"
-    [expanded]="vo.shortName === selectedVo">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{vo.name}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-      <mat-spinner class="ms-auto me-auto" *ngIf="loading"></mat-spinner>
-      <perun-web-apps-alert
-        *ngIf="resources.length === 0 && !loading"
-        alert_type="warn"
-        >{{'SHARED_LIB.PERUN.COMPONENTS.OPT_OUT_MAILING_LISTS.NO_MAILING_LISTS_ALERT' | customTranslate | translate}}</perun-web-apps-alert
-      >
-      <mat-accordion *ngIf="resources.length && !loading">
-        <mat-expansion-panel
-          *ngFor="let resource of resources"
-          (closed)="deselectResource()"
-          (afterExpand)="changeSelectedResource(resource)"
-          [expanded]="resource.name === selectedResource">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{resource.name}}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <mat-checkbox
-              [checked]="optOutAttribute && optOutAttribute.value !== null"
-              (change)="setOptOut()">
-              {{'SHARED_LIB.PERUN.COMPONENTS.OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | customTranslate | translate}}
-            </mat-checkbox>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </ng-template>
-  </mat-expansion-panel>
+  @for (vo of filteredVos; track vo) {
+    <mat-expansion-panel
+      (closed)="deselectVo()"
+      (afterExpand)="changeSelectedVo(vo)"
+      [expanded]="vo.shortName === selectedVo">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{vo.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        @if (loading) {
+          <mat-spinner class="ms-auto me-auto"></mat-spinner>
+        }
+        @if (resources.length === 0 && !loading) {
+          <perun-web-apps-alert
+            alert_type="warn"
+            >{{'SHARED_LIB.PERUN.COMPONENTS.OPT_OUT_MAILING_LISTS.NO_MAILING_LISTS_ALERT' | customTranslate | translate}}</perun-web-apps-alert
+          >
+        }
+        @if (resources.length && !loading) {
+          <mat-accordion>
+            @for (resource of resources; track resource) {
+              <mat-expansion-panel
+                (closed)="deselectResource()"
+                (afterExpand)="changeSelectedResource(resource)"
+                [expanded]="resource.name === selectedResource">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{resource.name}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                  <mat-checkbox
+                    [checked]="optOutAttribute && optOutAttribute.value !== null"
+                    (change)="setOptOut()">
+                    {{'SHARED_LIB.PERUN.COMPONENTS.OPT_OUT_MAILING_LISTS.OPT_OUT_LABEL' | customTranslate | translate}}
+                  </mat-checkbox>
+                </div>
+              </mat-expansion-panel>
+            }
+          </mat-accordion>
+        }
+      </ng-template>
+    </mat-expansion-panel>
+  }
 </mat-accordion>

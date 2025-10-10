@@ -27,8 +27,10 @@ import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
     MatInputModule,
     UiAlertsModule,
     UiLoadersModule,
+    LoginScreenComponent,
+    LoginScreenBaseComponent,
+    LoginScreenServiceAccessComponent,
   ],
-  declarations: [LoginScreenComponent, LoginScreenBaseComponent, LoginScreenServiceAccessComponent],
   exports: [LoginScreenBaseComponent, LoginScreenComponent, LoginScreenServiceAccessComponent],
 })
 export class PerunLoginModule {}

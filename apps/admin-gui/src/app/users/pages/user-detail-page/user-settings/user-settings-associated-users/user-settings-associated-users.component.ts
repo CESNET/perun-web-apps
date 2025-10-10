@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,10 +12,26 @@ import { ConnectIdentityDialogComponent } from '../../../../../shared/components
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { map, switchMap, tap, filter } from 'rxjs/operators';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  RefreshButtonComponent,
+  UsersListComponent,
+} from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    UsersListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-user-settings-associated-users',
   templateUrl: './user-settings-associated-users.component.html',
   styleUrls: ['./user-settings-associated-users.component.scss'],
@@ -137,11 +156,7 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        if (!this.authResolver.isAuthorized('getUsersBySpecificUser_User_policy', [this.user])) {
-          void this.router.navigate(['/myProfile'], { queryParamsHandling: 'preserve' });
-        } else {
-          this.refreshTable();
-        }
+        this.refreshTable();
       }
     });
   }

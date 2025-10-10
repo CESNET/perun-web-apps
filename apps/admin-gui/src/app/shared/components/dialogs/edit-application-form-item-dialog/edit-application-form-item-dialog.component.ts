@@ -1,5 +1,18 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   ApplicationFormItem,
   AppType,
@@ -11,13 +24,31 @@ import {
 import { createNewApplicationFormItem } from '@perun-web-apps/perun/utils';
 import DisabledEnum = ApplicationFormItem.DisabledEnum;
 import HiddenEnum = ApplicationFormItem.HiddenEnum;
-import { ItemType, NO_FORM_ITEM, SelectionItem } from '@perun-web-apps/perun/components';
+import {
+  AppFormItemSearchSelectComponent,
+  HtmlContentFormFieldComponent,
+  ItemType,
+  NO_FORM_ITEM,
+  SelectionItem,
+  SelectionItemSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
 import {
   HtmlEscapeService,
   PerunTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ApplicationFormItemDisabledPipe } from '../../../pipes/application-form-item-disabled.pipe';
+import { ApplicationFormItemHiddenPipe } from '../../../pipes/application-form-item-hidden.pipe';
+import { ApplicationFormItemTypePipe } from '../../../pipes/application-form-item-type.pipe';
+import { DisableSubmitOnAppItemEditPipe } from '@perun-web-apps/perun/pipes';
 
 export interface EditApplicationFormItemDialogComponentData {
   theme: string;
@@ -28,6 +59,33 @@ export interface EditApplicationFormItemDialogComponentData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    AppFormItemSearchSelectComponent,
+    SelectionItemSearchSelectComponent,
+    HtmlContentFormFieldComponent,
+    LoaderDirective,
+    ApplicationFormItemDisabledPipe,
+    ApplicationFormItemHiddenPipe,
+    ApplicationFormItemTypePipe,
+    DisableSubmitOnAppItemEditPipe,
+  ],
+  standalone: true,
   selector: 'app-edit-application-form-item-dialog',
   templateUrl: './edit-application-form-item-dialog.component.html',
   styleUrls: ['./edit-application-form-item-dialog.component.scss'],

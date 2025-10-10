@@ -1,5 +1,14 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MembersListComponent } from '@perun-web-apps/perun/components';
+import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   FindSponsorsService,
   NotificatorService,
@@ -7,11 +16,13 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { MembersManagerService, RichMember, User } from '@perun-web-apps/perun/openapi';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
+import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface SponsorExistingMemberDialogData {
   voId: number;
@@ -21,6 +32,23 @@ export interface SponsorExistingMemberDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    ExpirationSelectComponent,
+    MembersListComponent,
+    TranslateModule,
+    ChooseSponsorComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-sponsor-existing-member-dialog',
   templateUrl: './sponsor-existing-member-dialog.component.html',
   styleUrls: ['./sponsor-existing-member-dialog.component.scss'],

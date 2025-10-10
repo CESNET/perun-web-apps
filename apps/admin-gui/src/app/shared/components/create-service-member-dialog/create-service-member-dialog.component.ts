@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatListModule, MatListItem } from '@angular/material/list';
+import { MembersListComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -6,7 +16,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Candidate,
   ExtSource,
@@ -25,13 +35,22 @@ import {
   NotificatorService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import {
+  FormBuilder,
+  FormControl,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import { CustomValidators, emailRegexString } from '@perun-web-apps/perun/utils';
 import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoginPasswordFormWithGenerateOptionComponent } from '../login-password-form-with-generate-option/login-password-form-with-generate-option.component';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 export interface CreateServiceMemberDialogData {
   vo: Vo;
@@ -47,6 +66,30 @@ export interface CreateServiceMemberDialogResult {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MembersListComponent,
+    MatListModule,
+    MatListItem,
+    TranslateModule,
+    MatTooltip,
+    MatStepLabel,
+    LoaderDirective,
+    LoginPasswordFormWithGenerateOptionComponent,
+    MatStep,
+    MatStepper,
+    LoadingTableComponent,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'app-create-service-member-dialog',
   templateUrl: './create-service-member-dialog.component.html',
   styleUrls: ['./create-service-member-dialog.component.scss'],

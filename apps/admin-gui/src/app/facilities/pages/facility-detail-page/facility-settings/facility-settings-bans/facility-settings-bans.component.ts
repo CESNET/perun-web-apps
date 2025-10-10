@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   EnrichedBanOnFacility,
@@ -18,10 +21,28 @@ import { AddFacilityBanDialogComponent } from '../../../../../shared/components/
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UpdateFacilityBanDialogComponent } from '../../../../../shared/components/dialogs/update-facility-ban-dialog/update-facility-ban-dialog.component';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
-import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
+import {
+  BanOnEntityListColumn,
+  BanOnEntityListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    BanOnEntityListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-facility-settings-bans',
   templateUrl: './facility-settings-bans.component.html',
   styleUrls: ['./facility-settings-bans.component.scss'],

@@ -4,9 +4,17 @@
   [class.error-alert]="alert_type === 'error'"
   [class.success-alert]="alert_type === 'success'"
   [class.info-alert]="alert_type === 'info'">
-  <mat-icon *ngIf="alert_type === 'info'" class="perun-alert-icon"> info </mat-icon>
-  <mat-icon *ngIf="alert_type === 'warn'" class="perun-alert-icon"> warning </mat-icon>
-  <mat-icon *ngIf="alert_type === 'error'" class="perun-alert-icon"> dangerous </mat-icon>
-  <mat-icon *ngIf="alert_type === 'success'" class="perun-alert-icon"> check_circle </mat-icon>
+  @if (alert_type === 'info') {
+    <mat-icon class="perun-alert-icon"> info </mat-icon>
+  }
+  @if (alert_type === 'warn') {
+    <mat-icon class="perun-alert-icon"> warning </mat-icon>
+  }
+  @if (alert_type === 'error') {
+    <mat-icon class="perun-alert-icon"> dangerous </mat-icon>
+  }
+  @if (alert_type === 'success') {
+    <mat-icon class="perun-alert-icon"> check_circle </mat-icon>
+  }
   <ng-content></ng-content>
 </div>

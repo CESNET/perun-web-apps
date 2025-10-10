@@ -1,5 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   ResourcesManagerService,
   RichResource,
@@ -11,6 +17,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_RESOURCE_DELETE_SERVICE } from '@perun-web-apps/config/table-config';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ResourcesListComponent } from '@perun-web-apps/perun/components';
 
 export interface DeleteServiceFromFacilityData {
   theme: string;
@@ -21,6 +29,18 @@ export interface DeleteServiceFromFacilityData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+    ResourcesListComponent,
+  ],
+  standalone: true,
   selector: 'app-delete-service-from-facility',
   templateUrl: './delete-service-from-facility.component.html',
   styleUrls: ['./delete-service-from-facility.component.scss'],

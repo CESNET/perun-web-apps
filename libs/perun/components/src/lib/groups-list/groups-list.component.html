@@ -15,48 +15,56 @@
       matSortActive="name"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <span
-            [matTooltipDisabled]="isMasterCheckboxEnabled"
-            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.MASTER_CHECKBOX_TOOLTIP' | translate">
-            <mat-checkbox
-              *ngIf="!disableHeadCheckbox && selection.isMultipleSelection()"
-              (change)="$event ? masterToggle() : null"
-              [aria-label]="selected.all | masterCheckboxLabel | translate"
-              [checked]="selection.hasValue() && selected.all"
-              [indeterminate]="selection.hasValue() && !selected.all"
-              [disabled]="!isMasterCheckboxEnabled"
-              color="primary">
-            </mat-checkbox>
-          </span>
-        </th>
-        <td
-          *matCellDef="let group"
-          class="static-column-size align-checkbox"
-          mat-cell
-          (mouseenter)="disabledRouting = true"
-          (mouseleave)="disabledRouting = disableRouting"
-          [class.cursor-default]="(group | disableGroupSelect: disableMembers : disableGroups : groupsToDisableCheckbox) || !canBeSelected(group)">
-          <span
-            *ngIf="{disable: group | disableGroupSelect: disableMembers : disableGroups : groupsToDisableCheckbox} as groupStatus"
-            [matTooltip]="group | groupCheckboxTooltip: false: canBeSelected(group) | translate"
-            [matTooltipPosition]="'above'"
-            [matTooltipDisabled]="!groupStatus.disable && canBeSelected(group)">
-            <mat-checkbox
-              (change)="$event ? itemSelectionToggle(group) : null"
-              (click)="$event.stopPropagation()"
-              [aria-label]="selection.isSelected(group) | checkboxLabel | translate: {name: group.name}"
-              [checked]="selection.isSelected(group)"
-              [disabled]="groupStatus.disable || !canBeSelected(group)"
-              attr.data-cy="{{group.name}}-checkbox"
-              color="primary">
-            </mat-checkbox>
-          </span>
-        </td>
-      </ng-container>
+      @if (
+        {all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected};
+        as selected
+      ) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            <span
+              [matTooltipDisabled]="isMasterCheckboxEnabled"
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.MASTER_CHECKBOX_TOOLTIP' | translate">
+              @if (!disableHeadCheckbox && selection.isMultipleSelection()) {
+                <mat-checkbox
+                  (change)="$event ? masterToggle() : null"
+                  [aria-label]="selected.all | masterCheckboxLabel | translate"
+                  [checked]="selection.hasValue() && selected.all"
+                  [indeterminate]="selection.hasValue() && !selected.all"
+                  [disabled]="!isMasterCheckboxEnabled"
+                  color="primary">
+                </mat-checkbox>
+              }
+            </span>
+          </th>
+          <td
+            *matCellDef="let group"
+            class="static-column-size align-checkbox"
+            mat-cell
+            (mouseenter)="disabledRouting = true"
+            (mouseleave)="disabledRouting = disableRouting"
+            [class.cursor-default]="(group | disableGroupSelect: disableMembers : disableGroups : groupsToDisableCheckbox) || !canBeSelected(group)">
+            @if (
+              {disable: group | disableGroupSelect: disableMembers : disableGroups : groupsToDisableCheckbox};
+              as groupStatus
+            ) {
+              <span
+                [matTooltip]="group | groupCheckboxTooltip: false: canBeSelected(group) | translate"
+                [matTooltipPosition]="'above'"
+                [matTooltipDisabled]="!groupStatus.disable && canBeSelected(group)">
+                <mat-checkbox
+                  (change)="$event ? itemSelectionToggle(group) : null"
+                  (click)="$event.stopPropagation()"
+                  [aria-label]="selection.isSelected(group) | checkboxLabel | translate: {name: group.name}"
+                  [checked]="selection.isSelected(group)"
+                  [disabled]="groupStatus.disable || !canBeSelected(group)"
+                  attr.data-cy="{{group.name}}-checkbox"
+                  color="primary">
+                </mat-checkbox>
+              </span>
+            }
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_GROUP_ID' | translate}}
@@ -81,18 +89,20 @@
       <ng-container matColumnDef="indirectGroupAssigment">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let group" mat-cell>
-          <mat-icon
-            *ngIf="group.sourceGroupId && !group.moreTypesOfAssignment"
-            matTooltipPosition="above"
-            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.INDIRECT_GROUP' | translate"
-            >account_tree</mat-icon
-          >
-          <mat-icon
-            *ngIf="group.moreTypesOfAssignment"
-            matTooltipPosition="above"
-            [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.MULTIPLE_ASSIGNMENTS' | translate"
-            >alt_route</mat-icon
-          >
+          @if (group.sourceGroupId && !group.moreTypesOfAssignment) {
+            <mat-icon
+              matTooltipPosition="above"
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.INDIRECT_GROUP' | translate"
+              >account_tree</mat-icon
+            >
+          }
+          @if (group.moreTypesOfAssignment) {
+            <mat-icon
+              matTooltipPosition="above"
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.MULTIPLE_ASSIGNMENTS' | translate"
+              >alt_route</mat-icon
+            >
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="name">
@@ -143,17 +153,18 @@
           {{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.TABLE_GROUP_STATUS' | translate}}
         </th>
         <td *matCellDef="let group" mat-cell>
-          <i
-            *ngIf="{status: group.attributes | findAttribute: 'groupStatus'} as groupStatus"
-            (click)="$event.stopPropagation()"
-            class="material-icons status-change {{groupStatus.status | groupStatusIconColor}} cursor-default"
-            matTooltip="{{groupStatus.status}}"
-            matTooltipClass="status-tooltip"
-            matTooltipPosition="left">
-            <span>
-              {{groupStatus.status | memberStatusIcon}}
-            </span>
-          </i>
+          @if ({status: group.attributes | findAttribute: 'groupStatus'}; as groupStatus) {
+            <i
+              (click)="$event.stopPropagation()"
+              class="material-icons status-change {{groupStatus.status | groupStatusIconColor}} cursor-default"
+              matTooltip="{{groupStatus.status}}"
+              matTooltipClass="status-tooltip"
+              matTooltipPosition="left">
+              <span>
+                {{groupStatus.status | memberStatusIcon}}
+              </span>
+            </i>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="description">
@@ -169,15 +180,16 @@
         <td *matCellDef="let group" class="wrap-content" mat-cell>
           <span class="align-elements">
             {{group | groupExpiration | parseDate}}
-            <button
-              *ngIf="group | canManageGroup"
-              (click)="changeExpiration(group)"
-              (mouseenter)="disabledRouting = true"
-              (mouseleave)="disabledRouting = disableRouting"
-              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.CHANGE_EXPIRATION' | translate}}"
-              mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
+            @if (group | canManageGroup) {
+              <button
+                (click)="changeExpiration(group)"
+                (mouseenter)="disabledRouting = true"
+                (mouseleave)="disabledRouting = disableRouting"
+                matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUPS_LIST.CHANGE_EXPIRATION' | translate}}"
+                mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
           </span>
         </td>
       </ng-container>
@@ -211,6 +223,8 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && dataSource.filteredData.length === 0" alert_type="warn">
-  {{noGroupsAlert | translate}}
-</perun-web-apps-alert>
+@if (!loading && dataSource.filteredData.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{noGroupsAlert | translate}}
+  </perun-web-apps-alert>
+}

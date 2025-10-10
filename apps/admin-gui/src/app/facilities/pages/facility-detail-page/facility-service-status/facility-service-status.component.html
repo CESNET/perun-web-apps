@@ -1,48 +1,54 @@
 <div>
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.SERVICES_STATUS.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="propagationAuth"
-    (click)="forcePropagation()"
-    [disabled]="selected.selected.length === 0 || this.disableForcePropagationButton || loading"
-    class="me-2"
-    color="accent"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.SERVICES_STATUS.FORCE_PROPAGATION' | translate}}
-  </button>
-  <button
-    *ngIf="allowAuth"
-    (click)="allow()"
-    [disabled]="selected.selected.length === 0 || this.disableAllowButton || loading"
-    class="me-2"
-    color="accent"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.SERVICES_STATUS.ALLOW' | translate}}
-  </button>
-  <button
-    *ngIf="blockAuth"
-    (click)="block()"
-    class="me-2"
-    color="warn"
-    [disabled]="selected.selected.length === 0 || this.disableBlockButton || loading"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.SERVICES_STATUS.BLOCK' | translate}}
-  </button>
-  <button
-    *ngIf="deleteAuth"
-    mat-flat-button
-    [disabled]="selected.selected.length === 0 || disableRemoveButton || loading"
-    [matMenuTriggerFor]="menu"
-    [matTooltipDisabled]="!disableRemoveButton"
-    class="me-2 dropdown-toggle"
-    color="warn"
-    matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
-    {{'FACILITY_DETAIL.SERVICES_STATUS.REMOVE' | translate}}
-  </button>
-  <mat-menu #menu="matMenu">
-    <button (click)="removeTaskResults()" *ngIf="!taskIsNull" mat-menu-item>
-      {{'FACILITY_DETAIL.SERVICES_STATUS.REMOVE_TASK_RESULTS' | translate}}
+  @if (propagationAuth) {
+    <button
+      (click)="forcePropagation()"
+      [disabled]="selected.selected.length === 0 || this.disableForcePropagationButton || loading"
+      class="me-2"
+      color="accent"
+      mat-flat-button>
+      {{'FACILITY_DETAIL.SERVICES_STATUS.FORCE_PROPAGATION' | translate}}
     </button>
+  }
+  @if (allowAuth) {
+    <button
+      (click)="allow()"
+      [disabled]="selected.selected.length === 0 || this.disableAllowButton || loading"
+      class="me-2"
+      color="accent"
+      mat-flat-button>
+      {{'FACILITY_DETAIL.SERVICES_STATUS.ALLOW' | translate}}
+    </button>
+  }
+  @if (blockAuth) {
+    <button
+      (click)="block()"
+      class="me-2"
+      color="warn"
+      [disabled]="selected.selected.length === 0 || this.disableBlockButton || loading"
+      mat-flat-button>
+      {{'FACILITY_DETAIL.SERVICES_STATUS.BLOCK' | translate}}
+    </button>
+  }
+  @if (deleteAuth) {
+    <button
+      mat-flat-button
+      [disabled]="selected.selected.length === 0 || disableRemoveButton || loading"
+      [matMenuTriggerFor]="menu"
+      [matTooltipDisabled]="!disableRemoveButton"
+      class="me-2 dropdown-toggle"
+      color="warn"
+      matTooltip="{{'DIALOGS.REMOVE_SERVICE_FROM_FACILITY.CHECKBOXES_DISABLED' | translate}}">
+      {{'FACILITY_DETAIL.SERVICES_STATUS.REMOVE' | translate}}
+    </button>
+  }
+  <mat-menu #menu="matMenu">
+    @if (!taskIsNull) {
+      <button (click)="removeTaskResults()" mat-menu-item>
+        {{'FACILITY_DETAIL.SERVICES_STATUS.REMOVE_TASK_RESULTS' | translate}}
+      </button>
+    }
     <button (click)="removeServiceFromFacility()" mat-menu-item>
       {{'FACILITY_DETAIL.SERVICES_STATUS.REMOVE_SERVICE_FROM_FACILITY' | translate}}
     </button>

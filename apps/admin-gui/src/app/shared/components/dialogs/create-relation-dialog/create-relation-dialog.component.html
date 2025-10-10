@@ -4,11 +4,12 @@
 <div class="{{theme}} position-relative">
   <div *perunWebAppsLoader="initLoading; indicator: spinner">
     <h1 mat-dialog-title>{{"DIALOGS.CREATE_RELATION.TITLE" | translate}}</h1>
-    <perun-web-apps-vo-search-select
-      *ngIf="vosToSelect.length > 1"
-      [vo]="thisVo.vo"
-      [vos]="vosToSelect"
-      (voSelected)="getGroupsToInclude($event.id)"></perun-web-apps-vo-search-select>
+    @if (vosToSelect.length > 1) {
+      <perun-web-apps-vo-search-select
+        [vo]="thisVo.vo"
+        [vos]="vosToSelect"
+        (voSelected)="getGroupsToInclude($event.id)"></perun-web-apps-vo-search-select>
+    }
     <div class="dialog-container" mat-dialog-content>
       <perun-web-apps-debounce-filter
         (filter)="applyFilter($event)"

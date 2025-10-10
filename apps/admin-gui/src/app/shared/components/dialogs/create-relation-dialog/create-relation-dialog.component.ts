@@ -1,5 +1,13 @@
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  VoSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   EnrichedVo,
   Group,
@@ -9,8 +17,9 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TABLE_CREATE_RELATION_GROUP_DIALOG } from '@perun-web-apps/config/table-config';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface CreateRelationDialogData {
   theme: string;
@@ -21,6 +30,19 @@ export interface CreateRelationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    GroupsListComponent,
+    VoSearchSelectComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-create-relation-dialog',
   templateUrl: './create-relation-dialog.component.html',
   styleUrls: ['./create-relation-dialog.component.scss'],

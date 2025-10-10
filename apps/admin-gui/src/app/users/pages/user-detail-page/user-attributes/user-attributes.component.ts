@@ -1,9 +1,22 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { OneEntityAttributePageComponent } from '../../../../shared/components/one-entity-attribute-page/one-entity-attribute-page.component';
+import { TwoEntityAttributePageComponent } from '../../../../shared/components/two-entity-attribute-page/two-entity-attribute-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { User } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [
+    CommonModule,
+    OneEntityAttributePageComponent,
+    TwoEntityAttributePageComponent,
+    MatTabsModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'app-user-settings-attributes',
   templateUrl: './user-attributes.component.html',
   styleUrls: ['./user-attributes.component.scss'],

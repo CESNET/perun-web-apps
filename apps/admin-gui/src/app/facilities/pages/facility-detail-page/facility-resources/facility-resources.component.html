@@ -2,25 +2,27 @@
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.RESOURCES.TITLE' | translate}}</h1>
   <div class="align-elements">
     <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-    <button
-      *ngIf="addAuth"
-      mat-flat-button
-      color="accent"
-      data-cy="create-resource-button"
-      class="me-2 action-button"
-      (click)="createResource()">
-      {{'FACILITY_DETAIL.RESOURCES.CREATE' | translate}}
-    </button>
-    <button
-      *ngIf="removeAuth"
-      mat-flat-button
-      color="warn"
-      class="me-2"
-      data-cy="delete-resource-button"
-      [disabled]="selected.selected.length === 0 || loading"
-      (click)="removeResource()">
-      {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
-    </button>
+    @if (addAuth) {
+      <button
+        mat-flat-button
+        color="accent"
+        data-cy="create-resource-button"
+        class="me-2 action-button"
+        (click)="createResource()">
+        {{'FACILITY_DETAIL.RESOURCES.CREATE' | translate}}
+      </button>
+    }
+    @if (removeAuth) {
+      <button
+        mat-flat-button
+        color="warn"
+        class="me-2"
+        data-cy="delete-resource-button"
+        [disabled]="selected.selected.length === 0 || loading"
+        (click)="removeResource()">
+        {{'FACILITY_DETAIL.RESOURCES.DELETE' | translate}}
+      </button>
+    }
     <perun-web-apps-service-search-select
       [services]="services"
       (serviceSelected)="serviceSelected($event)"

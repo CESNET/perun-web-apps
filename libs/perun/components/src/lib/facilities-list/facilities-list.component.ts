@@ -1,6 +1,19 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { RecentlyViewedIconComponent } from '../recently-viewed-icon/recently-viewed-icon.component';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  FilterUniqueObjectsPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EnrichedFacility, Group } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -14,8 +27,29 @@ import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ObjectListValuesComponent } from '../object-list-values/object-list-values.component';
+import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RecentlyViewedIconComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    FilterUniqueObjectsPipe,
+    MasterCheckboxLabelPipe,
+    CheckboxLabelPipe,
+    ObjectListValuesComponent,
+    AuthorizedGroupsCellComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-facilities-list',
   templateUrl: './facilities-list.component.html',
   styleUrls: ['./facilities-list.component.scss'],

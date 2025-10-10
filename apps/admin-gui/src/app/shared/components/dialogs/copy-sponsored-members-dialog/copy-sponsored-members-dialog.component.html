@@ -14,50 +14,56 @@
       <ng-template #tableSpinner>
         <perun-web-apps-loading-table></perun-web-apps-loading-table>
       </ng-template>
-      <div class="position-relative" *ngIf="sourceSponsorSelected">
-        <h6>{{'DIALOGS.COPY_SPONSORED_MEMBERS.SPONSORED_MEMBERS' | translate}}</h6>
-        <perun-web-apps-alert alert_type="info">
-          {{'DIALOGS.COPY_SPONSORED_MEMBERS.SPONSORED_MEMBERS_INFO' | translate}}
-        </perun-web-apps-alert>
-        <perun-web-apps-debounce-filter
-          (filter)="applyFilter($event)"
-          [placeholder]="'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.FILTER'">
-        </perun-web-apps-debounce-filter>
-        <app-sponsored-members-list
-          *perunWebAppsLoader="tableLoading; indicator: tableSpinner"
-          [tableLoading]="tableLoading"
-          [disableRouting]="true"
-          [sponsoredMembers]="filteredSponsoredMembers"
-          [selection]="selection"
-          [cachedSubject]="cachedSubject"
-          [filterValue]="filter"
-          [displayedColumns]="['select', 'id', 'name', 'email', 'logins', 'expiration']"
-          [selectedSponsor]="sourceSponsor"
-          [tableId]="tableId">
-        </app-sponsored-members-list>
-      </div>
-      <div *ngIf="isPerunAdmin">
-        <app-choose-sponsor
-          *ngIf="!tableLoading"
-          [voId]="data.voId"
-          [customTitle]="'DIALOGS.CREATE_SPONSORED_MEMBER.SELECT_SPONSOR_COPY'"
-          [disableSelf]="disableSelf"
-          [voSponsors]="voSponsorsTarget"
-          (sponsorTypeSelected)="sponsorType = $event"
-          (sponsorSelected)="targetSponsor = $event">
-        </app-choose-sponsor>
-      </div>
+      @if (sourceSponsorSelected) {
+        <div class="position-relative">
+          <h6>{{'DIALOGS.COPY_SPONSORED_MEMBERS.SPONSORED_MEMBERS' | translate}}</h6>
+          <perun-web-apps-alert alert_type="info">
+            {{'DIALOGS.COPY_SPONSORED_MEMBERS.SPONSORED_MEMBERS_INFO' | translate}}
+          </perun-web-apps-alert>
+          <perun-web-apps-debounce-filter
+            (filter)="applyFilter($event)"
+            [placeholder]="'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.FILTER'">
+          </perun-web-apps-debounce-filter>
+          <app-sponsored-members-list
+            *perunWebAppsLoader="tableLoading; indicator: tableSpinner"
+            [tableLoading]="tableLoading"
+            [disableRouting]="true"
+            [sponsoredMembers]="filteredSponsoredMembers"
+            [selection]="selection"
+            [cachedSubject]="cachedSubject"
+            [filterValue]="filter"
+            [displayedColumns]="['select', 'id', 'name', 'email', 'logins', 'expiration']"
+            [selectedSponsor]="sourceSponsor"
+            [tableId]="tableId">
+          </app-sponsored-members-list>
+        </div>
+      }
+      @if (isPerunAdmin) {
+        <div>
+          @if (!tableLoading) {
+            <app-choose-sponsor
+              [voId]="data.voId"
+              [customTitle]="'DIALOGS.CREATE_SPONSORED_MEMBER.SELECT_SPONSOR_COPY'"
+              [disableSelf]="disableSelf"
+              [voSponsors]="voSponsorsTarget"
+              (sponsorTypeSelected)="sponsorType = $event"
+              (sponsorSelected)="targetSponsor = $event">
+            </app-choose-sponsor>
+          }
+        </div>
+      }
       <div>
         <perun-web-apps-alert alert_type="info">
           {{'DIALOGS.COPY_SPONSORED_MEMBERS.EXP_INFO' | translate}}
         </perun-web-apps-alert>
         <h6>{{'DIALOGS.COPY_SPONSORED_MEMBERS.EXPIRATION' | translate}}</h6>
         <mat-checkbox [(ngModel)]="pickExpiration">Pick new expiration date</mat-checkbox>
-        <perun-web-apps-expiration-select
-          *ngIf="pickExpiration"
-          [minDate]="minDate"
-          (expirationSelected)="expiration = $event">
-        </perun-web-apps-expiration-select>
+        @if (pickExpiration) {
+          <perun-web-apps-expiration-select
+            [minDate]="minDate"
+            (expirationSelected)="expiration = $event">
+          </perun-web-apps-expiration-select>
+        }
       </div>
     </div>
     <div mat-dialog-actions>

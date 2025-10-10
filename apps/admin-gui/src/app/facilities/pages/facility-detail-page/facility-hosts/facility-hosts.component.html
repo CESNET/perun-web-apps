@@ -1,23 +1,21 @@
 <div>
   <h1 class="page-subtitle">{{'FACILITY_DETAIL.HOSTS.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="addAuth"
-    (click)="addHost()"
-    color="accent"
-    class="me-2 action-button"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.HOSTS.ADD' | translate}}
-  </button>
-  <button
-    *ngIf="removeAuth"
-    (click)="removeHost()"
-    [disabled]="loading || selected.selected.length === 0"
-    class="me-2"
-    color="warn"
-    mat-flat-button>
-    {{'FACILITY_DETAIL.HOSTS.REMOVE' | translate}}
-  </button>
+  @if (addAuth) {
+    <button (click)="addHost()" color="accent" class="me-2 action-button" mat-flat-button>
+      {{'FACILITY_DETAIL.HOSTS.ADD' | translate}}
+    </button>
+  }
+  @if (removeAuth) {
+    <button
+      (click)="removeHost()"
+      [disabled]="loading || selected.selected.length === 0"
+      class="me-2"
+      color="warn"
+      mat-flat-button>
+      {{'FACILITY_DETAIL.HOSTS.REMOVE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'FACILITY_DETAIL.HOSTS.FILTER'"></perun-web-apps-debounce-filter>

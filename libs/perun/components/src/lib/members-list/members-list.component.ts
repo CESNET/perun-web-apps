@@ -1,3 +1,28 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import {
+  CheckboxLabelPipe,
+  GroupStatusIconColorPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+  MemberCheckboxLabelPipe,
+  MemberEmailPipe,
+  MemberLoginsPipe,
+  MemberStatusDisabledPipe,
+  MemberStatusIconColorPipe,
+  MemberStatusIconPipe,
+  MemberStatusTooltipPipe,
+  MemberTypeIconPipe,
+  MemberTypeTooltipPipe,
+  UserFullNamePipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -38,7 +63,7 @@ import {
   customDataSourceSort,
 } from '@perun-web-apps/perun/utils';
 
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ChangeMemberStatusOrExpirationDialogComponent } from '../change-member-status-or-expiration-dialog/change-member-status-or-expiration-dialog.component';
@@ -48,11 +73,44 @@ import {
   MemberWithConsentStatus,
   PageQuery,
 } from '@perun-web-apps/perun/models';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MemberOrganizationPipe } from '@perun-web-apps/perun/pipes';
+import { ConsentStatusComponent } from '../consent-status/consent-status.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MemberStatusIconPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    MemberStatusTooltipPipe,
+    MemberLoginsPipe,
+    CheckboxLabelPipe,
+    MemberStatusIconColorPipe,
+    GroupStatusIconColorPipe,
+    MemberStatusDisabledPipe,
+    MemberCheckboxLabelPipe,
+    MemberTypeTooltipPipe,
+    MasterCheckboxLabelPipe,
+    UserFullNamePipe,
+    MemberEmailPipe,
+    MemberTypeIconPipe,
+    MemberOrganizationPipe,
+    ConsentStatusComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-members-list',
   templateUrl: './members-list.component.html',
   styleUrls: ['./members-list.component.scss'],

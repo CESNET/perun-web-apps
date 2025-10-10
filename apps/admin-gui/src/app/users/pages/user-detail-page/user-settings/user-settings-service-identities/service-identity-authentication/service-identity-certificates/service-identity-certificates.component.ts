@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
@@ -6,10 +9,22 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EditAttributeDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
-import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import { AttributesListComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    AttributesListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-service-identity-certificates',
   templateUrl: './service-identity-certificates.component.html',
   styleUrls: ['./service-identity-certificates.component.scss'],

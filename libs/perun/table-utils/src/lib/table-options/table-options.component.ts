@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
@@ -11,6 +17,15 @@ interface DialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-table-options',
   templateUrl: './table-options.component.html',
   styleUrls: ['./table-options.component.scss'],

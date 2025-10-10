@@ -1,76 +1,102 @@
 <div class="user-theme">
-  <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
-  <table *ngIf="!loading" class="mt-3 word-break-all">
-    <tbody>
-      <tr>
-        <td class="fw-bold">{{'PROFILE_PAGE.NAME'|customTranslate | translate}}</td>
-        <td class="d-flex align-items-center">
-          <p class="center-self">{{fullName}}</p>
-          <button
-            *ngIf="personalDataChangeConfig.enableLinkedName || personalDataChangeConfig.enableCustomName"
-            (click)="changeName()"
-            class="ms-2"
-            matTooltip="{{'PROFILE_PAGE.CHANGE_NAME' | translate}}"
-            mat-icon-button>
-            <mat-icon> edit </mat-icon>
-          </button>
-        </td>
-      </tr>
-      <tr *ngFor="let attribute of additionalAttributes">
-        <td class="fw-bold att-name-width">
-          <div [matTooltip]="attribute['tooltip_' + currentLang]" matTooltipPosition="above">
-            {{attribute['displayName_' + currentLang]}}
-          </div>
-        </td>
-        <td [ngSwitch]="attribute.attribute.friendlyName" class="w-100">
-          <mat-form-field *ngSwitchCase="'preferredLanguage'" class="center-self">
-            <mat-select [(value)]="currentLang" class="mb-auto ">
-              <mat-option
-                (click)="changeLanguage(lang)"
-                *ngFor="let lang of languages"
-                [value]="lang">
-                {{'SHARED_LIB.LANGUAGES.'+ lang | uppercase | translate}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div *ngSwitchCase="'preferredMail'" class="d-flex align-items-center">
-            <a class="center-self" href="mailto:{{email}}">{{email}}</a>
-            <button
-              *ngIf="personalDataChangeConfig.enableLinkedEmail || personalDataChangeConfig.enableCustomEmail"
-              (click)="changeEmail()"
-              class="ms-2"
-              matTooltip="{{'PROFILE_PAGE.CHANGE_EMAIL' | translate}}"
-              mat-icon-button>
-              <mat-icon> edit </mat-icon>
-            </button>
-          </div>
-
-          <mat-form-field *ngSwitchCase="'timezone'" class="center-self">
-            <mat-select [(value)]="currentTimezone">
-              <mat-option (click)="changeTimeZone(tz)" *ngFor="let tz of timeZones" [value]="tz">
-                {{tz}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div *ngSwitchDefault class="d-flex align-items-center">
-            <p *ngIf="!attribute.attribute.value">-</p>
-            <perun-web-apps-attribute-value
-              *ngIf="attribute.attribute.value"
-              [attribute]="attribute.attribute"
-              [readonly]="true">
-            </perun-web-apps-attribute-value>
-            <button
-              *ngIf="attribute.attribute.friendlyName === 'organization' && (personalDataChangeConfig.enableLinkedOrganization || personalDataChangeConfig.enableCustomOrganization)"
-              (click)="changeOrganization()"
-              matTooltip="{{'PROFILE_PAGE.CHANGE_ORGANIZATION' | translate}}"
-              mat-icon-button>
-              <mat-icon> edit </mat-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  @if (loading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
+  @if (!loading) {
+    <table class="mt-3 word-break-all">
+      <tbody>
+        <tr>
+          <td class="fw-bold">{{'PROFILE_PAGE.NAME'|customTranslate | translate}}</td>
+          <td class="d-flex align-items-center">
+            <p class="center-self">{{fullName}}</p>
+            @if (
+              personalDataChangeConfig.enableLinkedName || personalDataChangeConfig.enableCustomName
+            ) {
+              <button
+                (click)="changeName()"
+                class="ms-2"
+                matTooltip="{{'PROFILE_PAGE.CHANGE_NAME' | translate}}"
+                mat-icon-button>
+                <mat-icon> edit </mat-icon>
+              </button>
+            }
+          </td>
+        </tr>
+        @for (attribute of additionalAttributes; track attribute) {
+          <tr>
+            <td class="fw-bold att-name-width">
+              <div [matTooltip]="attribute['tooltip_' + currentLang]" matTooltipPosition="above">
+                {{attribute['displayName_' + currentLang]}}
+              </div>
+            </td>
+            <td class="w-100">
+              @switch (attribute.attribute.friendlyName) {
+                @case ('preferredLanguage') {
+                  <mat-form-field class="center-self">
+                    <mat-select [(value)]="currentLang" class="mb-auto ">
+                      @for (lang of languages; track lang) {
+                        <mat-option (click)="changeLanguage(lang)" [value]="lang">
+                          {{'SHARED_LIB.LANGUAGES.'+ lang | uppercase | translate}}
+                        </mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                }
+                @case ('preferredMail') {
+                  <div class="d-flex align-items-center">
+                    <a class="center-self" href="mailto:{{email}}">{{email}}</a>
+                    @if (
+                      personalDataChangeConfig.enableLinkedEmail || personalDataChangeConfig.enableCustomEmail
+                    ) {
+                      <button
+                        (click)="changeEmail()"
+                        class="ms-2"
+                        matTooltip="{{'PROFILE_PAGE.CHANGE_EMAIL' | translate}}"
+                        mat-icon-button>
+                        <mat-icon> edit </mat-icon>
+                      </button>
+                    }
+                  </div>
+                }
+                @case ('timezone') {
+                  <mat-form-field class="center-self">
+                    <mat-select [(value)]="currentTimezone">
+                      @for (tz of timeZones; track tz) {
+                        <mat-option (click)="changeTimeZone(tz)" [value]="tz">
+                          {{tz}}
+                        </mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                }
+                @default {
+                  <div class="d-flex align-items-center">
+                    @if (!attribute.attribute.value) {
+                      <p>-</p>
+                    }
+                    @if (attribute.attribute.value) {
+                      <perun-web-apps-attribute-value
+                        [attribute]="attribute.attribute"
+                        [readonly]="true">
+                      </perun-web-apps-attribute-value>
+                    }
+                    @if (
+                      attribute.attribute.friendlyName === 'organization' && (personalDataChangeConfig.enableLinkedOrganization || personalDataChangeConfig.enableCustomOrganization)
+                    ) {
+                      <button
+                        (click)="changeOrganization()"
+                        matTooltip="{{'PROFILE_PAGE.CHANGE_ORGANIZATION' | translate}}"
+                        mat-icon-button>
+                        <mat-icon> edit </mat-icon>
+                      </button>
+                    }
+                  </div>
+                }
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
 </div>

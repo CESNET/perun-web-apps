@@ -1,5 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { PublicationSystem } from '@perun-web-apps/perun/openapi';
 import {
   customDataSourceFilterPredicate,
@@ -9,9 +12,18 @@ import {
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-publication-systems-list',
   templateUrl: './publication-systems-list.component.html',
   styleUrls: ['./publication-systems-list.component.scss'],

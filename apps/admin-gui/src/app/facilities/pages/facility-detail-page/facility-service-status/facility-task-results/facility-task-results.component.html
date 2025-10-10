@@ -3,15 +3,16 @@
   <span class="text-muted"> &nbsp;#{{task.id}} </span>
 </h1>
 <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-<button
-  (click)="removeTaskResult()"
-  *ngIf="removeAuth"
-  [disabled]="loading || selection.selected.length === 0"
-  class="me-2"
-  color="warn"
-  mat-flat-button>
-  {{'FACILITY_DETAIL.TASK_RESULTS.REMOVE' | translate}}
-</button>
+@if (removeAuth) {
+  <button
+    (click)="removeTaskResult()"
+    [disabled]="loading || selection.selected.length === 0"
+    class="me-2"
+    color="warn"
+    mat-flat-button>
+    {{'FACILITY_DETAIL.TASK_RESULTS.REMOVE' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'FACILITY_DETAIL.TASK_RESULTS.FILTER'"></perun-web-apps-debounce-filter>

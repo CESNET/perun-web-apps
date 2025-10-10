@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
@@ -17,12 +18,15 @@ import { AddMemberService, FailedCandidate } from '../add-member.service';
 import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { AddMemberDialogComponent } from '../../../shared/components/dialogs/add-member-dialog/add-member-dialog.component';
 
 export interface VoAddMemberData {
   voId: number;
 }
 
 @Component({
+  imports: [CommonModule, AddMemberDialogComponent],
+  standalone: true,
   selector: 'app-vo-add-member-dialog',
   templateUrl: './vo-add-member-dialog.component.html',
   styleUrls: ['./vo-add-member-dialog.component.scss'],

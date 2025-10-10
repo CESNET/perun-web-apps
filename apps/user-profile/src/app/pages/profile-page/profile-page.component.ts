@@ -1,5 +1,12 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import * as moment from 'moment-timezone';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -16,7 +23,7 @@ import {
   PersonalDataChangeConfig,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { UserFullNamePipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -28,6 +35,7 @@ import {
   ChangeNameService,
 } from '@perun-web-apps/perun/services';
 import { MailChangeFailedDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { AttributeValueComponent } from '@perun-web-apps/perun/components';
 
 interface DisplayedAttribute {
   attribute: Attribute;
@@ -47,6 +55,19 @@ interface ProfileAttribute {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    CustomTranslatePipe,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    AttributeValueComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-profile-page',
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.scss'],

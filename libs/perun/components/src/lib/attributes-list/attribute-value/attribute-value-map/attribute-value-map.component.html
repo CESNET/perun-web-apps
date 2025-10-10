@@ -2,69 +2,76 @@
   <form class="d-flex w-100">
     <div class="w-100">
       <div class="me-5">
-        <div
-          *ngFor="let value of values.slice(0, itemsShown); let i = index; trackBy: customTrackBy"
-          class="d-flex mb-1 fixed-height">
-          <mat-form-field
-            appearance="{{readonly ? 'outline' : 'fill'}}"
-            subscriptSizing="dynamic"
-            class="w-100 me-2">
-            <input
-              matInput
-              required
-              type="text"
-              class="overflow-ellipsis"
-              (click)="readonly && attribute.displayName && showValue(keys[i], attribute.displayName)"
-              [class.cursor-pointer]="readonly && attribute.displayName !== undefined"
-              id="{{attribute.id}}-key-{{i}}"
-              [(ngModel)]="keys[i]"
-              [readonly]="readonly"
-              name="key-{{i}}" />
-          </mat-form-field>
-          <mat-form-field
-            appearance="{{readonly ? 'outline' : 'fill'}}"
-            subscriptSizing="dynamic"
-            class="w-100 me-2">
-            <input
-              (click)="readonly && attribute.displayName !== undefined && showValue(value,attribute.displayName)"
-              [class.cursor-pointer]="readonly && attribute.displayName !== undefined"
-              [readonly]="readonly"
-              class="overflow-ellipsis"
-              matInput
-              type="text"
-              name="value-{{i}}"
-              id="{{attribute.id}}-value-{{i}}"
-              [(ngModel)]="values[i]" />
-          </mat-form-field>
-          <button
-            *ngIf="!readonly"
-            mat-icon-button
-            color="warn"
-            (click)="removeValue(i)"
-            matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.REMOVE' | translate}}">
-            <mat-icon> indeterminate_check_box </mat-icon>
-          </button>
-        </div>
+        @for (value of values.slice(0, itemsShown); track customTrackBy(i); let i = $index) {
+          <div class="d-flex mb-1 fixed-height">
+            <mat-form-field
+              appearance="{{readonly ? 'outline' : 'fill'}}"
+              subscriptSizing="dynamic"
+              class="w-100 me-2">
+              <input
+                matInput
+                required
+                type="text"
+                class="overflow-ellipsis"
+                (click)="readonly && attribute.displayName && showValue(keys[i], attribute.displayName)"
+                [class.cursor-pointer]="readonly && attribute.displayName !== undefined"
+                id="{{attribute.id}}-key-{{i}}"
+                [(ngModel)]="keys[i]"
+                [readonly]="readonly"
+                name="key-{{i}}" />
+            </mat-form-field>
+            <mat-form-field
+              appearance="{{readonly ? 'outline' : 'fill'}}"
+              subscriptSizing="dynamic"
+              class="w-100 me-2">
+              <input
+                (click)="readonly && attribute.displayName !== undefined && showValue(value,attribute.displayName)"
+                [class.cursor-pointer]="readonly && attribute.displayName !== undefined"
+                [readonly]="readonly"
+                class="overflow-ellipsis"
+                matInput
+                type="text"
+                name="value-{{i}}"
+                id="{{attribute.id}}-value-{{i}}"
+                [(ngModel)]="values[i]" />
+            </mat-form-field>
+            @if (!readonly) {
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="removeValue(i)"
+                matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.REMOVE' | translate}}">
+                <mat-icon> indeterminate_check_box </mat-icon>
+              </button>
+            }
+          </div>
+        }
       </div>
       <div>
-        <button
-          [matTooltip]="(showMore ? 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.LESS' : 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.MORE') | translate"
-          [matTooltipPosition]="'above'"
-          *ngIf="values.length > defaultItemsShown"
-          mat-icon-button
-          (click)="onShowChange()">
-          <mat-icon *ngIf="!showMore">more_horiz</mat-icon>
-          <mat-icon *ngIf="showMore">keyboard_arrow_up</mat-icon>
-        </button>
+        @if (values.length > defaultItemsShown) {
+          <button
+            [matTooltip]="(showMore ? 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.LESS' : 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.MORE') | translate"
+            [matTooltipPosition]="'above'"
+            mat-icon-button
+            (click)="onShowChange()">
+            @if (!showMore) {
+              <mat-icon>more_horiz</mat-icon>
+            }
+            @if (showMore) {
+              <mat-icon>keyboard_arrow_up</mat-icon>
+            }
+          </button>
+        }
       </div>
     </div>
   </form>
 </div>
-<button
-  *ngIf="!readonly"
-  mat-icon-button
-  color="accent"
-  (click)="addValue()"
-  matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.ADD' | translate}}">
-  <mat-icon> add_box </mat-icon>
-</button>
+@if (!readonly) {
+  <button
+    mat-icon-button
+    color="accent"
+    (click)="addValue()"
+    matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTE_VALUE_MAP.ADD' | translate}}">
+    <mat-icon> add_box </mat-icon>
+  </button>
+}

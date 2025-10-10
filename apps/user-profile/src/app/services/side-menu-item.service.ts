@@ -75,6 +75,24 @@ export class SideMenuItemService {
             tabName: 'consents',
           });
           break;
+        case 'roles':
+          items.push({
+            label: 'MENU_ITEMS.ROLES',
+            icon: 'passkey',
+            link: '/profile/roles',
+            activatedRegex: '^/profile/roles',
+            tabName: 'roles',
+          });
+          break;
+        case 'bans':
+          items.push({
+            label: 'MENU_ITEMS.BANS',
+            icon: 'person_off',
+            link: '/profile/bans',
+            activatedRegex: '^/profile/bans',
+            tabName: 'bans',
+          });
+          break;
         case 'authentication':
           items.push({
             label: 'MENU_ITEMS.AUTHENTICATION',

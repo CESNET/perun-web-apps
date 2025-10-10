@@ -1,5 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   NotificatorService,
   PerunTranslateService,
@@ -17,8 +23,12 @@ import {
 import { Role } from '@perun-web-apps/perun/models';
 import { TABLE_ADD_MANAGER } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { AutoFocusDirective, LoaderDirective } from '@perun-web-apps/perun/directives';
+import { UsersListComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
 
 export interface AddManagerDialogData {
   complementaryObject: PerunBean;
@@ -28,6 +38,22 @@ export interface AddManagerDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    TranslateModule,
+    LoaderDirective,
+    UsersListComponent,
+    AutoFocusDirective,
+    LoadingTableComponent,
+    DisplayedRolePipe,
+  ],
+  standalone: true,
   selector: 'app-add-manager-dialog',
   templateUrl: './add-manager-dialog.component.html',
   styleUrls: ['./add-manager-dialog.component.scss'],

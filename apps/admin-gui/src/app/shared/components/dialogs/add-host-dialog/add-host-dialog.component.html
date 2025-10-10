@@ -16,13 +16,17 @@
           perunWebAppsAutoFocus
           rows="8">
         </textarea>
-        <mat-error *ngIf="this.hostsCtrl.hasError('required')">
-          {{'DIALOGS.ADD_HOST.EMPTY_MESSAGE' | translate}}
-        </mat-error>
-        <mat-error *ngIf="this.hostsCtrl.hasError('invalidHost')">
-          {{'DIALOGS.ADD_HOST.INVALID_HOST' | translate}}
-          {{this.hostsCtrl.getError('invalidHost').value}}
-        </mat-error>
+        @if (this.hostsCtrl.hasError('required')) {
+          <mat-error>
+            {{'DIALOGS.ADD_HOST.EMPTY_MESSAGE' | translate}}
+          </mat-error>
+        }
+        @if (this.hostsCtrl.hasError('invalidHost')) {
+          <mat-error>
+            {{'DIALOGS.ADD_HOST.INVALID_HOST' | translate}}
+            {{this.hostsCtrl.getError('invalidHost').value}}
+          </mat-error>
+        }
       </mat-form-field>
       <perun-web-apps-alert
         alert_type="info"

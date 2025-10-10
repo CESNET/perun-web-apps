@@ -1,10 +1,20 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ApplicationFormEmailFooterDialogData {
   theme: string;
@@ -13,6 +23,23 @@ export interface ApplicationFormEmailFooterDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTabsModule,
+    TranslateModule,
+    MatTooltip,
+    HtmlContentFormFieldComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-edit-email-footer-dialog',
   templateUrl: './edit-email-footer-dialog.component.html',
   styleUrls: ['./edit-email-footer-dialog.component.scss'],

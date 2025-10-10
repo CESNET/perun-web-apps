@@ -1,6 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Location } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Location, CommonModule } from '@angular/common';
 
 export interface PreventProxyOverloadDialogData {
   title: string;
@@ -9,6 +10,8 @@ export interface PreventProxyOverloadDialogData {
 }
 
 @Component({
+  imports: [CommonModule, MatDialogModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-prevent-proxy-overload-dialog',
   templateUrl: './prevent-proxy-overload-dialog.component.html',
   styleUrls: ['./prevent-proxy-overload-dialog.component.css'],

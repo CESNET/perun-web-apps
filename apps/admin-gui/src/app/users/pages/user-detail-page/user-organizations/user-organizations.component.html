@@ -1,7 +1,4 @@
-<h1 *ngIf="this.isMyProfile" class="page-subtitle">
-  {{'SHARED_LIB.PERUN.ORGANIZATIONS.YOU_ARE_MEMBER' | translate}}
-</h1>
-<h1 *ngIf="!this.isMyProfile" class="page-subtitle">
+<h1 class="page-subtitle">
   {{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_MEMBER' | translate}}
 </h1>
 <perun-web-apps-refresh-button (refresh)="refreshMemberTable()"></perun-web-apps-refresh-button>
@@ -20,7 +17,7 @@
   </perun-web-apps-vos-list>
 </div>
 
-<div *ngIf="!this.isMyProfile" class="mt-5">
+<div class="mt-5">
   <h1 class="page-subtitle">{{'SHARED_LIB.PERUN.ORGANIZATIONS.USER_IS_ADMIN' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshAdminTable()"></perun-web-apps-refresh-button>
   <perun-web-apps-debounce-filter

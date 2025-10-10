@@ -1,13 +1,18 @@
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AttrEntity } from '@perun-web-apps/perun/models';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
-import { AttributesListComponent } from '@perun-web-apps/perun/components';
+import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 export interface CreateAttributeDialogData {
   entityId: number;
@@ -19,6 +24,18 @@ export interface CreateAttributeDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    AttributesListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-create-attribute-dialog',
   templateUrl: './create-attribute-dialog.component.html',
   styleUrls: ['./create-attribute-dialog.component.scss'],

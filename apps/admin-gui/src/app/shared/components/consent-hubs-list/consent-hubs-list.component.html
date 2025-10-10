@@ -15,28 +15,28 @@
       matSortActive="id"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let consentHub" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(consentHub) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(consentHub) | checkboxLabel | translate: {name: consentHub.name}"
-            [checked]="selection.isSelected(consentHub)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let consentHub" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(consentHub) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(consentHub) | checkboxLabel | translate: {name: consentHub.name}"
+              [checked]="selection.isSelected(consentHub)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -71,11 +71,13 @@
           {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.FACILITIES' | translate}}
         </th>
         <td *matCellDef="let consentHub" mat-cell>
-          <span *ngFor="let facility of consentHub.facilities">
-            {{facility.name}}
-            <span class="text-muted"> #{{facility.id}}</span>
-            <br />
-          </span>
+          @for (facility of consentHub.facilities; track facility.id) {
+            <span>
+              {{facility.name}}
+              <span class="text-muted"> #{{facility.id}}</span>
+              <br />
+            </span>
+          }
         </td>
       </ng-container>
 
@@ -88,12 +90,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && consentHubs.length === 0" alert_type="warn">
-  {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.NO_CONSENT_HUBS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && consentHubs.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.NO_CONSENT_HUBS' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && consentHubs.length !== 0"
-  alert_type="warn">
-  {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.NO_FILTER_RESULTS' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && consentHubs.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.CONSENT_HUBS_LIST.NO_FILTER_RESULTS' | translate}}
+  </perun-web-apps-alert>
+}

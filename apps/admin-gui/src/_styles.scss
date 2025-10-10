@@ -10,26 +10,27 @@
 
 // Include the common styles for Angular Material.
 @include mat.all-component-typographies();
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$perun-primary: mat.define-palette(mat.$gray-palette, 900);
-$perun-accent: mat.define-palette(mat.$green-palette, 600);
+$perun-primary: mat.m2-define-palette(mat.$m2-gray-palette, 900);
+$perun-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
 
 // The warn palette is optional (defaults to red).
-$perun-warn: mat.define-palette(mat.$red-palette);
+$perun-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$perun-theme: mat.define-light-theme(
+$perun-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $perun-primary,
       accent: $perun-accent,
       warn: $perun-warn,
     ),
-    typography: mat.define-typography-config(),
+    typography: mat.m2-define-typography-config(),
     density: 0,
   )
 );
@@ -77,10 +78,10 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $vo-primary: mat.define-palette($vo-palette, 500);
-  $vo-accent: mat.define-palette(mat.$green-palette, 600);
+  $vo-primary: mat.m2-define-palette($vo-palette, 500);
+  $vo-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
 
-  $vo-theme: mat.define-light-theme(
+  $vo-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $vo-primary,
@@ -157,9 +158,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $facility-primary: mat.define-palette($facility-palette, 500);
-  $facility-accent: mat.define-palette(mat.$green-palette, 600);
-  $facility-theme: mat.define-light-theme(
+  $facility-primary: mat.m2-define-palette($facility-palette, 500);
+  $facility-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $facility-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $facility-primary,
@@ -226,9 +227,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $resource-primary: mat.define-palette($resource-palette, 500);
-  $resource-accent: mat.define-palette(mat.$green-palette, 600);
-  $resource-theme: mat.define-light-theme(
+  $resource-primary: mat.m2-define-palette($resource-palette, 500);
+  $resource-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $resource-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $resource-primary,
@@ -295,9 +296,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $group-primary: mat.define-palette($group-palette, 500);
-  $group-accent: mat.define-palette(mat.$green-palette, 600);
-  $group-theme: mat.define-light-theme(
+  $group-primary: mat.m2-define-palette($group-palette, 500);
+  $group-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $group-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $group-primary,
@@ -364,9 +365,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $member-primary: mat.define-palette($member-palette, 500);
-  $member-accent: mat.define-palette(mat.$green-palette, 600);
-  $member-theme: mat.define-light-theme(
+  $member-primary: mat.m2-define-palette($member-palette, 500);
+  $member-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $member-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $member-primary,
@@ -433,9 +434,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $admin-primary: mat.define-palette($admin-palette, 500);
-  $admin-accent: mat.define-palette(mat.$green-palette, 600);
-  $admin-theme: mat.define-light-theme(
+  $admin-primary: mat.m2-define-palette($admin-palette, 500);
+  $admin-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $admin-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $admin-primary,
@@ -493,9 +494,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $user-primary: mat.define-palette($user-palette, 500);
-  $user-accent: mat.define-palette(mat.$green-palette, 600);
-  $user-theme: mat.define-light-theme(
+  $user-primary: mat.m2-define-palette($user-palette, 500);
+  $user-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $user-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $user-primary,
@@ -562,9 +563,9 @@ mat.$theme-ignore-duplication-warnings: true;
     ),
   );
 
-  $service-primary: mat.define-palette($service-palette, 500);
-  $service-accent: mat.define-palette(mat.$green-palette, 600);
-  $service-theme: mat.define-light-theme(
+  $service-primary: mat.m2-define-palette($service-palette, 500);
+  $service-accent: mat.m2-define-palette(mat.$m2-green-palette, 600);
+  $service-theme: mat.m2-define-light-theme(
     (
       color: (
         primary: $service-primary,

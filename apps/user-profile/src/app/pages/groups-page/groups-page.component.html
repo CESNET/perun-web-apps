@@ -1,26 +1,32 @@
 <h1 class="page-title pt-2">{{'GROUPS.TITLE' | customTranslate | translate}}</h1>
 <div class="user-theme">
-  <mat-form-field class="me-2 w-75" *ngIf="!initialLoading">
-    <mat-label>{{'GROUPS.SELECT_VO' | translate}}</mat-label>
-    <input
-      type="text"
-      placeholder="{{'GROUPS.SELECT_VO' | customTranslate | translate}}"
-      aria-label="Assignee"
-      matInput
-      [formControl]="myControl"
-      [matAutocomplete]="auto" />
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      [displayWith]="displayFn"
-      (optionSelected)="filterByVo($event)">
-      <mat-option value="all">{{'GROUPS.ALL' | customTranslate | translate}}</mat-option>
-      <mat-option *ngFor="let vo of vos" [value]="vo">
-        {{vo.name}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+  @if (!initialLoading) {
+    <mat-form-field class="me-2 w-75">
+      <mat-label>{{'GROUPS.SELECT_VO' | translate}}</mat-label>
+      <input
+        type="text"
+        placeholder="{{'GROUPS.SELECT_VO' | customTranslate | translate}}"
+        aria-label="Assignee"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto" />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayFn"
+        (optionSelected)="filterByVo($event)">
+        <mat-option value="all">{{'GROUPS.ALL' | customTranslate | translate}}</mat-option>
+        @for (vo of vos; track vo.id) {
+          <mat-option [value]="vo">
+            {{vo.name}}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  }
 
-  <mat-spinner *ngIf="initialLoading" class="me-auto ms-auto"></mat-spinner>
+  @if (initialLoading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
 
   <h4 class="page-subtitle">{{'GROUPS.MEMBER_GROUPS' | customTranslate | translate}}</h4>
   <perun-web-apps-debounce-filter

@@ -1,3 +1,14 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  CreateGroupFormComponent,
+  DebounceFilterComponent,
+  GroupsListComponent,
+} from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -13,6 +24,19 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    CreateGroupFormComponent,
+  ],
+  standalone: true,
   selector: 'app-assign-groups-sponsored-members-component',
   templateUrl: 'assign-groups-sponsored-members-component.html',
   styleUrls: ['assign-groups-sponsored-members-component.scss'],

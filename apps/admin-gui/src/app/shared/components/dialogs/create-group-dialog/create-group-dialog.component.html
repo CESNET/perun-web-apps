@@ -8,32 +8,35 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_GROUP.NAME' | translate}}</mat-label>
         <input [formControl]="nameControl" matInput data-cy="group-name" required />
-        <mat-error *ngIf="nameControl.errors?.['spaceName']">
-          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-        </mat-error>
-        <mat-error *ngIf="!nameControl.errors?.['spaceName']">
-          {{invalidNameMessage.length ? invalidNameMessage : ('DIALOGS.CREATE_GROUP.FILL_VALUE' | translate)}}
-        </mat-error>
+        @if (nameControl.errors?.['spaceName']) {
+          <mat-error>
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
+        }
+        @if (!nameControl.errors?.['spaceName']) {
+          <mat-error>
+            {{invalidNameMessage.length ? invalidNameMessage : ('DIALOGS.CREATE_GROUP.FILL_VALUE' | translate)}}
+          </mat-error>
+        }
       </mat-form-field>
       <mat-form-field class="mt-4">
         <mat-label>{{'DIALOGS.CREATE_GROUP.DESCRIPTION' | translate}}</mat-label>
         <textarea [formControl]="descriptionControl" matInput data-cy="group-description">
         </textarea>
       </mat-form-field>
-      <mat-checkbox
-        *ngIf="isNotSubGroup"
-        [(ngModel)]="asSubgroup"
-        (click)="loadVoGroups()"
-        [labelPosition]="'before'">
-        {{'DIALOGS.CREATE_GROUP.AS_SUBGROUP' | translate}}
-      </mat-checkbox>
-      <perun-web-apps-group-search-select
-        *ngIf="asSubgroup"
-        (groupSelected)="selectedParent = $event"
-        [disableAutoSelect]="true"
-        [groups]="voGroups"
-        class="long-input">
-      </perun-web-apps-group-search-select>
+      @if (isNotSubGroup) {
+        <mat-checkbox [(ngModel)]="asSubgroup" (click)="loadVoGroups()" [labelPosition]="'before'">
+          {{'DIALOGS.CREATE_GROUP.AS_SUBGROUP' | translate}}
+        </mat-checkbox>
+      }
+      @if (asSubgroup) {
+        <perun-web-apps-group-search-select
+          (groupSelected)="selectedParent = $event"
+          [disableAutoSelect]="true"
+          [groups]="voGroups"
+          class="long-input">
+        </perun-web-apps-group-search-select>
+      }
     </div>
     <div mat-dialog-actions>
       <button (click)="onCancel()" class="ms-auto" mat-stroked-button>

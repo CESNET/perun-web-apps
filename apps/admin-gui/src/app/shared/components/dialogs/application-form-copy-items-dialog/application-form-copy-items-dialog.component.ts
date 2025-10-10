@@ -1,5 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Group,
   GroupsManagerService,
@@ -14,6 +18,9 @@ import {
 } from '@perun-web-apps/perun/services';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { compareFnName } from '@perun-web-apps/perun/utils';
+import { GroupSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { VoSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ApplicationFormCopyItemsDialogData {
   voId: number;
@@ -22,6 +29,17 @@ export interface ApplicationFormCopyItemsDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    GroupSearchSelectComponent,
+    VoSearchSelectComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-application-form-copy-items-dialog',
   templateUrl: './application-form-copy-items-dialog.component.html',
   styleUrls: ['./application-form-copy-items-dialog.component.scss'],

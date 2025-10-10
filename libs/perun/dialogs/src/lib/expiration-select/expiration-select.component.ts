@@ -1,9 +1,24 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { formatDate, CommonModule } from '@angular/common';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    FormsModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-expiration-select',
   templateUrl: './expiration-select.component.html',
   styleUrls: ['./expiration-select.component.css'],

@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupRolesFilterComponent } from '../../../../shared/components/group-roles-filter/group-roles-filter.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -18,13 +24,37 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { Urns } from '@perun-web-apps/perun/urns';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { GroupsListComponent } from '@perun-web-apps/perun/components';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  GroupsListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  GroupsTreeComponent,
+} from '@perun-web-apps/perun/components';
 import { GroupWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    GroupRolesFilterComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsListComponent,
+    GroupsTreeComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-member-groups',
   templateUrl: './member-groups.component.html',
   styleUrls: ['./member-groups.component.scss'],

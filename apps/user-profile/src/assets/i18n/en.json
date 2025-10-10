@@ -10,7 +10,9 @@
     "SERVICES": "Services",
     "GROUPS": "Groups",
     "VOS": "Organizations",
+    "BANS": "Bans",
     "PRIVACY": "Privacy",
+    "ROLES": "Roles",
     "CONSENTS": "Consents",
     "CONSENT_REQUEST": "Consent request",
     "AUTHENTICATION": "Authentication",
@@ -55,6 +57,7 @@
     "IDP": "Your linked accounts",
     "CERT": "Your certificates",
     "OTHER": "Other",
+    "SERVICE": "Your service accounts",
     "ADD": "Add",
     "REMOVE": "Remove",
     "EXT_SOURCE_NAME_CERT": "Certificate issuer",
@@ -63,13 +66,18 @@
     "LOGIN_IDP": "Linked account",
     "OTHER_TOOLTIP": "Accounts that were not acquired through Account linking",
     "SUCCESSFULLY_ADDED": "Account was successfully added",
-    "MESSAGE_SENT_TO_SUPPORT": "Email was sent to support team"
+    "MESSAGE_SENT_TO_SUPPORT": "Email was sent to support team",
+    "NO_SERVICE_ACCOUNTS": "No service accounts connected"
   },
   "PRIVACY": {
     "TITLE": "Privacy",
-    "FILTER": "Filter private data by organization's name",
+    "VOS": "Information used by organizations",
+    "FACILITIES": "Information used by facilities",
+    "FILTER_VO": "Filter by organization name",
+    "FILTER_FACILITY": "Filter by facility name",
     "USER_INFO": "Information about you",
-    "DATA": "Information used by "
+    "DATA": "Information used by ",
+    "FILTER_EMPTY": "Filter empty/false attributes"
   },
   "CONSENTS": {
     "TITLE": "Consents",
@@ -91,6 +99,87 @@
       "GRANT_CONSENT_BUTTON": "Grant consent",
       "REJECT_CONSENT_BUTTON": "Reject consent"
     }
+  },
+  "BANS": {
+    "TITLE": "Bans",
+    "ORGANIZATIONS": "Organizations where you are banned",
+    "RESOURCES": "Resources where you are banned",
+    "FACILITIES": "Facilities where you are banned",
+    "FILTER": "Filter by name or description"
+  },
+  "ROLES": {
+    "TITLE": "Roles",
+    "USER": "User based roles",
+    "GROUP": "Group based roles",
+    "NO_ROLES": "No roles found",
+    "VOADMIN": "Organization admin",
+    "VOADMIN_VOS_SELF": "Organizations you are manager of",
+    "VOOBSERVER": "Organization observer",
+    "VOOBSERVER_VOS_SELF": "Organizations you are observer of",
+    "ORGANIZATIONMEMBERSHIPMANAGER": "Organization membership manager",
+    "ORGANIZATIONMEMBERSHIPMANAGER_VOS_SELF": "Organizations you are membership manager of",
+    "VOBANMANAGER": "Organization ban manager",
+    "VOBANMANAGER_VOS_SELF": "Organizations you are ban manager of",
+    "TOPGROUPCREATOR": "Group creator (VO)",
+    "GROUPCREATOR": "Group creator",
+    "TOPGROUPCREATOR_VOS_SELF": "Organizations where you can create groups",
+    "GROUPCREATOR_GROUPS_SELF": "Groups where you can create subgroups",
+    "PERUN_ADMIN": "Perun admin",
+    "PERUN_OBSERVER": "Perun observer",
+    "SELF": "Self",
+    "SELF_USERS_SELF": "Identities linked to your Perun account",
+    "MEMBERSHIP_VOS_SELF": "Organizations you are member of",
+    "MEMBERSHIP_GROUPS_SELF": "Groups you are member of",
+    "MEMBERSHIP_RESOURCES_SELF": "Resources you are assigned to",
+    "MEMBERSHIP_FACILITIES_SELF": "Facilities you are assigned to",
+    "FACILITYADMIN": "Facility admin",
+    "FACILITYADMIN_FACILITIES_SELF": "Facilities you are manager of",
+    "FACILITYOBSERVER": "Facility observer",
+    "FACILITYOBSERVER_FACILITIES": "Facilities you are observer of",
+    "FACILITYOBSERVER_FACILITIES_SELF": "Facilities you are observer of",
+    "TRUSTEDFACILITYADMIN": "Trusted facility admin",
+    "TRUSTEDFACILITYADMIN_VOS_SELF": "Virtual organizations you are trusted facility admin in",
+    "TRUSTEDFACILITYADMIN_VOS_USER": "Virtual organizations user is trusted facility admin in",
+    "TRUSTEDFACILITYADMIN_VOS_GROUP": "Virtual organizations where group members are trusted facility admins",
+    "FACILITYBANMANAGER": "Facility ban manager",
+    "FACILITYBANMANAGER_FACILITIES_SELF": "Facilities you are ban manager of",
+    "GROUPOBSERVER": "Group observer",
+    "GROUPOBSERVER_GROUPS_SELF": "Groups you are observer of",
+    "GROUPADMIN": "Group admin",
+    "GROUPADMIN_GROUPS_SELF": "Groups you are manager of",
+    "GROUPMEMBERSHIPMANAGER": "Group membership manager",
+    "GROUPMEMBERSHIPMANAGER_GROUPS_SELF": "Groups you are manager of",
+    "RESOURCEADMIN": "Resource admin",
+    "RESOURCEADMIN_RESOURCES_SELF": "Resources you are manager of",
+    "RESOURCEADMIN_RESOURCES_USER": "Resources where user is manager",
+    "RESOURCEADMIN_RESOURCES_GROUP": "Resources where group members are managers",
+    "RESOURCEBANMANAGER": "Resource ban manager",
+    "RESOURCEBANMANAGER_RESOURCES_SELF": "Resources you are ban manager of",
+    "SPONSOR": "Sponsor",
+    "SPONSOR_VOS_SELF": "Organizations where you are sponsor",
+    "SPONSOR_VOS_USER": "Organizations where user is sponsor",
+    "SPONSOR_VOS_GROUP": "Organizations where group members are sponsors",
+    "SPONSORNOCREATERIGHTS": "Sponsor without rights to create",
+    "SPONSORNOCREATERIGHTS_VOS_SELF": "Organizations where you are sponsor without rights to create",
+    "SPONSORSHIP": "Sponsorship",
+    "SPONSORSHIP_MEMBERS_SELF": "Members you are sponsor of",
+    "SPONSORSHIP_MEMBERS_USER": "Members user is sponsor of",
+    "RESOURCESELFSERVICE": "Resource self service",
+    "RESOURCESELFSERVICE_RESOURCES_SELF": "Resources you are manager of",
+    "RESOURCEOBSERVER": "Resource observer",
+    "RESOURCEOBSERVER_RESOURCES_SELF": "Resources you are observer of",
+    "SERVICEUSER": "Service user",
+    "CABINETADMIN": "Cabinet admin",
+    "MEMBERSHIP": "Membership",
+    "AUDITCONSUMERADMIN": "Audit consumer admin",
+    "PERUNADMIN": "Perun admin",
+    "PERUNADMIN_SELF": "You have the role of perun admin",
+    "PERUNADMINBA": "Perun admin for BA accounts",
+    "PERUNADMINBA_SELF": "You have the role of perun admin for BA accounts",
+    "PERUNOBSERVER": "Perun observer",
+    "SERVICEACCOUNTCREATOR": "Service account creator",
+    "SERVICEACCOUNTCREATOR_VOS_SELF": "Organizations where you can create service accounts",
+    "PERUNOBSERVER_SELF": "You have the role of perun observer"
   },
   "MEMBERSHIP_LIST": {
     "NAME": "Name",
@@ -291,7 +380,12 @@
           "DISABLED_HINT": "You cannot add members to this group or user is already member.",
           "ALREADY_MEMBER_TOOLTIP": "User is already member of group",
           "CREATE_RELATION_AUTH_TOOLTIP": "You don't have permission to create relation with this group.",
-          "SYNCHRONIZED_GROUP": "Group is filled with members from external source"
+          "SYNCHRONIZED_GROUP": "Group is filled with members from external source",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "SERVICE_ACCOUNTS_LIST": {
+          "NAME": "Name",
+          "SERVICE": "Service"
         },
         "GROUP_MENU": {
           "MOVE": "Move group",
@@ -324,7 +418,24 @@
           "TABLE_RESOURCE_TAGS": "Tags",
           "TABLE_SEARCH": "Filter by name, description or ID",
           "TABLE_RESOURCE_DESCRIPTION": "Description",
-          "NO_RESOURCES_WARNING": "No resources assigned."
+          "NO_RESOURCES_WARNING": "No resources assigned.",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "VOS_LIST": {
+          "NAME": "Name",
+          "SHORTNAME": "Short name",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "MEMBERS_LIST": {
+          "NAME": "Name"
+        },
+        "MANAGERS_LIST": {
+          "PERSON": "Person"
+        },
+        "FACILITIES_LIST": {
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "AUTHZ_GROUP": "Role acquired through"
         },
         "RESOURCE_SEARCH_SELECT": {
           "SELECT_RESOURCE": "Select resource",
@@ -374,7 +485,8 @@
           "DESCRIPTION": "Description",
           "DISABLED_HINT": "You don't have permission to change this attribute.",
           "EMPTY": "No settings found. Use 'Add' button to add new setting.",
-          "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute"
+          "CHECKBOX_TOOLTIP": "You don't have privileges to edit this attribute",
+          "EMPTY_SETTINGS": "No attributes found."
         },
         "USER_DONT_EXIST": {
           "TITLE": "Requested user (by ID or external identity) doesn't exist.",
@@ -582,6 +694,14 @@
           "REMOVE_KEY": "Remove selected key",
           "REMOVE_DIALOG_TITLE": "Remove ssh key",
           "REMOVE_DIALOG_DESCRIPTION": "Selected ssh key will be removed."
+        },
+        "BAN_ON_ENTITY_LIST": {
+          "TARGET_NAME_HEADER": "{{ target }}",
+          "SUBJECT_NAME_HEADER": "{{ subject }}",
+          "SUBJECT_ID_HEADER": "{{ subject }} Id",
+          "DESCRIPTION_HEADER": "Description",
+          "EXPIRATION_HEADER": "Expiration",
+          "NO_BANS": "No bans found."
         }
       },
       "ORGANIZATIONS": {

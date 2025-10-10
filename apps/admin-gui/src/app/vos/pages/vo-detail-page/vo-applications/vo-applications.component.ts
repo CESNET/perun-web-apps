@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
@@ -22,6 +23,8 @@ import { CacheHelperService } from '../../../../core/services/common/cache-helpe
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
+  imports: [CommonModule, ApplicationActionsComponent],
+  standalone: true,
   selector: 'app-vo-applications',
   templateUrl: './vo-applications.component.html',
   styleUrls: ['./vo-applications.component.scss'],

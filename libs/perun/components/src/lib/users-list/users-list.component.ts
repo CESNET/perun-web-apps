@@ -1,3 +1,10 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -27,7 +34,7 @@ import {
   parseVo,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import {
   DynamicDataSource,
@@ -35,12 +42,22 @@ import {
   PageQuery,
   UserWithConsentStatus,
 } from '@perun-web-apps/perun/models';
-import { ConsentStatusIconPipe } from '@perun-web-apps/perun/pipes';
-import { TranslateService } from '@ngx-translate/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  CheckboxLabelPipe,
+  ConsentStatusIconPipe,
+  IsAllSelectedPipe,
+  MasterCheckboxLabelPipe,
+  UserEmailPipe,
+  UserFullNamePipe,
+  UserLoginsPipe,
+  UserVoPipe,
+} from '@perun-web-apps/perun/pipes';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { ConsentStatusComponent } from '../consent-status/consent-status.component';
 
 export type userTableColumn =
   | 'select'
@@ -53,6 +70,29 @@ export type userTableColumn =
   | 'consentStatus';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    UserVoPipe,
+    UserLoginsPipe,
+    CheckboxLabelPipe,
+    UserEmailPipe,
+    UserFullNamePipe,
+    MasterCheckboxLabelPipe,
+    ConsentStatusIconPipe,
+    ConsentStatusComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css'],

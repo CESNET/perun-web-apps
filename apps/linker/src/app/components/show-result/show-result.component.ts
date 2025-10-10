@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LinkerResult } from '@perun-web-apps/lib-linker';
@@ -5,8 +8,11 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig, parseQueryParams } from '@perun-web-apps/perun/utils';
 import { SendMessageDialogComponent } from '../send-message-dialog/send-message-dialog.component';
+import { ConsolidationResultComponent } from '@perun-web-apps/lib-linker';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, TranslateModule, ConsolidationResultComponent],
+  standalone: true,
   selector: 'perun-web-apps-show-result',
   templateUrl: './show-result.component.html',
   styleUrls: ['./show-result.component.css'],

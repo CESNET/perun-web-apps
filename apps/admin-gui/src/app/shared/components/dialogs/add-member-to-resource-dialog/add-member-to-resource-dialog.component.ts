@@ -1,3 +1,7 @@
+import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -6,9 +10,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   Facility,
   Group,
@@ -18,7 +22,13 @@ import {
   Service,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
+import {
+  GroupsListComponent,
+  ResourceSearchSelectComponent,
+} from '@perun-web-apps/perun/components';
+import { FacilitySearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AddMemberToResourceDialogData {
   memberId: number;
@@ -27,6 +37,23 @@ export interface AddMemberToResourceDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    GroupsListComponent,
+    MatStepLabel,
+    FacilitySearchSelectComponent,
+    MatStepper,
+    ResourceSearchSelectComponent,
+    LoaderDirective,
+    MatStep,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-add-member-to-resource-dialog',
   templateUrl: './add-member-to-resource-dialog.component.html',
   styleUrls: ['./add-member-to-resource-dialog.component.scss'],

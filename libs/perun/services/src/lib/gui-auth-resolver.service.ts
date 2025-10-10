@@ -12,7 +12,7 @@ import {
   User,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import { AuthPrivilege, Role } from '@perun-web-apps/perun/models';
+import { AuthPrivilege, Role, RPCError } from '@perun-web-apps/perun/models';
 import { StoreService } from './store.service';
 
 type Entity = Vo & Group & Resource & Member & User & Facility;
@@ -34,6 +34,7 @@ export class GuiAuthResolver {
   private editableGroups: number[] = [];
   private observableVos: number[] = [];
   private hasGroupInTheseVos: number[] = [];
+  private hasServiceIdentities: boolean = false;
 
   constructor(
     private authzSevice: AuthzResolverService,
@@ -43,6 +44,7 @@ export class GuiAuthResolver {
   init(principal: PerunPrincipal): void {
     this.principal = principal;
     this.initData(principal);
+    this.setHasServiceIdentities();
   }
 
   setPerunPolicies(policies: PerunPolicy[]): void {
@@ -119,6 +121,10 @@ export class GuiAuthResolver {
     return this.editableVos.includes(id) || this.isPerunAdmin();
   }
 
+  getHasServiceIdentities(): boolean {
+    return this.hasServiceIdentities;
+  }
+
   isGroupAdmin(): boolean {
     return this.isPerunAdmin() || this.hasAtLeastOne(Role.GROUPADMIN);
   }
@@ -181,7 +187,7 @@ export class GuiAuthResolver {
           this.allRolesManagementRules = allRules;
           resolve();
         },
-        (error) => reject(error),
+        (error: RPCError) => reject(error),
       );
     });
   }
@@ -569,5 +575,11 @@ export class GuiAuthResolver {
       }
     }
     return false;
+  }
+
+  private setHasServiceIdentities(): void {
+    const identities: number[] = this.principal.roles.SELF.User;
+    this.hasServiceIdentities =
+      identities.filter((userId) => userId !== this.principal.userId).length > 0;
   }
 }

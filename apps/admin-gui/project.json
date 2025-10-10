@@ -2,13 +2,14 @@
   "name": "admin-gui",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/admin-gui/src",
+  "prefix": "perun-web-apps",
+  "tags": [],
   "generators": {
     "@nx/angular:component": {
       "style": "scss"
     }
   },
-  "sourceRoot": "apps/admin-gui/src",
-  "prefix": "perun-web-apps",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -73,7 +74,7 @@
             {
               "type": "initial",
               "maximumWarning": "2mb",
-              "maximumError": "8mb"
+              "maximumError": "12mb"
             },
             {
               "type": "anyComponentStyle",
@@ -98,7 +99,8 @@
         "development": {
           "buildTarget": "admin-gui:build:development"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -117,6 +119,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/apps/admin-gui"]
     }
-  },
-  "tags": []
+  }
 }

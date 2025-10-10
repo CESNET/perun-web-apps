@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { PerunBean, RoleManagementRules } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'unassignedRole',
 })
 export class UnassignedRolePipe implements PipeTransform {

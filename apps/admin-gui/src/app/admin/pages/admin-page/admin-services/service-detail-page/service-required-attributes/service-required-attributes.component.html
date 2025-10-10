@@ -1,23 +1,21 @@
 <div>
   <h1 class="page-subtitle">{{ 'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"> </perun-web-apps-refresh-button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="onAdd()"
-    color="accent"
-    class="me-2 action-button"
-    mat-flat-button>
-    {{ 'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.ADD' | translate}}
-  </button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="onRemove()"
-    [disabled]="loading || selection.selected.length === 0"
-    class="me-2"
-    color="warn"
-    mat-flat-button>
-    {{ 'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.REMOVE' | translate}}
-  </button>
+  @if (authResolver.isPerunAdmin()) {
+    <button (click)="onAdd()" color="accent" class="me-2 action-button" mat-flat-button>
+      {{ 'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.ADD' | translate}}
+    </button>
+  }
+  @if (authResolver.isPerunAdmin()) {
+    <button
+      (click)="onRemove()"
+      [disabled]="loading || selection.selected.length === 0"
+      class="me-2"
+      color="warn"
+      mat-flat-button>
+      {{ 'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.REMOVE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'SERVICE_DETAIL.REQUIRED_ATTRIBUTES.FILTER'">

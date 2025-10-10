@@ -3,6 +3,7 @@ import { RoleManagementRules } from '@perun-web-apps/perun/openapi';
 import { PerunTranslateService } from '@perun-web-apps/perun/services';
 
 @Pipe({
+  standalone: true,
   name: 'displayedRole',
 })
 export class DisplayedRolePipe implements PipeTransform {

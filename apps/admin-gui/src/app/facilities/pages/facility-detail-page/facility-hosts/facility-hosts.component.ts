@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesManagerService, Facility, Host } from '@perun-web-apps/perun/openapi';
@@ -8,8 +12,22 @@ import { AddHostDialogComponent } from '../../../../shared/components/dialogs/ad
 import { RemoveHostDialogComponent } from '../../../../shared/components/dialogs/remove-host-dialog/remove-host-dialog.component';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { HostsListComponent } from '../../../../shared/components/hosts-list/hosts-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    LoaderDirective,
+    HostsListComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-facility-hosts',
   templateUrl: './facility-hosts.component.html',
   styleUrls: ['./facility-hosts.component.scss'],

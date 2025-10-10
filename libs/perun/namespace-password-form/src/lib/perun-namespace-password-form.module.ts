@@ -21,8 +21,8 @@ import { PasswordFormComponent } from './password-form/password-form.component';
     MatProgressSpinnerModule,
     MatIconModule,
     UiAlertsModule,
+    PasswordFormComponent,
   ],
-  declarations: [PasswordFormComponent],
   exports: [PasswordFormComponent],
   providers: [],
 })

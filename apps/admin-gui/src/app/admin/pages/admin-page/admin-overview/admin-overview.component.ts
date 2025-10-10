@@ -1,7 +1,11 @@
+import { MenuButtonsFieldComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding } from '@angular/core';
 import { MenuItem } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [CommonModule, MenuButtonsFieldComponent],
+  standalone: true,
   selector: 'app-admin-overview',
   templateUrl: './admin-overview.component.html',
   styleUrls: ['./admin-overview.component.scss'],

@@ -1,5 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { parseQueryParams } from '@perun-web-apps/perun/utils';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { OAuthStorage } from 'angular-oauth2-oidc';
@@ -9,11 +17,26 @@ import {
   User,
 } from '@perun-web-apps/perun/openapi';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 // eslint-disable-next-line
 declare let require: any;
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-send-message-dialog',
   templateUrl: './send-message-dialog.component.html',
   styleUrls: ['./send-message-dialog.component.scss'],

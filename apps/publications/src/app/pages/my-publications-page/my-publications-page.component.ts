@@ -1,7 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemovePublicationDialogComponent } from '../../dialogs/remove-publication-dialog/remove-publication-dialog.component';
-import { FilterPublication } from '../../components/publication-filter/publication-filter.component';
+import {
+  FilterPublication,
+  PublicationFilterComponent,
+} from '../../components/publication-filter/publication-filter.component';
 import {
   AuthzResolverService,
   CabinetManagerService,
@@ -13,8 +21,23 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from '../Filter';
 import { BehaviorSubject } from 'rxjs';
+import { PublicationsListComponent } from '../../components/publications-list/publications-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    PublicationsListComponent,
+    LoaderDirective,
+    PublicationFilterComponent,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-my-publications-page',
   templateUrl: './my-publications-page.component.html',
   styleUrls: ['./my-publications-page.component.scss'],

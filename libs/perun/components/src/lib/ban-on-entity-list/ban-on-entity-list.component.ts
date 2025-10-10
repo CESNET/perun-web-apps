@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import {
   Component,
   DestroyRef,
@@ -27,10 +33,16 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
-import { formatDate } from '@angular/common';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import {
+  UserFullNamePipe,
+  IsAllSelectedPipe,
+  IsAuthorizedPipe,
+  CheckboxLabelPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { formatDate, CommonModule } from '@angular/common';
 import { BAN_EXPIRATION_NEVER } from '../ban-specification/ban-specification.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
@@ -49,6 +61,24 @@ export type BanOnEntityListColumn =
   | 'edit';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    IsAuthorizedPipe,
+    UserFullNamePipe,
+    CheckboxLabelPipe,
+    MasterCheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-ban-on-entity-list',
   templateUrl: './ban-on-entity-list.component.html',
   styleUrls: ['./ban-on-entity-list.component.scss'],

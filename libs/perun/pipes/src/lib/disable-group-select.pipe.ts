@@ -3,6 +3,7 @@ import { Group } from '@perun-web-apps/perun/openapi';
 import { isGroupSynchronized } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'disableGroupSelect',
 })
 export class DisableGroupSelectPipe implements PipeTransform {

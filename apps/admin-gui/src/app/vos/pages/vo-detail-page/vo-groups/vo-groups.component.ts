@@ -1,3 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupRolesFilterComponent } from '../../../../shared/components/group-roles-filter/group-roles-filter.component';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  GroupsTreeComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -30,14 +42,33 @@ import { GroupFlatNode, GroupWithStatus, PageQuery } from '@perun-web-apps/perun
 import { TABLE_VO_GROUPS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { GroupUtilsService } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    GroupRolesFilterComponent,
+    TranslateModule,
+    MatTooltip,
+    GroupsTreeComponent,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-groups',
   templateUrl: './vo-groups.component.html',
   styleUrls: ['./vo-groups.component.scss'],

@@ -1,9 +1,24 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDivider } from '@angular/material/divider';
+import { MenuButtonsFieldComponent } from '../menu-buttons-field/menu-buttons-field.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ExpandableSectionId, MenuItem } from '@perun-web-apps/perun/models';
 import { ExpandedTilesStoreService } from '@perun-web-apps/perun/services';
 import { Observable, of, switchMap } from 'rxjs';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MenuButtonsFieldComponent,
+    MatDivider,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-expandable-tiles',
   templateUrl: './expandable-tiles.component.html',
   styleUrls: ['./expandable-tiles.component.scss'],

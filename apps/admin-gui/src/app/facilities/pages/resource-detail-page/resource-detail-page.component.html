@@ -1,73 +1,85 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 resource-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div *ngIf="!loading && resource !== undefined">
-    <div class="d-flex page-title-headtitle">
-      <mat-icon
-        matTooltip="{{'RESOURCE_DETAIL.ENTITY' | translate}}"
-        [ngStyle]="{'color':'black'}"
-        class="perun-icon perun-icon-detail"
-        svgIcon="perun-resource-black">
-      </mat-icon>
-      <div class="page-title-block">
-        <div class="page-title-headline d-flex align-items-center">
-          <a
-            [perunWebAppsMiddleClickRouterLink]="[baseUrl]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="[baseUrl]"
-            class="resource-link">
-            {{resource.name}}
-          </a>
-          <span class="text-muted"> &nbsp;#{{resource.id}} </span>
-          <button
-            (click)="editResource()"
-            aria-label="Edit resource"
-            *ngIf="editResourceAuth"
-            matTooltip="{{'RESOURCE_DETAIL.EDIT' | translate}}"
-            mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            (click)="deleteResource()"
-            *ngIf="deleteAuth"
-            matTooltip="{{'RESOURCE_DETAIL.DELETE' | translate}}"
-            mat-icon-button>
-            <mat-icon>delete_forever</mat-icon>
-          </button>
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading && resource !== undefined) {
+    <div>
+      <div class="d-flex page-title-headtitle">
+        <mat-icon
+          matTooltip="{{'RESOURCE_DETAIL.ENTITY' | translate}}"
+          [ngStyle]="{'color':'black'}"
+          class="perun-icon perun-icon-detail"
+          svgIcon="perun-resource-black">
+        </mat-icon>
+        <div class="page-title-block">
+          <div class="page-title-headline d-flex align-items-center">
+            <a
+              [perunWebAppsMiddleClickRouterLink]="[baseUrl]"
+              (auxclick)="$event.preventDefault()"
+              [routerLink]="[baseUrl]"
+              class="resource-link">
+              {{resource.name}}
+            </a>
+            <span class="text-muted"> &nbsp;#{{resource.id}} </span>
+            @if (editResourceAuth) {
+              <button
+                (click)="editResource()"
+                aria-label="Edit resource"
+                matTooltip="{{'RESOURCE_DETAIL.EDIT' | translate}}"
+                mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            @if (deleteAuth) {
+              <button
+                (click)="deleteResource()"
+                matTooltip="{{'RESOURCE_DETAIL.DELETE' | translate}}"
+                mat-icon-button>
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            }
+          </div>
+          <div>{{'RESOURCE_DETAIL.UUID' | translate}}: {{resource.uuid}}</div>
+          <span class="mt-1 entity-info">
+            {{'RESOURCE_DETAIL.ENTITY' | translate}}, {{'RESOURCE_DETAIL.VO' | translate}}:
+            @if (voLinkAuth) {
+              <a
+                attr.data-cy="{{resource.vo.name}}"
+                [perunWebAppsMiddleClickRouterLink]="['/organizations', resource.vo.id.toString()]"
+                (auxclick)="$event.preventDefault()"
+                [routerLink]="['/organizations', resource.vo.id]"
+                class="resource-link"
+                >{{resource.vo.name}}</a
+              >
+            }
+            @if (!voLinkAuth) {
+              <span>
+                {{resource.vo.name}}
+              </span>
+            }
+            #{{resource.voId}}, {{'RESOURCE_DETAIL.FACILITY' | translate}}:
+            @if (facilityLinkAuth) {
+              <a
+                class="resource-link"
+                attr.data-cy="{{resource.facility.name}}"
+                [perunWebAppsMiddleClickRouterLink]="['/facilities', resource.facilityId.toString()]"
+                (auxclick)="$event.preventDefault()"
+                [routerLink]="['/facilities', resource.facilityId]"
+                >{{resource.facility.name}}</a
+              >
+            }
+            @if (!facilityLinkAuth) {
+              <span>
+                {{resource.facility.name}}
+              </span>
+            }
+            #{{resource.facilityId}}, {{'RESOURCE_DETAIL.DESCRIPTION' | translate}}:
+            {{resource.description}}
+          </span>
         </div>
-        <div>{{'RESOURCE_DETAIL.UUID' | translate}}: {{resource.uuid}}</div>
-        <span class="mt-1 entity-info">
-          {{'RESOURCE_DETAIL.ENTITY' | translate}}, {{'RESOURCE_DETAIL.VO' | translate}}:
-          <a
-            *ngIf="voLinkAuth"
-            attr.data-cy="{{resource.vo.name}}"
-            [perunWebAppsMiddleClickRouterLink]="['/organizations', resource.vo.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/organizations', resource.vo.id]"
-            class="resource-link"
-            >{{resource.vo.name}}</a
-          >
-          <span *ngIf="!voLinkAuth">
-            {{resource.vo.name}}
-          </span>
-          #{{resource.voId}}, {{'RESOURCE_DETAIL.FACILITY' | translate}}:
-          <a
-            class="resource-link"
-            *ngIf="facilityLinkAuth"
-            attr.data-cy="{{resource.facility.name}}"
-            [perunWebAppsMiddleClickRouterLink]="['/facilities', resource.facilityId.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/facilities', resource.facilityId]"
-            >{{resource.facility.name}}</a
-          >
-          <span *ngIf="!facilityLinkAuth">
-            {{resource.facility.name}}
-          </span>
-          #{{resource.facilityId}}, {{'RESOURCE_DETAIL.DESCRIPTION' | translate}}:
-          {{resource.description}}
-        </span>
       </div>
+      <app-animated-router-outlet></app-animated-router-outlet>
     </div>
-    <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
+  }
 </div>

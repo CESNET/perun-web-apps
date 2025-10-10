@@ -1,9 +1,16 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { TABLE_ADD_HIERARCHICAL_INCLUSION } from '@perun-web-apps/config/table-config';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 export interface AddGroupHierarchicalIncludeDialogData {
   theme: string;
@@ -13,6 +20,18 @@ export interface AddGroupHierarchicalIncludeDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-add-group-hierarchical-include-dialog',
   templateUrl: './add-group-hierarchical-include-dialog.component.html',
   styleUrls: ['./add-group-hierarchical-include-dialog.component.scss'],

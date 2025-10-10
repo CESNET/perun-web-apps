@@ -1,21 +1,26 @@
 <mat-nav-list class="pt-0">
-  <a
-    mat-list-item
-    (click)="item.external ? goToURL(item.link):shouldHideMenu()"
-    *ngFor="let item of items"
-    [class.activated]="isActive(item.activatedRegex)"
-    mat-ripple
-    [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
-    class="side-menu-item-height"
-    routerLink="{{item.external ? null: item.link}}"
-    [perunWebAppsMiddleClickRouterLink]="[item.external ? null: item.link]"
-    (auxclick)="$event.preventDefault()"
-    queryParamsHandling="merge">
-    <div [ngStyle]="{'color': textColor}" class="d-flex flex-row">
-      <mat-icon>{{item.icon}}</mat-icon>
-      <span class="ms-4">
-        {{item.external ? (item | localisedText: lang:'label') : item.label | customTranslate: lang | translate}}
-      </span>
-    </div>
-  </a>
+  @for (item of items; track item) {
+    <a
+      mat-list-item
+      (click)="item.external ? goToURL(item.link):shouldHideMenu()"
+      [class.activated]="isActive(item.activatedRegex)"
+      mat-ripple
+      [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
+      class="side-menu-item-height"
+      routerLink="{{item.external ? null: item.link}}"
+      [perunWebAppsMiddleClickRouterLink]="[item.external ? null: item.link]"
+      (auxclick)="$event.preventDefault()"
+      queryParamsHandling="merge">
+      <div [ngStyle]="{'color': textColor}" class="d-flex flex-row">
+        <!-- the icon used for roles comes from a different library -->
+        <mat-icon
+          fontSet="{{item.icon==='passkey' ? 'material-symbols-outlined' : 'material-icons'}}">
+          {{item.icon}}
+        </mat-icon>
+        <span class="ms-4">
+          {{item.external ? (item | localisedText: lang:'label') : item.label | customTranslate: lang | translate}}
+        </span>
+      </div>
+    </a>
+  }
 </mat-nav-list>

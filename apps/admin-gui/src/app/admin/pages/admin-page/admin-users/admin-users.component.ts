@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { TABLE_ADMIN_USER_SELECT } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
@@ -19,10 +22,28 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { MatDialog } from '@angular/material/dialog';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  UsersListComponent,
+} from '@perun-web-apps/perun/components';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    UsersListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss'],

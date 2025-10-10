@@ -3,44 +3,48 @@
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
   <span
     [matTooltip]="(loading$ | async) && !canPerformAction.approve ? tooltipMessages.approve : ''">
-    <button
-      *ngIf="authRights.approve"
-      [disabled]="(loading$ | async) || !canPerformAction.approve"
-      (click)="onApprove()"
-      color="accent"
-      mat-flat-button>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
-    </button>
+    @if (authRights.approve) {
+      <button
+        [disabled]="(loading$ | async) || !canPerformAction.approve"
+        (click)="onApprove()"
+        color="accent"
+        mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
+      </button>
+    }
   </span>
   <span [matTooltip]="(loading$ | async) || !canPerformAction.reject ? tooltipMessages.reject : ''">
-    <button
-      *ngIf="authRights.reject"
-      [disabled]="(loading$ | async) || !canPerformAction.reject"
-      (click)="onReject()"
-      color="warn"
-      mat-flat-button>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
-    </button>
+    @if (authRights.reject) {
+      <button
+        [disabled]="(loading$ | async) || !canPerformAction.reject"
+        (click)="onReject()"
+        color="warn"
+        mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
+      </button>
+    }
   </span>
   <span [matTooltip]="(loading$ | async) || !canPerformAction.delete ? tooltipMessages.delete : ''">
-    <button
-      *ngIf="authRights.delete"
-      [disabled]="(loading$ | async) || !canPerformAction.delete"
-      (click)="onDelete()"
-      color="warn"
-      mat-flat-button>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
-    </button>
+    @if (authRights.delete) {
+      <button
+        [disabled]="(loading$ | async) || !canPerformAction.delete"
+        (click)="onDelete()"
+        color="warn"
+        mat-flat-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
+      </button>
+    }
   </span>
   <span [matTooltip]="(loading$ | async) || !canPerformAction.resend ? tooltipMessages.resend : ''">
-    <button
-      *ngIf="authRights.resend"
-      [disabled]="(loading$ | async) || !canPerformAction.resend"
-      (click)="onResend()"
-      mat-stroked-button>
-      <i class="material-icons"> mail_outline </i>
-      {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
-    </button>
+    @if (authRights.resend) {
+      <button
+        [disabled]="(loading$ | async) || !canPerformAction.resend"
+        (click)="onResend()"
+        mat-stroked-button>
+        <i class="material-icons"> mail_outline </i>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
+      </button>
+    }
   </span>
   <perun-web-apps-application-state-selector (stateChanged)="statesChanged($event)">
   </perun-web-apps-application-state-selector>
@@ -52,25 +56,27 @@
     [endDate]="endDate"
     [startDate]="startDate"></perun-web-apps-date-range>
   <span [matTooltip]="tooltipMessages.columnSettings" matTooltipPosition="above">
-    <button
-      *ngIf="authRights.columnSettings"
-      [disabled]="showAllDetails"
-      (click)="viewChanged()"
-      mat-stroked-button>
-      <mat-icon>settings</mat-icon>
-    </button>
+    @if (authRights.columnSettings) {
+      <button [disabled]="showAllDetails" (click)="viewChanged()" mat-stroked-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+    }
   </span>
 </div>
 <div class="action-row">
   <mat-slide-toggle [checked]="showAllDetails" (change)="toggleDetailedView()">
     {{'VO_DETAIL.APPLICATION.SHOW_ALL_DETAILS' | translate}}
   </mat-slide-toggle>
-  <mat-slide-toggle *ngIf="vo" [checked]="showGroupApps" (change)="toggleIncludeGroups()">
-    {{'VO_DETAIL.APPLICATION.SHOW_GROUP_APPLICATIONS' | translate}}
-  </mat-slide-toggle>
-  <mat-slide-toggle *ngIf="group" [checked]="showSubgroupApps" (change)="toggleIncludeSubGroups()">
-    {{'VO_DETAIL.APPLICATION.SHOW_SUBGROUP_APPLICATIONS' | translate}}
-  </mat-slide-toggle>
+  @if (vo) {
+    <mat-slide-toggle [checked]="showGroupApps" (change)="toggleIncludeGroups()">
+      {{'VO_DETAIL.APPLICATION.SHOW_GROUP_APPLICATIONS' | translate}}
+    </mat-slide-toggle>
+  }
+  @if (group) {
+    <mat-slide-toggle [checked]="showSubgroupApps" (change)="toggleIncludeSubGroups()">
+      {{'VO_DETAIL.APPLICATION.SHOW_SUBGROUP_APPLICATIONS' | translate}}
+    </mat-slide-toggle>
+  }
 </div>
 <ng-template #spinner>
   <perun-web-apps-loading-table></perun-web-apps-loading-table>

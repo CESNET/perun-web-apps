@@ -5,20 +5,22 @@
       {{'ADMIN.SEARCHER.TAB_USERS' | translate}}
     </ng-template>
     <ng-template matTabContent>
-      <perun-web-apps-attribute-search-select
-        *ngIf="!loading"
-        [attributes]="allAttrDefinitions"
-        [attributesForEntity]="['user']"
-        (search)="getUsers($event)">
-      </perun-web-apps-attribute-search-select>
-      <perun-web-apps-users-list
-        *ngIf="!loadingEntityData"
-        [loading]="loading"
-        [tableId]="tableId"
-        [routeToAdmin]="true"
-        [displayColumns]="['user', 'id', 'name']"
-        [users]="entities">
-      </perun-web-apps-users-list>
+      @if (!loading) {
+        <perun-web-apps-attribute-search-select
+          [attributes]="allAttrDefinitions"
+          [attributesForEntity]="['user']"
+          (search)="getUsers($event)">
+        </perun-web-apps-attribute-search-select>
+      }
+      @if (!loadingEntityData) {
+        <perun-web-apps-users-list
+          [loading]="loading"
+          [tableId]="tableId"
+          [routeToAdmin]="true"
+          [displayColumns]="['user', 'id', 'name']"
+          [users]="entities">
+        </perun-web-apps-users-list>
+      }
     </ng-template>
   </mat-tab>
   <mat-tab>
@@ -27,26 +29,27 @@
     </ng-template>
     <ng-template matTabContent>
       <div class="mt-3">
-        <perun-web-apps-vo-search-select
-          *ngIf="vos.length > 0"
-          [vos]="vos"
-          (voSelected)="voSelected($event)">
-        </perun-web-apps-vo-search-select>
+        @if (vos.length > 0) {
+          <perun-web-apps-vo-search-select [vos]="vos" (voSelected)="voSelected($event)">
+          </perun-web-apps-vo-search-select>
+        }
       </div>
       <!-- we search members in searcher by user attributes !!! -->
-      <perun-web-apps-attribute-search-select
-        *ngIf="!loading"
-        [attributes]="allAttrDefinitions"
-        [attributesForEntity]="['user', 'member']"
-        (search)="getMembers($event)">
-      </perun-web-apps-attribute-search-select>
-      <perun-web-apps-members-list
-        *ngIf="!loadingEntityData"
-        [loading]="loading"
-        (refreshTable)="getMembers(searchInput)"
-        [displayedColumns]="['id', 'voId', 'userId', 'status']"
-        [members]="entities"
-        [tableId]="tableId" />
+      @if (!loading) {
+        <perun-web-apps-attribute-search-select
+          [attributes]="allAttrDefinitions"
+          [attributesForEntity]="['user', 'member']"
+          (search)="getMembers($event)">
+        </perun-web-apps-attribute-search-select>
+      }
+      @if (!loadingEntityData) {
+        <perun-web-apps-members-list
+          [loading]="loading"
+          (refreshTable)="getMembers(searchInput)"
+          [displayedColumns]="['id', 'voId', 'userId', 'status']"
+          [members]="entities"
+          [tableId]="tableId" />
+      }
     </ng-template>
   </mat-tab>
   <mat-tab>
@@ -54,19 +57,21 @@
       {{'ADMIN.SEARCHER.TAB_FACILITIES' | translate}}
     </ng-template>
     <ng-template matTabContent>
-      <perun-web-apps-attribute-search-select
-        *ngIf="!loading"
-        [attributes]="allAttrDefinitions"
-        [attributesForEntity]="['facility']"
-        (search)="getFacilities($event)">
-      </perun-web-apps-attribute-search-select>
-      <perun-web-apps-facilities-list
-        *ngIf="!loadingEntityData"
-        [loading]="loading"
-        [tableId]="tableId"
-        [displayedColumns]="['id', 'name', 'description']"
-        [facilities]="entities">
-      </perun-web-apps-facilities-list>
+      @if (!loading) {
+        <perun-web-apps-attribute-search-select
+          [attributes]="allAttrDefinitions"
+          [attributesForEntity]="['facility']"
+          (search)="getFacilities($event)">
+        </perun-web-apps-attribute-search-select>
+      }
+      @if (!loadingEntityData) {
+        <perun-web-apps-facilities-list
+          [loading]="loading"
+          [tableId]="tableId"
+          [displayedColumns]="['id', 'name', 'description']"
+          [facilities]="entities">
+        </perun-web-apps-facilities-list>
+      }
     </ng-template>
   </mat-tab>
   <mat-tab>
@@ -74,20 +79,24 @@
       {{'ADMIN.SEARCHER.TAB_RESOURCES' | translate}}
     </ng-template>
     <ng-template matTabContent>
-      <perun-web-apps-attribute-search-select
-        *ngIf="!loading"
-        [attributes]="allAttrDefinitions"
-        [attributesForEntity]="['resource']"
-        (search)="getResources($event)">
-      </perun-web-apps-attribute-search-select>
-      <perun-web-apps-resources-list
-        *ngIf="!loadingEntityData"
-        [loading]="loading"
-        [tableId]="tableId"
-        [displayedColumns]="['id', 'name', 'description', 'voId', 'facilityId']"
-        [resources]="entities">
-      </perun-web-apps-resources-list>
+      @if (!loading) {
+        <perun-web-apps-attribute-search-select
+          [attributes]="allAttrDefinitions"
+          [attributesForEntity]="['resource']"
+          (search)="getResources($event)">
+        </perun-web-apps-attribute-search-select>
+      }
+      @if (!loadingEntityData) {
+        <perun-web-apps-resources-list
+          [loading]="loading"
+          [tableId]="tableId"
+          [displayedColumns]="['id', 'name', 'description', 'voId', 'facilityId']"
+          [resources]="entities">
+        </perun-web-apps-resources-list>
+      }
     </ng-template>
   </mat-tab>
 </mat-tab-group>
-<mat-spinner class="ms-auto me-auto" *ngIf="loading || loadingEntityData"></mat-spinner>
+@if (loading || loadingEntityData) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+}

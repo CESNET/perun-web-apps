@@ -1,25 +1,27 @@
 <div>
   <h1 class="page-subtitle">{{'ADMIN.SERVICES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="createService()"
-    color="accent"
-    class="action-button me-2"
-    data-cy="service-create-button"
-    mat-flat-button>
-    {{'ADMIN.SERVICES.CREATE' | translate}}
-  </button>
-  <button
-    *ngIf="authResolver.isPerunAdmin()"
-    (click)="deleteService()"
-    [disabled]="loading || selection.selected.length === 0"
-    class="me-2"
-    color="warn"
-    data-cy="service-delete-button"
-    mat-flat-button>
-    {{'ADMIN.SERVICES.DELETE' | translate}}
-  </button>
+  @if (authResolver.isPerunAdmin()) {
+    <button
+      (click)="createService()"
+      color="accent"
+      class="action-button me-2"
+      data-cy="service-create-button"
+      mat-flat-button>
+      {{'ADMIN.SERVICES.CREATE' | translate}}
+    </button>
+  }
+  @if (authResolver.isPerunAdmin()) {
+    <button
+      (click)="deleteService()"
+      [disabled]="loading || selection.selected.length === 0"
+      class="me-2"
+      color="warn"
+      data-cy="service-delete-button"
+      mat-flat-button>
+      {{'ADMIN.SERVICES.DELETE' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'ADMIN.SERVICES.FILTER'">

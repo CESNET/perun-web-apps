@@ -116,6 +116,8 @@ To run E2E tests locally:
     sudo docker compose down
     ```
 
+It is also important to keep track of the desired RPC version. The RPC version is specified in the `e2e/docker-postresql/Dockerfile` file.
+
 ### Developing E2E tests
 
 Tests are located within the `apps/admin-gui-e2e/src/e2e` folder. Each test should be fully independent. For instance, creating an entity in one test and attempting to delete the same entity in another should be avoided. Ideally, entities intended for deletion should be prepared at the database level beforehand (for more information see [Test data](#test-data)).

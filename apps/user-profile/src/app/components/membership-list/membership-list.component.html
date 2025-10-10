@@ -68,6 +68,8 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && !dataSource.filteredData.length" alert_type="warn">
-  {{ noMembershipFoundAlert | customTranslate | translate}}
-</perun-web-apps-alert>
+@if (!loading && !dataSource.filteredData.length) {
+  <perun-web-apps-alert alert_type="warn">
+    {{ noMembershipFoundAlert | customTranslate | translate}}
+  </perun-web-apps-alert>
+}

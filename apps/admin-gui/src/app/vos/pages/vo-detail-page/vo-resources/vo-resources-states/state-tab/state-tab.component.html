@@ -1,113 +1,118 @@
-<mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
-<div *ngIf="!loading" class="p-2">
-  <mat-accordion class="headers-align" multi="true" togglePosition="before">
-    <mat-expansion-panel *ngFor="let resourceStatus of propagation">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <img height="28" src="assets/img/PerunWebImages/resource-black.svg" width="28" />
-          <div class="ms-2">
-            {{resourceStatus.resource.name}}
-          </div>
-        </mat-panel-title>
-
-        <mat-panel-description>
-          <div *ngIf="getErrorCountStates(resourceStatus) !== 0; else okStateDescription">
-            <i class="material-icons red"> error </i>
-            {{getErrorCountStates(resourceStatus)}}
-            {{'VO_DETAIL.RESOURCES.STATES.FROM' | translate}} {{resourceStatus.taskList.length}}
-            {{'VO_DETAIL.RESOURCES.STATES.TASKS_WITH_ERROR_STATE' | translate}}
-          </div>
-          <ng-template #okStateDescription>
-            {{resourceStatus.taskList.length === 0 ?
-            ('VO_DETAIL.RESOURCES.STATES.NO_SERVICES_ASSIGNED' | translate) :
-            resourceStatus.taskList.length + ' ' + ('VO_DETAIL.RESOURCES.STATES.SERVICES_ASSIGNED' | translate)}}
-          </ng-template>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <ng-template matExpansionPanelContent>
-        <mat-divider></mat-divider>
-        <table
-          class="w-100"
-          *ngIf="resourceStatus.taskList.length !== 0"
-          [dataSource]="datasources[propagation.indexOf(resourceStatus)]"
-          mat-table>
-          <ng-container matColumnDef="id">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_ID' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>{{task.id}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="service">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_SERVICE' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>{{task.service.name}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_STATUS' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>{{task.status}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="scheduled">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_SCHEDULED' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.schedule; else notScheduledYet">
-                {{task.schedule | date:'d.M.y H:mm:ss'}}
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+}
+@if (!loading) {
+  <div class="p-2">
+    <mat-accordion class="headers-align" multi="true" togglePosition="before">
+      @for (resourceStatus of propagation; track resourceStatus) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <img height="28" src="assets/img/PerunWebImages/resource-black.svg" width="28" />
+              <div class="ms-2">
+                {{resourceStatus.resource.name}}
               </div>
-              <ng-template #notScheduledYet class="font-italic">
-                {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
-              </ng-template>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="started">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_STARTED' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.startTime; else notStartedYet">
-                {{task.startTime | date:'d.M.y H:mm:ss'}}
-              </div>
-              <ng-template #notStartedYet class="font-italic">
-                {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
-              </ng-template>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="ended">
-            <th *matHeaderCellDef mat-header-cell>
-              {{'VO_DETAIL.RESOURCES.STATES.TABLE_ENDED' | translate}}
-            </th>
-            <td *matCellDef="let task" mat-cell>
-              <div *ngIf="task.endTime; else notEndedYet">
-                {{task.endTime | date:'d.M.y H:mm:ss'}}
-              </div>
-              <ng-template #notEndedYet class="font-italic">
-                {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
-              </ng-template>
-            </td>
-          </ng-container>
-
-          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-          <tr
-            [ngClass]="{'redTableItem': task.status === 'ERROR' || task.status === 'SENDERROR' || task.status === 'GENERROR',
+            </mat-panel-title>
+            <mat-panel-description>
+              @if (getErrorCountStates(resourceStatus) !== 0) {
+                <div>
+                  <i class="material-icons red"> error </i>
+                  {{getErrorCountStates(resourceStatus)}}
+                  {{'VO_DETAIL.RESOURCES.STATES.FROM' | translate}}
+                  {{resourceStatus.taskList.length}}
+                  {{'VO_DETAIL.RESOURCES.STATES.TASKS_WITH_ERROR_STATE' | translate}}
+                </div>
+              } @else {
+                {{resourceStatus.taskList.length === 0 ?
+                ('VO_DETAIL.RESOURCES.STATES.NO_SERVICES_ASSIGNED' | translate) :
+                resourceStatus.taskList.length + ' ' + ('VO_DETAIL.RESOURCES.STATES.SERVICES_ASSIGNED' | translate)}}
+              }
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <mat-divider></mat-divider>
+            @if (resourceStatus.taskList.length !== 0) {
+              <table
+                class="w-100"
+                [dataSource]="datasources[propagation.indexOf(resourceStatus)]"
+                mat-table>
+                <ng-container matColumnDef="id">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_ID' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>{{task.id}}</td>
+                </ng-container>
+                <ng-container matColumnDef="service">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_SERVICE' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>{{task.service.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_STATUS' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>{{task.status}}</td>
+                </ng-container>
+                <ng-container matColumnDef="scheduled">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_SCHEDULED' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>
+                    @if (task.schedule) {
+                      <div>
+                        {{task.schedule | date:'d.M.y H:mm:ss'}}
+                      </div>
+                    } @else {
+                      {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
+                    }
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="started">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_STARTED' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>
+                    @if (task.startTime) {
+                      <div>
+                        {{task.startTime | date:'d.M.y H:mm:ss'}}
+                      </div>
+                    } @else {
+                      {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
+                    }
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ended">
+                  <th *matHeaderCellDef mat-header-cell>
+                    {{'VO_DETAIL.RESOURCES.STATES.TABLE_ENDED' | translate}}
+                  </th>
+                  <td *matCellDef="let task" mat-cell>
+                    @if (task.endTime) {
+                      <div>
+                        {{task.endTime | date:'d.M.y H:mm:ss'}}
+                      </div>
+                    } @else {
+                      {{'VO_DETAIL.RESOURCES.STATES.NOT_YET' | translate}}
+                    }
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr
+                  [ngClass]="{'redTableItem': task.status === 'ERROR' || task.status === 'SENDERROR' || task.status === 'GENERROR',
                           'greenTableItem': task.status === 'DONE',
                           'yellowTableItem': task.status === 'WARNING'}"
-            *matRowDef="let task; columns: displayedColumns;"
-            mat-row></tr>
-        </table>
-
-        <div *ngIf="resourceStatus.taskList.length === 0">
-          {{'VO_DETAIL.RESOURCES.STATES.NO_TASKS' | translate}}
-        </div>
-      </ng-template>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+                  *matRowDef="let task; columns: displayedColumns;"
+                  mat-row></tr>
+              </table>
+            }
+            @if (resourceStatus.taskList.length === 0) {
+              <div>
+                {{'VO_DETAIL.RESOURCES.STATES.NO_TASKS' | translate}}
+              </div>
+            }
+          </ng-template>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  </div>
+}

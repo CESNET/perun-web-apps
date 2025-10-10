@@ -10,10 +10,12 @@ export class RoleService {
   prepareRoles(
     roles: { [p: string]: { [p: string]: number[] } },
     names: string[],
+    adminGui = true,
   ): Map<string, Map<string, number[]>> {
     const preparedRoles = new Map<string, Map<string, number[]>>();
     names.forEach((roleName) => {
       if (
+        adminGui &&
         !this.store.getProperty('enable_sponsorships') &&
         (roleName === 'SPONSOR' ||
           roleName === 'SPONSORNOCREATERIGHTS' ||

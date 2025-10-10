@@ -3,35 +3,38 @@
     <mat-icon class="title-icon">assignment_ind</mat-icon>
     <span class="ms-3 mt-1">{{'AUTHORS_PAGE.TITLE' | translate}}</span>
   </h1>
-  <div *ngIf="!initLoading">
-    <h5>{{ author | userFullName }}{{'AUTHOR_DETAIL.TITLE' | translate}}</h5>
-    <div class="mt-3">
-      <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-      <button
-        mat-flat-button
-        color="warn"
-        class="me-2"
-        [disabled]="selected.selected.length === 0 || loading"
-        (click)="removePublication()">
-        {{'AUTHOR_DETAIL.REMOVE' | translate}}
-      </button>
-      <perun-web-apps-publication-filter
-        (filteredPublication)="filterPublication($event)"></perun-web-apps-publication-filter>
+  @if (!initLoading) {
+    <div>
+      <h5>{{ author | userFullName }}{{'AUTHOR_DETAIL.TITLE' | translate}}</h5>
+      <div class="mt-3">
+        <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+        <button
+          mat-flat-button
+          color="warn"
+          class="me-2"
+          [disabled]="selected.selected.length === 0 || loading"
+          (click)="removePublication()">
+          {{'AUTHOR_DETAIL.REMOVE' | translate}}
+        </button>
+        <perun-web-apps-publication-filter
+          (filteredPublication)="filterPublication($event)"></perun-web-apps-publication-filter>
+      </div>
+      <ng-template #spinner>
+        <perun-web-apps-loading-table></perun-web-apps-loading-table>
+      </ng-template>
+      <div class="position-relative table-min-height">
+        <perun-web-apps-publications-list
+          *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
+          [publications]="publications"
+          [selection]="selected"
+          [cachedSubject]="cachedSubject"
+          [tableId]="tableId"
+          [routerPath]="'/authors/'+author.id+'/publication'"></perun-web-apps-publications-list>
+      </div>
     </div>
-
-    <ng-template #spinner>
-      <perun-web-apps-loading-table></perun-web-apps-loading-table>
-    </ng-template>
-    <div class="position-relative table-min-height">
-      <perun-web-apps-publications-list
-        *perunWebAppsLoader="loading; indicator: spinner"
-        [loading]="loading"
-        [publications]="publications"
-        [selection]="selected"
-        [cachedSubject]="cachedSubject"
-        [tableId]="tableId"
-        [routerPath]="'/authors/'+author.id+'/publication'"></perun-web-apps-publications-list>
-    </div>
-  </div>
-  <mat-spinner class="ms-auto me-auto" *ngIf="initLoading"></mat-spinner>
+  }
+  @if (initLoading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
 </div>

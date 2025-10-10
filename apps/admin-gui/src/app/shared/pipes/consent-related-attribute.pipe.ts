@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 
 @Pipe({
+  standalone: true,
   name: 'consentRelatedAttribute',
 })
 export class ConsentRelatedAttributePipe implements PipeTransform {

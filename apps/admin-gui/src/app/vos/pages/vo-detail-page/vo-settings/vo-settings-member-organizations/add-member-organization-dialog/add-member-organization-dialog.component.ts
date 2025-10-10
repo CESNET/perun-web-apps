@@ -1,17 +1,41 @@
+import { MatTableModule } from '@angular/material/table';
+import { DebounceFilterComponent, VosListComponent } from '@perun-web-apps/perun/components';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepContent, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import {
   EntityStorageService,
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    DebounceFilterComponent,
+    MatTableModule,
+    TranslateModule,
+    VosListComponent,
+    MatStepLabel,
+    LoaderDirective,
+    MatStepper,
+    MatStepContent,
+    MatStep,
+  ],
+  standalone: true,
   selector: 'app-add-member-organization-dialog',
   templateUrl: './add-member-organization-dialog.component.html',
   styleUrls: ['./add-member-organization-dialog.component.scss'],

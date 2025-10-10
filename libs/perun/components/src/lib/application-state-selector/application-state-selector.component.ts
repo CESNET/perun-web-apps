@@ -1,7 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AppState } from '@perun-web-apps/perun/openapi';
 
 @Component({
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-application-state-selector',
   templateUrl: './application-state-selector.component.html',
   styleUrls: ['./application-state-selector.component.scss'],

@@ -8,41 +8,51 @@
       {{'DIALOGS.APP_APPROVE_ANYWAY.TEXT' | translate}}
     </div>
     <perun-web-apps-alert alert_type="warn">
-      <div *ngIf="err.reason === 'NOT_ACADEMIC'">
+      @if (err.reason === 'NOT_ACADEMIC') {
         <div>
-          {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ACADEMIC' | translate}}
+          <div>
+            {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ACADEMIC' | translate}}
+          </div>
+          <div>{{'DIALOGS.APP_APPROVE_ANYWAY.LOA' | translate}} {{application.extSourceLoa}}</div>
+          <div>
+            {{'DIALOGS.APP_APPROVE_ANYWAY.IDP_CATEGORY' | translate}}
+            {{err.category?.length > 0 ? err.category : 'N/A'}}
+          </div>
+          <div>
+            {{'DIALOGS.APP_APPROVE_ANYWAY.AFFILIATION' | translate}}
+            {{err.affiliation?.length > 0 ? err.affiliation : 'N/A'}}
+          </div>
         </div>
-        <div>{{'DIALOGS.APP_APPROVE_ANYWAY.LOA' | translate}} {{application.extSourceLoa}}</div>
+      }
+      @if (err.reason === 'NOT_ELIGIBLE') {
         <div>
-          {{'DIALOGS.APP_APPROVE_ANYWAY.IDP_CATEGORY' | translate}}
-          {{err.category?.length > 0 ? err.category : 'N/A'}}
+          <div>
+            {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ELIGIBLE' | translate}}
+          </div>
         </div>
+      }
+      @if (err.reason !== 'NOT_ELIGIBLE' && err.reason !== 'NOT_ACADEMIC') {
         <div>
-          {{'DIALOGS.APP_APPROVE_ANYWAY.AFFILIATION' | translate}}
-          {{err.affiliation?.length > 0 ? err.affiliation : 'N/A'}}
+          <div>
+            {{err.message}}
+          </div>
         </div>
-      </div>
-      <div *ngIf="err.reason === 'NOT_ELIGIBLE'">
-        <div>
-          {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ELIGIBLE' | translate}}
-        </div>
-      </div>
-      <div *ngIf="err.reason !== 'NOT_ELIGIBLE' && err.reason !== 'NOT_ACADEMIC'">
-        <div>
-          {{err.message}}
-        </div>
-      </div>
+      }
     </perun-web-apps-alert>
-    <div *ngIf="err.soft">
-      {{'DIALOGS.APP_APPROVE_ANYWAY.APPROVE_ANYWAY' | translate}}
-    </div>
+    @if (err.soft) {
+      <div>
+        {{'DIALOGS.APP_APPROVE_ANYWAY.APPROVE_ANYWAY' | translate}}
+      </div>
+    }
   </div>
   <div mat-dialog-actions>
     <button mat-stroked-button class="ms-auto" (click)="onCancel()">
       {{'DIALOGS.APP_APPROVE_ANYWAY.CANCEL' | translate}}
     </button>
-    <button *ngIf="err.soft" mat-flat-button class="ms-2" color="accent" (click)="onSubmit()">
-      {{'DIALOGS.APP_APPROVE_ANYWAY.SUBMIT' | translate}}
-    </button>
+    @if (err.soft) {
+      <button mat-flat-button class="ms-2" color="accent" (click)="onSubmit()">
+        {{'DIALOGS.APP_APPROVE_ANYWAY.SUBMIT' | translate}}
+      </button>
+    }
   </div>
 </div>

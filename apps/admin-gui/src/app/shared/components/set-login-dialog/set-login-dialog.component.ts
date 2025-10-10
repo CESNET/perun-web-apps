@@ -1,6 +1,10 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, ValidatorFn, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import {
   ApiRequestConfigurationService,
@@ -9,6 +13,8 @@ import {
 } from '@perun-web-apps/perun/services';
 import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoginPasswordFormWithGenerateOptionComponent } from '../login-password-form-with-generate-option/login-password-form-with-generate-option.component';
 
 export interface SetLoginDialogComponentData {
   userId: number;
@@ -16,6 +22,17 @@ export interface SetLoginDialogComponentData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    LoginPasswordFormWithGenerateOptionComponent,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-set-login-dialog',
   templateUrl: './set-login-dialog.component.html',
   styleUrls: ['./set-login-dialog.component.scss'],

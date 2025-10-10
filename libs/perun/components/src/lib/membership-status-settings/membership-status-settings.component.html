@@ -5,28 +5,33 @@
       {{status | memberStatusIcon}}
     </i>
     <span class="me-2">{{status | transformMemberStatus}}</span>
-    <button
-      *ngIf="editStatusAuth"
-      (click)="onChangeStatus()"
-      mat-icon-button
-      matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_STATUS' | translate}}">
-      <mat-icon>edit</mat-icon>
-    </button>
+    @if (editStatusAuth) {
+      <button
+        (click)="onChangeStatus()"
+        mat-icon-button
+        matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_STATUS' | translate}}">
+        <mat-icon>edit</mat-icon>
+      </button>
+    }
   </div>
 </div>
-<mat-divider *ngIf="showExpiration"></mat-divider>
-<div
-  *ngIf="showExpiration"
-  class="d-flex flex-row align-items-center align-items-center justify-content-between field-height">
-  <b>{{'MEMBER_DETAIL.OVERVIEW.EXPIRATION' | translate}}</b>
-  <div class="d-flex flex-row align-items-center justify-content-center">
-    <i class="me-2"> {{expiration | parseDate}} </i>
-    <button
-      *ngIf="editExpirationAuth"
-      (click)="onChangeExpiration()"
-      mat-icon-button
-      matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_EXPIRATION' | translate}}">
-      <mat-icon>edit</mat-icon>
-    </button>
+@if (showExpiration) {
+  <mat-divider></mat-divider>
+}
+@if (showExpiration) {
+  <div
+    class="d-flex flex-row align-items-center align-items-center justify-content-between field-height">
+    <b>{{'MEMBER_DETAIL.OVERVIEW.EXPIRATION' | translate}}</b>
+    <div class="d-flex flex-row align-items-center justify-content-center">
+      <i class="me-2"> {{expiration | parseDate}} </i>
+      @if (editExpirationAuth) {
+        <button
+          (click)="onChangeExpiration()"
+          mat-icon-button
+          matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_EXPIRATION' | translate}}">
+          <mat-icon>edit</mat-icon>
+        </button>
+      }
+    </div>
   </div>
-</div>
+}

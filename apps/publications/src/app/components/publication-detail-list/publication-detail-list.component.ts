@@ -1,17 +1,25 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   CabinetManagerService,
   Category,
   Publication,
   PublicationForGUI,
 } from '@perun-web-apps/perun/openapi';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 
 export const YEAR_MODE_FORMATS = {
   parse: {
@@ -26,6 +34,22 @@ export const YEAR_MODE_FORMATS = {
 };
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    FormsModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-publication-detail-list',
   templateUrl: './publication-detail-list.component.html',
   styleUrls: ['./publication-detail-list.component.scss'],

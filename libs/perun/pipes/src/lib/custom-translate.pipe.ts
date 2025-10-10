@@ -9,6 +9,7 @@ interface CustomLabel {
 }
 
 @Pipe({
+  standalone: true,
   name: 'customTranslate',
 })
 export class CustomTranslatePipe implements PipeTransform {

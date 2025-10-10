@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CabinetManagerService, Category } from '@perun-web-apps/perun/openapi';
 import { TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
@@ -8,8 +12,22 @@ import { AddCategoryDialogComponent } from '../../dialogs/add-category-dialog/ad
 import { RemoveCategoryDialogComponent } from '../../dialogs/remove-category-dialog/remove-category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+import { CategoriesListComponent } from '../../components/categories-list/categories-list.component';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    CategoriesListComponent,
+    LoadingTableComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-categories-page',
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss'],

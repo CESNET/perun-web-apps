@@ -4,24 +4,20 @@
       <button mat-stroked-button class="ms-auto" (click)="closeWindow()">
         {{'SHOW_RESULT.CLOSE_WINDOW_BUTTON' | translate}}
       </button>
-      <button
-        mat-flat-button
-        *ngIf="linkerResult === 'IDENTITY_IDENTICAL' ||
-                linkerResult === 'IDENTITY_UNKNOWN' ||
-                linkerResult === 'IDENTITY_LINKED'"
-        color="accent"
-        class="ms-2"
-        (click)="loginAgain()">
-        {{'SHOW_RESULT.LOG_OTHER_BUTTON' | translate}}
-      </button>
-      <button
-        mat-flat-button
-        *ngIf="linkerResult === 'IDENTITY_REGISTERED_ALREADY'"
-        color="accent"
-        class="ms-2"
-        (click)="sendMessageToSupport()">
-        {{'SHOW_RESULT.CONTACT_SUPPORT_BUTTON' | translate}}
-      </button>
+      @if (
+        linkerResult === 'IDENTITY_IDENTICAL' ||
+        linkerResult === 'IDENTITY_UNKNOWN' ||
+        linkerResult === 'IDENTITY_LINKED'
+      ) {
+        <button mat-flat-button color="accent" class="ms-2" (click)="loginAgain()">
+          {{'SHOW_RESULT.LOG_OTHER_BUTTON' | translate}}
+        </button>
+      }
+      @if (linkerResult === 'IDENTITY_REGISTERED_ALREADY') {
+        <button mat-flat-button color="accent" class="ms-2" (click)="sendMessageToSupport()">
+          {{'SHOW_RESULT.CONTACT_SUPPORT_BUTTON' | translate}}
+        </button>
+      }
     </div>
   </perun-web-apps-consolidation-result>
 </div>

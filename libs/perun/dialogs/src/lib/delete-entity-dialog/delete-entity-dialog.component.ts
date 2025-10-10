@@ -1,6 +1,17 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatListModule, MatListItem } from '@angular/material/list';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   Facility,
   Group,
@@ -10,6 +21,9 @@ import {
   UsersManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { DeleteDialogTypePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { RemoveGroupTooltipPipe } from '@perun-web-apps/perun/pipes';
 
 type entityToDelete = Facility | Group | Vo | Resource | User | Service;
 
@@ -19,6 +33,27 @@ export interface DeleteDialogResult {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatListModule,
+    MatListItem,
+    MatTableModule,
+    TranslateModule,
+    MatTooltip,
+    LoaderDirective,
+    DeleteDialogTypePipe,
+    RemoveGroupTooltipPipe,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-delete-entity-dialog',
   templateUrl: './delete-entity-dialog.component.html',
   styleUrls: ['./delete-entity-dialog.component.scss'],

@@ -6,9 +6,11 @@
       <mat-form-field class="me-2">
         <mat-label>{{'SHARED.COMPONENTS.MANAGERS_PAGE.SELECT_ROLE' | translate}}</mat-label>
         <mat-select [(value)]="selectedRole">
-          <mat-option *ngFor="let role of availableRoles" [value]="role.roleName">
-            {{role | displayedRole}}
-          </mat-option>
+          @for (role of availableRoles; track role.roleName) {
+            <mat-option [value]="role.roleName">
+              {{role | displayedRole}}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
@@ -25,34 +27,39 @@
           #auto="matAutocomplete"
           (optionSelected)="showVoGroups($event)"
           [displayWith]="displayFn">
-          <mat-option *ngFor="let vo of filteredOptions | async" [value]="vo">
-            {{vo.name}}
-            <span class="text-muted">{{vo.shortName}}</span>
-          </mat-option>
+          @for (vo of filteredOptions | async; track vo.id) {
+            <mat-option [value]="vo">
+              {{vo.name}}
+              <span class="text-muted">{{vo.shortName}}</span>
+            </mat-option>
+          }
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <perun-web-apps-debounce-filter
-      *ngIf="groups !== null && groups.length > 0 && !loading"
-      (filter)="applyFilter($event)"
-      placeholder="{{'DIALOGS.ADD_GROUPS.FILTER_GROUPS' | translate}}">
-    </perun-web-apps-debounce-filter>
+    @if (groups !== null && groups.length > 0 && !loading) {
+      <perun-web-apps-debounce-filter
+        (filter)="applyFilter($event)"
+        placeholder="{{'DIALOGS.ADD_GROUPS.FILTER_GROUPS' | translate}}">
+      </perun-web-apps-debounce-filter>
+    }
     <ng-template #spinner>
       <perun-web-apps-loading-table></perun-web-apps-loading-table>
     </ng-template>
-    <div *ngIf="firstSearchDone" class="position-relative mt-3 table-min-height">
-      <perun-web-apps-groups-list
-        *perunWebAppsLoader="loading; indicator: spinner"
-        [loading]="loading"
-        [disableMembers]="false"
-        [disableRouting]="true"
-        [displayedColumns]="['select', 'id', 'name', 'description']"
-        [selection]="selection"
-        [groups]="groups"
-        [filter]="filterValue"
-        [tableId]="tableId">
-      </perun-web-apps-groups-list>
-    </div>
+    @if (firstSearchDone) {
+      <div class="position-relative mt-3 table-min-height">
+        <perun-web-apps-groups-list
+          *perunWebAppsLoader="loading; indicator: spinner"
+          [loading]="loading"
+          [disableMembers]="false"
+          [disableRouting]="true"
+          [displayedColumns]="['select', 'id', 'name', 'description']"
+          [selection]="selection"
+          [groups]="groups"
+          [filter]="filterValue"
+          [tableId]="tableId">
+        </perun-web-apps-groups-list>
+      </div>
+    }
   </div>
 
   <div mat-dialog-actions>

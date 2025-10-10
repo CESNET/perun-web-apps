@@ -1,3 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { getRecentlyVisitedItems, RecentItem } from '@perun-web-apps/perun/utils';
 import {
@@ -9,6 +17,7 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { MatRipple } from '@angular/material/core';
 
 interface RecentDisplayedItem {
   url: string;
@@ -20,6 +29,18 @@ interface RecentDisplayedItem {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    UiAlertsModule,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    MatRipple,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-dashboard-recently-viewed-button-field',
   templateUrl: './dashboard-recently-viewed-button-field.component.html',
   styleUrls: ['./dashboard-recently-viewed-button-field.component.scss'],

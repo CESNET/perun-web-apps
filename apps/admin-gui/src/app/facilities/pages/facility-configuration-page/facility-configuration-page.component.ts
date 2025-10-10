@@ -1,3 +1,10 @@
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ManagersPageComponent } from '../../../shared/components/managers-page/managers-page.component';
+import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
@@ -11,13 +18,13 @@ import {
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import {
   EntityStorageService,
   GuiAuthResolver,
   NotificatorService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig, isVirtualAttribute } from '@perun-web-apps/perun/utils';
 import { NoServiceDialogComponent } from '../../components/no-service-dialog/no-service-dialog.component';
@@ -27,8 +34,40 @@ import { Router } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { BehaviorSubject } from 'rxjs';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { FacilityHostsComponent } from '../facility-detail-page/facility-hosts/facility-hosts.component';
+import { ServicesListComponent } from '../../../shared/components/services-list/services-list.component';
+import { ServiceSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { FacilityServicesDestinationsComponent } from '../facility-detail-page/facility-services-destinations/facility-services-destinations.component';
+import { FacilitySettingsManagersComponent } from '../facility-detail-page/facility-settings/facility-settings-managers/facility-settings-managers.component';
+import { HostsListComponent } from '../../../shared/components/hosts-list/hosts-list.component';
+import { DestinationListComponent } from '../../../shared/components/destination-list/destination-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { RPCError } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    UiAlertsModule,
+    DebounceFilterComponent,
+    ManagersPageComponent,
+    MatExpansionModule,
+    MatStepperModule,
+    TranslateModule,
+    LoadingTableComponent,
+    FacilityHostsComponent,
+    ServicesListComponent,
+    ServiceSearchSelectComponent,
+    AttributesListComponent,
+    FacilityServicesDestinationsComponent,
+    FacilitySettingsManagersComponent,
+    HostsListComponent,
+    DestinationListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-facility-configuration-page',
   templateUrl: './facility-configuration-page.component.html',
   styleUrls: ['./facility-configuration-page.component.scss'],
@@ -60,7 +99,7 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
   destinationServiceMissing = false;
   availableRoles: RoleManagementRules[] = [];
   filterValue = '';
-  ATTRIBUTES_IDX = 3;
+  ATTRIBUTES_IDX = 2;
   serviceControl: UntypedFormControl = new UntypedFormControl(false, Validators.requiredTrue);
   attributesControl: UntypedFormControl = new UntypedFormControl(true, Validators.requiredTrue);
   private allowNavigate = false;
@@ -70,9 +109,9 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
   private servicesPerPackage: Map<number, Set<number>> = new Map<number, Set<number>>();
   private saveMsg = '';
   private removeMsg = '';
-  private BEFORE_OPTIONAL_IDX = 2;
-  private DESTINATIONS_IDX = 4;
-  private AFTER_OPTIONAL_IDX = 5;
+  private BEFORE_OPTIONAL_IDX = 1;
+  private DESTINATIONS_IDX = 3;
+  private AFTER_OPTIONAL_IDX = 4;
 
   constructor(
     private attributesManager: AttributesManagerService,
@@ -165,9 +204,9 @@ export class FacilityConfigurationPageComponent implements OnInit, AfterViewInit
             this.processing = false;
             resolve();
           },
-          error: () => {
+          error: (err: RPCError) => {
             this.processing = false;
-            reject();
+            reject(err);
           },
         });
     });

@@ -1,3 +1,18 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  FacilitiesListComponent,
+  GroupsListComponent,
+  MembersListComponent,
+  ResourcesListComponent,
+  UsersListComponent,
+  VosListComponent,
+} from '@perun-web-apps/perun/components';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -40,8 +55,27 @@ import { DisplayedRolePipe, ManageableEntitiesPipe } from '@perun-web-apps/perun
 import { BehaviorSubject, iif, mergeMap, Observable, of } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { RemoveRoleDialogComponent } from '@perun-web-apps/perun/dialogs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    UiAlertsModule,
+    MembersListComponent,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    ResourcesListComponent,
+    FacilitiesListComponent,
+    UsersListComponent,
+    VosListComponent,
+    GroupsListComponent,
+    LoaderDirective,
+    DisplayedRolePipe,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-roles-page',
   templateUrl: './roles-page.component.html',
   styleUrls: ['./roles-page.component.scss'],

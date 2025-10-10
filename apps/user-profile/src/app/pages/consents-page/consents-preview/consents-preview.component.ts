@@ -1,10 +1,26 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Consent, ConsentsManagerService } from '@perun-web-apps/perun/openapi';
+import { ConsentsListComponent } from '@perun-web-apps/perun/components';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    ConsentsListComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-consents-preview',
   templateUrl: './consents-preview.component.html',
   styleUrls: ['./consents-preview.component.scss'],

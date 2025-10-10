@@ -1,3 +1,8 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -9,14 +14,32 @@ import {
   ThanksForGUI,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { PublicationDetailListComponent } from '../../components/publication-detail-list/publication-detail-list.component';
+import { AddThanksComponent } from '../../components/add-thanks/add-thanks.component';
+import { AddAuthorsComponent } from '../../components/add-authors/add-authors.component';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+    PublicationDetailListComponent,
+    AddThanksComponent,
+    AddAuthorsComponent,
+    UserFullNamePipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-publication-detail',
   templateUrl: './publication-detail.component.html',
   styleUrls: ['./publication-detail.component.scss'],

@@ -14,50 +14,55 @@
       matSort
       matSortDirection="asc"
       matSortDisableClear="">
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected} as selected">
-        <th *matHeaderCellDef="let row" mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            *ngIf="selection.isMultipleSelection()"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <span
-            [matTooltipDisabled]="!(disableCheckbox && !directManagerIds?.includes(row.id))"
-            [matTooltip]="'MANAGERS_LIST.INDIRECT_DISABLED_TOOLTIP' | translate">
-            <mat-checkbox
-              (change)="$event ? toggleRow(row) : null"
-              (click)="$event.stopPropagation()"
-              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row | userFullName}"
-              [checked]="selection.isSelected(row)"
-              [disabled]="disableCheckbox && !directManagerIds?.includes(row.id)"
-              color="primary"
-              attr.data-cy="{{row.firstName | lowercase}}-checkbox">
-            </mat-checkbox>
-          </span>
-        </td>
-      </ng-container>
+      @if (
+        {all: dataSource | isAllSelected: selection?.selected?.length :canBeSelected};
+        as selected
+      ) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef="let row" mat-header-cell class="align-checkbox">
+            @if (selection.isMultipleSelection()) {
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                color="primary">
+              </mat-checkbox>
+            }
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+            <span
+              [matTooltipDisabled]="!(disableCheckbox && !directManagerIds?.includes(row.id))"
+              [matTooltip]="'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.INDIRECT_DISABLED_TOOLTIP' | translate">
+              <mat-checkbox
+                (change)="$event ? toggleRow(row) : null"
+                (click)="$event.stopPropagation()"
+                [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row | userFullName}"
+                [checked]="selection.isSelected(row)"
+                [disabled]="disableCheckbox && !directManagerIds?.includes(row.id)"
+                color="primary"
+                attr.data-cy="{{row.firstName | lowercase}}-checkbox">
+              </mat-checkbox>
+            </span>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="user">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let user" class="static-column-size" mat-cell>
-          <mat-icon
-            *ngIf="!user.serviceUser"
-            class="align-bottom"
-            matTooltip="{{'MANAGERS_LIST.PERSON' | translate}}">
-            account_circle
-          </mat-icon>
-          <mat-icon
-            *ngIf="user.serviceUser"
-            matTooltip="{{'MANAGERS_LIST.SERVICE' | translate}}"
-            [svgIcon]="svgIcon"
-            class="align-bottom perun-icon">
-          </mat-icon>
+          @if (!user.serviceUser) {
+            <mat-icon
+              class="align-bottom"
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.PERSON' | translate}}">
+              account_circle
+            </mat-icon>
+          } @else {
+            <mat-icon
+              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.SERVICE_ACCOUNTS_LIST.SERVICE' | translate}}"
+              [svgIcon]="svgIcon"
+              class="align-bottom perun-icon">
+            </mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="id">
@@ -66,7 +71,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('id')">
-          {{'MANAGERS_LIST.ID' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.ID' | translate}}
         </th>
         <td *matCellDef="let user" class="static-column-size" mat-cell>
           {{user.id}}
@@ -78,7 +83,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('name')">
-          {{'MANAGERS_LIST.NAME' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.SERVICE_ACCOUNTS_LIST.NAME' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell attr.data-cy="{{user.firstName | lowercase}}-td">
           {{user | userFullName}}
@@ -90,7 +95,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('organization')">
-          {{'MANAGERS_LIST.ORGANIZATION' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.ORGANIZATION' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userVo}}</td>
       </ng-container>
@@ -100,7 +105,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('email')">
-          {{'MANAGERS_LIST.EMAIL' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.EMAIL' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userEmail}}</td>
       </ng-container>
@@ -110,7 +115,7 @@
           mat-header-cell
           mat-sort-header
           [disabled]="checkIfSortDisabled('logins')">
-          {{'MANAGERS_LIST.LOGINS' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.MANAGERS_LIST.LOGINS' | translate}}
         </th>
         <td *matCellDef="let user" mat-cell>{{user | userLogins}}</td>
       </ng-container>
@@ -132,16 +137,16 @@
       <tr
         *matRowDef="let user; columns: displayedColumns;"
         [class.cursor-pointer]="!disableRouting"
-        [routerLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/myProfile/service-identities', user.id])"
-        [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/myProfile/service-identities', user.id])"
+        [routerLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/service-identities', user.id])"
+        [perunWebAppsMiddleClickRouterLink]="disableRouting ? null : (routeToAdmin ? ['/admin/users', user.id] : ['/service-identities', user.id])"
         class="dark-hover-list-item"
         mat-row></tr>
     </table>
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="!loading && dataSource.filteredData.length === 0"
-  [alert_type]="'warn'">
-  {{noUsersFoundLabel.length > 0 ? noUsersFoundLabel : 'SHARED_LIB.UI.ALERTS.NO_USERS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && dataSource.filteredData.length === 0) {
+  <perun-web-apps-alert [alert_type]="'warn'">
+    {{noUsersFoundLabel.length > 0 ? noUsersFoundLabel : 'SHARED_LIB.UI.ALERTS.NO_USERS' | translate}}
+  </perun-web-apps-alert>
+}

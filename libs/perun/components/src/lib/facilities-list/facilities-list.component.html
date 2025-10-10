@@ -19,16 +19,20 @@
       matSortDisableClear>
       <ng-container matColumnDef="select">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <span
-            *ngIf="enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length} as selected">
-            <mat-checkbox
-              (change)="masterToggle()"
-              [checked]="selection.hasValue() && selected.all"
-              [indeterminate]="selection.hasValue() && !selected.all"
-              [aria-label]="selected.all | masterCheckboxLabel | translate"
-              color="primary">
-            </mat-checkbox>
-          </span>
+          @if (
+            enableMasterCheckbox && {all:dataSource | isAllSelected: selection.selected.length};
+            as selected
+          ) {
+            <span>
+              <mat-checkbox
+                (change)="masterToggle()"
+                [checked]="selection.hasValue() && selected.all"
+                [indeterminate]="selection.hasValue() && !selected.all"
+                [aria-label]="selected.all | masterCheckboxLabel | translate"
+                color="primary">
+              </mat-checkbox>
+            </span>
+          }
         </th>
         <td *matCellDef="let facility" class="static-column-size align-checkbox" mat-cell>
           <mat-checkbox
@@ -43,7 +47,7 @@
       </ng-container>
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.ID' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.ID' | translate}}
         </th>
         <td *matCellDef="let facility" class="static-column-size" mat-cell>
           {{facility.facility.id}}
@@ -58,7 +62,7 @@
       </ng-container>
       <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.NAME' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.NAME' | translate}}
         </th>
         <td *matCellDef="let facility" mat-cell attr.data-cy="{{facility.facility.name}}">
           {{facility.facility.name}}
@@ -66,7 +70,7 @@
       </ng-container>
       <ng-container matColumnDef="authzGroup">
         <th mat-header-cell *matHeaderCellDef>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.AUTHZ_GROUP' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.AUTHZ_GROUP' | translate}}
         </th>
         <td
           mat-cell
@@ -83,13 +87,13 @@
       </ng-container>
       <ng-container matColumnDef="description">
         <th *matHeaderCellDef mat-header-cell>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.DESCRIPTION' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.DESCRIPTION' | translate}}
         </th>
         <td *matCellDef="let facility" mat-cell>{{facility.facility.description}}</td>
       </ng-container>
       <ng-container matColumnDef="destinations">
         <th *matHeaderCellDef mat-header-cell>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.DESTINATIONS' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.DESTINATIONS' | translate}}
         </th>
         <td *matCellDef="let facility" mat-cell>
           <perun-web-apps-object-list-values
@@ -101,7 +105,7 @@
       </ng-container>
       <ng-container matColumnDef="hosts">
         <th *matHeaderCellDef mat-header-cell>
-          {{'SHARED.COMPONENTS.FACILITIES_LIST.HOSTS' | translate}}
+          {{'SHARED_LIB.PERUN.COMPONENTS.FACILITIES_LIST.HOSTS' | translate}}
         </th>
         <td *matCellDef="let facility" mat-cell>
           <perun-web-apps-object-list-values
@@ -124,12 +128,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && facilities.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && facilities.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && facilities.length === 0" alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FACILITIES' | translate}}
-</perun-web-apps-alert>
+@if (!loading && facilities.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FACILITIES' | translate}}
+  </perun-web-apps-alert>
+}

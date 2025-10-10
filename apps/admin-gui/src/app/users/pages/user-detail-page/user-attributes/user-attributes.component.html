@@ -10,17 +10,19 @@
         [entity]="'user'"></app-one-entity-attribute-page>
     </ng-template>
   </mat-tab>
-  <mat-tab *ngIf="userFacilityAttAuth">
-    <ng-template matTabLabel>
-      {{'ADMIN_USER.ENTITY' | translate}}
-      -
-      {{'FACILITY_DETAIL.ENTITY' | translate}}
-    </ng-template>
-    <ng-template matTabContent>
-      <app-two-entity-attribute-page
-        [firstEntity]="'user'"
-        [firstEntityId]="userId"
-        [secondEntity]="'facility'"></app-two-entity-attribute-page>
-    </ng-template>
-  </mat-tab>
+  @if (userFacilityAttAuth) {
+    <mat-tab>
+      <ng-template matTabLabel>
+        {{'ADMIN_USER.ENTITY' | translate}}
+        -
+        {{'FACILITY_DETAIL.ENTITY' | translate}}
+      </ng-template>
+      <ng-template matTabContent>
+        <app-two-entity-attribute-page
+          [firstEntity]="'user'"
+          [firstEntityId]="userId"
+          [secondEntity]="'facility'"></app-two-entity-attribute-page>
+      </ng-template>
+    </mat-tab>
+  }
 </mat-tab-group>

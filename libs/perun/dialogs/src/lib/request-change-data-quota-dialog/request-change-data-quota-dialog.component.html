@@ -23,9 +23,11 @@
         <input matInput required type="number" [formControl]="newValueControl" />
       </mat-form-field>
       <mat-select [(value)]="selectedUnit" class="select-width mt-auto mb-auto ms-2">
-        <mat-option *ngFor="let unit of units" [value]="selectedUnit">
-          {{unit}}
-        </mat-option>
+        @for (unit of units; track unit) {
+          <mat-option [value]="selectedUnit">
+            {{unit}}
+          </mat-option>
+        }
       </mat-select>
     </div>
     <div>

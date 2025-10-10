@@ -1,9 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
+import { StatisticsCardComponent } from '../../../../shared/components/statistics-card/statistics-card.component';
 
 @Component({
+  imports: [CommonModule, MatProgressSpinnerModule, TranslateModule, StatisticsCardComponent],
+  standalone: true,
   selector: 'app-vo-statistics',
   templateUrl: './vo-statistics.component.html',
   styleUrls: ['./vo-statistics.component.scss'],

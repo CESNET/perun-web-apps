@@ -3,6 +3,7 @@ import { RichMember } from '@perun-web-apps/perun/openapi';
 import { isMemberIndirectString } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'memberStatusIconColor',
 })
 export class MemberStatusIconColorPipe implements PipeTransform {

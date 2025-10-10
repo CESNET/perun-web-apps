@@ -1,0 +1,20 @@
+<h1 class="page-subtitle">{{'SETTINGS.GUI_CONFIG.TITLE' | translate}}</h1>
+<div class="col-12 col-lg-6 p-0">
+  <mat-form-field class="w-100">
+    <mat-label>{{'SETTINGS.GUI_CONFIG.PREF_TABLE_PAGE_SIZE' | translate}}</mat-label>
+    <mat-select [(value)]="preferredTablePageSize" (valueChange)="updatePreferredTablePageSize()">
+      @for (value of tablePageSizeOptions; track value) {
+        <mat-option [value]="value">
+          {{value}}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle
+    labelPosition="before"
+    class="mt-2 ms-2 w-75"
+    [ngModel]="showIds"
+    (toggleChange)="toggleShowIds()">
+    {{'SETTINGS.GUI_CONFIG.SHOW_IDS_IN_TABLES' | translate}}
+  </mat-slide-toggle>
+</div>

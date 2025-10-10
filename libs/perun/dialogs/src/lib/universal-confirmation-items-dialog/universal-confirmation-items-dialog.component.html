@@ -5,42 +5,41 @@
       {{this.data.description | translate}}
     </p>
 
-    <div class="fw-bold" *ngIf="data.showAsk">
-      {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.ASK' | translate}}
-    </div>
+    @if (data.showAsk) {
+      <div class="fw-bold">
+        {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.ASK' | translate}}
+      </div>
+    }
 
-    <table *ngIf="data.items.length" mat-table [dataSource]="dataSource" class="w-100">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let item">{{item}}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-weight-bolder"></tr>
-      <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
-    </table>
-    <perun-web-apps-alert *ngIf="data.alert" [alert_type]="'warn'">
-      {{data.alert | translate}}
-    </perun-web-apps-alert>
+    @if (data.items.length) {
+      <table mat-table [dataSource]="dataSource" class="w-100">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item">{{item}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="font-weight-bolder"></tr>
+        <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+      </table>
+    }
+    @if (data.alert) {
+      <perun-web-apps-alert [alert_type]="'warn'">
+        {{data.alert | translate}}
+      </perun-web-apps-alert>
+    }
   </div>
   <div mat-dialog-actions>
     <button mat-stroked-button class="ms-auto" (click)="onCancel()">
       {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.CANCEL_BUTTON' | translate}}
     </button>
-    <button
-      mat-flat-button
-      class="ms-2"
-      color="warn"
-      (click)="onSubmit()"
-      *ngIf="data.type === 'remove'">
-      {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.REMOVE_BUTTON' | translate}}
-    </button>
-    <button
-      mat-flat-button
-      class="ms-2"
-      color="accent"
-      (click)="onSubmit()"
-      *ngIf="data.type === 'confirmation'">
-      {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.SUBMIT_BUTTON' | translate}}
-    </button>
+    @if (data.type === 'remove') {
+      <button mat-flat-button class="ms-2" color="warn" (click)="onSubmit()">
+        {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.REMOVE_BUTTON' | translate}}
+      </button>
+    }
+    @if (data.type === 'confirmation') {
+      <button mat-flat-button class="ms-2" color="accent" (click)="onSubmit()">
+        {{'SHARED_LIB.PERUN.COMPONENTS.UNIVERSAL_REMOVE_ITEMS_DIALOG.SUBMIT_BUTTON' | translate}}
+      </button>
+    }
   </div>
 </div>

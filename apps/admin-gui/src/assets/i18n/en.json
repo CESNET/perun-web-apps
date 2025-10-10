@@ -35,7 +35,9 @@
     "FACILITIES_DESC": "Manage facilities and resources.",
     "ADMIN_DESC": "Manage attributes, users and do diagnostics.",
     "PROFILE_DESC": "View information about you and your organizations and groups.",
-    "MY_PROFILE": "My profile"
+    "MY_PROFILE": "My profile",
+    "SERVICE_IDENTITIES": "Service identities",
+    "SETTINGS": "Settings"
   },
   "VO_MANAGEMENT": {
     "TITLE": "Select organization",
@@ -730,7 +732,9 @@
         "APPROVE_MESSAGE": "Application was approved",
         "VERIFY_MESSAGE": "Application was verified",
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
-        "EDIT": "Edit"
+        "EDIT": "Edit",
+        "MODIFIED_NAME_NOT_AVAILABLE": "N/A",
+        "MODIFIED_NAME_REGISTRAR": "Automatically approved"
       }
     },
     "STATISTICS": {
@@ -1188,6 +1192,10 @@
       "OVERVIEW": "Overview",
       "REQUIRED_ATTRIBUTES": "Required attributes",
       "DESTINATIONS": "Destinations"
+    },
+    "SETTINGS": {
+      "OVERVIEW": "Overview",
+      "GUI_CONFIG": "Gui configuration"
     }
   },
   "DIALOGS": {
@@ -2646,30 +2654,6 @@
       "CANCEL": "Cancel"
     }
   },
-  "MEMBERS_LIST": {
-    "ID": "Id",
-    "VO_ID": "Organization Id",
-    "USER_ID": "User Id",
-    "TYPE": "Type",
-    "NAME": "Name",
-    "STATUS": "Organization status",
-    "GROUP_STATUS": "Group status",
-    "ALREADY_SPONSORED": "Already \nsponsored",
-    "EMAIL": "Email",
-    "LOGINS": "Logins",
-    "ORGANIZATION": "Organization",
-    "NO_MEMBERS_ALERT": "No members present",
-    "NO_FILTER_RESULTS_ALERT": "No members are matching your query",
-    "INDIRECT_MEMBER": "Show indirect member origin",
-    "DIRECT_MEMBER": "Direct member",
-    "DUAL_MEMBERSHIP": "This member is of both direct and indirect origin.",
-    "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied. You must go to member’s origin group.",
-    "CHECKBOX_TOOLTIP_UNALTERABLE": "Members from member organizations cannot be directly removed",
-    "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
-    "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
-    "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
-    "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
-  },
   "MEMBERS_CANDIDATES_LIST": {
     "STATUS": "Status",
     "NAME": "Name",
@@ -2679,16 +2663,6 @@
     "ALREADY_MEMBER": "Already member",
     "ADDING_BLOCKED": "Manual adding of users outside of the organization is blocked.",
     "MASTER_CHECKBOX_TOOLTIP": "No member candidate on this page can be selected"
-  },
-  "MANAGERS_LIST": {
-    "ID": "Id",
-    "NAME": "Name",
-    "ORGANIZATION": "Organization",
-    "EMAIL": "Email",
-    "LOGINS": "Logins",
-    "PERSON": "Person",
-    "SERVICE": "Service",
-    "INDIRECT_DISABLED_TOOLTIP": "Derived manager cannot be directly removed"
   },
   "AUDIT_MESSAGES_LIST": {
     "ID": "Id",
@@ -2885,6 +2859,7 @@
       },
       "SERVICE_IDENTITIES": {
         "TITLE": "Service accounts",
+        "TITLE_NON_ADMIN": "Service identities",
         "CREATE": "Connect",
         "DELETE": "Disconnect",
         "NO_IDENTITIES": "No service accounts connected."
@@ -2918,6 +2893,13 @@
       "RESOURCE": "Resources",
       "FACILITY": "Facilities",
       "FILTER": "Filter by name, id or description"
+    }
+  },
+  "SETTINGS": {
+    "GUI_CONFIG": {
+      "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
+      "TITLE": "Gui Configuration",
+      "SHOW_IDS_IN_TABLES": "Show IDs in tables"
     }
   },
   "ATTRIBUTE_PAGE": {
@@ -3018,15 +3000,6 @@
         "LAST_ATTEMPT": "Last attempted propagation",
         "NO_TIMESTAMP": "UNKNOWN",
         "NO_TIMESTAMP_TOOLTIP": "No recent propagation found."
-      },
-      "FACILITIES_LIST": {
-        "ID": "Id",
-        "NAME": "Name",
-        "DESCRIPTION": "Description",
-        "DESTINATIONS": "Destinations",
-        "HOSTS": "Hosts",
-        "NO_FACILITIES_WARNING": "No facilities found",
-        "AUTHZ_GROUP": "Role acquired through"
       },
       "CONSENT_HUBS_LIST": {
         "ID": "Id",
@@ -3234,11 +3207,25 @@
           "FIND_GROUP": "Find group...",
           "NO_GROUP_FOUND": "No matching group found"
         },
+        "SERVICE_ACCOUNTS_LIST": {
+          "NAME": "Name",
+          "SERVICE": "Service"
+        },
         "VOS_LIST": {
           "ID": "Id",
           "NAME": "Name",
           "SHORTNAME": "Short name",
           "AUTHZ_GROUP": "Role acquired through"
+        },
+        "MANAGERS_LIST": {
+          "ID": "Id",
+          "NAME": "Name",
+          "ORGANIZATION": "Organization",
+          "EMAIL": "Email",
+          "LOGINS": "Logins",
+          "PERSON": "Person",
+          "SERVICE": "Service",
+          "INDIRECT_DISABLED_TOOLTIP": "Derived manager cannot be directly removed"
         },
         "VO_SEARCH_SELECT": {
           "SELECT_VO": "Select organization",
@@ -3282,6 +3269,39 @@
           "SELECT_MEMBER": "Select member",
           "FIND_MEMBER": "Find member...",
           "NO_MEMBER_FOUND": "No matching member found"
+        },
+        "FACILITIES_LIST": {
+          "ID": "Id",
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "DESTINATIONS": "Destinations",
+          "HOSTS": "Hosts",
+          "NO_FACILITIES_WARNING": "No facilities found",
+          "AUTHZ_GROUP": "Role acquired through"
+        },
+        "MEMBERS_LIST": {
+          "ID": "Id",
+          "VO_ID": "Organization Id",
+          "USER_ID": "User Id",
+          "TYPE": "Type",
+          "NAME": "Name",
+          "STATUS": "Organization status",
+          "GROUP_STATUS": "Group status",
+          "ALREADY_SPONSORED": "Already \nsponsored",
+          "EMAIL": "Email",
+          "LOGINS": "Logins",
+          "ORGANIZATION": "Organization",
+          "NO_MEMBERS_ALERT": "No members present",
+          "NO_FILTER_RESULTS_ALERT": "No members are matching your query",
+          "INDIRECT_MEMBER": "Show indirect member origin",
+          "DIRECT_MEMBER": "Direct member",
+          "DUAL_MEMBERSHIP": "This member is of both direct and indirect origin.",
+          "CHECKBOX_TOOLTIP_INDIRECT": "Indirect members cannot be removed or copied. You must go to member’s origin group.",
+          "CHECKBOX_TOOLTIP_UNALTERABLE": "Members from member organizations cannot be directly removed",
+          "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
+          "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
+          "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
+          "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
         },
         "FACILITY_SEARCH_SELECT": {
           "SELECT_FACILITY": "Select facility",

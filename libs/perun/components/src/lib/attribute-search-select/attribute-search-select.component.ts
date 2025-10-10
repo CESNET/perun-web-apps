@@ -1,3 +1,10 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { EntitySearchSelectComponent } from '../entity-search-select/entity-search-select.component';
+import { DebounceFilterComponent } from '../debounce-filter/debounce-filter.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AttributeDefinition } from '@perun-web-apps/perun/openapi';
 import { compareFnDisplayName } from '@perun-web-apps/perun/utils';
@@ -5,6 +12,16 @@ import { compareFnDisplayName } from '@perun-web-apps/perun/utils';
 type Entity = 'user' | 'facility' | 'resource' | 'member';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    EntitySearchSelectComponent,
+    DebounceFilterComponent,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attribute-search-select',
   templateUrl: './attribute-search-select.component.html',
   styleUrls: ['./attribute-search-select.component.scss'],

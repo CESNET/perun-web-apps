@@ -4,6 +4,7 @@ import { InvitationWithSender } from '@perun-web-apps/perun/openapi';
 import { InvitationStatus } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'selectedPendingInvitation',
   pure: false,
 })

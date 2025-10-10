@@ -1,12 +1,33 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule, MatListItem } from '@angular/material/list';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    MatListModule,
+    MatListItem,
+    MatProgressSpinnerModule,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-settings-preferred-shells',
   templateUrl: './settings-preferred-shells.component.html',
   styleUrls: ['./settings-preferred-shells.component.scss'],

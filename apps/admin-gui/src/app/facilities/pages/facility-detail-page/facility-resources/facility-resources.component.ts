@@ -1,3 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+  ResourcesListComponent,
+} from '@perun-web-apps/perun/components';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -23,8 +31,23 @@ import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/ser
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
+import { ServiceSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    ServiceSearchSelectComponent,
+    LoadingTableComponent,
+    ResourcesListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-facility-resources',
   templateUrl: './facility-resources.component.html',
   styleUrls: ['./facility-resources.component.scss'],

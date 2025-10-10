@@ -1,11 +1,34 @@
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  DebounceFilterComponent,
+  GroupsListComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, Input, OnInit } from '@angular/core';
 import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
 import { TABLE_FACILITY_ALLOWED_GROUPS } from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-facility-allowed-groups',
   templateUrl: './facility-allowed-groups.component.html',
   styleUrls: ['./facility-allowed-groups.component.scss'],

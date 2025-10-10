@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { EnrichedBanOnVo, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import {
@@ -11,11 +14,29 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddVoBanDialogComponent } from '../../../../../shared/components/dialogs/add-vo-ban-dialog/add-vo-ban-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { UpdateVoBanDialogComponent } from '../../../../../shared/components/dialogs/update-vo-ban-dialog/update-vo-ban-dialog.component';
-import { BanOnEntityListColumn } from '@perun-web-apps/perun/components';
+import {
+  BanOnEntityListColumn,
+  BanOnEntityListComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject } from 'rxjs';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    BanOnEntityListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-vo-settings-bans',
   templateUrl: './vo-settings-bans.component.html',
   styleUrls: ['./vo-settings-bans.component.scss'],

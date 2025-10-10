@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
+  standalone: true,
   name: 'categoryLabel',
 })
 export class CategoryLabelPipe implements PipeTransform {

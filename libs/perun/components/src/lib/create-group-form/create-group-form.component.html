@@ -13,18 +13,17 @@
       {{'DIALOGS.CREATE_GROUP.INVALID_DESCRIPTION' | translate}}
     </mat-error>
   </mat-form-field>
-  <mat-checkbox
-    *ngIf="isNotSubGroup"
-    (change)="emitAsSubGroup()"
-    [labelPosition]="'before'"
-    [(ngModel)]="asSubgroup">
-    {{'DIALOGS.CREATE_GROUP.AS_SUBGROUP' | translate}}
-  </mat-checkbox>
-  <perun-web-apps-group-search-select
-    *ngIf="asSubgroup"
-    class="long-input"
-    [disableAutoSelect]="true"
-    [groups]="voGroups"
-    (groupSelected)="emitParentGroup($event)">
-  </perun-web-apps-group-search-select>
+  @if (isNotSubGroup) {
+    <mat-checkbox (change)="emitAsSubGroup()" [labelPosition]="'before'" [(ngModel)]="asSubgroup">
+      {{'DIALOGS.CREATE_GROUP.AS_SUBGROUP' | translate}}
+    </mat-checkbox>
+  }
+  @if (asSubgroup) {
+    <perun-web-apps-group-search-select
+      class="long-input"
+      [disableAutoSelect]="true"
+      [groups]="voGroups"
+      (groupSelected)="emitParentGroup($event)">
+    </perun-web-apps-group-search-select>
+  }
 </div>

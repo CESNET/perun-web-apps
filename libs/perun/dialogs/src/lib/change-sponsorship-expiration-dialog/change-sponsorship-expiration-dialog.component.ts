@@ -1,3 +1,5 @@
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   AttributesManagerService,
@@ -5,9 +7,11 @@ import {
   MembersManagerService,
   Sponsor,
 } from '@perun-web-apps/perun/openapi';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { ChangeExpirationDialogComponent } from '../change-expiration-dialog/change-expiration-dialog.component';
 
 export interface ChangeSponsorshipExpirationDialogData {
   memberId: number;
@@ -15,6 +19,15 @@ export interface ChangeSponsorshipExpirationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    LoaderDirective,
+    ChangeExpirationDialogComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-sponsorship-expiration-dialog',
   templateUrl: './change-sponsorship-expiration-dialog.component.html',
   styleUrls: ['./change-sponsorship-expiration-dialog.component.scss'],

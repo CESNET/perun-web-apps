@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ApplicationMail } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'appMailSendingDisabled',
 })
 export class AppMailSendingDisabledPipe implements PipeTransform {

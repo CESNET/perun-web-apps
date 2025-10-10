@@ -2,6 +2,9 @@
   "name": "publications",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/publications/src",
+  "prefix": "perun-web-apps",
+  "tags": [],
   "generators": {
     "@schematics/angular:component": {
       "style": "scss",
@@ -29,8 +32,6 @@
       "skipTests": true
     }
   },
-  "sourceRoot": "apps/publications/src",
-  "prefix": "perun-web-apps",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -90,7 +91,7 @@
             {
               "type": "initial",
               "maximumWarning": "2mb",
-              "maximumError": "6mb"
+              "maximumError": "8mb"
             },
             {
               "type": "anyComponentStyle",
@@ -115,7 +116,8 @@
         "development": {
           "buildTarget": "publications:build:development"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -134,6 +136,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/apps/publications"]
     }
-  },
-  "tags": []
+  }
 }

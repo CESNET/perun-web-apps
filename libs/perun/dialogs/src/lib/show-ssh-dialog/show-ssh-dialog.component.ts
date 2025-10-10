@@ -1,11 +1,25 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 export interface ShowSshDialogData {
   value: string;
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-show-ssh-dialog',
   templateUrl: './show-ssh-dialog.component.html',
   styleUrls: ['./show-ssh-dialog.component.scss'],

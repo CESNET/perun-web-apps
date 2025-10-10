@@ -24,8 +24,6 @@ import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';
     MatProgressSpinnerModule,
     MatDialogModule,
     PerunPipesModule,
-  ],
-  declarations: [
     ExportTableDialogComponent,
     ExportDataDialogComponent,
     TableOptionsComponent,

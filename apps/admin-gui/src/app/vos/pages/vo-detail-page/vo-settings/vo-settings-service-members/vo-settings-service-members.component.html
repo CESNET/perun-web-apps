@@ -3,15 +3,16 @@
 <button (click)="createServiceMember()" class="me-2 action-button" color="accent" mat-flat-button>
   {{'VO_DETAIL.SETTINGS.SERVICE_MEMBERS.CREATE' | translate}}
 </button>
-<button
-  (click)="onRemoveMembers()"
-  *ngIf="removeAuth"
-  [disabled]="loading || selection.isEmpty()"
-  class="me-2"
-  color="warn"
-  mat-flat-button>
-  {{'VO_DETAIL.SETTINGS.SERVICE_MEMBERS.DELETE' | translate}}
-</button>
+@if (removeAuth) {
+  <button
+    (click)="onRemoveMembers()"
+    [disabled]="loading || selection.isEmpty()"
+    class="me-2"
+    color="warn"
+    mat-flat-button>
+    {{'VO_DETAIL.SETTINGS.SERVICE_MEMBERS.DELETE' | translate}}
+  </button>
+}
 <perun-web-apps-debounce-filter
   (filter)="applyFilter($event)"
   [placeholder]="'VO_DETAIL.SETTINGS.SERVICE_MEMBERS.FILTER'">

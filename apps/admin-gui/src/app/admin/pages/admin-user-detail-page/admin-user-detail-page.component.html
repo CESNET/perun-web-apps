@@ -1,56 +1,66 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 user-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div *ngIf="!loading && user !== undefined" class="d-flex page-title-headtitle">
-    <mat-icon
-      class="perun-icon perun-icon-detail"
-      [ngStyle]="{'color':'black'}"
-      [svgIcon]="svgIcon"
-      matTooltip="{{'ADMIN_USER.ENTITY' | translate}}">
-    </mat-icon>
-    <div class="page-title-block">
-      <div class="page-title-headline d-flex align-items-center">
-        <a [routerLink]="['/admin/users', user.id]" class="user-link" data-cy="user-name-link">
-          {{user | userFullName}}
-        </a>
-        <span class="text-muted"> &nbsp;#{{user.id}} </span>
-        <span *ngIf="authResolver.isPerunAdmin()">
-          <button
-            *ngIf="!anonymized"
-            (click)="editUser()"
-            mat-icon-button
-            matTooltip="{{'ADMIN_USER.EDIT' | translate}}"
-            data-cy="edit-user-button">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="!anonymized && !userDeletionForced"
-            (click)="anonymizeUser()"
-            matTooltip="{{'ADMIN_USER.ANONYMIZE' | translate}}"
-            mat-icon-button>
-            <mat-icon>no_accounts</mat-icon>
-          </button>
-          <button
-            *ngIf="userDeletionForced"
-            (click)="deleteUser()"
-            matTooltip="{{'ADMIN_USER.DELETE' | translate}}"
-            mat-icon-button>
-            <mat-icon>delete_forever</mat-icon>
-          </button>
-          <mat-icon
-            *ngIf="anonymized"
-            matTooltip="{{'USER_DETAIL.DASHBOARD.ANONYMIZED' | translate}}"
-            class="mat-icon-war ms-2">
-            blur_off
-          </mat-icon>
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading && user !== undefined) {
+    <div class="d-flex page-title-headtitle">
+      <mat-icon
+        class="perun-icon perun-icon-detail"
+        [ngStyle]="{'color':'black'}"
+        [svgIcon]="svgIcon"
+        matTooltip="{{'ADMIN_USER.ENTITY' | translate}}">
+      </mat-icon>
+      <div class="page-title-block">
+        <div class="page-title-headline d-flex align-items-center">
+          <a [routerLink]="['/admin/users', user.id]" class="user-link" data-cy="user-name-link">
+            {{user | userFullName}}
+          </a>
+          <span class="text-muted"> &nbsp;#{{user.id}} </span>
+          @if (authResolver.isPerunAdmin()) {
+            <span>
+              @if (!anonymized) {
+                <button
+                  (click)="editUser()"
+                  mat-icon-button
+                  matTooltip="{{'ADMIN_USER.EDIT' | translate}}"
+                  data-cy="edit-user-button">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              @if (!anonymized && !userDeletionForced) {
+                <button
+                  (click)="anonymizeUser()"
+                  matTooltip="{{'ADMIN_USER.ANONYMIZE' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>no_accounts</mat-icon>
+                </button>
+              }
+              @if (userDeletionForced) {
+                <button
+                  (click)="deleteUser()"
+                  matTooltip="{{'ADMIN_USER.DELETE' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              }
+              @if (anonymized) {
+                <mat-icon
+                  matTooltip="{{'USER_DETAIL.DASHBOARD.ANONYMIZED' | translate}}"
+                  class="mat-icon-war ms-2">
+                  blur_off
+                </mat-icon>
+              }
+            </span>
+          }
+        </div>
+        <div>{{'ADMIN_USER.UUID' | translate}}: {{user.uuid}}</div>
+        <span class="mt-1 entity-info">
+          {{'ADMIN_USER.ENTITY' | translate}}, {{'ADMIN_USER.USER_TYPE' | translate}}:
+          {{getUserType()}}
         </span>
       </div>
-      <div>{{'ADMIN_USER.UUID' | translate}}: {{user.uuid}}</div>
-      <span class="mt-1 entity-info">
-        {{'ADMIN_USER.ENTITY' | translate}}, {{'ADMIN_USER.USER_TYPE' | translate}}:
-        {{getUserType()}}
-      </span>
     </div>
-  </div>
+  }
   <app-animated-router-outlet></app-animated-router-outlet>
 </div>

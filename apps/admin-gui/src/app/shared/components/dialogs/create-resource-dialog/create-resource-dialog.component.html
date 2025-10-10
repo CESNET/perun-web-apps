@@ -19,12 +19,16 @@
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_RESOURCE.NAME' | translate}}</mat-label>
         <input matInput [formControl]="nameCtrl" data-cy="create-resource-name-input" required />
-        <mat-error *ngIf="nameCtrl.errors?.['spaceName']">
-          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-        </mat-error>
-        <mat-error *ngIf="!nameCtrl.errors?.['spaceName']">
-          {{'DIALOGS.CREATE_RESOURCE.INCORRECT_NAME' | translate}}
-        </mat-error>
+        @if (nameCtrl.errors?.['spaceName']) {
+          <mat-error>
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
+        }
+        @if (!nameCtrl.errors?.['spaceName']) {
+          <mat-error>
+            {{'DIALOGS.CREATE_RESOURCE.INCORRECT_NAME' | translate}}
+          </mat-error>
+        }
       </mat-form-field>
       <mat-form-field>
         <mat-label>{{'DIALOGS.CREATE_RESOURCE.DESCRIPTION' | translate}}</mat-label>

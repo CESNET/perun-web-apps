@@ -11,31 +11,35 @@
           [entity]="'group'"></app-one-entity-attribute-page>
       </ng-template>
     </mat-tab>
-    <mat-tab *ngIf="groupMemberAttAuth">
-      <ng-template matTabLabel>
-        {{'GROUP_DETAIL.ENTITY' | translate}}
-        -
-        {{'MEMBER_DETAIL.ENTITY' | translate}}
-      </ng-template>
-      <ng-template matTabContent>
-        <app-two-entity-attribute-page
-          [firstEntity]="'group'"
-          [firstEntityId]="group.id"
-          [secondEntity]="'member'"></app-two-entity-attribute-page>
-      </ng-template>
-    </mat-tab>
-    <mat-tab *ngIf="groupResourceAttAuth">
-      <ng-template matTabLabel>
-        {{'GROUP_DETAIL.ENTITY' | translate}}
-        -
-        {{'RESOURCE_DETAIL.ENTITY' | translate}}
-      </ng-template>
-      <ng-template matTabContent>
-        <app-two-entity-attribute-page
-          [firstEntity]="'group'"
-          [firstEntityId]="group.id"
-          [secondEntity]="'resource'"></app-two-entity-attribute-page>
-      </ng-template>
-    </mat-tab>
+    @if (groupMemberAttAuth) {
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{'GROUP_DETAIL.ENTITY' | translate}}
+          -
+          {{'MEMBER_DETAIL.ENTITY' | translate}}
+        </ng-template>
+        <ng-template matTabContent>
+          <app-two-entity-attribute-page
+            [firstEntity]="'group'"
+            [firstEntityId]="group.id"
+            [secondEntity]="'member'"></app-two-entity-attribute-page>
+        </ng-template>
+      </mat-tab>
+    }
+    @if (groupResourceAttAuth) {
+      <mat-tab>
+        <ng-template matTabLabel>
+          {{'GROUP_DETAIL.ENTITY' | translate}}
+          -
+          {{'RESOURCE_DETAIL.ENTITY' | translate}}
+        </ng-template>
+        <ng-template matTabContent>
+          <app-two-entity-attribute-page
+            [firstEntity]="'group'"
+            [firstEntityId]="group.id"
+            [secondEntity]="'resource'"></app-two-entity-attribute-page>
+        </ng-template>
+      </mat-tab>
+    }
   </mat-tab-group>
 </div>

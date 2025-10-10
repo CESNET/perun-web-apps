@@ -1,6 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   GuiAuthResolver,
   NotificatorService,
@@ -9,6 +14,7 @@ import {
 } from '@perun-web-apps/perun/services';
 import { AuthzResolverService, PerunBean, RichUser } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveManagerDialogData {
   complementaryObject: PerunBean;
@@ -19,6 +25,17 @@ export interface RemoveManagerDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-remove-manager-dialog',
   templateUrl: './remove-manager-dialog.component.html',
   styleUrls: ['./remove-manager-dialog.component.scss'],

@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
   Attribute,
@@ -20,8 +24,19 @@ import {
 import { Urns } from '@perun-web-apps/perun/urns';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { MemberStatusDisabledPipe } from '@perun-web-apps/perun/pipes';
+import { MembershipStatusSettingsComponent } from '../membership-status-settings/membership-status-settings.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MembershipStatusSettingsComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-member-overview-membership',
   templateUrl: './member-overview-membership.component.html',
   styleUrls: ['./member-overview-membership.component.css'],

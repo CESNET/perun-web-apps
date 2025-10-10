@@ -1,8 +1,12 @@
+import { AnimatedRouterOutletComponent } from '../../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { fadeIn } from '@perun-web-apps/perun/animations';
 
 @Component({
+  imports: [CommonModule, AnimatedRouterOutletComponent],
+  standalone: true,
   selector: 'app-vo-settings',
   templateUrl: './vo-settings.component.html',
   styleUrls: ['./vo-settings.component.scss'],

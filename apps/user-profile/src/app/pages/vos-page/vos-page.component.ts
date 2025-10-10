@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   MembersManagerService,
@@ -6,9 +10,24 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
-import { Membership } from '../../components/membership-list/membership-list.component';
+import {
+  Membership,
+  MembershipListComponent,
+} from '../../components/membership-list/membership-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    CustomTranslatePipe,
+    DebounceFilterComponent,
+    TranslateModule,
+    MembershipListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-vos-page',
   templateUrl: './vos-page.component.html',
   styleUrls: ['./vos-page.component.scss'],
@@ -55,12 +74,9 @@ export class VosPageComponent implements OnInit {
   }
 
   isEverythingLoaded(): void {
-    this.vosCount--;
-    this.loading = this.vosCount !== 0;
-    if (!this.loading) {
-      this.userMemberships = this.userMembershipsTemp;
-      this.adminMemberships = this.adminMembershipsTemp;
-    }
+    this.userMemberships = this.userMembershipsTemp;
+    this.adminMemberships = this.adminMembershipsTemp;
+    this.loading = false;
   }
 
   extendMembership(membership: Membership): void {
@@ -69,8 +85,11 @@ export class VosPageComponent implements OnInit {
   }
 
   private fillMemberships(vos: Array<Vo>, memberships: Membership[]): void {
+    if (vos.length === 0) {
+      this.loading = this.vosCount !== 0;
+      return;
+    }
     this.membersService.getMembersByUser(this.userId).subscribe((members) => {
-      if (vos.length === 0) this.loading = false;
       vos.forEach((vo) => {
         const member = members.find((mem) => mem.voId === vo.id);
         if (!member) {
@@ -78,7 +97,8 @@ export class VosPageComponent implements OnInit {
             entity: vo,
             expirationAttribute: null,
           });
-          this.isEverythingLoaded();
+          this.vosCount--;
+          if (this.vosCount === 0) this.isEverythingLoaded();
         } else {
           this.membersService.getRichMemberWithAttributes(member.id).subscribe((richMember) => {
             const expirationAtt = richMember.memberAttributes.find(
@@ -88,7 +108,8 @@ export class VosPageComponent implements OnInit {
               entity: vo,
               expirationAttribute: expirationAtt,
             });
-            this.isEverythingLoaded();
+            this.vosCount--;
+            if (this.vosCount === 0) this.isEverythingLoaded();
           });
         }
       });

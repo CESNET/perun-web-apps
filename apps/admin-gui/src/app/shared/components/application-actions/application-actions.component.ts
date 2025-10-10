@@ -1,3 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  ApplicationsListComponent,
+  ApplicationStateSelectorComponent,
+  DebounceFilterComponent,
+  RefreshButtonComponent,
+} from '@perun-web-apps/perun/components';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import {
@@ -31,6 +43,9 @@ import {
   getExportDataForColumn,
   getSortDataColumnQuery,
 } from '@perun-web-apps/perun/utils';
+import { DateRangeComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface AppAction {
   approve: boolean;
@@ -49,6 +64,22 @@ interface AppActionTooltip {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    DebounceFilterComponent,
+    RefreshButtonComponent,
+    TranslateModule,
+    MatTooltip,
+    ApplicationStateSelectorComponent,
+    DateRangeComponent,
+    LoadingTableComponent,
+    ApplicationsListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-application-actions',
   templateUrl: './application-actions.component.html',
   styleUrls: ['./application-actions.component.scss'],

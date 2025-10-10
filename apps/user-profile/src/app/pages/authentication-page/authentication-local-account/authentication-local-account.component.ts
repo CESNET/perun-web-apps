@@ -1,3 +1,7 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { Observable } from 'rxjs';
@@ -9,6 +13,8 @@ import { Router } from '@angular/router';
 import { AppType } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [CommonModule, MatButtonModule, CustomTranslatePipe, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-authentication-local-account',
   templateUrl: './authentication-local-account.component.html',
   styleUrls: ['./authentication-local-account.component.scss'],

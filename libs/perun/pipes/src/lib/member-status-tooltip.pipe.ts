@@ -4,6 +4,7 @@ import { isMemberIndirectString, parseMemberStatus } from '@perun-web-apps/perun
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
+  standalone: true,
   name: 'memberStatusTooltip',
 })
 export class MemberStatusTooltipPipe implements PipeTransform {
@@ -41,13 +42,13 @@ export class MemberStatusTooltipPipe implements PipeTransform {
     const indirect = isMemberIndirectString(member);
     if (membersGroup) {
       res = `${res}
-      ${this.translate.instant('MEMBERS_LIST.STATUS_TOOLTIP_MEMBERS_GROUP') as string}`;
+      ${this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.STATUS_TOOLTIP_MEMBERS_GROUP') as string}`;
     } else if (indirect === 'INDIRECT' && showGroupStatuses) {
       res = `${res}
-      ${this.translate.instant('MEMBERS_LIST.STATUS_TOOLTIP_GROUP_INDIRECT') as string}`;
+      ${this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.STATUS_TOOLTIP_GROUP_INDIRECT') as string}`;
     } else if (!showGroupStatuses && indirect === 'UNALTERABLE') {
       res = `${res}
-      ${this.translate.instant('MEMBERS_LIST.STATUS_TOOLTIP_INDIRECT') as string}`;
+      ${this.translate.instant('SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.STATUS_TOOLTIP_INDIRECT') as string}`;
     }
     return res;
   }

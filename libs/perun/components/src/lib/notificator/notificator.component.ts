@@ -1,10 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input } from '@angular/core';
 import { NotificationData } from '@perun-web-apps/perun/models';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { flyInOut } from '@perun-web-apps/perun/animations';
 import { NotificationStorageService } from '@perun-web-apps/perun/services';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
+  imports: [CommonModule, NotificationComponent],
+  standalone: true,
   selector: 'perun-web-apps-notificator',
   templateUrl: './notificator.component.html',
   styleUrls: ['./notificator.component.scss'],

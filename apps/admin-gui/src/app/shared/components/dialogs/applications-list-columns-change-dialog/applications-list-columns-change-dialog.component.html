@@ -13,17 +13,17 @@
           [mainTextFunction]="columnTranslation">
         </perun-web-apps-string-search-select>
 
-        <button *ngIf="!this.templateAttribute" (click)="default()" mat-stroked-button>
-          {{'DIALOGS.APPLICATIONS_LIST_COLUMNS_CHANGE.SET_TO_DEFAULT' | translate}}
-        </button>
+        @if (!this.templateAttribute) {
+          <button (click)="default()" mat-stroked-button>
+            {{'DIALOGS.APPLICATIONS_LIST_COLUMNS_CHANGE.SET_TO_DEFAULT' | translate}}
+          </button>
+        }
 
-        <button
-          [matMenuTriggerFor]="menu"
-          *ngIf="this.templateAttribute"
-          class="dropdown-toggle ml-auto"
-          mat-stroked-button>
-          {{'DIALOGS.APPLICATIONS_LIST_COLUMNS_CHANGE.SET_TO' | translate}}
-        </button>
+        @if (this.templateAttribute) {
+          <button [matMenuTriggerFor]="menu" class="dropdown-toggle ml-auto" mat-stroked-button>
+            {{'DIALOGS.APPLICATIONS_LIST_COLUMNS_CHANGE.SET_TO' | translate}}
+          </button>
+        }
         <mat-menu #menu="matMenu">
           <button (click)="default()" mat-menu-item>
             {{'DIALOGS.APPLICATIONS_LIST_COLUMNS_CHANGE.DEFAULT' | translate}}

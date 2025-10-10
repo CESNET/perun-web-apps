@@ -1,3 +1,11 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatRipple } from '@angular/material/core';
+import { MatListModule, MatListItem } from '@angular/material/list';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { EntityStorageService, StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
@@ -5,11 +13,24 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSshDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RemoveStringValueDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ShowSshDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    CdkCopyToClipboard,
+    CustomTranslatePipe,
+    MatListModule,
+    MatListItem,
+    MatRipple,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-settings-ssh-keys',
   templateUrl: './settings-ssh-keys.component.html',
   styleUrls: ['./settings-ssh-keys.component.scss'],
@@ -54,7 +75,7 @@ export class SettingsSSHKeysComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (window.location.pathname.startsWith('/myProfile')) {
+    if (window.location.pathname.startsWith('/service-identities')) {
       this.userId = this.entityStorageService.getEntity().id;
     } else {
       this.userId = this.store.getPerunPrincipal().userId;

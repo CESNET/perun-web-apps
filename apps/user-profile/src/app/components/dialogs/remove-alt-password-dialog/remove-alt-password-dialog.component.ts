@@ -1,7 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface RemoveAltPasswordDialogData {
   userId: number;
@@ -10,6 +16,17 @@ export interface RemoveAltPasswordDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    CustomTranslatePipe,
+    LoadingDialogComponent,
+    MatTableModule,
+    TranslateModule,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-remove-alt-password-dialog',
   templateUrl: './remove-alt-password-dialog.component.html',
   styleUrls: ['./remove-alt-password-dialog.component.scss'],

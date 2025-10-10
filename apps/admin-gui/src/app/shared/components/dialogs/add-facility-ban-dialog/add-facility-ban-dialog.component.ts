@@ -1,3 +1,5 @@
+import { AddBanDialogComponent } from '../add-ban-dialog/add-ban-dialog.component';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -22,9 +24,24 @@ import {
   getDefaultDialogConfig,
 } from '@perun-web-apps/perun/utils';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
-import { userTableColumn } from '@perun-web-apps/perun/components';
+import {
+  userTableColumn,
+  DebounceFilterComponent,
+  UsersListComponent,
+} from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
 @Component({
+  imports: [
+    CommonModule,
+    DebounceFilterComponent,
+    AddBanDialogComponent,
+    UsersListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+  ],
+  standalone: true,
   selector: 'app-add-facility-ban-dialog',
   templateUrl: './add-facility-ban-dialog.component.html',
   styleUrls: ['./add-facility-ban-dialog.component.scss'],

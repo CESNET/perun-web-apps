@@ -1,18 +1,24 @@
 <div class="{{theme}}">
   <h1 mat-dialog-title>{{title | translate}}</h1>
-  <div *ngIf="!loading" mat-dialog-content>
-    <i [innerHTML]="info | translate"></i>
-  </div>
-  <div *ngIf="!loading" matDialogActions>
-    <button (click)="onCancel()" class="me-2" mat-stroked-button>
-      {{'DIALOGS.CANCEL_CONFIG.CANCEL' | translate}}
-    </button>
-    <button (click)="onDelete()" class="ms-auto me-2" color="warn" mat-flat-button>
-      <mat-icon iconPositionEnd> warning </mat-icon>
-      {{'DIALOGS.CANCEL_CONFIG.DELETE' | translate}}
-    </button>
-    <button (click)="onKeep()" *ngIf="!lastStep" color="accent" mat-flat-button>
-      {{'DIALOGS.CANCEL_CONFIG.KEEP' | translate}}
-    </button>
-  </div>
+  @if (!loading) {
+    <div mat-dialog-content>
+      <i [innerHTML]="info | translate"></i>
+    </div>
+  }
+  @if (!loading) {
+    <div matDialogActions>
+      <button (click)="onCancel()" class="me-2" mat-stroked-button>
+        {{'DIALOGS.CANCEL_CONFIG.CANCEL' | translate}}
+      </button>
+      <button (click)="onDelete()" class="ms-auto me-2" color="warn" mat-flat-button>
+        <mat-icon iconPositionEnd> warning </mat-icon>
+        {{'DIALOGS.CANCEL_CONFIG.DELETE' | translate}}
+      </button>
+      @if (!lastStep) {
+        <button (click)="onKeep()" color="accent" mat-flat-button>
+          {{'DIALOGS.CANCEL_CONFIG.KEEP' | translate}}
+        </button>
+      }
+    </div>
+  }
 </div>

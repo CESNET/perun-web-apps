@@ -1,3 +1,8 @@
+import {
+  ApplicationActionsComponent,
+  AppAction,
+} from '../../../../shared/components/application-actions/application-actions.component';
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import {
   Attribute,
@@ -15,14 +20,12 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ApplicationsListColumnsChangeDialogComponent } from '../../../../shared/components/dialogs/applications-list-columns-change-dialog/applications-list-columns-change-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import {
-  AppAction,
-  ApplicationActionsComponent,
-} from '../../../../shared/components/application-actions/application-actions.component';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
+  imports: [CommonModule, ApplicationActionsComponent],
+  standalone: true,
   selector: 'app-group-applications',
   templateUrl: './group-applications.component.html',
   styleUrls: ['./group-applications.component.scss'],

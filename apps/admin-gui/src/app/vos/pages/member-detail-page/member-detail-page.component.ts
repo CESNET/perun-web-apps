@@ -1,8 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
+import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SideMenuItemService } from '../../../shared/side-menu/side-menu-item.service';
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { fadeIn } from '@perun-web-apps/perun/animations';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import {
@@ -14,6 +21,18 @@ import {
 import { EntityPathParam } from '@perun-web-apps/perun/models';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    PerunSharedComponentsModule,
+    AnimatedRouterOutletComponent,
+    RouterModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltip,
+  ],
+  standalone: true,
   selector: 'app-member-detail-page',
   templateUrl: './member-detail-page.component.html',
   styleUrls: ['./member-detail-page.component.scss'],

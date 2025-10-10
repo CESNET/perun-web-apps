@@ -15,28 +15,28 @@
       matSortActive="id"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef mat-header-cell class="align-checkbox">
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(row) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.name}"
-            [checked]="selection.isSelected(row)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef mat-header-cell class="align-checkbox">
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(row) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.name}"
+              [checked]="selection.isSelected(row)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'SHARED_LIB.PERUN.COMPONENTS.OWNERS_LIST.ID' | translate}}
@@ -73,9 +73,13 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && !owners.length" alert_type="warn">
-  {{'SHARED_LIB.PERUN.COMPONENTS.OWNERS_LIST.NO_OWNERS' | translate}}
-</perun-web-apps-alert>
-<perun-web-apps-alert *ngIf="!dataSource.filteredData.length && owners.length" alert_type="warn">
-  {{'SHARED_LIB.PERUN.COMPONENTS.OWNERS_LIST.NO_FILTER_OWNERS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && !owners.length) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.PERUN.COMPONENTS.OWNERS_LIST.NO_OWNERS' | translate}}
+  </perun-web-apps-alert>
+}
+@if (!dataSource.filteredData.length && owners.length) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.PERUN.COMPONENTS.OWNERS_LIST.NO_FILTER_OWNERS' | translate}}
+  </perun-web-apps-alert>
+}

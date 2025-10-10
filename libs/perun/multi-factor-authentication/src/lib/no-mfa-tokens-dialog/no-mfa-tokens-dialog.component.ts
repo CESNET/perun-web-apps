@@ -1,11 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 export interface NoMfaTokensData {
   tokensUrl: string;
 }
 
 @Component({
+  imports: [CommonModule, MatButtonModule, MatDialogModule, UiAlertsModule, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-no-mfa-tokens-dialog',
   templateUrl: './no-mfa-tokens-dialog.component.html',
   styleUrls: ['./no-mfa-tokens-dialog.component.scss'],

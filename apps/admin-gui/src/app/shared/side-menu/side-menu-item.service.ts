@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SideMenuLink, SideMenuItem } from './side-menu.component';
+import { SideMenuItem, SideMenuLink } from './side-menu.component';
 import {
   ApiRequestConfigurationService,
   GuiAuthResolver,
@@ -84,71 +84,15 @@ export class SideMenuItemService {
 
   getUserItem(): SideMenuItem {
     return {
-      baseLink: ['/myProfile'],
       label: 'MAIN_MENU.MY_PROFILE',
       colorClass: 'base-item-color-activated',
       icon: 'perun-user',
       baseColorClass: 'base-item-color',
-      baseColorClassRegex: '^/myProfile/*',
-      activatedClass: 'dark-item-activated',
+      baseColorClassRegex: 'IMPOSSIBLE REGEX',
       linksClass: 'dark-item-links',
       backgroundColorCss: this.theme.sidemenu_bg_color,
       textColorCss: this.theme.sidemenu_text_color,
-      links: [
-        {
-          label: 'MENU_ITEMS.USER.OVERVIEW',
-          url: [`/myProfile`],
-          activatedRegex: `^/myProfile$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.ORGANIZATIONS',
-          url: [`/myProfile/organizations`],
-          activatedRegex: `^/myProfile/organizations$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.GROUPS',
-          url: [`/myProfile/groups`],
-          activatedRegex: `^/myProfile/groups$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.ATTRIBUTES',
-          url: [`/myProfile/attributes`],
-          activatedRegex: `^/myProfile/attributes$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.ROLES',
-          url: [`/myProfile/roles`],
-          activatedRegex: `/myProfile/roles`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.SERVICE_IDENTITIES',
-          url: [`/myProfile/service-identities`],
-          activatedRegex: `^/myProfile/service-identities`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.BANS',
-          url: [`/myProfile/bans`],
-          activatedRegex: `^/myProfile/bans`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.SETTINGS',
-          url: [`/myProfile/settings`],
-          activatedRegex: `^/myProfile/settings$`, // this route is never activated (expandable submenu)
-          children: [
-            {
-              label: 'MENU_ITEMS.USER.PASSWORD_RESET',
-              url: [`/myProfile/settings/passwordReset`],
-              activatedRegex: `^/myProfile/settings/passwordReset`,
-            },
-            {
-              label: 'MENU_ITEMS.USER.GUI_CONFIG',
-              url: ['/myProfile/settings/guiConfig'],
-              activatedRegex: '/myProfile/settings/guiConfig',
-            },
-          ],
-          showChildren: `settings`,
-        },
-      ],
+      links: [],
     };
   }
 
@@ -214,6 +158,49 @@ export class SideMenuItemService {
           label: 'MENU_ITEMS.ADMIN.TASKS',
           url: ['/admin/tasks'],
           activatedRegex: '^/admin/tasks',
+        },
+      ],
+    };
+  }
+
+  getServiceIdentitiesItem(): SideMenuItem {
+    return {
+      baseLink: ['/service-identities'],
+      label: 'MAIN_MENU.SERVICE_IDENTITIES',
+      colorClass: 'base-item-color-activated',
+      icon: 'perun-service-identity',
+      baseColorClass: 'base-item-color',
+      baseColorClassRegex: '^/service-identities/*',
+      activatedClass: 'dark-item-activated',
+      linksClass: 'dark-item-links',
+      backgroundColorCss: this.theme.sidemenu_bg_color,
+      textColorCss: this.theme.sidemenu_text_color,
+      links: [],
+    };
+  }
+
+  getSettingsItem(): SideMenuItem {
+    return {
+      baseLink: ['/settings'],
+      label: 'MAIN_MENU.SETTINGS',
+      colorClass: 'base-item-color-activated',
+      icon: 'perun-settings2',
+      baseColorClass: 'base-item-color',
+      baseColorClassRegex: '^/settings/*',
+      activatedClass: 'dark-item-activated',
+      linksClass: 'dark-item-links',
+      backgroundColorCss: this.theme.sidemenu_bg_color,
+      textColorCss: this.theme.sidemenu_text_color,
+      links: [
+        {
+          label: 'MENU_ITEMS.SETTINGS.OVERVIEW',
+          url: ['/settings'],
+          activatedRegex: '^/settings$',
+        },
+        {
+          label: 'MENU_ITEMS.SETTINGS.GUI_CONFIG',
+          url: ['/settings/gui_config'],
+          activatedRegex: '/settings/gui_config',
         },
       ],
     };
@@ -313,74 +300,49 @@ export class SideMenuItemService {
   parseServiceIdentity(user: User): SideMenuItem {
     return {
       label: parseFullName(user),
-      baseLink: [`/myProfile/service-identities/${user.id}`],
+      baseLink: [`/service-identities/${user.id}`],
       backgroundColorCss: this.theme.sidemenu_user_bg_color,
       textColorCss: this.theme.sidemenu_user_text_color,
       links: [
         {
           label: 'MENU_ITEMS.USER.OVERVIEW',
-          url: [`/myProfile/service-identities/${user.id}`],
-          activatedRegex: '/myProfile/service-identities/\\d+$',
-        },
-        {
-          label: 'MENU_ITEMS.USER.ORGANIZATIONS',
-          url: [`/myProfile/service-identities/${user.id}/organizations`],
-          activatedRegex: `^/myProfile/service-identities/\\d+/organizations$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.GROUPS',
-          url: [`/myProfile/service-identities/${user.id}/groups`],
-          activatedRegex: `^/myProfile/service-identities/\\d+/groups$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.ATTRIBUTES',
-          url: [`/myProfile/service-identities/${user.id}/attributes`],
-          activatedRegex: `^/myProfile/service-identities/\\d+/attributes$`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.ROLES',
-          url: [`/myProfile/service-identities/${user.id}/roles`],
-          activatedRegex: `/myProfile/service-identities/\\d+/roles`,
-        },
-        {
-          label: 'MENU_ITEMS.USER.BANS',
-          url: [`/myProfile/service-identities/${user.id}/bans`],
-          activatedRegex: `^/myProfile/service-identities/\\d+/bans`,
+          url: [`/service-identities/${user.id}`],
+          activatedRegex: '/service-identities/\\d+$',
         },
         {
           label: 'MENU_ITEMS.USER.ASSOCIATED_USERS',
-          url: [`/myProfile/service-identities/${user.id}/associated-users`],
-          activatedRegex: '/myProfile/service-identities/\\d+/associated-users',
+          url: [`/service-identities/${user.id}/associated-users`],
+          activatedRegex: '/service-identities/\\d+/associated-users',
         },
         {
           label: 'MENU_ITEMS.USER.MAILING_LISTS',
-          url: [`/myProfile/service-identities/${user.id}/mailing-lists`],
-          activatedRegex: '/myProfile/service-identities/\\d+/mailing-lists',
+          url: [`/service-identities/${user.id}/mailing-lists`],
+          activatedRegex: '/service-identities/\\d+/mailing-lists',
         },
         {
           label: 'MENU_ITEMS.USER.DATA_QUOTAS',
-          url: [`/myProfile/service-identities/${user.id}/data-quotas`],
-          activatedRegex: '/myProfile/service-identities/\\d+/data-quotas',
+          url: [`/service-identities/${user.id}/data-quotas`],
+          activatedRegex: '/service-identities/\\d+/data-quotas',
         },
         {
           label: 'MENU_ITEMS.USER.AUTHENTICATION',
-          url: [`/myProfile/service-identities/${user.id}/authentication`],
-          activatedRegex: '/myProfile/service-identities/\\d+/authentication$',
+          url: [`/service-identities/${user.id}/authentication`],
+          activatedRegex: '/service-identities/\\d+/authentication$',
           children: [
             {
               label: 'MENU_ITEMS.USER.LOGINS',
-              url: [`/myProfile/service-identities/${user.id}/authentication/logins`],
-              activatedRegex: `/myProfile/service-identities/\\d+/authentication/logins`,
+              url: [`/service-identities/${user.id}/authentication/logins`],
+              activatedRegex: `/service-identities/\\d+/authentication/logins`,
             },
             {
               label: 'MENU_ITEMS.USER.CERTIFICATES',
-              url: [`/myProfile/service-identities/${user.id}/authentication/certificates`],
-              activatedRegex: `/myProfile/service-identities/\\d+/authentication/certificates`,
+              url: [`/service-identities/${user.id}/authentication/certificates`],
+              activatedRegex: `/service-identities/\\d+/authentication/certificates`,
             },
             {
               label: 'MENU_ITEMS.USER.SSH_KEYS',
-              url: [`/myProfile/service-identities/${user.id}/authentication/ssh-keys`],
-              activatedRegex: `/myProfile/service-identities/\\d+/authentication/ssh-keys`,
+              url: [`/service-identities/${user.id}/authentication/ssh-keys`],
+              activatedRegex: `/service-identities/\\d+/authentication/ssh-keys`,
             },
           ],
           showChildren: 'authentication',

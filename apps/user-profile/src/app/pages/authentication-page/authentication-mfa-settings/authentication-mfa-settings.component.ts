@@ -1,3 +1,10 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 /* eslint-disable
    @typescript-eslint/no-explicit-any,
    @typescript-eslint/explicit-module-boundary-types,
@@ -6,12 +13,27 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MfaApiService, StoreService } from '@perun-web-apps/perun/services';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MfaSettings } from '@perun-web-apps/perun/models';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { CategoryLabelPipe } from '../../../pipes/category-label.pipe';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    CustomTranslatePipe,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    CategoryLabelPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-authentication-mfa-settings',
   templateUrl: './authentication-mfa-settings.component.html',
   styleUrls: ['./authentication-mfa-settings.component.scss'],

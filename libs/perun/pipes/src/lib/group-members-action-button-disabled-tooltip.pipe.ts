@@ -4,6 +4,7 @@ import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps
 import { Urns } from '@perun-web-apps/perun/urns';
 
 @Pipe({
+  standalone: true,
   name: 'groupMembersActionButtonDisabledTooltip',
 })
 export class GroupMembersActionButtonDisabledTooltipPipe implements PipeTransform {

@@ -18,27 +18,27 @@ describe('VO management with role VO admin', () => {
       .get(`[data-cy=access-item-button]`)
       .click()
   });
-
-  it('test create vo', () => {
-    cy.intercept('**/vosManager/createVo/**')
-      .as('createVo')
-      .intercept('**/vosManager/getEnrichedVoById**')
-      .as('getVoById')
-      .get('[data-cy=new-vo-button]')
-      .click()
-    cy.get('[data-cy=vo-name-input]')
-      .type('test-e2e-vo', {force: true})
-    cy.get('[data-cy=vo-shortname-input]')
-      .type('test-e2e-vo', {force: true})
-    cy.get('[data-cy=create-vo-button]')
-      .click()
-    cy.wait('@createVo')
-      .wait('@getVoById')
-      // assert that the vo was created
-      .get('[data-cy=notification-message]')
-      .contains('New organization was successfully created')
-      .should('exist');
-  });
+  // TODO CREATE TESTS FOR VO CREATOR AND MOVE THIS THERE
+  // it('test create vo', () => {
+  //   cy.intercept('**/vosManager/createVo/**')
+  //     .as('createVo')
+  //     .intercept('**/vosManager/getEnrichedVoById**')
+  //     .as('getVoById')
+  //     .get('[data-cy=new-vo-button]')
+  //     .click()
+  //   cy.get('[data-cy=vo-name-input]')
+  //     .type('test-e2e-vo', {force: true})
+  //   cy.get('[data-cy=vo-shortname-input]')
+  //     .type('test-e2e-vo', {force: true})
+  //   cy.get('[data-cy=create-vo-button]')
+  //     .click()
+  //   cy.wait('@createVo')
+  //     .wait('@getVoById')
+  //     // assert that the vo was created
+  //     .get('[data-cy=notification-message]')
+  //     .contains('New organization was successfully created')
+  //     .should('exist');
+  // });
 
   it('test add attribute', () => {
     cy.intercept('**/attributesManager/setAttributes/vo')

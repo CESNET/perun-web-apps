@@ -1,3 +1,8 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import {
   Application,
@@ -6,8 +11,8 @@ import {
   Member,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Router, RouterModule } from '@angular/router';
 import {
   downloadData,
   getDataForExport,
@@ -16,6 +21,7 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
+import { SelectApplicationLinkPipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 
 interface ApplicationData extends Application {
   formItem?: ApplicationFormItem;
@@ -29,6 +35,19 @@ interface ApplicationData extends Application {
  * @deprecated it seems that this component is no longer used anywhere
  */
 @Component({
+  imports: [
+    CommonModule,
+    UiAlertsModule,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RouterModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    UserFullNamePipe,
+    SelectApplicationLinkPipe,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-application-list-details',
   templateUrl: './application-list-details.component.html',
   styleUrls: ['./application-list-details.component.scss'],

@@ -14,55 +14,60 @@
       [filtersCount]="filtersCount">
     </perun-web-apps-advanced-filter>
   </div>
-  <div *ngIf="advancedFilter" class="advanced-filter">
-    <div class="toggle filters">
-      <mat-slide-toggle
-        [(ngModel)]="showAllowed"
-        (change)="changeFilter()"
-        class="me-2"
-        labelPosition="before">
-        {{'FACILITY_DETAIL.ALLOWED_USERS.FILTER_ALLOWED' | translate}}
-      </mat-slide-toggle>
-      <span class="text-muted">{{toggle_messages[showAllowed ? 1 : 0] | translate}}</span>
+  @if (advancedFilter) {
+    <div class="advanced-filter">
+      <div class="toggle filters">
+        <mat-slide-toggle
+          [(ngModel)]="showAllowed"
+          (change)="changeFilter()"
+          class="me-2"
+          labelPosition="before">
+          {{'FACILITY_DETAIL.ALLOWED_USERS.FILTER_ALLOWED' | translate}}
+        </mat-slide-toggle>
+        <span class="text-muted">{{toggle_messages[showAllowed ? 1 : 0] | translate}}</span>
+      </div>
+      <div class="filters">
+        <perun-web-apps-vo-search-select
+          [vos]="vos"
+          (voSelected)="voSelected($event)"
+          [vo]="selectedVo"
+          [disableAutoSelect]="true"
+          class="search-select">
+        </perun-web-apps-vo-search-select>
+        <perun-web-apps-resource-search-select
+          [resources]="filteredResources"
+          (resourceSelected)="resourceSelected($event)"
+          [displayStatus]="false"
+          [resource]="selectedResource"
+          [disableAutoSelect]="true"
+          class="search-select">
+        </perun-web-apps-resource-search-select>
+        <perun-web-apps-service-search-select
+          [services]="filteredServices"
+          (serviceSelected)="serviceSelected($event)"
+          [service]="selectedService"
+          [disableAutoSelect]="true"
+          class="search-select">
+        </perun-web-apps-service-search-select>
+        @if (globalForceConsents && facilityForceConsents) {
+          <mat-form-field class="search-select">
+            <mat-label>{{'CONSENTS.STATUS' | translate}}</mat-label>
+            <mat-select (closed)="consentStatusSelected()" [formControl]="consentStatuses" multiple>
+              <mat-select-trigger>
+                {{displaySelectedStatuses()}}
+              </mat-select-trigger>
+              @for (status of consentStatusesList; track status) {
+                <mat-option
+                  [value]="status"
+                  >{{"CONSENTS.STATUS_" + status | translate}}</mat-option
+                >
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      </div>
     </div>
-    <div class="filters">
-      <perun-web-apps-vo-search-select
-        [vos]="vos"
-        (voSelected)="voSelected($event)"
-        [vo]="selectedVo"
-        [disableAutoSelect]="true"
-        class="search-select">
-      </perun-web-apps-vo-search-select>
-      <perun-web-apps-resource-search-select
-        [resources]="filteredResources"
-        (resourceSelected)="resourceSelected($event)"
-        [displayStatus]="false"
-        [resource]="selectedResource"
-        [disableAutoSelect]="true"
-        class="search-select">
-      </perun-web-apps-resource-search-select>
-      <perun-web-apps-service-search-select
-        [services]="filteredServices"
-        (serviceSelected)="serviceSelected($event)"
-        [service]="selectedService"
-        [disableAutoSelect]="true"
-        class="search-select">
-      </perun-web-apps-service-search-select>
-      <mat-form-field class="search-select" *ngIf="globalForceConsents && facilityForceConsents">
-        <mat-label>{{'CONSENTS.STATUS' | translate}}</mat-label>
-        <mat-select (closed)="consentStatusSelected()" [formControl]="consentStatuses" multiple>
-          <mat-select-trigger>
-            {{displaySelectedStatuses()}}
-          </mat-select-trigger>
-          <mat-option
-            *ngFor="let status of consentStatusesList"
-            [value]="status"
-            >{{"CONSENTS.STATUS_" + status | translate}}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
+  }
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>

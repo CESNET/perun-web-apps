@@ -12,32 +12,35 @@
       <div class="text-muted">{{currentStatusDescription}}</div>
       <mat-form-field class="w-100 mt-2">
         <mat-label>{{'DIALOGS.CHANGE_STATUS.NEW_STATUS' | translate}}</mat-label>
-        <mat-select *ngIf="statuses.length > 1" (selectionChange)="changeStatus($event)">
-          <mat-option *ngFor="let status of statuses" [value]="status">
-            {{status | memberStatus}}
-          </mat-option>
-        </mat-select>
-        <input
-          *ngIf="statuses.length === 1"
-          [readonly]="true"
-          [value]="statuses[0] | memberStatus"
-          matInput />
+        @if (statuses.length > 1) {
+          <mat-select (selectionChange)="changeStatus($event)">
+            @for (status of statuses; track status) {
+              <mat-option [value]="status">
+                {{status | memberStatus}}
+              </mat-option>
+            }
+          </mat-select>
+        }
+        @if (statuses.length === 1) {
+          <input [readonly]="true" [value]="statuses[0] | memberStatus" matInput />
+        }
       </mat-form-field>
       <div class="text-muted new-line mb-3">
         <i [innerHTML]="changeDescription"></i>
       </div>
-      <perun-web-apps-expiration-select
-        *ngIf="!loading && expirationRequired"
-        [allowNever]="newStatus === 'VALID'"
-        [canExtendInGroup]="canExtendMembershipGroup"
-        [canExtendInVo]="canExtendMembershipVo"
-        [theme]="theme"
-        [expiration]="expiration"
-        [maxDate]="maxDate"
-        [minDate]="minDate"
-        [newStatus]="newStatus"
-        (expirationSelected)="setExpiration($event)">
-      </perun-web-apps-expiration-select>
+      @if (!loading && expirationRequired) {
+        <perun-web-apps-expiration-select
+          [allowNever]="newStatus === 'VALID'"
+          [canExtendInGroup]="canExtendMembershipGroup"
+          [canExtendInVo]="canExtendMembershipVo"
+          [theme]="theme"
+          [expiration]="expiration"
+          [maxDate]="maxDate"
+          [minDate]="minDate"
+          [newStatus]="newStatus"
+          (expirationSelected)="setExpiration($event)">
+        </perun-web-apps-expiration-select>
+      }
     </div>
     <div mat-dialog-actions>
       <button (click)="cancel()" class="ms-auto me-2" mat-stroked-button>

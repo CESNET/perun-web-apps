@@ -1,87 +1,94 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 service-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="ms-auto me-auto"></mat-spinner>
-  <div *ngIf="!loading" class="page-title-headtitle detail-layout">
-    <mat-icon
-      matTooltip="{{'SERVICE_DETAIL.ENTITY' | translate}}"
-      [ngStyle]="{'color':'black'}"
-      class="perun-icon perun-icon-detail"
-      svgIcon="perun-service">
-    </mat-icon>
-    <div class="wrap-container">
-      <div class="detail-info">
-        <div class="flex-column">
-          <div class="page-title-headline d-flex align-items-center">
-            <a
-              data-cy="service-name-link"
-              [perunWebAppsMiddleClickRouterLink]="['/admin/services', service.id.toString()]"
-              (auxclick)="$event.preventDefault()"
-              [routerLink]="['/admin/services', service.id]"
-              class="service-link">
-              {{service.name}}
-            </a>
-            <span class="text-muted"> &nbsp; #{{service.id}} </span>
-            <button
-              *ngIf="authResolver.isPerunAdmin()"
-              (click)="editService()"
-              aria-label="Edit service"
-              data-cy="service-edit-button"
-              matTooltip="{{'SERVICE_DETAIL.EDIT' | translate}}"
-              mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              *ngIf="authResolver.isPerunAdmin()"
-              (click)="removeService()"
-              aria-label="Remove service"
-              matTooltip="{{'SERVICE_DETAIL.DELETE' | translate}}"
-              mat-icon-button>
-              <mat-icon>delete_forever</mat-icon>
-            </button>
+  @if (loading) {
+    <mat-spinner class="ms-auto me-auto"></mat-spinner>
+  }
+  @if (!loading) {
+    <div class="page-title-headtitle detail-layout">
+      <mat-icon
+        matTooltip="{{'SERVICE_DETAIL.ENTITY' | translate}}"
+        [ngStyle]="{'color':'black'}"
+        class="perun-icon perun-icon-detail"
+        svgIcon="perun-service">
+      </mat-icon>
+      <div class="wrap-container">
+        <div class="detail-info">
+          <div class="flex-column">
+            <div class="page-title-headline d-flex align-items-center">
+              <a
+                data-cy="service-name-link"
+                [perunWebAppsMiddleClickRouterLink]="['/admin/services', service.id.toString()]"
+                (auxclick)="$event.preventDefault()"
+                [routerLink]="['/admin/services', service.id]"
+                class="service-link">
+                {{service.name}}
+              </a>
+              <span class="text-muted"> &nbsp; #{{service.id}} </span>
+              @if (authResolver.isPerunAdmin()) {
+                <button
+                  (click)="editService()"
+                  aria-label="Edit service"
+                  data-cy="service-edit-button"
+                  matTooltip="{{'SERVICE_DETAIL.EDIT' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              @if (authResolver.isPerunAdmin()) {
+                <button
+                  (click)="removeService()"
+                  aria-label="Remove service"
+                  matTooltip="{{'SERVICE_DETAIL.DELETE' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              }
+            </div>
+            <span class="mt-1 entity-info">
+              {{'SERVICE_DETAIL.DESCRIPTION' | translate}}: {{service.description}}
+            </span>
           </div>
-          <span class="mt-1 entity-info">
-            {{'SERVICE_DETAIL.DESCRIPTION' | translate}}: {{service.description}}
-          </span>
+        </div>
+        <div class="detail-actions">
+          <mat-slide-toggle
+            [checked]="service.enabled"
+            (toggleChange)="changeServiceStatus()"
+            labelPosition="before"
+            class="mb-25">
+            {{'SERVICE_DETAIL.ENABLE' | translate}}
+          </mat-slide-toggle>
+          <mat-slide-toggle
+            [checked]="service.useExpiredMembers"
+            (toggleChange)="groupPropagationChange()"
+            labelPosition="before"
+            class="mb-25">
+            {{'SERVICE_DETAIL.PROPAGATE_GROUP' | translate}}
+          </mat-slide-toggle>
+          <mat-slide-toggle
+            [checked]="service.useExpiredVoMembers"
+            (toggleChange)="voPropagationChange()"
+            labelPosition="before"
+            class="mb-25">
+            {{'SERVICE_DETAIL.PROPAGATE_VO' | translate}}
+          </mat-slide-toggle>
+          <mat-slide-toggle
+            [checked]="service.useBannedMembers"
+            (toggleChange)="bannedPropagationChange()"
+            labelPosition="before"
+            class="mb-25">
+            {{'SERVICE_DETAIL.PROPAGATE_BANNED' | translate}}
+          </mat-slide-toggle>
+          @if (authResolver.isPerunAdmin()) {
+            <button
+              (click)="evaluateConsents()"
+              class="action-button evaluate-button"
+              mat-stroked-button>
+              {{'SERVICE_DETAIL.EVALUATE_CONSENTS' | translate}}
+            </button>
+          }
         </div>
       </div>
-      <div class="detail-actions">
-        <mat-slide-toggle
-          [checked]="service.enabled"
-          (toggleChange)="changeServiceStatus()"
-          labelPosition="before"
-          class="mb-25">
-          {{'SERVICE_DETAIL.ENABLE' | translate}}
-        </mat-slide-toggle>
-        <mat-slide-toggle
-          [checked]="service.useExpiredMembers"
-          (toggleChange)="groupPropagationChange()"
-          labelPosition="before"
-          class="mb-25">
-          {{'SERVICE_DETAIL.PROPAGATE_GROUP' | translate}}
-        </mat-slide-toggle>
-        <mat-slide-toggle
-          [checked]="service.useExpiredVoMembers"
-          (toggleChange)="voPropagationChange()"
-          labelPosition="before"
-          class="mb-25">
-          {{'SERVICE_DETAIL.PROPAGATE_VO' | translate}}
-        </mat-slide-toggle>
-        <mat-slide-toggle
-          [checked]="service.useBannedMembers"
-          (toggleChange)="bannedPropagationChange()"
-          labelPosition="before"
-          class="mb-25">
-          {{'SERVICE_DETAIL.PROPAGATE_BANNED' | translate}}
-        </mat-slide-toggle>
-        <button
-          *ngIf="authResolver.isPerunAdmin()"
-          (click)="evaluateConsents()"
-          class="action-button evaluate-button"
-          mat-stroked-button>
-          {{'SERVICE_DETAIL.EVALUATE_CONSENTS' | translate}}
-        </button>
-      </div>
     </div>
-  </div>
+  }
   <app-animated-router-outlet></app-animated-router-outlet>
 </div>

@@ -9,7 +9,9 @@
     "SERVICES": "Služby",
     "GROUPS": "Skupiny",
     "VOS": "Organizace",
+    "BANS": "Bany",
     "PRIVACY": "Soukromí",
+    "ROLES": "Role",
     "CONSENTS": "Souhlasy",
     "CONSENT_REQUEST": "Žádost o souhlas",
     "AUTHENTICATION": "Autentizace",
@@ -54,6 +56,7 @@
     "IDP": "Vaše spojené účty",
     "CERT": "Vaše certifikáty",
     "OTHER": "Ostatní",
+    "SERVICE": "Vaše servisní účty",
     "ADD": "Přidat",
     "REMOVE": "Odstranit",
     "EXT_SOURCE_NAME_CERT": "Poskytovatel certifikátu",
@@ -62,13 +65,15 @@
     "LOGIN_IDP": "Připojený účet",
     "OTHER_TOOLTIP": "Účty, které nebyly získány přes Spojování účtů",
     "SUCCESSFULLY_ADDED": "Účet byl úspěšně přidán",
-    "MESSAGE_SENT_TO_SUPPORT": "Email byl odeslán support týmu"
+    "MESSAGE_SENT_TO_SUPPORT": "Email byl odeslán support týmu",
+    "NO_SERVICE_ACCOUNTS": "Nemáte žádne servisní účty"
   },
   "PRIVACY": {
     "TITLE": "Soukromí",
-    "FILTER": "Filtrovat osobní data dle jména organizace",
+    "FILTER": "Filtrovat osobní data dle jména organizace/facility",
     "USER_INFO": "Informace o Vás",
-    "DATA": "Informace využívané organizací "
+    "DATA": "Informace využívané organizací ",
+    "FILTER_EMPTY": "Filtrovat prázdné atributy"
   },
   "CONSENTS": {
     "TITLE": "Souhlasy",
@@ -90,6 +95,87 @@
       "GRANT_CONSENT_BUTTON": "Udělit souhlas",
       "REJECT_CONSENT_BUTTON": "Odmítnout souhlas"
     }
+  },
+  "BANS": {
+    "TITLE": "Bany",
+    "ORGANIZATIONS": "Organizace, kde máte ban",
+    "RESOURCES": "Zdroje, kde máte ban",
+    "FACILITIES": "Facility, kde máte ban",
+    "FILTER": "Filtrovat podle názvu nebo popisu"
+  },
+  "ROLES": {
+    "TITLE": "Role",
+    "USER": "Uživatelské role",
+    "GROUP": "Role ze skupin",
+    "NO_ROLES": "Nebyly nalezeny žádné role",
+    "VOADMIN": "VOADMIN",
+    "VOADMIN_VOS_SELF": "Organizace, kde jste VOADMIN",
+    "VOOBSERVER": "VOOBSERVER",
+    "VOOBSERVER_VOS_SELF": "Organizace, kde jste VOOBSERVER",
+    "ORGANIZATIONMEMBERSHIPMANAGER": "ORGANIZATIONMEMBERSHIPMANAGER",
+    "ORGANIZATIONMEMBERSHIPMANAGER_VOS_SELF": "Organizace, kde jste ORGANIZATIONMEMBERSHIPMANAGER",
+    "VOBANMANAGER": "VOBANMANAGER",
+    "VOBANMANAGER_VOS_SELF": "Organizace, kde jste VOBANMANAGER",
+    "TOPGROUPCREATOR": "TOPGROUPCREATOR",
+    "GROUPCREATOR": "GROUPCREATOR",
+    "TOPGROUPCREATOR_VOS_SELF": "Organizace, kde jste TOPGROUPCREATOR",
+    "GROUPCREATOR_GROUPS_SELF": "Skupiny, kde jste GROUPCREATOR",
+    "PERUN_ADMIN": "PERUNADMIN",
+    "PERUN_OBSERVER": "PERUNOBSERVER",
+    "SELF": "Vy",
+    "SELF_USERS_SELF": "Identity propojené s Vaším účtem Perun",
+    "MEMBERSHIP_VOS_SELF": "Organizace, jejichž jste členem",
+    "MEMBERSHIP_GROUPS_SELF": "Skupiny, jejichž jste členem",
+    "MEMBERSHIP_RESOURCES_SELF": "Zdroje, ke kterým jste přiřazen",
+    "MEMBERSHIP_FACILITIES_SELF": "Facility, ke kterým jste přiřazen",
+    "FACILITYADMIN": "Facility admin",
+    "FACILITYADMIN_FACILITIES_SELF": "Facility, kde jste Facility admin",
+    "FACILITYOBSERVER": "Facility observer",
+    "FACILITYOBSERVER_FACILITIES": "Facility, kde jste Facility observer",
+    "FACILITYOBSERVER_FACILITIES_SELF": "Facility, kde jste Facility observer",
+    "TRUSTEDFACILITYADMIN": "Trusted Facility admin",
+    "TRUSTEDFACILITYADMIN_VOS_SELF": "Virtuální organizace, kde jste Trusted Facility admin",
+    "TRUSTEDFACILITYADMIN_VOS_USER": "Virtuální organizace, kde je uživatel Trusted Facility admin",
+    "TRUSTEDFACILITYADMIN_VOS_GROUP": "Virtuální organizac,, kde jsou členové skupiny Trusted Facility admin",
+    "FACILITYBANMANAGER": "Facility ban manager",
+    "FACILITYBANMANAGER_FACILITIES_SELF": "Facility, kde jste Facility ban manager",
+    "GROUPOBSERVER": "GROUPOBSERVER",
+    "GROUPOBSERVER_GROUPS_SELF": "Skupiny, kde jste GROUPOBSERVER",
+    "GROUPADMIN": "GROUPADMIN",
+    "GROUPADMIN_GROUPS_SELF": "Skupiny, kde jste GROUPADMIN",
+    "GROUPMEMBERSHIPMANAGER": "GROUPMEMBERSHIPMANAGER",
+    "GROUPMEMBERSHIPMANAGER_GROUPS_SELF": "Skupiny, kde jste GROUPMEMBERSHIPMANAGER",
+    "RESOURCEADMIN": "RESOURCEADMIN",
+    "RESOURCEADMIN_RESOURCES_SELF": "Zdroje, kde jste RESOURCEADMIN",
+    "RESOURCEADMIN_RESOURCES_USER": "Zdroje, kde je uživatel RESOURCEADMIN",
+    "RESOURCEADMIN_RESOURCES_GROUP": "Zdroje, kde jsou členové skupiny RESOURCEADMIN",
+    "RESOURCEBANMANAGER": "RESOURCEBANMANAGER",
+    "RESOURCEBANMANAGER_RESOURCES_SELF": "Zdroje, kde jste RESOURCEBANMANAGER",
+    "SPONSOR": "SPONSOR",
+    "SPONSOR_VOS_SELF": "Organizace, kde jste SPONSOR",
+    "SPONSOR_VOS_USER": "Organizace, kde je uživatel SPONSOR",
+    "SPONSOR_VOS_GROUP": "Organizace, kde jsou členové skupiny SPONSOR",
+    "SPONSORNOCREATERIGHTS": "SPONSORNOCREATERIGHTS",
+    "SPONSORNOCREATERIGHTS_VOS_SELF": "Organizac, kde jste SPONSORNOCREATERIGHTS",
+    "SPONSORSHIP": "Sponzorství",
+    "SPONSORSHIP_MEMBERS_SELF": "Členové které sponzorujete",
+    "SPONSORSHIP_MEMBERS_USER": "Členové které sponzoruje uživatel",
+    "RESOURCESELFSERVICE": "RESOURCESELFSERVICE",
+    "RESOURCESELFSERVICE_RESOURCES_SELF": "Zdroje, kde jste RESOURCESELFSERVICE",
+    "RESOURCEOBSERVER": "RESOURCEOBSERVER",
+    "RESOURCEOBSERVER_RESOURCES_SELF": "Zdroje, kde jste RESOURCEOBSERVER",
+    "SERVICEUSER": "SERVICEUSER",
+    "CABINETADMIN": "CABINETADMIN",
+    "MEMBERSHIP": "Členství",
+    "AUDITCONSUMERADMIN": "AUDITCONSUMERADMIN",
+    "PERUNADMIN": "PERUNADMIN",
+    "PERUNADMIN_SELF": "Máte roli PERUNADMIN",
+    "PERUNADMINBA": "PERUNADMINBA",
+    "PERUNADMINBA_SELF": "Máte roli PERUNADMINBA",
+    "PERUNOBSERVER": "PERUNOBSERVER",
+    "SERVICEACCOUNTCREATOR": "SERVICEACCOUNTCREATOR",
+    "SERVICEACCOUNTCREATOR_VOS_SELF": "Organizace, kde jste SERVICEACCOUNTCREATOR",
+    "PERUNOBSERVER_SELF": "Máte roli PERUNOBSERVER"
   },
   "MEMBERSHIP_LIST": {
     "NAME": "Jméno",
@@ -284,7 +370,16 @@
           "TABLE_VO_NAME": "Vo",
           "TABLE_GROUP_NAME": "Jméno",
           "TABLE_SEARCH": "Filtrovat dle jména, popisu nebo ID",
-          "TABLE_GROUP_DESCRIPTION": "Popis"
+          "TABLE_GROUP_EXPIRATION": "Expirace",
+          "DISABLED_HINT": "Nemůžete přidávat členy do této skupiny nebo je uživatel již členem.",
+          "ALREADY_MEMBER_TOOLTIP": "Uživatel je již členem skupiny",
+          "CREATE_RELATION_AUTH_TOOLTIP": "Nemáte oprávnění vytvořit relaci s touto skupinou.",
+          "SYNCHRONIZED_GROUP": "Skupina obsahuje členy z externího zdroje",
+          "AUTHZ_GROUP": "Role získaná prostřednictvím"
+        },
+        "SERVICE_ACCOUNTS_LIST": {
+          "NAME": "Název",
+          "SERVICE": "Služba"
         },
         "GROUP_MENU": {
           "MOVE": "Přesunout skupinu",
@@ -306,7 +401,24 @@
           "TABLE_RESOURCE_TAGS": "Tagy",
           "TABLE_SEARCH": "Filtrovat dle jména, popisu nebo ID",
           "TABLE_RESOURCE_DESCRIPTION": "Popis",
-          "NO_RESOURCES_WARNING": "Nemáte přiřazené žádné zdroje."
+          "NO_RESOURCES_WARNING": "Nemáte přiřazené žádné zdroje.",
+          "AUTHZ_GROUP": "Role získaná prostřednictvím"
+        },
+        "VOS_LIST": {
+          "NAME": "Název",
+          "SHORTNAME": "Zkrácený název",
+          "AUTHZ_GROUP": "Role získaná prostřednictvím"
+        },
+        "MEMBERS_LIST": {
+          "NAME": "Název"
+        },
+        "MANAGERS_LIST": {
+          "PERSON": "Osoba"
+        },
+        "FACILITIES_LIST": {
+          "NAME": "Název",
+          "DESCRIPTION": "Popis",
+          "AUTHZ_GROUP": "Role získaná prostřednictvím"
         },
         "ATTRIBUTE_VALUE_LIST": {
           "EDIT_DIALOG": {
@@ -334,7 +446,8 @@
           "NAME": "Jméno",
           "VALUE": "Hodnota",
           "DESCRIPTION": "Popis",
-          "EMPTY": "Žádné nastavení nebyly nalezeny. Použijte tlačidlo 'Přidat' pro přidání nových nastavení."
+          "EMPTY": "Žádné nastavení nebyly nalezeny. Použijte tlačidlo 'Přidat' pro přidání nových nastavení.",
+          "EMPTY_SETTINGS": "Žádné atributy nebyly nalezeny."
         },
         "USER_DONT_EXIST": {
           "TITLE": "Požadovaný uživatel (dle ID nebo externí identity) neexistuje.",
@@ -520,6 +633,14 @@
           "REMOVE_KEY": "Odstranit",
           "REMOVE_DIALOG_TITLE": "Odstranit SSH klíč",
           "REMOVE_DIALOG_DESCRIPTION": "Vámi vybrané SSH klíče budou odstraněny"
+        },
+        "BAN_ON_ENTITY_LIST": {
+          "TARGET_NAME_HEADER": "{{ target }}",
+          "SUBJECT_NAME_HEADER": "{{ subject }}",
+          "SUBJECT_ID_HEADER": "{{ subject }} Id",
+          "DESCRIPTION_HEADER": "Popis",
+          "EXPIRATION_HEADER": "Expirace",
+          "NO_BANS": "Nebyly nalezeny žádne bany."
         }
       },
       "ORGANIZATIONS": {

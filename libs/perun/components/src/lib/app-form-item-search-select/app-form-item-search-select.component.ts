@@ -1,10 +1,14 @@
+import { EntitySearchSelectComponent } from '../entity-search-select/entity-search-select.component';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApplicationFormItem } from '@perun-web-apps/perun/openapi';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 export const NO_FORM_ITEM: ApplicationFormItem = {};
 
 @Component({
+  imports: [CommonModule, EntitySearchSelectComponent, TranslateModule],
+  standalone: true,
   selector: 'perun-web-apps-app-form-item-search-select',
   templateUrl: './app-form-item-search-select.component.html',
   styleUrls: ['./app-form-item-search-select.component.css'],

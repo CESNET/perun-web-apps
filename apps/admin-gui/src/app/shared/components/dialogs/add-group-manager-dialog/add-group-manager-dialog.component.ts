@@ -1,10 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import {
   AuthzResolverService,
@@ -17,7 +24,13 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
 import { TABLE_SELECT_GROUP_MANAGER_DIALOG } from '@perun-web-apps/config/table-config';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteModule,
+} from '@angular/material/autocomplete';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
 
 export interface AddGroupManagerDialogData {
   complementaryObject: PerunBean;
@@ -27,6 +40,23 @@ export interface AddGroupManagerDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatDialogModule,
+    DebounceFilterComponent,
+    TranslateModule,
+    GroupsListComponent,
+    LoaderDirective,
+    LoadingTableComponent,
+    DisplayedRolePipe,
+  ],
+  standalone: true,
   selector: 'app-add-group-manager-dialog',
   templateUrl: './add-group-manager-dialog.component.html',
   styleUrls: ['./add-group-manager-dialog.component.scss'],

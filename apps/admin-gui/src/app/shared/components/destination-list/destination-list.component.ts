@@ -1,3 +1,9 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,10 +13,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { RichDestination, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   customDataSourceFilterPredicate,
   customDataSourceSort,
@@ -24,11 +30,34 @@ import {
   PerunTranslateService,
   TableCheckbox,
 } from '@perun-web-apps/perun/services';
-import { LastPropagationPipe } from '@perun-web-apps/perun/pipes';
+import {
+  LastPropagationPipe,
+  IsAllSelectedPipe,
+  CheckboxLabelPipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    LastPropagationPipe,
+    CheckboxLabelPipe,
+    MultiWordDataCyPipe,
+    MasterCheckboxLabelPipe,
+  ],
+  standalone: true,
   selector: 'app-perun-web-apps-destination-list',
   templateUrl: './destination-list.component.html',
   styleUrls: ['./destination-list.component.scss'],

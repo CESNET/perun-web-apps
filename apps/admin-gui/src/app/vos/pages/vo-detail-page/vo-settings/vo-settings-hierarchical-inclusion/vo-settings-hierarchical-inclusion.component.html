@@ -18,12 +18,13 @@
     {{'VO_DETAIL.SETTINGS.HIERARCHICAL_INCLUSION.REMOVE' | translate}}
   </button>
   <div class="vo-search-select">
-    <perun-web-apps-vo-search-select
-      *ngIf="parentVos.length > 0"
-      [vos]="parentVos"
-      (voSelected)="voSelected($event)"
-      [disableAutoSelect]="true">
-    </perun-web-apps-vo-search-select>
+    @if (parentVos.length > 0) {
+      <perun-web-apps-vo-search-select
+        [vos]="parentVos"
+        (voSelected)="voSelected($event)"
+        [disableAutoSelect]="true">
+      </perun-web-apps-vo-search-select>
+    }
   </div>
 </div>
 <ng-template #spinner>

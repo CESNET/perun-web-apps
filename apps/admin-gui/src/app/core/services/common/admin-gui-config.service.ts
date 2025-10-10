@@ -180,7 +180,7 @@ export class AdminGuiConfigService {
       this.dialog.open(ServerDownDialogComponent, config);
     }
     console.error(err);
-    throw err;
+    throw new Error(err);
   }
 
   private loadPolicies(): Promise<void> {

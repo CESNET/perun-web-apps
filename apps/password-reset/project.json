@@ -2,13 +2,14 @@
   "name": "password-reset",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/password-reset/src",
+  "prefix": "perun-web-apps",
+  "tags": [],
   "generators": {
     "@schematics/angular:component": {
       "style": "scss"
     }
   },
-  "sourceRoot": "apps/password-reset/src",
-  "prefix": "perun-web-apps",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -93,7 +94,8 @@
         "development": {
           "buildTarget": "password-reset:build:development"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -112,6 +114,5 @@
       },
       "outputs": ["{workspaceRoot}/coverage/apps/password-reset"]
     }
-  },
-  "tags": []
+  }
 }

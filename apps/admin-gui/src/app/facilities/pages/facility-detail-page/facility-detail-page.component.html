@@ -1,46 +1,52 @@
 <div class="container-fluid ps-xl-5 pe-xl-5 facility-theme">
   <perun-web-apps-back-button> </perun-web-apps-back-button>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div *ngIf="!loading && facility !== undefined">
-    <div class="d-flex page-title-headtitle">
-      <mat-icon
-        matTooltip="{{'FACILITY_DETAIL.ENTITY' | translate}}"
-        [ngStyle]="{'color':'black'}"
-        class="perun-icon perun-icon-detail"
-        svgIcon="perun-facility-black">
-      </mat-icon>
-      <div class="page-title-block">
-        <div class="page-title-headline d-flex align-items-center">
-          <a
-            class="facility-link"
-            [perunWebAppsMiddleClickRouterLink]="['/facilities', facility.id.toString()]"
-            (auxclick)="$event.preventDefault()"
-            [routerLink]="['/facilities', facility.id]"
-            >{{facility.name}}</a
-          >
-          <span class="text-muted"> &nbsp;#{{facility.id}} </span>
-          <button
-            (click)="editFacility()"
-            *ngIf="editFacilityAuth"
-            matTooltip="{{'FACILITY_DETAIL.EDIT' | translate}}"
-            mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            (click)="deleteFacility()"
-            *ngIf="deleteAuth"
-            matTooltip="{{'FACILITY_DETAIL.DELETE' | translate}}"
-            mat-icon-button>
-            <mat-icon>delete_forever</mat-icon>
-          </button>
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading && facility !== undefined) {
+    <div>
+      <div class="d-flex page-title-headtitle">
+        <mat-icon
+          matTooltip="{{'FACILITY_DETAIL.ENTITY' | translate}}"
+          [ngStyle]="{'color':'black'}"
+          class="perun-icon perun-icon-detail"
+          svgIcon="perun-facility-black">
+        </mat-icon>
+        <div class="page-title-block">
+          <div class="page-title-headline d-flex align-items-center">
+            <a
+              class="facility-link"
+              [perunWebAppsMiddleClickRouterLink]="['/facilities', facility.id.toString()]"
+              (auxclick)="$event.preventDefault()"
+              [routerLink]="['/facilities', facility.id]"
+              >{{facility.name}}</a
+            >
+            <span class="text-muted"> &nbsp;#{{facility.id}} </span>
+            @if (editFacilityAuth) {
+              <button
+                (click)="editFacility()"
+                matTooltip="{{'FACILITY_DETAIL.EDIT' | translate}}"
+                mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            @if (deleteAuth) {
+              <button
+                (click)="deleteFacility()"
+                matTooltip="{{'FACILITY_DETAIL.DELETE' | translate}}"
+                mat-icon-button>
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            }
+          </div>
+          <div>{{'FACILITY_DETAIL.UUID' | translate}}: {{facility.uuid}}</div>
+          <span class="mt-1 entity-info">
+            {{'FACILITY_DETAIL.ENTITY' | translate}}, {{'FACILITY_DETAIL.DESCRIPTION' | translate}}:
+            {{facility.description}}
+          </span>
         </div>
-        <div>{{'FACILITY_DETAIL.UUID' | translate}}: {{facility.uuid}}</div>
-        <span class="mt-1 entity-info">
-          {{'FACILITY_DETAIL.ENTITY' | translate}}, {{'FACILITY_DETAIL.DESCRIPTION' | translate}}:
-          {{facility.description}}
-        </span>
       </div>
+      <app-animated-router-outlet></app-animated-router-outlet>
     </div>
-    <app-animated-router-outlet></app-animated-router-outlet>
-  </div>
+  }
 </div>

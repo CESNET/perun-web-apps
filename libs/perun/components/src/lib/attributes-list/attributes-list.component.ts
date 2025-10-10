@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import {
+  CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  IsVirtualAttributePipe,
+  MasterCheckboxLabelPipe,
+} from '@perun-web-apps/perun/pipes';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,8 +19,8 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AttributeValueComponent } from './attribute-value/attribute-value.component';
 import { Attribute } from '@perun-web-apps/perun/openapi';
@@ -26,10 +36,28 @@ import {
 import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    TableWrapperComponent,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    MasterCheckboxLabelPipe,
+    IsVirtualAttributePipe,
+    CheckboxLabelPipe,
+    MultiWordDataCyPipe,
+    AttributeValueComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-attributes-list',
   templateUrl: './attributes-list.component.html',
   styleUrls: ['./attributes-list.component.scss'],
@@ -43,6 +71,7 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   @Input() displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   @Input() filterValue = '';
   @Input() filterEmpty = false;
+  @Input() filterFalse = false;
   @Input() tableId: string;
   @Input() readonly = false;
   @Input() hiddenColumns: string[] = [];
@@ -122,6 +151,11 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
         }
         return true;
       });
+      if (this.filterFalse) {
+        filteredAttributes = filteredAttributes.filter(
+          (attribute) => attribute.type !== 'java.lang.Boolean' || attribute.value !== false,
+        );
+      }
     }
 
     filteredAttributes = filterCoreAttributes(filteredAttributes);

@@ -7,10 +7,12 @@
       {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.TITLE' | translate}}
     </h1>
     <div mat-dialog-content>
-      <p *ngIf="group && resource" class="mb-4">
-        {{group.name}} <span class="text-muted id-font">#{{group.id}}</span> - {{resource.name}}
-        <span class="text-muted id-font">#{{resource.id}}</span>
-      </p>
+      @if (group && resource) {
+        <p class="mb-4">
+          {{group.name}} <span class="text-muted id-font">#{{group.id}}</span> - {{resource.name}}
+          <span class="text-muted id-font">#{{resource.id}}</span>
+        </p>
+      }
       <p>
         <strong class="me-2">
           {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.CURRENT' | translate}}
@@ -27,39 +29,42 @@
         {{getReversedStatus()}}
       </p>
 
-      <span *ngIf="status ==='INACTIVE' || status ==='FAILED'" class="text-muted">
-        {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ACTIVE_HINT' | translate}}
-      </span>
-      <span *ngIf="status ==='ACTIVE'" class="text-muted">
-        {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.INACTIVE_HINT' | translate}}
-      </span>
-
-      <mat-radio-group
-        class="d-flex flex-column mt-3"
-        *ngIf="status === 'INACTIVE' || status ==='FAILED'"
-        [(ngModel)]="asyncValidation">
-        <span class="fw-bold">
-          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.VALIDATE' | translate}}
-          :
+      @if (status ==='INACTIVE' || status ==='FAILED') {
+        <span class="text-muted">
+          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ACTIVE_HINT' | translate}}
         </span>
-        <mat-radio-button [value]="false">
-          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.SYNC' | translate}}
-        </mat-radio-button>
-        <mat-radio-button [value]="true">
-          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ASYNC' | translate}}
-        </mat-radio-button>
-      </mat-radio-group>
+      }
+      @if (status ==='ACTIVE') {
+        <span class="text-muted">
+          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.INACTIVE_HINT' | translate}}
+        </span>
+      }
 
-      <span
-        class="text-muted"
-        *ngIf="(status === 'INACTIVE' || status === 'FAILED') && asyncValidation === false">
-        {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.SYNC_HINT' | translate}}
-      </span>
-      <span
-        class="text-muted"
-        *ngIf="(status === 'INACTIVE' || status ==='FAILED') && asyncValidation === true">
-        {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ASYNC_HINT' | translate}}
-      </span>
+      @if (status === 'INACTIVE' || status ==='FAILED') {
+        <mat-radio-group class="d-flex flex-column mt-3" [(ngModel)]="asyncValidation">
+          <span class="fw-bold">
+            {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.VALIDATE' | translate}}
+            :
+          </span>
+          <mat-radio-button [value]="false">
+            {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.SYNC' | translate}}
+          </mat-radio-button>
+          <mat-radio-button [value]="true">
+            {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ASYNC' | translate}}
+          </mat-radio-button>
+        </mat-radio-group>
+      }
+
+      @if ((status === 'INACTIVE' || status === 'FAILED') && asyncValidation === false) {
+        <span class="text-muted">
+          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.SYNC_HINT' | translate}}
+        </span>
+      }
+      @if ((status === 'INACTIVE' || status ==='FAILED') && asyncValidation === true) {
+        <span class="text-muted">
+          {{'SHARED_LIB.PERUN.COMPONENTS.CHANGE_GROUP_RESOURCE_ASSIGMENT_DIALOG.ASYNC_HINT' | translate}}
+        </span>
+      }
     </div>
     <div mat-dialog-actions>
       <button class="ms-auto me-2" mat-stroked-button (click)="onCancel()">

@@ -15,28 +15,28 @@
       matSortActive="id"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let destination" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(destination) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(destination) | checkboxLabel | translate: {name: destination.destination}"
-            [checked]="selection.isSelected(destination)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let destination" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(destination) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(destination) | checkboxLabel | translate: {name: destination.destination}"
+              [checked]="selection.isSelected(destination)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="destinationId">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -55,13 +55,14 @@
       <ng-container matColumnDef="warn">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let destination" mat-cell>
-          <mat-icon
-            *ngIf="!services.has(destination.service.id)"
-            class="warn"
-            matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.WARN' | translate}}"
-            matTooltipPosition="above">
-            warning
-          </mat-icon>
+          @if (!services.has(destination.service.id)) {
+            <mat-icon
+              class="warn"
+              matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.WARN' | translate}}"
+              matTooltipPosition="above">
+              warning
+            </mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="facility">
@@ -90,18 +91,20 @@
       <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let destination" mat-cell>
-          <mat-icon
-            *ngIf="!destination.blocked"
-            class="align-bottom"
-            matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.ALLOWED' | translate}}">
-            check_circle_outline
-          </mat-icon>
-          <mat-icon
-            *ngIf="destination.blocked"
-            class="align-bottom"
-            matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.BLOCKED' | translate}}">
-            block
-          </mat-icon>
+          @if (!destination.blocked) {
+            <mat-icon
+              class="align-bottom"
+              matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.ALLOWED' | translate}}">
+              check_circle_outline
+            </mat-icon>
+          }
+          @if (destination.blocked) {
+            <mat-icon
+              class="align-bottom"
+              matTooltip="{{'SHARED.COMPONENTS.DESTINATIONS_LIST.BLOCKED' | translate}}">
+              block
+            </mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="propagationType">
@@ -144,12 +147,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && destinations.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && destinations.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert *ngIf="!loading && destinations.length === 0" alert_type="warn">
-  {{'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_DESTINATIONS' | translate}}
-</perun-web-apps-alert>
+@if (!loading && destinations.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_DESTINATIONS' | translate}}
+  </perun-web-apps-alert>
+}

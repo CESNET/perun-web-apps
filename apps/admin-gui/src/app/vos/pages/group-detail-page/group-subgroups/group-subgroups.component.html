@@ -1,30 +1,33 @@
 <div>
   <h1 class="page-subtitle">{{'GROUP_DETAIL.SUBGROUPS.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
-  <button
-    *ngIf="createAuth"
-    (click)="onCreateGroup()"
-    class="me-2 action-button"
-    color="accent"
-    data-cy="new-subgroup-button"
-    mat-flat-button>
-    {{'GROUP_DETAIL.SUBGROUPS.CREATE_GROUP' | translate}}
-  </button>
-  <span
-    *ngIf="{removeAuth: removeAuth$ | async} as auth"
-    [matTooltipDisabled]="loading || selected.selected.length === 0 || auth.removeAuth"
-    matTooltip="{{'GROUP_DETAIL.SUBGROUPS.DELETE_PERMISSION_HINT' | translate}}">
+  @if (createAuth) {
     <button
-      (click)="deleteGroup()"
-      *ngIf="deleteAuth"
-      [disabled]="loading || selected.selected.length === 0 || !auth.removeAuth"
-      color="warn"
-      class="me-2"
-      data-cy="delete-group-button"
+      (click)="onCreateGroup()"
+      class="me-2 action-button"
+      color="accent"
+      data-cy="new-subgroup-button"
       mat-flat-button>
-      {{'GROUP_DETAIL.SUBGROUPS.DELETE_GROUP' | translate}}
+      {{'GROUP_DETAIL.SUBGROUPS.CREATE_GROUP' | translate}}
     </button>
-  </span>
+  }
+  @if ({removeAuth: removeAuth$ | async}; as auth) {
+    <span
+      [matTooltipDisabled]="loading || selected.selected.length === 0 || auth.removeAuth"
+      matTooltip="{{'GROUP_DETAIL.SUBGROUPS.DELETE_PERMISSION_HINT' | translate}}">
+      @if (deleteAuth) {
+        <button
+          (click)="deleteGroup()"
+          [disabled]="loading || selected.selected.length === 0 || !auth.removeAuth"
+          color="warn"
+          class="me-2"
+          data-cy="delete-group-button"
+          mat-flat-button>
+          {{'GROUP_DETAIL.SUBGROUPS.DELETE_GROUP' | translate}}
+        </button>
+      }
+    </span>
+  }
 
   <app-group-roles-filter
     [theme]="'group-theme'"
@@ -53,33 +56,35 @@
   </ng-template>
   <div class="position-relative mt-3 table-min-height">
     <div *perunWebAppsLoader="loading; indicator: spinner">
-      <perun-web-apps-groups-tree
-        *ngIf="!showGroupList"
-        [loading]="loading"
-        [disableRouting]="!routeAuth"
-        [expandAll]="filtering"
-        [groups]="groups"
-        (moveGroup)="onMoveGroup($event)"
-        (refreshTable)="refreshTable()"
-        [displayedColumns]="['nameWithId', 'description', 'menu']"
-        [hideCheckbox]="!deleteAuth"
-        [filterValue]="filterValue"
-        [selection]="selected">
-      </perun-web-apps-groups-tree>
-      <perun-web-apps-groups-list
-        [loading]="loading"
-        (groupMoved)="onMoveGroup($event)"
-        (refreshTable)="refreshTable()"
-        *ngIf="showGroupList"
-        [disableMembers]="true"
-        [disableRouting]="!routeAuth"
-        [displayedColumns]="deleteAuth ? ['select', 'id', 'name', 'description', 'menu'] : ['id', 'name', 'description', 'menu']"
-        [groups]="groups"
-        [selection]="selected"
-        [filter]="filterValue"
-        [tableId]="tableId"
-        [cacheSubject]="cacheSubject">
-      </perun-web-apps-groups-list>
+      @if (!showGroupList) {
+        <perun-web-apps-groups-tree
+          [loading]="loading"
+          [disableRouting]="!routeAuth"
+          [expandAll]="filtering"
+          [groups]="groups"
+          (moveGroup)="onMoveGroup($event)"
+          (refreshTable)="refreshTable()"
+          [displayedColumns]="['nameWithId', 'description', 'menu']"
+          [hideCheckbox]="!deleteAuth"
+          [filterValue]="filterValue"
+          [selection]="selected">
+        </perun-web-apps-groups-tree>
+      }
+      @if (showGroupList) {
+        <perun-web-apps-groups-list
+          [loading]="loading"
+          (groupMoved)="onMoveGroup($event)"
+          (refreshTable)="refreshTable()"
+          [disableMembers]="true"
+          [disableRouting]="!routeAuth"
+          [displayedColumns]="deleteAuth ? ['select', 'id', 'name', 'description', 'menu'] : ['id', 'name', 'description', 'menu']"
+          [groups]="groups"
+          [selection]="selected"
+          [filter]="filterValue"
+          [tableId]="tableId"
+          [cacheSubject]="cacheSubject">
+        </perun-web-apps-groups-list>
+      }
     </div>
   </div>
 </div>

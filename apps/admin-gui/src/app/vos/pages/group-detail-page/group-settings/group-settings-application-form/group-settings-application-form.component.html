@@ -1,133 +1,140 @@
 <h1 class="page-subtitle">
   {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
 </h1>
-<mat-spinner *ngIf="loadingHeader" class="ms-auto me-auto"> </mat-spinner>
-<div *ngIf="!noApplicationForm">
-  <div *ngIf="!loadingHeader" class="d-flex w-75">
-    <div>
-      <div class="fw-bold">
-        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
-        {{applicationForm.moduleClassNames}}
+@if (loadingHeader) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
+@if (!noApplicationForm) {
+  <div>
+    @if (!loadingHeader) {
+      <div class="d-flex w-75">
+        <div>
+          <div class="fw-bold">
+            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
+            {{applicationForm.moduleClassNames}}
+          </div>
+          <div>
+            <span
+              class="fw-bold"
+              >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
+            >:
+            <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
+            {{applicationForm.automaticApproval ?
+              ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+            ,
+            <span [ngClass]="autoRegistrationEnabled ? '' : 'me-2'">
+              <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
+              {{applicationForm.automaticApprovalExtension ?
+                ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+            </span>
+            @if (autoRegistrationEnabled) {
+              <span class="me-2">
+                ,
+                <mat-icon class="align-middle" matTooltip="Embedded">nat</mat-icon>
+                {{applicationForm.automaticApprovalEmbedded ?
+                  ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+              </span>
+            }
+            @if (editAuth) {
+              <button (click)="settings()" class="ms-2 action-button" mat-stroked-button>
+                <i class="material-icons align-middle">edit</i>
+                <span class="align-middle">
+                  {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
+                </span>
+              </button>
+            }
+          </div>
+          @if (autoRegistrationEnabled) {
+            <span>
+              <mat-icon class="align-bottom">info</mat-icon>
+              {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ALLOW_EMBEDDED' | translate}}
+            </span>
+          }
+        </div>
       </div>
-      <div>
-        <span
-          class="fw-bold"
-          >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
-        >:
-
-        <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
-        {{applicationForm.automaticApproval ?
-        ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
-        ,
-        <span [ngClass]="autoRegistrationEnabled ? '' : 'me-2'">
-          <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
-          {{applicationForm.automaticApprovalExtension ?
-        ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
-        </span>
-
-        <span *ngIf="autoRegistrationEnabled" class="me-2">
-          ,
-          <mat-icon class="align-middle" matTooltip="Embedded">nat</mat-icon>
-          {{applicationForm.automaticApprovalEmbedded ?
-          ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
-        </span>
-        <button *ngIf="editAuth" (click)="settings()" class="ms-2 action-button" mat-stroked-button>
-          <i class="material-icons align-middle">edit</i>
+    }
+    <mat-divider class="mb-2 mt-2"></mat-divider>
+    <div class="w-100 d-flex">
+      <perun-web-apps-refresh-button
+        (refresh)="this.updateFormItems()"></perun-web-apps-refresh-button>
+      @if (editAuth) {
+        <button
+          [disabled]="loadingTable"
+          (click)="add()"
+          color="accent"
+          class="me-2 action-button"
+          data-cy="add-form-item"
+          mat-flat-button>
+          {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
+        </button>
+      }
+      @if (editAuth) {
+        <button
+          (click)="save()"
+          color="accent"
+          [disabled]="!itemsChanged"
+          class="me-2"
+          data-cy="save-application-form"
+          mat-flat-button>
+          <i class="material-icons">save</i>
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+        </button>
+      }
+      @if (editAuth) {
+        <button (click)="copy()" class="me-2 action-button" mat-stroked-button>
+          <i class="material-icons align-middle">file_copy</i>
           <span class="align-middle">
-            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
+            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.COPY_GROUP_BUTTON' | translate}}
           </span>
         </button>
-      </div>
-      <span *ngIf="autoRegistrationEnabled">
-        <mat-icon class="align-bottom">info</mat-icon>
-        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ALLOW_EMBEDDED' | translate}}
-      </span>
+      }
+      <button (click)="preview()" mat-stroked-button>
+        <i class="material-icons">search</i>
+        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}
+      </button>
+      <!--    <button-->
+      <!--      *ngIf="editAuth"-->
+      <!--      (click)="clear()"-->
+      <!--      class="ms-2"-->
+      <!--      mat-stroked-button-->
+      <!--      matTooltip="{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_TOOLTIP' | translate}}"-->
+      <!--      matTooltipPosition="above">-->
+      <!--      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
+      <!--    </button>-->
+    </div>
+    @if (editAuth) {
+      <perun-web-apps-alert alert_type="info">
+        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
+      </perun-web-apps-alert>
+    }
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative table-min-height">
+      <app-application-form-list
+        *perunWebAppsLoader="loadingTable; indicator: spinner"
+        [loading]="loadingTable"
+        (applicationFormItemsChange)="changeItems()"
+        [applicationForm]="applicationForm"
+        [applicationFormItems]="applicationFormItems"
+        [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups']"
+        [refreshApplicationForm]="refreshApplicationForm"
+        [embeddedGroupsItemSaved]="embeddedGroupsItemSaved"
+        [theme]="'group-theme'">
+      </app-application-form-list>
     </div>
   </div>
-
-  <mat-divider class="mb-2 mt-2"></mat-divider>
-
-  <div class="w-100 d-flex">
-    <perun-web-apps-refresh-button
-      (refresh)="this.updateFormItems()"></perun-web-apps-refresh-button>
-
-    <button
-      *ngIf="editAuth"
-      [disabled]="loadingTable"
-      (click)="add()"
-      color="accent"
-      class="me-2 action-button"
-      data-cy="add-form-item"
-      mat-flat-button>
-      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
-    </button>
-
-    <button
-      *ngIf="editAuth"
-      (click)="save()"
-      color="accent"
-      [disabled]="!itemsChanged"
-      class="me-2"
-      data-cy="save-application-form"
-      mat-flat-button>
-      <i class="material-icons">save</i>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
-    </button>
-
-    <button (click)="copy()" *ngIf="editAuth" class="me-2 action-button" mat-stroked-button>
-      <i class="material-icons align-middle">file_copy</i>
-      <span class="align-middle">
-        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.COPY_GROUP_BUTTON' | translate}}
-      </span>
-    </button>
-
-    <button (click)="preview()" mat-stroked-button>
-      <i class="material-icons">search</i>
-      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}
-    </button>
-
-    <!--    <button-->
-    <!--      *ngIf="editAuth"-->
-    <!--      (click)="clear()"-->
-    <!--      class="ms-2"-->
-    <!--      mat-stroked-button-->
-    <!--      matTooltip="{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_TOOLTIP' | translate}}"-->
-    <!--      matTooltipPosition="above">-->
-    <!--      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
-    <!--    </button>-->
+}
+@if (!loadingTable && noApplicationForm) {
+  <div>
+    <perun-web-apps-alert
+      alert_type="warn"
+      >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.NO_APPLICATION_FORM' | translate}}</perun-web-apps-alert
+    >
+    @if (createEmptyForm) {
+      <button (click)="createEmptyApplicationForm()" data-cy="create-empty-form" mat-stroked-button>
+        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CREATE_APPLICATION_FORM' | translate}}
+      </button>
+    }
   </div>
-
-  <perun-web-apps-alert alert_type="info" *ngIf="editAuth">
-    {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
-  </perun-web-apps-alert>
-
-  <ng-template #spinner>
-    <perun-web-apps-loading-table></perun-web-apps-loading-table>
-  </ng-template>
-  <div class="position-relative table-min-height">
-    <app-application-form-list
-      *perunWebAppsLoader="loadingTable; indicator: spinner"
-      [loading]="loadingTable"
-      (applicationFormItemsChange)="changeItems()"
-      [applicationForm]="applicationForm"
-      [applicationFormItems]="applicationFormItems"
-      [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups']"
-      [refreshApplicationForm]="refreshApplicationForm"
-      [embeddedGroupsItemSaved]="embeddedGroupsItemSaved"
-      [theme]="'group-theme'">
-    </app-application-form-list>
-  </div>
-</div>
-<div *ngIf="!loadingTable && noApplicationForm">
-  <perun-web-apps-alert
-    alert_type="warn"
-    >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.NO_APPLICATION_FORM' | translate}}</perun-web-apps-alert
-  >
-  <button
-    *ngIf="createEmptyForm"
-    (click)="createEmptyApplicationForm()"
-    data-cy="create-empty-form"
-    mat-stroked-button>
-    {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CREATE_APPLICATION_FORM' | translate}}
-  </button>
-</div>
+}

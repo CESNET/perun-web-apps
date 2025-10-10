@@ -1,3 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InitAuthService, StoreService } from '@perun-web-apps/perun/services';
 import {
@@ -7,8 +13,21 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { LinkerResult, OpenLinkerService } from '@perun-web-apps/lib-linker';
 import { Router } from '@angular/router';
+import { ListOfIdentitiesComponent } from '../list-of-identities/list-of-identities.component';
+import { SimilarIdentityFriendlyNamesStringPipe } from '@perun-web-apps/lib-linker';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    UiAlertsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    ListOfIdentitiesComponent,
+    SimilarIdentityFriendlyNamesStringPipe,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-main-window',
   templateUrl: './main-window.component.html',
   styleUrls: ['./main-window.component.css'],

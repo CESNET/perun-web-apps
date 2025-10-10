@@ -3,6 +3,7 @@ import { findAttribute } from '@perun-web-apps/perun/utils';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'findAttribute',
 })
 export class FindAttributePipe implements PipeTransform {

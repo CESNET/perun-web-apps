@@ -3,162 +3,180 @@
 </ng-template>
 <div class="position-relative">
   <div *perunWebAppsLoader="loading; indicator: spinner">
-    <div *ngIf="!force">
-      <h1 mat-dialog-title>
-        {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
-        {{entityType}}
-      </h1>
-      <div class="dialog-container" mat-dialog-content>
-        <perun-web-apps-alert *ngIf="lastGroupsVo?.length > 0" alert_type="warn">
-          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_VO' | translate}}
-        </perun-web-apps-alert>
-        <perun-web-apps-alert *ngIf="lastGroupsFac?.length > 0" alert_type="warn">
-          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_FAC' | translate}}
-        </perun-web-apps-alert>
-        <perun-web-apps-alert *ngIf="lastOwnerAnyServiceAccount" alert_type="warn">
-          {{'DIALOGS.DELETE_ENTITY.WARN_LAST_OWNER' | translate}}
-        </perun-web-apps-alert>
-        <div *ngIf="!disableForce">
-          {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
-          {{'DIALOGS.DELETE_ENTITY.ONLY' | translate}}
+    @if (!force) {
+      <div>
+        <h1 mat-dialog-title>
+          {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
           {{entityType}}
-          <span class="fw-bold">{{'DIALOGS.DELETE_ENTITY.OR' | translate}}</span>
-          {{entityType}}
-          {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}?
-        </div>
-        <div *ngIf="disableForce">
-          {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
-          {{entityType}}
-          ?
-        </div>
-        <table [dataSource]="entityNames" class="w-100 table-margin" mat-table>
-          <ng-container matColumnDef="name">
-            <th *matHeaderCellDef mat-header-cell></th>
-            <td
-              *matCellDef="let entity"
-              mat-cell
-              [matTooltip]="entity | removeGroupTooltip: lastGroupsVo: lastGroupsFac"
-              [matTooltipDisabled]="!lastGroupsVo?.includes(entity.id) && !lastGroupsFac?.includes(entity.id)"
-              [matTooltipClass]="'my-tooltip'">
-              <div class="d-flex align-items-center">
-                {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
-                <mat-icon
-                  class="ms-2"
-                  *ngIf="lastGroupsVo?.includes(entity.id) || lastGroupsFac?.includes(entity.id)"
-                  >warning</mat-icon
-                >
-              </div>
-            </td>
-          </ng-container>
-
-          <tr *matHeaderRowDef="['name']" class="font-weight-bolder" mat-header-row></tr>
-          <tr *matRowDef="let entity; columns: ['name'];" mat-row></tr>
-        </table>
-
-        <div *ngIf="lastOwnerAnyServiceAccount">
-          {{ 'DIALOGS.DELETE_ENTITY.UNATTENDED_SERVICE_ACCOUNTS' | translate }}
-          <table [dataSource]="serviceAccountsLeftUnattended" class="w-100 table-margin" mat-table>
-            <ng-container matColumnDef="serviceAccount">
+        </h1>
+        <div class="dialog-container" mat-dialog-content>
+          @if (lastGroupsVo?.length > 0) {
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.DELETE_ENTITY.WARN_LAST_VO' | translate}}
+            </perun-web-apps-alert>
+          }
+          @if (lastGroupsFac?.length > 0) {
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.DELETE_ENTITY.WARN_LAST_FAC' | translate}}
+            </perun-web-apps-alert>
+          }
+          @if (lastOwnerAnyServiceAccount) {
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.DELETE_ENTITY.WARN_LAST_OWNER' | translate}}
+            </perun-web-apps-alert>
+          }
+          @if (!disableForce) {
+            <div>
+              {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
+              {{'DIALOGS.DELETE_ENTITY.ONLY' | translate}}
+              {{entityType}}
+              <span class="fw-bold">{{'DIALOGS.DELETE_ENTITY.OR' | translate}}</span>
+              {{entityType}}
+              {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}?
+            </div>
+          }
+          @if (disableForce) {
+            <div>
+              {{'DIALOGS.DELETE_ENTITY.BASIC' | translate: {action: this.anonymize | deleteDialogType} }}
+              {{entityType}}
+              ?
+            </div>
+          }
+          <table [dataSource]="entityNames" class="w-100 table-margin" mat-table>
+            <ng-container matColumnDef="name">
               <th *matHeaderCellDef mat-header-cell></th>
-              <td *matCellDef="let serviceAccount" mat-cell>
+              <td
+                *matCellDef="let entity"
+                mat-cell
+                [matTooltip]="entity | removeGroupTooltip: lastGroupsVo: lastGroupsFac"
+                [matTooltipDisabled]="!lastGroupsVo?.includes(entity.id) && !lastGroupsFac?.includes(entity.id)"
+                [matTooltipClass]="'my-tooltip'">
                 <div class="d-flex align-items-center">
-                  {{ serviceAccount }}
+                  {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
+                  @if (lastGroupsVo?.includes(entity.id) || lastGroupsFac?.includes(entity.id)) {
+                    <mat-icon class="ms-2">warning</mat-icon>
+                  }
                 </div>
               </td>
             </ng-container>
-
-            <tr
-              *matHeaderRowDef="['serviceAccount']"
-              class="font-weight-bolder"
-              mat-header-row></tr>
-            <tr *matRowDef="let serviceAccount; columns: ['serviceAccount'];" mat-row></tr>
-          </table>
-        </div>
-      </div>
-      <div mat-dialog-actions>
-        <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
-          {{'DIALOGS.DELETE_ENTITY.CANCEL' | translate}}
-        </button>
-        <button
-          *ngIf="!disableForce"
-          (click)="force = true"
-          class="ms-2"
-          data-cy="force-delete"
-          color="warn"
-          mat-flat-button>
-          <mat-icon>warning</mat-icon>
-          {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
-          {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}
-        </button>
-        <button
-          (click)="onDelete()"
-          class="ms-2"
-          data-cy="delete-button-dialog"
-          color="warn"
-          mat-flat-button>
-          {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
-        </button>
-      </div>
-    </div>
-    <div *ngIf="force">
-      <h1 mat-dialog-title>
-        {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
-        {{entityType}}
-        {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}
-      </h1>
-      <div class="dialog-container" mat-dialog-content>
-        <div class="mb-4">
-          {{'DIALOGS.DELETE_ENTITY.WARN' | translate}}:
-          <mat-list>
-            <mat-list-item *ngFor="let relation of relations">
-              <span>
-                <mat-icon class="dot-icon">fiber_manual_record</mat-icon>
-                {{relation}}
-              </span>
-            </mat-list-item>
-          </mat-list>
-          <div *ngIf="anotherMessage">
-            {{anotherMessage}}
-          </div>
-          <perun-web-apps-alert alert_type="warn">
-            {{'DIALOGS.DELETE_ENTITY.ASK' | translate: {action: this.anonymize | deleteDialogType} }}
-            {{entityType}} ?
-          </perun-web-apps-alert>
-          <table mat-table [dataSource]="entityNames" class="w-100 table-margin">
-            <ng-container matColumnDef="name">
-              <th *matHeaderCellDef mat-header-cell></th>
-              <td *matCellDef="let entity" mat-cell>
-                {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
-              </td>
-            </ng-container>
-
             <tr *matHeaderRowDef="['name']" class="font-weight-bolder" mat-header-row></tr>
             <tr *matRowDef="let entity; columns: ['name'];" mat-row></tr>
           </table>
+          @if (lastOwnerAnyServiceAccount) {
+            <div>
+              {{ 'DIALOGS.DELETE_ENTITY.UNATTENDED_SERVICE_ACCOUNTS' | translate }}
+              <table
+                [dataSource]="serviceAccountsLeftUnattended"
+                class="w-100 table-margin"
+                mat-table>
+                <ng-container matColumnDef="serviceAccount">
+                  <th *matHeaderCellDef mat-header-cell></th>
+                  <td *matCellDef="let serviceAccount" mat-cell>
+                    <div class="d-flex align-items-center">
+                      {{ serviceAccount }}
+                    </div>
+                  </td>
+                </ng-container>
+                <tr
+                  *matHeaderRowDef="['serviceAccount']"
+                  class="font-weight-bolder"
+                  mat-header-row></tr>
+                <tr *matRowDef="let serviceAccount; columns: ['serviceAccount'];" mat-row></tr>
+              </table>
+            </div>
+          }
         </div>
-        <mat-form-field>
-          <mat-label>
-            {{'DIALOGS.DELETE_ENTITY.CONTROL' | translate: {action: this.anonymize | deleteDialogType | uppercase} }}
-          </mat-label>
-          <input [formControl]="deleteControl" data-cy="force-delete-control" matInput />
-        </mat-form-field>
+        <div mat-dialog-actions>
+          <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+            {{'DIALOGS.DELETE_ENTITY.CANCEL' | translate}}
+          </button>
+          @if (!disableForce) {
+            <button
+              (click)="force = true"
+              class="ms-2"
+              data-cy="force-delete"
+              color="warn"
+              mat-flat-button>
+              <mat-icon>warning</mat-icon>
+              {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
+              {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}
+            </button>
+          }
+          <button
+            (click)="onDelete()"
+            class="ms-2"
+            data-cy="delete-button-dialog"
+            color="warn"
+            mat-flat-button>
+            {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
+          </button>
+        </div>
       </div>
-      <div mat-dialog-actions>
-        <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
-          {{'DIALOGS.DELETE_ENTITY.CANCEL' | translate}}
-        </button>
-        <button
-          (click)="onDelete()"
-          [disabled]="deleteControl.invalid"
-          class="ms-2"
-          data-cy="force-delete-button"
-          color="warn"
-          mat-flat-button>
-          <mat-icon>warning</mat-icon>
+    }
+    @if (force) {
+      <div>
+        <h1 mat-dialog-title>
           {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
+          {{entityType}}
           {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}
-        </button>
+        </h1>
+        <div class="dialog-container" mat-dialog-content>
+          <div class="mb-4">
+            {{'DIALOGS.DELETE_ENTITY.WARN' | translate}}:
+            <mat-list>
+              @for (relation of relations; track relation) {
+                <mat-list-item>
+                  <span>
+                    <mat-icon class="dot-icon">fiber_manual_record</mat-icon>
+                    {{relation}}
+                  </span>
+                </mat-list-item>
+              }
+            </mat-list>
+            @if (anotherMessage) {
+              <div>
+                {{anotherMessage}}
+              </div>
+            }
+            <perun-web-apps-alert alert_type="warn">
+              {{'DIALOGS.DELETE_ENTITY.ASK' | translate: {action: this.anonymize | deleteDialogType} }}
+              {{entityType}} ?
+            </perun-web-apps-alert>
+            <table mat-table [dataSource]="entityNames" class="w-100 table-margin">
+              <ng-container matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td *matCellDef="let entity" mat-cell>
+                  {{ entityType === 'user' ? (entity | userFullName) : entity.name }}
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="['name']" class="font-weight-bolder" mat-header-row></tr>
+              <tr *matRowDef="let entity; columns: ['name'];" mat-row></tr>
+            </table>
+          </div>
+          <mat-form-field>
+            <mat-label>
+              {{'DIALOGS.DELETE_ENTITY.CONTROL' | translate: {action: this.anonymize | deleteDialogType | uppercase} }}
+            </mat-label>
+            <input [formControl]="deleteControl" data-cy="force-delete-control" matInput />
+          </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+          <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+            {{'DIALOGS.DELETE_ENTITY.CANCEL' | translate}}
+          </button>
+          <button
+            (click)="onDelete()"
+            [disabled]="deleteControl.invalid"
+            class="ms-2"
+            data-cy="force-delete-button"
+            color="warn"
+            mat-flat-button>
+            <mat-icon>warning</mat-icon>
+            {{'DIALOGS.DELETE_ENTITY.DELETE' | translate: {action: this.anonymize | deleteDialogType | titlecase} }}
+            {{'DIALOGS.DELETE_ENTITY.RELATIONS' | translate}}
+          </button>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

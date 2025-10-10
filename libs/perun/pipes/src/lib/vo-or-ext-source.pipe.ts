@@ -3,6 +3,7 @@ import { parseVo } from '@perun-web-apps/perun/utils';
 import { RichUser } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'userVo',
 })
 export class UserVoPipe implements PipeTransform {

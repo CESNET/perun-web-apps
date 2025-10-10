@@ -1,13 +1,27 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
   ApiRequestConfigurationService,
   ErrorTranslateService,
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  loginAsyncValidator,
+  PasswordFormComponent,
+} from '@perun-web-apps/perun/namespace-password-form';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CustomValidators, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
   PasswordAction,
@@ -20,6 +34,16 @@ import { BugReportDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    UiAlertsModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    PasswordFormComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-password-reset-form',
   templateUrl: './password-reset-form.component.html',
   styleUrls: ['./password-reset-form.component.scss'],

@@ -1,65 +1,76 @@
 <div>
-  <mat-spinner *ngIf="loading" class="me-auto ms-auto"></mat-spinner>
-  <div *ngIf="!loading">
-    <span *ngIf="unknownIdentity" class="mt-n3">{{
-      'LIST_OF_IDENTITIES.SIGN_NOT_KNOW' | translate
-    }}</span>
-    <span *ngIf="!unknownIdentity" class="mt-n3">{{
-      'LIST_OF_IDENTITIES.SIGN_KNOW' | translate
-    }}</span>
-    <div class="identity-flexbox">
-      <div class="d-flex align-items-center justify-content-center">
-        <img
-          *ngIf="logo"
-          class="logo text-center"
-          [height]="this.height"
-          [width]="this.width"
-          src="{{ this.logo }}" />
-        <mat-icon
-          *ngIf="!logo && !unknownIdentity"
-          svgIcon="perun-verify-grey"
-          class="perun-icon perun-icon-identity">
-        </mat-icon>
-        <mat-icon
-          *ngIf="!logo && unknownIdentity"
-          svgIcon="perun-info-grey"
-          class="perun-icon perun-icon-identity">
-        </mat-icon>
-      </div>
-      <div>
-        <h2 class="px-3">{{ this.idpProvider }}</h2>
-        <mat-divider></mat-divider>
-
-        <table [dataSource]="dataSource" mat-table class="w-100">
-          <ng-container matColumnDef="name">
-            <th *matHeaderCellDef mat-header-cell></th>
-            <td *matCellDef="let attribute" class="fw-bold px-3" mat-cell>{{attribute.name}}:</td>
-          </ng-container>
-          <ng-container matColumnDef="value">
-            <th *matHeaderCellDef mat-header-cell></th>
-            <td *matCellDef="let attribute" class="pe-3" mat-cell>
-              <span *ngIf="attribute.name !== 'Linked accounts'">{{attribute.value}}</span>
-              <span *ngIf="attribute.name === 'Linked accounts'">
-                <span *ngFor="let account of attribute.value">
-                  {{account}}
-                  <span
-                    [matTooltip]="(account.includes(idpProvider) ? 'LIST_OF_IDENTITIES.DELETE_DISABLED_TOOLTIP' : 'LIST_OF_IDENTITIES.DELETE') | translate">
-                    <button
-                      mat-icon-button
-                      color="warn"
-                      (click)="openDeleteDialog(account)"
-                      [disabled]="account.includes(idpProvider)">
-                      <mat-icon>clear</mat-icon>
-                    </button>
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+  @if (!loading) {
+    <div>
+      @if (unknownIdentity) {
+        <span class="mt-n3">{{
+          'LIST_OF_IDENTITIES.SIGN_NOT_KNOW' | translate
+        }}</span>
+      }
+      @if (!unknownIdentity) {
+        <span class="mt-n3">{{
+          'LIST_OF_IDENTITIES.SIGN_KNOW' | translate
+        }}</span>
+      }
+      <div class="identity-flexbox">
+        <div class="d-flex align-items-center justify-content-center">
+          @if (logo) {
+            <img
+              class="logo text-center"
+              [height]="this.height"
+              [width]="this.width"
+              src="{{ this.logo }}" />
+          }
+          @if (!logo && !unknownIdentity) {
+            <mat-icon svgIcon="perun-verify-grey" class="perun-icon perun-icon-identity">
+            </mat-icon>
+          }
+          @if (!logo && unknownIdentity) {
+            <mat-icon svgIcon="perun-info-grey" class="perun-icon perun-icon-identity"> </mat-icon>
+          }
+        </div>
+        <div>
+          <h2 class="px-3">{{ this.idpProvider }}</h2>
+          <mat-divider></mat-divider>
+          <table [dataSource]="dataSource" mat-table class="w-100">
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef mat-header-cell></th>
+              <td *matCellDef="let attribute" class="fw-bold px-3" mat-cell>{{attribute.name}}:</td>
+            </ng-container>
+            <ng-container matColumnDef="value">
+              <th *matHeaderCellDef mat-header-cell></th>
+              <td *matCellDef="let attribute" class="pe-3" mat-cell>
+                @if (attribute.name !== 'Linked accounts') {
+                  <span>{{attribute.value}}</span>
+                }
+                @if (attribute.name === 'Linked accounts') {
+                  <span>
+                    @for (account of attribute.value; track account) {
+                      <span>
+                        {{account}}
+                        <span
+                          [matTooltip]="(account.includes(idpProvider) ? 'LIST_OF_IDENTITIES.DELETE_DISABLED_TOOLTIP' : 'LIST_OF_IDENTITIES.DELETE') | translate">
+                          <button
+                            mat-icon-button
+                            color="warn"
+                            (click)="openDeleteDialog(account)"
+                            [disabled]="account.includes(idpProvider)">
+                            <mat-icon>clear</mat-icon>
+                          </button>
+                        </span>
+                        <br />
+                      </span>
+                    }
                   </span>
-                  <br />
-                </span>
-              </span>
-            </td>
-          </ng-container>
-          <tr *matRowDef="let attribute; columns: ['name', 'value'];" mat-row></tr>
-        </table>
+                }
+              </td>
+            </ng-container>
+            <tr *matRowDef="let attribute; columns: ['name', 'value'];" mat-row></tr>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  }
 </div>

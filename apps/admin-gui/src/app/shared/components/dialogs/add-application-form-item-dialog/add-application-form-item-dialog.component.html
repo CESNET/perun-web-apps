@@ -10,9 +10,11 @@
   <mat-form-field class="mb-4" subscriptSizing="dynamic">
     <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INPUT_WIDGET' | translate}}:</mat-label>
     <mat-select [(ngModel)]="selectedWidget" disableOptionCentering>
-      <mat-option *ngFor="let widget of widgets" [value]="widget">
-        {{widget | applicationFormItemType}}
-      </mat-option>
+      @for (widget of widgets; track widget) {
+        <mat-option [value]="widget">
+          {{widget | applicationFormItemType}}
+        </mat-option>
+      }
     </mat-select>
     <mat-hint>
       {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.WIDGET_DESCRIPTION.'+selectedWidget | translate}}
@@ -21,9 +23,11 @@
   <mat-form-field>
     <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INSERT_AFTER' | translate}}:</mat-label>
     <mat-select [(ngModel)]="selectedItem" disableOptionCentering>
-      <mat-option *ngFor="let item of items" [value]="item">
-        {{item}}
-      </mat-option>
+      @for (item of items; track item) {
+        <mat-option [value]="item">
+          {{item}}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 </div>

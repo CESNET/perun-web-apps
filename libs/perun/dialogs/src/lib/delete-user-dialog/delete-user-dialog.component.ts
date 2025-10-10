@@ -1,3 +1,5 @@
+import { DeleteEntityDialogComponent } from '../delete-entity-dialog/delete-entity-dialog.component';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { User, UsersManagerService } from '@perun-web-apps/perun/openapi';
@@ -11,6 +13,8 @@ export interface DeleteUserDialogComponentData {
 }
 
 @Component({
+  imports: [CommonModule, DeleteEntityDialogComponent],
+  standalone: true,
   selector: 'perun-web-apps-delete-user-dialog',
   templateUrl: './delete-user-dialog.component.html',
   styleUrls: ['./delete-user-dialog.component.scss'],

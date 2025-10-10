@@ -5,54 +5,55 @@
     matTooltip="{{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.NO_SPONSORS' | translate}}"
     [matTooltipDisabled]="!(findSponsorsAuth && !sponsorshipIsPossible)"
     matTooltipPosition="above">
-    <button
-      data-cy="sponsor-dropdown-button"
-      *ngIf="createAuth || generateAuth"
-      [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
-      [matMenuTriggerFor]="menu"
-      class="me-2 dropdown-toggle"
-      color="accent"
-      mat-flat-button>
-      {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.CREATE' | translate}}
-    </button>
+    @if (createAuth || generateAuth) {
+      <button
+        data-cy="sponsor-dropdown-button"
+        [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
+        [matMenuTriggerFor]="menu"
+        class="me-2 dropdown-toggle"
+        color="accent"
+        mat-flat-button>
+        {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.CREATE' | translate}}
+      </button>
+    }
   </span>
   <mat-menu #menu="matMenu">
-    <button
-      data-cy="sponsor-new-button"
-      (click)="onCreate()"
-      *ngIf="createAuth"
-      class="action-button"
-      mat-menu-item>
-      {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.CREATE_ONE' | translate}}
-    </button>
-    <button
-      data-cy="sponsor-csv-button"
-      (click)="onGenerate()"
-      *ngIf="generateAuth"
-      class="action-button"
-      mat-menu-item>
-      {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.GENERATE' | translate}}
-    </button>
+    @if (createAuth) {
+      <button data-cy="sponsor-new-button" (click)="onCreate()" class="action-button" mat-menu-item>
+        {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.CREATE_ONE' | translate}}
+      </button>
+    }
+    @if (generateAuth) {
+      <button
+        data-cy="sponsor-csv-button"
+        (click)="onGenerate()"
+        class="action-button"
+        mat-menu-item>
+        {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.GENERATE' | translate}}
+      </button>
+    }
   </mat-menu>
-  <button
-    data-cy="sponsor-existing-button"
-    *ngIf="setSponsorshipAuth"
-    (click)="onSponsorExistingMember()"
-    [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
-    color="accent"
-    class="me-2 action-button"
-    mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.SPONSOR_EXISTING' | translate}}
-  </button>
-  <button
-    *ngIf="setSponsorshipAuth"
-    (click)="copySponsoredMembers()"
-    [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
-    color="accent"
-    class="me-2 action-button"
-    mat-flat-button>
-    {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.COPY' | translate}}
-  </button>
+  @if (setSponsorshipAuth) {
+    <button
+      data-cy="sponsor-existing-button"
+      (click)="onSponsorExistingMember()"
+      [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
+      color="accent"
+      class="me-2 action-button"
+      mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.SPONSOR_EXISTING' | translate}}
+    </button>
+  }
+  @if (setSponsorshipAuth) {
+    <button
+      (click)="copySponsoredMembers()"
+      [disabled]="findSponsorsAuth && !sponsorshipIsPossible"
+      color="accent"
+      class="me-2 action-button"
+      mat-flat-button>
+      {{'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.COPY' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'VO_DETAIL.SETTINGS.SPONSORED_MEMBERS.FILTER'">

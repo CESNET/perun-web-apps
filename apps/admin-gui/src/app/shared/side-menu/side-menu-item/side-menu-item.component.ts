@@ -1,11 +1,27 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatRipple } from '@angular/material/core';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { SideMenuLink, SideMenuItem } from '../side-menu.component';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { openClose, rollInOut } from '@perun-web-apps/perun/animations';
 import { ExpandedTilesStoreService, StoreService } from '@perun-web-apps/perun/services';
 import { ExpandableSectionId } from '@perun-web-apps/perun/models';
+import { ActiveSideMenuItemPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MiddleClickRouterLinkDirective,
+    RouterModule,
+    MatRipple,
+    TranslateModule,
+    ActiveSideMenuItemPipe,
+  ],
+  standalone: true,
   selector: 'app-side-menu-item',
   templateUrl: './side-menu-item.component.html',
   styleUrls: ['./side-menu-item.component.scss'],

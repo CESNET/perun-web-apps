@@ -1,7 +1,21 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpirationSelectComponent } from '../expiration-select/expiration-select.component';
+import { ParseDatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatDialogModule,
+    ParseDatePipe,
+    ExpirationSelectComponent,
+    TranslateModule,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-change-expiration-dialog',
   templateUrl: './change-expiration-dialog.component.html',
   styleUrls: ['./change-expiration-dialog.component.scss'],

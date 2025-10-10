@@ -1,5 +1,15 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {
   Application,
   ApplicationMail,
@@ -11,6 +21,9 @@ import {
   TABLE_GROUP_APPLICATIONS_NORMAL,
   TABLE_VO_APPLICATIONS_NORMAL,
 } from '@perun-web-apps/config/table-config';
+import { ApplicationsListComponent } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AppTypeMailTypeMatchPipe } from '@perun-web-apps/perun/pipes';
 
 interface ApplicationsBulkOperationDialogData {
   theme: string;
@@ -28,6 +41,24 @@ interface ApplicationsBulkOperationDialogData {
 }
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    UiAlertsModule,
+    LoadingDialogComponent,
+    TranslateModule,
+    MatTooltip,
+    ApplicationsListComponent,
+    LoaderDirective,
+    AppTypeMailTypeMatchPipe,
+  ],
+  standalone: true,
   selector: 'app-applications-bulk-operation-dialog',
   templateUrl: './applications-bulk-operation-dialog.component.html',
   styleUrls: ['./applications-bulk-operation-dialog.component.scss'],

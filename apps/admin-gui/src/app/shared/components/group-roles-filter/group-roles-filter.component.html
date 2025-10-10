@@ -4,12 +4,9 @@
     <mat-select-trigger>
       {{roles.value | selectedRoleFilterValues : rolesList.length | groupRole}}
     </mat-select-trigger>
-    <mat-option
-      class="{{theme}}"
-      *ngFor="let role of rolesList"
-      [value]="role"
-      >{{role | groupRole}}</mat-option
-    >
+    @for (role of rolesList; track role) {
+      <mat-option class="{{theme}}" [value]="role">{{role | groupRole}}</mat-option>
+    }
   </mat-select>
 </mat-form-field>
 
@@ -19,11 +16,8 @@
     <mat-select-trigger>
       {{roleTypes.value | selectedRoleFilterValues : roleTypesList.length | groupRoleType}}
     </mat-select-trigger>
-    <mat-option
-      class="{{theme}}"
-      *ngFor="let type of roleTypesList"
-      [value]="type"
-      >{{type | groupRoleType}}</mat-option
-    >
+    @for (type of roleTypesList; track type) {
+      <mat-option class="{{theme}}" [value]="type">{{type | groupRoleType}}</mat-option>
+    }
   </mat-select>
 </mat-form-field>

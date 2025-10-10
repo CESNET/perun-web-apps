@@ -1,3 +1,5 @@
-<span *ngFor="let item of menuItems" class="custom-breadcrumb">
-  <a [routerLink]="item.routerLink" class="breadcrumb-text">{{item.label | translate}}</a>
-</span>
+@for (item of menuItems; track item.label) {
+  <span class="custom-breadcrumb">
+    <a [routerLink]="item.routerLink" class="breadcrumb-text">{{item.label | translate}}</a>
+  </span>
+}

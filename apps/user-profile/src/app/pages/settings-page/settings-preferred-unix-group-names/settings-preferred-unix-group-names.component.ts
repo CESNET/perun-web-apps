@@ -1,15 +1,27 @@
+import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUnixGroupDialogComponent } from '../../../components/dialogs/add-unix-group-dialog/add-unix-group-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { RemoveStringValueDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
+import { StringListComponent } from '../../../components/string-list/string-list.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    CustomTranslatePipe,
+    TranslateModule,
+    StringListComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-settings-preferred-unix-group-names',
   templateUrl: './settings-preferred-unix-group-names.component.html',
   styleUrls: ['./settings-preferred-unix-group-names.component.scss'],

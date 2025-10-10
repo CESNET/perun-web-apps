@@ -14,13 +14,14 @@
           [formControl]="nameControl"
           data-cy="service-name-input"
           required />
-        <mat-error *ngIf="nameControl.errors?.['spaceName']">
-          {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
-        </mat-error>
-        <mat-error
-          *ngIf="!nameControl.errors?.['spaceName']"
-          >{{'DIALOGS.CREATE_EDIT_SERVICE.RESTRICTION_NAME' | translate}}</mat-error
-        >
+        @if (nameControl.errors?.['spaceName']) {
+          <mat-error>
+            {{'DIALOGS.NAME_SPACE_ERROR' | translate}}
+          </mat-error>
+        }
+        @if (!nameControl.errors?.['spaceName']) {
+          <mat-error>{{'DIALOGS.CREATE_EDIT_SERVICE.RESTRICTION_NAME' | translate}}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>

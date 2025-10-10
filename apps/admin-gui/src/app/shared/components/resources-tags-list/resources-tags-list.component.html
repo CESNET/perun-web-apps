@@ -17,28 +17,28 @@
       matSortActive="id"
       matSortDirection="asc"
       matSortDisableClear>
-      <ng-container
-        matColumnDef="select"
-        *ngIf="{all: dataSource | isAllSelected: selection.selected.length} as selected">
-        <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [aria-label]="selected.all | masterCheckboxLabel | translate"
-            [checked]="selection.hasValue() && selected.all"
-            [indeterminate]="selection.hasValue() && !selected.all"
-            color="primary">
-          </mat-checkbox>
-        </th>
-        <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
-          <mat-checkbox
-            (change)="$event ? toggleRow(row) : null"
-            (click)="$event.stopPropagation()"
-            [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.tagName}"
-            [checked]="selection.isSelected(row)"
-            color="primary">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+      @if ({all: dataSource | isAllSelected: selection.selected.length}; as selected) {
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="align-checkbox" mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [aria-label]="selected.all | masterCheckboxLabel | translate"
+              [checked]="selection.hasValue() && selected.all"
+              [indeterminate]="selection.hasValue() && !selected.all"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="static-column-size align-checkbox" mat-cell>
+            <mat-checkbox
+              (change)="$event ? toggleRow(row) : null"
+              (click)="$event.stopPropagation()"
+              [aria-label]="selection.isSelected(row) | checkboxLabel | translate: {name: row.tagName}"
+              [checked]="selection.isSelected(row)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+      }
 
       <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -52,17 +52,21 @@
           {{'VO_DETAIL.RESOURCES.TAGS.TAG_NAME' | translate}}
         </th>
         <td *matCellDef="let tag" mat-cell>
-          <div *ngIf="!isChanging.isSelected(tag)">
-            {{tag.tagName}}
-          </div>
-          <div *ngIf="isChanging.isSelected(tag)">
-            <mat-form-field subscriptSizing="dynamic">
-              <input
-                [(ngModel)]="tag.tagName"
-                matInput
-                placeholder="{{'VO_DETAIL.RESOURCES.TAGS.CHANGE_TAG_NAME' | translate}}" />
-            </mat-form-field>
-          </div>
+          @if (!isChanging.isSelected(tag)) {
+            <div>
+              {{tag.tagName}}
+            </div>
+          }
+          @if (isChanging.isSelected(tag)) {
+            <div>
+              <mat-form-field subscriptSizing="dynamic">
+                <input
+                  [(ngModel)]="tag.tagName"
+                  matInput
+                  placeholder="{{'VO_DETAIL.RESOURCES.TAGS.CHANGE_TAG_NAME' | translate}}" />
+              </mat-form-field>
+            </div>
+          }
         </td>
       </ng-container>
 
@@ -70,20 +74,22 @@
         <th *matHeaderCellDef mat-header-cell></th>
         <td *matCellDef="let tag" mat-cell>
           <div class="d-flex justify-content-end">
-            <button
-              (click)="edit(tag)"
-              *ngIf="!isChanging.isSelected(tag)"
-              mat-icon-button
-              matTooltip="{{'VO_DETAIL.RESOURCES.TAGS.EDIT_BUTTON' | translate}}">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              (click)="save(tag)"
-              *ngIf="isChanging.isSelected(tag)"
-              mat-icon-button
-              matTooltip="{{'VO_DETAIL.RESOURCES.TAGS.SAVE_BUTTON' | translate}}">
-              <mat-icon>save</mat-icon>
-            </button>
+            @if (!isChanging.isSelected(tag)) {
+              <button
+                (click)="edit(tag)"
+                mat-icon-button
+                matTooltip="{{'VO_DETAIL.RESOURCES.TAGS.EDIT_BUTTON' | translate}}">
+                <mat-icon>edit</mat-icon>
+              </button>
+            }
+            @if (isChanging.isSelected(tag)) {
+              <button
+                (click)="save(tag)"
+                mat-icon-button
+                matTooltip="{{'VO_DETAIL.RESOURCES.TAGS.SAVE_BUTTON' | translate}}">
+                <mat-icon>save</mat-icon>
+              </button>
+            }
           </div>
         </td>
       </ng-container>
@@ -97,12 +103,14 @@
   </perun-web-apps-table-wrapper>
 </div>
 
-<perun-web-apps-alert *ngIf="!loading && resourceTags.length === 0" alert_type="warn">
-  {{entity === 'vo' ? ('VO_DETAIL.RESOURCES.TAGS.NO_TAGS' | translate) : ('RESOURCE_DETAIL.TAGS.NO_TAGS' | translate)}}
-</perun-web-apps-alert>
+@if (!loading && resourceTags.length === 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{entity === 'vo' ? ('VO_DETAIL.RESOURCES.TAGS.NO_TAGS' | translate) : ('RESOURCE_DETAIL.TAGS.NO_TAGS' | translate)}}
+  </perun-web-apps-alert>
+}
 
-<perun-web-apps-alert
-  *ngIf="dataSource.filteredData.length === 0 && resourceTags.length !== 0"
-  alert_type="warn">
-  {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
-</perun-web-apps-alert>
+@if (dataSource.filteredData.length === 0 && resourceTags.length !== 0) {
+  <perun-web-apps-alert alert_type="warn">
+    {{'SHARED_LIB.UI.ALERTS.NO_FILTER_RESULTS_ALERT' | translate}}
+  </perun-web-apps-alert>
+}

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Group, RegistrarManagerService, Type, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -8,8 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddGroupToVoRegistrationComponent } from '../../../../../shared/components/dialogs/add-group-to-vo-registration/add-group-to-vo-registration.component';
+import { ApplicationFormManageGroupsComponent } from '../../../../components/application-form-manage-groups/application-form-manage-groups.component';
 
 @Component({
+  imports: [CommonModule, ApplicationFormManageGroupsComponent],
+  standalone: true,
   selector: 'app-vo-settings-manage-embedded-groups',
   templateUrl: './vo-settings-manage-embedded-groups.component.html',
   styleUrls: ['./vo-settings-manage-embedded-groups.component.scss'],

@@ -8,6 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DynamicDataSource, isDynamicDataSource } from '@perun-web-apps/perun/models';
 
 @Pipe({
+  standalone: true,
   name: 'isAllSelected',
 })
 export class IsAllSelectedPipe implements PipeTransform {

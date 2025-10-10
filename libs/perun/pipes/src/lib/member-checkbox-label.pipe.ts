@@ -4,6 +4,7 @@ import { RichMember } from '@perun-web-apps/perun/openapi';
 import { isMemberIndirectString } from '@perun-web-apps/perun/utils';
 
 @Pipe({
+  standalone: true,
   name: 'memberCheckboxLabel',
 })
 export class MemberCheckboxLabelPipe implements PipeTransform {
@@ -12,10 +13,14 @@ export class MemberCheckboxLabelPipe implements PipeTransform {
   transform(value: RichMember, groupId?: number): string {
     const indirect = isMemberIndirectString(value);
     if (indirect === 'INDIRECT') {
-      return this.translate.instant('MEMBERS_LIST.CHECKBOX_TOOLTIP_INDIRECT') as string;
+      return this.translate.instant(
+        'SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.CHECKBOX_TOOLTIP_INDIRECT',
+      ) as string;
     }
     if (!groupId && indirect === 'UNALTERABLE') {
-      return this.translate.instant('MEMBERS_LIST.CHECKBOX_TOOLTIP_UNALTERABLE') as string;
+      return this.translate.instant(
+        'SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.CHECKBOX_TOOLTIP_UNALTERABLE',
+      ) as string;
     }
     return '';
   }

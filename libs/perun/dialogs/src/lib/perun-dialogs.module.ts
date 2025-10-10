@@ -79,8 +79,6 @@ import { ChangeOrganizationDialogComponent } from './change-organization-dialog/
     PerunNamespacePasswordFormModule,
     UiMaterialModule,
     MatSortModule,
-  ],
-  declarations: [
     BugReportDialogComponent,
     ChangeExpirationDialogComponent,
     ChangeMemberStatusDialogComponent,

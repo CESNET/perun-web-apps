@@ -1,9 +1,14 @@
+import { RouterModule } from '@angular/router';
+import { PerunFooterComponent, PerunHeaderComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { PreferredLanguageService, StoreService } from '@perun-web-apps/perun/services';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+  imports: [CommonModule, PerunFooterComponent, PerunHeaderComponent, RouterModule],
+  standalone: true,
   selector: 'perun-web-apps-login-screen-base',
   templateUrl: './login-screen-base.component.html',
   styleUrls: ['./login-screen-base.component.scss'],

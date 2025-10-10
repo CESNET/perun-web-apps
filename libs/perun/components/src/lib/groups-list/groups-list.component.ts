@@ -1,3 +1,13 @@
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { RecentlyViewedIconComponent } from '../recently-viewed-icon/recently-viewed-icon.component';
+import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -35,16 +45,61 @@ import {
   PageQuery,
 } from '@perun-web-apps/perun/models';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DisableGroupSelectPipe } from '@perun-web-apps/perun/pipes';
+import {
+  DisableGroupSelectPipe,
+  IsAllSelectedPipe,
+  ParseDatePipe,
+  MemberStatusIconPipe,
+  MasterCheckboxLabelPipe,
+  CheckboxLabelPipe,
+  GroupStatusIconColorPipe,
+} from '@perun-web-apps/perun/pipes';
 import { GroupUtilsService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { CanManageGroupPipe } from '@perun-web-apps/perun/pipes';
+import { GroupExpirationPipe } from '@perun-web-apps/perun/pipes';
+import { FindAttributePipe } from '@perun-web-apps/perun/pipes';
+import { GroupCheckboxTooltipPipe } from '@perun-web-apps/perun/pipes';
+import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
+import { GroupResourceStatusComponent } from '../group-resource-status/group-resource-status.component';
+import { GroupMenuComponent } from '../group-menu/group-menu.component';
 
 @Component({
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    UiAlertsModule,
+    IsAllSelectedPipe,
+    ParseDatePipe,
+    MemberStatusIconPipe,
+    MiddleClickRouterLinkDirective,
+    TableWrapperComponent,
+    RecentlyViewedIconComponent,
+    RouterModule,
+    MatTableModule,
+    MatSortModule,
+    TranslateModule,
+    MatTooltip,
+    CanManageGroupPipe,
+    GroupExpirationPipe,
+    MasterCheckboxLabelPipe,
+    FindAttributePipe,
+    DisableGroupSelectPipe,
+    CheckboxLabelPipe,
+    GroupStatusIconColorPipe,
+    GroupCheckboxTooltipPipe,
+    AuthorizedGroupsCellComponent,
+    GroupResourceStatusComponent,
+    GroupMenuComponent,
+  ],
+  standalone: true,
   selector: 'perun-web-apps-groups-list',
   templateUrl: './groups-list.component.html',
   styleUrls: ['./groups-list.component.scss'],

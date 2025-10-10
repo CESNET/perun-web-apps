@@ -1,9 +1,15 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RolesPageComponent } from '../../../../../shared/components/roles-list/roles-page.component';
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { AuthzResolverService, Group } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { StoreService, RoleService } from '@perun-web-apps/perun/services';
 
 @Component({
+  imports: [CommonModule, RolesPageComponent, MatTabsModule, TranslateModule],
+  standalone: true,
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
   styleUrls: ['./user-roles.component.scss'],

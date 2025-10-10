@@ -4,6 +4,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { RichGroup } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
+  standalone: true,
   name: 'groupSyncToolTip',
 })
 export class GroupSyncToolTipPipe implements PipeTransform {

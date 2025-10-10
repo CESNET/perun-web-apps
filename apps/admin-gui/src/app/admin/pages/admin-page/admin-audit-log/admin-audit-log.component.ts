@@ -1,3 +1,6 @@
+import { TranslateModule } from '@ngx-translate/core';
+import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TABLE_AUDIT_MESSAGES } from '@perun-web-apps/config/table-config';
 import {
@@ -8,8 +11,22 @@ import {
 import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
 import { PageQuery } from '@perun-web-apps/perun/models';
 import { map, startWith, tap } from 'rxjs/operators';
+import { AuditLogSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AuditMessagesListComponent } from '../../../../shared/components/audit-messages-list/audit-messages-list.component';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 @Component({
+  imports: [
+    CommonModule,
+    RefreshButtonComponent,
+    TranslateModule,
+    AuditLogSearchSelectComponent,
+    LoadingTableComponent,
+    AuditMessagesListComponent,
+    LoaderDirective,
+  ],
+  standalone: true,
   selector: 'app-admin-audit-log',
   templateUrl: './admin-audit-log.component.html',
   styleUrls: ['./admin-audit-log.component.scss'],
