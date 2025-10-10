@@ -1,5 +1,30 @@
 Upgrade notes
 
+## [20.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.2...v20.0.0) (2025-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* moved my profile section of admin GUI to user-profile
+app
+* to build, node versions now have to be ^20.19.0 || ^22.12.0 || ^24.0.0 (tested on ^24), should be covered by changes to `pom.xml`
+
+### Features
+
+* move myProfile functionality to user profile application ([5b2a4b9](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5b2a4b93ae3fee334a95d084d6cde779053e3e20))
+* upgrade Angular to version 20 along with its required components as well ([560f622](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/560f622549baa9bb8db6f50838d5d2f047fe4b36))
+
+
+### Bug Fixes
+
+* **admin:** correctly display modifier name in application detail ([32a103c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/32a103c0b39d7c509197edd82f41a06e14c84e5a))
+* **admin:** facility configuration guide correctly retrieves required service attributes ([1ce19f5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/1ce19f5e10d4b66a3b14d3a2277056d98d003631))
+* **admin:** get local cypress E2E test functional again ([b909e8d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b909e8dab1609af39872dfdb657444ab77db29a8))
+* **admin:** side menu artefact line ([302c2fc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/302c2fc6dd9ba7e8ff9dba80ceaf982977912cfd))
+* do not track by whole object in for loop in templates ([f50fd11](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f50fd11af354889570e26c733bd6df24a916e57e))
+* doduble loading on user profile ([f415a2a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f415a2ae866afcc1dac3c3d5bfd1c526668840eb))
+* **profile:** adjust loading indicators on groups and vos pages ([eef3c2e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/eef3c2e60898eedaba3b26ea51c5b7d32cf4dd2b))
+
 ## [19.0.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.1...v19.0.2) (2025-09-04)
 
 
