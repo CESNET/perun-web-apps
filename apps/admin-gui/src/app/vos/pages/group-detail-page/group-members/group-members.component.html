@@ -99,7 +99,7 @@
     [matTooltipDisabled]="!copyInvitationDisabled"
     [matTooltipPosition]="'above'"
     matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate}}">
-    @if (inviteAuth) {
+    @if (copyInviteLinkAuth) {
       <button
         (click)="copyInvitationLink()"
         [disabled]="(group | groupMembersActionButtonDisabled) || copyInvitationDisabled"
