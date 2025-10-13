@@ -35,7 +35,8 @@ import { RPCError } from '@perun-web-apps/perun/models';
 import { ApplicationApproveAnywayDialogComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
 import { GetLabelPipe } from '@perun-web-apps/perun/pipes';
 import { ModifiedNamePipe } from '@perun-web-apps/perun/pipes';
-import { ApplicationStatePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { ApplicationStatePipe } from '@perun-web-apps/perun/pipes';
+import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
   imports: [
@@ -52,8 +53,8 @@ import { ApplicationStatePipe, UserFullNamePipe } from '@perun-web-apps/perun/pi
     MatTooltip,
     GetLabelPipe,
     ModifiedNamePipe,
-    UserFullNamePipe,
     ApplicationStatePipe,
+    AppCreatedByNamePipe,
   ],
   standalone: true,
   selector: 'app-application-detail',
