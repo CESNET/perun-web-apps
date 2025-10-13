@@ -1,5 +1,13 @@
 Upgrade notes
 
+## [20.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.0.0...v20.0.1) (2025-10-13)
+
+
+### Bug Fixes
+
+* **admin:** allow read-only roles to copy the invitation link ([edba66a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/edba66a0491993f6aa6ea1115d548d50fe99d71e))
+* **admin:** display modified/createdBy application values when name not available ([73aa2b2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/73aa2b2f8d688737f96a5e997f5dc692c8b434e3))
+
 ## [20.0.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v19.0.2...v20.0.0) (2025-10-10)
 
 
