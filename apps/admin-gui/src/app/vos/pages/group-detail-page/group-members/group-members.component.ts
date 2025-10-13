@@ -3,10 +3,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import {
   DebounceFilterComponent,
-  RefreshButtonComponent,
   MembersListComponent,
+  RefreshButtonComponent,
 } from '@perun-web-apps/perun/components';
-import { MemberStatusPipe } from '@perun-web-apps/perun/pipes';
+import {
+  GroupMembersActionButtonDisabledPipe,
+  GroupMembersActionButtonDisabledTooltipPipe,
+  MemberStatusPipe,
+} from '@perun-web-apps/perun/pipes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -58,8 +62,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvitePreapprovedMemberDialogComponent } from '../../../../shared/components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
 import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-preapproved-members-dialog/bulk-invite-preapproved-members-dialog.component';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
-import { GroupMembersActionButtonDisabledPipe } from '@perun-web-apps/perun/pipes';
-import { GroupMembersActionButtonDisabledTooltipPipe } from '@perun-web-apps/perun/pipes';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
@@ -117,6 +119,7 @@ export class GroupMembersComponent implements OnInit {
   addAuth: boolean;
   removeAuth: boolean;
   inviteAuth: boolean;
+  copyInviteLinkAuth: boolean;
   preApprovedInviteAuth: boolean;
   inviteDisabled = true;
   preApprovedInviteDisabled = true;
@@ -235,6 +238,11 @@ export class GroupMembersComponent implements OnInit {
       'group-sendInvitation_Vo_Group_String_String_String_policy',
       [this.group],
     );
+    // this policy should pretty much correspond to who we want to allow to copy the link
+    this.copyInviteLinkAuth = this.guiAuthResolver.isAuthorized(
+      'group-getApplicationById_int_policy',
+      [this.group],
+    );
     this.preApprovedInviteAuth = this.guiAuthResolver.isAuthorized(
       'inviteToGroup_Vo_Group_String_String_String_LocalDate_String_policy',
       [this.group],
@@ -250,6 +258,8 @@ export class GroupMembersComponent implements OnInit {
         .subscribe((enabled) => {
           this.inviteDisabled = !enabled;
         });
+    }
+    if (this.copyInviteLinkAuth) {
       this.registrarService
         .isLinkInvitationEnabled(this.group.voId, this.group.id)
         .subscribe((enabled) => {
