@@ -3,8 +3,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import {
   DebounceFilterComponent,
-  RefreshButtonComponent,
   MembersListComponent,
+  RefreshButtonComponent,
 } from '@perun-web-apps/perun/components';
 import { MemberStatusPipe } from '@perun-web-apps/perun/pipes';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,6 +26,7 @@ import {
   ApiRequestConfigurationService,
   EntityStorageService,
   GuiAuthResolver,
+  MembersListService,
   NotificatorService,
   StoreService,
 } from '@perun-web-apps/perun/services';
@@ -55,7 +56,6 @@ import { BulkInviteMembersDialogComponent } from '../../../../shared/components/
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { concatMap, map, tap } from 'rxjs/operators';
-import { MembersListService } from '@perun-web-apps/perun/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -113,6 +113,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
   addAuth: boolean;
   removeAuth: boolean;
   inviteAuth: boolean;
+  copyInviteLinkAuth: boolean;
   inviteDisabled = true;
   routeAuth: boolean;
   blockManualMemberAdding: boolean;
@@ -210,10 +211,17 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
       [this.vo],
     );
 
+    // this policy should pretty much correspond to who we want to allow to copy the link
+    this.copyInviteLinkAuth = this.authzService.isAuthorized('vo-getApplicationById_int_policy', [
+      this.vo,
+    ]);
+
     if (this.inviteAuth) {
       this.registrarService.isInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
         this.inviteDisabled = !enabled;
       });
+    }
+    if (this.copyInviteLinkAuth) {
       this.registrarService.isLinkInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
         this.copyInvitationDisabled = !enabled;
       });
