@@ -6,6 +6,7 @@ import {
   CheckboxLabelPipe,
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
+  ModifiedNamePipe,
   SelectApplicationLinkPipe,
   UserFullNamePipe,
 } from '@perun-web-apps/perun/pipes';
@@ -54,10 +55,10 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
-import { AppFriendlyNamePipe } from '@perun-web-apps/perun/pipes';
 import { AppFedInfoParsePipe } from '@perun-web-apps/perun/pipes';
 import { AppValuePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationTypeIconComponent } from '../application-type-icon/application-type-icon.component';
+import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
 @Component({
   imports: [
     CommonModule,
@@ -76,10 +77,12 @@ import { ApplicationTypeIconComponent } from '../application-type-icon/applicati
     SelectApplicationLinkPipe,
     MasterCheckboxLabelPipe,
     MultiWordDataCyPipe,
-    AppFriendlyNamePipe,
+    UserFullNamePipe,
     AppFedInfoParsePipe,
     AppValuePipe,
     ApplicationTypeIconComponent,
+    ModifiedNamePipe,
+    AppCreatedByNamePipe,
   ],
   standalone: true,
   selector: 'perun-web-apps-applications-list',

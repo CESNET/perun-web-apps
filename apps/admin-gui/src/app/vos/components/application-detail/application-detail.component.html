@@ -105,7 +105,7 @@
           <span
             class="fw-bold"
             >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
-          >: {{invitation.senderName}}
+          >: {{invitation.senderName | modifiedName : invitation.createdBy}}
         </div>
         <div>
           <span
@@ -120,7 +120,7 @@
         <mat-card-title
           ><i class="material-icons red align-text-top">clear</i>
           {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
-          {{application.modifiedByDisplayName | modifiedName}}</mat-card-title
+          {{application.modifiedByDisplayName | modifiedName : application.modifiedBy}}</mat-card-title
         >
         <div>
           <span
@@ -135,7 +135,7 @@
         <mat-card-title
           ><i class="material-icons green align-text-top">done</i>
           {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
-          {{application.modifiedByDisplayName | modifiedName}}</mat-card-title
+          {{application.modifiedByDisplayName | modifiedName : application.modifiedBy}}</mat-card-title
         >
         <div>
           <span
@@ -160,7 +160,7 @@
       <mat-card-title
         ><i class="material-icons align-text-top">redo</i>
         {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate}}:
-        {{application.user === null ? application.createdBy.slice(application.createdBy.lastIndexOf('=') + 1, application.createdBy.length) : application.user | userFullName}}</mat-card-title
+        {{application | appCreatedByName}}</mat-card-title
       >
 
       @if (userMail) {

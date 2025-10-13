@@ -124,7 +124,7 @@
           *matCellDef="let application"
           attr.data-cy="{{application.createdBy}}-createdBy"
           mat-cell>
-          {{application.createdBy.slice(application.createdBy.lastIndexOf('=') + 1, application.createdBy.length)}}
+          {{application | appCreatedByName}}
         </td>
       </ng-container>
       <ng-container matColumnDef="modifiedBy">
@@ -132,7 +132,7 @@
           {{'APPLICATIONS_LIST.MODIFIED_BY' | translate}}
         </th>
         <td *matCellDef="let application" mat-cell>
-          {{application.modifiedBy | parseAppFriendlyName}}
+          {{application.modifiedByDisplayName | modifiedName : application.modifiedBy}}
         </td>
       </ng-container>
       <ng-container matColumnDef="modifiedAt">

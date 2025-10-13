@@ -1,10 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { User } from '@perun-web-apps/perun/openapi';
 
 @Pipe({
   standalone: true,
   name: 'userFullName',
 })
+@Injectable({ providedIn: 'root' })
 export class UserFullNamePipe implements PipeTransform {
   transform<T extends User>(value: T): string {
     const nameParts: string[] = [

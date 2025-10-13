@@ -21,7 +21,12 @@ import {
 } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { SelectApplicationLinkPipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import {
+  ModifiedNamePipe,
+  SelectApplicationLinkPipe,
+  UserFullNamePipe,
+} from '@perun-web-apps/perun/pipes';
+import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
 
 interface ApplicationData extends Application {
   formItem?: ApplicationFormItem;
@@ -46,6 +51,8 @@ interface ApplicationData extends Application {
     TranslateModule,
     UserFullNamePipe,
     SelectApplicationLinkPipe,
+    ModifiedNamePipe,
+    AppCreatedByNamePipe,
   ],
   standalone: true,
   selector: 'app-perun-web-apps-application-list-details',
@@ -226,19 +233,5 @@ export class ApplicationListDetailsComponent implements OnChanges {
       this.dataSource.paginator.firstPage();
     }
     this.loading = false;
-  }
-
-  getFriendlyName(modifiedBy: string): string {
-    const index = modifiedBy.lastIndexOf('/CN=');
-    if (index !== -1) {
-      const string = modifiedBy
-        .slice(index + 4, modifiedBy.length)
-        .replace('/unstructuredName=', ' ');
-      if (string.lastIndexOf('\\') !== -1) {
-        return modifiedBy.slice(modifiedBy.lastIndexOf('=') + 1, modifiedBy.length);
-      }
-      return string;
-    }
-    return modifiedBy;
   }
 }

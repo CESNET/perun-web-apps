@@ -70,7 +70,6 @@ import { GroupRoleTypePipe } from './group-role-type.pipe';
 import { SelectedRoleFilterValuesPipe } from './selected-role-filter-values.pipe';
 import { AppFedInfoParsePipe } from './app-fed-info-parse.pipe';
 import { AppValuePipe } from './app-value.pipe';
-import { AppFriendlyNamePipe } from './app-friendly-name.pipe';
 import { MailNotificationTooltipPipe } from './mail-notification-tooltip.pipe';
 import { AppMailSendingDisabledPipe } from './app-mail-sending-disabled.pipe';
 import { RemoveGroupTooltipPipe } from './remove-group-tooltip.pipe';
@@ -159,7 +158,6 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     AppFedInfoParsePipe,
     AppValuePipe,
     AppTypeMailTypeMatchPipe,
-    AppFriendlyNamePipe,
     SelectedPendingInvitation,
     DisableSubmitOnAppItemEditPipe,
   ],
@@ -242,7 +240,6 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     AppFedInfoParsePipe,
     AppValuePipe,
     AppTypeMailTypeMatchPipe,
-    AppFriendlyNamePipe,
     SelectedPendingInvitation,
     DisableSubmitOnAppItemEditPipe,
   ],
