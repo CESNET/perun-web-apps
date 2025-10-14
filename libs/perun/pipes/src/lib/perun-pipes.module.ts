@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ResourceTagsToStringPipe } from './resource-tags-to-string.pipe';
 import { IsVirtualAttributePipe } from './is-virtual-attribute.pipe';
 import { UserFullNamePipe } from './user-full-name.pipe';
-import { GetMailFromAttributesPipe } from './get-mail-from-attributes.pipe';
+import { GetAttrValueFromAttributesPipe } from './get-attr-value-from-attributes.pipe';
 import { CustomTranslatePipe } from './custom-translate.pipe';
 import { GroupSyncIconPipe } from './group-sync-icon.pipe';
 import { GroupSyncToolTipPipe } from './group-sync-tool-tip.pipe';
@@ -87,7 +87,7 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     UserFullNamePipe,
     ModifiedNamePipe,
     GetLabelPipe,
-    GetMailFromAttributesPipe,
+    GetAttrValueFromAttributesPipe,
     CustomTranslatePipe,
     GroupSyncIconPipe,
     GroupSyncToolTipPipe,
@@ -170,7 +170,7 @@ import { DisableSubmitOnAppItemEditPipe } from './disable-submit-on-app-item-edi
     UserFullNamePipe,
     ModifiedNamePipe,
     GetLabelPipe,
-    GetMailFromAttributesPipe,
+    GetAttrValueFromAttributesPipe,
     CustomTranslatePipe,
     GroupSyncIconPipe,
     GroupSyncToolTipPipe,

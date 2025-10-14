@@ -30,6 +30,15 @@ export class SideMenuItemService {
             tabName: 'identities',
           });
           break;
+        case 'orcid':
+          items.push({
+            label: 'MENU_ITEMS.ORCID',
+            icon: 'orcid',
+            link: '/profile/orcid',
+            activatedRegex: '^/profile/orcid$',
+            tabName: 'orcid',
+          });
+          break;
         case 'services':
           items.push({
             label: 'MENU_ITEMS.SERVICES',

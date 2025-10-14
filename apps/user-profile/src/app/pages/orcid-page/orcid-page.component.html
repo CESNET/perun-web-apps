@@ -1,0 +1,81 @@
+<div class="user-theme">
+  <h1 class="mb-4 mt-3" style="font-size: 1.5rem">
+    {{'ORCID.TITLE' | customTranslate | translate}}
+  </h1>
+  @if (!loading) {
+    @if (orcidExtSources.length === 0) {
+      <perun-web-apps-alert alert_type="warn">
+        {{'ORCID.NO_ACCOUNTS' | customTranslate | translate}}
+      </perun-web-apps-alert>
+
+      <button
+        mat-flat-button
+        class="my-0 ms-1"
+        color="accent"
+        (click)="addOrcidIdentity()"
+        [disabled]="loading">
+        {{'ORCID.CONNECT' | customTranslate | translate}}
+      </button>
+    } @else {
+      <perun-web-apps-alert class="mb-3" alert_type="info">
+        {{ (orcidExtSources.length === 1 ? 'ORCID.INFO' : 'ORCID.INFO_MORE') | customTranslate | translate}}
+        <a
+          class="ms-1"
+          [perunWebAppsMiddleClickRouterLink]="['/profile/identities']"
+          (auxclick)="$event.preventDefault()"
+          [routerLink]="['/profile/identities']">
+          {{'ORCID.LINKED_ACCOUNTS_LINK' | customTranslate | translate}}
+        </a>
+      </perun-web-apps-alert>
+
+      @for (ues of orcidExtSources; track ues.userExtSource.id) {
+        <div class="card p-4 mt-2 mb-4">
+          <div class="d-flex align-items-center mb-3">
+            <h1 class="m-0" style="font-size: 1.4rem">
+              {{ ues.attributes | getAttrValueFromAttributes : NAME_ATTR_NAME}}
+            </h1>
+            <button
+              mat-icon-button
+              aria-label="Link to orcid"
+              (click)="redirectToOrcid(ues)"
+              matTooltip="{{ 'ORCID.TOOLTIP' | customTranslate | translate }}">
+              <mat-icon svgIcon="perun-orcid-green"></mat-icon>
+            </button>
+          </div>
+
+          <table class="word-break-all">
+            <tbody>
+              <tr>
+                <td class="fw-bold py-2">
+                  {{'ORCID.MAIL' | customTranslate | translate}}
+                </td>
+                <td>
+                  {{ ues.attributes | getAttrValueFromAttributes : MAIL_ATTR_NAME  }}
+                </td>
+              </tr>
+              <tr>
+                <td class="fw-bold py-2">
+                  {{'ORCID.PERSONAL_ID' | customTranslate | translate}}
+                </td>
+                <td>
+                  {{ ues.attributes | getAttrValueFromAttributes : ID_ATTR_NAME}}
+                </td>
+              </tr>
+              <tr>
+                <td class="fw-bold py-2">
+                  {{'ORCID.ORCID' | customTranslate | translate}}
+                </td>
+                <td>
+                  {{ ues.attributes | getAttrValueFromAttributes : ORCID_ATTR_NAME}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  }
+  @if (loading) {
+    <mat-spinner class="me-auto ms-auto"></mat-spinner>
+  }
+</div>

@@ -95,6 +95,10 @@ export class CustomIconService {
       name: 'perun-service-identity',
     },
     {
+      url: 'assets/img/PerunWebImages/orcid_green.svg',
+      name: 'perun-orcid-green',
+    },
+    {
       url: 'assets/img/PerunWebImages/service_identity-black.svg',
       name: 'perun-service-identity-black',
     },

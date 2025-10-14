@@ -74,6 +74,11 @@ Items marked with (#) are likely relevant.
 
 - `display_identity_certificates`: boolean, whether to display at “Identities” page identities that are obtained through certificates
 
+### If tab 'orcid' is present:
+
+- `consolidator_url_orcid`: URL of old Consolidator for ORCID identities,
+- (*)`orcid_ext_source_name`: The name of the ORCID external source
+
 ### If tab/s ‘vos’ and/or ‘groups’ are present:
 
 - (*)`registrar_base_url`: URL of Registrar (for extending memberships)

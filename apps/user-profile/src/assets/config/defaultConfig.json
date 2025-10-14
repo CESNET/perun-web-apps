@@ -32,6 +32,7 @@
   ],
   "consolidator_url": "https://perun-dev.cesnet.cz/allfed-ic/ic/",
   "consolidator_url_cert": "https://perun-dev.cesnet.cz/cert-ic/ic/",
+  "consolidator_url_orcid": "https://perun-dev.cesnet.cz/orcid-ic/ic/",
   "registrar_base_url": "https://perun-dev.cesnet.cz/fed/registrar/",
   "use_localhost_linker_url": false,
   "password_help": {
@@ -102,6 +103,7 @@
   "displayed_tabs": [
     "profile",
     "identities",
+    "orcid",
     "services",
     "groups",
     "vos",
@@ -257,5 +259,6 @@
     "sidemenu_active_text_color": "#ffffff",
     "user_color": "#00796b"
   },
-  "export_limit": 1000
+  "export_limit": 1000,
+  "orcid_ext_source_name": "https://login.cesnet.cz/orcid-idp/"
 }

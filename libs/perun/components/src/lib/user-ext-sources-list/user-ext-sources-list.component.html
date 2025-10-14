@@ -48,7 +48,7 @@
           {{'SHARED_LIB.PERUN.COMPONENTS.USER_EXT_SOURCES_LIST.MAIL' | customTranslate | translate}}
         </th>
         <td *matCellDef="let richUserExtSource" class="truncate" mat-cell>
-          {{richUserExtSource.attributes | getMailFromAttributes}}
+          {{richUserExtSource.attributes | getAttrValueFromAttributes : 'mail'}}
         </td>
       </ng-container>
       <ng-container matColumnDef="extSourceName">

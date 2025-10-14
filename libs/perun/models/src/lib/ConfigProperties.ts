@@ -189,6 +189,7 @@ export interface PerunConfig {
   displayed_tabs: string[];
   consolidator_url: string;
   consolidator_url_cert: string;
+  consolidator_url_orcid: string;
   registrar_base_url: string;
   mfa: ProfileMFA;
   preferred_unix_group_names: string[];
@@ -199,6 +200,7 @@ export interface PerunConfig {
   custom_labels?: ProfileCustomLabel[];
   display_identity_certificates?: boolean;
   use_new_consolidator: boolean;
+  orcid_ext_source_name?: string;
 
   // Publications specific
   // Optional
