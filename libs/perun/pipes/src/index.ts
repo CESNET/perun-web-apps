@@ -59,7 +59,7 @@ export * from './lib/active-side-menu-item.pipe';
 export * from './lib/group-members-action-button-disabled.pipe';
 export * from './lib/group-members-action-button-disabled-tooltip.pipe';
 export * from './lib/remove-group-tooltip.pipe';
-export * from './lib/get-mail-from-attributes.pipe';
+export * from './lib/get-attr-value-from-attributes.pipe';
 export * from './lib/multi-word-data-cy.pipe';
 export * from './lib/resource-tags-to-string.pipe';
 export * from './lib/member-organization.pipe';

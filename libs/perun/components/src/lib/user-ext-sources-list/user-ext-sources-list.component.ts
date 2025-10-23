@@ -4,7 +4,7 @@ import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives
 import {
   CheckboxLabelPipe,
   CustomTranslatePipe,
-  GetMailFromAttributesPipe,
+  GetAttrValueFromAttributesPipe,
 } from '@perun-web-apps/perun/pipes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,7 +41,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
     TranslateModule,
     MatTooltip,
     CheckboxLabelPipe,
-    GetMailFromAttributesPipe,
+    GetAttrValueFromAttributesPipe,
   ],
   standalone: true,
   selector: 'perun-web-apps-user-ext-sources-list',

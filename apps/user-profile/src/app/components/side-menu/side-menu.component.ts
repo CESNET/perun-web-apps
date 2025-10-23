@@ -1,7 +1,7 @@
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
 import { CustomTranslatePipe, LocalisedTextPipe } from '@perun-web-apps/perun/pipes';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { SideMenuItem, SideMenuItemService } from '../../services/side-menu-item.service';
@@ -10,6 +10,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatRipple } from '@angular/material/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   imports: [
@@ -40,10 +41,15 @@ export class SideMenuComponent implements OnInit {
     private sideMenuItemService: SideMenuItemService,
     private storeService: StoreService,
     private router: Router,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
     private translateService: TranslateService,
   ) {
     this.currentUrl = router.url;
-
+    this.matIconRegistry.addSvgIcon(
+      'orcid',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/img/PerunWebImages/orcid.svg'),
+    );
     router.events.subscribe((_: NavigationEnd) => {
       if (_ instanceof NavigationEnd) {
         this.currentUrl = _.url;
