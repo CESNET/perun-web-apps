@@ -1,5 +1,25 @@
 Upgrade notes
 
+## [20.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.0.1...v20.1.0) (2025-11-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* new config properties `gui_settings_panel` and `allow_show_id_setting`
+which control the display of the new top panel; defaultConfig(s).json are set in a way
+you probably want it
+
+### Features
+
+* move GUI settings to a header drop-down panel ([46df5bf](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/46df5bf9c4112c2bc20b0480a26bf591d7f45712))
+* **profile:** new page for orcid account ([ca02a62](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ca02a620b896cd845a885a11f7731675660299b7))
+
+
+### Bug Fixes
+
+* config tweaks ([50bf772](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/50bf77255d723674478d94dc5f387395ebac73d2))
+* **profile:** correctly mark required properties in orcid config ([744fd10](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/744fd108f79c8ee3b4a7aaf4794c6717547776dd))
+
 ## [20.0.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.0.0...v20.0.1) (2025-10-13)
 
 

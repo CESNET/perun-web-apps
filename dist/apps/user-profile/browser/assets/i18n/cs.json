@@ -1,7 +1,12 @@
 {
   "NAV": {
     "LOGOUT": "Odhlásit se",
-    "OTHER_APPLICATIONS": "Další aplikace"
+    "OTHER_APPLICATIONS": "Další aplikace",
+    "GUI_CONFIG": {
+      "TITLE": "Nastavení GUI",
+      "PREF_TABLE_PAGE_SIZE": "Velikost stránky v tabulkách",
+      "SHOW_IDS_IN_TABLES": "Zobrazovat ID sloupec"
+    }
   },
   "MENU_ITEMS": {
     "PROFILE": "Profil",
@@ -15,7 +20,8 @@
     "CONSENTS": "Souhlasy",
     "CONSENT_REQUEST": "Žádost o souhlas",
     "AUTHENTICATION": "Autentizace",
-    "SETTINGS": "Nastavení"
+    "SETTINGS": "Nastavení",
+    "ORCID": "ORCID Účet"
   },
   "SETTINGS": {
     "DATA_QUOTAS": "Kvóty dat",
@@ -67,6 +73,18 @@
     "SUCCESSFULLY_ADDED": "Účet byl úspěšně přidán",
     "MESSAGE_SENT_TO_SUPPORT": "Email byl odeslán support týmu",
     "NO_SERVICE_ACCOUNTS": "Nemáte žádne servisní účty"
+  },
+  "ORCID": {
+    "TITLE": "Váš ORCID účet",
+    "NO_ACCOUNTS": "Nemáte připojený žádný ORCID účet",
+    "CONNECT": "Připojit ORCID účet",
+    "INFO": "Váš účet je propojen s tímto ORCID účtem. Pro přehled všech propojených účtů přejděte na",
+    "LINKED_ACCOUNTS_LINK": "Spojené účty",
+    "INFO_MORE": "Váš účet je propojen s těmito ORCID účty. Pro přehled všech propojených účtů přejděte na",
+    "MAIL": "Email",
+    "PERSONAL_ID": "Osobní identifikátor",
+    "ORCID": "ORCID",
+    "TOOLTIP": "Přejít na vaši ORCID stránku"
   },
   "PRIVACY": {
     "TITLE": "Soukromí",

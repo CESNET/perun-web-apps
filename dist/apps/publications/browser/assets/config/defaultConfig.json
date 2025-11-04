@@ -136,5 +136,7 @@
     "user_color": "#00796b"
   },
   "log_out_enabled": true,
-  "export_limit": 1000
+  "export_limit": 1000,
+  "gui_settings_panel": true,
+  "allow_show_id_setting": true
 }
