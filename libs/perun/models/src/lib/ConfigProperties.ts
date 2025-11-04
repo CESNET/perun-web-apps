@@ -227,4 +227,9 @@ export interface PerunConfig {
 
   //User profile + Consolidator
   use_localhost_linker_url: boolean;
+
+  // Admin GUI + User profile + Publications
+  gui_settings_panel?: boolean;
+  // Admin GUI + Publications
+  allow_show_id_setting?: boolean;
 }

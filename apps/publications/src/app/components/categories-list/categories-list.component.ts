@@ -35,6 +35,7 @@ import { UpdateRankDialogComponent } from '../../dialogs/update-rank-dialog/upda
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CheckboxLabelPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -61,7 +62,6 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
   @Input() tableId: string;
-  @Input() displayedColumns: string[] = ['select', 'id', 'name', 'rank'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
   @Output() refreshTable = new EventEmitter<void>();
@@ -70,6 +70,8 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
   cachedSelection: SelectionModel<Category>;
   dataSource: MatTableDataSource<Category>;
   editAuth = false;
+  displayedColumns: string[] = ['select', 'id', 'name', 'rank'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -77,7 +79,16 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
     private dialog: MatDialog,
     private authResolver: GuiAuthResolver,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -111,6 +122,8 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
@@ -213,6 +226,21 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

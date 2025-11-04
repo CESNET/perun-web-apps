@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -42,6 +43,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
 import { GroupResourceStatusComponent } from '../group-resource-status/group-resource-status.component';
 import { ResourceTagsToStringPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -80,20 +82,6 @@ export class ResourcesListComponent implements OnInit, OnChanges {
   @Input() filterValue: string;
   @Input() disableRouting = false;
   @Input() routingVo = false;
-  @Input() displayedColumns: string[] = [
-    'select',
-    'id',
-    'recent',
-    'indirectResourceAssigment',
-    'name',
-    'vo',
-    'voId',
-    'status',
-    'facility',
-    'facilityId',
-    'tags',
-    'description',
-  ];
   @Input() groupToResource: Group;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() recentIds: number[];
@@ -111,13 +99,38 @@ export class ResourcesListComponent implements OnInit, OnChanges {
   removeAuth = false;
   addAuth = false;
   disabledRouting: boolean;
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'recent',
+    'indirectResourceAssigment',
+    'name',
+    'vo',
+    'voId',
+    'status',
+    'facility',
+    'facilityId',
+    'tags',
+    'description',
+  ];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private guiAuthResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
+    private cd: ChangeDetectorRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -176,6 +189,8 @@ export class ResourcesListComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   getDataForColumnFun = (data: ResourceWithStatus, column: string): string => {
@@ -316,6 +331,22 @@ export class ResourcesListComponent implements OnInit, OnChanges {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+        this.cd.detectChanges();
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

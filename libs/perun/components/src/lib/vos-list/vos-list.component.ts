@@ -28,6 +28,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -60,7 +61,6 @@ export class VosListComponent implements OnInit, OnChanges {
   @Input() filterValue: string;
   @Input() selection: SelectionModel<Vo>;
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() displayedColumns: string[] = [];
   @Input() disableRouting = false;
   @Input() disableCheckbox = false;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -73,13 +73,24 @@ export class VosListComponent implements OnInit, OnChanges {
   disabledRouting = false;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<Vo>;
+  displayedColumns: string[] = [];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -126,6 +137,8 @@ export class VosListComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   getDataForColumnFun = (data: Vo, column: string): string => {
@@ -133,9 +146,6 @@ export class VosListComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.setDataSource();
   }
 
@@ -219,6 +229,21 @@ export class VosListComponent implements OnInit, OnChanges {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

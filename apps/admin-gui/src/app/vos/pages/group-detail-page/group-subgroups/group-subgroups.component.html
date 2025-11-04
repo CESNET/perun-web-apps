@@ -77,7 +77,7 @@
           (refreshTable)="refreshTable()"
           [disableMembers]="true"
           [disableRouting]="!routeAuth"
-          [displayedColumns]="deleteAuth ? ['select', 'id', 'name', 'description', 'menu'] : ['id', 'name', 'description', 'menu']"
+          [displayColumns]="deleteAuth ? ['select', 'id', 'name', 'description', 'menu'] : ['id', 'name', 'description', 'menu']"
           [groups]="groups"
           [selection]="selected"
           [filter]="filterValue"

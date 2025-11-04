@@ -7,8 +7,8 @@ import {
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnInit,
@@ -36,6 +36,8 @@ import { NotificationDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ApplicationApproveAnywayDialogComponent } from '../dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -54,11 +56,9 @@ import { ApplicationApproveAnywayDialogComponent } from '../dialogs/application-
   templateUrl: './application-operation-error-list.component.html',
   styleUrls: ['./application-operation-error-list.component.scss'],
 })
-export class ApplicationOperationErrorListComponent implements AfterViewInit, OnInit {
+export class ApplicationOperationErrorListComponent implements OnInit {
   @Input()
   appErrorPairs: [Application, PerunException][];
-  @Input()
-  displayedColumns: string[] = [];
   @Input()
   theme: string;
   @Output()
@@ -81,13 +81,25 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
   );
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   clickable = true;
+  displayedColumns: string[] = [];
+  unfilteredColumns: string[] = [];
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private dialog: MatDialog,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
+    private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -127,12 +139,8 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
     this.selection.changed.subscribe((change) => {
       this.selectedApplicationResults.emit(change.source.selected);
     });
-  }
 
-  ngAfterViewInit(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
+    this.watchForIdColumnChanges();
   }
 
   updateDatasource(): void {
@@ -257,5 +265,20 @@ export class ApplicationOperationErrorListComponent implements AfterViewInit, On
       this.cachedSelection,
       this.selection.compareWith,
     );
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

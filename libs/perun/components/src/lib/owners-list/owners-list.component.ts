@@ -31,6 +31,7 @@ import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -56,7 +57,6 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selection = new SelectionModel<Owner>(true, []);
   @Input() tableId: string;
   @Input() filterValue = '';
-  @Input() displayedColumns: string[] = ['select', 'id', 'name', 'contact', 'type'];
   @Input() loading: boolean;
   @Input() cachedSubject: BehaviorSubject<boolean>;
 
@@ -64,14 +64,25 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<Owner>;
+  displayedColumns: string[] = ['select', 'id', 'name', 'contact', 'type'];
+  unfilteredColumns = this.displayedColumns;
 
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -107,6 +118,8 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngAfterViewInit(): void {
@@ -157,9 +170,6 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.dataSource = new MatTableDataSource<Owner>(this.owners);
     this.setDataSource();
   }
@@ -195,6 +205,21 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

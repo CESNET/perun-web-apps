@@ -23,7 +23,7 @@
     <perun-web-apps-groups-list
       *perunWebAppsLoader="loading; indicator: spinner"
       [loading]="loading"
-      [displayedColumns]="['id', 'vo', 'name', 'description']"
+      [displayColumns]="['id', 'vo', 'name', 'description']"
       [groups]="groupsToShow"
       [disableMembers]="false"
       [filter]="filterValue"

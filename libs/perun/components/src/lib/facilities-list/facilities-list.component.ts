@@ -11,7 +11,15 @@ import {
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EnrichedFacility, Group } from '@perun-web-apps/perun/openapi';
@@ -29,6 +37,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ObjectListValuesComponent } from '../object-list-values/object-list-values.component';
 import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -62,15 +71,6 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
   @Input() recentIds: number[];
   @Input() filterValue: string;
   @Input() tableId: string;
-  @Input() displayedColumns: string[] = [
-    'select',
-    'id',
-    'recent',
-    'name',
-    'description',
-    'destinations',
-    'hosts',
-  ];
   @Input() selection: SelectionModel<EnrichedFacility>;
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -82,14 +82,34 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
   localDisableRouting: boolean;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<EnrichedFacility>;
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'recent',
+    'name',
+    'description',
+    'destinations',
+    'hosts',
+  ];
+  unfilteredColumns = this.displayedColumns;
 
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
+    private cd: ChangeDetectorRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -133,6 +153,8 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   getDataForColumnFun = (data: EnrichedFacility, column: string): string => {
@@ -140,9 +162,6 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.setDataSource();
   }
 
@@ -224,6 +243,22 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+        this.cd.detectChanges();
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

@@ -2,6 +2,11 @@
   "NAV": {
     "LOGOUT": "Log out",
     "OTHER_APPLICATIONS": "Other applications",
+    "GUI_CONFIG": {
+      "TITLE": "GUI Settings",
+      "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
+      "SHOW_IDS_IN_TABLES": "Show IDs in tables"
+    },
     "MENU": "Menu"
   },
   "MENU_ITEMS": {

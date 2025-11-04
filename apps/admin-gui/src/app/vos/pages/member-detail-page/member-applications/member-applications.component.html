@@ -25,7 +25,7 @@
     [loading]="loading$ | async"
     [tableId]="showAllDetails ? detailTableId : tableId"
     [member]="member"
-    [displayedColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
+    [displayColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
     [applications]="applicationsPage$ | async"
     (queryChanged)="nextPage.next($event)"
     (downloadAll)="downloadAll($event)"

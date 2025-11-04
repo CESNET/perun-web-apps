@@ -26,7 +26,7 @@
                       <perun-web-apps-vos-list
                         *perunWebAppsLoader="loading; indicator: spinner"
                         [loading]="loading"
-                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'shortName'] : (userBased ? ['name', 'shortName'] : ['name', 'shortName', 'authzGroup'])"
+                        [displayColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'shortName'] : (userBased ? ['name', 'shortName'] : ['name', 'shortName', 'authzGroup'])"
                         [vos]="vos | async"
                         [disableRouting]="true"
                         [disableCheckbox]="true"
@@ -43,7 +43,7 @@
                       <perun-web-apps-groups-list
                         *perunWebAppsLoader="loading; indicator: spinner"
                         [loading]="loading"
-                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['vo', 'name', 'description'] : (userBased ? ['vo', 'name', 'description'] : ['vo', 'name', 'description', 'authzGroup'])"
+                        [displayColumns]="role.roleName === 'MEMBERSHIP' ? ['vo', 'name', 'description'] : (userBased ? ['vo', 'name', 'description'] : ['vo', 'name', 'description', 'authzGroup'])"
                         [groups]="groups | async"
                         [disableRouting]="true"
                         [disableHeadCheckbox]="true"
@@ -60,7 +60,7 @@
                       <perun-web-apps-resources-list
                         *perunWebAppsLoader="loading; indicator: spinner"
                         [resources]="resources | async"
-                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'vo', 'facility', 'description'] : (userBased ? ['name', 'vo', 'facility', 'description'] : ['name', 'vo', 'facility', 'description', 'authzGroup'])"
+                        [displayColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'vo', 'facility', 'description'] : (userBased ? ['name', 'vo', 'facility', 'description'] : ['name', 'vo', 'facility', 'description', 'authzGroup'])"
                         [authzVoNames]="voNames"
                         [disableRouting]="true"
                         [loading]="loading"
@@ -76,7 +76,7 @@
                       <perun-web-apps-facilities-list
                         *perunWebAppsLoader="loading; indicator: spinner"
                         [loading]="loading"
-                        [displayedColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'description'] : (userBased ? ['name', 'description'] : ['name', 'description', 'authzGroup'])"
+                        [displayColumns]="role.roleName === 'MEMBERSHIP' ? ['name', 'description'] : (userBased ? ['name', 'description'] : ['name', 'description', 'authzGroup'])"
                         [facilities]="facilities | async"
                         [disableRouting]="true"
                         [authzVoNames]="voNames"

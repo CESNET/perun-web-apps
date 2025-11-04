@@ -18,6 +18,11 @@ Items marked with (#) are likely relevant.
 
 - (#)`supported_languages`: array of languages that are supported (for setting application form, sending emails, setting of notification, ...), default is only `en`, currently supported values: `en`, `cs`. If you want to add some new language the GUI team needs to be warned.
 
+- (#)`gui_settings_panel`: whether to display settings panel, where user can change table size and (optionally) displaying of ids in the tables
+  - recommended to set to `true`
+- (#)`allow_show_id_setting`: include "show ids" setting in the gui settings panel
+  - relevant only when `gui_settings_panel` is true; recommended to set to `true`
+
 - `header_label_<language_shortcut>`: represents the name of app, located right next to the logo, usually represents the name of the app or additional text to the logo, if not filled default texts are used
 
 - `auto_service_access_redirect`: automatically redirects users to `/service-access` to log in, use only when we don’t want users to use OIDC

@@ -39,6 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -68,7 +69,6 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   @Input() attributes: Attribute[] = [];
   @Input() selection = new SelectionModel<Attribute>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   @Input() filterValue = '';
   @Input() filterEmpty = false;
   @Input() filterFalse = false;
@@ -83,14 +83,25 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   isMasterCheckboxEnabled: boolean = true;
   dataSource: MatTableDataSource<Attribute>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
     private translate: TranslateService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -132,6 +143,8 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   canBeSelected(attribute: Attribute): boolean {
@@ -139,10 +152,6 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
-
     let filteredAttributes = this.attributes;
     if (this.filterEmpty) {
       filteredAttributes = filteredAttributes.filter((attribute) => {
@@ -276,5 +285,20 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
 
   getAttributeFullName(attribute: Attribute): string {
     return `${attribute.namespace}:${attribute.friendlyName}`;
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

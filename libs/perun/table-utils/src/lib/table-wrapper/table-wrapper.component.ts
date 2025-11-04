@@ -3,6 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Input,
@@ -13,12 +14,13 @@ import {
 import {
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   MatPaginator,
-  PageEvent,
   MatPaginatorModule,
+  PageEvent,
 } from '@angular/material/paginator';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
 import { TableOptionsComponent } from '../table-options/table-options.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [
@@ -50,7 +52,10 @@ export class TableWrapperComponent implements OnInit {
   pageSize = 5;
   paginator: MatPaginator;
 
-  constructor(private tableConfigService: TableConfigService) {}
+  constructor(
+    private tableConfigService: TableConfigService,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @ViewChild(MatPaginator, { static: true }) set matPaginator(pg: MatPaginator) {
     this.paginator = pg;
@@ -63,14 +68,27 @@ export class TableWrapperComponent implements OnInit {
     }
 
     this.paginator._changePageSize(this.pageSize); // Ensures that any subscriber to MatPaginator page event will get correct initial page size
+
+    this.tableConfigService.globalPageSizeChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        const newPageSize = this.tableConfigService.getTablePageSize(this.tableId);
+        if (newPageSize !== this.pageSize) {
+          this.pageSize = newPageSize;
+          this.paginator._changePageSize(newPageSize);
+        }
+      });
   }
 
   pageChangedTop(event: PageEvent): void {
     // let the parent component know about the page change
     this.pageChanged.emit();
     if (this.table) {
-      this.pageSize = event.pageSize;
-      this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);
+      // if we got here on page change or on global page size change, do not set pageSize for this specific table
+      if (this.pageSize !== event.pageSize) {
+        this.pageSize = event.pageSize;
+        this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);
+      }
       this.table.nativeElement.scroll({
         top: 0,
         behavior: 'smooth',
