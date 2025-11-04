@@ -3,7 +3,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import {
   Application,
   ApplicationFormItem,
@@ -27,6 +27,8 @@ import {
   UserFullNamePipe,
 } from '@perun-web-apps/perun/pipes';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface ApplicationData extends Application {
   formItem?: ApplicationFormItem;
@@ -59,7 +61,7 @@ interface ApplicationData extends Application {
   templateUrl: './application-list-details.component.html',
   styleUrls: ['./application-list-details.component.scss'],
 })
-export class ApplicationListDetailsComponent implements OnChanges {
+export class ApplicationListDetailsComponent implements OnChanges, OnInit {
   @Input()
   applications: Application[] = [];
   @Input()
@@ -91,6 +93,7 @@ export class ApplicationListDetailsComponent implements OnChanges {
     'modifiedAt',
     'fedInfo',
   ];
+  unfilteredColumns = this.displayedColumns;
   dataSource: MatTableDataSource<ApplicationData>;
   loading = false;
   table: ApplicationData[] = [];
@@ -101,7 +104,13 @@ export class ApplicationListDetailsComponent implements OnChanges {
     private router: Router,
     private authResolver: GuiAuthResolver,
     private registrarManager: RegistrarManagerService,
+    private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  ngOnInit(): void {
+    this.watchForIdColumnChanges();
+  }
 
   ngOnChanges(): void {
     if (localStorage.getItem('showIds') !== 'true') {
@@ -233,5 +242,20 @@ export class ApplicationListDetailsComponent implements OnChanges {
       this.dataSource.paginator.firstPage();
     }
     this.loading = false;
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

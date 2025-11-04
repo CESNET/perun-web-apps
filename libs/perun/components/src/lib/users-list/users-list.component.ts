@@ -6,6 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -58,6 +59,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ConsentStatusComponent } from '../consent-status/consent-status.component';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 export type userTableColumn =
   | 'select'
@@ -140,6 +142,7 @@ export class UsersListComponent implements OnInit, OnChanges {
     'logins',
     'organization',
   ];
+  unfilteredColumns = this.displayedColumns;
 
   constructor(
     private tableCheckbox: TableCheckbox,
@@ -147,6 +150,8 @@ export class UsersListComponent implements OnInit, OnChanges {
     private translate: TranslateService,
     private consentService: ConsentsManagerService,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   @Input() set users(users: RichUser[] | PaginatedRichUsers) {
@@ -168,8 +173,9 @@ export class UsersListComponent implements OnInit, OnChanges {
   }
 
   @Input() set displayColumns(columns: userTableColumn[]) {
-    if (!this.routeToAdmin) {
-      columns = columns.filter((c) => c !== 'id');
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
     this.displayedColumns = columns;
     this.loadConsents();
@@ -200,9 +206,6 @@ export class UsersListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     if (this.selection) {
       this.cachedSelection = new SelectionModel<RichUser>(
         this.selection.isMultipleSelection(),
@@ -221,6 +224,8 @@ export class UsersListComponent implements OnInit, OnChanges {
         this.child.paginator.firstPage();
       }
     });
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -419,5 +424,21 @@ export class UsersListComponent implements OnInit, OnChanges {
     this.sort.active = this.displayedColumns.find(
       (column) => column !== 'select' && column !== 'user',
     );
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+        this.cd.detectChanges();
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

@@ -38,6 +38,7 @@ import { formatDate, CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -65,15 +66,6 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 export class ServicesStatusListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() servicesStatus: ServiceState[] = [];
-  @Input() displayedColumns: string[] = [
-    'select',
-    'task.id',
-    'service.name',
-    'status',
-    'blocked',
-    'task.startTime',
-    'task.endTime',
-  ];
   @Input() selection = new SelectionModel<ServiceState>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
@@ -86,13 +78,32 @@ export class ServicesStatusListComponent implements OnInit, OnChanges, AfterView
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<ServiceState>;
+  displayedColumns: string[] = [
+    'select',
+    'task.id',
+    'service.name',
+    'status',
+    'blocked',
+    'task.startTime',
+    'task.endTime',
+  ];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'task.id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -171,12 +182,11 @@ export class ServicesStatusListComponent implements OnInit, OnChanges, AfterView
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'task.id');
-    }
     this.dataSource = new MatTableDataSource<ServiceState>(this.servicesStatus);
     this.setDataSource();
     this.dataSource.filterPredicate = (data, filter): boolean => {
@@ -280,6 +290,21 @@ export class ServicesStatusListComponent implements OnInit, OnChanges, AfterView
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'task.id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'task.id');
     }
   }
 }

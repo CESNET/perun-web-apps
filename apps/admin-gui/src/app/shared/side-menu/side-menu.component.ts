@@ -24,19 +24,16 @@ export class SideMenuComponent implements OnInit {
   facilityItems: SideMenuItem[] = [];
   adminItems: SideMenuItem[] = [];
   homeItems: SideMenuItem[] = [];
-  settingsItems: SideMenuItem[] = [];
   serviceIdentitiesItems: SideMenuItem[] = [];
   accessItem: SideMenuItem = this.sideMenuItemService.getAccessManagementItem();
   adminItem: SideMenuItem = this.sideMenuItemService.getAdminItem();
   facilityItem: SideMenuItem = this.sideMenuItemService.getFacilitiesManagementItem();
   homeItem: SideMenuItem = this.sideMenuItemService.getHomeItem();
   userItem: SideMenuItem = this.sideMenuItemService.getUserItem();
-  settingsItem: SideMenuItem = this.sideMenuItemService.getSettingsItem();
   serviceIdentitiesItem: SideMenuItem = this.sideMenuItemService.getServiceIdentitiesItem();
   mobileView = true;
   adminItemOpened = false;
   userItemOpened = false;
-  settingsItemOpened = false;
 
   constructor(
     private sideMenuService: SideMenuService,
@@ -113,9 +110,6 @@ export class SideMenuComponent implements OnInit {
     this.sideMenuService.homeItemsChange.subscribe((items) => {
       this.setHomeItems(items);
     });
-    this.sideMenuService.settingsItemsChange.subscribe((items) => {
-      this.setSettingsItems(items);
-    });
     this.sideMenuService.serviceIdentitiesItemsChange.subscribe((items) => {
       this.setServiceIdentitiesItems(items);
     });
@@ -131,76 +125,54 @@ export class SideMenuComponent implements OnInit {
   private reset(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
     SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptHome(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
     SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptFacility(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
     SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptAccess(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
     SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptAdmin(): void {
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
-    SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
-  }
-
-  private resetExceptSettings(): void {
-    this.userItemOpened = false;
-    this.adminItemOpened = false;
-    SideMenuComponent.setNewItems(this.homeItems, []);
-    SideMenuComponent.setNewItems(this.accessItems, []);
-    SideMenuComponent.setNewItems(this.facilityItems, []);
-    SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.serviceIdentitiesItems, []);
   }
 
   private resetExceptServiceIdentities(): void {
     this.adminItemOpened = false;
     this.userItemOpened = false;
-    this.settingsItemOpened = false;
     SideMenuComponent.setNewItems(this.homeItems, []);
     SideMenuComponent.setNewItems(this.adminItems, []);
     SideMenuComponent.setNewItems(this.accessItems, []);
-    SideMenuComponent.setNewItems(this.settingsItems, []);
     SideMenuComponent.setNewItems(this.facilityItems, []);
   }
 
@@ -224,12 +196,6 @@ export class SideMenuComponent implements OnInit {
     this.adminItemOpened = items.length === 0;
     this.resetExceptAdmin();
     SideMenuComponent.setNewItems(this.adminItems, items);
-  }
-
-  private setSettingsItems(items: SideMenuItem[]): void {
-    this.settingsItemOpened = items.length === 0;
-    this.resetExceptSettings();
-    SideMenuComponent.setNewItems(this.settingsItems, items);
   }
 
   private setServiceIdentitiesItems(items: SideMenuItem[]): void {

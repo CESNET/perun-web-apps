@@ -24,6 +24,11 @@
     "PROFILE": "Profile",
     "NOTIFICATIONS_TOOLTIP": "Recent notifications",
     "OTHER_APPLICATIONS": "Other applications",
+    "GUI_CONFIG": {
+      "TITLE": "GUI Settings",
+      "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
+      "SHOW_IDS_IN_TABLES": "Show IDs in tables"
+    },
     "MENU": "Menu"
   },
   "MAIN_MENU": {
@@ -2864,10 +2869,6 @@
         "DELETE": "Disconnect",
         "NO_IDENTITIES": "No service accounts connected."
       },
-      "GUI_CONFIG": {
-        "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
-        "TITLE": "Gui Configuration"
-      },
       "ASSOCIATED_USERS": {
         "TITLE": "Account managers",
         "ADD": "Connect",
@@ -2893,13 +2894,6 @@
       "RESOURCE": "Resources",
       "FACILITY": "Facilities",
       "FILTER": "Filter by name, id or description"
-    }
-  },
-  "SETTINGS": {
-    "GUI_CONFIG": {
-      "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
-      "TITLE": "Gui Configuration",
-      "SHOW_IDS_IN_TABLES": "Show IDs in tables"
     }
   },
   "ATTRIBUTE_PAGE": {

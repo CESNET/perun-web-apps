@@ -41,6 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 import { NameSpaceToDefPipe } from '../../pipes/name-space-to-def.pipe';
 import { AttributeTypeCleanPipe } from '../../pipes/attribute-type-clean.pipe';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -74,17 +75,6 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   cachedSubject: BehaviorSubject<boolean>;
   @Input()
-  displayedColumns: string[] = [
-    'select',
-    'id',
-    'friendlyName',
-    'displayName',
-    'entity',
-    'namespace',
-    'type',
-    'unique',
-  ];
-  @Input()
   filterValue: string;
   @Input()
   tableId: string;
@@ -102,6 +92,17 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<AttributeDefinition>;
   isMasterCheckboxEnabled: boolean = true;
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'friendlyName',
+    'displayName',
+    'entity',
+    'namespace',
+    'type',
+    'unique',
+  ];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -110,7 +111,16 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
     private tableCheckbox: TableCheckbox,
     private consentRelatedPipe: ConsentRelatedAttributePipe,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -160,15 +170,14 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   canBeSelected = (row: AttributeDefinition): boolean =>
     !this.consentRelatedPipe.transform(row.namespace, this.serviceEnabled, this.consentRequired);
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.dataSource = new MatTableDataSource<AttributeDefinition>(this.definitions);
     this.setDataSource();
 
@@ -288,6 +297,21 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

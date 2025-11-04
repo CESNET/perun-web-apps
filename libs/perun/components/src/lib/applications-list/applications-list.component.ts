@@ -59,6 +59,7 @@ import { AppFedInfoParsePipe } from '@perun-web-apps/perun/pipes';
 import { AppValuePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationTypeIconComponent } from '../application-type-icon/application-type-icon.component';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 @Component({
   imports: [
     CommonModule,
@@ -93,7 +94,6 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @Input() displayedColumns: string[] = [];
   @Input() fedColumnsFriendly: string[] = [];
   @Input() tableId: string;
   @Input() disableRouting = false;
@@ -116,11 +116,14 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
 
   // contains all selected applications across all pages
   cachedSelection: SelectionModel<Application>;
+  displayedColumns: string[] = [];
+  unfilteredColumns = this.displayedColumns;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private translate: PerunTranslateService,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
 
@@ -145,6 +148,14 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
     this.dataSource.filter = value;
   }
 
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
+
   ngOnInit(): void {
     if (this.selection) {
       this.cachedSelection = new SelectionModel<Application>(
@@ -164,6 +175,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         this.child.paginator.firstPage();
       }
     });
+    this.watchForIdColumnChanges();
     if (this.loading || !this.displayedColumns.includes('fedInfo')) return;
     const data = this.dataSource.data[0] as RichApplication;
     if (data) {
@@ -190,9 +202,6 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         this.fedAttrs.find((attr) => attr.friendlyName === name)?.displayName || '',
       ),
     );
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
   }
 
   isAllSelected(): boolean {
@@ -333,6 +342,21 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
         );
       this.dataSource.sortData = (data: Application[], sort: MatSort): Application[] =>
         customDataSourceSort(data, sort, getSortDataColumn);
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

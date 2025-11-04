@@ -28,6 +28,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -52,7 +53,6 @@ import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 export class ConsentHubsListComponent implements OnInit, OnChanges {
   @Input() consentHubs: ConsentHub[];
   @Input() filterValue = '';
-  @Input() displayedColumns: string[] = ['select', 'id', 'name', 'enforceConsents', 'facilities'];
   @Input() tableId: string;
   @Input() selection = new SelectionModel<ConsentHub>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
@@ -63,6 +63,8 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<ConsentHub>;
   exporting = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  displayedColumns: string[] = ['select', 'id', 'name', 'enforceConsents', 'facilities'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -71,8 +73,17 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
     private notificator: NotificatorService,
     private translate: TranslateService,
     private consentsManager: ConsentsManagerService,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -98,9 +109,6 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     if (this.selection) {
       this.cachedSelection = new SelectionModel<ConsentHub>(
         this.selection.isMultipleSelection(),
@@ -114,6 +122,8 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
@@ -231,5 +241,20 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
         );
       }
     });
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

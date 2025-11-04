@@ -29,6 +29,7 @@ import { AuthenticationAccountActivationComponent } from './pages/authentication
 import { PasswordResetComponent, SettingsSSHKeysComponent } from '@perun-web-apps/perun/components';
 import { BansPageComponent } from './pages/bans-page/bans-page.component';
 import { RolesPageComponent } from './pages/roles-page/roles-page.component';
+import { OrcidPageComponent } from './pages/orcid-page/orcid-page.component';
 
 export const appRoutes: Routes = [
   {
@@ -62,6 +63,11 @@ export const appRoutes: Routes = [
         path: 'identities',
         component: IdentitiesPageComponent,
         data: { breadcrumb: 'MENU_ITEMS.IDENTITIES' },
+      },
+      {
+        path: 'orcid',
+        component: OrcidPageComponent,
+        data: { breadcrumb: 'MENU_ITEMS.ORCID' },
       },
       {
         path: 'groups',

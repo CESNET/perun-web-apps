@@ -26,20 +26,6 @@
   <app-side-menu-item [item]="userItem" [root]="true" (click)="redirectToProfile()">
   </app-side-menu-item>
 
-  @if (authResolver.isPerunAdminOrObserver()) {
-    <app-side-menu-item
-      [item]="adminItem"
-      [showLinks]="adminItemOpened"
-      [root]="true"
-      data-cy="admin-button">
-    </app-side-menu-item>
-  }
-  @for (item of adminItems; track item.label; let i = $index) {
-    <div @rollInOut class="overflow-hidden">
-      <app-side-menu-item [item]="item" [showLinks]="true"> </app-side-menu-item>
-    </div>
-  }
-
   @if (authResolver.getHasServiceIdentities()) {
     <app-side-menu-item [item]="serviceIdentitiesItem" [root]="true"> </app-side-menu-item>
   }
@@ -51,12 +37,17 @@
     </div>
   }
 
-  <app-side-menu-item [item]="settingsItem" [showLinks]="settingsItemOpened" [root]="true">
-  </app-side-menu-item>
-  @for (item of settingsItems; track item.label; let i = $index) {
+  @if (authResolver.isPerunAdminOrObserver()) {
+    <app-side-menu-item
+      [item]="adminItem"
+      [showLinks]="adminItemOpened"
+      [root]="true"
+      data-cy="admin-button">
+    </app-side-menu-item>
+  }
+  @for (item of adminItems; track item.label; let i = $index) {
     <div @rollInOut class="overflow-hidden">
-      <app-side-menu-item [item]="item" [showLinks]="i === settingsItems.length - 1">
-      </app-side-menu-item>
+      <app-side-menu-item [item]="item" [showLinks]="true"> </app-side-menu-item>
     </div>
   }
 </div>

@@ -30,6 +30,9 @@ Items marked with (#) are likely relevant.
 
 - (#)`local_account_namespace`: namespace of user local account
 
+- (#)`gui_settings_panel`: whether to display settings panel, where user can change table size
+  - recommended to set to `true`
+
 - `auto_service_access_redirect`: automatically redirects users to `/service-access` to log in, use only when we don’t want users to use OIDC
 
 - `profile_page_attributes`: an array of objects containing info about user attributes displayed on “profile” page
@@ -73,6 +76,11 @@ Items marked with (#) are likely relevant.
 - `use_localhost_linker_url`: for testing purposes, when we want to test the consolidator/user-profile and linker both at once, we set this to true, in any other case keep it false
 
 - `display_identity_certificates`: boolean, whether to display at “Identities” page identities that are obtained through certificates
+
+### If tab 'orcid' is present:
+
+- (*)`consolidator_url_orcid`: URL of old Consolidator for ORCID identities
+- (*)`orcid_ext_source_name`: The name of the ORCID external source
 
 ### If tab/s ‘vos’ and/or ‘groups’ are present:
 

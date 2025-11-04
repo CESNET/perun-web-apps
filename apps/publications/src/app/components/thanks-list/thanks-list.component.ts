@@ -31,6 +31,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -54,7 +55,6 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() thanks: ThanksForGUI[] = [];
   @Input() filterValue = '';
   @Input() tableId: string;
-  @Input() displayedColumns = ['select', 'id', 'name', 'createdBy'];
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() selection = new SelectionModel<Owner>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
@@ -63,12 +63,23 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   dataSource: MatTableDataSource<ThanksForGUI>;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<Owner>;
+  displayedColumns = ['select', 'id', 'name', 'createdBy'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -100,6 +111,8 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
@@ -185,6 +198,21 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
         customDataSourceSort(data, sort, ThanksListComponent.getDataForColumn);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

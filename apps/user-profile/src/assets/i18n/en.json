@@ -2,6 +2,11 @@
   "NAV": {
     "LOGOUT": "Log out",
     "OTHER_APPLICATIONS": "Other applications",
+    "GUI_CONFIG": {
+      "TITLE": "GUI Settings",
+      "PREF_TABLE_PAGE_SIZE": "Preferred table page size",
+      "SHOW_IDS_IN_TABLES": "Show IDs in tables"
+    },
     "MENU": "Menu"
   },
   "MENU_ITEMS": {
@@ -16,7 +21,8 @@
     "CONSENTS": "Consents",
     "CONSENT_REQUEST": "Consent request",
     "AUTHENTICATION": "Authentication",
-    "SETTINGS": "Settings"
+    "SETTINGS": "Settings",
+    "ORCID": "ORCID Account"
   },
   "SETTINGS": {
     "DATA_QUOTAS": "Data quotas",
@@ -68,6 +74,18 @@
     "SUCCESSFULLY_ADDED": "Account was successfully added",
     "MESSAGE_SENT_TO_SUPPORT": "Email was sent to support team",
     "NO_SERVICE_ACCOUNTS": "No service accounts connected"
+  },
+  "ORCID": {
+    "TITLE": "Your ORCID account",
+    "NO_ACCOUNTS": "You do not have any ORCID account connected",
+    "CONNECT": "Connect ORCID account",
+    "INFO": "Your account is connected with this ORCID account. For an overview of all your linked accounts see",
+    "LINKED_ACCOUNTS_LINK": "Linked accounts",
+    "INFO_MORE": "Your account is linked with these ORCID accounts. For an overview of all your linked accounts see",
+    "MAIL": "Mail",
+    "PERSONAL_ID": "Personal identifier",
+    "ORCID": "ORCID",
+    "TOOLTIP": "Go to your ORCID page"
   },
   "PRIVACY": {
     "TITLE": "Privacy",

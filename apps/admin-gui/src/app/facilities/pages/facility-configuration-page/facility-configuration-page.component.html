@@ -31,7 +31,7 @@
           (selectionChanged)="singleServiceSelected()"
           [loading]="processing"
           [disableRouting]="true"
-          [displayedColumns]="['select', 'id', 'name', 'enabled', 'description']"
+          [displayColumns]="['select', 'id', 'name', 'enabled', 'description']"
           [selection]="selection"
           [cachedSubject]="cachedSubject"
           [filterValue]="filterValue"
@@ -138,7 +138,7 @@
                   *perunWebAppsLoader="processing; indicator: spinner"
                   [loading]="processing"
                   [disableRouting]="true"
-                  [displayedColumns]="['id', 'name']"
+                  [displayColumns]="['id', 'name']"
                   [hosts]="hosts">
                 </app-hosts-list>
               </div>
@@ -154,7 +154,7 @@
               <app-services-list
                 [loading]="processing"
                 [disableRouting]="true"
-                [displayedColumns]="['id', 'name', 'enabled', 'script', 'description']"
+                [displayColumns]="['id', 'name', 'enabled', 'script', 'description']"
                 [services]="selection.selected">
               </app-services-list>
             </mat-expansion-panel>
@@ -170,7 +170,7 @@
               <h1 class="page-subtitle">{{'FACILITY_CONFIGURATION.ATTS' | translate}}</h1>
               <perun-web-apps-attributes-list
                 [loading]="processing"
-                [displayedColumns]="['id', 'displayName', 'value', 'description']"
+                [displayColumns]="['id', 'displayName', 'value', 'description']"
                 [attributes]="filteredAttributes"
                 [emptyListText]="'FACILITY_CONFIGURATION.EMPTY_REQ_ATT'">
               </perun-web-apps-attributes-list>
@@ -191,7 +191,7 @@
                   *perunWebAppsLoader="processing; indicator: spinner"
                   [loading]="processing"
                   [destinations]="destinations"
-                  [displayedColumns]="['destinationId', 'service', 'warn', 'destination', 'type', 'propagationType']"
+                  [displayColumns]="['destinationId', 'service', 'warn', 'destination', 'type', 'propagationType']"
                   [services]="serviceIds">
                 </app-perun-web-apps-destination-list>
               </div>

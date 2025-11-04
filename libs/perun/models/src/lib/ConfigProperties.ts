@@ -189,16 +189,18 @@ export interface PerunConfig {
   displayed_tabs: string[];
   consolidator_url: string;
   consolidator_url_cert: string;
+  consolidator_url_orcid: string;
   registrar_base_url: string;
   mfa: ProfileMFA;
   preferred_unix_group_names: string[];
+  use_new_consolidator: boolean;
+  orcid_ext_source_name: string;
   // Optional
   local_account_namespace?: string;
   profile_page_attributes?: ProfileAttribute[];
   external_services?: ProfileExtService[];
   custom_labels?: ProfileCustomLabel[];
   display_identity_certificates?: boolean;
-  use_new_consolidator: boolean;
 
   // Publications specific
   // Optional
@@ -225,4 +227,9 @@ export interface PerunConfig {
 
   //User profile + Consolidator
   use_localhost_linker_url: boolean;
+
+  // Admin GUI + User profile + Publications
+  gui_settings_panel?: boolean;
+  // Admin GUI + Publications
+  allow_show_id_setting?: boolean;
 }

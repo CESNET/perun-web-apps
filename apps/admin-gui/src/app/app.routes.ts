@@ -44,10 +44,6 @@ export const appRoutes: Routes = [
     loadChildren: () => import('./facilities/facilities.routes').then((m) => m.facilitiesRoutes),
   },
   {
-    path: 'settings',
-    loadChildren: () => import('./settings/settings.routes').then((m) => m.settingsRoutes),
-  },
-  {
     path: 'service-identities',
     loadChildren: () => import('./users/users.routes').then((m) => m.usersRoutes),
   },

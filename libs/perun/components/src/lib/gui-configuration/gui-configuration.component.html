@@ -1,0 +1,27 @@
+<div
+  class="d-flex flex-column justify-content-center align-items-center mx-2 mt-2"
+  (click)="$event.stopPropagation()">
+  <mat-form-field>
+    <mat-label>{{'NAV.GUI_CONFIG.PREF_TABLE_PAGE_SIZE' | translate}}</mat-label>
+    <mat-select
+      [(value)]="preferredTablePageSize"
+      (valueChange)="updatePreferredTablePageSize()"
+      (click)="$event.stopPropagation()">
+      @for (value of tablePageSizeOptions; track value) {
+        <mat-option [value]="value">
+          {{value}}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  @if (showIdSettingEnabled) {
+    <mat-slide-toggle
+      labelPosition="before"
+      class="mt-1 mb-4 ms-2 w-100 spaced-toggle"
+      [ngModel]="showIds"
+      (toggleChange)="toggleShowIds()"
+      (click)="$event.stopPropagation()">
+      {{'NAV.GUI_CONFIG.SHOW_IDS_IN_TABLES' | translate}}
+    </mat-slide-toggle>
+  }
+</div>

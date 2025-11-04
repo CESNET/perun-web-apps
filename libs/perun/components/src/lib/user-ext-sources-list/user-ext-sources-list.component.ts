@@ -4,7 +4,7 @@ import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives
 import {
   CheckboxLabelPipe,
   CustomTranslatePipe,
-  GetMailFromAttributesPipe,
+  GetAttrValueFromAttributesPipe,
 } from '@perun-web-apps/perun/pipes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -26,6 +26,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -41,7 +42,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
     TranslateModule,
     MatTooltip,
     CheckboxLabelPipe,
-    GetMailFromAttributesPipe,
+    GetAttrValueFromAttributesPipe,
   ],
   standalone: true,
   selector: 'perun-web-apps-user-ext-sources-list',
@@ -53,14 +54,6 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   @Input() selection: SelectionModel<RichUserExtSource> = new SelectionModel<RichUserExtSource>();
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue = '';
-  @Input() displayedColumns: string[] = [
-    'select',
-    'id',
-    'mail',
-    'extSourceName',
-    'login',
-    'lastAccess',
-  ];
   @Input() tableId: string;
   @Input() extSourceNameHeader: string;
   @Input() loginHeader: string;
@@ -73,6 +66,8 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   userId: number;
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<RichUserExtSource>;
+  displayedColumns: string[] = ['select', 'id', 'mail', 'extSourceName', 'login', 'lastAccess'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -80,7 +75,16 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -127,12 +131,11 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.dataSource = new MatTableDataSource<RichUserExtSource>(this.userExtSources);
     this.setDataSource();
   }
@@ -193,6 +196,21 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

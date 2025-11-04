@@ -14,7 +14,7 @@
       <perun-web-apps-vos-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [displayedColumns]="['id', 'recent', 'shortName', 'name']"
+        [displayColumns]="['id', 'recent', 'shortName', 'name']"
         [recentIds]="this.recentIds"
         [vos]="this.objects">
       </perun-web-apps-vos-list>
@@ -25,7 +25,7 @@
       <perun-web-apps-groups-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [displayedColumns]="['id', 'recent', 'vo', 'name', 'description']"
+        [displayColumns]="['id', 'recent', 'vo', 'name', 'description']"
         [groups]="this.objects"
         [recentIds]="recentIds">
       </perun-web-apps-groups-list>
@@ -36,7 +36,7 @@
       <perun-web-apps-resources-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [displayedColumns]="['id', 'recent', 'name', 'vo', 'facility']"
+        [displayColumns]="['id', 'recent', 'name', 'vo', 'facility']"
         [resources]="this.objects"
         [recentIds]="recentIds"
         [routingVo]="true">
@@ -48,7 +48,7 @@
       <perun-web-apps-facilities-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [displayedColumns]="['id', 'recent', 'name', 'description']"
+        [displayColumns]="['id', 'recent', 'name', 'description']"
         [facilities]="this.objects"
         [recentIds]="recentIds">
       </perun-web-apps-facilities-list>

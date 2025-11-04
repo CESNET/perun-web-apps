@@ -38,6 +38,7 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AppMailSendingDisabledPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -71,8 +72,6 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
   @Input()
   groupId: number;
   @Input()
-  displayedColumns: string[] = ['select', 'id', 'mailType', 'appType', 'send'];
-  @Input()
   disableSend = false;
   @Input()
   selection = new SelectionModel<ApplicationMail>(true, []);
@@ -92,6 +91,8 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
   cachedSelection: SelectionModel<ApplicationMail>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   dataSource: MatTableDataSource<ApplicationMail>;
+  displayedColumns: string[] = ['select', 'id', 'mailType', 'appType', 'send'];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -102,7 +103,16 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -123,6 +133,7 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
         }
       });
     }
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
@@ -239,6 +250,21 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
     if (this.dataSource) {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.child.paginator;
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

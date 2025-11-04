@@ -67,6 +67,17 @@
       </button>
     }
 
+    @if (guiConfigPanelEnabled) {
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="tableMenu"
+        [matTooltip]="'NAV.GUI_CONFIG.TITLE' | translate">
+        <mat-icon [ngStyle]="{'color': iconColor}"> settings </mat-icon>
+      </button>
+      <mat-menu #tableMenu="matMenu">
+        <perun-web-apps-gui-configuration> </perun-web-apps-gui-configuration>
+      </mat-menu>
+    }
     <div class="d-flex flex-nowrap align-items-center">
       @if ((otherAppUrls | keyvalue)?.length && showOtherApps) {
         <button
@@ -94,7 +105,6 @@
           </button>
         }
       </mat-menu>
-
       @if (logoutEnabled) {
         <button mat-icon-button (click)="onLogOut()" [matTooltip]="'NAV.LOGOUT'|translate">
           <mat-icon>logout</mat-icon>

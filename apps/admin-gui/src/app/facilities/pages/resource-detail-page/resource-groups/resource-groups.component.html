@@ -40,7 +40,7 @@
     [disableMembers]="false"
     [groups]="assignedGroups"
     [disableRouting]="assignedGroups[0] ? !guiAuthResolver.isAuthorized('getGroupById_int_policy', [assignedGroups[0]]) : false"
-    [displayedColumns]="['select', 'id', 'indirectGroupAssigment', 'name', 'status', 'description']"
+    [displayColumns]="['select', 'id', 'indirectGroupAssigment', 'name', 'status', 'description']"
     [filter]="filteredValue"
     [resourceId]="resource.id"
     [selection]="selected"

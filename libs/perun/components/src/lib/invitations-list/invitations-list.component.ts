@@ -42,6 +42,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -70,15 +71,6 @@ export class InvitationsListComponent implements OnInit, OnChanges {
   @Input() selection: SelectionModel<InvitationWithSender>;
   @Input() cacheSubject: BehaviorSubject<boolean>;
   @Input() resetPagination: BehaviorSubject<boolean>;
-  @Input() displayedColumns: string[] = [
-    'checkbox',
-    'id',
-    'status',
-    'expiration',
-    'receiverName',
-    'receiverEmail',
-    'senderName',
-  ];
   @Input() groupId: number;
   @Input() tableId: string;
   @Input() loading: boolean;
@@ -95,9 +87,20 @@ export class InvitationsListComponent implements OnInit, OnChanges {
 
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<InvitationWithSender>;
+  displayedColumns: string[] = [
+    'checkbox',
+    'id',
+    'status',
+    'expiration',
+    'receiverName',
+    'receiverEmail',
+    'senderName',
+  ];
+  unfilteredColumns = this.displayedColumns;
 
   constructor(
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
 
@@ -122,6 +125,14 @@ export class InvitationsListComponent implements OnInit, OnChanges {
     this.dataSource.filter = value;
   }
 
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
+
   ngOnInit(): void {
     if (this.selection) {
       this.cachedSelection = new SelectionModel<InvitationWithSender>(
@@ -141,6 +152,8 @@ export class InvitationsListComponent implements OnInit, OnChanges {
         this.child.paginator.firstPage();
       }
     });
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -317,6 +330,21 @@ export class InvitationsListComponent implements OnInit, OnChanges {
         data: InvitationWithSender[],
         sort: MatSort,
       ): InvitationWithSender[] => customDataSourceSort(data, sort, getSortDataColumn);
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

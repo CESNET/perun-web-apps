@@ -10,7 +10,7 @@
   <perun-web-apps-vos-list
     *perunWebAppsLoader="memberRefresh; indicator: spinner"
     [loading]="memberRefresh"
-    [displayedColumns]="displayedColumns"
+    [displayColumns]="displayedColumns"
     [tableId]="memberTableId"
     [filterValue]="memberFilterValue"
     [vos]="vosWhereIsMember">
@@ -28,7 +28,7 @@
     <perun-web-apps-vos-list
       *perunWebAppsLoader="adminRefresh; indicator: spinner"
       [loading]="adminRefresh"
-      [displayedColumns]="displayedColumns"
+      [displayColumns]="displayedColumns"
       [tableId]="adminTableId"
       [filterValue]="adminFilterValue"
       [vos]="vosWhereIsAdmin">
