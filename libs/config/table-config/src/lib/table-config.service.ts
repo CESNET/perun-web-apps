@@ -28,7 +28,9 @@ export class TableConfigService {
   }
 
   setTablePageSize(tableId: string, value: number): void {
-    this.guiConfigService.setNumber(LS_TABLE_PREFIX + tableId, value);
+    if (tableId !== undefined) {
+      this.guiConfigService.setNumber(LS_TABLE_PREFIX + tableId, value);
+    }
   }
 
   setGlobalPageSizeChanged(): void {
