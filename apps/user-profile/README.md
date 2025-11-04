@@ -79,7 +79,7 @@ Items marked with (#) are likely relevant.
 
 ### If tab 'orcid' is present:
 
-- `consolidator_url_orcid`: URL of old Consolidator for ORCID identities,
+- (*)`consolidator_url_orcid`: URL of old Consolidator for ORCID identities
 - (*)`orcid_ext_source_name`: The name of the ORCID external source
 
 ### If tab/s ‘vos’ and/or ‘groups’ are present:

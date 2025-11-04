@@ -193,14 +193,14 @@ export interface PerunConfig {
   registrar_base_url: string;
   mfa: ProfileMFA;
   preferred_unix_group_names: string[];
+  use_new_consolidator: boolean;
+  orcid_ext_source_name: string;
   // Optional
   local_account_namespace?: string;
   profile_page_attributes?: ProfileAttribute[];
   external_services?: ProfileExtService[];
   custom_labels?: ProfileCustomLabel[];
   display_identity_certificates?: boolean;
-  use_new_consolidator: boolean;
-  orcid_ext_source_name?: string;
 
   // Publications specific
   // Optional
