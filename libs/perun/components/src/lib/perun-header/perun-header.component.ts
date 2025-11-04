@@ -131,16 +131,17 @@ export class PerunHeaderComponent implements OnInit {
       this.isLinkToOtherAppActive();
     }
 
+    if (this.storeService.getProperty('gui_settings_panel')) {
+      this.guiConfigPanelEnabled = true;
+    }
+
     if (!this.principal) {
       this.showNotifications = false;
       this.showToggle = false;
       this.showLanguageMenu = false;
       this.showOtherApps = false;
       this.showUserName = false;
-    }
-
-    if (this.storeService.getProperty('gui_settings_panel')) {
-      this.guiConfigPanelEnabled = true;
+      this.guiConfigPanelEnabled = false;
     }
   }
 
