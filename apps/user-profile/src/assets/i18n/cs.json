@@ -1,7 +1,12 @@
 {
   "NAV": {
     "LOGOUT": "Odhlásit se",
-    "OTHER_APPLICATIONS": "Další aplikace"
+    "OTHER_APPLICATIONS": "Další aplikace",
+    "GUI_CONFIG": {
+      "TITLE": "Nastavení GUI",
+      "PREF_TABLE_PAGE_SIZE": "Velikost stránky v tabulkách",
+      "SHOW_IDS_IN_TABLES": "Zobrazovat ID sloupec"
+    }
   },
   "MENU_ITEMS": {
     "PROFILE": "Profil",

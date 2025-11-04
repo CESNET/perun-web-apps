@@ -3,8 +3,8 @@ import { ParseDatePipe } from '@perun-web-apps/perun/pipes';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnInit,
@@ -28,9 +28,11 @@ import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-ap
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { formatDate, CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ParseEventNamePipe } from '../../pipes/parse-event-name.pipe';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [
@@ -55,19 +57,11 @@ import { ParseEventNamePipe } from '../../pipes/parse-event-name.pipe';
     },
   ],
 })
-export class AuditMessagesListComponent implements OnInit, AfterViewInit {
+export class AuditMessagesListComponent implements OnInit {
   @Input() tableId: string;
   @Input() refresh: boolean;
   @Input() loading: boolean;
   @Input() noMessagesAlert = 'SHARED_LIB.UI.ALERTS.NO_AUDIT_MESSAGES';
-  @Input() displayedColumns: string[] = [
-    'id',
-    'timestamp',
-    'name',
-    'actor',
-    'event.message',
-    'detail',
-  ];
   @Input() resetPagination: BehaviorSubject<boolean>;
   @Output() loading$: EventEmitter<Observable<boolean>> = new EventEmitter<Observable<boolean>>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
@@ -78,8 +72,14 @@ export class AuditMessagesListComponent implements OnInit, AfterViewInit {
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
   dataSource: MatTableDataSource<AuditMessage> | DynamicDataSource<AuditMessage>;
+  displayedColumns: string[] = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
+  unfilteredColumns = this.displayedColumns;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private tableConfigService: TableConfigService,
+    private destroyRef: DestroyRef,
+  ) {}
 
   @Input() set auditMessages(auditMessages: AuditMessage[] | PaginatedAuditMessages) {
     // Initialize data source with first AuditMessage object passed
@@ -96,6 +96,14 @@ export class AuditMessagesListComponent implements OnInit, AfterViewInit {
     } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = auditMessages;
     }
+  }
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
   }
 
   static getExportDataForColumn(data: AuditMessage, column: string): string {
@@ -121,12 +129,7 @@ export class AuditMessagesListComponent implements OnInit, AfterViewInit {
         this.tableWrapper.paginator.firstPage();
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
+    this.watchForIdColumnChanges();
   }
 
   viewDetails(auditMessage: AuditMessage): void {
@@ -200,6 +203,21 @@ export class AuditMessagesListComponent implements OnInit, AfterViewInit {
         );
       this.dataSource.sortData = (data: AuditMessage[], sort: MatSort): AuditMessage[] =>
         customDataSourceSort(data, sort, AuditMessagesListComponent.getExportDataForColumn);
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

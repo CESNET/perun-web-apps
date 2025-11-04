@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -68,6 +69,7 @@ import { GroupCheckboxTooltipPipe } from '@perun-web-apps/perun/pipes';
 import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
 import { GroupResourceStatusComponent } from '../group-resource-status/group-resource-status.component';
 import { GroupMenuComponent } from '../group-menu/group-menu.component';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -156,6 +158,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
     'expiration',
     'menu',
   ];
+  unfilteredColumns = this.columns;
 
   constructor(
     private dialog: MatDialog,
@@ -165,6 +168,8 @@ export class GroupsListComponent implements OnInit, OnChanges {
     private disableGroupSelect: DisableGroupSelectPipe,
     private groupUtils: GroupUtilsService,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   @Input() set groups(groups: GroupWithStatus[] | PaginatedRichGroups) {
@@ -190,7 +195,8 @@ export class GroupsListComponent implements OnInit, OnChanges {
     this.dataSource.filter = value;
   }
 
-  @Input() set displayedColumns(columns: string[]) {
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
     if (localStorage.getItem('showIds') !== 'true') {
       columns = columns.filter((column) => column !== 'id');
     }
@@ -221,6 +227,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
         this.tableWrapper.paginator.firstPage();
       }
     });
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -456,6 +463,22 @@ export class GroupsListComponent implements OnInit, OnChanges {
           });
         });
       }
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.columns = this.unfilteredColumns;
+        } else {
+          this.columns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+        this.cd.detectChanges();
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.columns.filter((column) => column !== 'id');
     }
   }
 }

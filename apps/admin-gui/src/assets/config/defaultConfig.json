@@ -187,5 +187,7 @@
     "APP_ERROR_VO_ADMIN": ["appId", "actor", "extSource", "voName", "groupName", "mailFooter", "htmlMailFooter", "errors", "customMessage", "autoApproveError", "fromApp-itemName", "appDetailUrl", "appDetailUrl-krb", "appDetailUrl-fed", "appDetailUrl-cert", "appDetailUrl-newGUI", "perunGuiUrl", "perunGuiUrl-krb", "perunGuiUrl-fed", "perunGuiUrl-cert", "perunGuiUrl-newGUI"],
     "USER_INVITE": ["voName", "groupName", "displayName", "mailFooter", "htmlMailFooter", "invitationLink", "invitationLink-krb", "invitationLink-fed", "invitationLink-cert", "invitationLink-non"],
     "USER_PRE_APPROVED_INVITE": ["voName", "groupName", "displayName", "mailFooter", "htmlMailFooter", "preapprovedInvitationLink", "expirationDate", "senderName"]
-  }
+  },
+  "gui_settings_panel": true,
+  "allow_show_id_setting": true
 }

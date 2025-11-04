@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { GUIConfigService, LS_TABLE_PREFIX, PREF_PAGE_SIZE } from './guiconfig.service';
 
 @Injectable({
@@ -6,6 +6,9 @@ import { GUIConfigService, LS_TABLE_PREFIX, PREF_PAGE_SIZE } from './guiconfig.s
 })
 export class TableConfigService {
   defaultTableSizes = new Map<string, number>();
+  globalPageSizeChanged = new EventEmitter<void>();
+  showIdsChanged = new EventEmitter<boolean>();
+
   constructor(private guiConfigService: GUIConfigService) {
     this.defaultTableSizes.set(TABLE_ATTRIBUTES_SETTINGS, 25);
     this.defaultTableSizes.set(TABLE_ADMIN_ATTRIBUTES, 25);
@@ -26,6 +29,14 @@ export class TableConfigService {
 
   setTablePageSize(tableId: string, value: number): void {
     this.guiConfigService.setNumber(LS_TABLE_PREFIX + tableId, value);
+  }
+
+  setGlobalPageSizeChanged(): void {
+    this.globalPageSizeChanged.emit();
+  }
+
+  setShowIds(show: boolean): void {
+    this.showIdsChanged.emit(show);
   }
 }
 

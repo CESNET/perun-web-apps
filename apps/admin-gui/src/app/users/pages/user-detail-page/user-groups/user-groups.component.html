@@ -19,7 +19,7 @@
     *perunWebAppsLoader="memberRefresh; indicator: spinner"
     [disableMembers]="false"
     [groups]="membersGroups"
-    [displayedColumns]="['id', 'vo', 'name', 'description']"
+    [displayColumns]="['id', 'vo', 'name', 'description']"
     [filter]="memberFilterValue"
     [tableId]="tableId">
   </perun-web-apps-groups-list>
@@ -41,7 +41,7 @@
         [loading]="adminRefresh"
         [disableMembers]="false"
         [groups]="adminsGroups"
-        [displayedColumns]="['id', 'vo', 'name', 'description']"
+        [displayColumns]="['id', 'vo', 'name', 'description']"
         [filter]="adminFilterValue"
         [tableId]="adminTableId">
       </perun-web-apps-groups-list>

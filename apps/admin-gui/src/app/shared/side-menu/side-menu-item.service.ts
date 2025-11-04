@@ -179,33 +179,6 @@ export class SideMenuItemService {
     };
   }
 
-  getSettingsItem(): SideMenuItem {
-    return {
-      baseLink: ['/settings'],
-      label: 'MAIN_MENU.SETTINGS',
-      colorClass: 'base-item-color-activated',
-      icon: 'perun-settings2',
-      baseColorClass: 'base-item-color',
-      baseColorClassRegex: '^/settings/*',
-      activatedClass: 'dark-item-activated',
-      linksClass: 'dark-item-links',
-      backgroundColorCss: this.theme.sidemenu_bg_color,
-      textColorCss: this.theme.sidemenu_text_color,
-      links: [
-        {
-          label: 'MENU_ITEMS.SETTINGS.OVERVIEW',
-          url: ['/settings'],
-          activatedRegex: '^/settings$',
-        },
-        {
-          label: 'MENU_ITEMS.SETTINGS.GUI_CONFIG',
-          url: ['/settings/gui_config'],
-          activatedRegex: '/settings/gui_config',
-        },
-      ],
-    };
-  }
-
   parseFacility(facility: Facility): SideMenuItem {
     return {
       label: facility.name,
@@ -664,15 +637,6 @@ export class SideMenuItemService {
       url: [`${path}/bans`],
       activatedRegex: `^${path}/bans`,
     });
-
-    // Settings
-    // links.push({
-    //   label: 'MENU_ITEMS.ADMIN.SETTINGS',
-    //   url: [`${path}/settings`],
-    //   activatedRegex: `${regex}/settings$`,
-    //   children: [],
-    //   showChildrenRegex: `${regex}/settings`
-    // });
     return links;
   }
 

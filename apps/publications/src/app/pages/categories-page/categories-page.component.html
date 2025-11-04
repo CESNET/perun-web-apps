@@ -31,7 +31,7 @@
       [categories]="categories"
       [filterValue]="filterValue"
       (refreshTable)="refreshTable()"
-      [displayedColumns]="removeAuth ? ['select', 'id', 'name', 'rank'] : ['name', 'rank']"
+      [displayColumns]="removeAuth ? ['select', 'id', 'name', 'rank'] : ['name', 'rank']"
       [tableId]="tableId"
       [selection]="selected"
       [cachedSubject]="cachedSubject"></perun-web-apps-categories-list>

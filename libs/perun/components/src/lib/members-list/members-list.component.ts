@@ -10,6 +10,7 @@ import {
   MemberCheckboxLabelPipe,
   MemberEmailPipe,
   MemberLoginsPipe,
+  MemberOrganizationPipe,
   MemberStatusDisabledPipe,
   MemberStatusIconColorPipe,
   MemberStatusIconPipe,
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -37,9 +39,9 @@ import {
 } from '@angular/core';
 import { MemberTreeViewDialogComponent } from '@perun-web-apps/perun/dialogs';
 import {
+  EntityStorageService,
   GuiAuthResolver,
   TableCheckbox,
-  EntityStorageService,
 } from '@perun-web-apps/perun/services';
 import {
   MemberGroupStatus,
@@ -49,18 +51,18 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  TABLE_ITEMS_COUNT_OPTIONS,
+  customDataSourceFilterPredicate,
+  customDataSourceSort,
   downloadData,
   getDataForExport,
   getDefaultDialogConfig,
   isMemberIndirect,
+  isMemberIndirectString,
   parseEmail,
   parseFullName,
   parseLogins,
   parseOrganization,
-  isMemberIndirectString,
-  customDataSourceFilterPredicate,
-  customDataSourceSort,
+  TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -76,8 +78,8 @@ import {
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MemberOrganizationPipe } from '@perun-web-apps/perun/pipes';
 import { ConsentStatusComponent } from '../consent-status/consent-status.component';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -159,6 +161,7 @@ export class MembersListComponent implements OnInit, OnChanges {
     'email',
     'logins',
   ];
+  unfilteredColumns = this.columns;
 
   dataSource: MatTableDataSource<MemberWithConsentStatus> | DynamicDataSource<RichMember>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -171,7 +174,9 @@ export class MembersListComponent implements OnInit, OnChanges {
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
     private entityStorage: EntityStorageService,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
+    private cd: ChangeDetectorRef,
   ) {}
 
   @Input() set members(members: MemberWithConsentStatus[] | PaginatedRichMembers) {
@@ -196,6 +201,7 @@ export class MembersListComponent implements OnInit, OnChanges {
   }
 
   @Input() set displayedColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
     if (localStorage.getItem('showIds') !== 'true') {
       columns = columns.filter((column) => column !== 'id');
     }
@@ -231,6 +237,8 @@ export class MembersListComponent implements OnInit, OnChanges {
         this.entityStorage.getEntity(),
       ]);
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -477,6 +485,22 @@ export class MembersListComponent implements OnInit, OnChanges {
         sort: MatSort,
       ): MemberWithConsentStatus[] =>
         customDataSourceSort(data, sort, this.getSortDataForColumnFun);
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.columns = this.unfilteredColumns;
+        } else {
+          this.columns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+        this.cd.detectChanges();
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.columns = this.columns.filter((column) => column !== 'id');
     }
   }
 }

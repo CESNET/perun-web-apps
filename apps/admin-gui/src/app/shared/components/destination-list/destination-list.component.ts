@@ -31,14 +31,15 @@ import {
   TableCheckbox,
 } from '@perun-web-apps/perun/services';
 import {
-  LastPropagationPipe,
-  IsAllSelectedPipe,
   CheckboxLabelPipe,
+  IsAllSelectedPipe,
+  LastPropagationPipe,
   MasterCheckboxLabelPipe,
+  MultiWordDataCyPipe,
 } from '@perun-web-apps/perun/pipes';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -75,8 +76,6 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   @Input()
   tableId: string;
   @Input()
-  displayedColumns: string[];
-  @Input()
   services: Set<number>;
   @Input()
   loading: boolean;
@@ -87,6 +86,8 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   cachedSelection: SelectionModel<RichDestination>;
   noTimestampText = '';
   noTimestampTooltip = '';
+  displayedColumns: string[] = [];
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
@@ -95,7 +96,16 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
     private lastPropagationPipe: LastPropagationPipe,
     private destroyRef: DestroyRef,
     private translate: PerunTranslateService,
+    private tableConfigService: TableConfigService,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'destinationId');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -122,6 +132,8 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
     this.noTimestampTooltip = this.translate.instant(
       'SHARED.COMPONENTS.DESTINATIONS_LIST.NO_TIMESTAMP_TOOLTIP',
     );
+
+    this.watchForIdColumnChanges();
   }
 
   getDataForColumn(data: RichDestination, column: string): string {
@@ -150,9 +162,6 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'destinationId');
-    }
     this.dataSource = new MatTableDataSource<RichDestination>(this.destinations);
     this.setDataSource();
     this.dataSource.filter = this.filterValue.toLowerCase();
@@ -237,6 +246,23 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter(
+            (column) => column !== 'destinationId',
+          );
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'destinationId');
     }
   }
 }

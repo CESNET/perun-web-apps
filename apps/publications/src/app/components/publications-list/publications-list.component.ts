@@ -45,6 +45,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ShowCiteDialogComponent } from '../../dialogs/show-cite-dialog/show-cite-dialog.component';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -74,17 +75,6 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
   @Input() publications: PublicationForGUI[];
   @Input() selection = new SelectionModel<PublicationForGUI>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() displayedColumns: string[] = [
-    'select',
-    'id',
-    'lock',
-    'title',
-    'reportedBy',
-    'year',
-    'category',
-    'thankedTo',
-    'cite',
-  ];
   @Input() tableId: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() routerPath: string;
@@ -105,6 +95,18 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
   lockAuth = false;
   locked: string;
   unlocked: string;
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'lock',
+    'title',
+    'reportedBy',
+    'year',
+    'category',
+    'thankedTo',
+    'cite',
+  ];
+  unfilteredColumns = this.displayedColumns;
 
   private sort: MatSort;
 
@@ -116,6 +118,7 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
     private translate: TranslateService,
     private authResolver: GuiAuthResolver,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {
     translate
       .get('PUBLICATIONS_LIST.CHANGE_LOCK_SUCCESS')
@@ -125,6 +128,14 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
       .get('PUBLICATIONS_LIST.UNLOCKED')
       .subscribe((value: string) => (this.unlocked = value));
     this.lockAuth = this.authResolver.isCabinetAdmin();
+  }
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
   }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
@@ -173,6 +184,8 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
@@ -300,5 +313,20 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
       title: publication.title,
       year: publication.year,
     };
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
+    }
   }
 }

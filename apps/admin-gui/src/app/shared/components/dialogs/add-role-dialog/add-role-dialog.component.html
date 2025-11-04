@@ -20,7 +20,7 @@
           [loading]="loading"
           [filterValue]="filterValue"
           [vos]="vos | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
-          [displayedColumns]="['checkbox', 'id', 'shortName', 'name']"
+          [displayColumns]="['checkbox', 'id', 'shortName', 'name']"
           [selection]="selected"
           [cachedSubject]="cachedSubject"
           [disableRouting]="true">
@@ -30,7 +30,7 @@
         <perun-web-apps-groups-list
           [loading]="loading"
           [groups]="groups | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
-          [displayedColumns]="['select', 'id', 'vo', 'name', 'description']"
+          [displayColumns]="['select', 'id', 'vo', 'name', 'description']"
           [selection]="selected"
           [filter]="filterValue"
           [disableRouting]="true">
@@ -40,7 +40,7 @@
         <perun-web-apps-facilities-list
           [filterValue]="filterValue"
           [facilities]="facilities | extractFacility | manageableEntities: selectedRule | unassignedRole: roles : selectedRule | toEnrichedFacility"
-          [displayedColumns]="['select', 'id', 'name', 'description']"
+          [displayColumns]="['select', 'id', 'name', 'description']"
           [selection]="selectedFacilities"
           [cachedSubject]="cachedSubject"
           [loading]="loading"
@@ -52,7 +52,7 @@
           [filterValue]="filterValue"
           [loading]="loading"
           [resources]="resources | manageableEntities: selectedRule | unassignedRole: roles : selectedRule"
-          [displayedColumns]="['select', 'id', 'name']"
+          [displayColumns]="['select', 'id', 'name']"
           [selection]="selected"
           [cachedSubject]="cachedSubject"
           [disableRouting]="true">

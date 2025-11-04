@@ -23,6 +23,7 @@ import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { MatBadge } from '@angular/material/badge';
 import { GlobalSearchComponent } from '../global-search/global-search.component';
 import { ShowNotificationHistoryDialogComponent } from '../show-notification-history-dialog/show-notification-history-dialog.component';
+import { GuiConfigurationComponent } from '../gui-configuration/gui-configuration.component';
 
 @Component({
   imports: [
@@ -37,6 +38,7 @@ import { ShowNotificationHistoryDialogComponent } from '../show-notification-his
     UserFullNamePipe,
     MatBadge,
     GlobalSearchComponent,
+    GuiConfigurationComponent,
   ],
   standalone: true,
   selector: 'perun-web-apps-header',
@@ -72,6 +74,7 @@ export class PerunHeaderComponent implements OnInit {
   activeLink = false;
   searchEnabled = false;
   searchAsAdmin = false;
+  guiConfigPanelEnabled = false;
 
   constructor(
     private storeService: StoreService,
@@ -134,6 +137,10 @@ export class PerunHeaderComponent implements OnInit {
       this.showLanguageMenu = false;
       this.showOtherApps = false;
       this.showUserName = false;
+    }
+
+    if (this.storeService.getProperty('gui_settings_panel')) {
+      this.guiConfigPanelEnabled = true;
     }
   }
 

@@ -32,6 +32,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 @Component({
   imports: [
@@ -60,7 +61,12 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
   @Input() filterValue: string;
   @Input() tableId: string;
   @Input() loading: boolean;
-  @Input() displayedColumns: string[] = [
+
+  pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  dataSource: MatTableDataSource<TaskResult>;
+  // contains all selected rows across all pages
+  cachedSelection: SelectionModel<TaskResult>;
+  displayedColumns: string[] = [
     'select',
     'id',
     'destination',
@@ -72,18 +78,23 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
     'standardMessage',
     'errorMessage',
   ];
-
-  pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
-  dataSource: MatTableDataSource<TaskResult>;
-  // contains all selected rows across all pages
-  cachedSelection: SelectionModel<TaskResult>;
+  unfilteredColumns = this.displayedColumns;
   private sort: MatSort;
 
   constructor(
     private authResolver: GuiAuthResolver,
     private tableCheckbox: TableCheckbox,
+    private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
   ) {}
+
+  @Input() set displayColumns(columns: string[]) {
+    this.unfilteredColumns = columns;
+    if (localStorage.getItem('showIds') !== 'true') {
+      columns = columns.filter((column) => column !== 'id');
+    }
+    this.displayedColumns = columns;
+  }
 
   @ViewChild(MatSort, { static: true }) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -158,12 +169,11 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   ngOnChanges(): void {
-    if (localStorage.getItem('showIds') !== 'true') {
-      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
-    }
     this.dataSource = new MatTableDataSource<TaskResult>(this.taskResults);
     this.setDataSource();
     this.dataSource.filter = this.filterValue;
@@ -247,6 +257,21 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
         this.cachedSelection,
         this.selection.compareWith,
       );
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.displayedColumns = this.unfilteredColumns.filter((column) => column !== 'id');
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'id');
     }
   }
 }

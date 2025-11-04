@@ -32,21 +32,22 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { GuiAuthResolver, TableCheckbox } from '@perun-web-apps/perun/services';
+import { TableCheckbox } from '@perun-web-apps/perun/services';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import {
-  UserFullNamePipe,
+  CheckboxLabelPipe,
   IsAllSelectedPipe,
   IsAuthorizedPipe,
-  CheckboxLabelPipe,
   MasterCheckboxLabelPipe,
+  UserFullNamePipe,
 } from '@perun-web-apps/perun/pipes';
-import { formatDate, CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { BAN_EXPIRATION_NEVER } from '../ban-specification/ban-specification.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
+import { TableConfigService } from '@perun-web-apps/config/table-config';
 
 export type EnrichedBan = EnrichedBanOnVo | EnrichedBanOnFacility | EnrichedBanOnResource;
 export type BanOnEntityListColumn =
@@ -91,17 +92,6 @@ export class BanOnEntityListComponent implements OnInit {
   @Input() updatePolicy: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
-  @Input() columns: BanOnEntityListColumn[] = [
-    'select',
-    'banId',
-    'targetId',
-    'targetName',
-    'subjectId',
-    'subjectName',
-    'description',
-    'expiration',
-    'edit',
-  ];
   @Output() updateBan = new EventEmitter<EnrichedBan>();
   @ViewChild(TableWrapperComponent, { static: true }) tableWrapper: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -113,12 +103,24 @@ export class BanOnEntityListComponent implements OnInit {
   cachedSelection: SelectionModel<EnrichedBan>;
   // This date is set by backend as a 'never' expire option
   EXPIRE_NEVER = BAN_EXPIRATION_NEVER;
+  columns: BanOnEntityListColumn[] = [
+    'select',
+    'banId',
+    'targetId',
+    'targetName',
+    'subjectId',
+    'subjectName',
+    'description',
+    'expiration',
+    'edit',
+  ];
+  unfilteredColumns = this.columns;
 
   constructor(
     private tableCheckbox: TableCheckbox,
-    private authResolver: GuiAuthResolver,
     private userName: UserFullNamePipe,
     private destroyRef: DestroyRef,
+    private tableConfigService: TableConfigService,
   ) {}
 
   @Input() set bans(bans: EnrichedBan[]) {
@@ -137,6 +139,7 @@ export class BanOnEntityListComponent implements OnInit {
   }
 
   @Input() set displayedColumns(columns: BanOnEntityListColumn[]) {
+    this.unfilteredColumns = columns;
     if (localStorage.getItem('showIds') !== 'true') {
       columns = columns.filter((column) => !column.endsWith('Id'));
     }
@@ -157,6 +160,8 @@ export class BanOnEntityListComponent implements OnInit {
         }
       });
     }
+
+    this.watchForIdColumnChanges();
   }
 
   getDataForColumn = (data: EnrichedBan, column: BanOnEntityListColumn): string => {
@@ -274,6 +279,21 @@ export class BanOnEntityListComponent implements OnInit {
     } else {
       this.target = 'Organization';
       this.subject = 'Member';
+    }
+  }
+
+  private watchForIdColumnChanges(): void {
+    this.tableConfigService.showIdsChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((showIds) => {
+        if (showIds) {
+          this.displayedColumns = this.unfilteredColumns;
+        } else {
+          this.columns = this.unfilteredColumns.filter((column) => !column.endsWith('Id'));
+        }
+      });
+    if (localStorage.getItem('showIds') !== 'true') {
+      this.columns = this.columns.filter((column) => !column.endsWith('Id'));
     }
   }
 }

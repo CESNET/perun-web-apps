@@ -49,7 +49,7 @@
       <perun-web-apps-groups-list
         *perunWebAppsLoader="loading; indicator: spinner"
         [loading]="loading"
-        [displayedColumns]="['select', 'id', 'name', 'description']"
+        [displayColumns]="['select', 'id', 'name', 'description']"
         [disableRouting]="true"
         [groups]="this.groups"
         [filter]="filterValue"
