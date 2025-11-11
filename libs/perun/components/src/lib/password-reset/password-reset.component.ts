@@ -10,8 +10,10 @@ import { EntityStorageService, StoreService } from '@perun-web-apps/perun/servic
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { ChangePasswordDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { PasswordResetDialogComponent } from '@perun-web-apps/perun/dialogs';
+import {
+  ChangePasswordDialogComponent,
+  PasswordResetDialogComponent,
+} from '@perun-web-apps/perun/dialogs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

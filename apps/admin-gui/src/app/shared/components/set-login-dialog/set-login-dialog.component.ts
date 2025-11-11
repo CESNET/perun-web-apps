@@ -11,7 +11,7 @@ import {
   NotificatorService,
   PerunTranslateService,
 } from '@perun-web-apps/perun/services';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
+import { loginPasswordAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoginPasswordFormWithGenerateOptionComponent } from '../login-password-form-with-generate-option/login-password-form-with-generate-option.component';
@@ -52,7 +52,7 @@ export class SetLoginDialogComponent implements OnInit, AfterViewInit {
       passwordCtrl: [
         '',
         Validators.required,
-        [loginAsyncValidator(null, this.usersManagerService, this.apiRequestConfiguration)],
+        [loginPasswordAsyncValidator(null, this.usersManagerService, this.apiRequestConfiguration)],
       ],
       passwordAgainCtrl: [''],
       generatePasswordCtrl: [true],
@@ -78,6 +78,9 @@ export class SetLoginDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.userId = this.data.userId;
+    this.formGroup.get('loginCtrl')?.valueChanges.subscribe(() => {
+      this.formGroup.get('passwordCtrl')?.updateValueAndValidity({ onlySelf: true });
+    });
   }
 
   ngAfterViewInit(): void {

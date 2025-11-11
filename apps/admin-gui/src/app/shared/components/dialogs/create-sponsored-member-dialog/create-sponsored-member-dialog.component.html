@@ -90,11 +90,11 @@
                 </mat-form-field>
                 <mat-form-field
                   matTooltip="{{(this.selectedNamespace === null ? 'DIALOGS.CREATE_SPONSORED_MEMBER.NO_NAMESPACE_SELECTED' : 'DIALOGS.CREATE_SPONSORED_MEMBER.LOGIN_DISABLED') | translate}}"
-                  [matTooltipDisabled]="namespaceControl.get('login').enabled"
+                  [matTooltipDisabled]="namespaceControl.get('loginCtrl').enabled"
                   matTooltipPosition="left">
                   <mat-label>{{'DIALOGS.CREATE_SPONSORED_MEMBER.LOGIN' | translate}}</mat-label>
-                  <input data-cy="login-input" matInput formControlName="login" required />
-                  @if (namespaceControl.hasError('required', 'login')) {
+                  <input data-cy="login-input" matInput formControlName="loginCtrl" required />
+                  @if (namespaceControl.hasError('required', 'loginCtrl')) {
                     <mat-error>
                       {{'DIALOGS.CREATE_SPONSORED_MEMBER.LENGTH_ERROR' | translate}}
                     </mat-error>

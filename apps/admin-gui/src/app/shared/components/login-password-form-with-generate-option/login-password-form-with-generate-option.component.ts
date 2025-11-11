@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { enableFormControl } from '@perun-web-apps/perun/utils';
 import {
-  loginAsyncValidator,
+  loginPasswordAsyncValidator,
   PasswordFormComponent,
 } from '@perun-web-apps/perun/namespace-password-form';
 import { MembersManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
@@ -80,7 +80,7 @@ export class LoginPasswordFormWithGenerateOptionComponent {
         password,
         [Validators.required],
         [
-          loginAsyncValidator(
+          loginPasswordAsyncValidator(
             this.selectedNamespace,
             this.usersManagerService,
             this.apiRequestConfiguration,

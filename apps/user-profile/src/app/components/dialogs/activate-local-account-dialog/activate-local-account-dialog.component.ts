@@ -11,7 +11,7 @@ import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { ApiRequestConfigurationService, NotificatorService } from '@perun-web-apps/perun/services';
 import { switchMap } from 'rxjs/operators';
 import {
-  loginAsyncValidator,
+  loginPasswordAsyncValidator,
   PasswordFormComponent,
 } from '@perun-web-apps/perun/namespace-password-form';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -46,7 +46,13 @@ export class ActivateLocalAccountDialogComponent {
       passwordCtrl: [
         '',
         Validators.required,
-        [loginAsyncValidator(this.data.namespace, this.userManager, this.apiRequestConfiguration)],
+        [
+          loginPasswordAsyncValidator(
+            this.data.namespace,
+            this.userManager,
+            this.apiRequestConfiguration,
+          ),
+        ],
       ],
       passwordAgainCtrl: ['', Validators.required],
     },
