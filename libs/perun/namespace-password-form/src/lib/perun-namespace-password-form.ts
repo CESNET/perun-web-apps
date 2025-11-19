@@ -20,18 +20,25 @@ export class ImmediateStateMatcher implements ErrorStateMatcher {
   }
 }
 
-export const loginAsyncValidator =
+export const loginPasswordAsyncValidator =
   (
     namespace: string,
     usersManager: UsersManagerService,
     apiRequestConfiguration: ApiRequestConfigurationService,
     useNon = false,
+    existingLogin: string = null,
     time = 500,
   ) =>
   (input: UntypedFormControl): Observable<PasswordError | null> =>
     timer(time).pipe(
       switchMap(() => {
         apiRequestConfiguration.dontHandleErrorForNext();
+        const form = input.parent;
+        let login: string = form?.get('loginCtrl')?.value as string;
+
+        if (!login) {
+          login = existingLogin;
+        }
         if (!namespace || namespace === 'No namespace') {
           return of(null);
         }
@@ -39,6 +46,7 @@ export const loginAsyncValidator =
           {
             password: input.value as string,
             namespace: namespace,
+            login: login,
           },
           useNon,
         ) as Observable<PasswordError>;

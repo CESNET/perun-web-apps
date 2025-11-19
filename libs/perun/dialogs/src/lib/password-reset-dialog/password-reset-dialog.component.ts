@@ -2,7 +2,7 @@ import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   ApiRequestConfigurationService,
   NotificatorService,
@@ -10,20 +10,20 @@ import {
 } from '@perun-web-apps/perun/services';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import {
-  loginAsyncValidator,
+  loginPasswordAsyncValidator,
   PasswordFormComponent,
 } from '@perun-web-apps/perun/namespace-password-form';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   ValidatorFn,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { CustomValidators } from '@perun-web-apps/perun/utils';
 import { PasswordLabels } from '@perun-web-apps/perun/models';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface ResetPasswordDialogData {
@@ -74,10 +74,12 @@ export class PasswordResetDialogComponent implements OnInit {
           '',
           Validators.required,
           [
-            loginAsyncValidator(
+            loginPasswordAsyncValidator(
               this.data.namespace,
               this.usersService,
               this.apiRequestConfiguration,
+              false,
+              this.data.login,
             ),
           ],
         ],
