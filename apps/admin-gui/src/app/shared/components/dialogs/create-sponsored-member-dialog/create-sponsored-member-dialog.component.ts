@@ -36,7 +36,7 @@ import {
 import { FormBuilder, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CustomValidators, emailRegexString, enableFormControl } from '@perun-web-apps/perun/utils';
 import {
-  loginAsyncValidator,
+  loginPasswordAsyncValidator,
   PasswordFormComponent,
 } from '@perun-web-apps/perun/namespace-password-form';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
@@ -103,11 +103,11 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
   namespaceControl = this.formBuilder.group(
     {
       namespace: ['', Validators.required],
-      login: ['', [Validators.required]],
+      loginCtrl: ['', [Validators.required]],
       passwordCtrl: [
         '',
         Validators.required,
-        [loginAsyncValidator(null, this.usersService, this.apiRequestConfiguration)],
+        [loginPasswordAsyncValidator(null, this.usersService, this.apiRequestConfiguration)],
       ],
       passwordAgainCtrl: [''],
       passwordReset: [false, []],
@@ -200,7 +200,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
     }
 
     if (rules.login !== 'disabled') {
-      sponsoredMember.userData.login = this.namespaceControl.value.login;
+      sponsoredMember.userData.login = this.namespaceControl.value.loginCtrl;
     }
 
     if (rules.password !== 'disabled') {
@@ -258,7 +258,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
       this.selectedNamespace === null
         ? { login: 'disabled', password: 'disabled' }
         : this.parsedRules.get(namespc);
-    const login = this.namespaceControl.get('login');
+    const login = this.namespaceControl.get('loginCtrl');
     const password = this.namespaceControl.get('passwordCtrl');
     const passwordAgain = this.namespaceControl.get('passwordAgainCtrl');
     const passwordReset = this.namespaceControl.get('passwordReset');
@@ -273,7 +273,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
     if (rules.password !== 'disabled') {
       const validators = rules.password === 'optional' ? [] : [Validators.required];
       enableFormControl(password, validators, [
-        loginAsyncValidator(namespc, this.usersService, this.apiRequestConfiguration),
+        loginPasswordAsyncValidator(namespc, this.usersService, this.apiRequestConfiguration),
       ]);
       enableFormControl(passwordAgain, []);
       enableFormControl(passwordReset, []);
@@ -358,6 +358,10 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
         this.loading = false;
       });
       this.cd.detectChanges();
+    });
+
+    this.namespaceControl.get('loginCtrl')?.valueChanges.subscribe(() => {
+      this.namespaceControl.get('passwordCtrl')?.updateValueAndValidity({ onlySelf: true });
     });
   }
 

@@ -2,8 +2,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   ApiRequestConfigurationService,
   ErrorTranslateService,
@@ -11,16 +11,16 @@ import {
 } from '@perun-web-apps/perun/services';
 import { UsersManagerService } from '@perun-web-apps/perun/openapi';
 import {
-  loginAsyncValidator,
+  loginPasswordAsyncValidator,
   PasswordFormComponent,
 } from '@perun-web-apps/perun/namespace-password-form';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   ValidatorFn,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { CustomValidators, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
@@ -48,7 +48,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './password-reset-form.component.html',
   styleUrls: ['./password-reset-form.component.scss'],
 })
-export class PasswordResetFormComponent implements OnInit {
+export class PasswordResetFormComponent implements OnInit, OnChanges {
   @Input() mode: PasswordAction;
   @Input() namespace: string;
   @Input() login: string;
@@ -85,11 +85,12 @@ export class PasswordResetFormComponent implements OnInit {
           '',
           Validators.required,
           [
-            loginAsyncValidator(
+            loginPasswordAsyncValidator(
               this.namespace,
               this.usersService,
               this.apiRequestConfiguration,
               !this.authWithoutToken,
+              this.login,
             ),
           ],
         ],
@@ -109,6 +110,21 @@ export class PasswordResetFormComponent implements OnInit {
         this.errorMsg = this.getMessage(this.errorKey);
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['login'] && this.newPasswdForm) {
+      const ctrl = this.newPasswdForm.get('passwordCtrl');
+      ctrl.setAsyncValidators([
+        loginPasswordAsyncValidator(
+          this.namespace,
+          this.usersService,
+          this.apiRequestConfiguration,
+          !this.authWithoutToken,
+          this.login,
+        ),
+      ]);
+    }
   }
 
   onSubmit(): void {

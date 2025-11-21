@@ -1,5 +1,5 @@
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatListModule, MatListItem } from '@angular/material/list';
+import { MatListItem, MatListModule } from '@angular/material/list';
 import { MembersListComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
@@ -16,7 +16,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {
   Candidate,
   ExtSource,
@@ -35,18 +35,18 @@ import {
   NotificatorService,
   StoreService,
 } from '@perun-web-apps/perun/services';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   FormBuilder,
   FormControl,
+  ReactiveFormsModule,
   ValidatorFn,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import { CustomValidators, emailRegexString } from '@perun-web-apps/perun/utils';
-import { loginAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
+import { loginPasswordAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoginPasswordFormWithGenerateOptionComponent } from '../login-password-form-with-generate-option/login-password-form-with-generate-option.component';
@@ -116,7 +116,7 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
       passwordCtrl: [
         '',
         Validators.required,
-        [loginAsyncValidator(null, this.usersManagerService, this.apiRequestConfiguration)],
+        [loginPasswordAsyncValidator(null, this.usersManagerService, this.apiRequestConfiguration)],
       ],
       passwordAgainCtrl: [''],
       generatePasswordCtrl: [true],
@@ -204,6 +204,10 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
         });
       }
     }
+
+    this.secondFormGroup.get('loginCtrl')?.valueChanges.subscribe(() => {
+      this.secondFormGroup.get('passwordCtrl')?.updateValueAndValidity({ onlySelf: true });
+    });
   }
 
   onCreate(sponsor: boolean): void {
