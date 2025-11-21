@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.1.0...v20.2.0) (2025-11-21)
+
+
+### Features
+
+* include login to backend password checks ([ca1786c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ca1786c5f09c92e1bf69cf8be1281c792e4f0a4a))
+
 ## [20.1.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.0.1...v20.1.0) (2025-11-04)
 
 
