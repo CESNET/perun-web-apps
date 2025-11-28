@@ -1,5 +1,16 @@
 Upgrade notes
 
+## [20.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.2.0...v20.3.0) (2025-11-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* If the message is rewritten in instanceConfig (or other namespaces are included), make sure the minimum is updated
+
+### Features
+
+* update password help messages in defaultConfigs to match new length minimum of 12 characters ([0c306e9](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0c306e9a4f8d5bf7de8e9dc6968d8c9b81ddafa0))
+
 ## [20.2.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.1.0...v20.2.0) (2025-11-21)
 
 
