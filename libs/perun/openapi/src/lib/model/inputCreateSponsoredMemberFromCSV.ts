@@ -32,4 +32,8 @@ export interface InputCreateSponsoredMemberFromCSV {
    * groups to which should be the created users assigned
    */
   groups?: Array<number>;
+  /**
+   * base url of Perun instance (optional)
+   */
+  baseUrl?: string;
 }

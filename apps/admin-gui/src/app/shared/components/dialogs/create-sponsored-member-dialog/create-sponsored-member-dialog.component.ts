@@ -34,7 +34,12 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { FormBuilder, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CustomValidators, emailRegexString, enableFormControl } from '@perun-web-apps/perun/utils';
+import {
+  CustomValidators,
+  emailRegexString,
+  enableFormControl,
+  getDomain,
+} from '@perun-web-apps/perun/utils';
 import {
   loginPasswordAsyncValidator,
   PasswordFormComponent,
@@ -207,6 +212,7 @@ export class CreateSponsoredMemberDialogComponent implements OnInit, AfterViewIn
       sponsoredMember.sendActivationLink = this.namespaceControl.value.passwordReset;
       sponsoredMember.language = this.currentLanguage;
       sponsoredMember.userData.password = this.namespaceControl.value.passwordCtrl;
+      sponsoredMember.baseUrl = getDomain();
     }
 
     if (this.expiration !== 'never') {

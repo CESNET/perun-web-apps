@@ -15,6 +15,7 @@ api/groupsManager.service.ts
 api/integrationManager.service.ts
 api/invitationsManager.service.ts
 api/membersManager.service.ts
+api/notificationManager.service.ts
 api/ownersManager.service.ts
 api/rTMessagesManager.service.ts
 api/registrarManager.service.ts
@@ -70,6 +71,9 @@ model/category.ts
 model/consent.ts
 model/consentHub.ts
 model/consentStatus.ts
+model/createPerunNotifReceiverRequest.ts
+model/createPerunNotifRegexRequest.ts
+model/createPerunNotifTemplateMessageRequest.ts
 model/destination.ts
 model/destinationPropagationType.ts
 model/destinationType.ts
@@ -117,6 +121,7 @@ model/inputChangeNonAuthzPasswordByToken.ts
 model/inputChangePasswordForLogin.ts
 model/inputChangePasswordForUser.ts
 model/inputCheckCheckboxHtml.ts
+model/inputCheckForSimilarUsersWithData.ts
 model/inputCheckHtmlInput.ts
 model/inputCheckPasswordResetRequestByTokenIsValid.ts
 model/inputCheckPasswordStrength.ts
@@ -270,6 +275,11 @@ model/personalDataChangeConfig.ts
 model/perunAppsConfig.ts
 model/perunBean.ts
 model/perunException.ts
+model/perunNotifObject.ts
+model/perunNotifReceiver.ts
+model/perunNotifRegex.ts
+model/perunNotifTemplate.ts
+model/perunNotifTemplateMessage.ts
 model/perunPolicy.ts
 model/perunPrincipal.ts
 model/publication.ts

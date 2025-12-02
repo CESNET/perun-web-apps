@@ -6129,6 +6129,7 @@ export class MembersManagerService {
    * @param namespace namespace
    * @param emailAttributeURN urn of the attribute with stored mail
    * @param language language of the message
+   * @param baseUrl base url of Perun instance (optional)
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -6138,6 +6139,7 @@ export class MembersManagerService {
     namespace: string,
     emailAttributeURN: string,
     language: string,
+    baseUrl?: string,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -6148,6 +6150,7 @@ export class MembersManagerService {
     namespace: string,
     emailAttributeURN: string,
     language: string,
+    baseUrl?: string,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -6158,6 +6161,7 @@ export class MembersManagerService {
     namespace: string,
     emailAttributeURN: string,
     language: string,
+    baseUrl?: string,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -6168,6 +6172,7 @@ export class MembersManagerService {
     namespace: string,
     emailAttributeURN: string,
     language: string,
+    baseUrl?: string,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -6221,6 +6226,13 @@ export class MembersManagerService {
         localVarQueryParameters,
         <any>language,
         'language',
+      );
+    }
+    if (baseUrl !== undefined && baseUrl !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>baseUrl,
+        'baseUrl',
       );
     }
 
