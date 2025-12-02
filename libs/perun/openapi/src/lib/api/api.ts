@@ -24,6 +24,8 @@ export * from './invitationsManager.service';
 import { InvitationsManagerService } from './invitationsManager.service';
 export * from './membersManager.service';
 import { MembersManagerService } from './membersManager.service';
+export * from './notificationManager.service';
+import { NotificationManagerService } from './notificationManager.service';
 export * from './ownersManager.service';
 import { OwnersManagerService } from './ownersManager.service';
 export * from './rTMessagesManager.service';
@@ -58,6 +60,7 @@ export const APIS = [
   IntegrationManagerService,
   InvitationsManagerService,
   MembersManagerService,
+  NotificationManagerService,
   OwnersManagerService,
   RTMessagesManagerService,
   RegistrarManagerService,

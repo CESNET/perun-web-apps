@@ -13,6 +13,7 @@ import {
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { getDomain } from '@perun-web-apps/perun/utils';
 
 export interface PasswordResetRequestDialogData {
   userId: number;
@@ -74,9 +75,7 @@ export class PasswordResetRequestDialogComponent implements OnInit {
   onSubmit(): void {
     this.loading = true;
     const namespace: string = this.selectedLogin.friendlyNameParameter as unknown as string;
-    const currentUrl = window.location.href;
-    const splittedUrl = currentUrl.split('/');
-    const domain = splittedUrl[0] + '//' + splittedUrl[2]; // protocol with domain
+    const domain = getDomain();
 
     this.membersManagerService
       .sendPasswordResetLinkEmail(

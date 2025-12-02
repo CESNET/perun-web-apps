@@ -30,7 +30,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { formatDate, CommonModule } from '@angular/common';
-import { downloadData, emailRegexString } from '@perun-web-apps/perun/utils';
+import { downloadData, emailRegexString, getDomain } from '@perun-web-apps/perun/utils';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { Subject } from 'rxjs';
 import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
@@ -269,6 +269,7 @@ export class GenerateSponsoredMembersDialogComponent implements OnInit {
       vo: this.data.voId,
       sendActivationLinks: this.passwordReset === 'reset',
       language: this.currentLanguage,
+      baseUrl: getDomain(),
     };
 
     if (groupIds.length > 0) {
