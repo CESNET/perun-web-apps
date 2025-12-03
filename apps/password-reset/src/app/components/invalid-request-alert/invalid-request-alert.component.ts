@@ -1,6 +1,6 @@
 import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,18 +11,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./invalid-request-alert.component.scss'],
 })
 export class InvalidRequestAlertComponent implements OnInit {
+  @Input() message: string;
   invalidRequestMessage: string;
 
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    this.invalidRequestMessage = this.translate.instant(
-      'PAGES.PWD_RESET_PAGE.INVALID_REQUEST',
-    ) as string;
+    this.invalidRequestMessage = this.message;
     this.translate.onLangChange.subscribe(() => {
-      this.invalidRequestMessage = this.translate.instant(
-        'PAGES.PWD_RESET_PAGE.INVALID_REQUEST',
-      ) as string;
+      this.invalidRequestMessage = this.message;
     });
   }
 }

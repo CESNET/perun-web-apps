@@ -50,6 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   namespace: string;
   login: string;
   validToken: boolean;
+  validNamespace = true;
   authWithoutToken = false;
   displayWarning: boolean = this.store.getProperty('display_warning');
   warningMessage: string = this.store.getProperty('warning_message');
@@ -107,6 +108,9 @@ export class AppComponent implements OnInit, AfterViewInit {
           const selectedLogin = logins.find(
             (login) => login.friendlyNameParameter === this.namespace,
           );
+          if (!selectedLogin && this.mode === 'reset') {
+            this.validNamespace = false;
+          }
           this.login = selectedLogin ? String(selectedLogin.value) : '';
         });
       }

@@ -25,6 +25,7 @@ export class PasswordResetPageComponent implements OnInit {
   @Input() namespace: string;
   @Input() login: string;
   @Input() validToken: boolean;
+  @Input() validNamespace: boolean;
   @Input() authWithoutToken: boolean;
 
   passwordResetLogo: SafeHtml;
