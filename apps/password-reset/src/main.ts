@@ -61,7 +61,6 @@ const initializeApp = (
 ): (() => Promise<void>) => {
   return () => {
     translate.setDefaultLang('en');
-    translate.use('en');
     customIconService.registerPerunRefreshIcon();
     return Promise.resolve();
   };
