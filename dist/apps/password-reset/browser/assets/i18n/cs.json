@@ -12,6 +12,7 @@
       "RETRY_BUTTON": "Zkusit znova",
       "ACTIVATION_BUTTON": "Aktivovat účet",
       "INVALID_REQUEST": "<b>Chybný odkaz</b>\nOdkaz buďto vyexpiroval, byl již použit nebo je špatný",
+      "INVALID_NAMESPACE": "Nebyl nalezen žádny login pro namespace {{namespace}}",
       "RESET_SUCCESS": "Heslo bylo úspěšně resetováno",
       "ACTIVATION_SUCCESS": "Účet byl úspěšně aktivován"
     }

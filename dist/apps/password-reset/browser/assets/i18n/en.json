@@ -12,6 +12,7 @@
       "RETRY_BUTTON": "Try again",
       "ACTIVATION_BUTTON": "Activate account",
       "INVALID_REQUEST": "<b>Request is invalid</b>\nIt may be expired, already used or incorrect",
+      "INVALID_NAMESPACE": "No login was found for namespace {{namespace}}",
       "RESET_SUCCESS": "Password was successfully reset",
       "ACTIVATION_SUCCESS": "Account was successfully activated"
     }

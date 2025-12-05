@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [20.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.3.0...v20.4.0) (2025-12-05)
+
+
+### Features
+
+* include base url on create sponsored member requests ([2de1345](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/2de1345b38e6258b36570e8c9fa4ff391732849c))
+
+
+### Bug Fixes
+
+* **pwdreset:** error notice on wrong namespace pass reset ([557d55c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/557d55ce898aa0514d46f226deff124951150ff8))
+* **pwdreset:** race condition on wrong language ([35eb2cd](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/35eb2cd374868aa2912463e3a2435da76ddeecd6))
+
 ## [20.3.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.2.0...v20.3.0) (2025-11-28)
 
 
