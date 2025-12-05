@@ -21,4 +21,8 @@ export interface InputCreateSponsoredMember {
   sendActivationLink?: boolean;
   language?: string;
   userData: SponsoredUserData;
+  /**
+   * base url of Perun instance (optional)
+   */
+  baseUrl?: string;
 }

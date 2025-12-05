@@ -3,17 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { PasswordAction } from '@perun-web-apps/perun/models';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
-import { InvalidRequestAlertComponent } from '../../components/invalid-request-alert/invalid-request-alert.component';
+import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 
 @Component({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    PasswordResetFormComponent,
-    InvalidRequestAlertComponent,
-  ],
+  imports: [CommonModule, TranslateModule, PasswordResetFormComponent, UiAlertsModule],
   standalone: true,
   selector: 'perun-web-apps-password-reset-page',
   templateUrl: './password-reset-page.component.html',
@@ -25,6 +20,7 @@ export class PasswordResetPageComponent implements OnInit {
   @Input() namespace: string;
   @Input() login: string;
   @Input() validToken: boolean;
+  @Input() validNamespace: boolean;
   @Input() authWithoutToken: boolean;
 
   passwordResetLogo: SafeHtml;

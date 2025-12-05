@@ -186,3 +186,8 @@ export function getFedValue(fedInfo: string, colName: string): string {
   values[0] = values[0].replace('#ESCAPED_COMMA', '\\,');
   return deescapeMapEscapings(values[0]);
 }
+export function getDomain(): string {
+  const currentUrl = window.location.href;
+  const splittedUrl = currentUrl.split('/');
+  return splittedUrl[0] + '//' + splittedUrl[2]; // protocol with domain
+}
