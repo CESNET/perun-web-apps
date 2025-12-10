@@ -8,30 +8,19 @@
       {{'DIALOGS.APP_APPROVE_ANYWAY.TEXT' | translate}}
     </div>
     <perun-web-apps-alert alert_type="warn">
-      @if (err.reason === 'NOT_ACADEMIC') {
-        <div>
-          <div>
-            {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ACADEMIC' | translate}}
-          </div>
-          <div>{{'DIALOGS.APP_APPROVE_ANYWAY.LOA' | translate}} {{application.extSourceLoa}}</div>
-          <div>
-            {{'DIALOGS.APP_APPROVE_ANYWAY.IDP_CATEGORY' | translate}}
-            {{err.category?.length > 0 ? err.category : 'N/A'}}
-          </div>
-          <div>
-            {{'DIALOGS.APP_APPROVE_ANYWAY.AFFILIATION' | translate}}
-            {{err.affiliation?.length > 0 ? err.affiliation : 'N/A'}}
-          </div>
-        </div>
-      }
       @if (err.reason === 'NOT_ELIGIBLE') {
         <div>
           <div>
             {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ELIGIBLE' | translate}}
           </div>
         </div>
-      }
-      @if (err.reason !== 'NOT_ELIGIBLE' && err.reason !== 'NOT_ACADEMIC') {
+      } @else if (err.reason === 'NOT_ELIGIBLE_EINFRACZ') {
+        <div>
+          <div>
+            {{'DIALOGS.APP_APPROVE_ANYWAY.NOT_ELIGIBLE_EINFRACZ' | translate}}
+          </div>
+        </div>
+      } @else {
         <div>
           <div>
             {{err.message}}
