@@ -11,7 +11,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { TABLE_PUBLICATION_THANKS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddThanksDialogComponent } from '../../dialogs/add-thanks-dialog/add-thanks-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
@@ -46,8 +45,6 @@ export class AddThanksComponent implements OnInit {
   @Input() cachedSubject = new BehaviorSubject(true);
 
   @Input() similarityCheck = false;
-
-  tableId = TABLE_PUBLICATION_THANKS;
 
   loading = false;
   filterValue = '';

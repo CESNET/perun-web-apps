@@ -78,8 +78,6 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
   @Input()
   cachedSubject: BehaviorSubject<boolean>;
   @Input()
-  tableId: string;
-  @Input()
   theme: string;
   @Input()
   loading: boolean;
@@ -93,6 +91,8 @@ export class NotificationListComponent implements OnInit, OnChanges, AfterViewIn
   dataSource: MatTableDataSource<ApplicationMail>;
   displayedColumns: string[] = ['select', 'id', 'mailType', 'appType', 'send'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-notification-list';
+
   private sort: MatSort;
 
   constructor(

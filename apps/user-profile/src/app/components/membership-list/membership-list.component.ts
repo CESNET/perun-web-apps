@@ -63,13 +63,14 @@ export class MembershipListComponent implements OnChanges, AfterViewInit {
     'expirationAttribute',
     'extend',
   ];
-  @Input() tableId: string;
   @Input() filterValue = '';
   @Input() noMembershipFoundAlert = '';
   @Input() loading: boolean;
   @Output() extendMembership: EventEmitter<Membership> = new EventEmitter<Membership>();
   dataSource: MatTableDataSource<Membership>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+
+  tableId = 'perun-web-apps-membership-list';
 
   private sort: MatSort;
 

@@ -44,7 +44,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import { CustomValidators, emailRegexString } from '@perun-web-apps/perun/utils';
 import { loginPasswordAsyncValidator } from '@perun-web-apps/perun/namespace-password-form';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
@@ -139,7 +138,6 @@ export class CreateServiceMemberDialogComponent implements OnInit, AfterViewInit
     true,
     (richMember1, richMember2) => richMember1.id === richMember2.id,
   );
-  tableId = TABLE_VO_MEMBERS;
   assignedMembers: RichMember[] = [];
   candidate: Candidate = { beanName: '', id: 0 };
   successMessageMember = '';

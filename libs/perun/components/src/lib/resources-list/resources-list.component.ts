@@ -87,7 +87,6 @@ export class ResourcesListComponent implements OnInit, OnChanges {
   @Input() recentIds: number[];
   @Input() groupId: number = null;
   @Input() resourcesToDisableCheckbox: Set<number> = new Set<number>();
-  @Input() tableId: string;
   @Input() loading: boolean;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter<void>();
   @Output() allSelected = new EventEmitter();
@@ -114,6 +113,8 @@ export class ResourcesListComponent implements OnInit, OnChanges {
     'description',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-resources-list';
+
   private sort: MatSort;
 
   constructor(

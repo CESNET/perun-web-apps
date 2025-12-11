@@ -70,7 +70,6 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
   @Input() authzVoNames: Map<number, string>;
   @Input() recentIds: number[];
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() selection: SelectionModel<EnrichedFacility>;
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -92,6 +91,7 @@ export class FacilitiesListComponent implements OnInit, OnChanges {
     'hosts',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-facilities-list';
 
   private sort: MatSort;
 

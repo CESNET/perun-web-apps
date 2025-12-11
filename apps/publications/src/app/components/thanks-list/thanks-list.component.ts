@@ -54,7 +54,6 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
 export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() thanks: ThanksForGUI[] = [];
   @Input() filterValue = '';
-  @Input() tableId: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() selection = new SelectionModel<Owner>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
@@ -65,6 +64,8 @@ export class ThanksListComponent implements AfterViewInit, OnInit, OnChanges {
   cachedSelection: SelectionModel<Owner>;
   displayedColumns = ['select', 'id', 'name', 'createdBy'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-thanks-list';
+
   private sort: MatSort;
 
   constructor(

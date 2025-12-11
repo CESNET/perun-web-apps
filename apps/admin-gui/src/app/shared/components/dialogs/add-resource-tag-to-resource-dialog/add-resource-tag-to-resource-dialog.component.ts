@@ -3,7 +3,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { TABLE_ADD_RESOURCES_TAGS_TO_RESOURCE } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import { ResourcesTagsListComponent } from '../../resources-tags-list/resources-tags-list.component';
@@ -35,7 +34,6 @@ export interface AddResourceTagToResourceDialogData {
 export class AddResourceTagToResourceDialogComponent implements OnInit {
   loading: boolean;
   theme: string;
-  tableId = TABLE_ADD_RESOURCES_TAGS_TO_RESOURCE;
   filterValue: string;
   selection = new SelectionModel<ResourceTag>(true, []);
   resourceTags: ResourceTag[] = [];

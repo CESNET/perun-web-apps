@@ -59,7 +59,6 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
   @Input() selection = new SelectionModel<TaskResult>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() loading: boolean;
 
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
@@ -79,6 +78,8 @@ export class TaskResultsListComponent implements AfterViewInit, OnInit, OnChange
     'errorMessage',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-task-results-list';
+
   private sort: MatSort;
 
   constructor(

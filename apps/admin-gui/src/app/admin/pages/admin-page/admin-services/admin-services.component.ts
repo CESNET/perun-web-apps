@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ADMIN_SERVICES } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEditServiceDialogComponent } from '../../../../shared/components/dialogs/create-edit-service-dialog/create-edit-service-dialog.component';
@@ -47,7 +46,6 @@ export class AdminServicesComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   loading = false;
   filterValue = '';
-  tableId = TABLE_ADMIN_SERVICES;
 
   constructor(
     private serviceManager: ServicesManagerService,

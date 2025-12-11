@@ -4,7 +4,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
-import { TABLE_FACILITY_ALLOWED_USERS } from '@perun-web-apps/config/table-config';
 import {
   ConsentStatus,
   ConsentsManagerService,
@@ -144,8 +143,6 @@ export class FacilityAllowedUsersComponent implements OnInit {
     'consentStatus',
   ];
   displayedColumns: userTableColumn[] = ['id', 'name', 'email', 'logins', 'organization'];
-
-  tableId = TABLE_FACILITY_ALLOWED_USERS;
 
   routeAuth: boolean;
   toggle_messages: string[] = [

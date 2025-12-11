@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BanOnResource, ResourcesManagerService, RichMember } from '@perun-web-apps/perun/openapi';
-import { TABLE_BANS } from '@perun-web-apps/config/table-config';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { BanForm, AddBanData } from '../add-ban-dialog/add-ban-dialog.component';
@@ -27,7 +26,6 @@ export class AddResourceBanDialogComponent implements OnInit {
   loading = false;
   displayedColumns = ['checkbox', 'id', 'fullName', 'organization', 'email', 'logins'];
   members: RichMember[] = [];
-  tableId = TABLE_BANS;
   filter = '';
 
   constructor(

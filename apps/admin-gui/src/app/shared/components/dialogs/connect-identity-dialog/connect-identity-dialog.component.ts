@@ -10,7 +10,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -67,7 +66,6 @@ export class ConnectIdentityDialogComponent implements OnInit {
     'logins',
     'organization',
   ];
-  tableId = TABLE_USER_SERVICE_IDENTITIES;
   searchCtrl: UntypedFormControl;
   private userId: number;
   private isService: boolean;

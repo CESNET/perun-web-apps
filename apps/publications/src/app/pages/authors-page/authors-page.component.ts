@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Author, CabinetManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
 import { AuthorsListComponent } from '../../components/authors-list/authors-list.component';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -29,7 +28,6 @@ export class AuthorsPageComponent implements OnInit {
   filterValue = '';
   loading: boolean;
   authors: Author[] = [];
-  tableId = TABLE_PUBLICATION_AUTHORS;
 
   constructor(private cabinetService: CabinetManagerService) {}
 

@@ -3,7 +3,6 @@ import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CabinetManagerService, PublicationSystem } from '@perun-web-apps/perun/openapi';
-import { TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { PublicationSystemsListComponent } from '../../components/publication-systems-list/publication-systems-list.component';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -27,7 +26,6 @@ export class PublicationSystemsPageComponent implements OnInit {
   publicationSystems: PublicationSystem[] = [];
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_GROUP_RESOURCES_LIST;
 
   constructor(private cabinetManagerService: CabinetManagerService) {}
 

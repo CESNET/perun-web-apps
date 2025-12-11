@@ -98,8 +98,6 @@ export class SponsoredMembersListComponent implements OnInit, OnChanges {
   @Input()
   disableRouting = false;
   @Input()
-  tableId: string;
-  @Input()
   selectedSponsor: User;
   @Output()
   refreshTable = new EventEmitter<void>();
@@ -112,6 +110,8 @@ export class SponsoredMembersListComponent implements OnInit, OnChanges {
   loading = false;
   routingStrategy = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  tableId = 'app-sponsored-members-list';
+
   private sort: MatSort;
 
   constructor(

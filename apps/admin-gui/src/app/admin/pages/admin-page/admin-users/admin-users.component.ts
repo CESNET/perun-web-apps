@@ -2,7 +2,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
-import { TABLE_ADMIN_USER_SELECT } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, merge, Observable, switchMap } from 'rxjs';
@@ -55,7 +54,6 @@ export class AdminUsersComponent implements OnInit {
 
   usersWithoutVo = false;
   searchString: string;
-  tableId = TABLE_ADMIN_USER_SELECT;
   attributes: string[] = [];
   displayedColumns: userTableColumn[] = ['user', 'id', 'name', 'email', 'logins', 'organization'];
   nextPage = new BehaviorSubject<PageQuery>({});

@@ -43,7 +43,6 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TABLE_VO_MEMBERS } from '@perun-web-apps/config/table-config';
 import {
   downloadData,
   getDataForExport,
@@ -106,7 +105,6 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
   statuses = new FormControl(['']);
   statusList = ['VALID', 'INVALID', 'EXPIRED', 'DISABLED'];
   selectedStatuses: VoMemberStatuses[] = [];
-  tableId = TABLE_VO_MEMBERS;
   displayedColumns = ['checkbox', 'id', 'fullName', 'status', 'organization', 'email', 'logins'];
   searchString = '';
   updateTable = false;

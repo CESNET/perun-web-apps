@@ -18,7 +18,6 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { GuiAuthResolver, NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { TABLE_CREATE_RELATION_GROUP_DIALOG } from '@perun-web-apps/config/table-config';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
 export interface CreateRelationDialogData {
@@ -59,7 +58,6 @@ export class CreateRelationDialogComponent implements OnInit {
   filterValue = '';
   initLoading: boolean;
   loading: boolean;
-  tableId = TABLE_CREATE_RELATION_GROUP_DIALOG;
   thisVo: EnrichedVo;
   groupsToNotInclude: number[];
   vosToSelect: Vo[] = [];

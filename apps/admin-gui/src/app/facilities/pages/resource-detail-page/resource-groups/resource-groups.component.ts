@@ -14,7 +14,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveGroupFromResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-from-resource-dialog/remove-group-from-resource-dialog.component';
 import { AssignGroupToResourceDialogComponent } from '../../../../shared/components/dialogs/assign-group-to-resource-dialog/assign-group-to-resource-dialog.component';
-import { TABLE_RESOURCE_ALLOWED_GROUPS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
@@ -52,7 +51,6 @@ export class ResourceGroupsComponent implements OnInit {
   filteredValue = '';
   groupsToDisable: Set<number>;
 
-  tableId = TABLE_RESOURCE_ALLOWED_GROUPS;
   resource: Resource;
   cacheSubject = new BehaviorSubject(true);
 

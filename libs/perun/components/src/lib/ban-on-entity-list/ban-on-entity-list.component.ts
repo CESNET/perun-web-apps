@@ -88,7 +88,6 @@ export type BanOnEntityListColumn =
 export class BanOnEntityListComponent implements OnInit {
   @Input() selection = new SelectionModel<EnrichedBan>(false, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() tableId: string;
   @Input() updatePolicy: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
@@ -115,6 +114,7 @@ export class BanOnEntityListComponent implements OnInit {
     'edit',
   ];
   unfilteredColumns = this.columns;
+  tableId = 'perun-web-apps-ban-on-entity-list';
 
   constructor(
     private tableCheckbox: TableCheckbox,

@@ -18,7 +18,6 @@
       @if (!!facilityAttributes) {
         <perun-web-apps-attributes-list
           #FacilityAList
-          [tableId]="tableId"
           [attributes]="facilityAttributes"
           [selection]="selectionFacility">
         </perun-web-apps-attributes-list>
@@ -40,7 +39,6 @@
         @if (!!resourceAttributes) {
           <perun-web-apps-attributes-list
             #ResourceAList
-            [tableId]="tableId"
             [attributes]="resourceAttributes"
             [selection]="selectionResource">
           </perun-web-apps-attributes-list>
@@ -63,7 +61,6 @@
         @if (!!groupAttributes) {
           <perun-web-apps-attributes-list
             #GroupAList
-            [tableId]="tableId"
             [attributes]="groupAttributes"
             [selection]="selectionGroup">
           </perun-web-apps-attributes-list>
@@ -86,7 +83,6 @@
         @if (!!memberAttributes) {
           <perun-web-apps-attributes-list
             #MemberAList
-            [tableId]="tableId"
             [attributes]="memberAttributes"
             [selection]="selectionMember">
           </perun-web-apps-attributes-list>

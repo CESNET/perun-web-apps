@@ -65,7 +65,6 @@ export class ApplicationOperationErrorListComponent implements OnInit {
   selectedApplicationResults = new EventEmitter<[Application, PerunException][]>();
   @Output() updated = new EventEmitter<boolean>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
-
   dataSource: MatTableDataSource<[Application, PerunException]>;
   selection = new SelectionModel<[Application, PerunException]>(
     true,
@@ -83,6 +82,8 @@ export class ApplicationOperationErrorListComponent implements OnInit {
   clickable = true;
   displayedColumns: string[] = [];
   unfilteredColumns: string[] = [];
+  tableId = 'app-application-operation-error-list';
+
   private sort: MatSort;
 
   constructor(

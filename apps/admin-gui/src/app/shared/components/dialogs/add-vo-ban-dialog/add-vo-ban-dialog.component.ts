@@ -12,7 +12,6 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { TABLE_BANS } from '@perun-web-apps/config/table-config';
 import {
   MembersListService,
   NotificatorService,
@@ -58,7 +57,6 @@ export class AddVoBanDialogComponent implements OnInit {
     this.store.getLoginAttributeNames(),
   );
   displayedColumns = ['checkbox', 'id', 'fullName', 'email', 'logins'];
-  tableId = TABLE_BANS;
   filter = '';
   voId: number;
   nextPage = new BehaviorSubject<PageQuery>({});

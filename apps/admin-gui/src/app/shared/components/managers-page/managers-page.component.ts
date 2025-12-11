@@ -20,7 +20,6 @@ import {
   RoleManagementRules,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { TABLE_GROUP_MANAGERS_PAGE } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
@@ -100,7 +99,6 @@ export class ManagersPageComponent implements OnInit {
   showIndirectAdmins = false;
   directAdminsIds: number[] = null;
   loading = false;
-  tableId = TABLE_GROUP_MANAGERS_PAGE;
   routeAuth: boolean;
   manageAuth: boolean;
   roleModes: string[];

@@ -14,7 +14,6 @@ import {
   MembersManagerService,
   RoleAssignmentType,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_MEMBER_DETAIL_GROUPS } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
@@ -73,7 +72,6 @@ export class MemberGroupsComponent implements OnInit {
   loading: boolean;
   filterValue = '';
   filtering = false;
-  tableId = TABLE_MEMBER_DETAIL_GROUPS;
   showGroupList = false;
   selection: SelectionModel<Group> = new SelectionModel<Group>(
     true,

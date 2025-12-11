@@ -23,7 +23,6 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
-import { TABLE_SELECT_GROUP_MANAGER_DIALOG } from '@perun-web-apps/config/table-config';
 import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteModule,
@@ -85,8 +84,6 @@ export class AddGroupManagerDialogComponent implements OnInit {
 
   availableRoles: RoleManagementRules[];
   theme: string;
-
-  tableId = TABLE_SELECT_GROUP_MANAGER_DIALOG;
 
   constructor(
     private dialogRef: MatDialogRef<AddGroupManagerDialogComponent>,

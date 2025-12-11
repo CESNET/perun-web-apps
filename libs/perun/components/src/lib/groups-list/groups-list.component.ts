@@ -124,7 +124,6 @@ export class GroupsListComponent implements OnInit, OnChanges {
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() recentIds: number[] = [];
   @Input() resourceId: number = null;
-  @Input() tableId: string;
   @Input() relation = false;
   @Input() noGroupsAlert = 'SHARED_LIB.UI.ALERTS.NO_GROUPS';
   @Input() loading: boolean;
@@ -159,6 +158,7 @@ export class GroupsListComponent implements OnInit, OnChanges {
     'menu',
   ];
   unfilteredColumns = this.columns;
+  tableId = 'perun-web-apps-groups-list';
 
   constructor(
     private dialog: MatDialog,

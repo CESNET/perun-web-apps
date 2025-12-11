@@ -22,7 +22,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_GROUP_INVITATIONS } from '@perun-web-apps/config/table-config';
 import {
   downloadData,
   getDataForExport,
@@ -112,7 +111,6 @@ export class GroupInvitationsComponent implements OnInit {
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
   );
-  tableId = TABLE_GROUP_INVITATIONS;
   statuses = new FormControl(['']);
   statusList = ['PENDING', 'ACCEPTED', 'EXPIRED', 'REVOKED', 'UNSENT'];
   selectedStatuses: InvitationStatus[] = ['PENDING'];

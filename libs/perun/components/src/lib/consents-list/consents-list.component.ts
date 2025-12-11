@@ -62,7 +62,6 @@ import { ConsentStatusComponent } from '../consent-status/consent-status.compone
 export class ConsentsListComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() filterValue = '';
-  @Input() tableId: string;
   @Input() consents: Consent[] = [];
   @Input() selection = new SelectionModel<Consent>(true, []);
   @Input() cacheSubject: BehaviorSubject<boolean>;
@@ -75,6 +74,8 @@ export class ConsentsListComponent implements OnInit, AfterViewInit, OnChanges {
   expandedConsent: Consent | null;
   dataSource: MatTableDataSource<Consent>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  tableId = 'perun-web-apps-consents-list';
+
   private sort: MatSort;
 
   constructor(

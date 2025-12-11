@@ -110,10 +110,7 @@
 
     @if (showKeys) {
       <div>
-        <app-entityless-attribute-keys-list
-          (switchView)="switchShowKeys()"
-          [attDef]="attDef"
-          [tableId]="tableId">
+        <app-entityless-attribute-keys-list (switchView)="switchShowKeys()" [attDef]="attDef">
         </app-entityless-attribute-keys-list>
       </div>
     }

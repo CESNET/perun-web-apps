@@ -75,7 +75,6 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
   @Input() publications: PublicationForGUI[];
   @Input() selection = new SelectionModel<PublicationForGUI>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() tableId: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() routerPath: string;
   @Input() disabledRouting = false;
@@ -107,6 +106,7 @@ export class PublicationsListComponent implements OnInit, OnChanges, AfterViewIn
     'cite',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-publications-list';
 
   private sort: MatSort;
 

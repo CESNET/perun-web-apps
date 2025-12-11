@@ -6,7 +6,6 @@ import {
 } from '@perun-web-apps/perun/components';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TABLE_ADMIN_FACILITIES } from '@perun-web-apps/config/table-config';
 import { EnrichedFacility, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -32,7 +31,6 @@ export class UserFacilitiesComponent implements OnInit {
   userId: number;
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_ADMIN_FACILITIES;
   displayedColumns = ['id', 'name', 'description'];
 
   constructor(

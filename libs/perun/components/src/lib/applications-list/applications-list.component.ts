@@ -95,7 +95,6 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() fedColumnsFriendly: string[] = [];
-  @Input() tableId: string;
   @Input() disableRouting = false;
   @Input() group: Group;
   @Input() member: Member;
@@ -118,6 +117,7 @@ export class ApplicationsListComponent implements OnInit, OnChanges {
   cachedSelection: SelectionModel<Application>;
   displayedColumns: string[] = [];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-applications-list';
 
   constructor(
     private authResolver: GuiAuthResolver,

@@ -39,7 +39,6 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode, GroupWithStatus, PageQuery } from '@perun-web-apps/perun/models';
-import { TABLE_VO_GROUPS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -121,7 +120,6 @@ export class VoGroupsComponent implements OnInit {
   );
   filtering = false;
   filterValue = '';
-  tableId = TABLE_VO_GROUPS;
   displayedColumns = ['select', 'id', 'name', 'description', 'menu'];
   selectedRoles: GroupAdminRoles[] = [];
   selectedRoleTypes: RoleAssignmentType[] = [];

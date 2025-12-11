@@ -12,7 +12,6 @@ import { Group, ResourcesManagerService, RichResource } from '@perun-web-apps/pe
 import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
-import { TABLE_ASSIGN_RESOURCE_TO_GROUP } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
@@ -64,8 +63,6 @@ export class AddGroupResourceDialogComponent implements OnInit {
   async = true;
   autoAssignSubgroups = false;
   asActive = true;
-
-  tableId = TABLE_ASSIGN_RESOURCE_TO_GROUP;
 
   autoAssignHint: string;
   asActiveHint: string;

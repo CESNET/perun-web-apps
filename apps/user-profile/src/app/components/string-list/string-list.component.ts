@@ -48,6 +48,8 @@ export class StringListComponent implements OnInit, OnChanges, AfterViewInit {
   cachedSelection: SelectionModel<string>;
   displayedColumns: string[] = ['select', 'value'];
   dataSource: MatTableDataSource<string>;
+  tableId = 'perun-web-apps-string-list';
+
   private sort: MatSort;
 
   constructor(

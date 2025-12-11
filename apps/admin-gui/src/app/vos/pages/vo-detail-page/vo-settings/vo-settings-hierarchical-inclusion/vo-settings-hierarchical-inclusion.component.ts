@@ -19,7 +19,6 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGroupHierarchicalIncludeDialogComponent } from '../../../../../shared/components/dialogs/add-group-hierarchical-include-dialog/add-group-hierarchical-include-dialog.component';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { TABLE_HIERARCHICAL_INCLUSION } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -54,7 +53,6 @@ export class VoSettingsHierarchicalInclusionComponent implements OnInit {
     true,
     (group1, group2) => group1.id === group2.id,
   );
-  tableId = TABLE_HIERARCHICAL_INCLUSION;
   cacheSubject = new BehaviorSubject(true);
 
   constructor(

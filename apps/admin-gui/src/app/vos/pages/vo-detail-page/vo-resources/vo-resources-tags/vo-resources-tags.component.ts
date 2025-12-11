@@ -13,7 +13,6 @@ import {
   NotificatorService,
 } from '@perun-web-apps/perun/services';
 import { ResourcesManagerService, ResourceTag, Vo } from '@perun-web-apps/perun/openapi';
-import { TABLE_VO_RESOURCES_TAGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BehaviorSubject } from 'rxjs';
 import { ResourcesTagsListComponent } from '../../../../../shared/components/resources-tags-list/resources-tags-list.component';
@@ -48,7 +47,6 @@ export class VoResourcesTagsComponent implements OnInit {
     (resourceTag1, resourceTag2) => resourceTag1.id === resourceTag2.id,
   );
   filterValue: string;
-  tableId = TABLE_VO_RESOURCES_TAGS;
   displayedColumns: string[] = [];
   createAuth: boolean;
   deleteAuth: boolean;

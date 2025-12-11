@@ -12,7 +12,6 @@ import {
   PublicationForGUI,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_ADD_THANKS_DIALOG } from '@perun-web-apps/config/table-config';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -40,7 +39,6 @@ export class AddThanksDialogComponent implements OnInit {
   selected = new SelectionModel<Owner>(true, [], true, (owner1, owner2) => owner1.id === owner2.id);
   cachedSubject = new BehaviorSubject(true);
   filterValue: string;
-  tableId = TABLE_ADD_THANKS_DIALOG;
 
   constructor(
     private dialogRef: MatDialogRef<AddThanksDialogComponent>,

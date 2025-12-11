@@ -12,7 +12,6 @@ import {
   Service,
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_FACILITY_SERVICES_DESTINATION_LIST } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RemoveDestinationDialogComponent } from '../../../../shared/components/dialogs/remove-destination-dialog/remove-destination-dialog.component';
 import {
@@ -88,7 +87,6 @@ export class FacilityServicesDestinationsComponent implements OnInit {
   );
   cachedSubject = new BehaviorSubject(true);
   filterValue = '';
-  tableId = TABLE_FACILITY_SERVICES_DESTINATION_LIST;
 
   addAuth: boolean;
   removeAuth: boolean;

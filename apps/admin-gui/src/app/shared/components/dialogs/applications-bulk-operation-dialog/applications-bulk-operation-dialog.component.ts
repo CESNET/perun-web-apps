@@ -17,10 +17,6 @@ import {
   MailType,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_GROUP_APPLICATIONS_NORMAL,
-  TABLE_VO_APPLICATIONS_NORMAL,
-} from '@perun-web-apps/config/table-config';
 import { ApplicationsListComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { AppTypeMailTypeMatchPipe } from '@perun-web-apps/perun/pipes';
@@ -67,7 +63,6 @@ export class ApplicationsBulkOperationDialogComponent implements OnInit {
   loading = false;
   mailType: MailType = 'APP_CREATED_USER';
   reason = '';
-  tableId = TABLE_VO_APPLICATIONS_NORMAL;
   availableMailTypes = [
     MailType.APP_CREATED_USER,
     MailType.APPROVABLE_GROUP_APP_USER,
@@ -86,10 +81,6 @@ export class ApplicationsBulkOperationDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.data.theme === 'group') {
-      this.tableId = TABLE_GROUP_APPLICATIONS_NORMAL;
-    }
-
     if (this.data.action === 'RESEND') {
       this.loading = true;
       if (this.data.groupId) {

@@ -19,7 +19,6 @@ import { MembersManagerService, RichMember, User } from '@perun-web-apps/perun/o
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -57,7 +56,6 @@ export class SponsorExistingMemberDialogComponent implements OnInit {
   dialogLoading = false;
   tableLoading = false;
   theme: string;
-  tableId = TABLE_ADD_SPONSORED_MEMBERS;
   displayedColumns: string[];
   expiration = 'never';
   searchCtrl: UntypedFormControl = new UntypedFormControl('', [Validators.required]);

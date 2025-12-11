@@ -18,7 +18,6 @@ import {
   RichGroup,
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
-import { TABLE_VO_GROUPS } from '@perun-web-apps/config/table-config';
 import { Observable, Subscription } from 'rxjs';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps/perun/utils';
@@ -66,7 +65,6 @@ export class AssignGroupsSponsoredMembersComponent implements OnInit, OnDestroy 
   asSubgroup = false;
   parentGroup: Group = null;
   filterValue = '';
-  tableId = TABLE_VO_GROUPS;
   groupToCreate: Group = {
     id: 0,
     beanName: 'Group',

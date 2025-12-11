@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FacilitiesManagerService, Facility, Host } from '@perun-web-apps/perun/openapi';
-import { TABLE_FACILITY_HOSTS_LIST } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddHostDialogComponent } from '../../../../shared/components/dialogs/add-host-dialog/add-host-dialog.component';
@@ -45,7 +44,6 @@ export class FacilityHostsComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_FACILITY_HOSTS_LIST;
   displayedColumns: string[] = ['id', 'name'];
 
   addAuth: boolean;

@@ -12,7 +12,6 @@ import {
   NotificatorService,
 } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { TABLE_VO_EXTSOURCES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveExtSourceDialogComponent } from '../../../../../shared/components/dialogs/remove-ext-source-dialog/remove-ext-source-dialog.component';
 import { BehaviorSubject } from 'rxjs';
@@ -43,7 +42,6 @@ export class VoSettingsExtsourcesComponent implements OnInit {
   loading: boolean;
   filterValue = '';
   successMessage: string;
-  tableId = TABLE_VO_EXTSOURCES_SETTINGS;
   displayedColumns: string[] = [];
   addAuth: boolean;
   removeAuth: boolean;
