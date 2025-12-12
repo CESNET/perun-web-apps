@@ -1485,12 +1485,9 @@
       "SUBMIT": "Approve anyway",
       "CANCEL": "Cancel",
       "TEXT": "This application should not be approved for the following reason:",
-      "APPROVE_ANYWAY": "You can try to override the restriction by clicking the 'Approve anyway' button.",
-      "NOT_ACADEMIC": "User is not an active academia member and the application should not be approved.",
-      "LOA": "LoA:",
-      "IDP_CATEGORY": "IdP category:",
-      "AFFILIATION": "Affiliation:",
-      "NOT_ELIGIBLE": "User is not eligible for CESNET services and the application should not be approved."
+      "APPROVE_ANYWAY": "You may override this restriction – just click 'Approve anyway'.",
+      "NOT_ELIGIBLE": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for CESNET services.",
+      "NOT_ELIGIBLE_EINFRACZ": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for e‑INFRA CZ services."
     },
     "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
       "TITLE": "Change applications view preferences",
