@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.4.0...v20.5.0) (2025-12-12)
+
+
+### Features
+
+* **admin:** add translation for approving non-eligible e-INFRA CZ applicants ([6b41525](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6b4152590b827a8e7fc9618372f9e25479a03a20))
+
 ## [20.4.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.3.0...v20.4.0) (2025-12-05)
 
 
