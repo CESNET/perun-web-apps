@@ -1,18 +1,19 @@
 {
   "migrations": [
     {
-      "version": "20.0.0-0",
-      "description": "Updates Angular Material to v20",
-      "factory": "./ng-update/index_bundled#updateToV20",
-      "package": "@angular/material",
-      "name": "migration-v20"
+      "version": "20.2.0",
+      "description": "Replaces usages of the deprecated Router.getCurrentNavigation method with the Router.currentNavigation signal",
+      "factory": "./bundles/router-current-navigation.cjs#migrate",
+      "optional": true,
+      "package": "@angular/core",
+      "name": "router-current-navigation"
     },
     {
-      "version": "20.0.0-0",
-      "description": "Updates the Angular CDK to v20",
-      "factory": "./ng-update/index#updateToV20",
-      "package": "@angular/cdk",
-      "name": "migration-v20"
+      "version": "20.3.0",
+      "description": "Adds `BootstrapContext` to `bootstrapApplication` calls in `main.server.ts` to support server rendering.",
+      "factory": "./bundles/add-bootstrap-context-to-server-main.cjs#migrate",
+      "package": "@angular/core",
+      "name": "add-bootstrap-context-to-server-main"
     }
   ]
 }
