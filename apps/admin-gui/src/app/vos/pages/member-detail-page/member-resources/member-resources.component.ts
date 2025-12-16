@@ -15,7 +15,6 @@ import {
   RichResource,
 } from '@perun-web-apps/perun/openapi';
 import { MatDialog } from '@angular/material/dialog';
-import { TABLE_MEMBER_RESOURCE_LIST } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AddMemberToResourceDialogComponent } from '../../../../shared/components/dialogs/add-member-to-resource-dialog/add-member-to-resource-dialog.component';
@@ -45,7 +44,6 @@ export class MemberResourcesComponent implements OnInit {
   filterValue = '';
   loading = false;
   displayedColumns: string[] = ['id', 'name', 'vo', 'facility', 'tags', 'description'];
-  tableId = TABLE_MEMBER_RESOURCE_LIST;
   routeAuth: boolean;
   addAuth: boolean;
   voBean: PerunBean;

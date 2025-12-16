@@ -11,7 +11,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ResourcesManagerService, RichResource, Vo } from '@perun-web-apps/perun/openapi';
 import { RemoveResourceDialogComponent } from '../../../../../shared/components/dialogs/remove-resource-dialog/remove-resource-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TABLE_VO_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
@@ -52,7 +51,6 @@ export class VoResourcesPreviewComponent implements OnInit {
   loading: boolean;
   filterValue = '';
   displayedColumns: string[] = [];
-  tableId = TABLE_VO_RESOURCES_LIST;
   removeAuth: boolean;
   routeAuth = false;
 

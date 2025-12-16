@@ -58,7 +58,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
 })
 export class AuditMessagesListComponent implements OnInit {
-  @Input() tableId: string;
   @Input() refresh: boolean;
   @Input() loading: boolean;
   @Input() noMessagesAlert = 'SHARED_LIB.UI.ALERTS.NO_AUDIT_MESSAGES';
@@ -74,6 +73,7 @@ export class AuditMessagesListComponent implements OnInit {
   dataSource: MatTableDataSource<AuditMessage> | DynamicDataSource<AuditMessage>;
   displayedColumns: string[] = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-audit-messages-list';
 
   constructor(
     private dialog: MatDialog,

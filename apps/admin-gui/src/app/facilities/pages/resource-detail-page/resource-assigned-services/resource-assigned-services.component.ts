@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Resource, ResourcesManagerService, Service } from '@perun-web-apps/perun/openapi';
-import { TABLE_RESOURCE_ASSIGNED_SERVICES } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -44,7 +43,6 @@ export class ResourceAssignedServicesComponent implements OnInit {
   );
   cachedSubject = new BehaviorSubject(true);
   loading: boolean;
-  tableId = TABLE_RESOURCE_ASSIGNED_SERVICES;
   filterValue = '';
   assignServiceAuth: boolean;
   removeServiceAuth: boolean;

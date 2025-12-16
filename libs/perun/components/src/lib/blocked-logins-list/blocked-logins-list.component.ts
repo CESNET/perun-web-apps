@@ -59,8 +59,6 @@ import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 export class BlockedLoginsListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  @Input() tableId: string;
   @Input() updateTable: boolean;
   @Input() searchString = '';
   @Input() selection: SelectionModel<BlockedLogin>;
@@ -82,6 +80,7 @@ export class BlockedLoginsListComponent implements OnInit, OnChanges {
 
   // contains all selected blocked logins across all pages
   cachedSelection: SelectionModel<BlockedLogin>;
+  tableId = 'perun-web-apps-logins-list';
 
   constructor(
     private globalNamespacePipe: GlobalNamespacePipe,

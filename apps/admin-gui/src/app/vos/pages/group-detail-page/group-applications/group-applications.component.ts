@@ -10,10 +10,6 @@ import {
   AttributesManagerService,
   Group,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_GROUP_APPLICATIONS_DETAILED,
-  TABLE_GROUP_APPLICATIONS_NORMAL,
-} from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -45,9 +41,6 @@ export class GroupApplicationsComponent implements OnInit {
     resend: false,
     columnSettings: false,
   };
-
-  tableId = TABLE_GROUP_APPLICATIONS_NORMAL;
-  detailTableId = TABLE_GROUP_APPLICATIONS_DETAILED;
 
   fedAttrs: AttributeDefinition[] = [];
   viewPreferences$: Observable<Attribute>;

@@ -12,7 +12,6 @@ import {
   Vo,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { CreateSponsoredMemberDialogComponent } from '../../../../../shared/components/dialogs/create-sponsored-member-dialog/create-sponsored-member-dialog.component';
@@ -71,7 +70,6 @@ export class VoSettingsSponsoredMembersComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   searchString = '';
   loading = false;
-  tableId = TABLE_SPONSORED_MEMBERS;
   private vo: Vo;
   private attrNames: string[] = [Urns.USER_DEF_PREFERRED_MAIL];
 

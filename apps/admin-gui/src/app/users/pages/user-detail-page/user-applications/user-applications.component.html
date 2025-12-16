@@ -25,7 +25,6 @@
   <perun-web-apps-applications-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
     [loading]="loading$ | async"
-    [tableId]="showAllDetails ? detailTableId : tableId"
     [user]="user"
     [displayColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
     [applications]="applicationsPage$ | async"

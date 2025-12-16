@@ -74,8 +74,6 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   @Input()
   filterValue = '';
   @Input()
-  tableId: string;
-  @Input()
   services: Set<number>;
   @Input()
   loading: boolean;
@@ -88,6 +86,8 @@ export class DestinationListComponent implements AfterViewInit, OnInit, OnChange
   noTimestampTooltip = '';
   displayedColumns: string[] = [];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-perun-web-apps-destination-list';
+
   private sort: MatSort;
 
   constructor(

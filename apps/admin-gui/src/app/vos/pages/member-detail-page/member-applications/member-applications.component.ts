@@ -13,10 +13,6 @@ import {
   PaginatedRichApplications,
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_MEMBER_APPLICATIONS_DETAILED,
-  TABLE_MEMBER_APPLICATIONS_NORMAL,
-} from '@perun-web-apps/config/table-config';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { EntityStorageService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
@@ -77,8 +73,6 @@ export class MemberApplicationsComponent implements OnInit {
   ];
   filterValue = '';
   showAllDetails = false;
-  detailTableId = TABLE_MEMBER_APPLICATIONS_DETAILED;
-  tableId = TABLE_MEMBER_APPLICATIONS_NORMAL;
   dateFrom: Date = new Date('1970-01-01');
 
   applications: Application[] = [];

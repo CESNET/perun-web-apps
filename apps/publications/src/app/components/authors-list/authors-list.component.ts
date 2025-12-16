@@ -63,7 +63,6 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
 export class AuthorsListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() authors: Author[] = [];
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() disableRouting = false;
   @Input() reloadTable: boolean;
   @Input() selection = new SelectionModel<Author>(true, []);
@@ -83,6 +82,8 @@ export class AuthorsListComponent implements AfterViewInit, OnInit, OnChanges {
     'numberOfPublications',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-authors-list';
+
   private sort: MatSort;
 
   constructor(

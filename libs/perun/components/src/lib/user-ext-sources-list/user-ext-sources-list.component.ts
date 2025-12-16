@@ -54,7 +54,6 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   @Input() selection: SelectionModel<RichUserExtSource> = new SelectionModel<RichUserExtSource>();
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue = '';
-  @Input() tableId: string;
   @Input() extSourceNameHeader: string;
   @Input() loginHeader: string;
   @Input() disableRouting: boolean;
@@ -68,6 +67,8 @@ export class UserExtSourcesListComponent implements OnInit, OnChanges {
   cachedSelection: SelectionModel<RichUserExtSource>;
   displayedColumns: string[] = ['select', 'id', 'mail', 'extSourceName', 'login', 'lastAccess'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-user-ext-sources-list';
+
   private sort: MatSort;
 
   constructor(

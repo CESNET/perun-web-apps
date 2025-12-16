@@ -8,7 +8,6 @@ import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AttrEntity } from '@perun-web-apps/perun/models';
 import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -54,7 +53,6 @@ export class CreateAttributeDialogComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   showError = false;
   filterValue = '';
-  tableId = TABLE_ATTRIBUTES_SETTINGS;
   loading: boolean;
 
   private saveSuccessMessage: string;

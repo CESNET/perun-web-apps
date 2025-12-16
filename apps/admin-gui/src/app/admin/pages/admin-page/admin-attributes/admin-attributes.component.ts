@@ -12,7 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateAttributeDefinitionDialogComponent } from '../../../../shared/components/dialogs/create-attribute-definition-dialog/create-attribute-definition-dialog.component';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ADMIN_ATTRIBUTES } from '@perun-web-apps/config/table-config';
 import { AttributeImportDialogComponent } from '../../../../shared/components/dialogs/attribute-import-dialog/attribute-import-dialog.component';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
@@ -52,7 +51,6 @@ export class AdminAttributesComponent implements OnInit {
   filterValue = '';
 
   loading: boolean;
-  tableId = TABLE_ADMIN_ATTRIBUTES;
 
   constructor(
     private dialog: MatDialog,

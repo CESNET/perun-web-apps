@@ -85,7 +85,6 @@
   <perun-web-apps-applications-list
     *perunWebAppsLoader="loading$ | async; indicator: spinner"
     [loading]="loading$ | async"
-    [tableId]="showAllDetails ? detailTableId : tableId"
     [displayColumns]="currentColumns"
     [fedColumnsFriendly]="showAllDetails ? [] : configuredFedColumns"
     [fedAttrs]="fedAttrs"

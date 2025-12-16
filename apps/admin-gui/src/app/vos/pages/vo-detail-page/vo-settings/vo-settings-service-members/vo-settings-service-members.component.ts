@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MembersManagerService, RichMember, Vo } from '@perun-web-apps/perun/openapi';
-import { TABLE_SERVICE_MEMBERS } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -49,7 +48,6 @@ export class VoSettingsServiceMembersComponent implements OnInit {
   );
   searchString = '';
   loading = false;
-  tableId = TABLE_SERVICE_MEMBERS;
   removeAuth: boolean;
   cacheSubject = new BehaviorSubject(true);
   private vo: Vo;

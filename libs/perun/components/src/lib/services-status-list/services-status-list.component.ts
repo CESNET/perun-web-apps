@@ -69,7 +69,6 @@ export class ServicesStatusListComponent implements OnInit, OnChanges, AfterView
   @Input() selection = new SelectionModel<ServiceState>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() disableRouting = true;
   @Input() loading: boolean;
   @Output() selectionChange: EventEmitter<() => void> = new EventEmitter<() => void>();
@@ -88,6 +87,8 @@ export class ServicesStatusListComponent implements OnInit, OnChanges, AfterView
     'task.endTime',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-services-status-list';
+
   private sort: MatSort;
 
   constructor(

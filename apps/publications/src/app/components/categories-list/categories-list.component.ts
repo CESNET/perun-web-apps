@@ -61,7 +61,6 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
   @Input() selection = new SelectionModel<Category>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
   @Output() refreshTable = new EventEmitter<void>();
@@ -72,6 +71,8 @@ export class CategoriesListComponent implements AfterViewInit, OnInit, OnChanges
   editAuth = false;
   displayedColumns: string[] = ['select', 'id', 'name', 'rank'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-categories-list';
+
   private sort: MatSort;
 
   constructor(

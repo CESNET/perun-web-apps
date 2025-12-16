@@ -9,7 +9,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Author, CabinetManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -52,7 +51,6 @@ export class AddAuthorsDialogComponent implements OnInit {
   publicationId: number;
   authors: Author[] = [];
   alreadyAddedAuthors: Author[] = [];
-  tableIdAuthors = TABLE_PUBLICATION_AUTHORS;
   selection = new SelectionModel<Author>(
     true,
     [],

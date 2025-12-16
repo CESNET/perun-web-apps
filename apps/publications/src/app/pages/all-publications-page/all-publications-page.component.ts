@@ -11,7 +11,6 @@ import {
 } from '../../components/publication-filter/publication-filter.component';
 import { CabinetManagerService, PublicationForGUI } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
@@ -49,7 +48,6 @@ export class AllPublicationsPageComponent implements OnInit {
     (publication1, publication2) => publication1.id === publication2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   filter: Filter = {
     title: null,
     isbnissn: null,

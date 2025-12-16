@@ -68,8 +68,6 @@ export class HostsListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
   filterValue: string;
   @Input()
-  tableId: string;
-  @Input()
   facilityId: number;
   @Input()
   disableRouting = false;
@@ -81,6 +79,8 @@ export class HostsListComponent implements AfterViewInit, OnInit, OnChanges {
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'id', 'name'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-hosts-list';
+
   private sort: MatSort;
 
   constructor(

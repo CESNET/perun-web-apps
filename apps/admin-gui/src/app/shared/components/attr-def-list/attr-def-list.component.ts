@@ -77,8 +77,6 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   filterValue: string;
   @Input()
-  tableId: string;
-  @Input()
   disableRouting = false;
   @Input() consentRequired = false;
   @Input() serviceEnabled = false;
@@ -87,6 +85,8 @@ export class AttrDefListComponent implements OnInit, OnChanges, AfterViewInit {
   @Output()
   refreshEvent = new EventEmitter<void>();
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
+  tableId = 'app-attr-def-list';
+
   dataSource: MatTableDataSource<AttributeDefinition>;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   // contains all selected rows across all pages

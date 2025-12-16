@@ -9,7 +9,6 @@ import {
   UserExtSource,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { filterCoreAttributes, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -47,7 +46,6 @@ export class IdentityDetailComponent implements OnInit {
     (attribute1, attribute2) => attribute1.id === attribute2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_ATTRIBUTES_SETTINGS;
   attributes: Attribute[] = [];
   userExtSource: UserExtSource;
 

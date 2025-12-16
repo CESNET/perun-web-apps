@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RichDestination, Service, ServicesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_FACILITY_SERVICES_DESTINATION_LIST } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import {
   EntityStorageService,
@@ -50,7 +49,6 @@ export class ServiceDestinationsComponent implements OnInit {
     (richDestination1, richDestination2) => richDestination1.id === richDestination2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_FACILITY_SERVICES_DESTINATION_LIST;
   private service: Service;
 
   constructor(

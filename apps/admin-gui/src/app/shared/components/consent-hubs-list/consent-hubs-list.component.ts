@@ -53,7 +53,6 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
 export class ConsentHubsListComponent implements OnInit, OnChanges {
   @Input() consentHubs: ConsentHub[];
   @Input() filterValue = '';
-  @Input() tableId: string;
   @Input() selection = new SelectionModel<ConsentHub>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input() loading: boolean;
@@ -65,6 +64,8 @@ export class ConsentHubsListComponent implements OnInit, OnChanges {
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'id', 'name', 'enforceConsents', 'facilities'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-perun-web-apps-consent-hubs-list';
+
   private sort: MatSort;
 
   constructor(

@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ConsentHub, ConsentsManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_CONSENT_HUBS } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   GuiAuthResolver,
@@ -42,7 +41,6 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 })
 export class AdminConsentHubsComponent implements OnInit {
   loading = false;
-  tableId = TABLE_CONSENT_HUBS;
   selection = new SelectionModel<ConsentHub>(
     true,
     [],

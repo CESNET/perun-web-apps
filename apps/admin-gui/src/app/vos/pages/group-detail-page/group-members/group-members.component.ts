@@ -41,7 +41,6 @@ import {
   RichMember,
   VoMemberStatuses,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_GROUP_MEMBERS } from '@perun-web-apps/config/table-config';
 import {
   downloadData,
   getDataForExport,
@@ -106,7 +105,6 @@ export class GroupMembersComponent implements OnInit {
   synchEnabled = false;
   searchString = '';
   updateTable = false;
-  tableId = TABLE_GROUP_MEMBERS;
   memberAttrNames = [
     Urns.MEMBER_DEF_ORGANIZATION,
     Urns.MEMBER_DEF_MAIL,

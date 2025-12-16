@@ -21,7 +21,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { RemoveVoDialogComponent } from '../../../shared/components/dialogs/remove-vo-dialog/remove-vo-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CreateVoDialogComponent } from '../../../shared/components/dialogs/create-vo-dialog/create-vo-dialog.component';
-import { TABLE_VO_SELECT } from '@perun-web-apps/config/table-config';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -65,7 +64,6 @@ export class VoSelectPageComponent implements OnInit, AfterViewChecked {
   cachedSubject = new BehaviorSubject(true);
 
   displayedColumns: string[];
-  tableId = TABLE_VO_SELECT;
 
   constructor(
     private sideMenuService: SideMenuService,

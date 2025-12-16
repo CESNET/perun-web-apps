@@ -21,7 +21,6 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
-import { TABLE_ADD_MANAGER } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -73,7 +72,6 @@ export class AddManagerDialogComponent implements OnInit {
   firstSearchDone = false;
   availableRoles: RoleManagementRules[];
   theme: string;
-  tableId = TABLE_ADD_MANAGER;
   searchCtrl: UntypedFormControl;
   cacheSubject = new BehaviorSubject(true);
 

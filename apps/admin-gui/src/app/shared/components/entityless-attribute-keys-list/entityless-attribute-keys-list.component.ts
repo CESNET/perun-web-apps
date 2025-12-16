@@ -81,8 +81,6 @@ export interface ListData {
 export class EntitylessAttributeKeysListComponent implements OnInit, AfterViewInit {
   @Input()
   attDef: AttributeDefinition;
-  @Input()
-  tableId: string;
   @Output()
   switchView: EventEmitter<void> = new EventEmitter<void>();
   @ViewChildren(AttributeValueComponent)
@@ -103,6 +101,7 @@ export class EntitylessAttributeKeysListComponent implements OnInit, AfterViewIn
   isAddButtonDisabled = false;
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   loading: boolean;
+  tableId = 'app-entityless-attribute-keys-list';
 
   constructor(
     public dialogRef: MatDialogRef<EntitylessAttributeKeysListComponent>,

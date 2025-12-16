@@ -7,7 +7,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
-import { TABLE_ADD_EXTSOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { ExtSourcesListComponent } from '../../ext-sources-list/ext-sources-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -44,7 +43,6 @@ export class AddExtSourceDialogComponent implements OnInit {
   loading = false;
   filterValue = '';
   successMessage: string;
-  tableId = TABLE_ADD_EXTSOURCE_DIALOG;
 
   constructor(
     private dialogRef: MatDialogRef<AddExtSourceDialogComponent>,

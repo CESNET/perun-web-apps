@@ -7,7 +7,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RichResource, UsersManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ADMIN_USER_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -30,7 +29,6 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 export class UserResourcesComponent implements OnInit {
   resources: RichResource[] = [];
   loading: boolean;
-  tableId = TABLE_ADMIN_USER_RESOURCES_LIST;
   filterValue = '';
 
   constructor(

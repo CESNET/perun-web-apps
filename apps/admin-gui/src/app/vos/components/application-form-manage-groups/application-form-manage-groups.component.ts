@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Group } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_APPLICATION_FORM_ITEM_MANAGE_GROUP } from '@perun-web-apps/config/table-config';
 import { Observable } from 'rxjs';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
@@ -49,7 +48,6 @@ export class ApplicationFormManageGroupsComponent {
   @Output() addEvent: EventEmitter<void> = new EventEmitter<void>();
   @Output() removeEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  tableId = TABLE_APPLICATION_FORM_ITEM_MANAGE_GROUP;
   filterValue = '';
 
   constructor(private dialog: MatDialog) {}

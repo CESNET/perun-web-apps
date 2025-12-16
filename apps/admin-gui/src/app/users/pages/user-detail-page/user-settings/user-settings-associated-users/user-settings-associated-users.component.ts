@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { TABLE_USER_ASSOCIATED_USERS } from '@perun-web-apps/config/table-config';
 import { RichUser, User, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -46,7 +45,6 @@ export class UserSettingsAssociatedUsersComponent implements OnInit {
   );
   associatedUsers: RichUser[] = [];
   user: User;
-  tableId = TABLE_USER_ASSOCIATED_USERS;
   displayedColumns: userTableColumn[] = [
     'select',
     'id',

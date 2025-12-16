@@ -13,7 +13,6 @@ import {
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { RemovePublicationDialogComponent } from '../../dialogs/remove-publication-dialog/remove-publication-dialog.component';
@@ -57,7 +56,6 @@ export class AuthorDetailComponent implements OnInit {
     (publication1, publication2) => publication1.id === publication2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   author: User;
 
   constructor(

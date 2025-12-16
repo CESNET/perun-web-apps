@@ -68,8 +68,6 @@ export class ServicesListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input()
   filterValue = '';
   @Input()
-  tableId: string;
-  @Input()
   selection = new SelectionModel<Service>(true, []);
   @Input()
   cachedSubject: BehaviorSubject<boolean>;
@@ -85,6 +83,8 @@ export class ServicesListComponent implements AfterViewInit, OnInit, OnChanges {
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'id', 'name', 'enabled', 'script', 'description'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-services-list';
+
   private sort: MatSort;
 
   constructor(

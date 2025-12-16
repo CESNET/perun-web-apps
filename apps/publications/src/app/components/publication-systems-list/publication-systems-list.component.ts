@@ -41,13 +41,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class PublicationSystemsListComponent implements AfterViewInit, OnChanges, OnInit {
   @Input() publicationSystems: PublicationSystem[] = [];
   @Input() filterValue: string;
-  @Input() tableId: string;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   dataSource: MatTableDataSource<PublicationSystem>;
   displayedColumns: string[] = ['id', 'friendlyName', 'loginNamespace', 'url', 'type'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-publication-systems-list';
+
   private sort: MatSort;
 
   constructor(

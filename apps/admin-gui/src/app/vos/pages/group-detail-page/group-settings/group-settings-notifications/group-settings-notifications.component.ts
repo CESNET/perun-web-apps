@@ -24,7 +24,6 @@ import {
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { TABLE_GROUP_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { BehaviorSubject } from 'rxjs';
@@ -68,7 +67,6 @@ export class GroupSettingsNotificationsComponent implements OnInit {
   copyAuth = false;
   createFormAuth = false;
   displayedColumns: string[] = [];
-  tableId = TABLE_GROUP_SETTINGS_NOTIFICATIONS;
 
   constructor(
     private registrarService: RegistrarManagerService,

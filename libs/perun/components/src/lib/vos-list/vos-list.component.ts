@@ -64,7 +64,6 @@ export class VosListComponent implements OnInit, OnChanges {
   @Input() disableRouting = false;
   @Input() disableCheckbox = false;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
-  @Input() tableId: string;
   @Input() enableMasterCheckbox = false;
   @Input() loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
@@ -75,6 +74,8 @@ export class VosListComponent implements OnInit, OnChanges {
   cachedSelection: SelectionModel<Vo>;
   displayedColumns: string[] = [];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-vos-list';
+
   private sort: MatSort;
 
   constructor(

@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Group, GroupsManagerService, RichGroup, RichMember } from '@perun-web-apps/perun/openapi';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { TABLE_VO_GROUPS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps/perun/utils';
 import {
@@ -52,7 +51,6 @@ export class CopyMembersDialogComponent implements OnInit {
   loading = false;
   copyType: 'all' | 'selection' = 'all';
   filterValue = '';
-  tableId = TABLE_VO_GROUPS;
   assignableGroups: Group[] = [];
   selection: SelectionModel<Group> = new SelectionModel<Group>(
     true,

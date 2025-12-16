@@ -55,7 +55,6 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @Input() owners: Owner[] = [];
   @Input() selection = new SelectionModel<Owner>(true, []);
-  @Input() tableId: string;
   @Input() filterValue = '';
   @Input() loading: boolean;
   @Input() cachedSubject: BehaviorSubject<boolean>;
@@ -66,6 +65,7 @@ export class OwnersListComponent implements OnInit, OnChanges, AfterViewInit {
   cachedSelection: SelectionModel<Owner>;
   displayedColumns: string[] = ['select', 'id', 'name', 'contact', 'type'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-owners-list';
 
   private sort: MatSort;
 
