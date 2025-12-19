@@ -93,8 +93,6 @@ export class GroupsPageComponent implements OnInit {
 
   getAllGroups(): void {
     this.loading = true;
-    let i = 0;
-    let j = 0;
     this.userMembershipsTemp = [];
     this.adminMembershipsTemp = [];
     const allMemberIds = this.store.getPerunPrincipal().roles['SELF']['Member'];
@@ -103,30 +101,31 @@ export class GroupsPageComponent implements OnInit {
       this.loading = false;
       this.initialLoading = false;
       return;
-    } else {
-      j = allMemberIds.length;
     }
+    // One "group source" per membership + one for groups user is an admin
+    // remainingGroupSources is tracked to ensure this.addToLists(true) is called exactly once
+    let remainingGroupSources = allMemberIds.length + 1;
     allMemberIds.forEach((memberId) => {
-      j--;
       this.groupService.getMemberGroups(memberId).subscribe((groups) => {
-        // finish when the user has no group membership
-        if (groups.length === 0 && j === 0) {
-          // if last group, there won't be a chance to call `addToLists` in the attribute call
-          this.addToLists(true);
+        let remainingGroups = groups.length;
+        if (remainingGroups === 0) {
+          remainingGroupSources--;
+          if (remainingGroupSources === 0) this.addToLists(true);
+          return;
         }
-        i += groups.length;
         groups.forEach((group) => {
           this.attributesManagerService
             .getMemberGroupAttributes(memberId, group.id)
             .subscribe((atts) => {
-              i--;
               this.userMembershipsTemp.push({
                 entity: group,
                 expirationAttribute: atts.find(
                   (att) => att.friendlyName === 'groupMembershipExpiration',
                 ),
               });
-              if (i === 0 && j === 0) this.addToLists(true);
+              if (--remainingGroups === 0) {
+                if (--remainingGroupSources === 0) this.addToLists(true);
+              }
             });
         });
       });
@@ -139,6 +138,7 @@ export class GroupsPageComponent implements OnInit {
           expirationAttribute: null,
         });
       });
+      if (--remainingGroupSources === 0) this.addToLists(true);
     });
   }
 
@@ -215,8 +215,8 @@ export class GroupsPageComponent implements OnInit {
   }
 
   private addToLists(disableLoading = false): void {
-    this.userMemberships = this.userMembershipsTemp;
-    this.adminMemberships = this.adminMembershipsTemp;
+    this.userMemberships = [...this.userMembershipsTemp];
+    this.adminMemberships = [...this.adminMembershipsTemp];
     this.initialLoading = false;
     if (disableLoading) this.loading = false;
   }
