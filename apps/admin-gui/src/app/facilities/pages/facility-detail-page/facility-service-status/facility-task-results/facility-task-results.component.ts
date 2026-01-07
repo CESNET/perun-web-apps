@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_TASK_RESULTS } from '@perun-web-apps/config/table-config';
 import { Facility, Task, TaskResult, TasksManagerService } from '@perun-web-apps/perun/openapi';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -47,7 +46,6 @@ export class FacilityTaskResultsComponent implements OnInit {
   facility: Facility;
   taskResults: TaskResult[] = [];
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_TASK_RESULTS;
   displayedColumns = [
     'select',
     'id',

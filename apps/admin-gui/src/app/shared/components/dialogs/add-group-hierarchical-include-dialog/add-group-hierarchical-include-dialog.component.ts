@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { Group, GroupsManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
-import { TABLE_ADD_HIERARCHICAL_INCLUSION } from '@perun-web-apps/config/table-config';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 
@@ -48,7 +47,6 @@ export class AddGroupHierarchicalIncludeDialogComponent implements OnInit {
     true,
     (group1, group2) => group1.id === group2.id,
   );
-  tableId = TABLE_ADD_HIERARCHICAL_INCLUSION;
   filterValue = '';
 
   constructor(

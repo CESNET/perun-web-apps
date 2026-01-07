@@ -18,7 +18,6 @@ import {
   StoreService,
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_ADD_SPONSORED_MEMBERS } from '@perun-web-apps/config/table-config';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { BehaviorSubject } from 'rxjs';
 import { SponsoredMembersListComponent } from '../../sponsored-members-list/sponsored-members-list.component';
@@ -60,7 +59,6 @@ export class CopySponsoredMembersDialogComponent implements OnInit {
   tableLoading = false;
   theme: string;
   sponsorType: 'self' | 'other' = 'self';
-  tableId = TABLE_ADD_SPONSORED_MEMBERS;
   voSponsors: User[] = [];
   voSponsorsTarget: User[] = [];
   voSponsorsSource: User[] = [];

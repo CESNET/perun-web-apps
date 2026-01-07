@@ -17,6 +17,7 @@ import {
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
 import { TableOptionsComponent } from '../table-options/table-options.component';
@@ -42,7 +43,7 @@ export class TableWrapperComponent implements OnInit {
   @Input() hideExport = false;
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   @Input() dataLength = 0;
-  @Input() tableId: string;
+  @Input({ required: true }) tableId: string;
   @Output() exportDisplayedData = new EventEmitter<string>();
   @Output() exportAllData = new EventEmitter<string>();
   @Output() pageChanged = new EventEmitter<void>();
@@ -51,10 +52,12 @@ export class TableWrapperComponent implements OnInit {
 
   pageSize = 5;
   paginator: MatPaginator;
+  private routeUrl: string;
 
   constructor(
     private tableConfigService: TableConfigService,
     private destroyRef: DestroyRef,
+    private router: Router,
   ) {}
 
   @ViewChild(MatPaginator, { static: true }) set matPaginator(pg: MatPaginator) {
@@ -62,7 +65,8 @@ export class TableWrapperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pageSize = this.tableConfigService.getTablePageSize(this.tableId);
+    this.routeUrl = this.getRouteUrl();
+    this.pageSize = this.tableConfigService.getTablePageSize(this.tableId, this.routeUrl);
     if (this.pageSizeOptions === null) {
       this.pageSize = 5;
     }
@@ -72,7 +76,8 @@ export class TableWrapperComponent implements OnInit {
     this.tableConfigService.globalPageSizeChanged
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        const newPageSize = this.tableConfigService.getTablePageSize(this.tableId);
+        this.routeUrl ??= this.getRouteUrl();
+        const newPageSize = this.tableConfigService.getTablePageSize(this.tableId, this.routeUrl);
         if (newPageSize !== this.pageSize) {
           this.pageSize = newPageSize;
           this.paginator._changePageSize(newPageSize);
@@ -87,7 +92,8 @@ export class TableWrapperComponent implements OnInit {
       // if we got here on page change or on global page size change, do not set pageSize for this specific table
       if (this.pageSize !== event.pageSize) {
         this.pageSize = event.pageSize;
-        this.tableConfigService.setTablePageSize(this.tableId, event.pageSize);
+        this.routeUrl ??= this.getRouteUrl();
+        this.tableConfigService.setTablePageSize(this.tableId, event.pageSize, this.routeUrl);
       }
       this.table.nativeElement.scroll({
         top: 0,
@@ -123,5 +129,9 @@ export class TableWrapperComponent implements OnInit {
     return (
       charCode === 65 || charCode === 66 || charCode === 68 || (charCode >= 48 && charCode <= 57)
     ); // Accept only digits 0-9, arrows, backspace or delete
+  }
+
+  private getRouteUrl(): string {
+    return this.router.routerState.snapshot.url || this.router.url;
   }
 }

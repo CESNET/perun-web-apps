@@ -104,7 +104,6 @@ export class UsersListComponent implements OnInit, OnChanges {
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  @Input() tableId: string;
   @Input() selection: SelectionModel<RichUser>;
   @Input() disableRouting = false;
   @Input() facilityId: number;
@@ -143,6 +142,7 @@ export class UsersListComponent implements OnInit, OnChanges {
     'organization',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-users-list';
 
   constructor(
     private tableCheckbox: TableCheckbox,

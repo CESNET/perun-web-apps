@@ -127,7 +127,6 @@ export class MembersListComponent implements OnInit, OnChanges {
   @Input() selectedGroupStatuses: MemberGroupStatus[] = [];
   @Input() searchString: string;
   @Input() selectedStatuses: VoMemberStatuses[];
-  @Input() tableId: string;
   @Input() updateTable: boolean;
   @Input() isMembersGroup: boolean;
   @Input() disableRouting = false;
@@ -168,6 +167,7 @@ export class MembersListComponent implements OnInit, OnChanges {
 
   // contains all selected members across all pages
   cachedSelection: SelectionModel<RichMember>;
+  tableId = 'perun-web-apps-members-list';
 
   constructor(
     private dialog: MatDialog,

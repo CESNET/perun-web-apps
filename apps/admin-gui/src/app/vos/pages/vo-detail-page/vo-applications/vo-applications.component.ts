@@ -6,10 +6,6 @@ import {
   AttributesManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_VO_APPLICATIONS_DETAILED,
-  TABLE_VO_APPLICATIONS_NORMAL,
-} from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -44,9 +40,6 @@ export class VoApplicationsComponent implements OnInit {
     resend: false,
     columnSettings: false,
   };
-
-  tableId = TABLE_VO_APPLICATIONS_NORMAL;
-  detailTableId = TABLE_VO_APPLICATIONS_DETAILED;
 
   fedAttrs: AttributeDefinition[] = [];
   viewPreferences$: Observable<Attribute>;

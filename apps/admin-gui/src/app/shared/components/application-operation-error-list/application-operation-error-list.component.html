@@ -4,7 +4,8 @@
     (exportAllData)="exportAllData($event)"
     [pageSizeOptions]="pageSizeOptions"
     [dataLength]="dataSource.data.length"
-    (pageChanged)="pageChanged()">
+    (pageChanged)="pageChanged()"
+    [tableId]="tableId">
     <table
       [dataSource]="dataSource"
       (matSortChange)="pageChanged()"

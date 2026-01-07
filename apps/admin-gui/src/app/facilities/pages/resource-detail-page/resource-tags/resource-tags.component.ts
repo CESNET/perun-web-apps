@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Resource, ResourcesManagerService, ResourceTag } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_RESOURCES_TAGS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
   EntityStorageService,
@@ -49,7 +48,6 @@ export class ResourceTagsComponent implements OnInit {
     (resourceTag1, resourceTag2) => resourceTag1.id === resourceTag2.id,
   );
   filterValue: string;
-  tableId = TABLE_RESOURCES_TAGS;
   displayedColumns: string[] = [];
   createAuth: boolean;
   addAuth: boolean;

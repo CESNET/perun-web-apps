@@ -10,7 +10,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { TABLE_PUBLICATION_AUTHORS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { AuthorsListComponent } from '../authors-list/authors-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -46,8 +45,6 @@ export class AddAuthorsComponent implements OnInit {
 
   filterValue = '';
   loading = false;
-
-  tableId = TABLE_PUBLICATION_AUTHORS;
 
   constructor(
     private dialog: MatDialog,

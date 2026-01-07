@@ -25,7 +25,6 @@ import {
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { CreateResourceDialogComponent } from '../../../../shared/components/dialogs/create-resource-dialog/create-resource-dialog.component';
-import { TABLE_FACILITY_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
@@ -75,7 +74,6 @@ export class FacilityResourcesComponent implements OnInit, AfterViewInit {
   filterValue = '';
 
   loading: boolean;
-  tableId = TABLE_FACILITY_RESOURCES_LIST;
   displayedColumns = ['id', 'vo', 'facility', 'description'];
 
   addAuth: boolean;

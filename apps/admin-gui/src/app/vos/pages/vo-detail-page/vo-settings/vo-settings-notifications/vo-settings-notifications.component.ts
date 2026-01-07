@@ -24,7 +24,6 @@ import {
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { createNewApplicationMail, getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { TABLE_VO_SETTINGS_NOTIFICATIONS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { NotificationListComponent } from '../../../../components/notification-list/notification-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -58,7 +57,6 @@ export class VoSettingsNotificationsComponent implements OnInit {
     (applicationMail1, applicationMail2) => applicationMail1.id === applicationMail2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_VO_SETTINGS_NOTIFICATIONS;
   displayedColumns: string[] = [];
   addAuth: boolean;
   removeAuth: boolean;

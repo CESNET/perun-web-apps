@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CabinetManagerService, Category } from '@perun-web-apps/perun/openapi';
-import { TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -43,7 +42,6 @@ export class CategoriesPageComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_GROUP_RESOURCES_LIST;
 
   removeAuth: boolean;
   addAuth: boolean;

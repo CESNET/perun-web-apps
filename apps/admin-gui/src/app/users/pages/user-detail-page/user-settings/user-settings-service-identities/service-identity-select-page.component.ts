@@ -6,7 +6,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { RichUser, UsersManagerService } from '@perun-web-apps/perun/openapi';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { TABLE_USER_SERVICE_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ConnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/connect-identity-dialog/connect-identity-dialog.component';
 import { DisconnectIdentityDialogComponent } from '../../../../../shared/components/dialogs/disconnect-identity-dialog/disconnect-identity-dialog.component';
@@ -50,7 +49,6 @@ export class ServiceIdentitySelectPageComponent implements OnInit, OnDestroy, Af
   );
   identities: RichUser[] = [];
   userId: number;
-  tableId = TABLE_USER_SERVICE_IDENTITIES;
   displayedColumns: userTableColumn[] = ['select', 'id', 'user', 'name'];
   addIdentity: boolean;
   removeIdentity: boolean;

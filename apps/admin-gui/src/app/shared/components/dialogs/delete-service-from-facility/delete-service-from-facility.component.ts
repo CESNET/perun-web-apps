@@ -14,7 +14,6 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_RESOURCE_DELETE_SERVICE } from '@perun-web-apps/config/table-config';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -55,7 +54,6 @@ export class DeleteServiceFromFacilityComponent implements OnInit {
   taskChecked = true;
   taskResultsChecked = true;
   destinationChecked = true;
-  tableId = TABLE_RESOURCE_DELETE_SERVICE;
   dataSource = new MatTableDataSource<RichResource>(this.data.resource);
   selected = new SelectionModel<RichResource>(
     true,

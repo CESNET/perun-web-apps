@@ -16,7 +16,6 @@ import {
   DebounceFilterComponent,
   RefreshButtonComponent,
 } from '@perun-web-apps/perun/components';
-import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -54,7 +53,6 @@ export class OneEntityAttributePageComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   filterEmpty = true;
-  tableId = TABLE_ATTRIBUTES_SETTINGS;
   loading = false;
 
   constructor(

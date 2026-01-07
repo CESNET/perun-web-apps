@@ -9,7 +9,6 @@ import {
   GroupsManagerService,
   ResourcesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_GROUP_RESOURCES_LIST } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGroupResourceDialogComponent } from '../../../../shared/components/dialogs/add-group-resource-dialog/add-group-resource-dialog.component';
 import { RemoveGroupResourceDialogComponent } from '../../../../shared/components/dialogs/remove-group-resource-dialog/remove-group-resource-dialog.component';
@@ -64,7 +63,6 @@ export class GroupResourcesComponent implements OnInit {
   resourcesToDisable: Set<number>;
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_GROUP_RESOURCES_LIST;
   routingAuth: boolean;
   addAuth = false;
 

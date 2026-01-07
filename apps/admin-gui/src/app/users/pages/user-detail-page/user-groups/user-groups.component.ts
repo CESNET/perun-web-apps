@@ -14,10 +14,6 @@ import {
   UsersManagerService,
   Vo,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_USER_DETAIL_ADMIN_GROUPS,
-  TABLE_USER_DETAIL_MEMBER_GROUPS,
-} from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -50,9 +46,6 @@ export class UserGroupsComponent implements OnInit {
   adminsGroups: Group[] = [];
   userId: number;
 
-  tableId = TABLE_USER_DETAIL_MEMBER_GROUPS;
-
-  adminTableId = TABLE_USER_DETAIL_ADMIN_GROUPS;
   showPrincipal: boolean;
 
   constructor(

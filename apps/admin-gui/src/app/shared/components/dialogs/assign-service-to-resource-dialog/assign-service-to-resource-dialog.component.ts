@@ -11,7 +11,6 @@ import {
   Service,
   ServicesManagerService,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_ASSIGN_SERVICE_TO_RESOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs';
 import { ServicesListComponent } from '../../services-list/services-list.component';
@@ -50,7 +49,6 @@ export class AssignServiceToResourceDialogComponent implements OnInit {
     (service1, service2) => service1.id === service2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_ASSIGN_SERVICE_TO_RESOURCE_DIALOG;
   filterValue = '';
 
   constructor(

@@ -63,8 +63,6 @@ export class ExtSourcesListComponent implements AfterViewInit, OnInit, OnChanges
   @Input()
   filterValue = '';
   @Input()
-  tableId: string;
-  @Input()
   loading: boolean;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
   // contains all selected rows across all pages
@@ -74,6 +72,8 @@ export class ExtSourcesListComponent implements AfterViewInit, OnInit, OnChanges
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'id', 'name', 'type'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-ext-sources-list';
+
   private sort: MatSort;
 
   constructor(

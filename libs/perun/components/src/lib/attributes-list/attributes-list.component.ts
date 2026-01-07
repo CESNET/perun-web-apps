@@ -72,7 +72,6 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   @Input() filterValue = '';
   @Input() filterEmpty = false;
   @Input() filterFalse = false;
-  @Input() tableId: string;
   @Input() readonly = false;
   @Input() hiddenColumns: string[] = [];
   @Input() emptyListText = 'SHARED_LIB.PERUN.COMPONENTS.ATTRIBUTES_LIST.EMPTY_SETTINGS';
@@ -85,6 +84,8 @@ export class AttributesListComponent implements OnInit, OnChanges, AfterViewInit
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
   displayedColumns: string[] = ['select', 'id', 'displayName', 'value', 'description'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-attributes-list';
+
   private sort: MatSort;
 
   constructor(

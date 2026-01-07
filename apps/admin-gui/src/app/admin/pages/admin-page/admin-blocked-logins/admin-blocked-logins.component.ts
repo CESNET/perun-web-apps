@@ -15,7 +15,6 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { TABLE_ADMIN_BLOCKED_LOGINS } from '@perun-web-apps/config/table-config';
 import {
   downloadData,
   getDataForExport,
@@ -51,7 +50,6 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
   styleUrls: ['./admin-blocked-logins.component.scss'],
 })
 export class AdminBlockedLoginsComponent implements OnInit {
-  tableId = TABLE_ADMIN_BLOCKED_LOGINS;
   isAdmin = false;
 
   searchString: string;

@@ -8,10 +8,6 @@ import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UsersManagerService, Vo } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver, StoreService } from '@perun-web-apps/perun/services';
-import {
-  TABLE_USER_PROFILE_ADMIN_SELECT,
-  TABLE_USER_PROFILE_MEMBER_SELECT,
-} from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -41,8 +37,6 @@ export class UserOrganizationsComponent implements OnInit {
   adminFilterValue = '';
   memberFilterValue = '';
   displayedColumns = ['id', 'name'];
-  adminTableId = TABLE_USER_PROFILE_ADMIN_SELECT;
-  memberTableId = TABLE_USER_PROFILE_MEMBER_SELECT;
 
   constructor(
     private usersService: UsersManagerService,

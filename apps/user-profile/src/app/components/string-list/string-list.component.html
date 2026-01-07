@@ -3,7 +3,8 @@
     (exportDisplayedData)="exportDisplayedData($event)"
     (exportAllData)="exportAllData($event)"
     [dataLength]="dataSource.filteredData.length"
-    (pageChanged)="pageChanged()">
+    (pageChanged)="pageChanged()"
+    [tableId]="tableId">
     <table [dataSource]="dataSource" class="w-100" mat-table>
       <ng-container matColumnDef="select">
         <th *matHeaderCellDef mat-header-cell class="align-checkbox"></th>

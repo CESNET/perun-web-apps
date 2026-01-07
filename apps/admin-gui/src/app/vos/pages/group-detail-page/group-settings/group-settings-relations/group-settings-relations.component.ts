@@ -14,7 +14,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { CreateRelationDialogComponent } from '../../../../../shared/components/dialogs/create-relation-dialog/create-relation-dialog.component';
 import { RemoveRelationDialogComponent } from '../../../../../shared/components/dialogs/remove-relation-dialog/remove-relation-dialog.component';
-import { TABLE_GROUP_SETTINGS_RELATIONS } from '@perun-web-apps/config/table-config';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -58,7 +57,6 @@ export class GroupSettingsRelationsComponent implements OnInit {
   reverse = false;
   loading: boolean;
   filterValue = '';
-  tableId = TABLE_GROUP_SETTINGS_RELATIONS;
   removeAuth$: Observable<boolean> = this.selection.changed.pipe(
     map((changed) => {
       return changed.source.selected.reduce(

@@ -77,7 +77,6 @@ export class MembersCandidatesListComponent implements OnInit, OnChanges, AfterV
   @Input() members: MemberCandidate[];
   @Input() selection: SelectionModel<MemberCandidate>;
   @Input() cachedSubject: BehaviorSubject<boolean>;
-  @Input() tableId: string;
   @Input() blockManualAdding = false;
   @Input() loading: boolean;
   displayedColumns: string[] = [
@@ -96,6 +95,8 @@ export class MembersCandidatesListComponent implements OnInit, OnChanges, AfterV
   // contains all selected rows across all pages
   cachedSelection: SelectionModel<MemberCandidate>;
   isMasterCheckboxEnabled: boolean = true;
+  tableId = 'app-members-candidates-list';
+
   private sort: MatSort;
 
   constructor(

@@ -73,8 +73,6 @@ export class ResourcesTagsListComponent implements OnInit, OnChanges, AfterViewI
   selection = new SelectionModel<ResourceTag>(true, []);
   @Input() cachedSubject: BehaviorSubject<boolean>;
   @Input()
-  tableId: string;
-  @Input()
   entity: string;
   @Input()
   loading: boolean;
@@ -87,6 +85,8 @@ export class ResourcesTagsListComponent implements OnInit, OnChanges, AfterViewI
   cachedSelection: SelectionModel<ResourceTag>;
   displayedColumns = ['select', 'id', 'name', 'edit'];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'app-resources-tags-list';
+
   private sort: MatSort;
 
   constructor(

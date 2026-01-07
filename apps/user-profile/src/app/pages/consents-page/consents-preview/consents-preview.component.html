@@ -15,7 +15,6 @@
         [loading]="loading"
         [consents]="unsignedConsents"
         [filterValue]="filterValueUnsigned"
-        [tableId]="'TABLE_USER_CONSENTS'"
         (grantConsent)="grantConsent($event)"
         (rejectConsent)="rejectConsent($event)"
         [displayedColumns]="['status', 'name']"></perun-web-apps-consents-list>
@@ -37,7 +36,6 @@
       <perun-web-apps-consents-list
         [loading]="loading"
         [consents]="signedConsents"
-        [tableId]="'TABLE_USER_CONSENTS'"
         [filterValue]="filterValueSigned"
         (grantConsent)="grantConsent($event)"
         (rejectConsent)="rejectConsent($event)"

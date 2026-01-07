@@ -16,7 +16,6 @@ import {
   ResourcesManagerService,
   RichMember,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_RESOURCE_MEMBERS } from '@perun-web-apps/config/table-config';
 import {
   EntityStorageService,
   GuiAuthResolver,
@@ -52,7 +51,6 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 export class ResourceAssignedMembersComponent implements OnInit {
   loading = false;
   filterValue = '';
-  tableId = TABLE_RESOURCE_MEMBERS;
 
   resource: Resource;
   members: MemberWithConsentStatus[] = [];

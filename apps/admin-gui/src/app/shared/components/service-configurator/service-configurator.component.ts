@@ -12,7 +12,6 @@ import {
   RichMember,
   Service,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_ATTRIBUTES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { AttributesListComponent } from '@perun-web-apps/perun/components';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -53,8 +52,6 @@ export class ServiceConfiguratorComponent implements OnInit, OnChanges {
   resourceAttributes: Attribute[];
   groupAttributes: Attribute[];
   memberAttributes: Attribute[];
-
-  tableId = TABLE_ATTRIBUTES_SETTINGS;
 
   constructor(
     private attributesManager: AttributesManagerService,

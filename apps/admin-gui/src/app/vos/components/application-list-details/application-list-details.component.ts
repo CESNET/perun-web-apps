@@ -71,8 +71,6 @@ export class ApplicationListDetailsComponent implements OnChanges, OnInit {
   @Input()
   filterValue: string;
   @Input()
-  tableId: string;
-  @Input()
   disableRouting = false;
   @ViewChild(TableWrapperComponent, { static: true }) child: TableWrapperComponent;
 
@@ -99,6 +97,7 @@ export class ApplicationListDetailsComponent implements OnChanges, OnInit {
   table: ApplicationData[] = [];
   addedColumns = new Set<string>();
   pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
+  tableId = 'app-perun-web-apps-application-list-details';
 
   constructor(
     private router: Router,

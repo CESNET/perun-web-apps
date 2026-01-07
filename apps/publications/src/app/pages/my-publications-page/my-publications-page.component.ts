@@ -16,7 +16,6 @@ import {
   PublicationForGUI,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS } from '@perun-web-apps/config/table-config';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Filter } from '../Filter';
@@ -52,7 +51,6 @@ export class MyPublicationsPageComponent implements OnInit {
     (publication1, publication2) => publication1.id === publication2.id,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_PUBLICATION_AUTHOR_DETAIL_PUBLICATIONS;
   authorId: number;
   filter: Filter = {
     title: null,

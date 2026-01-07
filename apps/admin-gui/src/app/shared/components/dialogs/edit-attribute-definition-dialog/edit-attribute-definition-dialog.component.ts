@@ -20,7 +20,6 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { slideInOutLeft, slideInOutRight, switchAnimation } from '@perun-web-apps/perun/animations';
 import { AttributeForExportData } from '@perun-web-apps/perun/models';
-import { TABLE_ENTITYLESS_ATTRIBUTE_KEYS } from '@perun-web-apps/config/table-config';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
@@ -64,7 +63,6 @@ export interface EditAttributeDefinitionDialogData {
   animations: [switchAnimation, slideInOutLeft, slideInOutRight],
 })
 export class EditAttributeDefinitionDialogComponent implements OnInit {
-  tableId = TABLE_ENTITYLESS_ATTRIBUTE_KEYS;
   loading = false;
   showKeys = false;
   attDef: AttributeDefinition = this.data.attDef;

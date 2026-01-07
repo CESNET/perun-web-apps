@@ -20,12 +20,6 @@ import {
   Vo,
   VosManagerService,
 } from '@perun-web-apps/perun/openapi';
-import {
-  TABLE_SEARCHER_FACILITIES,
-  TABLE_SEARCHER_MEMBERS,
-  TABLE_SEARCHER_RESOURCES,
-  TABLE_SEARCHER_USERS,
-} from '@perun-web-apps/config/table-config';
 import { ResourceWithStatus } from '@perun-web-apps/perun/models';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -53,11 +47,11 @@ import { AttributeSearchSelectComponent } from '@perun-web-apps/perun/components
 export class AdminSearcherComponent implements OnInit {
   static id = 'AdminSearcherComponent';
   @HostBinding('class.router-component') true;
+
   loading: boolean;
   loadingEntityData = false;
   allAttrDefinitions: AttributeDefinition[] = [];
   searchInput: { [p: string]: string };
-  tableId = TABLE_SEARCHER_USERS;
   entities: RichUser[] | RichMember[] | EnrichedFacility[] | ResourceWithStatus[] = [];
   vos: Vo[] = [];
   selectedVo: Vo;
@@ -94,18 +88,14 @@ export class AdminSearcherComponent implements OnInit {
     this.entities = [];
     switch (indexChangeEvent) {
       case 0:
-        this.tableId = TABLE_SEARCHER_USERS;
         break;
       case 1:
         this.loadingEntityData = true;
         this.loadAllVos();
-        this.tableId = TABLE_SEARCHER_MEMBERS;
         break;
       case 2:
-        this.tableId = TABLE_SEARCHER_FACILITIES;
         break;
       case 3:
-        this.tableId = TABLE_SEARCHER_RESOURCES;
         break;
       default:
         break;
@@ -204,23 +194,6 @@ export class AdminSearcherComponent implements OnInit {
   refresh(): void {
     if (!this.searchInput) {
       return;
-    }
-
-    switch (this.tableId) {
-      case TABLE_SEARCHER_USERS:
-        this.getUsers(this.searchInput);
-        break;
-      case TABLE_SEARCHER_MEMBERS:
-        this.getMembers(this.searchInput);
-        break;
-      case TABLE_SEARCHER_FACILITIES:
-        this.getFacilities(this.searchInput);
-        break;
-      case TABLE_SEARCHER_RESOURCES:
-        this.getResources(this.searchInput);
-        break;
-      default:
-        break;
     }
   }
 }

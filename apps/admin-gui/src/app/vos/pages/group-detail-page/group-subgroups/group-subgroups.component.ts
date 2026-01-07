@@ -30,7 +30,6 @@ import {
   RoleAssignmentType,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { TABLE_GROUP_SUBGROUPS } from '@perun-web-apps/config/table-config';
 import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GroupFlatNode } from '@perun-web-apps/perun/models';
 import { MoveGroupDialogComponent } from '../../../../shared/components/dialogs/move-group-dialog/move-group-dialog.component';
@@ -83,7 +82,6 @@ export class GroupSubgroupsComponent implements OnInit {
   showGroupList = false;
   loading: boolean;
   filtering = false;
-  tableId = TABLE_GROUP_SUBGROUPS;
   filterValue = '';
   createAuth: boolean;
   deleteAuth: boolean;

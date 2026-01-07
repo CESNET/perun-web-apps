@@ -19,7 +19,6 @@ import { AddUserExtSourceDialogComponent } from '../../../../shared/components/d
 import { ActivatedRoute } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RemoveUserExtSourceDialogComponent } from '@perun-web-apps/perun/dialogs';
-import { TABLE_USER_IDENTITIES } from '@perun-web-apps/config/table-config';
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -52,7 +51,6 @@ export class UserIdentitiesComponent implements OnInit {
   userId: number;
   displayedColumns = ['select', 'id', 'extSourceName', 'login', 'lastAccess'];
   loading: boolean;
-  tableId = TABLE_USER_IDENTITIES;
   filterValue = '';
   cachedSubject = new BehaviorSubject(true);
 

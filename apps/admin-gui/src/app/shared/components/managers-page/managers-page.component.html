@@ -64,7 +64,6 @@
           *perunWebAppsLoader="loading; indicator: spinner"
           [routeToAdmin]="routeAuth"
           [loading]="loading"
-          [tableId]="tableId"
           [disableRouting]="!routeAuth || disableRouting"
           [sortableColumns]="['id', 'name', 'email', 'logins', 'organization']"
           [displayColumns]="displayedUserColumns"
@@ -121,7 +120,6 @@
           [displayColumns]="displayedGroupColumns"
           [groups]="groups"
           [selection]="selectionGroups"
-          [tableId]="tableId"
           [cacheSubject]="cacheSubject">
         </perun-web-apps-groups-list>
       </div>

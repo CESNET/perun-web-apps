@@ -12,7 +12,6 @@ import { AfterViewChecked, Component, DestroyRef, HostBinding, OnInit } from '@a
 import { SideMenuService } from '../../../core/services/common/side-menu.service';
 import { EnrichedFacility, FacilitiesManagerService } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
-import { TABLE_FACILITY_SELECT } from '@perun-web-apps/config/table-config';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateFacilityDialogComponent } from '../../../shared/components/dialogs/create-facility-dialog/create-facility-dialog.component';
@@ -53,7 +52,6 @@ export class FacilitySelectPageComponent implements OnInit, AfterViewChecked {
   createAuth: boolean;
   deleteAuth: boolean;
   filterValue = '';
-  tableId = TABLE_FACILITY_SELECT;
   selection = new SelectionModel<EnrichedFacility>(
     false,
     [],

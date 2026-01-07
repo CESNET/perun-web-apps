@@ -13,7 +13,6 @@ import {
   TasksManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_FACILITY_SERVICES_STATUS_LIST } from '@perun-web-apps/config/table-config';
 import {
   EntityStorageService,
   GuiAuthResolver,
@@ -61,8 +60,6 @@ export class FacilityServiceStatusComponent implements OnInit {
   cachedSubject = new BehaviorSubject(true);
   filterValue = '';
   loading: boolean;
-
-  tableId = TABLE_FACILITY_SERVICES_STATUS_LIST;
 
   disableAllowButton = true;
   disableBlockButton = true;

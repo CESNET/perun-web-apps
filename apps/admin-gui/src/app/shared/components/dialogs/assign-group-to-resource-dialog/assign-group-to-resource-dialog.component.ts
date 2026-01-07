@@ -15,7 +15,6 @@ import {
   ResourcesManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_ASSIGN_GROUP_TO_RESOURCE_DIALOG } from '@perun-web-apps/config/table-config';
 import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
@@ -63,7 +62,6 @@ export class AssignGroupToResourceDialogComponent implements OnInit {
     (group1, group2) => group1.id === group2.id,
   );
   filterValue = '';
-  tableId = TABLE_ASSIGN_GROUP_TO_RESOURCE_DIALOG;
   autoAssignHint: string;
   asActiveHint: string;
   asyncHint: string;

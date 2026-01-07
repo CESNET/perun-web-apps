@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { ExtSource, ExtSourcesManagerService } from '@perun-web-apps/perun/openapi';
-import { TABLE_ADMIN_EXTSOURCES } from '@perun-web-apps/config/table-config';
 import { ExtSourcesListComponent } from '../../../../shared/components/ext-sources-list/ext-sources-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -32,7 +31,6 @@ export class AdminExtSourcesComponent implements OnInit {
   filterValue = '';
 
   loading = false;
-  tableId = TABLE_ADMIN_EXTSOURCES;
 
   constructor(
     private extSourceService: ExtSourcesManagerService,

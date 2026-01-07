@@ -9,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, Input, OnInit } from '@angular/core';
 import { FacilitiesManagerService, Facility, Group, Vo } from '@perun-web-apps/perun/openapi';
-import { TABLE_FACILITY_ALLOWED_GROUPS } from '@perun-web-apps/config/table-config';
 import { EntityStorageService, GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -52,7 +51,6 @@ export class FacilityAllowedGroupsComponent implements OnInit {
   selected = 'all';
 
   groupsToShow: Group[] = this.groups;
-  tableId = TABLE_FACILITY_ALLOWED_GROUPS;
 
   groupsWithoutRouteAuth: Set<number> = new Set<number>();
 

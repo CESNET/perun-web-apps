@@ -2,7 +2,6 @@ import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TABLE_GROUP_EXTSOURCES_SETTINGS } from '@perun-web-apps/config/table-config';
 import { ExtSource, ExtSourcesManagerService, Group } from '@perun-web-apps/perun/openapi';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +43,6 @@ export class GroupSettingsExtsourcesComponent implements OnInit {
   loading: boolean;
   filterValue = '';
   successMessage: string;
-  tableId = TABLE_GROUP_EXTSOURCES_SETTINGS;
   displayedColumns: string[] = [];
   addAuth: boolean;
   removeAuth: boolean;

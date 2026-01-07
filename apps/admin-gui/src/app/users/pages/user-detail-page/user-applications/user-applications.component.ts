@@ -9,10 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
-  TABLE_MEMBER_APPLICATIONS_DETAILED,
-  TABLE_MEMBER_APPLICATIONS_NORMAL,
-} from '@perun-web-apps/config/table-config';
-import {
   Application,
   AppState,
   PaginatedRichApplications,
@@ -80,8 +76,6 @@ export class UserApplicationsComponent implements OnInit {
   ];
   filterValue = '';
   showAllDetails = false;
-  detailTableId = TABLE_MEMBER_APPLICATIONS_DETAILED;
-  tableId = TABLE_MEMBER_APPLICATIONS_NORMAL;
   dateFrom: Date = new Date('1970-01-01');
 
   currentStates: AppState[] = ['NEW', 'VERIFIED'];

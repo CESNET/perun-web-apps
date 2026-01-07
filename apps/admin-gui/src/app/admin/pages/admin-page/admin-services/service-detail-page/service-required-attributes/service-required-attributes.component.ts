@@ -9,7 +9,6 @@ import {
   AttributesManagerService,
   Service,
 } from '@perun-web-apps/perun/openapi';
-import { TABLE_REQUIRED_ATTRIBUTES } from '@perun-web-apps/config/table-config';
 import { MatDialog } from '@angular/material/dialog';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import {
@@ -54,7 +53,6 @@ export class ServiceRequiredAttributesComponent implements OnInit {
   );
   cachedSubject = new BehaviorSubject(true);
   attrDefinitions: AttributeDefinition[] = [];
-  tableId = TABLE_REQUIRED_ATTRIBUTES;
   private service: Service;
 
   constructor(

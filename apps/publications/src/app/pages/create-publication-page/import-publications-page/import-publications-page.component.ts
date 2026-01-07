@@ -21,7 +21,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NotificatorService, StoreService } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TABLE_IMPORT_PUBLICATIONS } from '@perun-web-apps/config/table-config';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -92,7 +91,6 @@ export class ImportPublicationsPageComponent implements OnInit {
       publication1.publicationSystemId === publication2.publicationSystemId,
   );
   cachedSubject = new BehaviorSubject(true);
-  tableId = TABLE_IMPORT_PUBLICATIONS;
   displayedColumns = ['select', 'title', 'reportedBy', 'year', 'isbn', 'cite'];
   firstSearchDone: boolean;
 

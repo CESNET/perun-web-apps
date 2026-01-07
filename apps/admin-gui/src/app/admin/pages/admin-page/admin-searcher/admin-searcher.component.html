@@ -15,7 +15,6 @@
       @if (!loadingEntityData) {
         <perun-web-apps-users-list
           [loading]="loading"
-          [tableId]="tableId"
           [routeToAdmin]="true"
           [displayColumns]="['user', 'id', 'name']"
           [users]="entities">
@@ -47,8 +46,7 @@
           [loading]="loading"
           (refreshTable)="getMembers(searchInput)"
           [displayedColumns]="['id', 'voId', 'userId', 'status']"
-          [members]="entities"
-          [tableId]="tableId" />
+          [members]="entities" />
       }
     </ng-template>
   </mat-tab>
@@ -67,7 +65,6 @@
       @if (!loadingEntityData) {
         <perun-web-apps-facilities-list
           [loading]="loading"
-          [tableId]="tableId"
           [displayColumns]="['id', 'name', 'description']"
           [facilities]="entities">
         </perun-web-apps-facilities-list>
@@ -89,7 +86,6 @@
       @if (!loadingEntityData) {
         <perun-web-apps-resources-list
           [loading]="loading"
-          [tableId]="tableId"
           [displayColumns]="['id', 'name', 'description', 'voId', 'facilityId']"
           [resources]="entities">
         </perun-web-apps-resources-list>

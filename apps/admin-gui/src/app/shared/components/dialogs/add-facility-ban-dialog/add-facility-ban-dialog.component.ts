@@ -11,7 +11,6 @@ import {
   UsersOrderColumn,
 } from '@perun-web-apps/perun/openapi';
 import { Urns } from '@perun-web-apps/perun/urns';
-import { TABLE_BANS } from '@perun-web-apps/config/table-config';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddBanData, BanForm } from '../add-ban-dialog/add-ban-dialog.component';
 import { GuiAuthResolver, NotificatorService, StoreService } from '@perun-web-apps/perun/services';
@@ -56,7 +55,6 @@ export class AddFacilityBanDialogComponent implements OnInit {
   ban: BanOnFacility;
   attrNames = [Urns.USER_DEF_PREFERRED_MAIL].concat(this.store.getLoginAttributeNames());
   displayedColumns: userTableColumn[] = ['select', 'id', 'name', 'email', 'logins'];
-  tableId = TABLE_BANS;
   searchString = '';
   nextPage = new BehaviorSubject<PageQuery>({});
   routeAuth = false;

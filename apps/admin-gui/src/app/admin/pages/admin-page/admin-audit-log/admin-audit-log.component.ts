@@ -2,7 +2,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TABLE_AUDIT_MESSAGES } from '@perun-web-apps/config/table-config';
 import {
   AuditMessage,
   AuditMessagesManagerService,
@@ -32,8 +31,6 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
   styleUrls: ['./admin-audit-log.component.scss'],
 })
 export class AdminAuditLogComponent implements OnInit {
-  tableId = TABLE_AUDIT_MESSAGES;
-
   displayedColumns = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
   auditMessages: AuditMessage[];
   selectedEvents: string[] = [];

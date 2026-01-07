@@ -72,7 +72,6 @@ export class InvitationsListComponent implements OnInit, OnChanges {
   @Input() cacheSubject: BehaviorSubject<boolean>;
   @Input() resetPagination: BehaviorSubject<boolean>;
   @Input() groupId: number;
-  @Input() tableId: string;
   @Input() loading: boolean;
   @Output() refreshTable = new EventEmitter<void>();
   @Output() queryChanged = new EventEmitter<PageQuery>();
@@ -97,6 +96,7 @@ export class InvitationsListComponent implements OnInit, OnChanges {
     'senderName',
   ];
   unfilteredColumns = this.displayedColumns;
+  tableId = 'perun-web-apps-invitations-list';
 
   constructor(
     private tableCheckbox: TableCheckbox,
