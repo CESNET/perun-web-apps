@@ -1,5 +1,13 @@
 Upgrade notes
 
+## [20.5.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.5.0...v20.5.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* persist table page size preferrence with selector/url keys ([a0a8930](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a0a8930f601de8e1b5981d62c84273d944064979))
+* **profile:** fix groups page not displaying groups initially ([652ed66](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/652ed6625e49bdd671510e9ec860a42950c94f89))
+
 ## [20.5.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.4.0...v20.5.0) (2025-12-12)
 
 
