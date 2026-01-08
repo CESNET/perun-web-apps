@@ -132,6 +132,8 @@ export class CreateEditServiceDialogComponent implements OnInit {
 
   makePath(): void {
     const path = './'.concat(this.nameControl.value);
-    this.pathControl.setValue(path);
+    if (!this.pathControl.value) {
+      this.pathControl.setValue(path);
+    }
   }
 }
