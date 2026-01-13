@@ -1,5 +1,17 @@
 Upgrade notes
 
+## [20.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.5.1...v20.6.0) (2026-01-13)
+
+
+### Features
+
+* decouple service and propagation script renaming ([fde3dcb](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/fde3dcba43207a29defeb4ee6c7162bc0dc8f2ac))
+
+
+### Bug Fixes
+
+* service identity logins displaying owner's logins ([6ea048e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6ea048e4e98a0f1e991b299897895bb38e96a293))
+
 ## [20.5.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.5.0...v20.5.1) (2026-01-07)
 
 
