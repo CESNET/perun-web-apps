@@ -3,5 +3,8 @@
 <button (click)="onAdd()" class="me-2 action-button" color="accent" mat-flat-button>
   {{'USER_DETAIL.SETTINGS.LOGINS.ADD' | translate}}
 </button>
-<perun-web-apps-password-reset #logins (filteredNamespaces)="filteredNamespaces = $event">
+<perun-web-apps-password-reset
+  #logins
+  [authenticationPage]="true"
+  (filteredNamespaces)="filteredNamespaces = $event">
 </perun-web-apps-password-reset>
