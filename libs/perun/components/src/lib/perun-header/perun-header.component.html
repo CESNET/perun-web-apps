@@ -25,12 +25,10 @@
     </p>
   </div>
 
-  <div
-    [ngStyle]="{'color': navTextColor, 'width': searchEnabled ? '60%' : 'none'}"
-    id="nav-menu-user-info">
+  <div [ngStyle]="{'color': navTextColor}" id="nav-menu-user-info">
     @if (searchEnabled) {
       <perun-web-apps-global-search
-        class="ms-4 global-search"
+        class="ms-1 global-search"
         [adminSearch]="searchAsAdmin"></perun-web-apps-global-search>
     }
     @if (showLanguageMenu) {

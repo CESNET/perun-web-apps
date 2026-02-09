@@ -2,7 +2,7 @@
   {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.TITLE' | translate}}
 </h1>
 
-<div class="w-100 d-flex">
+<div class="w-100 d-flex flex-wrap gap-2">
   <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
   @if (addAuth) {
     <button (click)="add()" class="me-2 action-button" color="accent" mat-flat-button>
@@ -31,7 +31,7 @@
   @if (copyAuth) {
     <button (click)="copy()" class="action-button" mat-stroked-button>
       <i class="material-icons align-middle">file_copy</i>
-      <span class="align-middle">
+      <span class="align-middle ">
         {{'VO_DETAIL.SETTINGS.NOTIFICATIONS.COPY_FROM_VO' | translate}}
       </span>
     </button>

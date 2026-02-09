@@ -13,7 +13,7 @@
           svgIcon="perun-group-black">
         </mat-icon>
         <div class="page-title-block">
-          <div class="page-title-headline d-flex align-items-center">
+          <div class="page-title-headline entity-title-wrapper align-items-center">
             <a
               attr.data-cy="{{group.shortName}}-shortName"
               class="group-link"
@@ -23,31 +23,33 @@
               [queryParams]="route.snapshot.queryParams">
               {{group.shortName}}
             </a>
-            <span class="text-muted"> &nbsp;#{{group.id}} </span>
-            <button
-              [cdkCopyToClipboard]="group.name"
-              [matTooltipPosition]="'below'"
-              mat-icon-button
-              matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}">
-              <mat-icon> file_copy </mat-icon>
-            </button>
-            @if (group.name !== 'members' && editAuth) {
+            <div>
+              <span class="text-muted"> &nbsp;#{{group.id}} </span>
               <button
-                (click)="editGroup()"
-                aria-label="Edit group"
-                matTooltip="{{'GROUP_DETAIL.EDIT' | translate}}"
-                mat-icon-button>
-                <mat-icon>edit</mat-icon>
+                [cdkCopyToClipboard]="group.name"
+                [matTooltipPosition]="'below'"
+                mat-icon-button
+                matTooltip="{{'SHARED_LIB.PERUN.COMPONENTS.GROUP_MENU.COPY' | translate}}">
+                <mat-icon> file_copy </mat-icon>
               </button>
-            }
-            @if (group.name !== 'members' && deleteAuth) {
-              <button
-                (click)="deleteGroup()"
-                matTooltip="{{'GROUP_DETAIL.DELETE' | translate}}"
-                mat-icon-button>
-                <mat-icon>delete_forever</mat-icon>
-              </button>
-            }
+              @if (group.name !== 'members' && editAuth) {
+                <button
+                  (click)="editGroup()"
+                  aria-label="Edit group"
+                  matTooltip="{{'GROUP_DETAIL.EDIT' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              @if (group.name !== 'members' && deleteAuth) {
+                <button
+                  (click)="deleteGroup()"
+                  matTooltip="{{'GROUP_DETAIL.DELETE' | translate}}"
+                  mat-icon-button>
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              }
+            </div>
           </div>
           <div>{{'GROUP_DETAIL.UUID' | translate}}: {{group.uuid}}</div>
           <span class="mt-1 entity-info">
