@@ -5,12 +5,12 @@ import {
   ParseDatePipe,
   MemberStatusIconPipe,
   TransformMemberStatusPipe,
+  GroupStatusIconColorPipe,
 } from '@perun-web-apps/perun/pipes';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GroupStatusIconColorPipe } from '@perun-web-apps/perun/pipes';
 
 @Component({
   imports: [
@@ -36,6 +36,7 @@ export class MembershipStatusSettingsComponent {
   @Input() showExpiration = true;
   @Input() editExpirationAuth = false;
   @Input() editStatusAuth = false;
+  @Input() isIndirect = false;
   @Output() changeStatus = new EventEmitter<void>();
   @Output() changeExpiration = new EventEmitter<void>();
 

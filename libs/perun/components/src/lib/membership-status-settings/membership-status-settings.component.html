@@ -6,12 +6,14 @@
     </i>
     <span class="me-2">{{status | transformMemberStatus}}</span>
     @if (editStatusAuth) {
-      <button
-        (click)="onChangeStatus()"
-        mat-icon-button
-        matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_STATUS' | translate}}">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <span
+        [matTooltip]="isIndirect
+          ? ('SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.STATUS_TOOLTIP_GROUP_INDIRECT' | translate)
+          : ('MEMBER_DETAIL.OVERVIEW.CHANGE_STATUS' | translate)">
+        <button (click)="onChangeStatus()" mat-icon-button [disabled]="isIndirect">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </span>
     }
   </div>
 </div>
@@ -25,12 +27,14 @@
     <div class="d-flex flex-row align-items-center justify-content-center">
       <i class="me-2"> {{expiration | parseDate}} </i>
       @if (editExpirationAuth) {
-        <button
-          (click)="onChangeExpiration()"
-          mat-icon-button
-          matTooltip="{{'MEMBER_DETAIL.OVERVIEW.CHANGE_EXPIRATION' | translate}}">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <span
+          [matTooltip]="isIndirect
+            ? ('SHARED_LIB.PERUN.COMPONENTS.MEMBERS_LIST.EXPIRATION_TOOLTIP_GROUP_INDIRECT' | translate)
+            : ('MEMBER_DETAIL.OVERVIEW.CHANGE_EXPIRATION' | translate)">
+          <button (click)="onChangeExpiration()" mat-icon-button [disabled]="isIndirect">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </span>
       }
     </div>
   </div>
