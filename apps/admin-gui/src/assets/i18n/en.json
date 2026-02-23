@@ -3292,6 +3292,7 @@
           "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
           "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
           "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
+          "EXPIRATION_TOOLTIP_GROUP_INDIRECT": "Indirect member expiration cannot be changed",
           "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
         },
         "FACILITY_SEARCH_SELECT": {
