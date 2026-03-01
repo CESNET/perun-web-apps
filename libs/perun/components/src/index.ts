@@ -30,6 +30,7 @@ export * from './lib/application-state-selector/application-state-selector.compo
 export * from './lib/html-content-form-field/html-content-form-field.component';
 export * from './lib/users-list/users-list.component';
 export * from './lib/applications-list/applications-list.component';
+export * from './lib/simple-applications-list/simple-applications-list.component';
 export * from './lib/members-list/members-list.component';
 export * from './lib/blocked-logins-list/blocked-logins-list.component';
 export * from './lib/recently-viewed-icon/recently-viewed-icon.component';

@@ -1,0 +1,5 @@
+@if (loading) {
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
+} @else {
+  <ng-container *ngComponentOutlet="selected()"></ng-container>
+}

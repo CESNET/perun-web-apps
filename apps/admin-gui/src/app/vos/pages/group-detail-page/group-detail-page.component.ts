@@ -84,6 +84,7 @@ export class GroupDetailPageComponent extends destroyDetailMixin() implements On
     Urns.GROUP_STRUCTURE_SYNC_ENABLED,
     Urns.GROUP_LAST_STRUCTURE_SYNC_STATE,
     Urns.GROUP_LAST_STRUCTURE_SYNC_TIMESTAMP,
+    // consider adding the new registrar flag here if we want to display the info in groups list
   ];
 
   constructor(

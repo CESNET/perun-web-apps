@@ -16,6 +16,11 @@ import {
 } from '@perun-web-apps/perun/services';
 import { LinkerConfigService } from './app/service/linker-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,6 +53,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
   return new Configuration(params);
 }
 
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
+}
+
 const loadConfigs = (appConfig: LinkerConfigService) => (): Promise<void> =>
   appConfig.loadConfigs();
 
@@ -75,6 +88,7 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       ApiModule,
+      RegistrarApiModule,
       MatIconModule,
       OAuthModule.forRoot(),
       TranslateModule.forRoot({
@@ -103,6 +117,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

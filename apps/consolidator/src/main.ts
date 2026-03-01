@@ -12,6 +12,11 @@ import { AppComponent } from './app/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { appRoutes } from './app/app.routes';
 import { MatIconModule } from '@angular/material/icon';
 import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
@@ -48,6 +53,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
   return new Configuration(params);
 }
 
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
+}
+
 const loadConfigs = (appConfig: ConsolidatorConfigService) => (): Promise<void> =>
   appConfig.loadConfigs();
 
@@ -75,6 +88,7 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       ApiModule,
+      RegistrarApiModule,
       MatIconModule,
       OAuthModule.forRoot(),
       TranslateModule.forRoot({
@@ -103,6 +117,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

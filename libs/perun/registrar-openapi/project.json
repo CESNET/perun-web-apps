@@ -1,0 +1,22 @@
+{
+  "name": "perun-registrar-openapi",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/perun/registrar-openapi/src",
+  "prefix": "perun-web-apps",
+  "tags": [],
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/perun/registrar-openapi/jest.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/perun/registrar-openapi"]
+    }
+  }
+}

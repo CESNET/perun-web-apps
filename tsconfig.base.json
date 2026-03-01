@@ -67,6 +67,9 @@
       "@perun-web-apps/perun/openapi": [
         "libs/perun/openapi/src/index.ts"
       ],
+      "@perun-web-apps/perun/registrar-openapi": [
+        "libs/perun/registrar-openapi/src/index.ts"
+      ],
       "@perun-web-apps/perun/pipes": [
         "libs/perun/pipes/src/index.ts"
       ],

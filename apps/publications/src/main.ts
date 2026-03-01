@@ -17,6 +17,11 @@ import {
 } from '@perun-web-apps/perun/services';
 import { PublicationsConfigService } from './app/services/publications-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
@@ -45,6 +50,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 const loadConfigs: (appConfig: PublicationsConfigService) => () => Promise<void> =
   (appConfig: PublicationsConfigService) => () =>
@@ -80,6 +93,7 @@ bootstrapApplication(AppComponent, {
       }),
       BrowserAnimationsModule,
       ApiModule,
+      RegistrarApiModule,
       HttpClientModule,
       MatTabsModule,
       OAuthModule.forRoot(),
@@ -101,6 +115,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

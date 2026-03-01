@@ -18,6 +18,11 @@ import {
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
 import { isRunningLocally } from '@perun-web-apps/perun/utils';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { UserProfileConfigService } from './app/services/user-profile-config.service';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
@@ -68,6 +73,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 
 const loadConfigs: (appConfig: UserProfileConfigService) => () => Promise<void> =
@@ -131,6 +144,7 @@ bootstrapApplication(AppComponent, {
       FormsModule,
       MatMenuModule,
       OAuthModule.forRoot(),
+      RegistrarApiModule,
     ),
     providePerunDateAdapter(),
     provideRouter(appRoutes),
@@ -150,6 +164,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     UserFullNamePipe,

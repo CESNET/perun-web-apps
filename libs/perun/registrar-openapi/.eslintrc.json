@@ -1,0 +1,8 @@
+{
+  "extends": ["../../../.eslintrc.json"],
+  // Ignore everything under 'src/lib/' since it is auto generated
+  "ignorePatterns": ["!**/*", "src/lib/"],
+  "parserOptions": {
+    "project": ["libs/perun/registrar-openapi/tsconfig.*?.json"]
+  }
+}

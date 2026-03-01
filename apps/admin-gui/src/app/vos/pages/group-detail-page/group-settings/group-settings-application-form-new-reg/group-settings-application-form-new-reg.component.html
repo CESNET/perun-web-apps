@@ -1,0 +1,142 @@
+<h1 class="page-subtitle">
+  {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
+</h1>
+@if (loadingHeader) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
+@if (!noApplicationForm) {
+  <div>
+    @if (!loadingHeader) {
+      <div class="d-flex w-75">
+        <div>
+          <!--          <div class="fw-bold">-->
+          <!--            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:-->
+          <!--            {{applicationForm.moduleClassNames}}-->
+          <!--          </div>-->
+          <div>
+            <span
+              class="fw-bold"
+              >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
+            >:
+            <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
+            {{formSpecification.autoApprovedTypes.includes('INITIAL') ?
+              ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+            ,
+            <span [ngClass]="autoRegistrationEnabled ? '' : 'me-2'">
+              <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
+              {{formSpecification.autoApprovedTypes.includes('EXTENSION') ?
+                ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+            </span>
+            <!--            @if (autoRegistrationEnabled) {-->
+            <!--              <span class="me-2">-->
+            <!--                ,-->
+            <!--                <mat-icon class="align-middle" matTooltip="Embedded">nat</mat-icon>-->
+            <!--                {{applicationForm.automaticApprovalEmbedded ?-->
+            <!--                  ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}-->
+            <!--              </span>-->
+            <!--            }-->
+            @if (editAuth) {
+              <button (click)="settings()" class="ms-2 action-button" mat-stroked-button>
+                <i class="material-icons align-middle">edit</i>
+                <span class="align-middle">
+                  {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
+                </span>
+              </button>
+            }
+          </div>
+          <!--          @if (autoRegistrationEnabled) {-->
+          <!--            <span>-->
+          <!--              <mat-icon class="align-bottom">info</mat-icon>-->
+          <!--              {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ALLOW_EMBEDDED' | translate}}-->
+          <!--            </span>-->
+          <!--          }-->
+        </div>
+      </div>
+    }
+    <mat-divider class="mb-2 mt-2"></mat-divider>
+    <div class="w-100 d-flex">
+      <!--      <perun-web-apps-refresh-button-->
+      <!--        (refresh)="this.updateFormItems()"></perun-web-apps-refresh-button>-->
+      @if (editAuth) {
+        <button
+          [disabled]="loadingTable"
+          (click)="add()"
+          color="accent"
+          class="me-2 action-button"
+          data-cy="add-form-item"
+          mat-flat-button>
+          {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
+        </button>
+      }
+      @if (editAuth) {
+        <button
+          (click)="save()"
+          color="accent"
+          [disabled]="!itemsChanged"
+          class="me-2"
+          data-cy="save-application-form"
+          mat-flat-button>
+          <i class="material-icons">save</i>
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+        </button>
+      }
+      <!--      @if (editAuth) {-->
+      <!--        <button (click)="copy()" class="me-2 action-button" mat-stroked-button>-->
+      <!--          <i class="material-icons align-middle">file_copy</i>-->
+      <!--          <span class="align-middle">-->
+      <!--            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.COPY_GROUP_BUTTON' | translate}}-->
+      <!--          </span>-->
+      <!--        </button>-->
+      <!--      }-->
+      <!--      <button (click)="preview()" mat-stroked-button>-->
+      <!--        <i class="material-icons">search</i>-->
+      <!--        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}-->
+      <!--      </button>-->
+      <!--    <button-->
+      <!--      *ngIf="editAuth"-->
+      <!--      (click)="clear()"-->
+      <!--      class="ms-2"-->
+      <!--      mat-stroked-button-->
+      <!--      matTooltip="{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_TOOLTIP' | translate}}"-->
+      <!--      matTooltipPosition="above">-->
+      <!--      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
+      <!--    </button>-->
+      <div class="mt-2 ms-2">
+        <label class="slide-label" (click)="toggleFormType('INITIAL')"
+          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
+        </label>
+        <mat-slide-toggle
+          #toggle
+          (change)="changeFormType()"
+          [(ngModel)]="showExtension"
+          class="me-1">
+        </mat-slide-toggle>
+        <label class="slide-label" (click)="toggleFormType('EXTENSION')"
+          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
+        </label>
+      </div>
+    </div>
+    @if (editAuth) {
+      <perun-web-apps-alert alert_type="info">
+        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
+      </perun-web-apps-alert>
+    }
+    <ng-template #spinner>
+      <perun-web-apps-loading-table></perun-web-apps-loading-table>
+    </ng-template>
+    <div class="position-relative table-min-height">
+      <app-application-form-list-new-reg
+        *perunWebAppsLoader="loadingTable; indicator: spinner"
+        [loading]="loadingTable"
+        [newFormItems]="newFormItemIds"
+        (applicationFormItemsChange)="changeItems()"
+        (applicationFormItemsDeleted)="toRemoveFormItemIds=$event"
+        [formSpecification]="formSpecification"
+        [applicationFormItems]="formItems"
+        [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview']"
+        [refreshApplicationForm]="refreshApplicationForm"
+        [theme]="'group-theme'">
+      </app-application-form-list-new-reg>
+    </div>
+  </div>
+}
