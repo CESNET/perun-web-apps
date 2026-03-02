@@ -1,0 +1,24 @@
+th.mat-column-actor,
+td.mat-column-actor {
+  min-width: 100px;
+}
+
+.event-message-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.actor-message-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.row-clickable {
+  cursor: pointer;
+}

@@ -4,8 +4,8 @@
   </h1>
   <div mat-dialog-content>
     <div>
-      {{'DIALOGS.AUDIT_MESSAGE_DETAIL.ACTOR' | translate}}: {{actor}},
-      {{'DIALOGS.AUDIT_MESSAGE_DETAIL.CREATED_AT' | translate}}: {{createdAt}}
+      <p>{{'DIALOGS.AUDIT_MESSAGE_DETAIL.ACTOR' | translate}}: {{actor}}</p>
+      <p>{{'DIALOGS.AUDIT_MESSAGE_DETAIL.CREATED_AT' | translate}}: {{createdAt}}</p>
     </div>
     <mat-tab-group (selectedTabChange)="tabChanged($event)" mat-stretch-tabs="false">
       <mat-tab>
