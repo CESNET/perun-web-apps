@@ -739,7 +739,10 @@
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
         "EDIT": "Edit",
         "MODIFIED_NAME_NOT_AVAILABLE": "N/A",
-        "MODIFIED_NAME_REGISTRAR": "Automatically approved"
+        "MODIFIED_NAME_REGISTRAR": "Automatically approved",
+        "CHECK_MEMBER_ACTIVATION": "After approving the application, please wait a few minutes and check that the member has been successfully validated",
+        "VO_MEMBER_STATUS": "Organization status",
+        "GROUP_MEMBER_STATUS": "Group status"
       }
     },
     "STATISTICS": {

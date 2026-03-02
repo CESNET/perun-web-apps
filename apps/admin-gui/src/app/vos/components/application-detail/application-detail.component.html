@@ -1,75 +1,82 @@
 <h2 class="page-subtitle">
-  {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TITLE' | translate}}
+  {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TITLE' | translate }}
   @if (!!application) {
-    <span class="text-muted"> #{{application.id}} </span>
+    <span class="text-muted"> #{{ application.id }} </span>
   }
 </h2>
-<mat-divider class="mb-4"></mat-divider>
+<mat-divider class="mb-2"></mat-divider>
 
 @if (loading) {
-  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+  <mat-spinner class="ms-auto me-auto"></mat-spinner>
 }
+
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+  <i class="material-icons me-2">warning</i>
+  <div>
+    {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.CHECK_MEMBER_ACTIVATION' | translate }}
+  </div>
+</div>
 
 @if (!loading) {
   <div>
     @if (this.application.state === 'NEW' && verifyAuth) {
       <button (click)="verifyApplication()" color="accent" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate }}
       </button>
     }
     @if (
       (this.application.state === 'VERIFIED' || this.application.state === 'NEW') && approveAuth
     ) {
       <button (click)="approveApplication()" color="accent" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate }}
       </button>
     }
     @if (
       (this.application.state === 'VERIFIED' || this.application.state === 'NEW') && rejectAuth
     ) {
       <button (click)="rejectApplication()" color="warn" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate }}
       </button>
     }
     @if (
       (this.application.state === 'REJECTED' || this.application.state === 'NEW') && deleteAuth
     ) {
       <button (click)="deleteApplication()" color="warn" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate }}
       </button>
     }
     @if (resendAuth) {
       <button (click)="resendNotification()" class="me-2" mat-stroked-button>
         <i class="material-icons"> mail_outline </i>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate }}
       </button>
     }
     @if (!application.group) {
       <div>
         <span
           class="fw-bold"
-          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_VO' | translate}}</span
-        >: {{this.application.vo.name}}
+          >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_VO' | translate }}</span
+        >: {{ this.application.vo.name }}
       </div>
     }
     @if (application.group) {
       <div>
         <span
           class="fw-bold"
-          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_GROUP' | translate}}</span
-        >: {{this.application.group.name}}
+          >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_FOR_GROUP' | translate }}</span
+        >: {{ this.application.group.name }}
         <span
           class="fw-bold"
-          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_IN_VO' | translate}}</span
-        >: {{this.application.vo.name}}
+          >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPLICATION_IN_VO' | translate }}</span
+        >: {{ this.application.vo.name }}
       </div>
     }
     <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.STATE' | translate}}</span
+      <span class="fw-bold">{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.STATE' | translate }}</span
       >: <span [outerHTML]="this.application.state | applicationState"></span>
     </div>
     <div>
-      <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TYPE' | translate}}</span
+      <span class="fw-bold">{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TYPE' | translate }}</span
       >:
       @if (application.type === 'INITIAL') {
         <span>
@@ -98,20 +105,20 @@
             class="group-link"
             [routerLink]="['/organizations', application.vo.id, 'groups', application.group.id, 'invitations', invitation.id]"
             [perunWebAppsMiddleClickRouterLink]="['/organizations', application.vo.id.toString(), 'groups', application.group.id.toString(), 'invitations', invitation.id.toString()]"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.PREAPPROVED' | translate}}</a
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.PREAPPROVED' | translate }}</a
           ></mat-card-title
         >
         <div>
           <span
             class="fw-bold"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate}}</span
-          >: {{invitation.senderName | modifiedName : invitation.createdBy}}
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SENDER' | translate }}</span
+          >: {{ invitation.senderName | modifiedName : invitation.createdBy }}
         </div>
         <div>
           <span
             class="fw-bold"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate }}</span
+          >: {{ this.application.modifiedAt | date:'d.M.y H:mm:ss' }}
         </div>
       </div>
     }
@@ -119,14 +126,14 @@
       <div class="card p-3 mt-2">
         <mat-card-title
           ><i class="material-icons red align-text-top">clear</i>
-          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
-          {{application.modifiedByDisplayName | modifiedName : application.modifiedBy}}</mat-card-title
-        >
+          {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate }}:
+          {{ application.modifiedByDisplayName | modifiedName : application.modifiedBy }}
+        </mat-card-title>
         <div>
           <span
             class="fw-bold"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate }}</span
+          >: {{ this.application.modifiedAt | date:'d.M.y H:mm:ss' }}
         </div>
       </div>
     }
@@ -134,14 +141,14 @@
       <div class="card p-3 mt-2">
         <mat-card-title
           ><i class="material-icons green align-text-top">done</i>
-          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate}}:
-          {{application.modifiedByDisplayName | modifiedName : application.modifiedBy}}</mat-card-title
-        >
+          {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVED_BY' | translate }}:
+          {{ application.modifiedByDisplayName | modifiedName : application.modifiedBy }}
+        </mat-card-title>
         <div>
           <span
             class="fw-bold"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-          >: {{this.application.modifiedAt | date:'d.M.y H:mm:ss'}}
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate }}</span
+          >: {{ this.application.modifiedAt | date:'d.M.y H:mm:ss' }}
         </div>
       </div>
     }
@@ -151,58 +158,113 @@
       <div class="card p-3 mt-2">
         <h5 class="fw-bold">
           <i class="material-icons orange">warning</i>
-          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.AUTO_APPROVE_FAILURE' | translate}}:
+          {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.AUTO_APPROVE_FAILURE' | translate }}:
         </h5>
-        <div>{{this.application.autoApproveError}}</div>
+        <div>{{ this.application.autoApproveError }}</div>
       </div>
     }
     <div class="card p-4 mt-2">
       <mat-card-title
         ><i class="material-icons align-text-top">redo</i>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate}}:
-        {{application | appCreatedByName}}</mat-card-title
-      >
+        {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SUBMITTED_BY' | translate }}:
+        {{ application | appCreatedByName }}
+      </mat-card-title>
 
       @if (userMail) {
         <div>
           <span
             class="fw-bold"
-            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.MAIL' | translate}}</span
-          >: {{this.userMail}}
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.MAIL' | translate }}</span
+          >: {{ this.userMail }}
         </div>
       }
       <div>
         <span
           class="fw-bold"
           attr.data-cy="{{this.application.extSourceName | lowercase}}-application-extsource"
-          >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EXT_SRC' | translate}}</span
-        >: {{this.application.extSourceName}}
+          >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.EXT_SRC' | translate }}</span
+        >: {{ this.application.extSourceName }}
       </div>
       <div>
-        <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.LOA' | translate}}</span
-        >: {{this.application.extSourceLoa}}
+        <span class="fw-bold">{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.LOA' | translate }}</span
+        >: {{ this.application.extSourceLoa }}
       </div>
       <div>
-        <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
-        >: {{this.application.createdAt | date:'d.M.y H:mm:ss'}}
+        <span
+          class="fw-bold"
+          >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate }}</span
+        >: {{ this.application.createdAt | date:'d.M.y H:mm:ss' }}
       </div>
+      @if (this.application.type === 'EXTENSION' && this.application.group) {
+        <!-- group extension application (user already member of VO)-->
+        <div class="d-flex align-items-center">
+          <span class="fw-bold">
+            {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:
+          </span>
+          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+            <span>
+              {{this.member.status | memberStatusIcon}}
+            </span>
+          </i>
+          {{ this.member.status }}
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="fw-bold">
+            {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.GROUP_MEMBER_STATUS' | translate }}:
+          </span>
+
+          <i
+            class="material-icons status-change {{member.groupStatus | groupStatusIconColor: member.membershipType === 'INDIRECT'}}">
+            <span>
+              {{this.member.groupStatus | memberStatusIcon}}
+            </span>
+          </i>
+          {{ this.member.groupStatus }}
+        </div>
+      } @else if (this.application.type === 'EXTENSION') {
+        <!--        VO extension application-->
+        <div class="d-flex align-items-center">
+          <span class="fw-bold"
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
+          >
+          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+            <span>
+              {{this.member.status | memberStatusIcon}}
+            </span>
+          </i>
+          {{ this.member.status }}
+        </div>
+      } @else if (this.application.type === 'INITIAL' && this.application.group) {
+        <!-- group initial application-->
+        <div class="d-flex align-items-center">
+          <span class="fw-bold"
+            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
+          >
+          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+            <span>
+              {{this.member.status | memberStatusIcon}}
+            </span>
+          </i>
+          {{ this.member.status }}
+        </div>
+      }
 
       @if (userData.length !== 0) {
         <table [dataSource]="dataSource" class="w-100" mat-table>
           <ng-container matColumnDef="label">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let userData" class="fw-bold" mat-cell>
-              {{userData.formItem | getLabel}}
+              {{ userData.formItem | getLabel }}
             </td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let userData" class="word-break-all" mat-cell>
               <div class="d-flex align-items-center">
-                {{userData.value}}
+                {{ userData.value }}
                 @if (
                   (application.state === 'NEW' || application.state === 'VERIFIED') &&
-                                                      userData.formItem.type !== 'EMBEDDED_GROUP_APPLICATION'
+                userData.formItem.type !== 'EMBEDDED_GROUP_APPLICATION'
                 ) {
                   <button
                     (click)="editApplicationData(userData)"
