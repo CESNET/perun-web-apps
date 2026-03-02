@@ -31,7 +31,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
   styleUrls: ['./admin-audit-log.component.scss'],
 })
 export class AdminAuditLogComponent implements OnInit {
-  displayedColumns = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
+  displayedColumns = ['id', 'timestamp', 'name', 'actor', 'eventMessage', 'detail'];
   auditMessages: AuditMessage[];
   selectedEvents: string[] = [];
   eventOptions: string[] = [];

@@ -39,23 +39,27 @@
 
       <ng-container matColumnDef="actor">
         <th *matHeaderCellDef mat-header-cell>{{'AUDIT_MESSAGES_LIST.ACTOR' | translate}}</th>
-        <td *matCellDef="let auditMessage" class="static-column-size" mat-cell>
-          {{auditMessage.actor}}
+        <td *matCellDef="let auditMessage" mat-cell>
+          <span class="actor-message-clamp">
+            {{auditMessage.actor}}
+          </span>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="event.message">
+      <ng-container matColumnDef="eventMessage">
         <th *matHeaderCellDef mat-header-cell>{{'AUDIT_MESSAGES_LIST.MESSAGE' | translate}}</th>
-        <td *matCellDef="let auditMessage" class="static-column-size" mat-cell>
-          {{auditMessage.event.message}}
+        <td *matCellDef="let auditMessage" mat-cell>
+          <span class="event-message-clamp">
+            {{auditMessage.event.message}}
+          </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="detail">
         <th *matHeaderCellDef mat-header-cell></th>
-        <td *matCellDef="let auditMessage" class="static-column-size" mat-cell>
+        <td *matCellDef="let auditMessage" mat-cell>
           <button
-            (click)="viewDetails(auditMessage)"
+            (click)="$event.stopPropagation(); viewDetails(auditMessage)"
             data-cy="audit-message-detail-button"
             color="accent"
             mat-flat-button>
@@ -67,8 +71,9 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr
         *matRowDef="let auditMessage; columns: displayedColumns;"
-        class="dark-hover-list-item"
-        mat-row></tr>
+        class="dark-hover-list-item row-clickable"
+        mat-row
+        (click)="viewDetails(auditMessage)"></tr>
     </table>
   </perun-web-apps-table-wrapper>
 </div>
