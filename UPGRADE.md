@@ -1,5 +1,19 @@
 Upgrade notes
 
+## [20.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.6.0...v20.7.0) (2026-03-05)
+
+
+### Features
+
+* **admin:** adjust audit log table ([187fad4](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/187fad446cf27ac1103fa2100ca15d82997fd19f))
+* **admin:** display the current membership status in application detail ([451a939](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/451a939f9034a80056f875d9c15cb8182c5a36ab))
+
+
+### Bug Fixes
+
+* **admin:** disable group status change for indirect members ([9a00e09](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/9a00e09fbdc232434aeedef70c9c3d51b8dd8535))
+* **deps:** update dependency npm to v11 [security] ([fc456cb](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/fc456cb09aabc6660ee0ea8b55322a19f996c80e))
+
 ## [20.6.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.5.1...v20.6.0) (2026-01-13)
 
 

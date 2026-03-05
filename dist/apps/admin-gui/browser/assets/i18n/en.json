@@ -739,7 +739,10 @@
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
         "EDIT": "Edit",
         "MODIFIED_NAME_NOT_AVAILABLE": "N/A",
-        "MODIFIED_NAME_REGISTRAR": "Automatically approved"
+        "MODIFIED_NAME_REGISTRAR": "Automatically approved",
+        "CHECK_MEMBER_ACTIVATION": "After approving the application, please wait a few minutes and check that the member has been successfully validated",
+        "VO_MEMBER_STATUS": "Organization status",
+        "GROUP_MEMBER_STATUS": "Group status"
       }
     },
     "STATISTICS": {
@@ -3292,6 +3295,7 @@
           "MASTER_CHECKBOX_TOOLTIP": "No member on this page can be selected",
           "STATUS_TOOLTIP_INDIRECT": "Member status from member organization cannot be directly changed",
           "STATUS_TOOLTIP_GROUP_INDIRECT": "Indirect member status cannot be changed",
+          "EXPIRATION_TOOLTIP_GROUP_INDIRECT": "Indirect member expiration cannot be changed",
           "STATUS_TOOLTIP_MEMBERS_GROUP": "Group status in 'members' group cannot be directly changed"
         },
         "FACILITY_SEARCH_SELECT": {
