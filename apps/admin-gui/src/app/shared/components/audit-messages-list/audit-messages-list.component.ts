@@ -71,7 +71,7 @@ export class AuditMessagesListComponent implements OnInit {
   @Input() pageSizeOptions = TABLE_ITEMS_COUNT_OPTIONS;
 
   dataSource: MatTableDataSource<AuditMessage> | DynamicDataSource<AuditMessage>;
-  displayedColumns: string[] = ['id', 'timestamp', 'name', 'actor', 'event.message', 'detail'];
+  displayedColumns: string[] = ['id', 'timestamp', 'name', 'actor', 'eventMessage', 'detail'];
   unfilteredColumns = this.displayedColumns;
   tableId = 'app-audit-messages-list';
 
@@ -116,7 +116,7 @@ export class AuditMessagesListComponent implements OnInit {
         return data.event.name.split('.').pop();
       case 'actor':
         return data.actor;
-      case 'event.message':
+      case 'eventMessage':
         return data.event.message;
       default:
         return '';

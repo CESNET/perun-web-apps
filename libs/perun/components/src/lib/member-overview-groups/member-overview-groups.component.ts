@@ -11,7 +11,11 @@ import {
   RichGroup,
   RichMember,
 } from '@perun-web-apps/perun/openapi';
-import { getDefaultDialogConfig, getRecentlyVisitedIds } from '@perun-web-apps/perun/utils';
+import {
+  getDefaultDialogConfig,
+  getRecentlyVisitedIds,
+  isMemberIndirect,
+} from '@perun-web-apps/perun/utils';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { GuiAuthResolver, PerunTranslateService } from '@perun-web-apps/perun/services';
 import {
@@ -51,6 +55,7 @@ export class MemberOverviewGroupsComponent implements OnInit {
   expirationAtt: Attribute;
   editAuth = false;
   showExpiration = true;
+  isIndirect = false;
 
   constructor(
     private groupsManager: GroupsManagerService,
@@ -99,6 +104,7 @@ export class MemberOverviewGroupsComponent implements OnInit {
       )
       .subscribe((members) => {
         this.selectedMember = members[0];
+        this.isIndirect = isMemberIndirect(this.selectedMember);
         this.expirationAtt = this.selectedMember.memberAttributes.find(
           (att) => att.baseFriendlyName === 'groupMembershipExpiration',
         );
