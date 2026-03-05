@@ -22,10 +22,13 @@ import {
   Application,
   ApplicationFormItemData,
   CantBeApprovedException,
+  GroupsManagerService,
   InvitationsManagerService,
   InvitationWithSender,
+  Member,
   MembersManagerService,
   RegistrarManagerService,
+  RichMember,
   UsersManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
@@ -33,10 +36,17 @@ import { EditApplicationFormItemDataDialogComponent } from '../../../shared/comp
 import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { ApplicationApproveAnywayDialogComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog/application-approve-anyway-dialog.component';
-import { GetLabelPipe } from '@perun-web-apps/perun/pipes';
+import {
+  GetLabelPipe,
+  GroupStatusIconColorPipe,
+  MemberStatusIconColorPipe,
+  MemberStatusIconPipe,
+} from '@perun-web-apps/perun/pipes';
 import { ModifiedNamePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationStatePipe } from '@perun-web-apps/perun/pipes';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   imports: [
@@ -55,6 +65,9 @@ import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
     ModifiedNamePipe,
     ApplicationStatePipe,
     AppCreatedByNamePipe,
+    MemberStatusIconPipe,
+    MemberStatusIconColorPipe,
+    GroupStatusIconColorPipe,
   ],
   standalone: true,
   selector: 'app-application-detail',
@@ -77,6 +90,8 @@ export class ApplicationDetailComponent implements OnInit {
   deleteAuth: boolean;
   resendAuth: boolean;
   invitation: InvitationWithSender = null;
+  member: Member = null;
+  richMember: RichMember = null;
 
   constructor(
     private registrarManager: RegistrarManagerService,
@@ -89,6 +104,7 @@ export class ApplicationDetailComponent implements OnInit {
     private authResolver: GuiAuthResolver,
     private usersService: UsersManagerService,
     private membersService: MembersManagerService,
+    private groupsManager: GroupsManagerService,
     private apiRequest: ApiRequestConfigurationService,
   ) {}
 
@@ -106,6 +122,42 @@ export class ApplicationDetailComponent implements OnInit {
         const applicationId = Number(params['applicationId']);
         this.registrarManager.getApplicationById(applicationId).subscribe((application) => {
           this.application = application;
+
+          if (this.application?.group !== null || this.application?.type === 'EXTENSION') {
+            this.membersService
+              .getMemberByUser(this.application.vo.id, this.application.user.id)
+              .pipe(
+                tap((member) => {
+                  this.member = member;
+                  this.richMember = {
+                    ...member,
+                    user: this.application.user,
+                    userExtSources: null,
+                    userAttributes: null,
+                    memberAttributes: null,
+                  };
+                }),
+                switchMap((member) => {
+                  // guard in case group does not exist
+                  if (!this.application.group || this.application.type === 'INITIAL') {
+                    return of(null);
+                  }
+
+                  return this.groupsManager.getGroupMemberById(
+                    this.application.group.id,
+                    member.id,
+                  );
+                }),
+                tap((groupMember) => {
+                  if (groupMember) {
+                    this.member.groupStatus = groupMember.groupStatus;
+                  }
+                }),
+                catchError(() => of(null)),
+              )
+              .subscribe();
+          }
+
           if (this.application.type === 'EMBEDDED' && this.application.user) {
             this.usersService
               .getRichUserWithAttributes(this.application.user.id)
