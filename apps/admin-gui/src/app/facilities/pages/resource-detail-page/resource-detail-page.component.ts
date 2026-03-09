@@ -33,8 +33,9 @@ import { RemoveResourceDialogComponent } from '../../../shared/components/dialog
 import { ReloadEntityDetailService } from '../../../core/services/common/reload-entity-detail.service';
 import { SideMenuItem } from '../../../shared/side-menu/side-menu.component';
 import { destroyDetailMixin } from '../../../shared/destroy-entity-detail';
-import { takeUntil } from 'rxjs/operators';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { EntityPathParam } from '@perun-web-apps/perun/models';
+import { iif } from 'rxjs';
 
 @Component({
   imports: [
@@ -92,46 +93,54 @@ export class ResourceDetailPageComponent extends destroyDetailMixin() implements
 
   reloadData(): void {
     this.loading = true;
-    this.route.params.subscribe((params) => {
-      const resourceId = Number(params['resourceId']);
 
-      this.resourcesManager.getRichResourceById(resourceId).subscribe((resource) => {
-        this.resource = resource;
-        this.entityStorageService.setEntityAndPathParam(
-          {
-            id: resource.id,
-            voId: resource.voId,
-            facilityId: resource.facilityId,
-            beanName: 'Resource',
-          },
-          EntityPathParam.Resource,
-        );
-        this.setAuth();
-        if (this.route.parent.snapshot.url[0].path === 'facilities') {
-          this.baseUrl = new GetResourceRoutePipe().transform(resource, false);
-          this.facilityManager.getFacilityById(resource.facilityId).subscribe(
-            (facility) => {
-              this.facility = facility;
-              this.setMenuItems();
-              this.loading = false;
+    this.route.params
+      .pipe(
+        map((params) => Number(params['resourceId'])),
+        switchMap((resourceId) => this.resourcesManager.getRichResourceById(resourceId)),
+        tap((richResource) => {
+          this.resource = richResource;
+          this.setAuth();
+          this.entityStorageService.setEntityAndPathParam(
+            {
+              id: richResource.id,
+              voId: richResource.voId,
+              facilityId: richResource.facilityId,
+              beanName: 'Resource',
             },
-            () => (this.loading = false),
+            EntityPathParam.Resource,
           );
-        } else {
-          this.baseUrl = new GetResourceRoutePipe().transform(resource, true);
-          this.vosManagerService.getVoById(resource.voId).subscribe(
-            (vo) => {
-              this.vo = vo;
-              this.underVoUrl = true;
-              this.setMenuItems();
-              this.loading = false;
-            },
-            () => (this.loading = false),
+          addRecentlyVisited('resources', richResource);
+        }),
+        switchMap((resource) => {
+          const isFacilities = this.route.parent.snapshot.url[0].path === 'facilities';
+          this.baseUrl = new GetResourceRoutePipe().transform(resource, !isFacilities);
+
+          return iif(
+            () => isFacilities,
+            this.facilityManager
+              .getFacilityById(resource.facilityId)
+              .pipe(map((facility) => ({ type: 'facility', value: facility }))),
+            this.vosManagerService
+              .getVoById(resource.voId)
+              .pipe(map((vo) => ({ type: 'vo', value: vo }))),
           );
-        }
-        addRecentlyVisited('resources', this.resource);
+        }),
+        tap((result) => {
+          if (result.type === 'facility') {
+            this.facility = result.value;
+            this.underVoUrl = false;
+          } else {
+            this.vo = result.value;
+            this.underVoUrl = true;
+          }
+          this.setMenuItems();
+          this.loading = false;
+        }),
+      )
+      .subscribe({
+        error: () => (this.loading = false),
       });
-    });
   }
 
   setMenuItems(): void {
