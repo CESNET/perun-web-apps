@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [20.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.7.0...v20.8.0) (2026-03-27)
+
+
+### Features
+
+* **admin:** refactor ResourceDetail component using RxJS ([efde1d1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/efde1d1c969d3a1395e53cf33e03cc686da3e83b))
+
+
+### Bug Fixes
+
+* **admin:** application detail member error ([7e95e56](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/7e95e5636562fc80593dbba459c466d4baee455a))
+* improve header and buttons responsiveness ([cdf493b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/cdf493b426634630bf2d24cedf1f46533006b850))
+
 ## [20.7.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.6.0...v20.7.0) (2026-03-05)
 
 
