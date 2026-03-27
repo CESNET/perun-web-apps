@@ -123,6 +123,7 @@ export class ApplicationDetailComponent implements OnInit {
         this.registrarManager.getApplicationById(applicationId).subscribe((application) => {
           this.application = application;
 
+          this.apiRequest.dontHandleErrorForNext();
           if (this.application?.group !== null || this.application?.type === 'EXTENSION') {
             this.membersService
               .getMemberByUser(this.application.vo.id, this.application.user.id)

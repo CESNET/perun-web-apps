@@ -195,58 +195,60 @@
           >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate }}</span
         >: {{ this.application.createdAt | date:'d.M.y H:mm:ss' }}
       </div>
-      @if (this.application.type === 'EXTENSION' && this.application.group) {
-        <!-- group extension application (user already member of VO)-->
-        <div class="d-flex align-items-center">
-          <span class="fw-bold">
-            {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:
-          </span>
-          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
-            <span>
-              {{this.member.status | memberStatusIcon}}
+      @if (this.member) {
+        @if (this.application.type === 'EXTENSION' && this.application.group) {
+          <!-- group extension application (user already member of VO)-->
+          <div class="d-flex align-items-center">
+            <span class="fw-bold">
+              {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:
             </span>
-          </i>
-          {{ this.member.status }}
-        </div>
-        <div class="d-flex align-items-center">
-          <span class="fw-bold">
-            {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.GROUP_MEMBER_STATUS' | translate }}:
-          </span>
+            <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+              <span>
+                {{this.member.status | memberStatusIcon}}
+              </span>
+            </i>
+            {{ this.member.status }}
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="fw-bold">
+              {{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.GROUP_MEMBER_STATUS' | translate }}:
+            </span>
 
-          <i
-            class="material-icons status-change {{member.groupStatus | groupStatusIconColor: member.membershipType === 'INDIRECT'}}">
-            <span>
-              {{this.member.groupStatus | memberStatusIcon}}
-            </span>
-          </i>
-          {{ this.member.groupStatus }}
-        </div>
-      } @else if (this.application.type === 'EXTENSION') {
-        <!--        VO extension application-->
-        <div class="d-flex align-items-center">
-          <span class="fw-bold"
-            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
-          >
-          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
-            <span>
-              {{this.member.status | memberStatusIcon}}
-            </span>
-          </i>
-          {{ this.member.status }}
-        </div>
-      } @else if (this.application.type === 'INITIAL' && this.application.group) {
-        <!-- group initial application-->
-        <div class="d-flex align-items-center">
-          <span class="fw-bold"
-            >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
-          >
-          <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
-            <span>
-              {{this.member.status | memberStatusIcon}}
-            </span>
-          </i>
-          {{ this.member.status }}
-        </div>
+            <i
+              class="material-icons status-change {{member.groupStatus | groupStatusIconColor: member.membershipType === 'INDIRECT'}}">
+              <span>
+                {{this.member.groupStatus | memberStatusIcon}}
+              </span>
+            </i>
+            {{ this.member.groupStatus }}
+          </div>
+        } @else if (this.application.type === 'EXTENSION') {
+          <!--        VO extension application-->
+          <div class="d-flex align-items-center">
+            <span class="fw-bold"
+              >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
+            >
+            <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+              <span>
+                {{this.member.status | memberStatusIcon}}
+              </span>
+            </i>
+            {{ this.member.status }}
+          </div>
+        } @else if (this.application.type === 'INITIAL' && this.application.group) {
+          <!-- group initial application-->
+          <div class="d-flex align-items-center">
+            <span class="fw-bold"
+              >{{ 'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VO_MEMBER_STATUS' | translate }}:</span
+            >
+            <i class="material-icons status-change {{(richMember | memberStatusIconColor)}}">
+              <span>
+                {{this.member.status | memberStatusIcon}}
+              </span>
+            </i>
+            {{ this.member.status }}
+          </div>
+        }
       }
 
       @if (userData.length !== 0) {
