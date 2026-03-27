@@ -3,7 +3,7 @@
 </h1>
 @if (!noApplicationForm) {
   <div>
-    <div class="w-100 d-flex">
+    <div class="w-100 d-flex flex-wrap gap-2">
       <perun-web-apps-refresh-button (click)="refresh()"></perun-web-apps-refresh-button>
       @if (addAuth) {
         <button (click)="add()" color="accent" class="me-2 action-button" mat-flat-button>

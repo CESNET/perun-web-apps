@@ -1,0 +1,9 @@
+.entity-title-wrapper {
+  display: flex;
+}
+
+@media (max-width: 500px) {
+  .entity-title-wrapper {
+    display: block;
+  }
+}
