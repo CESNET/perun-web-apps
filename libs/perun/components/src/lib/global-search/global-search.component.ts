@@ -110,7 +110,9 @@ export class GlobalSearchComponent implements OnInit {
     // TODO add animation to this
     this.renderer.addClass(this.container.nativeElement, 'show-search');
     this.renderer.addClass(this.searchIcon.nativeElement, 'hide-icon');
-    // this.renderer.addClass(this.container.nativeElement, 'toggle-search');
+    if (window.innerWidth <= 800) {
+      this.renderer.addClass(this.container.nativeElement, 'toggle-search');
+    }
     this.focusSearch = true;
     this.input.nativeElement.focus();
   }
@@ -121,7 +123,7 @@ export class GlobalSearchComponent implements OnInit {
     this.renderer.removeClass(this.searchIcon.nativeElement, 'hide-icon');
     this.focusSearch = false;
     this.input.nativeElement.blur();
-    // this.renderer.removeClass(this.container.nativeElement, 'toggle-search');
+    this.renderer.removeClass(this.container.nativeElement, 'toggle-search');
   }
 
   resetGroupOptions(): void {
