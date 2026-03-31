@@ -30,7 +30,7 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
   @Input() attributes: AttributeDefinition[];
   @Input() attributesForEntity: Entity[];
   @Output() attributeSelected = new EventEmitter<AttributeDefinition>();
-  @Output() search = new EventEmitter<{ [p: string]: string }>();
+  @Output() searchSubmit = new EventEmitter<{ [p: string]: string }>();
 
   availableAttrDefs: AttributeDefinition[] = [];
   options: string[][] = [];
@@ -77,6 +77,6 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
     this.options.forEach((search) => {
       inputGetEntity[search[0]] = search[1];
     });
-    this.search.emit(inputGetEntity);
+    this.searchSubmit.emit(inputGetEntity);
   }
 }

@@ -61,7 +61,7 @@ export class AddMemberDialogComponent implements OnInit {
   @Input() cachedSubject = new BehaviorSubject(true);
   @Output() add: EventEmitter<void> = new EventEmitter<void>();
   @Output() cancelled: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchSubmit: EventEmitter<string> = new EventEmitter<string>();
   @Output() invite: EventEmitter<string> = new EventEmitter<string>();
   searchCtrl: UntypedFormControl = new UntypedFormControl('', [
     Validators.required,
@@ -74,7 +74,7 @@ export class AddMemberDialogComponent implements OnInit {
   }
 
   applyFilter(searchValue: string): void {
-    this.search.emit(searchValue);
+    this.searchSubmit.emit(searchValue);
     this.selection.clear();
     this.cachedSubject.next(true);
   }
