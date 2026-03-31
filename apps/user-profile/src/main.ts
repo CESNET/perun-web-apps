@@ -17,9 +17,9 @@ import {
 } from '@perun-web-apps/perun/services';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
-import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
+import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { UserProfileConfigService } from './app/services/user-profile-config.service';
-import { PerunPipesModule, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,9 +30,7 @@ import { MatListModule } from '@angular/material/list';
 import { provideRouter, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -51,10 +49,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatMenuModule } from '@angular/material/menu';
-import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespace-password-form';
-import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
 import { appRoutes } from './app/app.routes';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -115,9 +110,6 @@ bootstrapApplication(AppComponent, {
       RouterModule,
       MatButtonModule,
       MatToolbarModule,
-      PerunSharedComponentsModule,
-      UiAlertsModule,
-      UiLoadersModule,
       MatExpansionModule,
       MatFormFieldModule,
       MatSelectModule,
@@ -131,20 +123,16 @@ bootstrapApplication(AppComponent, {
       MatSortModule,
       MatCardModule,
       ClipboardModule,
-      PerunPipesModule,
       MatAutocompleteModule,
       MatRippleModule,
       MatTooltipModule,
       MatSlideToggleModule,
       MatRadioModule,
       FormsModule,
-      PerunLoginModule,
-      PerunUtilsModule,
       MatMenuModule,
       OAuthModule.forRoot(),
-      PerunNamespacePasswordFormModule,
-      PerunTableUtilsModule,
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     CustomIconService,
     {

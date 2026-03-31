@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -60,6 +60,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ConsentStatusComponent } from '../consent-status/consent-status.component';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export type userTableColumn =
   | 'select'
@@ -76,7 +77,7 @@ export type userTableColumn =
     CommonModule,
     MatIconModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,

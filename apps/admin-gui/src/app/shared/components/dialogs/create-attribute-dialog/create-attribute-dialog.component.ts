@@ -1,4 +1,3 @@
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
@@ -12,6 +11,7 @@ import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-app
 import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CreateAttributeDialogData {
   entityId: number;
@@ -27,7 +27,7 @@ export interface CreateAttributeDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     TranslateModule,
     AttributesListComponent,

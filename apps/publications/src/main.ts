@@ -23,16 +23,9 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { GeneralModule } from '@perun-web-apps/general';
 import { appRoutes } from './app/app.routes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatTabsModule } from '@angular/material/tabs';
-import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
-import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
+import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideRouter } from '@angular/router';
 
@@ -86,18 +79,10 @@ bootstrapApplication(AppComponent, {
         },
       }),
       BrowserAnimationsModule,
-      UiMaterialModule,
-      GeneralModule,
       ApiModule,
       HttpClientModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunPipesModule,
-      PerunLoginModule,
       MatTabsModule,
-      PerunUtilsModule,
       OAuthModule.forRoot(),
-      PerunTableUtilsModule,
     ),
     provideRouter(appRoutes),
     CustomIconService,

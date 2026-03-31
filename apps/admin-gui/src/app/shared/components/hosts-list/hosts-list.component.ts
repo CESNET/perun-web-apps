@@ -6,7 +6,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -35,12 +35,13 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,

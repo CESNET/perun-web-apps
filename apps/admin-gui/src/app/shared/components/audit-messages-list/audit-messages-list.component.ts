@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { ParseDatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import {
   Component,
@@ -33,12 +33,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ParseEventNamePipe } from '../../pipes/parse-event-name.pipe';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     ParseDatePipe,
     TableWrapperComponent,
     MatTableModule,

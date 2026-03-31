@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -20,12 +20,13 @@ import { BehaviorSubject } from 'rxjs';
 import { ConsentHubsListComponent } from '../../../../shared/components/consent-hubs-list/consent-hubs-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     RefreshButtonComponent,
     TranslateModule,

@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatListItem, MatListModule } from '@angular/material/list';
 import { MembersListComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -50,6 +50,7 @@ import { MatStep, MatStepLabel, MatStepper } from '@angular/material/stepper';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoginPasswordFormWithGenerateOptionComponent } from '../login-password-form-with-generate-option/login-password-form-with-generate-option.component';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CreateServiceMemberDialogData {
   vo: Vo;
@@ -73,7 +74,7 @@ export interface CreateServiceMemberDialogResult {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MembersListComponent,
     MatListModule,

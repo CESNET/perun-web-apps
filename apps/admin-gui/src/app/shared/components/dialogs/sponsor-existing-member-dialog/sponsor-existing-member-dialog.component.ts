@@ -2,7 +2,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MembersListComponent } from '@perun-web-apps/perun/components';
 import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +22,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { BehaviorSubject } from 'rxjs';
 import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface SponsorExistingMemberDialogData {
   voId: number;
@@ -38,7 +39,7 @@ export interface SponsorExistingMemberDialogData {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     ExpirationSelectComponent,
     MembersListComponent,

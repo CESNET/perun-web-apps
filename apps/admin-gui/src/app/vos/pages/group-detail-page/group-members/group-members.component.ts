@@ -11,7 +11,7 @@ import {
   GroupMembersActionButtonDisabledTooltipPipe,
   MemberStatusPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -63,6 +63,7 @@ import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -72,7 +73,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MemberStatusPipe,
     DebounceFilterComponent,
     RefreshButtonComponent,

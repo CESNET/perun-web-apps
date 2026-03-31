@@ -25,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { parseQueryParams } from '@perun-web-apps/perun/utils';
 import { PasswordAction } from '@perun-web-apps/perun/models';
 import { PasswordResetPageComponent } from './pages/password-reset-page/password-reset-page.component';
-import { LoginScreenBaseComponent, PerunLoginModule } from '@perun-web-apps/perun/login';
+import { LoginScreenBaseComponent } from '@perun-web-apps/perun/login';
 
 @Component({
   imports: [
@@ -36,7 +36,6 @@ import { LoginScreenBaseComponent, PerunLoginModule } from '@perun-web-apps/peru
     MatTooltip,
     PasswordResetPageComponent,
     LoginScreenBaseComponent,
-    PerunLoginModule,
   ],
   standalone: true,
   selector: 'perun-web-apps-root',

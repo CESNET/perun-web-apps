@@ -16,7 +16,8 @@ import {
   userTableColumn,
   RefreshButtonComponent,
   UsersListComponent,
-  PerunSharedComponentsModule,
+  BackButtonComponent,
+  DebounceFilterComponent,
 } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
@@ -31,7 +32,8 @@ import { MatIcon } from '@angular/material/icon';
     UsersListComponent,
     LoaderDirective,
     LoadingTableComponent,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
+    DebounceFilterComponent,
     MatIcon,
   ],
   standalone: true,

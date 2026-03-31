@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { Attribute, AttributesManagerService } from '@perun-web-apps/perun/opena
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ApplicationFormEmailFooterDialogData {
   theme: string;
@@ -31,7 +32,7 @@ export interface ApplicationFormEmailFooterDialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTabsModule,
     TranslateModule,

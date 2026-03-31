@@ -1,4 +1,5 @@
-export * from './lib/perun-components.module';
+export * from './lib/perun-date-adapter';
+export * from './lib/back-button/back-button.component';
 export * from './lib/attributes-list/attributes-list.component';
 export * from './lib/attributes-list/attribute-value/attribute-value.component';
 export * from './lib/attributes-list/attribute-value/attribute-value-boolean/attribute-value-boolean.component';

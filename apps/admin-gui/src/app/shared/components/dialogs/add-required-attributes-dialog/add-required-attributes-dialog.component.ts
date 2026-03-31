@@ -1,6 +1,6 @@
 import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -21,6 +21,7 @@ import { from, Observable } from 'rxjs';
 import { concatMap, distinct, map, mergeMap, reduce, startWith } from 'rxjs/operators';
 import { AttrDefListComponent } from '../../attr-def-list/attr-def-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface AddRequiredAttributesDialogData {
   serviceId: number;
@@ -32,7 +33,7 @@ export interface AddRequiredAttributesDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     DebounceFilterComponent,
     TranslateModule,

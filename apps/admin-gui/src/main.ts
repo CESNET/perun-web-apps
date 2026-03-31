@@ -20,10 +20,9 @@ import {
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { AdminGuiConfigService } from './app/core/services/common/admin-gui-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
-import { GeneralModule } from '@perun-web-apps/general';
+
 import { NG_SCROLLBAR_OPTIONS, NgScrollbarModule } from 'ngx-scrollbar';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { environment } from './environments/environment';
@@ -74,7 +73,6 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       HttpClientModule,
       MatIconModule,
-      GeneralModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
@@ -83,11 +81,10 @@ bootstrapApplication(AppComponent, {
         },
       }),
       ApiModule,
-      PerunSharedComponentsModule,
-      PerunLoginModule,
       NgScrollbarModule,
       OAuthModule.forRoot(),
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     AdminGuiConfigService,
     {

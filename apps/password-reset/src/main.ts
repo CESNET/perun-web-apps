@@ -23,13 +23,8 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { GeneralModule } from '@perun-web-apps/general';
 import { appRoutes } from './app/app.routes';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespace-password-form';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 
@@ -83,16 +78,11 @@ bootstrapApplication(AppComponent, {
       }),
       BrowserAnimationsModule,
       MatIconModule,
-      GeneralModule,
       ApiModule,
       HttpClientModule,
-      UiMaterialModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunNamespacePasswordFormModule,
       OAuthModule.forRoot(),
-      PerunSharedComponentsModule,
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     CustomIconService,
     {

@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { BackButtonComponent } from '@perun-web-apps/perun/components';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -37,7 +37,7 @@ import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
     AnimatedRouterOutletComponent,
     RouterModule,
     MatProgressSpinnerModule,

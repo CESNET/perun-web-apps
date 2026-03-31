@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { EXTSOURCE_IDP, getElementFromSingleArray } from '@perun-web-apps/perun/utils';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ChangeNameDialogData {
   userId: number;
@@ -33,7 +34,7 @@ export interface ChangeNameDialogData {
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MatProgressSpinnerModule,
     TranslateModule,

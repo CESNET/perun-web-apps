@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomTranslatePipe, IsAllSelectedPipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -32,13 +32,14 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ConsentStatusComponent } from '../consent-status/consent-status.component';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     IsAllSelectedPipe,
     TableWrapperComponent,

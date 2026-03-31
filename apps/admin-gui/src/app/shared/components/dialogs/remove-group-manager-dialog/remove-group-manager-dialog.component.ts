@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -11,6 +11,7 @@ import { AuthzResolverService, Group, PerunBean } from '@perun-web-apps/perun/op
 import { Role } from '@perun-web-apps/perun/models';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface RemoveGroupDialogData {
   complementaryObject: PerunBean;
@@ -25,7 +26,7 @@ export interface RemoveGroupDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTableModule,
     TranslateModule,

@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { BackButtonComponent } from '@perun-web-apps/perun/components';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 import { MatIconModule } from '@angular/material/icon';
@@ -52,7 +52,7 @@ import { GroupSyncToolTipPipe } from '@perun-web-apps/perun/pipes';
     MatIconModule,
     CdkCopyToClipboard,
     MiddleClickRouterLinkDirective,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
     AnimatedRouterOutletComponent,
     RouterModule,
     MatProgressSpinnerModule,

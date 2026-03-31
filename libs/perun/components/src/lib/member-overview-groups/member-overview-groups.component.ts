@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
@@ -26,11 +26,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MembershipStatusSettingsComponent } from '../membership-status-settings/membership-status-settings.component';
 import { GroupSearchSelectComponent } from '../group-search-select/group-search-select.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
-    UiAlertsModule,
+    AlertComponent,
     MatCardModule,
     MatProgressSpinnerModule,
     TranslateModule,

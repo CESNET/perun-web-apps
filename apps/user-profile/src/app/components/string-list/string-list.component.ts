@@ -1,5 +1,5 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -25,7 +25,7 @@ import { CheckboxLabelPipe } from '@perun-web-apps/perun/pipes';
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     TableWrapperComponent,
     MatTableModule,
     TranslateModule,

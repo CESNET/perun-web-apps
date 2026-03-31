@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,6 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export type EnrichedBan = EnrichedBanOnVo | EnrichedBanOnFacility | EnrichedBanOnResource;
 export type BanOnEntityListColumn =
@@ -67,7 +68,7 @@ export type BanOnEntityListColumn =
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     TableWrapperComponent,
     MatTableModule,

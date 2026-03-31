@@ -2,7 +2,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DebounceFilterComponent } from '../debounce-filter/debounce-filter.component';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, CommonModule } from '@angular/common';
@@ -22,12 +22,13 @@ import { StoreService, NotificatorService } from '@perun-web-apps/perun/services
 import { compareFnName } from '@perun-web-apps/perun/utils';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { filter, Subscription } from 'rxjs';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     DebounceFilterComponent,
     MatExpansionModule,

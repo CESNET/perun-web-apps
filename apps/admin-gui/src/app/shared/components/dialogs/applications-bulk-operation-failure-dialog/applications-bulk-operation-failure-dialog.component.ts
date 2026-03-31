@@ -1,5 +1,5 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -14,6 +14,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { BugReportDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { ApplicationOperationErrorListComponent } from '../../application-operation-error-list/application-operation-error-list.component';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 interface ApplicationsBulkOperationFailureDialogData {
   theme: string;
@@ -27,7 +28,7 @@ interface ApplicationsBulkOperationFailureDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     TranslateModule,
     ApplicationOperationErrorListComponent,
   ],

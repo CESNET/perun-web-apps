@@ -1,7 +1,7 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +20,7 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MatListModule,
     MatListItem,

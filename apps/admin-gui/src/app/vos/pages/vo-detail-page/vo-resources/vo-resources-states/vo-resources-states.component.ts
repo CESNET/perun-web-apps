@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostBinding, OnInit } from '@angular/core';
 import { EntityStorageService } from '@perun-web-apps/perun/services';
@@ -9,11 +9,12 @@ import { ResourceState, TasksManagerService, Vo } from '@perun-web-apps/perun/op
 import { CacheHelperService } from '../../../../../core/services/common/cache-helper.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StateTabComponent } from './state-tab/state-tab.component';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
-    UiAlertsModule,
+    AlertComponent,
     RefreshButtonComponent,
     MatTabsModule,
     TranslateModule,

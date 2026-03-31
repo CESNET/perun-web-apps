@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSortModule } from '@angular/material/sort';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -15,12 +15,13 @@ import {
   PasswordResetDialogComponent,
 } from '@perun-web-apps/perun/dialogs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MatTableModule,
     MatSortModule,

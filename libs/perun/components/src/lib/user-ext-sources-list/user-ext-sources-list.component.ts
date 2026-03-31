@@ -6,7 +6,7 @@ import {
   CustomTranslatePipe,
   GetAttrValueFromAttributesPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
@@ -27,12 +27,13 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,
