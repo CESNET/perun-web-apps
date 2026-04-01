@@ -15,7 +15,7 @@
     [placeholder]="'MEMBER_DETAIL.APPLICATIONS.FILTER'"
     (filter)="applyFilter($event)">
   </perun-web-apps-debounce-filter>
-  <perun-web-apps-application-state-selector (stateChanged)="statesChanged($event)">
+  <perun-web-apps-application-state-selector [state]="'all'" (stateChanged)="statesChanged($event)">
   </perun-web-apps-application-state-selector>
 </div>
 <ng-template #spinner>

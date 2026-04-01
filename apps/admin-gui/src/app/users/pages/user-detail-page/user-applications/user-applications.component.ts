@@ -78,7 +78,7 @@ export class UserApplicationsComponent implements OnInit {
   showAllDetails = false;
   dateFrom: Date = new Date('1970-01-01');
 
-  currentStates: AppState[] = ['NEW', 'VERIFIED'];
+  currentStates: AppState[] = null;
 
   applications: Application[] = [];
   nextPage = new BehaviorSubject<PageQuery>({});
