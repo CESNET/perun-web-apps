@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.8.0...v20.9.0) (2026-04-13)
+
+
+### Features
+
+* **admin:** add new membership lifecycle options ([604834c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/604834cf10751d3789a52b970c3f2a8cc71f4376))
+
 ## [20.8.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.7.0...v20.8.0) (2026-03-27)
 
 
