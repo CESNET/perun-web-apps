@@ -10,6 +10,7 @@
       <mat-slide-toggle #mainToggle class="ms-4" [(ngModel)]="currentConfiguration.enabled">
       </mat-slide-toggle>
     </div>
+
     <div [@openClose]="mainToggle.checked ? 'open' : 'closed'">
       <app-settings-toggle-item
         ngDefaultControl
@@ -65,7 +66,9 @@
           }
         </div>
       </app-settings-toggle-item>
+
       <!--  Dont allow loa  -->
+
       <app-settings-toggle-item
         ngDefaultControl
         [(ngModel)]="currentConfiguration.doNotAllowLoasEnabled"
@@ -83,7 +86,9 @@
           </mat-select>
         </mat-form-field>
       </app-settings-toggle-item>
+
       <!--  Dont extend loa  -->
+
       <app-settings-toggle-item
         ngDefaultControl
         [(ngModel)]="currentConfiguration.doNotExtendLoasEnabled"
@@ -101,7 +106,9 @@
           </mat-select>
         </mat-form-field>
       </app-settings-toggle-item>
+
       <!-- Grace period -->
+
       <app-settings-toggle-item
         ngDefaultControl
         [(ngModel)]="currentConfiguration.gracePeriodEnabled"
@@ -130,7 +137,73 @@
           </mat-form-field>
         </div>
       </app-settings-toggle-item>
+
+      <!-- Remove after period -->
+
+      <app-settings-toggle-item
+        ngDefaultControl
+        [(ngModel)]="currentConfiguration.removeAfterEnabled"
+        [modelValue]="currentConfiguration.removeAfterEnabled"
+        (modelChange)="currentConfiguration.removeAfterEnabled=$event"
+        [title]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.REMOVE_AFTER_LABEL' | translate">
+        <div class="d-flex flex-row">
+          <mat-form-field class="me-2 amount-field">
+            <mat-label>
+              {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.REMOVE_AFTER_VALUE' | translate}}
+            </mat-label>
+            <input
+              pattern="{{dynamicAmountPattern}}"
+              [(ngModel)]="currentConfiguration.removeAfter"
+              matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label
+              >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.REMOVE_AFTER_TYPE' | translate}}</mat-label
+            >
+            <mat-select [(ngModel)]="currentConfiguration.removeAfterUnit">
+              @for (option of amountOptions; track option) {
+                <mat-option [value]="option.value">{{option.text}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </app-settings-toggle-item>
+
+      <!-- Archive after period -->
+
+      @if (this.expirationAttribute.entity === 'vo') {
+        <app-settings-toggle-item
+          ngDefaultControl
+          [(ngModel)]="currentConfiguration.archiveAfterEnabled"
+          [modelValue]="currentConfiguration.archiveAfterEnabled"
+          (modelChange)="currentConfiguration.archiveAfterEnabled=$event"
+          [title]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.ARCHIVE_AFTER_LABEL' | translate">
+          <div class="d-flex flex-row">
+            <mat-form-field class="me-2 amount-field">
+              <mat-label>
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.ARCHIVE_AFTER_VALUE' | translate}}
+              </mat-label>
+              <input
+                pattern="{{dynamicAmountPattern}}"
+                [(ngModel)]="currentConfiguration.archiveAfter"
+                matInput />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label
+                >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.ARCHIVE_AFTER_TYPE' | translate}}</mat-label
+              >
+              <mat-select [(ngModel)]="currentConfiguration.archiveAfterUnit">
+                @for (option of amountOptions; track option) {
+                  <mat-option [value]="option.value">{{option.text}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </app-settings-toggle-item>
+      }
+
       <!--  Loa period  -->
+
       <app-settings-toggle-item
         ngDefaultControl
         [(ngModel)]="currentConfiguration.specialLoaPeriodEnabled"
@@ -145,12 +218,11 @@
               >
               <mat-select #specialLoaSelect [(ngModel)]="currentConfiguration.specialLoa">
                 @for (loa of loas; track loa) {
-                  <mat-option [value]="loa">
-                    {{loa}}
-                  </mat-option>
+                  <mat-option [value]="loa">{{loa}}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
+
             @if (currentConfiguration.specialLoa !== null) {
               <div class="mt-2">
                 <mat-radio-group [(ngModel)]="currentConfiguration.specialLoaPeriodType">
@@ -217,6 +289,7 @@
         </div>
       </app-settings-toggle-item>
     </div>
+
     <div
       class="ms-auto mt-2"
       [matTooltipDisabled]="expirationAttribute.writable"
