@@ -23,10 +23,13 @@ import { Attribute } from '@perun-web-apps/perun/openapi';
 import { SettingsToggleItemComponent } from '../../../shared/components/settings-toggle-item/settings-toggle-item.component';
 
 export class ExpirationAttrValue {
+  lifecycleEnabled?: 'true' | 'false';
   period?: string;
   doNotExtendLoa?: string;
   doNotAllowLoa?: string;
   gracePeriod?: string;
+  removeAfter?: string;
+  archiveAfter?: string;
   periodLoa?: string;
 }
 
@@ -44,6 +47,12 @@ export interface ExpirationConfiguration {
   gracePeriodEnabled: boolean;
   gracePeriod: string;
   gracePeriodUnit: 'y' | 'd' | 'm';
+  removeAfterEnabled: boolean;
+  removeAfter: string;
+  removeAfterUnit: 'y' | 'd' | 'm';
+  archiveAfterEnabled?: boolean;
+  archiveAfter?: string;
+  archiveAfterUnit?: 'y' | 'd' | 'm';
   specialLoaPeriodEnabled: boolean;
   specialLoa: number;
   specialLoaPeriod: string;
@@ -136,8 +145,11 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     }
 
     return (
+      currentValue.lifecycleEnabled !== initValue.lifecycleEnabled ||
       currentValue.period !== initValue.period ||
       currentValue.gracePeriod !== initValue.gracePeriod ||
+      currentValue.removeAfter !== initValue.removeAfter ||
+      currentValue.archiveAfter !== initValue.archiveAfter ||
       currentValue.doNotExtendLoa !== initValue.doNotExtendLoa ||
       currentValue.doNotAllowLoa !== initValue.doNotAllowLoa ||
       currentValue.periodLoa !== initValue.periodLoa
@@ -168,7 +180,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     const loaPeriods = new Map();
     this.loas.forEach((loa) => loaPeriods.set(loa, ''));
 
-    return {
+    const form: ExpirationConfiguration = {
       enabled: false,
       periodEnabled: false,
       periodType: null,
@@ -182,6 +194,9 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       gracePeriodEnabled: false,
       gracePeriod: null,
       gracePeriodUnit: null,
+      removeAfterEnabled: false,
+      removeAfter: null,
+      removeAfterUnit: null,
       specialLoaPeriodEnabled: false,
       specialLoaPeriod: '',
       specialLoa: null,
@@ -191,6 +206,14 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       specialLoaPeriodStatic: '',
       specialLoaPeriodExtendExpiredMembers: false,
     };
+
+    if (this.expirationAttribute.entity === 'vo') {
+      form.archiveAfterEnabled = true;
+      form.archiveAfter = null;
+      form.archiveAfterUnit = null;
+    }
+
+    return form;
   }
 
   unParseAttrValue(value: ExpirationAttrValue): ExpirationConfiguration {
@@ -199,7 +222,8 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     if (value == null) {
       return config;
     }
-    config.enabled = true;
+    config.enabled =
+      value.lifecycleEnabled !== undefined ? value.lifecycleEnabled === 'true' : false;
 
     if (value.period !== undefined && value.period.length > 0) {
       config = this.setPeriodValues(value, config);
@@ -214,7 +238,15 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     }
 
     if (value.gracePeriod !== undefined && value.gracePeriod.length > 0) {
-      config = this.setGracePeriodValues(value, config);
+      config = this.setDynamicPeriodValues(value, config, 'gracePeriod');
+    }
+
+    if (value.removeAfter !== undefined && value.removeAfter.length > 0) {
+      config = this.setDynamicPeriodValues(value, config, 'removeAfter');
+    }
+
+    if (value.archiveAfter !== undefined && value.archiveAfter.length > 0) {
+      config = this.setDynamicPeriodValues(value, config, 'archiveAfter');
     }
 
     if (value.periodLoa !== undefined && value.periodLoa.length > 0) {
@@ -269,14 +301,16 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     return config;
   }
 
-  private setGracePeriodValues(
+  private setDynamicPeriodValues(
     value: ExpirationAttrValue,
     config: ExpirationConfiguration,
+    property: string,
   ): ExpirationConfiguration {
-    config.gracePeriodEnabled = true;
-    const unit = value.gracePeriod.charAt(value.gracePeriod.length - 1);
-    config.gracePeriod = value.gracePeriod.substring(0, value.gracePeriod.length - 1);
-    config.gracePeriodUnit = unit as 'm' | 'd' | 'y';
+    config[property + 'Enabled'] = true;
+    const valueProperty = value[property] as string;
+    const unit = valueProperty.charAt(valueProperty.length - 1);
+    config[property] = valueProperty.substring(0, valueProperty.length - 1);
+    config[property + 'Unit'] = unit as 'm' | 'd' | 'y';
     return config;
   }
 
@@ -358,17 +392,18 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     return dontExtendLoas.length > 0 ? dontExtendLoas : null;
   }
 
-  private parseGracePeriod(config: ExpirationConfiguration): string {
+  private parseDynamicCustomPeriod(config: ExpirationConfiguration, property: string): string {
+    const value = config[property] as string;
     if (
-      !config.gracePeriodEnabled ||
-      config.gracePeriod === null ||
-      config.gracePeriod.length === 0 ||
-      config.gracePeriodUnit === null
+      !config[property + 'Enabled'] ||
+      value === null ||
+      value.length === 0 ||
+      config[property + 'Unit'] === null
     ) {
       return null;
     }
 
-    return config.gracePeriod + config.gracePeriodUnit;
+    return value + config[property + 'Unit'];
   }
 
   private parseSpecialLoaPeriod(config: ExpirationConfiguration): string {
@@ -405,16 +440,18 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   }
 
   private parseAttributeValueFromConfig(config: ExpirationConfiguration): ExpirationAttrValue {
-    if (!config.enabled) {
-      return null;
-    }
+    const value: ExpirationAttrValue = {};
+
+    value.lifecycleEnabled = config.enabled ? 'true' : 'false';
+
     const period = this.parsePeriod(config);
     const dontAllowLoas = this.parseDontAllowLoas(config);
     const dontExtendLoad = this.parseDontExtendLoas(config);
-    const gracePeriod = this.parseGracePeriod(config);
-    const specialLoaPeriod = this.parseSpecialLoaPeriod(config);
+    const gracePeriod = this.parseDynamicCustomPeriod(config, 'gracePeriod');
+    const removeAfter = this.parseDynamicCustomPeriod(config, 'removeAfter');
+    const archiveAfter = this.parseDynamicCustomPeriod(config, 'archiveAfter');
 
-    const value: ExpirationAttrValue = {};
+    const specialLoaPeriod = this.parseSpecialLoaPeriod(config);
 
     if (period !== null) {
       value.period = period;
@@ -428,6 +465,12 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     }
     if (gracePeriod !== null) {
       value.gracePeriod = gracePeriod;
+    }
+    if (removeAfter !== null) {
+      value.removeAfter = removeAfter;
+    }
+    if (archiveAfter !== null) {
+      value.archiveAfter = archiveAfter;
     }
     if (specialLoaPeriod !== null) {
       value.periodLoa = specialLoaPeriod;
