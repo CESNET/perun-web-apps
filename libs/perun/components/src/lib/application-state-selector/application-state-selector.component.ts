@@ -2,7 +2,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AppState } from '@perun-web-apps/perun/openapi';
 
 @Component({
@@ -14,7 +14,7 @@ import { AppState } from '@perun-web-apps/perun/openapi';
 })
 export class ApplicationStateSelectorComponent {
   @Output() stateChanged = new EventEmitter<AppState[]>();
-  state = 'pending';
+  @Input() state = 'pending';
 
   select(): void {
     switch (this.state) {
