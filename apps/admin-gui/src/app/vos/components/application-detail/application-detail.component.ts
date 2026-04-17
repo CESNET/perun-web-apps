@@ -46,7 +46,7 @@ import { ModifiedNamePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationStatePipe } from '@perun-web-apps/perun/pipes';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 @Component({
   imports: [
@@ -124,10 +124,13 @@ export class ApplicationDetailComponent implements OnInit {
           this.application = application;
 
           this.apiRequest.dontHandleErrorForNext();
-          if (this.application?.group !== null || this.application?.type === 'EXTENSION') {
+          if (this.application.user) {
             this.membersService
               .getMemberByUser(this.application.vo.id, this.application.user.id)
               .pipe(
+                catchError(() => {
+                  return EMPTY;
+                }),
                 tap((member) => {
                   this.member = member;
                   this.richMember = {
@@ -154,7 +157,6 @@ export class ApplicationDetailComponent implements OnInit {
                     this.member.groupStatus = groupMember.groupStatus;
                   }
                 }),
-                catchError(() => of(null)),
               )
               .subscribe();
           }
