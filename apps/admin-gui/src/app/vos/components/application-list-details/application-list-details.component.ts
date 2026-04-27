@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import {
@@ -44,7 +44,7 @@ interface ApplicationData extends Application {
 @Component({
   imports: [
     CommonModule,
-    UiAlertsModule,
+    AlertComponent,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,
     RouterModule,

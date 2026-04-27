@@ -1,5 +1,5 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +10,7 @@ import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, InitAuthService } from '@perun-web-apps/perun/services';
 import { MatButton } from '@angular/material/button';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -18,7 +19,7 @@ import { MatButton } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     TranslateModule,
     MatButton,
   ],

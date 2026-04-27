@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { BackButtonComponent } from '@perun-web-apps/perun/components';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +10,7 @@ import { SideMenuService } from '../../../core/services/common/side-menu.service
   imports: [
     CommonModule,
     MatIconModule,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
     AnimatedRouterOutletComponent,
     TranslateModule,
   ],

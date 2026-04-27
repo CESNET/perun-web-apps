@@ -1,5 +1,5 @@
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { spaceNameValidator } from '@perun-web-apps/perun/utils';
 import { EntityPathParam } from '@perun-web-apps/perun/models';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CreateFacilityDialogData {
   theme: string;
@@ -29,7 +30,7 @@ export interface CreateFacilityDialogData {
     MatSelectModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,

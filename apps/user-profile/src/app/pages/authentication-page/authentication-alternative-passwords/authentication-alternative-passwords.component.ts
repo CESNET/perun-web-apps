@@ -1,5 +1,5 @@
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +26,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     TranslateModule,
     StringListComponent,

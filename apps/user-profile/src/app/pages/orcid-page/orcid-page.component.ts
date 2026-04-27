@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltip } from '@angular/material/tooltip';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import {
   MiddleClickRouterLinkDirective,
   QueryParamsHandlingDirective,
@@ -26,7 +26,7 @@ import {
     MatIconModule,
     CustomTranslatePipe,
     TranslateModule,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     GetAttrValueFromAttributesPipe,
     MatFormFieldModule,

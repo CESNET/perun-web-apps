@@ -1,7 +1,7 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -26,7 +26,7 @@ import { CategoryLabelPipe } from '../../../pipes/category-label.pipe';
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MatExpansionModule,
     MatProgressSpinnerModule,

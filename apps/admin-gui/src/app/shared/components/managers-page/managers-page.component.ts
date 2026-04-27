@@ -1,5 +1,5 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,6 +37,7 @@ import {
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { DisplayedRolePipe } from '@perun-web-apps/perun/pipes';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -45,7 +46,7 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
     MatFormFieldModule,
     MatSelectModule,
     MatSlideToggleModule,
-    UiAlertsModule,
+    AlertComponent,
     RefreshButtonComponent,
     MatTabsModule,
     TranslateModule,

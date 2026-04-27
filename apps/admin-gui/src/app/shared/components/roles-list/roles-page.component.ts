@@ -10,7 +10,7 @@ import {
   UsersListComponent,
   VosListComponent,
 } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {
@@ -56,12 +56,13 @@ import { BehaviorSubject, iif, mergeMap, Observable, of } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { RemoveRoleDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     MembersListComponent,
     MatExpansionModule,
     MatProgressSpinnerModule,

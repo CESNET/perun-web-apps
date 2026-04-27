@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -76,7 +76,7 @@ export const YEAR_MODE_FORMATS = {
     MatCheckboxModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    UiAlertsModule,
+    AlertComponent,
     MatTabsModule,
     MatProgressSpinnerModule,
     TranslateModule,

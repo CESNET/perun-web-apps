@@ -1,5 +1,5 @@
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {
@@ -29,6 +29,7 @@ import {
 } from '@perun-web-apps/perun/components';
 import { FacilitySearchSelectComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface AddMemberToResourceDialogData {
   memberId: number;
@@ -41,7 +42,7 @@ export interface AddMemberToResourceDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     GroupsListComponent,

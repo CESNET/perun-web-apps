@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ import { SimilarIdentityFriendlyNamesStringPipe } from '@perun-web-apps/lib-link
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     TranslateModule,
     ListOfIdentitiesComponent,

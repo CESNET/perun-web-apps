@@ -1,5 +1,5 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
@@ -38,7 +38,7 @@ import { MatDialog } from '@angular/material/dialog';
     CommonModule,
     MatButtonModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     TranslateModule,
     PasswordFormComponent,

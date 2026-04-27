@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +37,7 @@ import { HtmlContentFormFieldComponent } from '@perun-web-apps/perun/components'
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { TagBarComponent } from './tag-bar/tag-bar.component';
 import { MailNotificationTooltipPipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ApplicationFormAddEditMailDialogData {
   theme: string;
@@ -67,7 +68,7 @@ interface Translation {
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTabsModule,
     TranslateModule,

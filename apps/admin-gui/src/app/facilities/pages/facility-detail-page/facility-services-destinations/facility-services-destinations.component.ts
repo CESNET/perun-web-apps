@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { DebounceFilterComponent, RefreshButtonComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -26,13 +26,14 @@ import { BehaviorSubject } from 'rxjs';
 import { DestinationListComponent } from '../../../../shared/components/destination-list/destination-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     RefreshButtonComponent,
     TranslateModule,

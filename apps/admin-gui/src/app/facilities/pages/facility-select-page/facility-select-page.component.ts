@@ -1,10 +1,12 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  PerunSharedComponentsModule,
+  BackButtonComponent,
   DebounceFilterComponent,
+  FacilitiesListComponent,
   RefreshButtonComponent,
 } from '@perun-web-apps/perun/components';
+import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -28,9 +30,11 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
     DebounceFilterComponent,
+    FacilitiesListComponent,
     RefreshButtonComponent,
+    LoaderDirective,
     TranslateModule,
     MatTooltip,
     IsAuthorizedPipe,

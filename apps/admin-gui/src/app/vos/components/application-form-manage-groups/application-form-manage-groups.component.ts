@@ -5,7 +5,7 @@ import {
   GroupsListComponent,
   RefreshButtonComponent,
 } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
@@ -17,12 +17,13 @@ import { UniversalConfirmationItemsDialogComponent } from '@perun-web-apps/perun
 import { MatDialog } from '@angular/material/dialog';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     RefreshButtonComponent,
     TranslateModule,

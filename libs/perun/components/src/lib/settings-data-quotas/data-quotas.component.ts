@@ -3,7 +3,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DebounceFilterComponent } from '../debounce-filter/debounce-filter.component';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
@@ -19,12 +19,13 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RequestChangeDataQuotaDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     DebounceFilterComponent,
     MatExpansionModule,

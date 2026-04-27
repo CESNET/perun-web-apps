@@ -2,7 +2,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -36,6 +36,7 @@ import { Subject } from 'rxjs';
 import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
 import { AssignGroupsSponsoredMembersComponent } from '../../assign-groups-sponsored-members/assign-groups-sponsored-members-component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 interface MemberData {
   name: string;
@@ -68,7 +69,7 @@ interface OutputSponsoredMember {
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     ExpirationSelectComponent,
     MatMenuModule,

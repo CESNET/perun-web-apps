@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { ImmediateStateMatcher } from '../perun-namespace-password-form';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { Attribute, UsersManagerService } from '@perun-web-apps/perun/openapi';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -19,7 +20,7 @@ import { Attribute, UsersManagerService } from '@perun-web-apps/perun/openapi';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     TranslateModule,
     MatTooltip,

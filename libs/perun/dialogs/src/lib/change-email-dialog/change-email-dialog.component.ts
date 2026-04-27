@@ -1,6 +1,6 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +18,7 @@ import {
   EXTSOURCE_IDP,
   getElementFromSingleArray,
 } from '@perun-web-apps/perun/utils';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ChangeEmailDialogData {
   userId: number;
@@ -37,7 +38,7 @@ export interface ChangeEmailDialogData {
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     MatProgressSpinnerModule,
     TranslateModule,

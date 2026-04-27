@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -50,6 +50,7 @@ import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.comp
 import { AssignGroupsSponsoredMembersComponent } from '../../assign-groups-sponsored-members/assign-groups-sponsored-members-component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CreateSponsoredMemberDialogData {
   entityId?: number;
@@ -68,7 +69,7 @@ export interface CreateSponsoredMemberDialogData {
     MatCheckboxModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     ExpirationSelectComponent,
     TranslateModule,

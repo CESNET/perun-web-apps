@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -18,6 +18,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { MatRipple } from '@angular/material/core';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 interface RecentDisplayedItem {
   url: string;
@@ -32,7 +33,7 @@ interface RecentDisplayedItem {
   imports: [
     CommonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     MiddleClickRouterLinkDirective,
     RouterModule,
     MatProgressSpinnerModule,

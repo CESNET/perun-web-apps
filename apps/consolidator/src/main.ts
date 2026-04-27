@@ -13,16 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
 import { appRoutes } from './app/app.routes';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatIconModule } from '@angular/material/icon';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
-import { GeneralModule } from '@perun-web-apps/general';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
+import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
-import { LibLinkerModule } from '@perun-web-apps/lib-linker';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   ApiInterceptor,
@@ -80,16 +75,8 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       ApiModule,
-      UiMaterialModule,
-      PerunLoginModule,
       MatIconModule,
-      PerunSharedComponentsModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunUtilsModule,
-      GeneralModule,
       OAuthModule.forRoot(),
-      LibLinkerModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
@@ -98,6 +85,7 @@ bootstrapApplication(AppComponent, {
         },
       }),
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     CustomIconService,
     {
@@ -123,6 +111,7 @@ bootstrapApplication(AppComponent, {
       provide: PERUN_API_SERVICE,
       useClass: ApiService,
     },
+    UserFullNamePipe,
     { provide: OAuthStorage, useFactory: (): OAuthStorage => localStorage },
   ],
 }).catch((err) => console.error(err));

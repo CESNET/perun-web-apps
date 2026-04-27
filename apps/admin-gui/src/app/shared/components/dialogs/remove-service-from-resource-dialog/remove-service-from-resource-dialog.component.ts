@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ResourcesManagerService, Service } from '@perun-web-apps/perun/openapi';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface RemoveServiceFromResourceDialogData {
   resourceId: number;
@@ -29,7 +30,7 @@ export interface RemoveServiceFromResourceDialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTableModule,
     TranslateModule,

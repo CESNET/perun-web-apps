@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -49,6 +49,7 @@ import { ApplicationFormItemDisabledPipe } from '../../../pipes/application-form
 import { ApplicationFormItemHiddenPipe } from '../../../pipes/application-form-item-hidden.pipe';
 import { ApplicationFormItemTypePipe } from '../../../pipes/application-form-item-type.pipe';
 import { DisableSubmitOnAppItemEditPipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface EditApplicationFormItemDialogComponentData {
   theme: string;
@@ -70,7 +71,7 @@ export interface EditApplicationFormItemDialogComponentData {
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTabsModule,
     MatProgressSpinnerModule,

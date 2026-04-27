@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { CheckboxLabelPipe, CustomTranslatePipe } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -37,7 +37,7 @@ export interface Membership {
     CommonModule,
     MatButtonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     CustomTranslatePipe,
     TableWrapperComponent,
     MatTableModule,

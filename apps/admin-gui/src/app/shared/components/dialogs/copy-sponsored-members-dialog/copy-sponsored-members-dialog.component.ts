@@ -2,7 +2,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ExpirationSelectComponent } from '@perun-web-apps/perun/dialogs';
 import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { SponsoredMembersListComponent } from '../../sponsored-members-list/spon
 import { ChooseSponsorComponent } from '../../choose-sponsor/choose-sponsor.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { UserSearchSelectComponent } from '@perun-web-apps/perun/components';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CopySponsoredMembersDialogData {
   voId: number;
@@ -38,7 +39,7 @@ export interface CopySponsoredMembersDialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     DebounceFilterComponent,
     ExpirationSelectComponent,

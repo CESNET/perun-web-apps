@@ -5,10 +5,10 @@ import { StoreService } from '@perun-web-apps/perun/services';
 import { PasswordAction } from '@perun-web-apps/perun/models';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
-  imports: [CommonModule, TranslateModule, PasswordResetFormComponent, UiAlertsModule],
+  imports: [CommonModule, TranslateModule, PasswordResetFormComponent, AlertComponent],
   standalone: true,
   selector: 'perun-web-apps-password-reset-page',
   templateUrl: './password-reset-page.component.html',

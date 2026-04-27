@@ -1,5 +1,5 @@
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { Urns } from '@perun-web-apps/perun/urns';
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsersListComponent, userTableColumn } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface AddUserServiceIdentityData {
   userId: number;
@@ -32,7 +33,7 @@ export interface AddUserServiceIdentityData {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,

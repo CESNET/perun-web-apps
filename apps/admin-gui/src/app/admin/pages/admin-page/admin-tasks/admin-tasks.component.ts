@@ -1,17 +1,18 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { GroupsManagerService, TasksManagerService } from '@perun-web-apps/perun/openapi';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatSlideToggleModule,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     TranslateModule,
   ],

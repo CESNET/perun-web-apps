@@ -10,7 +10,7 @@ import {
   SelectApplicationLinkPipe,
   UserFullNamePipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -60,11 +60,12 @@ import { AppValuePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationTypeIconComponent } from '../application-type-icon/application-type-icon.component';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,

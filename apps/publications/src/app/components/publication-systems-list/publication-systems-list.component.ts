@@ -1,5 +1,5 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -27,7 +27,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   imports: [
     CommonModule,
-    UiAlertsModule,
+    AlertComponent,
     TableWrapperComponent,
     MatTableModule,
     MatSortModule,

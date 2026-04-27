@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode, RPCError } from '@perun-web-apps/perun/models';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface MoveGroupDialogData {
   group: GroupFlatNode;
@@ -39,7 +40,7 @@ export interface MoveGroupDialogData {
     FormsModule,
     MatAutocompleteModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     MatTooltip,

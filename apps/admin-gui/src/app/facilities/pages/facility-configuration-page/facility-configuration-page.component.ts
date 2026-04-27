@@ -1,7 +1,7 @@
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ManagersPageComponent } from '../../../shared/components/managers-page/managers-page.component';
 import { AttributesListComponent, DebounceFilterComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -44,13 +44,14 @@ import { HostsListComponent } from '../../../shared/components/hosts-list/hosts-
 import { DestinationListComponent } from '../../../shared/components/destination-list/destination-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     ManagersPageComponent,
     MatExpansionModule,

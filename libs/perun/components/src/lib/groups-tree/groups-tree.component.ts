@@ -7,7 +7,7 @@ import {
   MemberStatusIconPipe,
   GroupStatusIconColorPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,6 +44,7 @@ import { GroupExpirationPipe } from '@perun-web-apps/perun/pipes';
 import { FindAttributePipe } from '@perun-web-apps/perun/pipes';
 import { CanManageGroupPipe } from '@perun-web-apps/perun/pipes';
 import { GroupMenuComponent } from '../group-menu/group-menu.component';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 interface EnrichedGroupNode extends GroupFlatNode {
   fullName: string;
@@ -56,7 +57,7 @@ interface EnrichedGroupNode extends GroupFlatNode {
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     ParseDatePipe,
     MemberStatusIconPipe,
     MiddleClickRouterLinkDirective,

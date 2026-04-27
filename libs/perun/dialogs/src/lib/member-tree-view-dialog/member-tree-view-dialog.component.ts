@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { parseFullName } from '@perun-web-apps/perun/utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { ParseGroupNamePipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface MemberTreeViewDialogData {
   member: RichMember;
@@ -41,7 +42,7 @@ interface GroupNode {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     MatTooltip,

@@ -5,7 +5,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { OneEntityAttributePageComponent } from '../../../../shared/components/one-entity-attribute-page/one-entity-attribute-page.component';
 import { TwoEntityAttributePageComponent } from '../../../../shared/components/two-entity-attribute-page/two-entity-attribute-page.component';
 import { LoaderDirective, MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -25,11 +25,12 @@ import {
   VoSearchSelectComponent,
 } from '@perun-web-apps/perun/components';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
-    UiAlertsModule,
+    AlertComponent,
     MiddleClickRouterLinkDirective,
     OneEntityAttributePageComponent,
     TwoEntityAttributePageComponent,
