@@ -6,17 +6,14 @@
 	],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@angular/"],
-      "groupName": "angular framework",
-      "separateMajorMinor": false
-    },
-    {
       "matchPackageNames": [
         "@angular/material",
         "@angular/cdk",
         "@angular/material-moment-adapter"
       ],
-      "groupName": "angular material"
+      "groupName": "angular material",
+      "separateMajorMinor": false,
+      "separateMultipleMajor": false
     }
   ]
 }
