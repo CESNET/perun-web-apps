@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.9.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.0...v20.9.1) (2026-04-27)
+
+
+### Bug Fixes
+
+* **admin:** do not try to get member on non-existing user ([ae6e764](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/ae6e76473c184a1c2ccb50b8b74508c28ecda5a6))
+
 ## [20.9.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.8.0...v20.9.0) (2026-04-13)
 
 
