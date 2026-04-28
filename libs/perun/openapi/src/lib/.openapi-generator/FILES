@@ -286,6 +286,7 @@ model/publication.ts
 model/publicationForGUI.ts
 model/publicationSystem.ts
 model/rTMessage.ts
+model/registrarApplicationInput.ts
 model/resource.ts
 model/resourceState.ts
 model/resourceTag.ts
