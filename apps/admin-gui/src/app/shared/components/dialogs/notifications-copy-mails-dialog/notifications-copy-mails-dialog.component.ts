@@ -79,7 +79,7 @@ export class NotificationsCopyMailsDialogComponent implements OnInit {
         };
         this.selectedGroup = this.fakeGroup;
 
-        this.voService.getAllVos().subscribe((vos) => {
+        this.voService.getMyVos().subscribe((vos) => {
           this.vos = vos;
           this.loading = false;
           if (this.vos.length > 0) {
@@ -157,7 +157,7 @@ export class NotificationsCopyMailsDialogComponent implements OnInit {
 
   getGroups(): void {
     if (this.selectedVo) {
-      this.groupService.getAllGroups(this.selectedVo.id).subscribe((groups) => {
+      this.groupService.getAllMyGroups(this.selectedVo.id).subscribe((groups) => {
         this.groups = [this.fakeGroup].concat(groups);
       });
     } else {
