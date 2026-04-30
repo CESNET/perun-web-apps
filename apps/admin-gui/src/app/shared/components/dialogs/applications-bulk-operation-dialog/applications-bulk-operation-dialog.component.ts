@@ -64,7 +64,7 @@ export class ApplicationsBulkOperationDialogComponent implements OnInit {
   loading = false;
   mailType: MailType = 'APP_CREATED_USER';
   reason = '';
-  availableMailTypes = [
+  availableMailTypes: MailType[] = [
     MailType.APP_CREATED_USER,
     MailType.APPROVABLE_GROUP_APP_USER,
     MailType.APP_CREATED_VO_ADMIN,

@@ -11,22 +11,16 @@ import { MemberGroupsComponent } from './pages/member-detail-page/member-groups/
 import { GroupOverviewComponent } from './pages/group-detail-page/group-overview/group-overview.component';
 import { GroupSubgroupsComponent } from './pages/group-detail-page/group-subgroups/group-subgroups.component';
 import { VoResourcesComponent } from './pages/vo-detail-page/vo-resources/vo-resources.component';
-import { VoApplicationsComponent } from './pages/vo-detail-page/vo-applications/vo-applications.component';
 import { VoSettingsComponent } from './pages/vo-detail-page/vo-settings/vo-settings.component';
 import { VoAttributesComponent } from './pages/vo-detail-page/vo-attributes/vo-attributes.component';
 import { VoSettingsOverviewComponent } from './pages/vo-detail-page/vo-settings/vo-settings-overview/vo-settings-overview.component';
 import { VoSettingsExpirationComponent } from './pages/vo-detail-page/vo-settings/vo-settings-expiration/vo-settings-expiration.component';
-import { GroupApplicationsComponent } from './pages/group-detail-page/group-applications/group-applications.component';
 import { VoSettingsManagersComponent } from './pages/vo-detail-page/vo-settings/vo-settings-managers/vo-settings-managers.component';
-import { ApplicationDetailComponent } from './components/application-detail/application-detail.component';
 import { GroupMembersComponent } from './pages/group-detail-page/group-members/group-members.component';
 import { GroupResourcesComponent } from './pages/group-detail-page/group-resources/group-resources.component';
 import { GroupSettingsComponent } from './pages/group-detail-page/group-settings/group-settings.component';
 import { GroupAttributesComponent } from './pages/group-detail-page/group-attributes/group-attributes.component';
 import { GroupSettingsOverviewComponent } from './pages/group-detail-page/group-settings/group-settings-overview/group-settings-overview.component';
-import { VoSettingsApplicationFormComponent } from './pages/vo-detail-page/vo-settings/vo-settings-application-form/vo-settings-application-form.component';
-// eslint-disable-next-line max-len
-import { ApplicationFormPreviewComponent } from './components/application-form-preview/application-form-preview.component';
 // eslint-disable-next-line max-len
 import { MemberAttributesComponent } from './pages/member-detail-page/member-attributes/member-attributes.component';
 import { VoResourcesOverviewComponent } from './pages/vo-detail-page/vo-resources/vo-resources-overview/vo-resources-overview.component';
@@ -36,11 +30,9 @@ import { VoResourcesTagsComponent } from './pages/vo-detail-page/vo-resources/vo
 import { GroupSettingsExpirationComponent } from './pages/group-detail-page/group-settings/group-settings-expiration/group-settings-expiration.component';
 import { GroupSettingsManagersComponent } from './pages/group-detail-page/group-settings/group-settings-managers/group-settings-managers.component';
 import { VoSettingsNotificationsComponent } from './pages/vo-detail-page/vo-settings/vo-settings-notifications/vo-settings-notifications.component';
-import { GroupSettingsApplicationFormComponent } from './pages/group-detail-page/group-settings/group-settings-application-form/group-settings-application-form.component';
 import { GroupSettingsNotificationsComponent } from './pages/group-detail-page/group-settings/group-settings-notifications/group-settings-notifications.component';
 import { VoSettingsExtsourcesComponent } from './pages/vo-detail-page/vo-settings/vo-settings-extsources/vo-settings-extsources.component';
 import { GroupSettingsRelationsComponent } from './pages/group-detail-page/group-settings/group-settings-relations/group-settings-relations.component';
-import { MemberApplicationsComponent } from './pages/member-detail-page/member-applications/member-applications.component';
 import { MemberResourcesComponent } from './pages/member-detail-page/member-resources/member-resources.component';
 import { ResourceDetailPageComponent } from '../facilities/pages/resource-detail-page/resource-detail-page.component';
 import { ResourceOverviewComponent } from '../facilities/pages/resource-detail-page/resource-overview/resource-overview.component';
@@ -64,10 +56,19 @@ import { GroupRolesComponent } from './pages/group-detail-page/group-roles/group
 import { VoSettingsBansComponent } from './pages/vo-detail-page/vo-settings/vo-settings-bans/vo-settings-bans.component';
 import { MemberBansComponent } from './pages/member-detail-page/member-bans/member-bans.component';
 import { ResourceSettingsBansComponent } from '../facilities/pages/resource-detail-page/resource-settings/resource-settings-bans/resource-settings-bans.component';
-import { VoSettingsManageEmbeddedGroupsComponent } from './pages/vo-detail-page/vo-settings/vo-settings-manage-embedded-groups/vo-settings-manage-embedded-groups.component';
-import { GroupSettingsManageEmbeddedGroupsComponent } from './pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
 import { GroupInvitationsComponent } from './pages/group-detail-page/group-invitations/group-invitations.component';
 import { GroupInvitationDetailComponent } from './pages/group-detail-page/group-invitation-detail/group-invitation-detail.component';
+import { SettingsApplicationFormSwitchComponent } from '../shared/components/registrar-switching/settings-application-form-switch/settings-application-form-switch.component';
+import { ApplicationsPageSwitchComponent } from '../shared/components/registrar-switching/applications-page-switch/applications-page-switch.component';
+import { ApplicationFormEmbeddedGroupsSwitchComponent } from '../shared/components/registrar-switching/application-form-embedded-groups-switch/application-form-embedded-groups-switch.component';
+import { ApplicationFormPreviewSwitchComponent } from '../shared/components/registrar-switching/application-form-preview-switch/application-form-preview-switch.component';
+import {
+  newRegistrarAppDetailMatcher,
+  oldRegistrarAppDetailMatcher,
+} from '@perun-web-apps/perun/utils';
+import { ApplicationDetailComponent } from './components/application-detail/application-detail.component';
+import { ApplicationDetailNewRegComponent } from './components/application-detail-new-reg/application-detail-new-reg.component';
+import { MemberApplicationsSwitchComponent } from '../shared/components/registrar-switching/member-applications-switch/member-applications-switch.component';
 
 export const vosRoutes: Routes = [
   {
@@ -127,13 +128,23 @@ export const vosRoutes: Routes = [
       },
       {
         path: 'applications',
-        component: VoApplicationsComponent,
+        component: ApplicationsPageSwitchComponent,
         data: { animation: 'VoApplicationsPage' },
       },
       {
-        path: 'applications/:applicationId',
-        component: ApplicationDetailComponent,
-        data: { animation: 'VoApplicationDetailPage' },
+        path: 'applications',
+        children: [
+          {
+            matcher: oldRegistrarAppDetailMatcher,
+            component: ApplicationDetailComponent,
+            data: { animation: 'VoApplicationDetailPage' },
+          },
+          {
+            matcher: newRegistrarAppDetailMatcher,
+            component: ApplicationDetailNewRegComponent,
+            data: { animation: 'VoApplicationDetailPage' },
+          },
+        ],
       },
       {
         path: 'sponsoredMembers',
@@ -171,17 +182,17 @@ export const vosRoutes: Routes = [
           },
           {
             path: 'applicationForm',
-            component: VoSettingsApplicationFormComponent,
+            component: SettingsApplicationFormSwitchComponent,
             data: { animation: 'SettingsApplicationFormPage' },
           },
           {
             path: 'applicationForm/preview',
-            component: ApplicationFormPreviewComponent,
+            component: ApplicationFormPreviewSwitchComponent,
             data: { animation: 'SettingsApplicationFormPreviewPage' },
           },
           {
             path: 'applicationForm/manageGroups',
-            component: VoSettingsManageEmbeddedGroupsComponent,
+            component: ApplicationFormEmbeddedGroupsSwitchComponent,
           },
           {
             path: 'notifications',
@@ -234,13 +245,23 @@ export const vosRoutes: Routes = [
       },
       {
         path: 'applications',
-        component: MemberApplicationsComponent,
+        component: MemberApplicationsSwitchComponent,
         data: { animation: 'MemberApplicationsPage' },
       },
       {
-        path: 'applications/:applicationId',
-        component: ApplicationDetailComponent,
-        data: { animation: 'MemberApplicationDetailPage' },
+        path: 'applications',
+        children: [
+          {
+            matcher: oldRegistrarAppDetailMatcher,
+            component: ApplicationDetailComponent,
+            data: { animation: 'MemberApplicationDetailPage' },
+          },
+          {
+            matcher: newRegistrarAppDetailMatcher,
+            component: ApplicationDetailNewRegComponent,
+            data: { animation: 'MemberApplicationDetailPage' },
+          },
+        ],
       },
       {
         path: 'resources',
@@ -276,7 +297,7 @@ export const vosRoutes: Routes = [
       },
       {
         path: 'applications',
-        component: GroupApplicationsComponent,
+        component: ApplicationsPageSwitchComponent,
         data: { animation: 'GroupApplicationsPage' },
       },
       {
@@ -330,16 +351,16 @@ export const vosRoutes: Routes = [
           },
           {
             path: 'applicationForm',
-            component: GroupSettingsApplicationFormComponent,
+            component: SettingsApplicationFormSwitchComponent,
             data: { animation: 'GroupSettingsApplicationFormPage' },
           },
           {
             path: 'applicationForm/preview',
-            component: ApplicationFormPreviewComponent,
+            component: ApplicationFormPreviewSwitchComponent,
           },
           {
             path: 'applicationForm/manageGroups',
-            component: GroupSettingsManageEmbeddedGroupsComponent,
+            component: ApplicationFormEmbeddedGroupsSwitchComponent,
           },
           {
             path: 'notifications',
@@ -359,9 +380,19 @@ export const vosRoutes: Routes = [
         ],
       },
       {
-        path: 'applications/:applicationId',
-        component: ApplicationDetailComponent,
-        data: { animation: 'GroupApplicationDetailPage' },
+        path: 'applications',
+        children: [
+          {
+            matcher: oldRegistrarAppDetailMatcher,
+            component: ApplicationDetailComponent,
+            data: { animation: 'GroupApplicationDetailPage' },
+          },
+          {
+            matcher: newRegistrarAppDetailMatcher,
+            component: ApplicationDetailNewRegComponent,
+            data: { animation: 'GroupApplicationDetailPage' },
+          },
+        ],
       },
     ],
   },

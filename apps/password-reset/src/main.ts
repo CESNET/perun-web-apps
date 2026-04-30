@@ -15,6 +15,11 @@ import {
 } from '@perun-web-apps/perun/services';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { PasswordResetConfigService } from './app/services/password-reset-config.service';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
@@ -44,6 +49,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 
 const loadConfigs = (appConfig: PasswordResetConfigService) => (): Promise<void> =>
@@ -79,6 +92,7 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       MatIconModule,
       ApiModule,
+      RegistrarApiModule,
       HttpClientModule,
       OAuthModule.forRoot(),
     ),
@@ -100,6 +114,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

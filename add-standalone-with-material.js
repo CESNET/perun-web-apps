@@ -36,7 +36,7 @@ const materialMap = {
   'mat-dialog-actions': { module: 'MatDialogModule', path: '@angular/material/dialog' },
 
   // Perun custom
-  'perun-web-apps-alert': { module: 'UiAlertsModule', path: '@perun-web-apps/ui/alerts' },
+  'perun-web-apps-alert': { module: 'AlertComponent', path: '@perun-web-apps/ui/alerts' },
   'customTranslate': { module: 'CustomTranslatePipe', path: '@perun-web-apps/perun/pipes' },
   'isAllSelected': { module: 'IsAllSelectedPipe', path: '@perun-web-apps/perun/pipes' },
   'parseDate': { module: 'ParseDatePipe', path: '@perun-web-apps/perun/pipes' },

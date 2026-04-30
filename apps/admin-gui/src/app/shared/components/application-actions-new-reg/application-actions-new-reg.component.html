@@ -1,0 +1,97 @@
+<h1 class="page-subtitle">{{'VO_DETAIL.APPLICATION.TITLE' | translate}}</h1>
+<div class="action-row">
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+  <!--  <span-->
+  <!--    [matTooltip]="(loading$ | async) && !canPerformAction.approve ? tooltipMessages.approve : ''">-->
+  <!--    @if (authRights.approve) {-->
+  <!--      <button-->
+  <!--        [disabled]="(loading$ | async) || !canPerformAction.approve"-->
+  <!--        (click)="onApprove()"-->
+  <!--        color="accent"-->
+  <!--        mat-flat-button>-->
+  <!--        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}-->
+  <!--      </button>-->
+  <!--    }-->
+  <!--  </span>-->
+  <!--  <span [matTooltip]="(loading$ | async) || !canPerformAction.reject ? tooltipMessages.reject : ''">-->
+  <!--    @if (authRights.reject) {-->
+  <!--      <button-->
+  <!--        [disabled]="(loading$ | async) || !canPerformAction.reject"-->
+  <!--        (click)="onReject()"-->
+  <!--        color="warn"-->
+  <!--        mat-flat-button>-->
+  <!--        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}-->
+  <!--      </button>-->
+  <!--    }-->
+  <!--  </span>-->
+  <!--  <span [matTooltip]="(loading$ | async) || !canPerformAction.delete ? tooltipMessages.delete : ''">-->
+  <!--    @if (authRights.delete) {-->
+  <!--      <button-->
+  <!--        [disabled]="(loading$ | async) || !canPerformAction.delete"-->
+  <!--        (click)="onDelete()"-->
+  <!--        color="warn"-->
+  <!--        mat-flat-button>-->
+  <!--        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}-->
+  <!--      </button>-->
+  <!--    }-->
+  <!--  </span>-->
+  <!--  <span [matTooltip]="(loading$ | async) || !canPerformAction.resend ? tooltipMessages.resend : ''">-->
+  <!--    @if (authRights.resend) {-->
+  <!--      <button-->
+  <!--        [disabled]="(loading$ | async) || !canPerformAction.resend"-->
+  <!--        (click)="onResend()"-->
+  <!--        mat-stroked-button>-->
+  <!--        <i class="material-icons"> mail_outline </i>-->
+  <!--        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}-->
+  <!--      </button>-->
+  <!--    }-->
+  <!--  </span>-->
+  <perun-web-apps-application-state-selector (stateChanged)="statesChanged($event)">
+  </perun-web-apps-application-state-selector>
+  <perun-web-apps-debounce-filter
+    [placeholder]="'VO_DETAIL.APPLICATION.FILTER'"
+    (filter)="applyFilter($event)">
+  </perun-web-apps-debounce-filter>
+  <perun-web-apps-date-range
+    [endDate]="endDate"
+    [startDate]="startDate"></perun-web-apps-date-range>
+  <span [matTooltip]="tooltipMessages.columnSettings" matTooltipPosition="above">
+    @if (authRights.columnSettings) {
+      <button [disabled]="true" (click)="viewChanged()" mat-stroked-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+    }
+  </span>
+</div>
+<div class="action-row">
+  <mat-slide-toggle [checked]="showAllDetails" (change)="toggleDetailedView()">
+    {{'VO_DETAIL.APPLICATION.SHOW_ALL_DETAILS' | translate}}
+  </mat-slide-toggle>
+  @if (vo) {
+    <mat-slide-toggle [checked]="showGroupApps" (change)="toggleIncludeGroups()">
+      {{'VO_DETAIL.APPLICATION.SHOW_GROUP_APPLICATIONS' | translate}}
+    </mat-slide-toggle>
+  }
+  @if (group) {
+    <mat-slide-toggle [checked]="showSubgroupApps" (change)="toggleIncludeSubGroups()">
+      {{'VO_DETAIL.APPLICATION.SHOW_SUBGROUP_APPLICATIONS' | translate}}
+    </mat-slide-toggle>
+  }
+</div>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative table-min-height">
+  <perun-web-apps-simple-applications-list
+    *perunWebAppsLoader="loading; indicator: spinner"
+    [loading]="loading"
+    [displayColumns]="currentColumns"
+    [fedColumnsFriendly]="showAllDetails ? [] : configuredFedColumns"
+    [fedAttrs]="fedAttrs"
+    [applications]="applications"
+    [filter]="filterValue"
+    [selection]="selected"
+    (downloadAll)="downloadAll($event)"
+    [group]="group">
+  </perun-web-apps-simple-applications-list>
+</div>

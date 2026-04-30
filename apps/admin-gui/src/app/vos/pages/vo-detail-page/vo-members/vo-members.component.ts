@@ -52,13 +52,14 @@ import { InviteMemberDialogComponent } from '../../../../shared/components/dialo
 import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { VoAddMemberDialogComponent } from '../../../components/vo-add-member-dialog/vo-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, iif, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
-import { concatMap, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { FormsService, IdmMessagesService } from '@perun-web-apps/perun/registrar-openapi';
 
 @Component({
   imports: [
@@ -126,6 +127,7 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
   );
+  useNew: boolean;
 
   constructor(
     private registrarService: RegistrarManagerService,
@@ -142,6 +144,8 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
     private destroyRef: DestroyRef,
+    private formsService: FormsService,
+    private idmMessagesService: IdmMessagesService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -214,16 +218,42 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
       this.vo,
     ]);
 
-    if (this.inviteAuth) {
-      this.registrarService.isInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
-        this.inviteDisabled = !enabled;
-      });
-    }
-    if (this.copyInviteLinkAuth) {
-      this.registrarService.isLinkInvitationEnabled(this.vo.id, null).subscribe((enabled) => {
-        this.copyInvitationDisabled = !enabled;
-      });
-    }
+    this.attributesManager
+      .getVoAttributeByName(this.vo.id, Urns.VO_USE_NEW_REG)
+      .pipe(
+        map((attr) => (attr?.value != null ? (attr.value as boolean) : false)),
+        switchMap((useNew) => {
+          this.useNew = useNew;
+          const requests: Record<string, Observable<boolean>> = {};
+          if (this.inviteAuth) {
+            // requests.invite = useNew
+            //   ? this.formsService.inviteMailEnabled('VO', this.vo.id.toString())
+            //   : this.registrarService.isInvitationEnabled(this.vo.id);
+            requests.invite = this.registrarService
+              .isInvitationEnabled(this.vo.id)
+              .pipe(catchError(() => of(false))); // fallback value
+          }
+
+          if (this.copyInviteLinkAuth) {
+            requests.link = (
+              useNew
+                ? this.formsService.inviteLinkEnabled('VO', this.vo.id.toString())
+                : this.registrarService.isLinkInvitationEnabled(this.vo.id)
+            ).pipe(catchError(() => of(false)));
+          }
+
+          return forkJoin(requests);
+        }),
+        tap((results) => {
+          if (results.invite !== undefined) {
+            this.inviteDisabled = !results.invite;
+          }
+          if (results.link !== undefined) {
+            this.copyInvitationDisabled = !results.link;
+          }
+        }),
+      )
+      .subscribe();
   }
 
   onSearchByString(filter: string): void {
@@ -282,7 +312,11 @@ export class VoMembersComponent implements OnInit, AfterViewInit {
 
   copyInvitationLink(): void {
     const invitationLink$ = !this.invitationLink
-      ? this.registrarService.buildInviteURL(this.vo.id).pipe(
+      ? iif(
+          () => this.useNew,
+          this.idmMessagesService.inviteUrl('VO', this.vo.id.toString()),
+          this.registrarService.buildInviteURL(this.vo.id),
+        ).pipe(
           concatMap((createdUrl: string) => {
             this.invitationLink = createdUrl;
             return of(this.invitationLink);

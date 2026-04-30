@@ -262,5 +262,6 @@
   "export_limit": 1000,
   "orcid_ext_source_name": "https://login.cesnet.cz/orcid-idp/",
   "gui_settings_panel": true,
-  "allow_show_id_setting": false
+  "allow_show_id_setting": false,
+  "registrar_api_url": "http://localhost:8081"
 }

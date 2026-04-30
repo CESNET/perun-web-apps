@@ -33,6 +33,7 @@ export class HtmlContentFormFieldComponent implements OnInit, AfterViewInit {
   @Input() hint = '';
   @Input() minRows = 1;
   @Input() cd: ChangeDetectorRef = null;
+  @Input() useNewRegistrar = false;
   warningMessage = '';
 
   constructor(
@@ -41,7 +42,9 @@ export class HtmlContentFormFieldComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.inputFormControl.addAsyncValidators([this.htmlEscapeService.htmlInputValidator(this.cd)]);
+    this.inputFormControl.addAsyncValidators([
+      this.htmlEscapeService.htmlInputValidator(this.cd, this.useNewRegistrar),
+    ]);
 
     // handle the warning message from validator for the case when the HTML will be changed during the sanitization
     this.htmlEscapeService.autocompletionWarning.subscribe((warning) => {

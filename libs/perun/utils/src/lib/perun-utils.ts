@@ -24,6 +24,7 @@ import { MatSort } from '@angular/material/sort';
 import { saveAs } from 'file-saver';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Urns } from '@perun-web-apps/perun/urns';
+import { UrlMatchResult, UrlSegment } from '@angular/router';
 
 export const TABLE_ITEMS_COUNT_OPTIONS = [5, 10, 25, 100, 1000];
 export const EXTSOURCE_IDP = 'cz.metacentrum.perun.core.impl.ExtSourceIdp';
@@ -87,6 +88,25 @@ export function parseUserLogins(richUser: RichUser): string {
     logins = logins.substring(0, logins.length - 2);
   }
   return logins;
+}
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function newRegistrarAppDetailMatcher(segments: UrlSegment[]): UrlMatchResult | null {
+  if (segments.length !== 1) return null;
+
+  return UUID_REGEX.test(segments[0].path)
+    ? { consumed: segments, posParams: { applicationId: segments[0] } }
+    : null;
+}
+
+export function oldRegistrarAppDetailMatcher(segments: UrlSegment[]): UrlMatchResult | null {
+  if (segments.length !== 1) return null;
+
+  // Matches only pure integers (old reg)
+  return /^\d+$/.test(segments[0].path)
+    ? { consumed: segments, posParams: { applicationId: segments[0] } }
+    : null;
 }
 
 /**

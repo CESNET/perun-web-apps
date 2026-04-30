@@ -1,6 +1,7 @@
 {
   "config": "default",
   "api_url": "http://localhost:8081/ba/rpc/",
+  "registrar_api_url": "http://localhost:8081",
   "instance_favicon": false,
   "document_title": {
     "en": "Perun Web Gui"

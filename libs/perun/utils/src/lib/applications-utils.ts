@@ -52,6 +52,36 @@ export function getSortDataColumn(data: Application, column: string): string {
       return '';
   }
 }
+
+// Interface extending Application but overriding id to string
+export interface ApplicationWithStringId extends Application {
+  uuid: string;
+}
+
+export function getSortDataColumnNewReg(data: ApplicationWithStringId, column: string): string {
+  switch (column) {
+    case 'id':
+      return data.uuid;
+    case 'createdAt':
+      return data.createdAt;
+    case 'type':
+      return data.type;
+    case 'state':
+      return data.state;
+    case 'user':
+      return data.user
+        ? data.user.lastName
+          ? data.user.lastName
+          : data.user.firstName ?? ''
+        : data.createdBy.slice(data.createdBy.lastIndexOf('=') + 1, data.createdBy.length);
+    case 'group':
+      return data.group ? data.group.name : '';
+    case 'modifiedBy':
+      return parseModifiedBy(data);
+    default:
+      return 'createdAt';
+  }
+}
 export function getSortDataColumnQuery(column: string): ApplicationsOrderColumn {
   if (!column) {
     return ApplicationsOrderColumn.DATE_CREATED;
@@ -93,6 +123,49 @@ export function getExportDataForColumn(data: Application, column: string): strin
       return data.fedInfo ? deescapeMapEscapings(data.fedInfo) : '';
     case 'formData':
       return stringify((data as RichApplication).formData);
+    case 'state':
+      return data.state;
+    case 'extSourceName':
+      return data.extSourceName;
+    case 'extSourceType':
+      return data.extSourceType;
+    case 'user':
+      return data.user
+        ? parseFullName(data.user)
+        : data.createdBy.slice(data.createdBy.lastIndexOf('=') + 1, data.createdBy.length);
+    case 'createdBy':
+      return data.createdBy;
+    case 'createdAt':
+      return data.createdAt;
+    case 'modifiedBy':
+      return data.modifiedBy;
+    case 'modifiedAt':
+      return data.modifiedAt;
+    default:
+      return getFedValue(data.fedInfo, column);
+  }
+}
+export function getExportDataForColumnNewReg(
+  data: ApplicationWithStringId,
+  column: string,
+): string {
+  switch (column) {
+    case 'id':
+      return data.uuid;
+    case 'voId':
+      return data.vo.id.toString();
+    case 'voName':
+      return data.vo.name;
+    case 'groupId':
+      return data.group?.id.toString() ?? '';
+    case 'groupName':
+      return data.group?.name ?? '';
+    case 'type':
+      return data.type;
+    case 'fedInfo':
+      return data.fedInfo ? deescapeMapEscapings(data.fedInfo) : '';
+    case 'formData':
+      return '';
     case 'state':
       return data.state;
     case 'extSourceName':

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.TITLE' | translate}}</h1>
+<div class="dialog-container" mat-dialog-content>
+  <mat-form-field>
+    <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.SHORT_NAME' | translate}}:</mat-label>
+    <input [formControl]="nameCtrl" data-cy="item-short-name" matInput required />
+    <mat-error>
+      {{'DIALOGS.APPLICATION_FORM_ADD_ITEM.FILL_NAME' | translate}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="mb-4" subscriptSizing="dynamic">
+    <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INPUT_WIDGET' | translate}}:</mat-label>
+    <mat-select [(ngModel)]="selectedWidget" disableOptionCentering>
+      @for (widget of widgets; track widget) {
+        <mat-option [value]="widget">
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + widget | translate}}
+        </mat-option>
+      }
+    </mat-select>
+    <mat-hint>
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.WIDGET_DESCRIPTION.'+selectedWidget | translate}}
+    </mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INSERT_AFTER' | translate}}:</mat-label>
+    <mat-select [(ngModel)]="selectedItem" disableOptionCentering>
+      @for (item of items; track item) {
+        <mat-option [value]="item">
+          {{item}}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button (click)="cancel()" class="ms-auto" mat-stroked-button>
+    {{'DIALOGS.APPLICATION_FORM_ADD_ITEM.CANCEL' | translate}}
+  </button>
+  <button
+    [disabled]="nameCtrl.invalid"
+    (click)="submit()"
+    class="ms-2"
+    color="accent"
+    data-cy="add-form-item-button-dialog"
+    mat-flat-button>
+    {{'DIALOGS.APPLICATION_FORM_ADD_ITEM.CREATE' | translate}}
+  </button>
+</div>

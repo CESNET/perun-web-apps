@@ -129,6 +129,28 @@ export class MemberApplicationsComponent implements OnInit {
     this.nextPage.next(this.nextPage.value);
   }
 
+  // todo an outline of what the algorithm to fetch+merge applications from old and new registrar would look like
+  mergeTwoApplicationsLists(): void {
+    // 1) fetch new reg applications
+    //   a) new reg paginates => fetch with initial offset (0) and limit equal to page size
+    //   b) new reg does not paginate => fetch all apps
+    //      if not paginated, search,filtering,sorting would have to be applied client-side
+    // 2) fetch old reg application
+    //   old reg paginates, so fetch with initial offset(0) and limit equal to page size
+    // 3) take both the fetched apps lists (which both are independently sorted) and
+    //   a) pointers at the start of the lists, counters for each of the lists
+    //     i) if newreg is not paginated, place the pointer at offset (so keep offset even if not paginated)
+    //   b) compare the two elements, add the lower/higher (depends on asc/desc)
+    //   c) move the pointer of the list of that element
+    //   d) increment the counter of the list of that element
+    //   repeat until the sum of counters is the limit
+    // 4) we now have the resulting list of applications
+    //   for the next iteration, add counter of list to the offset of that list, then reset counters
+    // total count is easy to calculate, if pointer reaches end of list continue in other list, if both then exhausted
+    // nuance/problem: if I jump directly to lets say page 7, I have to overfetch (7*pagesize in both)
+    // and still calculate all the pages to get the correct result (probably heavy for client?)
+  }
+
   downloadAll(a: { format: string; length: number }): void {
     const query = this.nextPage.getValue();
 

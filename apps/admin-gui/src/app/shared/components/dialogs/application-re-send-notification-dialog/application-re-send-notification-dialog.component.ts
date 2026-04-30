@@ -49,7 +49,7 @@ export class ApplicationReSendNotificationDialogComponent implements OnInit {
   reason = '';
   loading = false;
   theme: string;
-  availableMailTypes = [
+  availableMailTypes: MailType[] = [
     MailType.APP_CREATED_USER,
     MailType.APPROVABLE_GROUP_APP_USER,
     MailType.APP_CREATED_VO_ADMIN,
