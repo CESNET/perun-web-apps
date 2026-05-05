@@ -8,7 +8,7 @@
       <p>
         {{'DIALOGS.MOVE_GROUP.INFO' | translate}}
       </p>
-      <mat-radio-group [(ngModel)]="moveOption">
+      <mat-radio-group [(ngModel)]="moveOption" (ngModelChange)="checkBrokenRegistrations()">
         @if (!toRootOptionDisabled) {
           <mat-radio-button color="primary" class="move-options" value="toRoot">
             {{'DIALOGS.MOVE_GROUP.NO_GROUP' | translate}}
@@ -45,6 +45,18 @@
             }
           </mat-autocomplete>
         </mat-form-field>
+        @if (groupsThatWillBeBroken.length > 0) {
+          <perun-web-apps-alert alert_type="warn">
+            <div>
+              {{'DIALOGS.MOVE_GROUP.BROKEN_REGISTRATION_WARNING' | translate}}
+              <ul class="mb-0">
+                @for (group of groupsThatWillBeBroken; track group.id) {
+                  <li>{{group.name}}</li>
+                }
+              </ul>
+            </div>
+          </perun-web-apps-alert>
+        }
       }
     </div>
     <div mat-dialog-actions>
@@ -55,14 +67,22 @@
         [matTooltipDisabled]="selectedGroup !== null || moveOption === 'toRoot'"
         [matTooltipPosition]="'above'"
         matTooltip="{{'DIALOGS.MOVE_GROUP.DISABLED_HINT' | translate}}">
-        <button
-          (click)="confirm()"
-          [disabled]="((otherGroupsCtrl.invalid || selectedGroup === null) && moveOption !== 'toRoot') || loading"
-          class="ms-2"
-          color="accent"
-          mat-flat-button>
-          {{'DIALOGS.MOVE_GROUP.CONFIRM' | translate}}
-        </button>
+        <span
+          [matTooltipDisabled]="groupsThatWillBeBroken.length === 0"
+          [matTooltipPosition]="'above'"
+          matTooltip="{{'DIALOGS.MOVE_GROUP.BROKEN_REGISTRATION_TOOLTIP' | translate}}">
+          <button
+            (click)="confirm()"
+            [disabled]="((otherGroupsCtrl.invalid || selectedGroup === null) && moveOption !== 'toRoot') || loading"
+            class="ms-2"
+            [color]="groupsThatWillBeBroken.length > 0 ? 'warn' : 'accent'"
+            mat-flat-button>
+            {{'DIALOGS.MOVE_GROUP.CONFIRM' | translate}}
+            @if (groupsThatWillBeBroken.length > 0) {
+              <mat-icon iconPositionStart me-2>warning</mat-icon>
+            }
+          </button>
+        </span>
       </span>
     </div>
   </div>

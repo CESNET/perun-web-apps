@@ -1262,7 +1262,9 @@
       "ERROR": "Failed to move group",
       "SUCCESS": "Group successfully moved",
       "DISABLED_HINT": "You must select an existing group.",
-      "CANNOT_MOVE": "You don't have permission to move this group."
+      "CANNOT_MOVE": "You don't have permission to move this group.",
+      "BROKEN_REGISTRATION_WARNING": "The auto registrations from following groups will be broken by the move:",
+      "BROKEN_REGISTRATION_TOOLTIP": "There are auto registrations setup from the parent groups of the group being moved to itself, or its subgroups. Moving the group will break these auto-registrations, meaning that this group and its subgroups will no longer be embedded in the application form of said groups."
     },
     "CREATE_GROUP": {
       "TITLE": "Create group",
