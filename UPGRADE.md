@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.9.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.1...v20.9.2) (2026-05-05)
+
+
+### Bug Fixes
+
+* disable archiveEnabled at expiration initial settings ([aee278e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/aee278ea07b5574552ed3dcb14c19d745fbf37b8))
+
 ## [20.9.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.0...v20.9.1) (2026-04-27)
 
 
