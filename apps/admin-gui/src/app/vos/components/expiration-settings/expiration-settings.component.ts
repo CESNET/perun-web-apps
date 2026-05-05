@@ -208,7 +208,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     };
 
     if (this.expirationAttribute.entity === 'vo') {
-      form.archiveAfterEnabled = true;
+      form.archiveAfterEnabled = false;
       form.archiveAfter = null;
       form.archiveAfterUnit = null;
     }
@@ -402,7 +402,6 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     ) {
       return null;
     }
-
     return value + config[property + 'Unit'];
   }
 
