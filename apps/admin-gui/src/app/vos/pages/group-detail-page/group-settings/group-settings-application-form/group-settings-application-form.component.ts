@@ -73,6 +73,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
   autoRegistrationEnabled: boolean;
   refreshApplicationForm = false;
   embeddedGroupsItemSaved = false;
+  shouldWarnMailValidation = false;
   // to recognize new items in other items' dependencies
   private idCounter = -1;
 
@@ -103,6 +104,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
         this.registrarManager.getFormItemsForGroup(this.group.id).subscribe({
           next: (formItems) => {
             this.applicationFormItems = formItems;
+            this.checkMailValidation();
             this.embeddedGroupsItemSaved =
               formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
             this.attributesManager
@@ -134,6 +136,14 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     });
   }
 
+  checkMailValidation(): void {
+    this.registrarManager.getApplicationMailsForGroup(this.group.id).subscribe((mails) => {
+      const missingValidationMail = !mails.some((mail) => mail.mailType === 'MAIL_VALIDATION');
+      const hasMailItem = this.applicationFormItems.some((item) => item.type === 'VALIDATED_EMAIL');
+      this.shouldWarnMailValidation = missingValidationMail && hasMailItem;
+    });
+  }
+
   setAuth(): void {
     this.editAuth = this.guiAuthResolver.isAuthorized(
       'group-updateFormItems_ApplicationForm_List<ApplicationFormItem>_policy',
@@ -159,6 +169,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
       // second item is new Application Form Item
       if (success) {
         this.applicationFormItems = Object.assign([], success[0]);
+        this.checkMailValidation();
 
         config = getDefaultDialogConfig();
         config.width = '600px';
@@ -237,6 +248,7 @@ export class GroupSettingsApplicationFormComponent implements OnInit {
     this.registrarManager.getFormItemsForGroup(this.group.id).subscribe({
       next: (formItems) => {
         this.applicationFormItems = formItems;
+        this.checkMailValidation();
         this.embeddedGroupsItemSaved =
           formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
         this.itemsChanged = false;

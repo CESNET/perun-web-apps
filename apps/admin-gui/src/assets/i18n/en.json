@@ -388,6 +388,7 @@
       "APPLICATION_FORM": {
         "TITLE": "Application form",
         "DRAG_AND_DROP_INFO": "You can move the table items by dragging them with the handle on the left side.",
+        "MAIL_VALIDATION_WARNING": "You do not have a 'Mail validation' email notification configured. Users using a non-validated email address (e.g. new users) will not be able to verify it. You can configure it in the 'Notifications' section.",
         "ADD_BUTTON": "Add",
         "COPY_VO_BUTTON": "Copy from Organization/Group",
         "PREVIEW_BUTTON": "Preview",
@@ -902,6 +903,7 @@
         "COPY_GROUP_BUTTON": "Copy from Organization/Group",
         "PREVIEW_BUTTON": "Preview",
         "DRAG_AND_DROP_INFO": "You can move with table items by dragging and dropping",
+        "MAIL_VALIDATION_WARNING": "You do not have a 'Mail validation' email notification configured. Users using a non-validated email address (e.g. new users) will not be able to verify it. You can configure it in the 'Notifications' section.",
         "NO_APPLICATION_FORM": "Application form doesn't exists",
         "CREATE_APPLICATION_FORM": "Create empty form",
         "CLEAR": "Clear form",
