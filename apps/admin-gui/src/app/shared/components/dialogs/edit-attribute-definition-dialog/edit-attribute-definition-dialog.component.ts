@@ -216,6 +216,39 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
       attributeDefinition: this.attDef,
       attributeRights: this.collections$.getValue(),
     };
+    // Filters attributes and rights that are not needed based on filters
+    const ALLOWED_KEYS = ['displayName', 'namespace', 'friendlyName', 'type'];
+    const ALLOWED_RIGHTS_KEYS = ['action', 'policies'];
+    const ALLOWED_POLICY_KEYS = ['role', 'object'];
+
+    for (const key of Object.keys(data.attributeDefinition)) {
+      if (!ALLOWED_KEYS.includes(key)) {
+        delete data.attributeDefinition[key];
+      }
+    }
+    for (let i = 0; i < (data.attributeRights?.length ?? 0); i++) {
+      const item = data.attributeRights[i];
+
+      if (!item) continue;
+
+      for (const key of Object.keys(item)) {
+        if (!ALLOWED_RIGHTS_KEYS.includes(key)) {
+          delete item[key];
+        }
+      }
+      for (let j = 0; j < (data.attributeRights[i].policies?.length ?? 0); j++) {
+        const policy = data.attributeRights[i].policies[j];
+
+        if (!policy) continue;
+
+        for (const key of Object.keys(policy)) {
+          if (!ALLOWED_POLICY_KEYS.includes(key)) {
+            delete policy[key];
+          }
+        }
+      }
+    }
+
     const success = this.clipboard.copy(JSON.stringify(data));
     if (success) {
       this.notificator.showSuccess(
