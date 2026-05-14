@@ -1,9 +1,11 @@
 <div>
   <h1 class="page-subtitle">{{'ADMIN.EXT_SOURCES.TITLE' | translate}}</h1>
   <perun-web-apps-refresh-button (click)="refreshTable()"></perun-web-apps-refresh-button>
-  <button (click)="loadConfigExtSources()" class="me-2" mat-stroked-button>
-    {{'ADMIN.EXT_SOURCES.LOAD' | translate}}
-  </button>
+  @if (authResolver.isPerunAdmin()) {
+    <button (click)="loadConfigExtSources()" class="me-2" mat-stroked-button>
+      {{'ADMIN.EXT_SOURCES.LOAD' | translate}}
+    </button>
+  }
   <perun-web-apps-debounce-filter
     (filter)="applyFilter($event)"
     [placeholder]="'ADMIN.EXT_SOURCES.SEARCH'"></perun-web-apps-debounce-filter>
