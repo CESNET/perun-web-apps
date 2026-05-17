@@ -38,7 +38,7 @@
               {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TYPE' | translate}}
             </th>
             <td *matCellDef="let applicationFormItem" mat-cell>
-              {{applicationFormItem.itemDefinition.type | applicationFormItemType}}
+              {{applicationFormItem.itemDefinition.type | applicationFormItemType : true}}
             </td>
           </ng-container>
           <ng-container matColumnDef="disabled">

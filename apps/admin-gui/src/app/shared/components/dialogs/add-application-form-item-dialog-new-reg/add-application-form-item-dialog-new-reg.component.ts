@@ -51,6 +51,8 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     'SELECTIONBOX',
     'CHECKBOX',
     'SUBMIT_BUTTON',
+    'LOGIN',
+    'PASSWORD',
   ];
   nameCtrl: UntypedFormControl;
   loading = false;

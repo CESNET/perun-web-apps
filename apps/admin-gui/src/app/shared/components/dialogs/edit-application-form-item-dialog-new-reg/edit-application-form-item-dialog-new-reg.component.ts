@@ -124,7 +124,13 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
   nextId = 1;
 
   typesWithUpdatable: ItemDefinitionDTO.TypeEnum[] = ['TEXTFIELD', 'CHECKBOX', 'SELECTIONBOX'];
-  typesWithDisabled: ItemDefinitionDTO.TypeEnum[] = ['TEXTFIELD', 'CHECKBOX', 'SELECTIONBOX'];
+  typesWithDisabled: ItemDefinitionDTO.TypeEnum[] = [
+    'LOGIN',
+    'PASSWORD',
+    'TEXTFIELD',
+    'CHECKBOX',
+    'SELECTIONBOX',
+  ];
 
   hiddenDependencyItem: ApplicationFormItem = null;
   disabledDependencyItem: ApplicationFormItem = null;
@@ -132,7 +138,13 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
   displayWarningForSourceAttr = false;
   displayWarningForDestinationAttr = false;
   languages = ['en'];
-  private dependencyTypes: ItemDefinitionDTO.TypeEnum[] = ['TEXTFIELD', 'CHECKBOX', 'SELECTIONBOX'];
+  private dependencyTypes: ItemDefinitionDTO.TypeEnum[] = [
+    'LOGIN',
+    'PASSWORD',
+    'TEXTFIELD',
+    'CHECKBOX',
+    'SELECTIONBOX',
+  ];
 
   constructor(
     private dialogRef: MatDialogRef<EditApplicationFormItemDialogNewRegComponent>,

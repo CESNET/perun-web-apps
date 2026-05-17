@@ -45,7 +45,7 @@
           <!--            </mat-checkbox>-->
           <!--          </section>-->
           @if (
-            isApplicationFormItemOfType(['TEXTFIELD', 'USERNAME', 'VALIDATED_EMAIL', 'PASSWORD', 'TEXTAREA',
+            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'VALIDATED_EMAIL', 'PASSWORD', 'TEXTAREA',
               'TIMEZONE', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
           ) {
             <div>
@@ -69,67 +69,69 @@
                   </mat-checkbox>
                 }
               </section>
-              <section class="mt-4">
-                <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ATTRIBUTES' | translate}}</h6>
-                @if (sourceAttributes !== undefined) {
-                  <div class="w-100">
-                    <perun-web-apps-selection-item-search-select
-                      [attributes]="sourceAttributes"
-                      [selectedAttribute]="idmSource"
-                      (itemSelected)="changeIdmAttribute($event); loadWarning(itemType.SOURCE)"
-                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SOURCE_ATTRIBUTE_DESCRIPTION' | translate"
-                      [asGroup]="data.isGroup"
-                      [type]="itemType.SOURCE">
-                    </perun-web-apps-selection-item-search-select>
-                    @if (displayWarningForSourceAttr) {
-                      <perun-web-apps-alert alert_type="warn">
-                        {{warningMessage}}
-                      </perun-web-apps-alert>
-                    }
-                  </div>
-                }
-                @if (destinationAttributes !== undefined) {
-                  <div class="w-100">
-                    <perun-web-apps-selection-item-search-select
-                      [attributes]="destinationAttributes"
-                      [selectedAttribute]="itemDestination"
-                      (itemSelected)="itemDestination = $event.value; loadWarning(itemType.DESTINATION)"
-                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DESTINATION_ATTRIBUTE_DESCRIPTION' | translate"
-                      [asGroup]="data.isGroup"
-                      [type]="itemType.DESTINATION"
-                      [required]="isApplicationFormItemOfType([])">
-                    </perun-web-apps-selection-item-search-select>
-                    @if (displayWarningForDestinationAttr) {
-                      <perun-web-apps-alert alert_type="warn">
-                        {{warningMessage}}
-                      </perun-web-apps-alert>
-                    }
-                  </div>
-                }
-                <div class="w-100">
-                  <perun-web-apps-selection-item-search-select
-                    [selectedAttribute]="identitySource"
-                    [asGroup]="data.isGroup"
-                    [type]="itemType.FEDERATION"
-                    [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_DESCRIPTION' | translate"
-                    (itemSelected)="changeFederationAttribute($event)">
-                  </perun-web-apps-selection-item-search-select>
-                  @if (federationAttributeDN === ' -- custom value -- ') {
+              @if (!isApplicationFormItemOfType(['LOGIN', 'PASSWORD'])) {
+                <section class="mt-4">
+                  <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ATTRIBUTES' | translate}}</h6>
+                  @if (sourceAttributes !== undefined) {
                     <div class="w-100">
-                      <mat-form-field class="w-100">
-                        <mat-label
-                          >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
-                        >
-                        <input [(ngModel)]="identitySource" matInput />
-                      </mat-form-field>
+                      <perun-web-apps-selection-item-search-select
+                        [attributes]="sourceAttributes"
+                        [selectedAttribute]="idmSource"
+                        (itemSelected)="changeIdmAttribute($event); loadWarning(itemType.SOURCE)"
+                        [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SOURCE_ATTRIBUTE_DESCRIPTION' | translate"
+                        [asGroup]="data.isGroup"
+                        [type]="itemType.SOURCE">
+                      </perun-web-apps-selection-item-search-select>
+                      @if (displayWarningForSourceAttr) {
+                        <perun-web-apps-alert alert_type="warn">
+                          {{warningMessage}}
+                        </perun-web-apps-alert>
+                      }
                     </div>
                   }
-                </div>
-              </section>
+                  @if (destinationAttributes !== undefined) {
+                    <div class="w-100">
+                      <perun-web-apps-selection-item-search-select
+                        [attributes]="destinationAttributes"
+                        [selectedAttribute]="itemDestination"
+                        (itemSelected)="itemDestination = $event.value; loadWarning(itemType.DESTINATION)"
+                        [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DESTINATION_ATTRIBUTE_DESCRIPTION' | translate"
+                        [asGroup]="data.isGroup"
+                        [type]="itemType.DESTINATION"
+                        [required]="isApplicationFormItemOfType([])">
+                      </perun-web-apps-selection-item-search-select>
+                      @if (displayWarningForDestinationAttr) {
+                        <perun-web-apps-alert alert_type="warn">
+                          {{warningMessage}}
+                        </perun-web-apps-alert>
+                      }
+                    </div>
+                  }
+                  <div class="w-100">
+                    <perun-web-apps-selection-item-search-select
+                      [selectedAttribute]="identitySource"
+                      [asGroup]="data.isGroup"
+                      [type]="itemType.FEDERATION"
+                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_DESCRIPTION' | translate"
+                      (itemSelected)="changeFederationAttribute($event)">
+                    </perun-web-apps-selection-item-search-select>
+                    @if (federationAttributeDN === ' -- custom value -- ') {
+                      <div class="w-100">
+                        <mat-form-field class="w-100">
+                          <mat-label
+                            >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
+                          >
+                          <input [(ngModel)]="identitySource" matInput />
+                        </mat-form-field>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
             </div>
           }
           @if (
-            isApplicationFormItemOfType(['TEXTFIELD', 'USERNAME', 'PASSWORD', 'TEXTAREA', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'PASSWORD', 'TEXTAREA', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
           ) {
             <div>
               <section class="mt-4">
@@ -227,7 +229,7 @@
               </div>
             }
             @if (
-              isApplicationFormItemOfType(['TEXTFIELD', 'VALIDATED_EMAIL', 'USERNAME', 'PASSWORD', 'RADIO', 'TEXTAREA',
+              isApplicationFormItemOfType(['TEXTFIELD', 'VALIDATED_EMAIL', 'LOGIN', 'PASSWORD', 'RADIO', 'TEXTAREA',
                         'COMBOBOX', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
             ) {
               <div>

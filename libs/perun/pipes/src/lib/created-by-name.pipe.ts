@@ -11,6 +11,7 @@ export class AppCreatedByNamePipe implements PipeTransform {
 
   transform(application: Application): string {
     if (!application.user) {
+      if (!application.createdBy) return 'N/A';
       return application.createdBy.slice(
         application.createdBy.lastIndexOf('=') + 1,
         application.createdBy.length,

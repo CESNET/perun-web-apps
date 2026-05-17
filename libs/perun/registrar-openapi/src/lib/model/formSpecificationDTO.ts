@@ -15,6 +15,7 @@ import { AssignedFormModuleDTO } from './assignedFormModuleDTO';
 export interface FormSpecificationDTO {
   id?: string;
   idmObject: IdmObject;
+  namespace?: string;
   items?: Array<FormItemsForTypeDTO>;
   autoApprovedTypes?: Array<FormSpecificationDTO.AutoApprovedTypesEnum>;
   transitions?: Array<FormTransitionDTO>;

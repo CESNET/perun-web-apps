@@ -26,6 +26,7 @@ model/enrichedApplicationDTO.ts
 model/enrichedApplicationFormDTO.ts
 model/enrichedFormItemDataDTO.ts
 model/errorResponse.ts
+model/extSource.ts
 model/formContextDTO.ts
 model/formItemDTO.ts
 model/formItemDataDTO.ts
@@ -38,6 +39,7 @@ model/formTypeConfig.ts
 model/getApplicationsForObjectsRequest.ts
 model/getApplicationsForUserRequest.ts
 model/htmlParsingResult.ts
+model/identity.ts
 model/idmMemberDTO.ts
 model/idmObject.ts
 model/itemDefinitionDTO.ts
