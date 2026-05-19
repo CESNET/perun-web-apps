@@ -205,27 +205,27 @@ export class VoSettingsApplicationFormNewRegComponent implements OnInit {
     const definitionDeletionCalls = itemsToDelete
       .filter((item) => !!item.itemDefinition?.id)
       .map((item) =>
-        this.formsService
-          .deleteItemDefinitionForForm(this.formSpecification.id, item.itemDefinition.id)
-          .pipe(catchError(() => of(null))),
+        this.formsService.deleteItemDefinitionForForm(
+          this.formSpecification.id,
+          item.itemDefinition.id,
+        ),
       );
 
     const otherDeletionCalls = [];
     itemsToDelete.forEach((item) => {
-      if (item.destination?.id) {
+      if (item.destination?.id && item.destination.accessLevel === 'FORM_SPECIFIC') {
         otherDeletionCalls.push(
-          this.formsService
-            .deleteDestinationForForm(this.formSpecification.id, item.destination.id)
-            .pipe(catchError(() => of(null))),
+          this.formsService.deleteDestinationForForm(
+            this.formSpecification.id,
+            item.destination.id,
+          ),
         );
       }
       if (item.prefillStrategyEntries) {
         item.prefillStrategyEntries.forEach((prefill) => {
-          if (prefill?.id) {
+          if (prefill?.id && prefill.accessLevel === 'FORM_SPECIFIC') {
             otherDeletionCalls.push(
-              this.formsService
-                .deletePrefillStrategyForForm(this.formSpecification.id, prefill.id)
-                .pipe(catchError(() => of(null))),
+              this.formsService.deletePrefillStrategyForForm(this.formSpecification.id, prefill.id),
             );
           }
         });
@@ -233,171 +233,170 @@ export class VoSettingsApplicationFormNewRegComponent implements OnInit {
     });
 
     const deletions$ =
-      definitionDeletionCalls.length > 0
-        ? forkJoin(definitionDeletionCalls).pipe(
-            switchMap(() =>
-              otherDeletionCalls.length > 0 ? forkJoin(otherDeletionCalls) : of(null),
-            ),
-          )
-        : otherDeletionCalls.length > 0
-          ? forkJoin(otherDeletionCalls)
-          : of(null);
+      definitionDeletionCalls.length > 0 ? forkJoin(definitionDeletionCalls) : of(null);
 
-    deletions$.subscribe({
-      next: () => {
-        this.toRemoveFormItemIds = [];
-        this.formItems = this.formItems.filter(
-          (item) =>
-            !itemsToDelete.some((deleted) => deleted.formItemDTO.id === item.formItemDTO.id),
-        );
-
-        const creationCalls = [];
-        const itemDefCreationCalls = []; // execute these after prefills and dests created
-        this.formItems.forEach((item) => {
-          if (item.destination && item.destination.id === null) {
-            creationCalls.push(
-              this.formsService
-                .createOrGetDestinationForForm(this.formSpecification.id, item.destination)
-                .pipe(
-                  catchError(() => of(null)),
-                  tap((destination) => {
-                    if (destination) {
-                      item.destination = destination;
-                      item.itemDefinition.destinationId = destination.id;
-                    }
-                  }),
-                ),
-            );
-          }
-          if (item.prefillStrategyEntries) {
-            item.prefillStrategyEntries.forEach((prefill) => {
-              if (prefill && prefill.id === null) {
-                creationCalls.push(
-                  this.formsService
-                    .createOrGetPrefillStrategyForForm(this.formSpecification.id, prefill)
-                    .pipe(
-                      catchError(() => of(null)),
-                      tap((prefillStrategy) => {
-                        if (prefillStrategy) {
-                          Object.assign(prefill, prefillStrategy);
-                          if (!item.itemDefinition.prefillStrategyIds) {
-                            item.itemDefinition.prefillStrategyIds = [];
-                          }
-                          if (
-                            !item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)
-                          ) {
-                            item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
-                          }
-                        }
-                      }),
-                    ),
-                );
-              }
-            });
-          }
-          if (item.itemDefinition.id === null) {
-            itemDefCreationCalls.push(
-              this.formsService
-                .createItemDefinitionForForm(this.formSpecification.id, item.itemDefinition)
-                .pipe(
-                  tap((itemDefinition) => {
-                    if (itemDefinition) {
-                      item.formItemDTO.itemDefinitionId = itemDefinition.id;
-                      item.itemDefinition = itemDefinition;
-                    }
-                  }),
-                ),
-            );
-          }
-        });
-
-        const executeUpdates = (): void => {
-          const definitionUpdates = this.formItems.map((item) => {
-            if (item.itemDefinition.id === null) {
-              return;
-            }
-            const patchObject = {} as ItemDefinitionPatchRequest;
-            patchObject.displayName = item.itemDefinition.displayName;
-            patchObject.updatable = item.itemDefinition.updatable;
-            patchObject.required = item.itemDefinition.required;
-            patchObject.prefillStrategyIds = item.itemDefinition.prefillStrategyIds;
-            patchObject.texts = item.itemDefinition.texts;
-            patchObject.hidden = item.itemDefinition.hidden;
-            patchObject.disabled = item.itemDefinition.disabled;
-            patchObject.validators = item.itemDefinition.validators;
-            patchObject.formTypes = item.itemDefinition.formTypes;
-            if (item.itemDefinition.defaultValue) {
-              patchObject.defaultValue = item.itemDefinition.defaultValue;
-            }
-            if (item.itemDefinition.destinationId) {
-              patchObject.destinationId = item.itemDefinition.destinationId;
-            }
-            const bulkUpdateRequest: BulkItemDefinitionUpdateRequest = {
-              itemDefinitionId: item.itemDefinition.id,
-              patchRequest: patchObject,
-            };
-            return bulkUpdateRequest;
-          });
-
-          // modify only the form type config which is selected
-
-          const typeconfig = this.formSpecification.items.find(
-            (prr) => prr.formTypeConfig.formType === this.selectedType.formType,
+    deletions$
+      .pipe(
+        switchMap(() => {
+          // ONLY runs if item definition deletions succeeded
+          return otherDeletionCalls.length > 0 ? forkJoin(otherDeletionCalls) : of(null);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.toRemoveFormItemIds = [];
+          this.formItems = this.formItems.filter(
+            (item) =>
+              !itemsToDelete.some((deleted) => deleted.formItemDTO.id === item.formItemDTO.id),
           );
-          if (typeconfig) {
-            typeconfig.formItems = this.formItems.map((enriched) => enriched.formItemDTO);
-          } else {
-            this.formSpecification.items.push({
-              formTypeConfig: { formType: this.selectedType.formType },
-              formItems: this.formItems.map((enriched) => enriched.formItemDTO),
-            });
-          }
 
-          // Execute all definition updates in parallel, then update form items
-          this.formsService.bulkUpdateItemDefinitions(definitionUpdates).subscribe({
-            next: () => {
-              this.formsService
-                .updateFormItems(this.formSpecification.id, this.formSpecification.items)
-                .subscribe({
-                  next: () => {
-                    this.translate
-                      .get(
-                        'VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_APPLICATION_FORM_ITEMS_SUCCESS',
-                      )
-                      .subscribe((successMessage: string) => {
-                        this.notificator.showSuccess(successMessage);
-                      });
-                    this.refreshItems();
-                  },
-                  error: () => (this.loadingTable = false),
-                });
-            },
-            error: () => (this.loadingTable = false),
+          const creationCalls = [];
+          const itemDefCreationCalls = []; // execute these after prefills and dests created
+          this.formItems.forEach((item) => {
+            if (item.destination && item.destination.id === null) {
+              creationCalls.push(
+                this.formsService
+                  .createOrGetDestinationForForm(this.formSpecification.id, item.destination)
+                  .pipe(
+                    catchError(() => of(null)),
+                    tap((destination) => {
+                      if (destination) {
+                        item.destination = destination;
+                        item.itemDefinition.destinationId = destination.id;
+                      }
+                    }),
+                  ),
+              );
+            }
+            if (item.prefillStrategyEntries) {
+              item.prefillStrategyEntries.forEach((prefill) => {
+                if (prefill && prefill.id === null) {
+                  creationCalls.push(
+                    this.formsService
+                      .createOrGetPrefillStrategyForForm(this.formSpecification.id, prefill)
+                      .pipe(
+                        catchError(() => of(null)),
+                        tap((prefillStrategy) => {
+                          if (prefillStrategy) {
+                            Object.assign(prefill, prefillStrategy);
+                            if (!item.itemDefinition.prefillStrategyIds) {
+                              item.itemDefinition.prefillStrategyIds = [];
+                            }
+                            if (
+                              !item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)
+                            ) {
+                              item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
+                            }
+                          }
+                        }),
+                      ),
+                  );
+                }
+              });
+            }
+            if (item.itemDefinition.id === null) {
+              itemDefCreationCalls.push(
+                this.formsService
+                  .createItemDefinitionForForm(this.formSpecification.id, item.itemDefinition)
+                  .pipe(
+                    tap((itemDefinition) => {
+                      if (itemDefinition) {
+                        item.formItemDTO.itemDefinitionId = itemDefinition.id;
+                        item.itemDefinition = itemDefinition;
+                      }
+                    }),
+                  ),
+              );
+            }
           });
-        };
 
-        const executeItemDefCreations = (): void => {
-          if (itemDefCreationCalls.length > 0) {
-            forkJoin(itemDefCreationCalls).subscribe({
-              next: () => executeUpdates(),
+          const executeUpdates = (): void => {
+            const definitionUpdates = this.formItems.map((item) => {
+              if (item.itemDefinition.id === null) {
+                return;
+              }
+              const patchObject = {} as ItemDefinitionPatchRequest;
+              patchObject.displayName = item.itemDefinition.displayName;
+              patchObject.updatable = item.itemDefinition.updatable;
+              patchObject.required = item.itemDefinition.required;
+              patchObject.prefillStrategyIds = item.itemDefinition.prefillStrategyIds;
+              patchObject.texts = item.itemDefinition.texts;
+              patchObject.hidden = item.itemDefinition.hidden;
+              patchObject.disabled = item.itemDefinition.disabled;
+              patchObject.validators = item.itemDefinition.validators;
+              patchObject.formTypes = item.itemDefinition.formTypes;
+              if (item.itemDefinition.defaultValue) {
+                patchObject.defaultValue = item.itemDefinition.defaultValue;
+              }
+              if (item.itemDefinition.destinationId) {
+                patchObject.destinationId = item.itemDefinition.destinationId;
+              }
+              const bulkUpdateRequest: BulkItemDefinitionUpdateRequest = {
+                itemDefinitionId: item.itemDefinition.id,
+                patchRequest: patchObject,
+              };
+              return bulkUpdateRequest;
+            });
+
+            // modify only the form type config which is selected
+
+            const typeconfig = this.formSpecification.items.find(
+              (prr) => prr.formTypeConfig.formType === this.selectedType.formType,
+            );
+            if (typeconfig) {
+              typeconfig.formItems = this.formItems.map((enriched) => enriched.formItemDTO);
+            } else {
+              this.formSpecification.items.push({
+                formTypeConfig: { formType: this.selectedType.formType },
+                formItems: this.formItems.map((enriched) => enriched.formItemDTO),
+              });
+            }
+
+            // Execute all definition updates in parallel, then update form items
+            this.formsService.bulkUpdateItemDefinitions(definitionUpdates).subscribe({
+              next: () => {
+                this.formsService
+                  .updateFormItems(this.formSpecification.id, this.formSpecification.items)
+                  .subscribe({
+                    next: () => {
+                      this.translate
+                        .get(
+                          'VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_APPLICATION_FORM_ITEMS_SUCCESS',
+                        )
+                        .subscribe((successMessage: string) => {
+                          this.notificator.showSuccess(successMessage);
+                        });
+                      this.refreshItems();
+                    },
+                    error: () => (this.loadingTable = false),
+                  });
+              },
+              error: () => (this.loadingTable = false),
+            });
+          };
+
+          const executeItemDefCreations = (): void => {
+            if (itemDefCreationCalls.length > 0) {
+              forkJoin(itemDefCreationCalls).subscribe({
+                next: () => executeUpdates(),
+                error: () => (this.loadingTable = false),
+              });
+            } else {
+              executeUpdates();
+            }
+          };
+
+          if (creationCalls.length > 0) {
+            forkJoin(creationCalls).subscribe({
+              next: () => executeItemDefCreations(),
               error: () => (this.loadingTable = false),
             });
           } else {
-            executeUpdates();
+            executeItemDefCreations();
           }
-        };
-
-        if (creationCalls.length > 0) {
-          forkJoin(creationCalls).subscribe({
-            next: () => executeItemDefCreations(),
-            error: () => (this.loadingTable = false),
-          });
-        } else {
-          executeItemDefCreations();
-        }
-      },
-      error: () => (this.loadingTable = false),
-    });
+        },
+        error: () => (this.loadingTable = false),
+      });
   }
 
   refreshItems(): void {
