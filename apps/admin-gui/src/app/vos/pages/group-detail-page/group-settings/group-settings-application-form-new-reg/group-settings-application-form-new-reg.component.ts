@@ -286,35 +286,41 @@ export class GroupSettingsApplicationFormNewRegComponent implements OnInit {
         this.formItems.forEach((item) => {
           if (item.destination && item.destination.id === null) {
             creationCalls.push(
-              this.formsService.createOrGetDestination(item.destination).pipe(
-                catchError(() => of(null)),
-                tap((destination) => {
-                  if (destination) {
-                    item.destination = destination;
-                    item.itemDefinition.destinationId = destination.id;
-                  }
-                }),
-              ),
+              this.formsService
+                .createOrGetDestinationForForm(this.formSpecification.id, item.destination)
+                .pipe(
+                  catchError(() => of(null)),
+                  tap((destination) => {
+                    if (destination) {
+                      item.destination = destination;
+                      item.itemDefinition.destinationId = destination.id;
+                    }
+                  }),
+                ),
             );
           }
           if (item.prefillStrategyEntries) {
             item.prefillStrategyEntries.forEach((prefill) => {
               if (prefill && prefill.id === null) {
                 creationCalls.push(
-                  this.formsService.createOrGetPrefillStrategy(prefill).pipe(
-                    catchError(() => of(null)),
-                    tap((prefillStrategy) => {
-                      if (prefillStrategy) {
-                        Object.assign(prefill, prefillStrategy);
-                        if (!item.itemDefinition.prefillStrategyIds) {
-                          item.itemDefinition.prefillStrategyIds = [];
+                  this.formsService
+                    .createOrGetPrefillStrategyForForm(this.formSpecification.id, prefill)
+                    .pipe(
+                      catchError(() => of(null)),
+                      tap((prefillStrategy) => {
+                        if (prefillStrategy) {
+                          Object.assign(prefill, prefillStrategy);
+                          if (!item.itemDefinition.prefillStrategyIds) {
+                            item.itemDefinition.prefillStrategyIds = [];
+                          }
+                          if (
+                            !item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)
+                          ) {
+                            item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
+                          }
                         }
-                        if (!item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)) {
-                          item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
-                        }
-                      }
-                    }),
-                  ),
+                      }),
+                    ),
                 );
               }
             });

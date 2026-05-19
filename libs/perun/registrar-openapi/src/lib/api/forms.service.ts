@@ -988,6 +988,120 @@ export class FormsService {
   }
 
   /**
+   * Create a new destination or get if exists for form
+   * Create a new form destination or retrieve an existing one with such urn
+   * @param formSpecificationId
+   * @param DestinationDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createOrGetDestinationForForm(
+    formSpecificationId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<DestinationDTO>;
+  public createOrGetDestinationForForm(
+    formSpecificationId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<DestinationDTO>>;
+  public createOrGetDestinationForForm(
+    formSpecificationId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<DestinationDTO>>;
+  public createOrGetDestinationForForm(
+    formSpecificationId: string,
+    DestinationDTO: DestinationDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (formSpecificationId === null || formSpecificationId === undefined) {
+      throw new Error(
+        'Required parameter formSpecificationId was null or undefined when calling createOrGetDestinationForForm.',
+      );
+    }
+    if (DestinationDTO === null || DestinationDTO === undefined) {
+      throw new Error(
+        'Required parameter DestinationDTO was null or undefined when calling createOrGetDestinationForForm.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'formSpecificationId', value: formSpecificationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/destination/create-or-get`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<DestinationDTO>(requestUrl, DestinationDTO, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Create or get prefill strategy
    * Create a new prefill strategy or retrieve an existing one with such urn and scope
    * @param PrefillStrategyEntryDTO
@@ -1073,6 +1187,120 @@ export class FormsService {
     }
 
     let requestUrl = `${this.configuration.basePath}/api/v1/forms/prefill-strategy/create-or-get`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<PrefillStrategyEntryDTO>(requestUrl, PrefillStrategyEntryDTO, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Create or get form-specific prefill strategy
+   * Create a new form-specific prefill strategy or retrieve an existing one with such urn
+   * @param formSpecificationId
+   * @param PrefillStrategyEntryDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createOrGetPrefillStrategyForForm(
+    formSpecificationId: string,
+    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<PrefillStrategyEntryDTO>;
+  public createOrGetPrefillStrategyForForm(
+    formSpecificationId: string,
+    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  public createOrGetPrefillStrategyForForm(
+    formSpecificationId: string,
+    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  public createOrGetPrefillStrategyForForm(
+    formSpecificationId: string,
+    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (formSpecificationId === null || formSpecificationId === undefined) {
+      throw new Error(
+        'Required parameter formSpecificationId was null or undefined when calling createOrGetPrefillStrategyForForm.',
+      );
+    }
+    if (PrefillStrategyEntryDTO === null || PrefillStrategyEntryDTO === undefined) {
+      throw new Error(
+        'Required parameter PrefillStrategyEntryDTO was null or undefined when calling createOrGetPrefillStrategyForForm.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'formSpecificationId', value: formSpecificationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/prefill-strategy/create-or-get`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
