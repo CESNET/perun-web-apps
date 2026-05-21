@@ -38,6 +38,12 @@
         </th>
         <td *matCellDef="let membership" mat-cell>{{membership.entity.description}}</td>
       </ng-container>
+      <ng-container matColumnDef="vo">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          {{'MEMBERSHIP_LIST.VO' | customTranslate | translate}}
+        </th>
+        <td *matCellDef="let member" class="static-column-size" mat-cell>{{member.vo.name}}</td>
+      </ng-container>
       <ng-container matColumnDef="expirationAttribute">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{'MEMBERSHIP_LIST.EXPIRATION' | customTranslate | translate}}

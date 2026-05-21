@@ -13,6 +13,7 @@ import {
   MembersManagerService,
   UsersManagerService,
   Vo,
+  VosManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
@@ -55,11 +56,12 @@ export class GroupsPageComponent implements OnInit {
   initialLoading = false;
   userId: number;
   vos: Vo[] = [];
+  vosIds: number[] = [];
   myControl = new UntypedFormControl();
   filteredVos: Observable<Vo[]>;
 
   selection = new SelectionModel<Membership>(false, []);
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name', 'vo'];
 
   userMemberships: Membership[] = [];
   adminMemberships: Membership[] = [];
@@ -74,6 +76,7 @@ export class GroupsPageComponent implements OnInit {
     private groupService: GroupsManagerService,
     private store: StoreService,
     private attributesManagerService: AttributesManagerService,
+    private vosManager: VosManagerService,
   ) {}
 
   ngOnInit(): void {
@@ -114,11 +117,13 @@ export class GroupsPageComponent implements OnInit {
           return;
         }
         groups.forEach((group) => {
+          const currentVo = this.vos.find((v) => v.id === group.voId);
           this.attributesManagerService
             .getMemberGroupAttributes(memberId, group.id)
             .subscribe((atts) => {
               this.userMembershipsTemp.push({
                 entity: group,
+                vo: currentVo,
                 expirationAttribute: atts.find(
                   (att) => att.friendlyName === 'groupMembershipExpiration',
                 ),
@@ -133,12 +138,21 @@ export class GroupsPageComponent implements OnInit {
 
     this.usersService.getGroupsWhereUserIsAdmin(this.userId).subscribe((adminGroups) => {
       adminGroups.forEach((group) => {
-        this.adminMembershipsTemp.push({
-          entity: group,
-          expirationAttribute: null,
-        });
+        this.vosIds.push(group.voId);
       });
-      if (--remainingGroupSources === 0) this.addToLists(true);
+      this.vosManager.getVosByIds(this.vosIds).subscribe((vos) => {
+        const adminVos = vos;
+
+        adminGroups.forEach((group) => {
+          const currentVo = adminVos.find((v) => v.id === group.voId);
+          this.adminMembershipsTemp.push({
+            entity: group,
+            vo: currentVo,
+            expirationAttribute: null,
+          });
+        });
+        if (--remainingGroupSources === 0) this.addToLists(true);
+      });
     });
   }
 
@@ -169,6 +183,7 @@ export class GroupsPageComponent implements OnInit {
                 i--;
                 this.userMembershipsTemp.push({
                   entity: group,
+                  vo: vo,
                   expirationAttribute: atts.find(
                     (att) => att.friendlyName === 'groupMembershipExpiration',
                   ),
@@ -185,6 +200,7 @@ export class GroupsPageComponent implements OnInit {
           adminGroups.forEach((group) => {
             this.adminMembershipsTemp.push({
               entity: group,
+              vo: vo,
               expirationAttribute: null,
             });
           });

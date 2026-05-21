@@ -198,6 +198,7 @@
   "MEMBERSHIP_LIST": {
     "NAME": "Jméno",
     "NEVER": "nikdy",
+    "VO": "Organizace",
     "DESCRIPTION": "Popis",
     "EXPIRATION": "Expirace členství",
     "EXTEND": "Prodloužit členství"
