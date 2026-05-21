@@ -45,7 +45,7 @@
           <!--            </mat-checkbox>-->
           <!--          </section>-->
           @if (
-            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'VALIDATED_EMAIL', 'PASSWORD', 'TEXTAREA',
+            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'VERIFIED_EMAIL', 'PASSWORD', 'TEXTAREA',
               'TIMEZONE', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
           ) {
             <div>
@@ -229,7 +229,7 @@
               </div>
             }
             @if (
-              isApplicationFormItemOfType(['TEXTFIELD', 'VALIDATED_EMAIL', 'LOGIN', 'PASSWORD', 'RADIO', 'TEXTAREA',
+              isApplicationFormItemOfType(['TEXTFIELD', 'VERIFIED_EMAIL', 'LOGIN', 'PASSWORD', 'RADIO', 'TEXTAREA',
                         'COMBOBOX', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
             ) {
               <div>

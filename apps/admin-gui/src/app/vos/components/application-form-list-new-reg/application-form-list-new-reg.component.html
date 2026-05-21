@@ -80,7 +80,7 @@
             <td *matCellDef="let applicationFormItem" mat-cell>
               @if (
                 applicationFormItem.itemDefinition.type === 'TEXTFIELD' ||
-                applicationFormItem.itemDefinition.type === 'VALIDATED_EMAIL' ||
+                applicationFormItem.itemDefinition.type === 'VERIFIED_EMAIL' ||
                 applicationFormItem.itemDefinition.type === 'USERNAME'
               ) {
                 <div>
