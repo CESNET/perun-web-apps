@@ -1814,7 +1814,8 @@
       "ERROR_NO_GROUP": "Please choose Group"
     },
     "IMPORT_ATTRIBUTE_DEFINITION": {
-      "SUCCESS": "Attribute imported."
+      "SUCCESS": "Attribute imported.",
+      "ERROR": "Invalid attribute definition: the JSON format is invalid or malformed. Please try exporting again."
     },
     "CREATE_ATTRIBUTE_DEFINITION": {
       "TITLE": "Create Attribute Definition",
