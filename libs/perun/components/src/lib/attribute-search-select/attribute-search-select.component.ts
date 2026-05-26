@@ -40,7 +40,12 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.availableAttrDefs = this.attributes
-      .filter((attrDef) => this.attributesForEntity.includes(attrDef.entity as Entity))
+      .filter(
+        (attr) =>
+          attr.displayName &&
+          attr.entity &&
+          this.attributesForEntity.includes(attr.entity as Entity),
+      )
       .sort(compareFnDisplayName);
     if (this.attributesForEntity.length > 1) {
       this.nameFunction = (attr: AttributeDefinition): string =>
