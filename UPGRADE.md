@@ -1,5 +1,29 @@
 Upgrade notes
 
+## [20.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.2...v20.10.0) (2026-06-02)
+
+
+### Features
+
+* **admin:** added filter for exported attributes ([c8e11bc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c8e11bc6ef4edbc66c691deae2ed23bbb232f889))
+* moving group used in auto registrations is now allowed ([72b0b12](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/72b0b126ff8a0dbd1424211d6278be9ac7b2a24e))
+* switching between new/old registrar components ([b20a594](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b20a5946fd17173b2883f175d83c671c52a2441f))
+* warn when validated mail in form but no notification ([bf07562](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/bf07562ace6151bb17973980c3a7d1ac63da83a0))
+
+
+### Bug Fixes
+
+* **admin:** correctly create new reg prefill/destinations ([db030ed](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/db030ed1e7c1078e90eb1d125f9a3f2143c8f535))
+* **admin:** default to showing all applications in user detail ([aadd343](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/aadd343ade0b370a54b95e44a513202a7a2e0417))
+* **admin:** do not try to get member on non-existing user ([143976c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/143976cdaeecd370a8a07c745c4e4fb513a1ea18))
+* **admin:** prevent invalid AttributeDefinition entries ([e9bd85e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e9bd85e92944a07f602053dbe4eceec94200801a))
+* **admin:** restrict admin button visibility ([8b1e043](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8b1e0431542e603dd44f67c6813326e59a8970dc))
+* **admin:** stop infinite loading on invalid JSON import ([6d805f7](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/6d805f73159b3cd2d51f58238bd98ba7ea2ed27c))
+* **admin:** stop when deleting item definition fails ([62ee264](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/62ee264af73b7702e3d2d02bfa33f913e866576b))
+* **deps:** update angular dependencies to v20.3.18 [security] ([79f853a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/79f853af5bd07b607da80e805e506cc1cc7461d6))
+* disable archiveEnabled at expiration initial settings ([27f8bcb](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/27f8bcbd821c706e8fde53acacf9bf67ea5d3758))
+* filter VOs by auth policy on copy notification dialog ([0bd742f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/0bd742f3d3b580fd3a7b98d79321a07bba83b95b))
+
 ## [20.9.2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.1...v20.9.2) (2026-05-05)
 
 
