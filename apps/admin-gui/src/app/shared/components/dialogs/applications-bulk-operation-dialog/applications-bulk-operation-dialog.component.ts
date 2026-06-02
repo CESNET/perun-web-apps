@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -20,6 +20,7 @@ import {
 import { ApplicationsListComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { AppTypeMailTypeMatchPipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 interface ApplicationsBulkOperationDialogData {
   theme: string;
@@ -46,7 +47,7 @@ interface ApplicationsBulkOperationDialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     MatTooltip,
@@ -63,7 +64,7 @@ export class ApplicationsBulkOperationDialogComponent implements OnInit {
   loading = false;
   mailType: MailType = 'APP_CREATED_USER';
   reason = '';
-  availableMailTypes = [
+  availableMailTypes: MailType[] = [
     MailType.APP_CREATED_USER,
     MailType.APPROVABLE_GROUP_APP_USER,
     MailType.APP_CREATED_VO_ADMIN,

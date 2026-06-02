@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDivider } from '@angular/material/divider';
 import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -29,13 +29,14 @@ import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { ApplicationFormListComponent } from '../../../../components/application-form-list/application-form-list.component';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     RefreshButtonComponent,
     MatDivider,
     MatProgressSpinnerModule,
@@ -62,6 +63,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
   displayedColumns: string[] = [];
   refreshApplicationForm = false;
   embeddedGroupsItemSaved = false;
+  shouldWarnMailValidation = false;
   private vo: Vo;
 
   // This counter is used to generate ids for newly added items. This fake ids are used in backend
@@ -87,11 +89,20 @@ export class VoSettingsApplicationFormComponent implements OnInit {
       this.applicationForm = form;
       this.registrarManager.getFormItemsForVo(this.vo.id).subscribe((formItems) => {
         this.applicationFormItems = formItems;
+        this.checkMailValidation();
         this.embeddedGroupsItemSaved =
           formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;
         this.loadingHeader = false;
         this.loadingTable = false;
       });
+    });
+  }
+
+  checkMailValidation(): void {
+    this.registrarManager.getApplicationMailsForVo(this.vo.id).subscribe((mails) => {
+      const missingValidationMail = !mails.some((mail) => mail.mailType === 'MAIL_VALIDATION');
+      const hasMailItem = this.applicationFormItems.some((item) => item.type === 'VALIDATED_EMAIL');
+      this.shouldWarnMailValidation = missingValidationMail && hasMailItem;
     });
   }
 
@@ -109,6 +120,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
       // second item is new Application Form Item
       if (success) {
         this.applicationFormItems = Object.assign([], success[0]);
+        this.checkMailValidation();
 
         config = getDefaultDialogConfig();
         config.width = '600px';
@@ -176,6 +188,7 @@ export class VoSettingsApplicationFormComponent implements OnInit {
     this.refreshApplicationForm = true;
     this.registrarManager.getFormItemsForVo(this.vo.id).subscribe((formItems) => {
       this.applicationFormItems = formItems;
+      this.checkMailValidation();
       this.itemsChanged = false;
       this.embeddedGroupsItemSaved =
         formItems.filter((item) => item.type === 'EMBEDDED_GROUP_APPLICATION').length > 0;

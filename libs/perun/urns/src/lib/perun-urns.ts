@@ -16,6 +16,7 @@ export class Urns {
   static VO_DEF_MAIL_FOOTER = 'urn:perun:vo:attribute-def:def:mailFooter';
   static VO_DEF_MAIL_HTML_FOOTER = 'urn:perun:vo:attribute-def:def:htmlMailFooter';
   static VO_BLOCK_MANUAL_MEMBER_ADDING = 'urn:perun:vo:attribute-def:def:blockManualMemberAdding';
+  static VO_USE_NEW_REG = 'urn:perun:vo:attribute-def:def:useNewRegistration';
 
   // User
   static USER_DEF_ORGANIZATION = 'urn:perun:user:attribute-def:def:organization';
@@ -38,6 +39,7 @@ export class Urns {
   static GROUP_LAST_STRUCTURE_SYNC_TIMESTAMP =
     'urn:perun:group:attribute-def:def:lastGroupStructureSynchronizationTimestamp';
   static GROUP_SYNC_INTERVAL = 'urn:perun:group:attribute-def:def:synchronizationInterval';
+  static GROUP_USE_NEW_REG = 'urn:perun:group:attribute-def:def:useNewRegistration';
   static GROUP_BLOCK_MANUAL_MEMBER_ADDING =
     'urn:perun:group:attribute-def:def:blockManualMemberAdding';
 

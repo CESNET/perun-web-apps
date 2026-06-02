@@ -3,6 +3,7 @@ export interface RPCError extends Error {
   message: string;
   name: string;
   type: string;
+  status: number;
   call?: string;
   payload?: object;
   urlWithParams?: string;

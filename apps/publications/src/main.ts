@@ -17,22 +17,20 @@ import {
 } from '@perun-web-apps/perun/services';
 import { PublicationsConfigService } from './app/services/publications-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { GeneralModule } from '@perun-web-apps/general';
 import { appRoutes } from './app/app.routes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { PerunPipesModule } from '@perun-web-apps/perun/pipes';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatTabsModule } from '@angular/material/tabs';
-import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
-import { PerunTableUtilsModule } from '@perun-web-apps/perun/table-utils';
+import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideRouter } from '@angular/router';
 
@@ -52,6 +50,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 const loadConfigs: (appConfig: PublicationsConfigService) => () => Promise<void> =
   (appConfig: PublicationsConfigService) => () =>
@@ -86,18 +92,11 @@ bootstrapApplication(AppComponent, {
         },
       }),
       BrowserAnimationsModule,
-      UiMaterialModule,
-      GeneralModule,
       ApiModule,
+      RegistrarApiModule,
       HttpClientModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunPipesModule,
-      PerunLoginModule,
       MatTabsModule,
-      PerunUtilsModule,
       OAuthModule.forRoot(),
-      PerunTableUtilsModule,
     ),
     provideRouter(appRoutes),
     CustomIconService,
@@ -116,6 +115,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

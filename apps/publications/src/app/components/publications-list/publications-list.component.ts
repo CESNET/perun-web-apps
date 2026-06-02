@@ -7,7 +7,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,7 +53,7 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,

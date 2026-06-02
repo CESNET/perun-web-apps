@@ -16,20 +16,20 @@ import {
 } from '@perun-web-apps/perun/services';
 import { LinkerConfigService } from './app/service/linker-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { appRoutes } from './app/app.routes';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
 import { MatIconModule } from '@angular/material/icon';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { isRunningLocally, PerunUtilsModule } from '@perun-web-apps/perun/utils';
-import { GeneralModule } from '@perun-web-apps/general';
-import { LibLinkerModule } from '@perun-web-apps/lib-linker';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
+import { isRunningLocally } from '@perun-web-apps/perun/utils';
+import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppComponent } from './app/app.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -51,6 +51,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 
 const loadConfigs = (appConfig: LinkerConfigService) => (): Promise<void> =>
@@ -80,16 +88,9 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       ApiModule,
-      UiMaterialModule,
-      PerunLoginModule,
+      RegistrarApiModule,
       MatIconModule,
-      PerunSharedComponentsModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunUtilsModule,
-      GeneralModule,
       OAuthModule.forRoot(),
-      LibLinkerModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
@@ -98,6 +99,7 @@ bootstrapApplication(AppComponent, {
         },
       }),
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     CustomIconService,
     {
@@ -117,12 +119,18 @@ bootstrapApplication(AppComponent, {
       useFactory: apiConfigFactory,
       deps: [StoreService],
     },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
+      deps: [StoreService],
+    },
     ApiInterceptor,
     API_INTERCEPTOR_PROVIDER,
     {
       provide: PERUN_API_SERVICE,
       useClass: ApiService,
     },
+    UserFullNamePipe,
     { provide: OAuthStorage, useFactory: (): OAuthStorage => localStorage },
   ],
 }).catch((err) => console.error(err));

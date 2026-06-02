@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -53,7 +53,7 @@ export const YEAR_MODE_FORMATS = {
     MatCheckboxModule,
     ReactiveFormsModule,
     FormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MatExpansionModule,
     MatProgressSpinnerModule,
     TranslateModule,

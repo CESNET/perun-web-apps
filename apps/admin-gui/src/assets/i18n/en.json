@@ -388,6 +388,7 @@
       "APPLICATION_FORM": {
         "TITLE": "Application form",
         "DRAG_AND_DROP_INFO": "You can move the table items by dragging them with the handle on the left side.",
+        "MAIL_VALIDATION_WARNING": "You do not have a 'Mail validation' email notification configured. Users using a non-validated email address (e.g. new users) will not be able to verify it. You can configure it in the 'Notifications' section.",
         "ADD_BUTTON": "Add",
         "COPY_VO_BUTTON": "Copy from Organization/Group",
         "PREVIEW_BUTTON": "Preview",
@@ -436,6 +437,18 @@
           "EMBEDDED_GROUP_APPLICATION": "Groups for embedded applications",
           "LIST_INPUT_BOX": "List input field",
           "MAP_INPUT_BOX": "Key - value input field"
+        },
+        "NEW_REG_TYPES": {
+          "HEADING": "Header",
+          "SUBMIT_BUTTON": "Submit button",
+          "HTML_COMMENT": "Custom HTML text",
+          "TEXTFIELD": "Input text field",
+          "SELECTIONBOX": "Single value selection from list",
+          "CHECKBOX": "Checkbox (multiple selection)"
+        },
+        "NEW_REG_TRANSLATIONS": {
+          "INITIAL": "Initial",
+          "EXTENSION": "Extension"
         },
         "HIDDEN": {
           "ALWAYS": "Always",
@@ -608,6 +621,7 @@
     "APPLICATION": {
       "TITLE": "Applications",
       "FILTER": "Filter",
+      "COLUMN_SETTINGS_NEW_REG": "Column settings are not available for new registration applications.",
       "SET_COLUMN_SETTINGS": "Configure column settings",
       "SELECTION_ALL": "All",
       "SELECTION_WFMV": "Waiting for mail verification",
@@ -744,6 +758,7 @@
         "VERIFY_MESSAGE": "Application was verified",
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
         "EDIT": "Edit",
+        "EDIT_DISABLED": "Editing submitted application of user is not available in new Registrar",
         "MODIFIED_NAME_NOT_AVAILABLE": "N/A",
         "MODIFIED_NAME_REGISTRAR": "Automatically approved",
         "CHECK_MEMBER_ACTIVATION": "After approving the application, please wait a few minutes and check that the member has been successfully validated",
@@ -888,6 +903,7 @@
         "COPY_GROUP_BUTTON": "Copy from Organization/Group",
         "PREVIEW_BUTTON": "Preview",
         "DRAG_AND_DROP_INFO": "You can move with table items by dragging and dropping",
+        "MAIL_VALIDATION_WARNING": "You do not have a 'Mail validation' email notification configured. Users using a non-validated email address (e.g. new users) will not be able to verify it. You can configure it in the 'Notifications' section.",
         "NO_APPLICATION_FORM": "Application form doesn't exists",
         "CREATE_APPLICATION_FORM": "Create empty form",
         "CLEAR": "Clear form",
@@ -1248,7 +1264,9 @@
       "ERROR": "Failed to move group",
       "SUCCESS": "Group successfully moved",
       "DISABLED_HINT": "You must select an existing group.",
-      "CANNOT_MOVE": "You don't have permission to move this group."
+      "CANNOT_MOVE": "You don't have permission to move this group.",
+      "BROKEN_REGISTRATION_WARNING": "The auto registrations from following groups will be broken by the move:",
+      "BROKEN_REGISTRATION_TOOLTIP": "There are auto registrations setup from the parent groups of the group being moved to itself, or its subgroups. Moving the group will break these auto-registrations, meaning that this group and its subgroups will no longer be embedded in the application form of said groups."
     },
     "CREATE_GROUP": {
       "TITLE": "Create group",
@@ -1625,7 +1643,15 @@
       "DISABLED_DESCRIPTION": "When the item should be disabled during the submission.",
       "DISABLED_DEPENDENCY": "Disabled dependency",
       "DISABLED_DEPENDENCY_DESCRIPTION": "Other form item, which is used to decide, if this one should be disabled.",
-      "INVALID_HTML_CONTENT": "The HTML part of this form item contains invalid content."
+      "INVALID_HTML_CONTENT": "The HTML part of this form item contains invalid content.",
+      "HTML_ERROR": {
+        "TAGS": "Following tags are invalid: ",
+        "ATTRIBUTES": "Following attributes are invalid: ",
+        "STYLES": "Following styles are invalid: ",
+        "LINKS": "'{{links}}' links contain invalid protocol (allowed: https, mailto).",
+        "CHECKBOX": "Input contains unsafe elements. Remove them and try again. Only <a> elements with 'href' and 'target' attributes are allowed",
+        "WARNING": "HTML will be autocompleted/changed during the sanitization so the result will be different than the input HTML."
+      }
     },
     "APPLICATION_FORM_DELETE_MAIL": {
       "TITLE": "Confirm delete action",
@@ -1788,7 +1814,8 @@
       "ERROR_NO_GROUP": "Please choose Group"
     },
     "IMPORT_ATTRIBUTE_DEFINITION": {
-      "SUCCESS": "Attribute imported."
+      "SUCCESS": "Attribute imported.",
+      "ERROR": "Invalid attribute definition: the JSON format is invalid or malformed. Please try exporting again."
     },
     "CREATE_ATTRIBUTE_DEFINITION": {
       "TITLE": "Create Attribute Definition",

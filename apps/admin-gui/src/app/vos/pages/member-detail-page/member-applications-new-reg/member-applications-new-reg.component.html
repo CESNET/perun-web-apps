@@ -1,0 +1,32 @@
+<h1 class="page-subtitle">{{'MEMBER_DETAIL.APPLICATIONS.TITLE' | translate}}</h1>
+<div>
+  <perun-web-apps-refresh-button (refresh)="refreshTable()"></perun-web-apps-refresh-button>
+  @if (!showAllDetails) {
+    <button (click)="showDetails()" class="me-2" mat-stroked-button>
+      {{'MEMBER_DETAIL.APPLICATIONS.SHOW_ALL_DETAILS' | translate}}
+    </button>
+  }
+  @if (showAllDetails) {
+    <button (click)="showDetails()" class="me-2" mat-stroked-button>
+      {{'MEMBER_DETAIL.APPLICATIONS.SHOW_LESS_DETAILS' | translate}}
+    </button>
+  }
+  <perun-web-apps-debounce-filter
+    [placeholder]="'MEMBER_DETAIL.APPLICATIONS.FILTER'"
+    (filter)="applyFilter($event)">
+  </perun-web-apps-debounce-filter>
+</div>
+<ng-template #spinner>
+  <perun-web-apps-loading-table></perun-web-apps-loading-table>
+</ng-template>
+<div class="position-relative table-min-height">
+  <perun-web-apps-simple-applications-list
+    *perunWebAppsLoader="loading; indicator: spinner"
+    [loading]="loading"
+    [member]="member"
+    [displayColumns]="showAllDetails ? detailedDisplayedColumns : displayedColumns"
+    [applications]="applications"
+    (downloadAll)="downloadAll($event)"
+    [filter]="filterValue">
+  </perun-web-apps-simple-applications-list>
+</div>

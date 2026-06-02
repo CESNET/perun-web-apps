@@ -4,7 +4,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -37,7 +37,7 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     TableWrapperComponent,
     MatTableModule,

@@ -9,7 +9,7 @@
         <perun-web-apps-attribute-search-select
           [attributes]="allAttrDefinitions"
           [attributesForEntity]="['user']"
-          (search)="getUsers($event)">
+          (searchSubmit)="getUsers($event)">
         </perun-web-apps-attribute-search-select>
       }
       @if (!loadingEntityData) {
@@ -38,7 +38,7 @@
         <perun-web-apps-attribute-search-select
           [attributes]="allAttrDefinitions"
           [attributesForEntity]="['user', 'member']"
-          (search)="getMembers($event)">
+          (searchSubmit)="getMembers($event)">
         </perun-web-apps-attribute-search-select>
       }
       @if (!loadingEntityData) {
@@ -59,7 +59,7 @@
         <perun-web-apps-attribute-search-select
           [attributes]="allAttrDefinitions"
           [attributesForEntity]="['facility']"
-          (search)="getFacilities($event)">
+          (searchSubmit)="getFacilities($event)">
         </perun-web-apps-attribute-search-select>
       }
       @if (!loadingEntityData) {
@@ -80,7 +80,7 @@
         <perun-web-apps-attribute-search-select
           [attributes]="allAttrDefinitions"
           [attributesForEntity]="['resource']"
-          (search)="getResources($event)">
+          (searchSubmit)="getResources($event)">
         </perun-web-apps-attribute-search-select>
       }
       @if (!loadingEntityData) {

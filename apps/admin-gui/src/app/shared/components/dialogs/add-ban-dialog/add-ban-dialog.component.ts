@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { BanSpecificationComponent } from '@perun-web-apps/perun/components';
 import { Ban } from '@perun-web-apps/perun/openapi';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { MatStep, MatStepper } from '@angular/material/stepper';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface BanForm {
   description: string;
@@ -26,7 +27,7 @@ export interface AddBanData<T extends Ban> {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     BanSpecificationComponent,

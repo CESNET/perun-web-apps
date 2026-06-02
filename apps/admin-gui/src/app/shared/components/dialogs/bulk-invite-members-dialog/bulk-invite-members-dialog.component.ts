@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { StoreService } from '@perun-web-apps/perun/services';
 import { InputInvitationsFromCsv, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface BulkInviteMembersDialogData {
   theme: string;
@@ -34,7 +35,7 @@ interface OutputData {
     MatSelectModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,

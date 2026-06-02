@@ -253,6 +253,7 @@ export * from './publication';
 export * from './publicationForGUI';
 export * from './publicationSystem';
 export * from './rTMessage';
+export * from './registrarApplicationInput';
 export * from './resource';
 export * from './resourceState';
 export * from './resourceTag';

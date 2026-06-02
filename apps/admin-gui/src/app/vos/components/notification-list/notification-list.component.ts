@@ -4,7 +4,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -39,6 +39,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AppMailSendingDisabledPipe } from '@perun-web-apps/perun/pipes';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -48,7 +49,7 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
     MatSlideToggleModule,
     FormsModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     TableWrapperComponent,
     MatTableModule,

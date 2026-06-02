@@ -1,5 +1,6 @@
 .gitignore
 README.md
+api.base.service.ts
 api.module.ts
 api/api.ts
 api/attributesManager.service.ts
@@ -286,6 +287,7 @@ model/publication.ts
 model/publicationForGUI.ts
 model/publicationSystem.ts
 model/rTMessage.ts
+model/registrarApplicationInput.ts
 model/resource.ts
 model/resourceState.ts
 model/resourceTag.ts
@@ -336,4 +338,7 @@ model/usersPageQuery.ts
 model/vo.ts
 model/voAdminRoles.ts
 model/voMemberStatuses.ts
+param.ts
+provide-api.ts
+query.params.ts
 variables.ts

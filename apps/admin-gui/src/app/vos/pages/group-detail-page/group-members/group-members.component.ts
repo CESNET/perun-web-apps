@@ -11,7 +11,7 @@ import {
   GroupMembersActionButtonDisabledTooltipPipe,
   MemberStatusPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -53,9 +53,9 @@ import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { GroupAddMemberDialogComponent } from '../../../components/group-add-member-dialog/group-add-member-dialog.component';
 import { BulkInviteMembersDialogComponent } from '../../../../shared/components/dialogs/bulk-invite-members-dialog/bulk-invite-members-dialog.component';
 import { CopyMembersDialogComponent } from '../../../../shared/components/dialogs/copy-members-dialog/copy-members-dialog-component';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, iif, merge, Observable, of } from 'rxjs';
 import { CacheHelperService } from '../../../../core/services/common/cache-helper.service';
-import { concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvitePreapprovedMemberDialogComponent } from '../../../../shared/components/dialogs/invite-preapproved-member-dialog/invite-preapproved-member-dialog.component';
@@ -63,6 +63,8 @@ import { BulkInvitePreapprovedMembersDialogComponent } from '../../../../shared/
 import { ExportDataDialogComponent } from '@perun-web-apps/perun/table-utils';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
+import { FormsService, IdmMessagesService } from '@perun-web-apps/perun/registrar-openapi';
 
 @Component({
   imports: [
@@ -72,7 +74,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MemberStatusPipe,
     DebounceFilterComponent,
     RefreshButtonComponent,
@@ -152,6 +154,7 @@ export class GroupMembersComponent implements OnInit {
     this.loadingSubject$,
     this.nextPage.pipe(map((): boolean => true)),
   );
+  useNew: boolean;
 
   private groupAttrNames = [
     Urns.GROUP_SYNC_ENABLED,
@@ -178,6 +181,8 @@ export class GroupMembersComponent implements OnInit {
     private membersService: MembersManagerService,
     private membersListService: MembersListService,
     private destroyRef: DestroyRef,
+    private formsService: FormsService,
+    private idmMessageService: IdmMessagesService,
   ) {}
 
   ngOnInit(): void {
@@ -250,28 +255,56 @@ export class GroupMembersComponent implements OnInit {
       [this.group],
     );
 
-    if (this.inviteAuth) {
-      this.registrarService
-        .isInvitationEnabled(this.group.voId, this.group.id)
-        .subscribe((enabled) => {
-          this.inviteDisabled = !enabled;
-        });
-    }
-    if (this.copyInviteLinkAuth) {
-      this.registrarService
-        .isLinkInvitationEnabled(this.group.voId, this.group.id)
-        .subscribe((enabled) => {
-          this.copyInvitationDisabled = !enabled;
-        });
-    }
+    this.attributesManager
+      .getGroupAttributeByName(this.group.id, Urns.GROUP_USE_NEW_REG)
+      .pipe(
+        map((attr) => (attr?.value != null ? (attr.value as boolean) : false)),
+        switchMap((useNew) => {
+          this.useNew = useNew;
+          const requests: Record<string, Observable<boolean>> = {};
+          if (this.inviteAuth) {
+            // requests.invite = useNew
+            //   ? this.formsService.inviteMailEnabled('GROUP', this.group.id.toString())
+            //   : this.registrarService.isInvitationEnabled(this.group.voId, this.group.id);
+            requests.invite = this.registrarService
+              .isInvitationEnabled(this.group.voId, this.group.id)
+              .pipe(catchError(() => of(false))); // fallback value
+          }
 
-    if (this.preApprovedInviteAuth) {
-      this.registrarService
-        .isPreApprovedInvitationEnabled(this.group.voId, this.group.id)
-        .subscribe((enabled) => {
-          this.preApprovedInviteDisabled = !enabled;
-        });
-    }
+          if (this.copyInviteLinkAuth) {
+            requests.link = (
+              useNew
+                ? this.formsService.inviteLinkEnabled('GROUP', this.group.id.toString())
+                : this.registrarService.isLinkInvitationEnabled(this.group.voId, this.group.id)
+            ).pipe(catchError(() => of(false)));
+          }
+
+          if (this.preApprovedInviteAuth) {
+            requests.preapproved = (
+              useNew
+                ? this.formsService.invitePreapprovedEnabled('GROUP', this.group.id.toString())
+                : this.registrarService.isPreApprovedInvitationEnabled(
+                    this.group.voId,
+                    this.group.id,
+                  )
+            ).pipe(catchError(() => of(false)));
+          }
+
+          return forkJoin(requests);
+        }),
+        tap((results) => {
+          if (results.invite !== undefined) {
+            this.inviteDisabled = !results.invite;
+          }
+          if (results.link !== undefined) {
+            this.copyInvitationDisabled = !results.link;
+          }
+          if (results.preapproved !== undefined) {
+            this.preApprovedInviteDisabled = !results.preapproved;
+          }
+        }),
+      )
+      .subscribe();
   }
 
   onSearchByString(filter: string): void {
@@ -356,7 +389,11 @@ export class GroupMembersComponent implements OnInit {
 
   copyInvitationLink(): void {
     const invitationLink$ = !this.invitationLink
-      ? this.registrarService.buildInviteURL(this.group.voId, this.group.id).pipe(
+      ? iif(
+          () => this.useNew,
+          this.idmMessageService.inviteUrl('GROUP', this.group.id.toString()),
+          this.registrarService.buildInviteURL(this.group.voId, this.group.id),
+        ).pipe(
           concatMap((createdUrl: string) => {
             this.invitationLink = createdUrl;
             return of(this.invitationLink);

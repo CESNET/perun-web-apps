@@ -1,5 +1,5 @@
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -9,6 +9,7 @@ import { NotificatorService } from '@perun-web-apps/perun/services';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AttributeDefinition, AttributesManagerService } from '@perun-web-apps/perun/openapi';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface DeleteAttributeDefinitionDialogData {
   attributes: AttributeDefinition[];
@@ -20,7 +21,7 @@ export interface DeleteAttributeDefinitionDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTableModule,
     TranslateModule,

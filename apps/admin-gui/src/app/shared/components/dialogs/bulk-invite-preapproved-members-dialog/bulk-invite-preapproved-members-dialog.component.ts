@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +17,7 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { formatDate, CommonModule } from '@angular/common';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface BulkInvitePreapprovedMembersDialogData {
   theme: string;
@@ -39,7 +40,7 @@ interface OutputData {
     ReactiveFormsModule,
     MatDatepickerModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,

@@ -1,5 +1,5 @@
 import { RefreshButtonComponent } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
@@ -30,12 +30,13 @@ import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { NotificationListComponent } from '../../../../components/notification-list/notification-list.component';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
-    UiAlertsModule,
+    AlertComponent,
     RefreshButtonComponent,
     TranslateModule,
     LoaderDirective,

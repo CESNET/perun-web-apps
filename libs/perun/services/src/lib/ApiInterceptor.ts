@@ -20,6 +20,7 @@ import { SessionExpirationDialogComponent } from '@perun-web-apps/perun/session-
 import { InitAuthService } from './init-auth.service';
 import { MfaHandlerService } from './mfa-handler.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { ErrorResponse } from '@perun-web-apps/perun/registrar-openapi';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
@@ -89,7 +90,7 @@ export class ApiInterceptor implements HttpInterceptor {
             ),
         },
       });
-    } else if (this.isCallToPerunApi(req.url)) {
+    } else if (this.isCallToPerunApi(req.url) || this.isCallToRegistrarApi(req.url)) {
       req = req.clone({
         setHeaders: {
           Authorization: this.authService.getAuthorizationHeaderValue(),
@@ -170,14 +171,32 @@ export class ApiInterceptor implements HttpInterceptor {
     return url.startsWith(this.store.getProperty('api_url'));
   }
 
+  private isCallToRegistrarApi(url: string): boolean {
+    return url.startsWith(this.store.getProperty('registrar_api_url'));
+  }
+
   private formatErrors<T>(error: HttpErrorResponse, req: HttpRequest<T>): RPCError {
     let rpcError: RPCError;
-    console.error(error);
     const innerError: RPCError = error.error as RPCError;
     if (innerError.errorId) {
       rpcError = innerError;
     }
-    // FIXME not sure if this peace of code is actually needed
+    const regError: ErrorResponse = error.error as ErrorResponse;
+    if (regError.timestamp) {
+      // for new reg, probably not ideal but just so that something gets shown
+      rpcError = {
+        call: regError.path,
+        payload: undefined,
+        stack: '',
+        type: '',
+        urlWithParams: error.url,
+        errorId: regError.timestamp,
+        name: regError.error,
+        status: error.status,
+        message: regError.message,
+      };
+    }
+    // FIXME not sure if this piece of code is actually needed
     // } else if (error.errorId) {
     //   rpcError = JSON.parse(error.error) as RPCError;
     // }

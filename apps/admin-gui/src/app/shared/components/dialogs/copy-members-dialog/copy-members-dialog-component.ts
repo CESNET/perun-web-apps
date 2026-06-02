@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { DebounceFilterComponent, GroupsListComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +19,7 @@ import {
 } from '@perun-web-apps/perun/services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface CopyMembersDialogData {
   theme: string;
@@ -34,7 +35,7 @@ export interface CopyMembersDialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     DebounceFilterComponent,
     TranslateModule,

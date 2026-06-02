@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NotificatorService } from '@perun-web-apps/perun/services';
 import { AppType, MailType, RegistrarManagerService } from '@perun-web-apps/perun/openapi';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface DialogData {
   applicationId: number;
@@ -32,7 +33,7 @@ export interface DialogData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     MatTooltip,
@@ -48,7 +49,7 @@ export class ApplicationReSendNotificationDialogComponent implements OnInit {
   reason = '';
   loading = false;
   theme: string;
-  availableMailTypes = [
+  availableMailTypes: MailType[] = [
     MailType.APP_CREATED_USER,
     MailType.APPROVABLE_GROUP_APP_USER,
     MailType.APP_CREATED_VO_ADMIN,

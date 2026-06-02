@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,6 +46,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { UserSearchSelectComponent } from '@perun-web-apps/perun/components';
 import { MemberSearchSelectComponent } from '@perun-web-apps/perun/components';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -54,7 +55,7 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
     MatSlideToggleModule,
     FormsModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     RefreshButtonComponent,
     MatProgressSpinnerModule,

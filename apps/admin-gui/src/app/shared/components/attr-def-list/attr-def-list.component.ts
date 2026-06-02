@@ -5,7 +5,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -42,12 +42,13 @@ import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 import { NameSpaceToDefPipe } from '../../pipes/name-space-to-def.pipe';
 import { AttributeTypeCleanPipe } from '../../pipes/attribute-type-clean.pipe';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     TableWrapperComponent,
     MatTableModule,

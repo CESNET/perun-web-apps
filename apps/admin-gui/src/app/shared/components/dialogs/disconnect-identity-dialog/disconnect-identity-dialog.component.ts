@@ -1,5 +1,5 @@
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -10,6 +10,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface RemoveUserServiceIdentityDialogData {
   theme: string;
@@ -25,7 +26,7 @@ export interface RemoveUserServiceIdentityDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTableModule,
     TranslateModule,

@@ -1,13 +1,14 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
-  imports: [CommonModule, MatButtonModule, MatDialogModule, UiAlertsModule, TranslateModule],
+  imports: [CommonModule, MatButtonModule, MatDialogModule, AlertComponent, TranslateModule],
   standalone: true,
   selector: 'perun-web-apps-mail-change-failed-dialog',
   templateUrl: './mail-change-failed-dialog.component.html',

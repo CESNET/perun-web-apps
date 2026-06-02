@@ -15,6 +15,11 @@ import {
 } from '@perun-web-apps/perun/services';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { PasswordResetConfigService } from './app/services/password-reset-config.service';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
@@ -23,13 +28,8 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { GeneralModule } from '@perun-web-apps/general';
 import { appRoutes } from './app/app.routes';
-import { UiMaterialModule } from '@perun-web-apps/ui/material';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
-import { UiLoadersModule } from '@perun-web-apps/ui/loaders';
-import { PerunNamespacePasswordFormModule } from '@perun-web-apps/perun/namespace-password-form';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 
@@ -49,6 +49,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 
 const loadConfigs = (appConfig: PasswordResetConfigService) => (): Promise<void> =>
@@ -83,16 +91,12 @@ bootstrapApplication(AppComponent, {
       }),
       BrowserAnimationsModule,
       MatIconModule,
-      GeneralModule,
       ApiModule,
+      RegistrarApiModule,
       HttpClientModule,
-      UiMaterialModule,
-      UiAlertsModule,
-      UiLoadersModule,
-      PerunNamespacePasswordFormModule,
       OAuthModule.forRoot(),
-      PerunSharedComponentsModule,
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     CustomIconService,
     {
@@ -110,6 +114,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     ApiInterceptor,

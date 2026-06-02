@@ -2,7 +2,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatListModule, MatListItem } from '@angular/material/list';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +24,7 @@ import {
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { DeleteDialogTypePipe, UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { RemoveGroupTooltipPipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 type entityToDelete = Facility | Group | Vo | Resource | User | Service;
 
@@ -41,7 +42,7 @@ export interface DeleteDialogResult {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatListModule,
     MatListItem,

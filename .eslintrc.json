@@ -71,6 +71,8 @@
         // Angular rules
         // Override rules from extensions to treat everything as error
         "@angular-eslint/use-lifecycle-interface": "error",
+        // Suppress prefer-inject rule introduced in @angular-eslint v20 — inject() migration deferred to a separate task
+        "@angular-eslint/prefer-inject": "off",
 
         // Nx rules
         "@nx/enforce-module-boundaries": [

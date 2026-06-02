@@ -19,7 +19,7 @@ import {
   MemberTypeTooltipPipe,
   UserFullNamePipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -80,6 +80,7 @@ import { BehaviorSubject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConsentStatusComponent } from '../consent-status/consent-status.component';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -87,7 +88,7 @@ import { TableConfigService } from '@perun-web-apps/config/table-config';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MemberStatusIconPipe,
     MiddleClickRouterLinkDirective,

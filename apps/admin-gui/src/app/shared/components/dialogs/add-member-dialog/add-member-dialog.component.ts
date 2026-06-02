@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { DebounceFilterComponent } from '@perun-web-apps/perun/components';
 import { LoadingDialogComponent, LoadingTableComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -17,13 +17,14 @@ import { BehaviorSubject } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { MembersCandidatesListComponent } from '../../members-candidates-list/members-candidates-list.component';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     DebounceFilterComponent,
     MatMenuModule,
@@ -60,7 +61,7 @@ export class AddMemberDialogComponent implements OnInit {
   @Input() cachedSubject = new BehaviorSubject(true);
   @Output() add: EventEmitter<void> = new EventEmitter<void>();
   @Output() cancelled: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchSubmit: EventEmitter<string> = new EventEmitter<string>();
   @Output() invite: EventEmitter<string> = new EventEmitter<string>();
   searchCtrl: UntypedFormControl = new UntypedFormControl('', [
     Validators.required,
@@ -73,7 +74,7 @@ export class AddMemberDialogComponent implements OnInit {
   }
 
   applyFilter(searchValue: string): void {
-    this.search.emit(searchValue);
+    this.searchSubmit.emit(searchValue);
     this.selection.clear();
     this.cachedSubject.next(true);
   }

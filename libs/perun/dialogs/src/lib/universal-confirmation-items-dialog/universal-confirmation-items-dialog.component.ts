@@ -1,10 +1,11 @@
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface UniversalConfirmationItemsDialogData {
   theme: string;
@@ -21,7 +22,7 @@ export interface UniversalConfirmationItemsDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     MatTableModule,
     TranslateModule,
   ],

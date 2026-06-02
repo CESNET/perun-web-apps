@@ -8,7 +8,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import {
@@ -38,12 +38,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ObjectListValuesComponent } from '../object-list-values/object-list-values.component';
 import { AuthorizedGroupsCellComponent } from '../authorized-groups-cell/authorized-groups-cell.component';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatCheckboxModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     MiddleClickRouterLinkDirective,
     TableWrapperComponent,

@@ -1,6 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +23,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Group, GroupsManagerService } from '@perun-web-apps/perun/openapi';
 import { GroupFlatNode, RPCError } from '@perun-web-apps/perun/models';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface MoveGroupDialogData {
   group: GroupFlatNode;
@@ -39,10 +41,11 @@ export interface MoveGroupDialogData {
     FormsModule,
     MatAutocompleteModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     MatTooltip,
+    MatIconModule,
     LoaderDirective,
   ],
   standalone: true,
@@ -62,6 +65,7 @@ export class MoveGroupDialogComponent implements OnInit {
   moveOption: 'toGroup' | 'toRoot';
   loading = false;
   selectedGroup: Group = null;
+  groupsThatWillBeBroken: Group[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<MoveGroupDialogComponent>,
@@ -82,8 +86,8 @@ export class MoveGroupDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.groupService.getAllGroups(this.data.group.voId).subscribe(
-      (allGroups) => {
+    this.groupService.getAllGroups(this.data.group.voId).subscribe({
+      next: (allGroups) => {
         this.otherGroups = allGroups.filter(
           (group) =>
             group.id !== this.data.group.id && group.name !== 'members' && this.canMove(group),
@@ -104,15 +108,36 @@ export class MoveGroupDialogComponent implements OnInit {
           startWith(''),
           map((group: string) => (group ? this._filterGroups(group) : this.otherGroups.slice())),
         );
+        this.otherGroupsCtrl.valueChanges.subscribe(() => {
+          this.checkBrokenRegistrations();
+        });
         this.loading = false;
       },
-      () => (this.loading = false),
-    );
+      error: () => (this.loading = false),
+    });
   }
 
   // Hack that ensures proper autocomplete value displaying
   displayFn(group: Group): string | Group {
     return group ? group.name : group;
+  }
+
+  checkBrokenRegistrations(): void {
+    // there is no or invalid value in the group selector, do not check anything
+    if (this.moveOption === 'toGroup' && !(this.otherGroupsCtrl.value as Group)?.id) {
+      this.groupsThatWillBeBroken = [];
+      return;
+    }
+
+    const destinationId =
+      this.moveOption === 'toGroup' ? (this.otherGroupsCtrl.value as Group).id : undefined;
+    this.groupService
+      .getGroupsWhereAutoRegistrationWillBeBrokenByMovingGroup(this.data.group.id, destinationId)
+      .subscribe({
+        next: (brokenGroups) => {
+          this.groupsThatWillBeBroken = brokenGroups;
+        },
+      });
   }
 
   canMove(group: Group): boolean {
@@ -130,21 +155,20 @@ export class MoveGroupDialogComponent implements OnInit {
     this.loading = true;
     // FIXME this might not work in case of some race condition (other request finishes sooner)
     this.apiRequest.dontHandleErrorForNext();
+    const destinationId =
+      this.moveOption === 'toGroup' ? (this.otherGroupsCtrl.value as Group)?.id : undefined;
     this.groupService
-      .moveGroupWithDestinationGroupMovingGroup(
-        this.data.group.id,
-        this.otherGroupsCtrl.value ? (this.otherGroupsCtrl.value as Group).id : undefined,
-      )
-      .subscribe(
-        () => {
+      .moveGroupWithDestinationGroupMovingGroup(this.data.group.id, destinationId)
+      .subscribe({
+        next: () => {
           this.notificator.showSuccess(this.successMessage);
           this.dialogRef.close(true);
         },
-        (error: RPCError) => {
+        error: (error: RPCError) => {
           this.notificator.showRPCError(error, this.errorMessage);
           this.dialogRef.close(false);
         },
-      );
+      });
   }
 
   private _filterGroups(value: string): Group[] {

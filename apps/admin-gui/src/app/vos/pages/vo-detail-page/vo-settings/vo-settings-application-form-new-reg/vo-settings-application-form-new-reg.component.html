@@ -1,0 +1,120 @@
+<h1 class="page-subtitle">
+  {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
+</h1>
+@if (loadingHeader) {
+  <mat-spinner class="ms-auto me-auto"> </mat-spinner>
+}
+<div>
+  @if (!loadingHeader) {
+    <div class="d-flex w-75">
+      <div>
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
+          >:
+          <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
+          {{formSpecification.autoApprovedTypes.includes('INITIAL') ?
+            ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+          ,
+          <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
+          {{formSpecification.autoApprovedTypes.includes('EXTENSION') ?
+            ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
+          @if (editAuth) {
+            <button (click)="settings()" class="ms-3 action-button" mat-stroked-button>
+              <i class="material-icons align-middle">edit</i>
+              <span class="align-middle">
+                {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SETTINGS_BUTTON' | translate}}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <mat-divider class="mb-2 mt-2"></mat-divider>
+
+  <div class="w-100 d-flex">
+    <!--    <perun-web-apps-refresh-button-->
+    <!--      (refresh)="this.updateFormItems()"></perun-web-apps-refresh-button>-->
+
+    @if (editAuth) {
+      <button
+        [disabled]="loadingTable"
+        (click)="add()"
+        color="accent"
+        class="me-2 action-button"
+        data-cy="add-form-item"
+        mat-flat-button>
+        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.ADD_BUTTON' | translate}}
+      </button>
+    }
+
+    @if (editAuth) {
+      <button
+        (click)="save()"
+        color="accent"
+        [disabled]="!itemsChanged"
+        data-cy="save-application-form"
+        class="me-2"
+        mat-flat-button>
+        <i class="material-icons">save</i>
+        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+      </button>
+    }
+
+    <!--    <button (click)="preview()" mat-stroked-button>-->
+    <!--      <i class="material-icons">search</i>-->
+    <!--      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}-->
+    <!--    </button>-->
+
+    <!--    <button-->
+    <!--      *ngIf="editAuth"-->
+    <!--      (click)="clear()"-->
+    <!--      class="ms-2"-->
+    <!--      mat-stroked-button-->
+    <!--      matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR_TOOLTIP' | translate}}"-->
+    <!--      matTooltipPosition="above">-->
+    <!--      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
+    <!--    </button>-->
+    <div class="mt-2 ms-2">
+      <label class="slide-label" (click)="toggleFormType('INITIAL')"
+        >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
+      </label>
+      <mat-slide-toggle
+        #toggle
+        (change)="changeFormType()"
+        [(ngModel)]="showExtension"
+        class="me-1">
+      </mat-slide-toggle>
+      <label class="slide-label" (click)="toggleFormType('EXTENSION')"
+        >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
+      </label>
+    </div>
+  </div>
+
+  @if (editAuth) {
+    <perun-web-apps-alert alert_type="info">
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.DRAG_AND_DROP_INFO' | translate}}
+    </perun-web-apps-alert>
+  }
+
+  <ng-template #spinner>
+    <perun-web-apps-loading-table></perun-web-apps-loading-table>
+  </ng-template>
+  <div class="position-relative table-min-height">
+    <app-application-form-list-new-reg
+      *perunWebAppsLoader="loadingTable; indicator: spinner"
+      [loading]="loadingTable"
+      [newFormItems]="newFormItemIds"
+      (applicationFormItemsChange)="changeItems()"
+      (applicationFormItemsDeleted)="toRemoveFormItemIds=$event"
+      [formSpecification]="formSpecification"
+      [applicationFormItems]="formItems"
+      [displayedColumns]="displayedColumns"
+      [refreshApplicationForm]="refreshApplicationForm"
+      [theme]="'vo-theme'">
+    </app-application-form-list-new-reg>
+  </div>
+</div>

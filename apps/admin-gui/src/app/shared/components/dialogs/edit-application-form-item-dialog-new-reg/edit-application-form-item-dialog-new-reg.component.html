@@ -1,0 +1,402 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} h-100 position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner" class="h-100 d-flex flex-column">
+    <h1 mat-dialog-title>
+      {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.TITLE' | translate}} :
+      {{this.applicationFormItem.formItemDTO.name}}
+    </h1>
+    <div class="dialog-container" mat-dialog-content>
+      <mat-tab-group color="primary" mat-stretch-tabs="false">
+        <mat-tab label="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.BASIC_SETTINGS' | translate}}">
+          <mat-form-field subscriptSizing="dynamic" class="w-100">
+            <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SHORT_NAME' | translate}}</mat-label>
+            <input [(ngModel)]="applicationFormItem.formItemDTO.name" matInput />
+            <mat-hint
+              >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SHORT_NAME_DESCRIPTION' | translate}}</mat-hint
+            >
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label>
+              {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INPUT_WIDGET' | translate}}
+            </mat-label>
+            <input
+              value="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + applicationFormItem.itemDefinition.type | translate}}"
+              matInput
+              readonly />
+          </mat-form-field>
+          <!--          <section class="mt-4">-->
+          <!--            <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISPLAY_ON_APPLICATION' | translate}}</h6>-->
+          <!--            <mat-checkbox-->
+          <!--              [ngModel]="this.applicationFormItem.itemDefinition.formTypes.includes('INITIAL')"-->
+          <!--              (change)="onChangingType('INITIAL')"-->
+          <!--              matTooltipPosition="after"-->
+          <!--              matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISPLAY_ON_APPLICATION_INITIAL'| translate}}">-->
+          <!--              {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INITIAL' | translate}}-->
+          <!--            </mat-checkbox>-->
+          <!--            <br />-->
+          <!--            <mat-checkbox-->
+          <!--              (change)="onChangingType('EXTENSION')"-->
+          <!--              [ngModel]="this.applicationFormItem.itemDefinition.formTypes.includes('EXTENSION')"-->
+          <!--              matTooltipPosition="after"-->
+          <!--              matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISPLAY_ON_APPLICATION_EXTENSION'| translate}}">-->
+          <!--              {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.EXTENSION' | translate}}-->
+          <!--            </mat-checkbox>-->
+          <!--          </section>-->
+          @if (
+            isApplicationFormItemOfType(['TEXTFIELD', 'USERNAME', 'VALIDATED_EMAIL', 'PASSWORD', 'TEXTAREA',
+              'TIMEZONE', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+          ) {
+            <div>
+              <section class="mt-4">
+                <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.USER_ACTION' | translate}}</h6>
+                <mat-checkbox
+                  [(ngModel)]="this.applicationFormItem.itemDefinition.required"
+                  matTooltipPosition="after"
+                  matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REQUIRED_DESCRIPTION'| translate}}">
+                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REQUIRED' | translate}}
+                </mat-checkbox>
+                <br />
+                @if (
+                  typesWithUpdatable.indexOf(this.applicationFormItem.itemDefinition.type) > -1
+                ) {
+                  <mat-checkbox
+                    [(ngModel)]="this.applicationFormItem.itemDefinition.updatable"
+                    matTooltipPosition="after"
+                    matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.UPDATABLE_DESCRIPTION'| translate}}">
+                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.UPDATABLE' | translate}}
+                  </mat-checkbox>
+                }
+              </section>
+              <section class="mt-4">
+                <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ATTRIBUTES' | translate}}</h6>
+                @if (sourceAttributes !== undefined) {
+                  <div class="w-100">
+                    <perun-web-apps-selection-item-search-select
+                      [attributes]="sourceAttributes"
+                      [selectedAttribute]="idmSource"
+                      (itemSelected)="changeIdmAttribute($event); loadWarning(itemType.SOURCE)"
+                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SOURCE_ATTRIBUTE_DESCRIPTION' | translate"
+                      [asGroup]="data.isGroup"
+                      [type]="itemType.SOURCE">
+                    </perun-web-apps-selection-item-search-select>
+                    @if (displayWarningForSourceAttr) {
+                      <perun-web-apps-alert alert_type="warn">
+                        {{warningMessage}}
+                      </perun-web-apps-alert>
+                    }
+                  </div>
+                }
+                @if (destinationAttributes !== undefined) {
+                  <div class="w-100">
+                    <perun-web-apps-selection-item-search-select
+                      [attributes]="destinationAttributes"
+                      [selectedAttribute]="itemDestination"
+                      (itemSelected)="itemDestination = $event.value; loadWarning(itemType.DESTINATION)"
+                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DESTINATION_ATTRIBUTE_DESCRIPTION' | translate"
+                      [asGroup]="data.isGroup"
+                      [type]="itemType.DESTINATION"
+                      [required]="isApplicationFormItemOfType([])">
+                    </perun-web-apps-selection-item-search-select>
+                    @if (displayWarningForDestinationAttr) {
+                      <perun-web-apps-alert alert_type="warn">
+                        {{warningMessage}}
+                      </perun-web-apps-alert>
+                    }
+                  </div>
+                }
+                <div class="w-100">
+                  <perun-web-apps-selection-item-search-select
+                    [selectedAttribute]="identitySource"
+                    [asGroup]="data.isGroup"
+                    [type]="itemType.FEDERATION"
+                    [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_DESCRIPTION' | translate"
+                    (itemSelected)="changeFederationAttribute($event)">
+                  </perun-web-apps-selection-item-search-select>
+                  @if (federationAttributeDN === ' -- custom value -- ') {
+                    <div class="w-100">
+                      <mat-form-field class="w-100">
+                        <mat-label
+                          >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
+                        >
+                        <input [(ngModel)]="identitySource" matInput />
+                      </mat-form-field>
+                    </div>
+                  }
+                </div>
+              </section>
+            </div>
+          }
+          @if (
+            isApplicationFormItemOfType(['TEXTFIELD', 'USERNAME', 'PASSWORD', 'TEXTAREA', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+          ) {
+            <div>
+              <section class="mt-4">
+                <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALIDATION' | translate}}</h6>
+                <mat-form-field subscriptSizing="dynamic" class="w-100">
+                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REGEX' | translate}}</mat-label>
+                  <input [(ngModel)]="validatorRegex" matInput />
+                  <mat-hint
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REGEX_DESCRIPTION' | translate}}</mat-hint
+                  >
+                </mat-form-field>
+              </section>
+            </div>
+          }
+
+          <section class="mt-4">
+            <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INTERACTIVITY' | translate}}</h6>
+            <!-- Disabled part -->
+            @if (typesWithDisabled.indexOf(this.applicationFormItem.itemDefinition.type) > -1) {
+              <div>
+                <mat-form-field subscriptSizing="dynamic" class="w-100">
+                  <mat-label
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISABLED' | translate}}</mat-label
+                  >
+                  <mat-select
+                    [(value)]="applicationFormItem.itemDefinition.disabled"
+                    disableOptionCentering>
+                    @for (value of disabledValues; track value) {
+                      <mat-option [value]="value">
+                        {{value | applicationFormItemDisabled}}
+                      </mat-option>
+                    }
+                  </mat-select>
+                  <mat-hint
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISABLED_DESCRIPTION' | translate}}</mat-hint
+                  >
+                </mat-form-field>
+                <div class="w-100">
+                  @if (this.disabledDependencyItem !== null) {
+                    <perun-web-apps-app-form-item-search-select
+                      [item]="this.disabledDependencyItem"
+                      (itemSelected)="this.disabledDependencyItem=$event"
+                      [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISABLED_DEPENDENCY' | translate"
+                      [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISABLED_DEPENDENCY_DESCRIPTION' | translate"
+                      [items]="possibleDependencyItems">
+                    </perun-web-apps-app-form-item-search-select>
+                  }
+                </div>
+              </div>
+            }
+            <!-- Hidden part -->
+            <mat-form-field subscriptSizing="dynamic" class="w-100">
+              <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HIDDEN' | translate}}</mat-label>
+              <mat-select
+                [(value)]="applicationFormItem.itemDefinition.hidden"
+                disableOptionCentering>
+                @for (value of hiddenValues; track value) {
+                  <mat-option [value]="value">
+                    {{value | applicationFormItemHidden}}
+                  </mat-option>
+                }
+              </mat-select>
+              <mat-hint
+                >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HIDDEN_DESCRIPTION' | translate}}</mat-hint
+              >
+            </mat-form-field>
+            <div class="w-100">
+              @if (this.hiddenDependencyItem !== null) {
+                <perun-web-apps-app-form-item-search-select
+                  [item]="this.hiddenDependencyItem"
+                  (itemSelected)="this.hiddenDependencyItem=$event"
+                  [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HIDDEN_DEPENDENCY' | translate"
+                  [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HIDDEN_DEPENDENCY_DESCRIPTION' | translate"
+                  [items]="possibleDependencyItems">
+                </perun-web-apps-app-form-item-search-select>
+              }
+            </div>
+          </section>
+
+          <!-- END of TAB 1 -->
+        </mat-tab>
+
+        @for (lang of languages; track lang) {
+          <mat-tab
+            label="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LANGUAGE_'+lang | uppercase | translate}}"
+            [formGroup]="inputFormGroup">
+            @if (isApplicationFormItemOfType(['HEADING', 'HTML_COMMENT'])) {
+              <div>
+                <perun-web-apps-html-content-form-field
+                  [inputFormControl]="inputFormGroup.controls[lang + '-html-label']"
+                  [tagType]="'textarea'"
+                  [label]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT'"
+                  [hint]="'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CONTENT_DESCRIPTION'"
+                  [useNewRegistrar]="true" />
+              </div>
+            }
+            @if (
+              isApplicationFormItemOfType(['TEXTFIELD', 'VALIDATED_EMAIL', 'USERNAME', 'PASSWORD', 'RADIO', 'TEXTAREA',
+                        'COMBOBOX', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+            ) {
+              <div>
+                @if (!isApplicationFormItemOfType(['CHECKBOX'])) {
+                  <mat-form-field subscriptSizing="dynamic" class="w-100">
+                    <mat-label
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
+                    >
+                    <textarea formControlName="{{lang}}-plain-label" matInput></textarea>
+                    <mat-hint
+                      >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL_DESCRIPTION' | translate}}</mat-hint
+                    >
+                  </mat-form-field>
+                }
+                @if (isApplicationFormItemOfType(['CHECKBOX'])) {
+                  <div>
+                    <mat-form-field subscriptSizing="dynamic" class="w-100">
+                      <mat-label
+                        >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
+                      >
+                      <textarea formControlName="{{lang}}-html-label" matInput></textarea>
+                      @if (inputFormGroup.controls[lang + '-html-label']?.pending) {
+                        <mat-spinner matSuffix [diameter]="18" class="input-spinner"></mat-spinner>
+                      }
+                      @if (!inputFormGroup.controls[lang + '-html-label']?.pending) {
+                        <mat-hint
+                          >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CHECKBOX_LABEL_DESCRIPTION' | translate}}</mat-hint
+                        >
+                      }
+                      @if (inputFormGroup.controls[lang + '-html-label']?.invalid) {
+                        <mat-error>
+                          {{inputFormGroup.controls[lang + '-html-label'].errors?.invalidHtmlContent}}
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                }
+                <mat-form-field subscriptSizing="dynamic" class="w-100">
+                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HELP' | translate}}</mat-label>
+                  <textarea formControlName="{{lang}}-plain-help" matInput></textarea>
+                  <mat-hint
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.HELP_DESCRIPTION' | translate}}</mat-hint
+                  >
+                </mat-form-field>
+                <mat-form-field subscriptSizing="dynamic" class="w-100">
+                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ERROR' | translate}}</mat-label>
+                  <textarea formControlName="{{lang}}-plain-error-message" matInput></textarea>
+                  <mat-hint
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ERROR_DESCRIPTION' | translate}}</mat-hint
+                  >
+                </mat-form-field>
+              </div>
+            }
+            @if (isApplicationFormItemOfType(['SUBMIT_BUTTON', 'AUTO_SUBMIT_BUTTON'])) {
+              <div>
+                <mat-form-field subscriptSizing="dynamic" class="w-100">
+                  <mat-label>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label>
+                  <textarea formControlName="{{lang}}-plain-label" matInput></textarea>
+                  <mat-hint
+                    >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL_BUTTON_DESCRIPTION' | translate}}</mat-hint
+                  >
+                </mat-form-field>
+              </div>
+            }
+            @if (isApplicationFormItemOfType(['RADIO', 'COMBOBOX', 'CHECKBOX', 'SELECTIONBOX'])) {
+              <div class="mt-4">
+                <h6>Options</h6>
+                <perun-web-apps-alert alert_type="info">
+                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.OPTIONS_DESCRIPTION' | translate}}
+                </perun-web-apps-alert>
+                <div class="d-flex mt-2 mb-2">
+                  <button (click)="sortOptionsAZ(lang)" class="ms-auto me-2" mat-stroked-button>
+                    <i class="material-icons">arrow_downward</i>
+                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_AZ' | translate}}
+                  </button>
+                  <button (click)="sortOptionsZA(lang)" class="me-auto" mat-stroked-button>
+                    <i class="material-icons">arrow_upward</i>
+                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_ZA' | translate}}
+                  </button>
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                  @for (option of options[lang]; track option) {
+                    <div class="mb-2">
+                      <div class="d-flex flex-row justify-content-center align-items-center">
+                        <mat-form-field class="mx-4" subscriptSizing="dynamic">
+                          <mat-label
+                            >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label
+                          >
+                          <input
+                            [(ngModel)]="option[0]"
+                            [ngModelOptions]="{standalone: true}"
+                            matInput />
+                        </mat-form-field>
+                        <mat-form-field subscriptSizing="dynamic">
+                          <mat-label
+                            >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
+                          >
+                          <input [formControl]="option[1]" matInput />
+                          @if (option[1].pending) {
+                            <mat-spinner
+                              matSuffix
+                              [diameter]="18"
+                              class="input-spinner"></mat-spinner>
+                          }
+                        </mat-form-field>
+                        <button
+                          (click)="removeOption(option, lang)"
+                          color="warn"
+                          mat-icon-button
+                          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
+                          <mat-icon>remove_circle</mat-icon>
+                        </button>
+                      </div>
+                      <div>
+                        @if (option[1].invalid) {
+                          <mat-error
+                            class="ms-5 mt-1"
+                            >{{option[1].errors?.invalidHtmlContent}}</mat-error
+                          >
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button (click)="addOption(lang)" class="me-2" color="accent" mat-flat-button>
+                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ADD_OPTION' | translate}}
+                  </button>
+                </div>
+              </div>
+            }
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </div>
+    <div class="d-flex" mat-dialog-actions>
+      <button (click)="cancel()" class="ms-auto mt-auto" mat-stroked-button>
+        {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CANCEL_BUTTON' | translate}}
+      </button>
+      <div
+        [matTooltipDisabled]="!applicationFormItem.itemDefinition.required ||
+          idmSource !== '' ||
+          identitySource !== '' ||
+          (applicationFormItem.itemDefinition.disabled !== 'ALWAYS' && applicationFormItem.itemDefinition.hidden !== 'ALWAYS')"
+        matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON_DISABLED_TOOLTIP' | translate}}">
+        <div
+          [matTooltipDisabled]="!inputFormGroup.invalid && !optionsFormArray.invalid"
+          [matTooltipPosition]="'above'"
+          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.INVALID_HTML_CONTENT' | translate}}">
+          <div
+            [matTooltipDisabled]="!isApplicationFormItemOfType([])
+            || (itemDestination !== '' && itemDestination !== null)"
+            matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON_DISABLED_TOOLTIP_DESTINATION_MISSING' | translate: {type: applicationFormItem.itemDefinition.type} }}">
+            <button
+              mat-flat-button
+              class="ms-2 mt-auto"
+              color="accent"
+              data-cy="edit-form-item-button-dialog"
+              [disabled]="inputFormGroup.invalid | disableSubmitOnAppItemEdit: inputFormGroup.pending:
+              optionsFormArray.invalid: optionsFormArray.pending: loading: applicationFormItem.itemDefinition.required:
+              idmSource: identitySource:
+              applicationFormItem.itemDefinition.disabled: applicationFormItem.itemDefinition.hidden: 'HEADING':
+              itemDestination: []"
+              (click)="submit()">
+              {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SUBMIT_BUTTON' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

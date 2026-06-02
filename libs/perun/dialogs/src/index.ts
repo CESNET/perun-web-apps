@@ -1,4 +1,3 @@
-export * from './lib/perun-dialogs.module';
 export * from './lib/change-expiration-dialog/change-expiration-dialog.component';
 export * from './lib/change-member-status-dialog/change-member-status-dialog.component';
 export * from './lib/edit-facility-resource-group-vo-dialog/edit-facility-resource-group-vo-dialog.component';

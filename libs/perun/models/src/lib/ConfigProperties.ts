@@ -145,6 +145,7 @@ export interface PerunConfig {
   // Shared properties
   // Required
   api_url: string;
+  registrar_api_url: string;
   oidc_client: OidcClient;
   proxy_logout: boolean;
   password_namespace_attributes: string[];

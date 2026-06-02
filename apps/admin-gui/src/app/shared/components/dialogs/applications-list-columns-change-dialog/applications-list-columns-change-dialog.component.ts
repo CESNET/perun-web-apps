@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -16,6 +16,7 @@ import { ApplicationColumnSelectLabelPipe } from '@perun-web-apps/perun/pipes';
 import { containsExactlyInAnyOrder } from '@perun-web-apps/perun/utils';
 import { StringSearchSelectComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ApplicationsListColumnsChangeDialogData {
   theme: string;
@@ -27,7 +28,7 @@ export interface ApplicationsListColumnsChangeDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatMenuModule,
     TranslateModule,

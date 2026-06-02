@@ -20,10 +20,14 @@ import {
 import { PERUN_API_SERVICE } from '@perun-web-apps/perun/tokens';
 import { AdminGuiConfigService } from './app/core/services/common/admin-gui-config.service';
 import { ApiModule, Configuration, ConfigurationParameters } from '@perun-web-apps/perun/openapi';
-import { GeneralModule } from '@perun-web-apps/general';
+
+import {
+  ApiModule as RegistrarApiModule,
+  Configuration as RegistrarConfiguration,
+  ConfigurationParameters as RegistrarConfigurationParameters,
+} from '@perun-web-apps/perun/registrar-openapi';
 import { NG_SCROLLBAR_OPTIONS, NgScrollbarModule } from 'ngx-scrollbar';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
-import { PerunLoginModule } from '@perun-web-apps/perun/login';
+import { providePerunDateAdapter } from '@perun-web-apps/perun/components';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { isRunningLocally } from '@perun-web-apps/perun/utils';
 import { environment } from './environments/environment';
@@ -44,6 +48,14 @@ export function apiConfigFactory(store: StoreService): Configuration {
     withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
   };
   return new Configuration(params);
+}
+
+export function registrarApiConfigFactory(store: StoreService): RegistrarConfiguration {
+  const params: RegistrarConfigurationParameters = {
+    basePath: store.getProperty('registrar_api_url'),
+    withCredentials: !isRunningLocally() /* add cookies to keep same session for BA access */,
+  };
+  return new RegistrarConfiguration(params);
 }
 
 const loadConfigs: (appConfig: AdminGuiConfigService) => () => Promise<void> =
@@ -74,7 +86,6 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       HttpClientModule,
       MatIconModule,
-      GeneralModule,
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
@@ -83,11 +94,11 @@ bootstrapApplication(AppComponent, {
         },
       }),
       ApiModule,
-      PerunSharedComponentsModule,
-      PerunLoginModule,
+      RegistrarApiModule,
       NgScrollbarModule,
       OAuthModule.forRoot(),
     ),
+    providePerunDateAdapter(),
     provideRouter(appRoutes),
     AdminGuiConfigService,
     {
@@ -105,6 +116,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: Configuration,
       useFactory: apiConfigFactory,
+      deps: [StoreService],
+    },
+    {
+      provide: RegistrarConfiguration,
+      useFactory: registrarApiConfigFactory,
       deps: [StoreService],
     },
     {

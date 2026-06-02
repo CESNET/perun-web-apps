@@ -1,6 +1,6 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -15,6 +15,7 @@ import {
 import { AuthzResolverService, PerunBean, RichUser } from '@perun-web-apps/perun/openapi';
 import { Role } from '@perun-web-apps/perun/models';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface RemoveManagerDialogData {
   complementaryObject: PerunBean;
@@ -29,7 +30,7 @@ export interface RemoveManagerDialogData {
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     MatTableModule,
     TranslateModule,

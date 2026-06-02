@@ -1,6 +1,6 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +30,7 @@ import {
 import { ApplicationFormItemTypePipe } from '../../../shared/pipes/application-form-item-type.pipe';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 import { SanitizeHtmlPipe } from '@perun-web-apps/perun/pipes';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -38,7 +39,7 @@ import { SanitizeHtmlPipe } from '@perun-web-apps/perun/pipes';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     MatTableModule,
     TranslateModule,
     MatTooltip,

@@ -1,19 +1,20 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
 import { AttributeAction, AttributePolicyCollection } from '@perun-web-apps/perun/openapi';
 import { AttributeRightsCollectionComponent } from '../attribute-rights-collection/attribute-rights-collection.component';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    UiAlertsModule,
+    AlertComponent,
     TranslateModule,
     MatTooltip,
     AttributeRightsCollectionComponent,

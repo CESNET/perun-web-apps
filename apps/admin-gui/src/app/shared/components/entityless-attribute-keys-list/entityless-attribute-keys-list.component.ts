@@ -4,7 +4,7 @@ import {
   IsAllSelectedPipe,
   MasterCheckboxLabelPipe,
 } from '@perun-web-apps/perun/pipes';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
@@ -40,6 +40,7 @@ import { TABLE_ITEMS_COUNT_OPTIONS } from '@perun-web-apps/perun/utils';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface EntitylessAttributeKeysListData {
   attDef: AttributeDefinition;
@@ -60,7 +61,7 @@ export interface ListData {
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     IsAllSelectedPipe,
     TableWrapperComponent,
     MatTableModule,

@@ -30,7 +30,7 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
   @Input() attributes: AttributeDefinition[];
   @Input() attributesForEntity: Entity[];
   @Output() attributeSelected = new EventEmitter<AttributeDefinition>();
-  @Output() search = new EventEmitter<{ [p: string]: string }>();
+  @Output() searchSubmit = new EventEmitter<{ [p: string]: string }>();
 
   availableAttrDefs: AttributeDefinition[] = [];
   options: string[][] = [];
@@ -40,7 +40,12 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.availableAttrDefs = this.attributes
-      .filter((attrDef) => this.attributesForEntity.includes(attrDef.entity as Entity))
+      .filter(
+        (attr) =>
+          attr.displayName &&
+          attr.entity &&
+          this.attributesForEntity.includes(attr.entity as Entity),
+      )
       .sort(compareFnDisplayName);
     if (this.attributesForEntity.length > 1) {
       this.nameFunction = (attr: AttributeDefinition): string =>
@@ -77,6 +82,6 @@ export class AttributeSearchSelectComponent implements OnInit, OnChanges {
     this.options.forEach((search) => {
       inputGetEntity[search[0]] = search[1];
     });
-    this.search.emit(inputGetEntity);
+    this.searchSubmit.emit(inputGetEntity);
   }
 }

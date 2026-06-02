@@ -1,5 +1,5 @@
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +17,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AutoFocusDirective, LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface AddHostDialogData {
   theme: string;
@@ -31,7 +32,7 @@ export interface AddHostDialogData {
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,

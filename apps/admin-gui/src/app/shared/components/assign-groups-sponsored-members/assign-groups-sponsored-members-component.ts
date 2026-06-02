@@ -5,7 +5,7 @@ import {
   DebounceFilterComponent,
   GroupsListComponent,
 } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,7 @@ import { GuiAuthResolver } from '@perun-web-apps/perun/services';
 import { Observable, Subscription } from 'rxjs';
 import { Urns } from '@perun-web-apps/perun/urns';
 import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps/perun/utils';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -28,7 +29,7 @@ import { hasBooleanAttributeEnabled, isGroupSynchronized } from '@perun-web-apps
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    UiAlertsModule,
+    AlertComponent,
     DebounceFilterComponent,
     TranslateModule,
     MatTooltip,

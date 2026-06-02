@@ -1,5 +1,5 @@
 import { LoadingDialogComponent } from '@perun-web-apps/ui/loaders';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { switchMap } from 'rxjs/operators';
 import { of, zip } from 'rxjs';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 @Component({
   imports: [
@@ -24,7 +25,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    UiAlertsModule,
+    AlertComponent,
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,
@@ -49,14 +50,24 @@ export class AttributeImportDialogComponent {
 
   create(): void {
     this.loading = true;
-    this.attributeData = JSON.parse(this.value) as AttributeForExportData;
+    try {
+      this.attributeData = JSON.parse(this.value) as AttributeForExportData;
+    } catch {
+      this.notificator.showError(
+        this.translate.instant('DIALOGS.IMPORT_ATTRIBUTE_DEFINITION.ERROR') as string,
+      );
+      this.loading = false;
+      return;
+    }
     this.attributesManager
       .createAttributeDefinition({ attribute: this.attributeData.attributeDefinition })
       .pipe(
         switchMap((attDef) => zip(of(attDef.id), of(this.attributeData.attributeRights))),
         this.attributesRightsService.addAttributeId(),
         switchMap((collections) =>
-          this.attributesManager.setAttributePolicyCollections({ policyCollections: collections }),
+          this.attributesManager.setAttributePolicyCollections({
+            policyCollections: collections,
+          }),
         ),
       )
       .subscribe(

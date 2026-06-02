@@ -99,6 +99,12 @@
     </perun-web-apps-alert>
   }
 
+  @if (shouldWarnMailValidation) {
+    <perun-web-apps-alert alert_type="warn">
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MAIL_VALIDATION_WARNING' | translate}}
+    </perun-web-apps-alert>
+  }
+
   <ng-template #spinner>
     <perun-web-apps-loading-table></perun-web-apps-loading-table>
   </ng-template>
@@ -109,7 +115,7 @@
       (applicationFormItemsChange)="changeItems()"
       [applicationForm]="applicationForm"
       [applicationFormItems]="applicationFormItems"
-      [displayColumns]="displayedColumns"
+      [displayedColumns]="displayedColumns"
       [refreshApplicationForm]="refreshApplicationForm"
       [embeddedGroupsItemSaved]="embeddedGroupsItemSaved"
       [theme]="'vo-theme'">

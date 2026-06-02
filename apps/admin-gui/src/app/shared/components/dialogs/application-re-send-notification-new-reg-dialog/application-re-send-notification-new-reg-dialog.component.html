@@ -1,0 +1,51 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.RE_SEND_NOTIFICATION.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      @if (!loading && displayedMailTypes.length === 0) {
+        <perun-web-apps-alert alert_type="warn">
+          {{'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_ALERT' | translate}}
+        </perun-web-apps-alert>
+      }
+      {{'DIALOGS.RE_SEND_NOTIFICATION.SELECT' | translate}}:
+      <mat-form-field class="w-100">
+        <mat-select [(value)]="mailType" disableOptionCentering>
+          @for (mailType of displayedMailTypes; track mailType) {
+            <mat-option [value]="mailType">
+              {{('DIALOGS.RE_SEND_NOTIFICATION.NOTIFICATION_TYPE.' + mailType) | translate}}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (mailType === 'APP_REJECTED_USER') {
+        <div>
+          {{'DIALOGS.RE_SEND_NOTIFICATION.REASON' | translate}}:
+          <mat-form-field class="w-100">
+            <textarea [(ngModel)]="reason" matInput></textarea>
+          </mat-form-field>
+        </div>
+      }
+    </div>
+    <div mat-dialog-actions>
+      <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+        {{'DIALOGS.RE_SEND_NOTIFICATION.CANCEL' | translate}}
+      </button>
+      <span
+        [matTooltip]="'DIALOGS.RE_SEND_NOTIFICATION.EMPTY_TYPES_TOOLTIP' | translate"
+        [matTooltipDisabled]="loading || displayedMailTypes.length > 0">
+        <button
+          (click)="onSubmit()"
+          [disabled]="loading || displayedMailTypes.length === 0"
+          class="ms-2"
+          color="accent"
+          mat-flat-button>
+          {{'DIALOGS.RE_SEND_NOTIFICATION.SEND' | translate}}
+        </button>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnimatedRouterOutletComponent } from '../../../shared/components/animated-router-outlet/animated-router-outlet.component';
-import { PerunSharedComponentsModule } from '@perun-web-apps/perun/components';
+import { BackButtonComponent } from '@perun-web-apps/perun/components';
 import { MiddleClickRouterLinkDirective } from '@perun-web-apps/perun/directives';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -25,7 +25,7 @@ import { EntityPathParam } from '@perun-web-apps/perun/models';
     CommonModule,
     MatIconModule,
     MiddleClickRouterLinkDirective,
-    PerunSharedComponentsModule,
+    BackButtonComponent,
     AnimatedRouterOutletComponent,
     RouterModule,
     MatProgressSpinnerModule,

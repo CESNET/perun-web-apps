@@ -30,7 +30,7 @@ import {
   UsersListComponent,
   VosListComponent,
 } from '@perun-web-apps/perun/components';
-import { UiAlertsModule } from '@perun-web-apps/ui/alerts';
+import { AlertComponent } from '@perun-web-apps/ui/alerts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 
@@ -46,7 +46,7 @@ import { LoaderDirective } from '@perun-web-apps/perun/directives';
     ResourcesListComponent,
     GroupsListComponent,
     UsersListComponent,
-    UiAlertsModule,
+    AlertComponent,
     MatProgressSpinnerModule,
     MembersListComponent,
     FacilitiesListComponent,
