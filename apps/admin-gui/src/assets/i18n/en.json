@@ -404,6 +404,7 @@
         "MANAGE_GROUPS_DISABLED": "Save the form with this item to manage the groups",
         "DELETE": "Delete",
         "MODULE_NAMES": "Module names",
+        "NAMESPACE": "Login namespace",
         "APPLICATION_TYPE": "Approval style",
         "MANUAL": "Manual",
         "AUTOMATIC": "Automatic",
@@ -444,7 +445,9 @@
           "HTML_COMMENT": "Custom HTML text",
           "TEXTFIELD": "Input text field",
           "SELECTIONBOX": "Single value selection from list",
-          "CHECKBOX": "Checkbox (multiple selection)"
+          "CHECKBOX": "Checkbox (multiple selection)",
+          "PASSWORD": "Input text field for password",
+          "LOGIN": "Input text field for username"
         },
         "NEW_REG_TRANSLATIONS": {
           "INITIAL": "Initial",
@@ -470,6 +473,7 @@
           "VALIDATED_EMAIL": "Special text field to gather and verify user`s email address. Input is checked on email address format. If a user enters a new value, then a validation email will be sent. The application then can't be approved unless the provided email address is validated.",
           "SELECTIONBOX": "Simple selection box with defined custom values that user can choose.",
           "USERNAME": "Special text field to gather user`s login. It checks login availability on user input.",
+          "LOGIN": "Special text field to gather user`s login. It checks login availability on user input.",
           "PASSWORD": "Two password fields to gather the user's new password. Input is never displayed. The user must type the same password in both fields.",
           "TEXTAREA": "Editable text area useful to gather longer text input with linebreaks, e.g. comments, SSH key",
           "COMBOBOX": "Selection box with defined custom values and one special option: \"--custom value--\", which allows users to input their text (as a simple text field).",
@@ -895,6 +899,7 @@
       "APPLICATION_FORM": {
         "TITLE": "Application form",
         "MODULE_NAMES": "Module names",
+        "NAMESPACE": "Login namespace",
         "APPLICATION_TYPE": "Approval style",
         "AUTOMATIC": "Automatic",
         "MANUAL": "Manual",
@@ -1532,6 +1537,7 @@
     "UPDATE_APPLICATION_FORM": {
       "TITLE": "Change application form settings",
       "MODULE_NAME": "Module name",
+      "NAMESPACE": "Namespace",
       "INITIAL": "Initial",
       "EXTENSION": "Extension",
       "EMBEDDED": "Embedded",
