@@ -14,9 +14,8 @@
       <div [ngStyle]="{'color': textColor}" class="d-flex flex-row">
         <!-- the icon used for roles comes from a different library -->
         @if (item.icon !== 'orcid') {
-          <mat-icon
-            fontSet="{{item.icon==='passkey' ? 'material-symbols-outlined' : 'material-icons'}}">
-            {{item.icon}}
+          <mat-icon>
+            {{item.icon === 'passkey' ? 'security' : item.icon}}
           </mat-icon>
         } @else {
           <mat-icon svgIcon="{{ item.icon }}"> </mat-icon>
