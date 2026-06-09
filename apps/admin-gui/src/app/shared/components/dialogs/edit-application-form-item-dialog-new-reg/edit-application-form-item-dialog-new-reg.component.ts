@@ -123,10 +123,16 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
   idToUuid = new Map<number, string>();
   nextId = 1;
 
-  typesWithUpdatable: ItemDefinitionDTO.TypeEnum[] = ['TEXTFIELD', 'CHECKBOX', 'SELECTIONBOX'];
+  typesWithUpdatable: ItemDefinitionDTO.TypeEnum[] = [
+    'VERIFIED_EMAIL',
+    'TEXTFIELD',
+    'CHECKBOX',
+    'SELECTIONBOX',
+  ];
   typesWithDisabled: ItemDefinitionDTO.TypeEnum[] = [
     'LOGIN',
     'PASSWORD',
+    'VERIFIED_EMAIL',
     'TEXTFIELD',
     'CHECKBOX',
     'SELECTIONBOX',
@@ -142,6 +148,7 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     'LOGIN',
     'PASSWORD',
     'TEXTFIELD',
+    'VERIFIED_EMAIL',
     'CHECKBOX',
     'SELECTIONBOX',
   ];

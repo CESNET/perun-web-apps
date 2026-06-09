@@ -49,6 +49,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     'HTML_COMMENT',
     'TEXTFIELD',
     'SELECTIONBOX',
+    'VERIFIED_EMAIL',
     'CHECKBOX',
     'SUBMIT_BUTTON',
     'LOGIN',
