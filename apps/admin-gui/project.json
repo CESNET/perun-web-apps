@@ -29,6 +29,7 @@
         ],
         "styles": [
           "apps/admin-gui/src/styles.scss",
+          "./node_modules/material-design-icons-iconfont/dist/material-design-icons.css",
           "./node_modules/bootstrap/dist/css/bootstrap.css"
         ],
         "scripts": ["./node_modules/tinycolor2/dist/tinycolor-min.js"]

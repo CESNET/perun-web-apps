@@ -23,6 +23,7 @@
         "assets": ["apps/password-reset/src/favicon.ico", "apps/password-reset/src/assets"],
         "styles": [
           "apps/password-reset/src/styles.scss",
+          "./node_modules/material-design-icons-iconfont/dist/material-design-icons.css",
           "./node_modules/bootstrap/dist/css/bootstrap.css"
         ],
         "scripts": []
@@ -51,7 +52,7 @@
             {
               "type": "initial",
               "maximumWarning": "2mb",
-              "maximumError": "5mb"
+              "maximumError": "7mb"
             },
             {
               "type": "anyComponentStyle",
@@ -69,7 +70,7 @@
             {
               "type": "initial",
               "maximumWarning": "2mb",
-              "maximumError": "6mb"
+              "maximumError": "7mb"
             },
             {
               "type": "anyComponentStyle",
