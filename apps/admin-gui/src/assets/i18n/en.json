@@ -419,6 +419,7 @@
         "REVERT_DELETE": "Restore",
         "CLEAR": "Clear form",
         "CLEAR_TOOLTIP": "Removes all form items",
+        "TOGGLE_DISABLED": "Please save the changes before changes the view.",
         "SUBMIT_MISSING": "You cannot save a form with input items without a submit button present",
         "DRAG": "Drag",
         "TYPES": {
