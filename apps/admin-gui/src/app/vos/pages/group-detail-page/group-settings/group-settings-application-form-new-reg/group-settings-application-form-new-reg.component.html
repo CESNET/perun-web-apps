@@ -106,18 +106,23 @@
       <!--      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
       <!--    </button>-->
       <div class="mt-2 ms-2">
-        <label class="slide-label" (click)="toggleFormType('INITIAL')"
-          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
-        </label>
-        <mat-slide-toggle
-          #toggle
-          (change)="changeFormType()"
-          [(ngModel)]="showExtension"
-          class="me-1">
-        </mat-slide-toggle>
-        <label class="slide-label" (click)="toggleFormType('EXTENSION')"
-          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
-        </label>
+        <span
+          matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TOGGLE_DISABLED' | translate}}"
+          [matTooltipDisabled]="!itemsChanged">
+          <label class="slide-label" (click)="!itemsChanged && toggleFormType('INITIAL')"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
+          </label>
+          <mat-slide-toggle
+            #toggle
+            (change)="changeFormType()"
+            [(ngModel)]="showExtension"
+            [disabled]="itemsChanged"
+            class="me-1">
+          </mat-slide-toggle>
+          <label class="slide-label" (click)="!itemsChanged && toggleFormType('EXTENSION')"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
+          </label>
+        </span>
       </div>
     </div>
     @if (editAuth) {
