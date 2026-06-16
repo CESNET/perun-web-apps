@@ -1,6 +1,10 @@
 <h1 class="page-subtitle">
   {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
 </h1>
+<perun-web-apps-alert
+  alert_type="warn"
+  >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_WARN' | translate}}</perun-web-apps-alert
+>
 @if (loadingHeader) {
   <mat-spinner class="ms-auto me-auto"> </mat-spinner>
 }
