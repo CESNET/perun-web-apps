@@ -23,6 +23,7 @@ import {
   FormSpecificationDTO,
   FormsService,
   FormTypeConfig,
+  ItemDefinitionDTO,
   ItemDefinitionPatchRequest,
   ItemWithDefinitionDTO,
 } from '@perun-web-apps/perun/registrar-openapi';
@@ -67,9 +68,20 @@ export class VoSettingsApplicationFormNewRegComponent implements OnInit {
   newFormItemIds: string[] = [];
   toRemoveFormItemIds: string[] = [];
   itemsChanged = false;
+  missingSubmitButton = false;
   editAuth: boolean;
   displayedColumns: string[] = [];
   refreshApplicationForm = false;
+  inputItem: ItemDefinitionDTO.TypeEnum[] = [
+    'DATE_PICKER',
+    'VERIFIED_EMAIL',
+    'CHECKBOX',
+    'LOGIN',
+    'PASSWORD',
+    'SELECTION_CUSTOM',
+    'SELECTIONBOX',
+    'TEXTFIELD',
+  ];
   private vo: Vo;
 
   constructor(
@@ -152,7 +164,7 @@ export class VoSettingsApplicationFormNewRegComponent implements OnInit {
         editDialog.afterClosed().subscribe((updatedItem: ItemWithDefinitionDTO) => {
           if (updatedItem) {
             Object.assign(success[1], updatedItem);
-            this.itemsChanged = true;
+            this.changeItems();
           }
         });
       }
@@ -193,6 +205,30 @@ export class VoSettingsApplicationFormNewRegComponent implements OnInit {
 
   changeItems(): void {
     this.itemsChanged = true;
+
+    const containsSubmit =
+      this.formItems.filter(
+        (item) =>
+          !this.toRemoveFormItemIds.includes(item.formItemDTO.id) &&
+          item.itemDefinition.type === 'SUBMIT_BUTTON',
+      ).length > 0;
+    const containsInput =
+      this.formItems.filter(
+        (item) =>
+          !this.toRemoveFormItemIds.includes(item.formItemDTO.id) &&
+          this.inputItem.includes(item.itemDefinition.type),
+      ).length > 0;
+
+    if (containsInput && !containsSubmit) {
+      this.missingSubmitButton = true;
+    } else {
+      this.missingSubmitButton = false;
+    }
+  }
+
+  removeChanged(removedIds: string[]): void {
+    this.toRemoveFormItemIds = removedIds;
+    this.changeItems();
   }
 
   save(): void {

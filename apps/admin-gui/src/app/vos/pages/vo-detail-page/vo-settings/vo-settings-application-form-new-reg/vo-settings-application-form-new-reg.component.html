@@ -56,16 +56,20 @@
     }
 
     @if (editAuth) {
-      <button
-        (click)="save()"
-        color="accent"
-        [disabled]="!itemsChanged"
-        data-cy="save-application-form"
-        class="me-2"
-        mat-flat-button>
-        <i class="material-icons">save</i>
-        {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
-      </button>
+      <span
+        matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SUBMIT_MISSING' | translate}}"
+        [matTooltipDisabled]="!missingSubmitButton">
+        <button
+          (click)="save()"
+          color="accent"
+          [disabled]="!itemsChanged || missingSubmitButton"
+          data-cy="save-application-form"
+          class="me-2"
+          mat-flat-button>
+          <i class="material-icons">save</i>
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+        </button>
+      </span>
     }
 
     <!--    <button (click)="preview()" mat-stroked-button>-->
@@ -113,7 +117,7 @@
       [loading]="loadingTable"
       [newFormItems]="newFormItemIds"
       (applicationFormItemsChange)="changeItems()"
-      (applicationFormItemsDeleted)="toRemoveFormItemIds=$event"
+      (applicationFormItemsDeleted)="removeChanged($event)"
       [formSpecification]="formSpecification"
       [applicationFormItems]="formItems"
       [displayedColumns]="displayedColumns"

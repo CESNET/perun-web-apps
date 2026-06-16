@@ -69,16 +69,20 @@
         </button>
       }
       @if (editAuth) {
-        <button
-          (click)="save()"
-          color="accent"
-          [disabled]="!itemsChanged"
-          class="me-2"
-          data-cy="save-application-form"
-          mat-flat-button>
-          <i class="material-icons">save</i>
-          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
-        </button>
+        <span
+          matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SUBMIT_MISSING' | translate}}"
+          [matTooltipDisabled]="!missingSubmitButton">
+          <button
+            (click)="save()"
+            color="accent"
+            [disabled]="!itemsChanged || missingSubmitButton"
+            class="me-2"
+            data-cy="save-application-form"
+            mat-flat-button>
+            <i class="material-icons">save</i>
+            {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+          </button>
+        </span>
       }
       <!--      @if (editAuth) {-->
       <!--        <button (click)="copy()" class="me-2 action-button" mat-stroked-button>-->
@@ -130,7 +134,7 @@
         [loading]="loadingTable"
         [newFormItems]="newFormItemIds"
         (applicationFormItemsChange)="changeItems()"
-        (applicationFormItemsDeleted)="toRemoveFormItemIds=$event"
+        (applicationFormItemsDeleted)="removeChanged($event)"
         [formSpecification]="formSpecification"
         [applicationFormItems]="formItems"
         [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview']"

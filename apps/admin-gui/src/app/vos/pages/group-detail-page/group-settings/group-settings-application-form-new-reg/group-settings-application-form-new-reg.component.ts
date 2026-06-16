@@ -26,6 +26,7 @@ import {
   FormSpecificationDTO,
   FormsService,
   FormTypeConfig,
+  ItemDefinitionDTO,
   ItemDefinitionPatchRequest,
   ItemWithDefinitionDTO,
 } from '@perun-web-apps/perun/registrar-openapi';
@@ -73,12 +74,23 @@ export class GroupSettingsApplicationFormNewRegComponent implements OnInit {
   newFormItemIds: string[] = [];
   noApplicationForm = false;
   itemsChanged = false;
+  missingSubmitButton = false;
   group: Group;
   editAuth = false;
   createEmptyForm = false;
   autoRegistrationEnabled: boolean;
   refreshApplicationForm = false;
   embeddedGroupsItemSaved = false;
+  inputItem: ItemDefinitionDTO.TypeEnum[] = [
+    'DATE_PICKER',
+    'VERIFIED_EMAIL',
+    'CHECKBOX',
+    'LOGIN',
+    'PASSWORD',
+    'SELECTION_CUSTOM',
+    'SELECTIONBOX',
+    'TEXTFIELD',
+  ];
 
   // This counter is used to generate ids for newly added items. This fake ids are used in backend
 
@@ -174,7 +186,7 @@ export class GroupSettingsApplicationFormNewRegComponent implements OnInit {
         editDialog.afterClosed().subscribe((updatedItem: ItemWithDefinitionDTO) => {
           if (updatedItem) {
             Object.assign(success[1], updatedItem);
-            this.itemsChanged = true;
+            this.changeItems();
           }
         });
       }
@@ -223,6 +235,29 @@ export class GroupSettingsApplicationFormNewRegComponent implements OnInit {
 
   changeItems(): void {
     this.itemsChanged = true;
+    const containsSubmit =
+      this.formItems.filter(
+        (item) =>
+          !this.toRemoveFormItemIds.includes(item.formItemDTO.id) &&
+          item.itemDefinition.type === 'SUBMIT_BUTTON',
+      ).length > 0;
+    const containsInput =
+      this.formItems.filter(
+        (item) =>
+          !this.toRemoveFormItemIds.includes(item.formItemDTO.id) &&
+          this.inputItem.includes(item.itemDefinition.type),
+      ).length > 0;
+
+    if (containsInput && !containsSubmit) {
+      this.missingSubmitButton = true;
+    } else {
+      this.missingSubmitButton = false;
+    }
+  }
+
+  removeChanged(removedIds: string[]): void {
+    this.toRemoveFormItemIds = removedIds;
+    this.changeItems();
   }
 
   save(): void {
