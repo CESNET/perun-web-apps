@@ -422,6 +422,7 @@
         "TOGGLE_DISABLED": "Please save the changes before changes the view.",
         "SUBMIT_MISSING": "You cannot save a form with input items without a submit button present",
         "DRAG": "Drag",
+        "NEW_REG_WARN": "You are editing the form for new Registrar. Use the `useNewRegistration` attribute to freely switch between the two forms. Switching to `true` will result in displaying the new form here, and users applying will go through the new Registrar interface. Only applications submitted via the new form will be displayed.",
         "TYPES": {
           "HEADING": "Header",
           "SUBMIT_BUTTON": "Submit button",
