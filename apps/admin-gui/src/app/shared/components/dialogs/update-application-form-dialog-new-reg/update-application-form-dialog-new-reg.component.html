@@ -5,6 +5,12 @@
   <div *perunWebAppsLoader="loading; indicator: spinner">
     <h1 mat-dialog-title>{{'DIALOGS.UPDATE_APPLICATION_FORM.TITLE' | translate}}</h1>
     <div class="dialog-container" mat-dialog-content>
+      <div class="d-flex flex-row align-items-center">
+        <mat-form-field class="w-100 mb-n2">
+          <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.NAMESPACE' | translate}}</mat-label>
+          <input [formControl]="namespaceCtrl" matInput />
+        </mat-form-field>
+      </div>
       <mat-form-field class="w-100">
         <mat-label>{{'DIALOGS.UPDATE_APPLICATION_FORM.INITIAL' | translate}}:</mat-label>
         <mat-select [(value)]="initialState" disableOptionCentering>

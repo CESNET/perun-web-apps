@@ -16,4 +16,5 @@ export interface SubmissionDTO {
   identityIdentifier?: string;
   identityIssuer?: string;
   identityAttributes?: { [key: string]: string };
+  anonymousToken?: string;
 }

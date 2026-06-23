@@ -10,6 +10,7 @@ export class ModifiedNamePipe implements PipeTransform {
 
   transform(modifiedBy: string, fallback: string): string {
     if (!modifiedBy) {
+      if (!fallback) return 'N/A';
       const index = fallback.lastIndexOf('/CN=');
       if (index !== -1) {
         const string = fallback

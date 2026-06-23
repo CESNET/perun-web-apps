@@ -8,8 +8,10 @@
  * Do not edit the class manually.
  */
 import { FormContextDTO } from './formContextDTO';
+import { Identity } from './identity';
 
 export interface SubmissionContextEnrichedDTO {
   redirectUrl?: string;
   formContexts?: Array<FormContextDTO>;
+  similarIdentities?: Array<Identity>;
 }

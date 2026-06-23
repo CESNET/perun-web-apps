@@ -19,6 +19,8 @@ export namespace ItemValidatorDTO {
     REQUIRED: 'REQUIRED',
     SELECTION_SINGLE: 'SELECTION_SINGLE',
     SELECTION_MULTI: 'SELECTION_MULTI',
+    RESERVED_LOGIN: 'RESERVED_LOGIN',
+    PASSWORD: 'PASSWORD',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }

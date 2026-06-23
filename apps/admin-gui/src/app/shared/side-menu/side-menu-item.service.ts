@@ -939,7 +939,10 @@ export class SideMenuItemService {
     }
 
     //SettingsNotifications
-    if (this.routePolicyService.canNavigate('groups-settings-notifications', group)) {
+    if (
+      group.name !== 'members' &&
+      this.routePolicyService.canNavigate('groups-settings-notifications', group)
+    ) {
       settingsChildrenLinks.push({
         label: 'MENU_ITEMS.GROUP.NOTIFICATIONS',
         url: [`/organizations/${group.voId}/groups/${group.id}/settings/notifications`],

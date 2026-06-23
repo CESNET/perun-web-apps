@@ -211,7 +211,10 @@ export class GroupOverviewComponent implements OnInit, DoCheck {
       });
     }
 
-    if (this.routePolicyService.canNavigate('groups-settings-notifications', this.group)) {
+    if (
+      this.group.name !== 'members' &&
+      this.routePolicyService.canNavigate('groups-settings-notifications', this.group)
+    ) {
       this.settingsItems.push({
         cssIcon: 'perun-notification',
         url: `/organizations/${this.group.voId}/groups/${this.group.id}/settings/notifications`,

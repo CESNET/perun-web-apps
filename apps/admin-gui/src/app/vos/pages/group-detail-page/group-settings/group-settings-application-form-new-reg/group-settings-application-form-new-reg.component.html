@@ -1,6 +1,10 @@
 <h1 class="page-subtitle">
   {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.TITLE' | translate}}
 </h1>
+<perun-web-apps-alert
+  alert_type="warn"
+  >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_WARN' | translate}}</perun-web-apps-alert
+>
 @if (loadingHeader) {
   <mat-spinner class="ms-auto me-auto"> </mat-spinner>
 }
@@ -9,10 +13,10 @@
     @if (!loadingHeader) {
       <div class="d-flex w-75">
         <div>
-          <!--          <div class="fw-bold">-->
-          <!--            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:-->
-          <!--            {{applicationForm.moduleClassNames}}-->
-          <!--          </div>-->
+          <div class="fw-bold">
+            {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.NAMESPACE' | translate}}:
+            {{formSpecification.namespace}}
+          </div>
           <div>
             <span
               class="fw-bold"
@@ -69,16 +73,20 @@
         </button>
       }
       @if (editAuth) {
-        <button
-          (click)="save()"
-          color="accent"
-          [disabled]="!itemsChanged"
-          class="me-2"
-          data-cy="save-application-form"
-          mat-flat-button>
-          <i class="material-icons">save</i>
-          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
-        </button>
+        <span
+          matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SUBMIT_MISSING' | translate}}"
+          [matTooltipDisabled]="!missingSubmitButton">
+          <button
+            (click)="save()"
+            color="accent"
+            [disabled]="!itemsChanged || missingSubmitButton"
+            class="me-2"
+            data-cy="save-application-form"
+            mat-flat-button>
+            <i class="material-icons">save</i>
+            {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
+          </button>
+        </span>
       }
       <!--      @if (editAuth) {-->
       <!--        <button (click)="copy()" class="me-2 action-button" mat-stroked-button>-->
@@ -102,18 +110,23 @@
       <!--      {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.CLEAR' | translate}}-->
       <!--    </button>-->
       <div class="mt-2 ms-2">
-        <label class="slide-label" (click)="toggleFormType('INITIAL')"
-          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
-        </label>
-        <mat-slide-toggle
-          #toggle
-          (change)="changeFormType()"
-          [(ngModel)]="showExtension"
-          class="me-1">
-        </mat-slide-toggle>
-        <label class="slide-label" (click)="toggleFormType('EXTENSION')"
-          >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
-        </label>
+        <span
+          matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TOGGLE_DISABLED' | translate}}"
+          [matTooltipDisabled]="!itemsChanged">
+          <label class="slide-label" (click)="!itemsChanged && toggleFormType('INITIAL')"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.INITIAL' | translate}}
+          </label>
+          <mat-slide-toggle
+            #toggle
+            (change)="changeFormType()"
+            [(ngModel)]="showExtension"
+            [disabled]="itemsChanged"
+            class="me-1">
+          </mat-slide-toggle>
+          <label class="slide-label" (click)="!itemsChanged && toggleFormType('EXTENSION')"
+            >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TRANSLATIONS.EXTENSION' | translate}}
+          </label>
+        </span>
       </div>
     </div>
     @if (editAuth) {
@@ -130,7 +143,7 @@
         [loading]="loadingTable"
         [newFormItems]="newFormItemIds"
         (applicationFormItemsChange)="changeItems()"
-        (applicationFormItemsDeleted)="toRemoveFormItemIds=$event"
+        (applicationFormItemsDeleted)="removeChanged($event)"
         [formSpecification]="formSpecification"
         [applicationFormItems]="formItems"
         [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview']"
