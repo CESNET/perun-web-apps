@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [20.11.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.10.0...v20.11.0) (2026-06-23)
+
+
+### Features
+
+* **admin:** add email item for new registrar ([b90f77c](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b90f77ce9fd9354c71c11b3d16dec9550d9a868f))
+* **admin:** disable new Registrar form `save` if submit button required and missing ([595ac52](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/595ac5267d66b8bf8c44a797a59e45b57cd96120))
+* **admin:** disable new Registrar form type toggle button on changes ([470078e](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/470078e71ef9225f61cd4c6c4dd11ba38f7e7861))
+* **admin:** display warning on `Application form` page when using new Registrar ([028edaa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/028edaab42349ef15b37d992b46f36322a62daa9))
+* **admin:** hide notification buttons for members groups ([c627a1d](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c627a1dfbd44849f000deb0351ee7fba9b872c97))
+* **admin:** new Registrar LOGN/PASSWORD ([97ee3aa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/97ee3aa57e375af63dfb96f7aaf315403054d41c))
+* **profile:** align breadcrumbs correctly in Firefox ([adfbdfa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/adfbdfa32be4e39ff4c921f8fb9ecb8d5b4651b6))
+
 ## [20.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.2...v20.10.0) (2026-06-02)
 
 
