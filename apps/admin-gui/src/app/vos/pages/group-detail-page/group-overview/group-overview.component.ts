@@ -166,29 +166,31 @@ export class GroupOverviewComponent implements OnInit, DoCheck {
 
     // FIXME - manage via canNavigate - problem with async call in route-policy.service.ts
     //not implemented in authorization....probably must be hardcoded
-    this.apiRequest.dontHandleErrorForNext();
-    this.attributesManager
-      .getGroupAttributeByName(this.group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
-      .subscribe({
-        next: () => {
-          this.settingsItems = [
-            {
-              cssIcon: 'perun-group',
-              url: `/organizations/${this.group.voId}/groups/${this.group.id}/settings/expiration`,
-              label: 'MENU_ITEMS.GROUP.EXPIRATION',
-              style: 'group-btn',
-            },
-            ...this.settingsItems,
-          ];
-          this.loading = false;
-        },
-        error: (error: RPCError) => {
-          if (error.name !== 'PrivilegeException') {
-            this.notificator.showRPCError(error);
-          }
-          this.loading = false;
-        },
-      });
+    if (this.group.name !== 'members') {
+      this.apiRequest.dontHandleErrorForNext();
+      this.attributesManager
+        .getGroupAttributeByName(this.group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
+        .subscribe({
+          next: () => {
+            this.settingsItems = [
+              {
+                cssIcon: 'perun-group',
+                url: `/organizations/${this.group.voId}/groups/${this.group.id}/settings/expiration`,
+                label: 'MENU_ITEMS.GROUP.EXPIRATION',
+                style: 'group-btn',
+              },
+              ...this.settingsItems,
+            ];
+            this.loading = false;
+          },
+          error: (error: RPCError) => {
+            if (error.name !== 'PrivilegeException') {
+              this.notificator.showRPCError(error);
+            }
+            this.loading = false;
+          },
+        });
+    }
 
     if (this.routePolicyService.canNavigate('groups-settings-managers', this.group)) {
       this.settingsItems.push({

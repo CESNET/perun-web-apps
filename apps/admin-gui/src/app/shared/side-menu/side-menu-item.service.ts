@@ -899,23 +899,25 @@ export class SideMenuItemService {
     // FIXME - manage via canNavigate - problem with async call in route-policy.service.ts
     //SettingsMembership
     //not implemented in authorization....probably must be hardcoded
-    this.apiRequest.dontHandleErrorForNext();
-    this.attributesManager
-      .getGroupAttributeByName(group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
-      .subscribe({
-        next: () => {
-          settingsChildrenLinks.unshift({
-            label: 'MENU_ITEMS.GROUP.EXPIRATION',
-            url: [`/organizations/${group.voId}/groups/${group.id}/settings/expiration`],
-            activatedRegex: '/organizations/\\d+/groups/\\d+/settings/expiration$',
-          });
-        },
-        error: (error: RPCError) => {
-          if (error.name !== 'PrivilegeException') {
-            this.notificator.showRPCError(error);
-          }
-        },
-      });
+    if (group.name !== 'members') {
+      this.apiRequest.dontHandleErrorForNext();
+      this.attributesManager
+        .getGroupAttributeByName(group.id, Urns.GROUP_DEF_EXPIRATION_RULES)
+        .subscribe({
+          next: () => {
+            settingsChildrenLinks.unshift({
+              label: 'MENU_ITEMS.GROUP.EXPIRATION',
+              url: [`/organizations/${group.voId}/groups/${group.id}/settings/expiration`],
+              activatedRegex: '/organizations/\\d+/groups/\\d+/settings/expiration$',
+            });
+          },
+          error: (error: RPCError) => {
+            if (error.name !== 'PrivilegeException') {
+              this.notificator.showRPCError(error);
+            }
+          },
+        });
+    }
 
     //SettingsManagers
     if (this.routePolicyService.canNavigate('groups-settings-managers', group)) {
