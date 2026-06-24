@@ -111,7 +111,7 @@ export class ApplicationDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.route.params.subscribe((params) => {
-      this.route.parent.params.subscribe((parentParams) => {
+      this.route.parent.parent.params.subscribe((parentParams) => {
         if (parentParams['groupId']) {
           this.dialogTheme = 'group-theme';
         } else if (parentParams['memberId']) {
@@ -200,7 +200,7 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   setAuthRights(): void {
-    if (this.dialogTheme === 'group-theme') {
+    if (this.application.group) {
       this.verifyAuth = this.authResolver.isAuthorized('group-verifyApplication_int_policy', [
         this.application.group,
       ]);
