@@ -1,5 +1,12 @@
 Upgrade notes
 
+## [20.10.1](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.10.0...v20.10.1) (2026-06-25)
+
+
+### Bug Fixes
+
+* authz evaluation on application detail page ([41a7e23](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/41a7e23b11fcdd121fb3002f0e855765302ef1f0))
+
 ## [20.10.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.9.2...v20.10.0) (2026-06-02)
 
 
