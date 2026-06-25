@@ -1,5 +1,18 @@
 Upgrade notes
 
+## [20.12.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.11.0...v20.12.0) (2026-06-25)
+
+
+### Features
+
+* **admin:** use new registrar send message method ([894a08f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/894a08f7c30b8b4e1865270e04140a6460ed4ebd))
+
+
+### Bug Fixes
+
+* authz evaluation on application detail page ([722b994](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/722b9940606b4a439941550274a71f0ee8c5704a))
+* authz evaluation on application detail page ([3fd3177](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3fd3177cfcac842d44b4ed0d64d41f128f054caa))
+
 ## [20.11.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.10.0...v20.11.0) (2026-06-23)
 
 
