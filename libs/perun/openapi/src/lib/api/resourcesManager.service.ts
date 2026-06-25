@@ -3698,7 +3698,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns all members assigned to the resource.
+   * Returns all allowed members on the resource. Allowed members belong to a group with an active assignment to the resource and their VO membership status is not INVALID or DISABLED.
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -3809,7 +3809,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Get all resources which have the member access on.
+   * Get all resources where the member is allowed. The member belongs to a group with an active assignment to the resource and their VO membership status is not INVALID or DISABLED.
    * @param member id of Member
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -3920,7 +3920,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns all users assigned to the resource.
+   * Returns all allowed users on the resource. Allowed users are members of a group with an active assignment to the resource and their VO membership status is not INVALID or DISABLED.
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4154,7 +4154,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns all members assigned to the resource.
+   * Returns all assigned members on the resource. Assigned members belong to a group with an active assignment to the resource. No filter is applied on their VO membership status.
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4265,7 +4265,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns members of groups assigned to resource with status of group-resource assignment.
+   * Returns all members of groups with a group-resource assignment to the resource, annotated with the assignment status. Assignments in any state are included (not only ACTIVE).
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4483,7 +4483,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * List all resources associated with a member\&#39;s group.
+   * Get all resources where the member is assigned. The member belongs to a group with an active assignment to the resource. No filter is applied on their VO membership status.
    * @param member id of Member
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4594,7 +4594,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns all assigned resources with statuses where member is assigned through the groups.
+   * Returns all resources reachable through groups the member belongs to, annotated with the group-resource assignment status. Assignments in any state are included (not only ACTIVE). If the same resource is reached through multiple assignments, only the entry with the most important status is returned.
    * @param member id of Member
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4705,7 +4705,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Returns all members assigned to the resource as RichMembers.
+   * Returns all assigned members on the resource as RichMembers. Assigned members belong to a group with an active assignment to the resource. No filter is applied on their VO membership status.
    * @param resource id of Resource
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -4923,7 +4923,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * List all rich resources associated with a member\&#39;s group.
+   * Get all rich resources where the member is assigned, with facility property filled. The member belongs to a group with an active assignment to the resource. No filter is applied on their VO membership status.
    * @param member id of Member
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -5034,7 +5034,7 @@ export class ResourcesManagerService {
   }
 
   /**
-   * Get all rich resources where the service and the member are assigned with facility property filled.
+   * Get all rich resources where the member is assigned, with facility property filled. The member belongs to a group with an active assignment to the resource. On top of that, results are restricted to resources with the given service assigned. No filter is applied on their VO membership status.
    * @param member id of Member
    * @param service id of Service
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).

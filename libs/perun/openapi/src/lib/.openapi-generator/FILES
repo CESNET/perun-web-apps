@@ -75,6 +75,7 @@ model/consentStatus.ts
 model/createPerunNotifReceiverRequest.ts
 model/createPerunNotifRegexRequest.ts
 model/createPerunNotifTemplateMessageRequest.ts
+model/deleteReservedLoginRequest.ts
 model/destination.ts
 model/destinationPropagationType.ts
 model/destinationType.ts
@@ -107,6 +108,7 @@ model/groupsPageQuery.ts
 model/hashedGenData.ts
 model/host.ts
 model/identity.ts
+model/idmObject.ts
 model/inputAddApplicationMailForGroup.ts
 model/inputAddApplicationMailForVo.ts
 model/inputAddDestinationToMultipleServices.ts
@@ -122,7 +124,8 @@ model/inputChangeNonAuthzPasswordByToken.ts
 model/inputChangePasswordForLogin.ts
 model/inputChangePasswordForUser.ts
 model/inputCheckCheckboxHtml.ts
-model/inputCheckForSimilarUsersWithData.ts
+model/inputCheckForSimilarUsersWithAppData.ts
+model/inputCheckForSimilarUsersWithFormItemData.ts
 model/inputCheckHtmlInput.ts
 model/inputCheckPasswordResetRequestByTokenIsValid.ts
 model/inputCheckPasswordStrength.ts
@@ -182,6 +185,7 @@ model/inputRemoveRichDestinations.ts
 model/inputReservePasswordForLogin.ts
 model/inputReservePasswordForUser.ts
 model/inputSendMessage.ts
+model/inputSendMessageNewRegistrar.ts
 model/inputSendMessages.ts
 model/inputSetBan.ts
 model/inputSetBanForUserOnFacility.ts
@@ -288,6 +292,8 @@ model/publicationForGUI.ts
 model/publicationSystem.ts
 model/rTMessage.ts
 model/registrarApplicationInput.ts
+model/reserveLoginForUserRequest.ts
+model/reserveLoginRequest.ts
 model/resource.ts
 model/resourceState.ts
 model/resourceTag.ts

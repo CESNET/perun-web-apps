@@ -4152,7 +4152,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Get all assigned groups on Facility, optionally filtered by Vo or Service or both.
+   * Get all allowed groups on the Facility, optionally filtered by Vo or Service or both. Allowed groups have an active assignment to a resource on the facility.
    * @param facility id of Facility
    * @param vo id of Vo
    * @param service id of Service
@@ -4283,7 +4283,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Get all assigned groups on Facility, optionally filtered by Vo or Service or both.
+   * Get all allowed groups on the Facility, optionally filtered by Vo or Service or both. Allowed groups have an active assignment to a resource on the facility.
    * @param facility name of Facility
    * @param vo id of Vo
    * @param service id of Service
@@ -4414,7 +4414,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Get all assigned RichGroups on Facility with specified set of attributes, optionally filtered by Vo or Service or both.
+   * Get all allowed RichGroups on the Facility with specified set of attributes, optionally filtered by Vo or Service or both. Allowed groups have an active assignment to a resource on the facility.
    * @param facility id of Facility
    * @param attrNames list of attribute names List&lt;String&gt;
    * @param vo id of Vo
@@ -4564,7 +4564,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Get all assigned RichGroups on Facility with specified set of attributes, optionally filtered by Vo or Service or both.
+   * Get all allowed RichGroups on the Facility with specified set of attributes, optionally filtered by Vo or Service or both. Allowed groups have an active assignment to a resource on the facility.
    * @param facility name of Facility
    * @param attrNames list of attribute names List&lt;String&gt;
    * @param vo id of Vo
@@ -4714,7 +4714,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Return all users which can use this facility
+   * Return all allowed users on the facility. Allowed users are members of a group with an active assignment to a resource on this facility and their VO membership status is not INVALID or DISABLED.
    * @param facility id of Facility
    * @param vo VO id, if provided, filter out users who aren\&#39;t in specific VO
    * @param service Service id, if provided, filter out users who aren\&#39;t allowed to use the service on the facility
@@ -4845,7 +4845,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Return all users which can use this facility
+   * Return all allowed users on the facility. Allowed users are members of a group with an active assignment to a resource on this facility and their VO membership status is not INVALID or DISABLED.
    * @param facility name of Facility
    * @param vo VO id, if provided, filter out users who aren\&#39;t in specific VO
    * @param service Service id, if provided, filter out users who aren\&#39;t allowed to use the service on the facility
@@ -5305,7 +5305,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Get facilities which have the member access on.
+   * Get facilities where the member is assigned. A facility is returned if the member belongs to a group with an active assignment to at least one resource on that facility. No filter is applied on their VO membership status.
    * @param member id of Member
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -5527,7 +5527,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * et facilities which have the user access on.
+   * Get facilities where the user is assigned. A facility is returned if the user has a membership in a group with an active assignment to at least one resource on that facility. No filter is applied on VO membership status.
    * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -6334,7 +6334,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Lists all users assigned to facility containing resources where service is assigned.
+   * Returns all assigned users on the facility. Assigned users are members of a group with an active assignment to a resource on this facility. If a service is provided, results are additionally restricted to resources with that service assigned. No filter is applied on their VO membership status.
    * @param facility id of Facility
    * @param service id of Service
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -6457,7 +6457,7 @@ export class FacilitiesManagerService {
   }
 
   /**
-   * Lists all users assigned to facility containing resources where service is assigned.
+   * Returns all assigned users on the facility. Assigned users are members of a group with an active assignment to a resource on this facility. If a service is provided, results are additionally restricted to resources with that service assigned. No filter is applied on their VO membership status.
    * @param facility name of Facility
    * @param service id of Service
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).

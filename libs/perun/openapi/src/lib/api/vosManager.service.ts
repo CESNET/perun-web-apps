@@ -1078,14 +1078,14 @@ export class VosManagerService {
 
   /**
    * Find candidates for VO. Candidates can be used to create new members. Candidates are searched in VOs external sources (if available). Candidates, which are already members of VO are never returned even if they match searchString.
-   * @param id numeric id
+   * @param vo id of Vo
    * @param searchString Text to search by
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public findCandidates(
-    id: number,
+    vo: number,
     searchString: string,
     useNon?: boolean,
     observe?: 'body',
@@ -1093,7 +1093,7 @@ export class VosManagerService {
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<Array<Candidate>>;
   public findCandidates(
-    id: number,
+    vo: number,
     searchString: string,
     useNon?: boolean,
     observe?: 'response',
@@ -1101,7 +1101,7 @@ export class VosManagerService {
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<Array<Candidate>>>;
   public findCandidates(
-    id: number,
+    vo: number,
     searchString: string,
     useNon?: boolean,
     observe?: 'events',
@@ -1109,15 +1109,15 @@ export class VosManagerService {
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<Array<Candidate>>>;
   public findCandidates(
-    id: number,
+    vo: number,
     searchString: string,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling findCandidates.');
+    if (vo === null || vo === undefined) {
+      throw new Error('Required parameter vo was null or undefined when calling findCandidates.');
     }
     if (searchString === null || searchString === undefined) {
       throw new Error(
@@ -1126,8 +1126,8 @@ export class VosManagerService {
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (id !== undefined && id !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>id, 'id');
+    if (vo !== undefined && vo !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>vo, 'vo');
     }
     if (searchString !== undefined && searchString !== null) {
       localVarQueryParameters = this.addToHttpParams(

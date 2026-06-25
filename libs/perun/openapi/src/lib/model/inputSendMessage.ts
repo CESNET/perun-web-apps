@@ -19,34 +19,8 @@ export interface InputSendMessage {
    */
   appId: number;
   /**
-   * group id
-   */
-  group?: number;
-  /**
-   * vo id
-   */
-  vo?: number;
-  /**
-   * user id
-   */
-  user?: number;
-  /**
-   * application id in new Registrar
-   */
-  newRegAppId?: string;
-  /**
-   * type of the application from new Registrar
-   */
-  newRegAppType?: InputSendMessage.NewRegAppTypeEnum;
-  /**
    * you can specify reason for case: mailType == APP_REJECTED_USER
    */
   reason?: string;
 }
-export namespace InputSendMessage {
-  export const NewRegAppTypeEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-  } as const;
-  export type NewRegAppTypeEnum = (typeof NewRegAppTypeEnum)[keyof typeof NewRegAppTypeEnum];
-}
+export namespace InputSendMessage {}

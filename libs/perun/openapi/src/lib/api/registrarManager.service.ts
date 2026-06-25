@@ -49,7 +49,9 @@ import { InputAddApplicationMailForVo } from '../model/inputAddApplicationMailFo
 // @ts-ignore
 import { InputCheckCheckboxHtml } from '../model/inputCheckCheckboxHtml';
 // @ts-ignore
-import { InputCheckForSimilarUsersWithData } from '../model/inputCheckForSimilarUsersWithData';
+import { InputCheckForSimilarUsersWithAppData } from '../model/inputCheckForSimilarUsersWithAppData';
+// @ts-ignore
+import { InputCheckForSimilarUsersWithFormItemData } from '../model/inputCheckForSimilarUsersWithFormItemData';
 // @ts-ignore
 import { InputCheckHtmlInput } from '../model/inputCheckHtmlInput';
 // @ts-ignore
@@ -68,6 +70,8 @@ import { InputInvitationsFromCsv } from '../model/inputInvitationsFromCsv';
 import { InputInviteMemberCandidates } from '../model/inputInviteMemberCandidates';
 // @ts-ignore
 import { InputSendMessage } from '../model/inputSendMessage';
+// @ts-ignore
+import { InputSendMessageNewRegistrar } from '../model/inputSendMessageNewRegistrar';
 // @ts-ignore
 import { InputSendMessages } from '../model/inputSendMessages';
 // @ts-ignore
@@ -1417,6 +1421,118 @@ export class RegistrarManagerService {
   }
 
   /**
+   * Check for similar users by name and email in new registrar application data
+   * @param InputCheckForSimilarUsersWithAppData
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public checkForSimilarUsersWithAppData(
+    InputCheckForSimilarUsersWithAppData: InputCheckForSimilarUsersWithAppData,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<Identity>>;
+  public checkForSimilarUsersWithAppData(
+    InputCheckForSimilarUsersWithAppData: InputCheckForSimilarUsersWithAppData,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<Identity>>>;
+  public checkForSimilarUsersWithAppData(
+    InputCheckForSimilarUsersWithAppData: InputCheckForSimilarUsersWithAppData,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<Identity>>>;
+  public checkForSimilarUsersWithAppData(
+    InputCheckForSimilarUsersWithAppData: InputCheckForSimilarUsersWithAppData,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (
+      InputCheckForSimilarUsersWithAppData === null ||
+      InputCheckForSimilarUsersWithAppData === undefined
+    ) {
+      throw new Error(
+        'Required parameter InputCheckForSimilarUsersWithAppData was null or undefined when calling checkForSimilarUsersWithAppData.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/registrarManager/checkForSimilarUsers/new-registrar`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<Array<Identity>>(requestUrl, InputCheckForSimilarUsersWithAppData, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Check for similar users by name and email in session (authz) information
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1508,45 +1624,45 @@ export class RegistrarManagerService {
 
   /**
    * Check for similar users by name and email in form data
-   * @param InputCheckForSimilarUsersWithData
+   * @param InputCheckForSimilarUsersWithFormItemData
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public checkForSimilarUsersWithFormItemData(
-    InputCheckForSimilarUsersWithData: InputCheckForSimilarUsersWithData,
+    InputCheckForSimilarUsersWithFormItemData: InputCheckForSimilarUsersWithFormItemData,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<Array<Identity>>;
   public checkForSimilarUsersWithFormItemData(
-    InputCheckForSimilarUsersWithData: InputCheckForSimilarUsersWithData,
+    InputCheckForSimilarUsersWithFormItemData: InputCheckForSimilarUsersWithFormItemData,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<Array<Identity>>>;
   public checkForSimilarUsersWithFormItemData(
-    InputCheckForSimilarUsersWithData: InputCheckForSimilarUsersWithData,
+    InputCheckForSimilarUsersWithFormItemData: InputCheckForSimilarUsersWithFormItemData,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<Array<Identity>>>;
   public checkForSimilarUsersWithFormItemData(
-    InputCheckForSimilarUsersWithData: InputCheckForSimilarUsersWithData,
+    InputCheckForSimilarUsersWithFormItemData: InputCheckForSimilarUsersWithFormItemData,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
     if (
-      InputCheckForSimilarUsersWithData === null ||
-      InputCheckForSimilarUsersWithData === undefined
+      InputCheckForSimilarUsersWithFormItemData === null ||
+      InputCheckForSimilarUsersWithFormItemData === undefined
     ) {
       throw new Error(
-        'Required parameter InputCheckForSimilarUsersWithData was null or undefined when calling checkForSimilarUsersWithFormItemData.',
+        'Required parameter InputCheckForSimilarUsersWithFormItemData was null or undefined when calling checkForSimilarUsersWithFormItemData.',
       );
     }
 
@@ -1608,14 +1724,18 @@ export class RegistrarManagerService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<Array<Identity>>(requestUrl, InputCheckForSimilarUsersWithData, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<Array<Identity>>(
+      requestUrl,
+      InputCheckForSimilarUsersWithFormItemData,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
@@ -6113,6 +6233,96 @@ export class RegistrarManagerService {
   }
 
   /**
+   * Gets logins reserved by the caller in format of &#x60;namespace-&gt;login&#x60;
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getPrincipalsReservedLogins(
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<{ [key: string]: string }>;
+  public getPrincipalsReservedLogins(
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  public getPrincipalsReservedLogins(
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  public getPrincipalsReservedLogins(
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/registrarManager/getPrincipalsReservedLogins`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<{ [key: string]: string }>(requestUrl, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Returns all groups which can be registered into during group registration.
    * @param group id of Group
    * @param formItem id of of the form item
@@ -8029,6 +8239,116 @@ export class RegistrarManagerService {
       requestUrl = helperUrl.toString();
     }
     return this.httpClient.post<any>(requestUrl, InputSendMessage, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Re-send mail notification for existing New Registrar application.
+   * Message of specified type is sent only, when application is in expected state related to the notification. Note, that some data related to processing application are not available (e.g. list of exceptions during approval), since this method doesn\&#39;t perform any action with Application itself. Perun admin can send any notification except USER_INVITE type, see #sendInvitation() for this.
+   * @param InputSendMessageNewRegistrar
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public sendMessageNewRegistrar(
+    InputSendMessageNewRegistrar: InputSendMessageNewRegistrar,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any>;
+  public sendMessageNewRegistrar(
+    InputSendMessageNewRegistrar: InputSendMessageNewRegistrar,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<any>>;
+  public sendMessageNewRegistrar(
+    InputSendMessageNewRegistrar: InputSendMessageNewRegistrar,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<any>>;
+  public sendMessageNewRegistrar(
+    InputSendMessageNewRegistrar: InputSendMessageNewRegistrar,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (InputSendMessageNewRegistrar === null || InputSendMessageNewRegistrar === undefined) {
+      throw new Error(
+        'Required parameter InputSendMessageNewRegistrar was null or undefined when calling sendMessageNewRegistrar.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/registrarManager/sendMessageNewRegistrar`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<any>(requestUrl, InputSendMessageNewRegistrar, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,

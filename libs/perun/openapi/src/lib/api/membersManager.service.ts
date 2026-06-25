@@ -4207,6 +4207,126 @@ export class MembersManagerService {
   }
 
   /**
+   * Returns a Member specified by VO id and User ID. Returns null if the Member does not exist.
+   * @param vo id of Vo
+   * @param user id of User
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getMemberByUserIfExists(
+    vo: number,
+    user: number,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Member>;
+  public getMemberByUserIfExists(
+    vo: number,
+    user: number,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Member>>;
+  public getMemberByUserIfExists(
+    vo: number,
+    user: number,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Member>>;
+  public getMemberByUserIfExists(
+    vo: number,
+    user: number,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (vo === null || vo === undefined) {
+      throw new Error(
+        'Required parameter vo was null or undefined when calling getMemberByUserIfExists.',
+      );
+    }
+    if (user === null || user === undefined) {
+      throw new Error(
+        'Required parameter user was null or undefined when calling getMemberByUserIfExists.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (vo !== undefined && vo !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>vo, 'vo');
+    }
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'user');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/membersManager/getMemberByUserIfExists`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Member>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Returns members of a VO.
    * @param vo id of Vo
    * @param status optional status
@@ -4966,6 +5086,141 @@ export class MembersManagerService {
     }
 
     let requestUrl = `${this.configuration.basePath}/json/membersManager/getRichMember`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<RichMember>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Returns RichMember with attributes by the users\&#39; uuid and the vo.
+   * Gets RichMember by uuid
+   * @param vo id of Vo
+   * @param uuid uuid of User
+   * @param attrNames list of attribute names List&lt;String&gt; or null
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getRichMemberByUserUUID(
+    vo: number,
+    uuid: string,
+    attrNames?: Array<string>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<RichMember>;
+  public getRichMemberByUserUUID(
+    vo: number,
+    uuid: string,
+    attrNames?: Array<string>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<RichMember>>;
+  public getRichMemberByUserUUID(
+    vo: number,
+    uuid: string,
+    attrNames?: Array<string>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<RichMember>>;
+  public getRichMemberByUserUUID(
+    vo: number,
+    uuid: string,
+    attrNames?: Array<string>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (vo === null || vo === undefined) {
+      throw new Error(
+        'Required parameter vo was null or undefined when calling getRichMemberByUserUUID.',
+      );
+    }
+    if (uuid === null || uuid === undefined) {
+      throw new Error(
+        'Required parameter uuid was null or undefined when calling getRichMemberByUserUUID.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (vo !== undefined && vo !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>vo, 'vo');
+    }
+    if (uuid !== undefined && uuid !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>uuid, 'uuid');
+    }
+    if (attrNames) {
+      attrNames.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'attrNames[]',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (BasicAuth) required
+    localVarCredential = this.configuration.lookupCredential('BasicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (BearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('BearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/json/membersManager/getRichMemberByUserUUID`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
