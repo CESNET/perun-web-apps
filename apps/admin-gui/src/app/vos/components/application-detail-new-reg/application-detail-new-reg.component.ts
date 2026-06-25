@@ -184,6 +184,8 @@ export class ApplicationDetailNewRegComponent implements OnInit {
       voId: this.vo.id,
       groupId: this.group?.id,
       userId: Number(this.application.idmUserId),
+      identifier: this.submission.identityIdentifier,
+      issuer: this.submission.identityIssuer,
     };
 
     this.dialog.open(ApplicationReSendNotificationNewRegDialogComponent, config);
