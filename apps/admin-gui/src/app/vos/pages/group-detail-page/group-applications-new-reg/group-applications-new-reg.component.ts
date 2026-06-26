@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApplicationActionsNewRegComponent } from '../../../../shared/components/application-actions-new-reg/application-actions-new-reg.component';
 
 @Component({
-  imports: [CommonModule, ApplicationActionsComponent, ApplicationActionsNewRegComponent],
+  imports: [CommonModule, ApplicationActionsNewRegComponent],
   standalone: true,
   selector: 'app-group-applications-new-reg',
   templateUrl: './group-applications-new-reg.component.html',
