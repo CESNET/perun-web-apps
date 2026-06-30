@@ -45,8 +45,8 @@ import {
 import { ModifiedNamePipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationStatePipe } from '@perun-web-apps/perun/pipes';
 import { AppCreatedByNamePipe } from '@perun-web-apps/perun/pipes';
-import { catchError, switchMap, tap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   imports: [
@@ -123,14 +123,10 @@ export class ApplicationDetailComponent implements OnInit {
         this.registrarManager.getApplicationById(applicationId).subscribe((application) => {
           this.application = application;
 
-          this.apiRequest.dontHandleErrorForNext();
           if (this.application.user) {
             this.membersService
-              .getMemberByUser(this.application.vo.id, this.application.user.id)
+              .getMemberByUserIfExists(this.application.vo.id, this.application.user.id)
               .pipe(
-                catchError(() => {
-                  return EMPTY;
-                }),
                 tap((member) => {
                   this.member = member;
                   this.richMember = {
