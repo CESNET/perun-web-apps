@@ -95,6 +95,7 @@ export class VosPageComponent implements OnInit {
         if (!member) {
           memberships.push({
             entity: vo,
+            vo: vo,
             expirationAttribute: null,
           });
           this.vosCount--;
@@ -106,6 +107,7 @@ export class VosPageComponent implements OnInit {
             );
             memberships.push({
               entity: vo,
+              vo: vo,
               expirationAttribute: expirationAtt,
             });
             this.vosCount--;

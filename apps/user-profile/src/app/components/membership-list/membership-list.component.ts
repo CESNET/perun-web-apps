@@ -29,6 +29,7 @@ import { ValidateExpirationPipe } from '../../pipes/validate-expiration.pipe';
 
 export interface Membership {
   entity: Vo | Group;
+  vo: Vo;
   expirationAttribute: Attribute;
 }
 
@@ -60,6 +61,7 @@ export class MembershipListComponent implements OnChanges, AfterViewInit {
     'checkbox',
     'name',
     'description',
+    'vo',
     'expirationAttribute',
     'extend',
   ];
@@ -83,6 +85,8 @@ export class MembershipListComponent implements OnChanges, AfterViewInit {
     switch (column) {
       case 'name':
         return data.entity.name;
+      case 'vo':
+        return data.vo.shortName;
       case 'description':
         return 'description' in data.entity ? data.entity.description : '';
       case 'expirationAttribute':

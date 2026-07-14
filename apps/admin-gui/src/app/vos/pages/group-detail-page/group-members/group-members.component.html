@@ -25,7 +25,7 @@
   <span
     [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled))"
     [matTooltipPosition]="'above'"
-    matTooltip="{{inviteDisabled && preApprovedInviteDisabled ? ('GROUP_DETAIL.MEMBERS.INVITE_BUTTON_DISABLED' | translate) : (group | groupMembersActionButtonDisabledTooltip | translate)}}">
+    matTooltip="{{inviteDisabled && preApprovedInviteDisabled && !(group | groupMembersActionButtonDisabled) ? ('GROUP_DETAIL.MEMBERS.INVITE_BUTTON_DISABLED' | translate) : (group | groupMembersActionButtonDisabledTooltip | translate)}}">
     @if (inviteAuth) {
       <button
         [disabled]="(group | groupMembersActionButtonDisabled) || (inviteDisabled && preApprovedInviteDisabled)"
@@ -44,7 +44,7 @@
         @if (inviteAuth) {
           <button
             (click)="onInviteMember()"
-            [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+            [disabled]="inviteDisabled"
             class="action-button"
             mat-menu-item>
             {{'GROUP_DETAIL.MEMBERS.INVITE_ONE' | translate}}
@@ -58,7 +58,7 @@
         @if (preApprovedInviteAuth) {
           <button
             (click)="onInvitePreapprovedMember()"
-            [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+            [disabled]="preApprovedInviteDisabled"
             class="action-button"
             mat-menu-item>
             {{'GROUP_DETAIL.MEMBERS.INVITE_ONE_PREAPPROVED' | translate}}
@@ -72,7 +72,7 @@
         @if (inviteAuth) {
           <button
             (click)="onBulkInvite()"
-            [disabled]="(group | groupMembersActionButtonDisabled) || inviteDisabled"
+            [disabled]="inviteDisabled"
             class="action-button"
             mat-menu-item>
             {{'GROUP_DETAIL.MEMBERS.INVITE_BULK' | translate}}
@@ -86,7 +86,7 @@
         @if (preApprovedInviteAuth) {
           <button
             (click)="onBulkPreapprovedInvite()"
-            [disabled]="(group | groupMembersActionButtonDisabled) || preApprovedInviteDisabled"
+            [disabled]="preApprovedInviteDisabled"
             class="action-button"
             mat-menu-item>
             {{'GROUP_DETAIL.MEMBERS.INVITE_BULK_PREAPPROVED' | translate}}
@@ -96,9 +96,9 @@
     </mat-menu>
   </span>
   <span
-    [matTooltipDisabled]="!copyInvitationDisabled"
+    [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || copyInvitationDisabled)"
     [matTooltipPosition]="'above'"
-    matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate}}">
+    matTooltip="{{(group | groupMembersActionButtonDisabled) ? (group | groupMembersActionButtonDisabledTooltip | translate) : ('GROUP_DETAIL.MEMBERS.COPY_INVITATION_LINK_DISABLED' | translate)}}">
     @if (copyInviteLinkAuth) {
       <button
         (click)="copyInvitationLink()"
@@ -113,13 +113,13 @@
     }
   </span>
   <span
-    [matTooltipDisabled]="!copyDisabled"
+    [matTooltipDisabled]="!((group | groupMembersActionButtonDisabled) || copyDisabled)"
     [matTooltipPosition]="'above'"
-    matTooltip="{{'GROUP_DETAIL.MEMBERS.COPY_MEMBERS_DISABLED' | translate}}">
+    matTooltip="{{ (group | groupMembersActionButtonDisabled) ? (group | groupMembersActionButtonDisabledTooltip  | translate) : ('GROUP_DETAIL.MEMBERS.COPY_MEMBERS_DISABLED' | translate)}}">
     @if (copyAuth) {
       <button
         (click)="onCopyMembers()"
-        [disabled]="copyDisabled"
+        [disabled]="(group | groupMembersActionButtonDisabled) || copyDisabled"
         class="me-2"
         color="accent"
         mat-flat-button>

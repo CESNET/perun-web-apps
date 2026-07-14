@@ -42,14 +42,14 @@
             {{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN' | translate}}
           </label>
           <div class="urn-row">
-            {{urn}}
-            <mat-icon
+            {{ urn }}
+            <button
+              mat-icon-button
               class="copy-urn"
-              matSuffix
               (click)="copyUrn()"
-              matTooltip="{{'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN_TOOLTIP' | translate}}"
-              >content_copy</mat-icon
-            >
+              matTooltip="{{ 'DIALOGS.EDIT_ATTRIBUTE_DEFINITION.URN_TOOLTIP' | translate }}">
+              <mat-icon>content_copy</mat-icon>
+            </button>
           </div>
           <perun-web-apps-attribute-unique-checkbox [attDef]="attDef">
           </perun-web-apps-attribute-unique-checkbox>

@@ -34,7 +34,7 @@
       [selection]="selection"
       [filterValue]="filterValue"
       [noMembershipFoundAlert]="'GROUPS.NO_GROUPS'"
-      [displayedColumns]="['name', 'description', 'expirationAttribute', 'extend']"
+      [displayedColumns]="['name', 'description','vo','expirationAttribute', 'extend']"
       (extendMembership)="extendMembership($event)"></perun-web-apps-membership-list>
   </div>
 
@@ -49,7 +49,7 @@
       [members]="adminMemberships"
       [filterValue]="adminFilterValue"
       [noMembershipFoundAlert]="'GROUPS.NO_GROUPS'"
-      [displayedColumns]="['name', 'description']"></perun-web-apps-membership-list>
+      [displayedColumns]="['name', 'description','vo']"></perun-web-apps-membership-list>
   </div>
 
   <ng-template #spinner>
