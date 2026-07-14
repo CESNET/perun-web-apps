@@ -1,5 +1,14 @@
 Upgrade notes
 
+## [20.13.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.12.0...v20.13.0) (2026-07-14)
+
+
+### Features
+
+* **admin:** correct button click offset ([a481231](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a481231d4cde73e34b1ec84e5cae689b13a10b89))
+* **admin:** unify tooltips and hide membership for members group ([4f7f714](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4f7f714d9605bc83969681ae013e11a40d867bc4))
+* **profile:** add organization column to user profile groups ([56852cd](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/56852cda8e08ee9a30825d367ba7d2e3acee1b21))
+
 ## [20.12.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.11.0...v20.12.0) (2026-06-25)
 
 
