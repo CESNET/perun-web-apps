@@ -557,6 +557,7 @@
         "MAIL_TYPE_MAIL_VALIDATION": "Mail validation / user",
         "MAIL_TYPE_APP_APPROVED_USER": "Approved / user",
         "MAIL_TYPE_APP_REJECTED_USER": "Rejected / user",
+        "MAIL_TYPE_APP_CHANGES_REQUESTED": "Changes requested / user",
         "MAIL_TYPE_APP_ERROR_VO_ADMIN": "Error / manager",
         "MAIL_TYPE_USER_INVITE": "Invitation / user",
         "MAIL_TYPE_USER_PRE_APPROVED_INVITE": "Invitation (preapproved) / user",
@@ -744,6 +745,7 @@
         "TITLE": "Application detail",
         "APPROVE": "Approve",
         "REJECT": "Reject",
+        "REQUEST_CHANGES": "Request changes",
         "SEND_NOTIFICATION": "Re-send notifications",
         "DELETE": "Delete",
         "TYPE": "Type",
@@ -1500,6 +1502,7 @@
         "MAIL_VALIDATION": "Mail validation / user",
         "APP_APPROVED_USER": "Approved / user",
         "APP_REJECTED_USER": "Rejected / user",
+        "APP_CHANGES_REQUESTED": "Changes requested / user",
         "APP_ERROR_VO_ADMIN": "Error / manager"
       }
     },
@@ -1517,6 +1520,13 @@
       "SUBMIT": "Reject",
       "CANCEL": "Cancel",
       "SUCCESS": "Application was rejected"
+    },
+    "CHANGES_REQUESTED": {
+      "TITLE": "Specify requested changes",
+      "TEXT": "Please describe the changes you wish the applicant to make to this application.",
+      "SUBMIT": "Request changes",
+      "CANCEL": "Cancel",
+      "SUCCESS": "User was notified of the requested changes"
     },
     "APP_APPROVE_ANYWAY": {
       "TITLE": "Application should not be approved",

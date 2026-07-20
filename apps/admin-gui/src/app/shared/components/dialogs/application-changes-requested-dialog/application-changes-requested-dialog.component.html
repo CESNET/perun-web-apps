@@ -1,0 +1,23 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}} position-relative">
+  <div *perunWebAppsLoader="loading; indicator: spinner">
+    <h1 mat-dialog-title>{{'DIALOGS.CHANGES_REQUESTED.TITLE' | translate}}</h1>
+    <div mat-dialog-content>
+      {{'DIALOGS.CHANGES_REQUESTED.TEXT' | translate}}
+      <mat-form-field class="w-100">
+        <textarea [(ngModel)]="reason" matInput></textarea>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button (click)="onCancel()" class="ms-auto" mat-stroked-button>
+        {{'DIALOGS.CHANGES_REQUESTED.CANCEL' | translate}}
+      </button>
+      <button (click)="onSubmit()" [disabled]="loading" class="ms-2" color="accent" mat-flat-button>
+        {{'DIALOGS.CHANGES_REQUESTED.SUBMIT' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
