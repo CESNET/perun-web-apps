@@ -217,7 +217,18 @@ export class EditAttributeDefinitionDialogComponent implements OnInit {
       attributeRights: this.collections$.getValue(),
     };
     // Filters attributes and rights that are not needed based on filters
-    const ALLOWED_KEYS = ['displayName', 'namespace', 'friendlyName', 'type'];
+    const ALLOWED_KEYS = [
+      'friendlyName',
+      'namespace',
+      'description',
+      'type',
+      'displayName',
+      'writable',
+      'unique',
+      'friendlyNameParameter',
+      'baseFriendlyName',
+      'entity',
+    ];
     const ALLOWED_RIGHTS_KEYS = ['action', 'policies'];
     const ALLOWED_POLICY_KEYS = ['role', 'object'];
 
