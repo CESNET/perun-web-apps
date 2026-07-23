@@ -29,7 +29,10 @@ export class ApiService implements PerunApiService {
 
   getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
-    headers = headers.set('Authorization', this.authService.getAuthorizationHeaderValue());
+    const token = this.authService.getAuthorizationHeaderValue();
+    if (token) {
+      headers = headers.set('Authorization', token);
+    }
     return headers;
   }
 
