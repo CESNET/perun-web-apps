@@ -91,11 +91,14 @@ export class ApiInterceptor implements HttpInterceptor {
         },
       });
     } else if (this.isCallToPerunApi(req.url) || this.isCallToRegistrarApi(req.url)) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: this.authService.getAuthorizationHeaderValue(),
-        },
-      });
+      const token = this.authService.getAuthorizationHeaderValue();
+      if (token) {
+        req = req.clone({
+          setHeaders: {
+            Authorization: token,
+          },
+        });
+      }
     }
 
     return this.handleRequest(req, next);
@@ -160,9 +163,15 @@ export class ApiInterceptor implements HttpInterceptor {
   }
 
   private replaceAuthenticationToken<T>(req: HttpRequest<T>): HttpRequest<T> {
+    const token = this.authService.getAuthorizationHeaderValue();
+
+    if (!token) {
+      return req;
+    }
+
     return req.clone({
       setHeaders: {
-        Authorization: this.authService.getAuthorizationHeaderValue(),
+        Authorization: token,
       },
     });
   }

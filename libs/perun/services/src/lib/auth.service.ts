@@ -92,10 +92,10 @@ export class AuthService {
     this.logoutProcess = logoutProcess;
   }
 
-  getAuthorizationHeaderValue(): string {
+  getAuthorizationHeaderValue(): string | null {
     return this.oauthService.hasValidAccessToken()
       ? 'Bearer ' + this.oauthService.getAccessToken()
-      : '';
+      : null;
   }
 
   startAuthentication(): void {
