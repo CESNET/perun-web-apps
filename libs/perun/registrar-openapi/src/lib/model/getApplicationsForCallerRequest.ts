@@ -9,11 +9,11 @@
  */
 import { IdmObject } from './idmObject';
 
-export interface GetApplicationsForObjectsRequest {
-  states: Array<GetApplicationsForObjectsRequest.StatesEnum>;
-  idmObjects: Array<IdmObject>;
+export interface GetApplicationsForCallerRequest {
+  idmObjects?: Array<IdmObject>;
+  states?: Array<GetApplicationsForCallerRequest.StatesEnum>;
 }
-export namespace GetApplicationsForObjectsRequest {
+export namespace GetApplicationsForCallerRequest {
   export const StatesEnum = {
     PENDING: 'PENDING',
     SUBMITTED: 'SUBMITTED',

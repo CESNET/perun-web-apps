@@ -23,9 +23,9 @@ import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
 
 // @ts-ignore
-import { ApplicationDTO } from '../model/applicationDTO';
-// @ts-ignore
 import { ApplicationDetailDTO } from '../model/applicationDetailDTO';
+// @ts-ignore
+import { ApplicationFormDTO } from '../model/applicationFormDTO';
 // @ts-ignore
 import { ApplicationResultDTO } from '../model/applicationResultDTO';
 // @ts-ignore
@@ -35,11 +35,17 @@ import { ErrorResponse } from '../model/errorResponse';
 // @ts-ignore
 import { FormItemDataDTO } from '../model/formItemDataDTO';
 // @ts-ignore
+import { GetApplicationsForCallerRequest } from '../model/getApplicationsForCallerRequest';
+// @ts-ignore
 import { GetApplicationsForObjectsRequest } from '../model/getApplicationsForObjectsRequest';
 // @ts-ignore
 import { GetApplicationsForUserRequest } from '../model/getApplicationsForUserRequest';
 // @ts-ignore
 import { Identity } from '../model/identity';
+// @ts-ignore
+import { PagedModelApplicationDTO } from '../model/pagedModelApplicationDTO';
+// @ts-ignore
+import { PagedModelEnrichedApplicationDTO } from '../model/pagedModelEnrichedApplicationDTO';
 // @ts-ignore
 import { RegistrationRequest } from '../model/registrationRequest';
 // @ts-ignore
@@ -167,6 +173,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -263,6 +275,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -316,7 +334,7 @@ export class SubmissionsService {
 
   /**
    * Find similar identities
-   * Checks IDM whetner similar users might exist based on item values, e.g. name or email
+   * Checks IDM whether similar users might exist based on item values, e.g. name or email
    * @param SubmittedDataDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -359,6 +377,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -420,7 +444,7 @@ export class SubmissionsService {
 
   /**
    * Force an open application into verified state
-   * Marks the application as &#x60;verified&#x60; even if it has unverified items
+   * Marks the application as &#x60;verified&#x60; even if it has unverified items. Also marks all items as assured
    * @param applicationId
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -463,6 +487,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -518,41 +548,48 @@ export class SubmissionsService {
    * Get all applications
    * Returns all applications in given states, if states param is nor present, applications in all states are returned.
    * @param states
+   * @param page Zero-based page index (0..N)
+   * @param size The size of the page to be returned
+   * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getAllApplications(
-    states?: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
-    >,
+    states?: Array<'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'>,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<ApplicationDTO>>;
+  ): Observable<PagedModelApplicationDTO>;
   public getAllApplications(
-    states?: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
-    >,
+    states?: Array<'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'>,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<ApplicationDTO>>>;
+  ): Observable<HttpResponse<PagedModelApplicationDTO>>;
   public getAllApplications(
-    states?: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
-    >,
+    states?: Array<'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'>,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<ApplicationDTO>>>;
+  ): Observable<HttpEvent<PagedModelApplicationDTO>>;
   public getAllApplications(
-    states?: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
-    >,
+    states?: Array<'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'>,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -568,10 +605,31 @@ export class SubmissionsService {
         );
       });
     }
+    if (page !== undefined && page !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>page, 'page');
+    }
+    if (size !== undefined && size !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>size, 'size');
+    }
+    if (sort) {
+      sort.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'sort',
+        );
+      });
+    }
 
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -613,7 +671,7 @@ export class SubmissionsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<ApplicationDTO>>(requestUrl, {
+    return this.httpClient.get<PagedModelApplicationDTO>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -669,6 +727,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -721,36 +785,198 @@ export class SubmissionsService {
   }
 
   /**
+   * Get all applications for caller
+   * Returns all applications for given objects that the caller has access to in given states, if states param is nor present, applications in all states are returned. If idmObjects are not listed, all applications of that user are returned
+   * @param GetApplicationsForCallerRequest
+   * @param page Zero-based page index (0..N)
+   * @param size The size of the page to be returned
+   * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getApplicationsForCaller(
+    GetApplicationsForCallerRequest: GetApplicationsForCallerRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<PagedModelEnrichedApplicationDTO>;
+  public getApplicationsForCaller(
+    GetApplicationsForCallerRequest: GetApplicationsForCallerRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<PagedModelEnrichedApplicationDTO>>;
+  public getApplicationsForCaller(
+    GetApplicationsForCallerRequest: GetApplicationsForCallerRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<PagedModelEnrichedApplicationDTO>>;
+  public getApplicationsForCaller(
+    GetApplicationsForCallerRequest: GetApplicationsForCallerRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (GetApplicationsForCallerRequest === null || GetApplicationsForCallerRequest === undefined) {
+      throw new Error(
+        'Required parameter GetApplicationsForCallerRequest was null or undefined when calling getApplicationsForCaller.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (page !== undefined && page !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>page, 'page');
+    }
+    if (size !== undefined && size !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>size, 'size');
+    }
+    if (sort) {
+      sort.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'sort',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/applications`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<PagedModelEnrichedApplicationDTO>(
+      requestUrl,
+      GetApplicationsForCallerRequest,
+      {
+        context: localVarHttpContext,
+        params: localVarQueryParameters,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
+  }
+
+  /**
    * Get all applications for form
    * Returns all applications for the form specification
    * @param formSpecificationId
+   * @param page Zero-based page index (0..N)
+   * @param size The size of the page to be returned
+   * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getApplicationsForForm(
     formSpecificationId: string,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<ApplicationDTO>>;
+  ): Observable<PagedModelApplicationDTO>;
   public getApplicationsForForm(
     formSpecificationId: string,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<ApplicationDTO>>>;
+  ): Observable<HttpResponse<PagedModelApplicationDTO>>;
   public getApplicationsForForm(
     formSpecificationId: string,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<ApplicationDTO>>>;
+  ): Observable<HttpEvent<PagedModelApplicationDTO>>;
   public getApplicationsForForm(
     formSpecificationId: string,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -762,9 +988,32 @@ export class SubmissionsService {
       );
     }
 
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (page !== undefined && page !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>page, 'page');
+    }
+    if (size !== undefined && size !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>size, 'size');
+    }
+    if (sort) {
+      sort.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'sort',
+        );
+      });
+    }
+
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -806,8 +1055,9 @@ export class SubmissionsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<ApplicationDTO>>(requestUrl, {
+    return this.httpClient.get<PagedModelApplicationDTO>(requestUrl, {
       context: localVarHttpContext,
+      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -822,6 +1072,9 @@ export class SubmissionsService {
    * @param idmObjectType
    * @param objectId
    * @param applicationState
+   * @param page Zero-based page index (0..N)
+   * @param size The size of the page to be returned
+   * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -830,41 +1083,53 @@ export class SubmissionsService {
     idmObjectType: 'VO' | 'GROUP',
     objectId: string,
     applicationState: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
+      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'
     >,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<EnrichedApplicationDTO>>;
+  ): Observable<PagedModelEnrichedApplicationDTO>;
   public getApplicationsForObject(
     idmObjectType: 'VO' | 'GROUP',
     objectId: string,
     applicationState: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
+      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'
     >,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<EnrichedApplicationDTO>>>;
+  ): Observable<HttpResponse<PagedModelEnrichedApplicationDTO>>;
   public getApplicationsForObject(
     idmObjectType: 'VO' | 'GROUP',
     objectId: string,
     applicationState: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
+      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'
     >,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<EnrichedApplicationDTO>>>;
+  ): Observable<HttpEvent<PagedModelEnrichedApplicationDTO>>;
   public getApplicationsForObject(
     idmObjectType: 'VO' | 'GROUP',
     objectId: string,
     applicationState: Array<
-      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'CHANGES_REQUESTED'
+      'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'APPROVED' | 'REJECTED' | 'ERROR'
     >,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -910,10 +1175,31 @@ export class SubmissionsService {
         );
       });
     }
+    if (page !== undefined && page !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>page, 'page');
+    }
+    if (size !== undefined && size !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>size, 'size');
+    }
+    if (sort) {
+      sort.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'sort',
+        );
+      });
+    }
 
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -955,7 +1241,7 @@ export class SubmissionsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<EnrichedApplicationDTO>>(requestUrl, {
+    return this.httpClient.get<PagedModelEnrichedApplicationDTO>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -970,33 +1256,48 @@ export class SubmissionsService {
    * Get all applications for IDM objects
    * Returns all applications for all the passed objects in the set states
    * @param GetApplicationsForObjectsRequest
+   * @param page Zero-based page index (0..N)
+   * @param size The size of the page to be returned
+   * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getApplicationsForObjects(
     GetApplicationsForObjectsRequest: GetApplicationsForObjectsRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<EnrichedApplicationDTO>>;
+  ): Observable<PagedModelEnrichedApplicationDTO>;
   public getApplicationsForObjects(
     GetApplicationsForObjectsRequest: GetApplicationsForObjectsRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<EnrichedApplicationDTO>>>;
+  ): Observable<HttpResponse<PagedModelEnrichedApplicationDTO>>;
   public getApplicationsForObjects(
     GetApplicationsForObjectsRequest: GetApplicationsForObjectsRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<EnrichedApplicationDTO>>>;
+  ): Observable<HttpEvent<PagedModelEnrichedApplicationDTO>>;
   public getApplicationsForObjects(
     GetApplicationsForObjectsRequest: GetApplicationsForObjectsRequest,
+    page?: number,
+    size?: number,
+    sort?: Array<string>,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1011,9 +1312,32 @@ export class SubmissionsService {
       );
     }
 
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (page !== undefined && page !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>page, 'page');
+    }
+    if (size !== undefined && size !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>size, 'size');
+    }
+    if (sort) {
+      sort.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'sort',
+        );
+      });
+    }
+
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1063,11 +1387,12 @@ export class SubmissionsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<Array<EnrichedApplicationDTO>>(
+    return this.httpClient.post<PagedModelEnrichedApplicationDTO>(
       requestUrl,
       GetApplicationsForObjectsRequest,
       {
         context: localVarHttpContext,
+        params: localVarQueryParameters,
         responseType: <any>responseType_,
         withCredentials: this.configuration.withCredentials,
         headers: localVarHeaders,
@@ -1079,34 +1404,34 @@ export class SubmissionsService {
 
   /**
    * Get all applications for user
-   * Returns all applications for given objects that the user has access to in given states, if states param is nor present, applications in all states are returned. If idmObjects are not listed, all applications of that user are returned
+   * Returns all applications for given objects of the user in given states, if states param is nor present, applications in all states are returned. If idmObjects are not listed, all applications of that user are returned
    * @param GetApplicationsForUserRequest
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getApplicationsForUser(
+  public getUserApplications(
     GetApplicationsForUserRequest: GetApplicationsForUserRequest,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<Array<EnrichedApplicationDTO>>;
-  public getApplicationsForUser(
+  public getUserApplications(
     GetApplicationsForUserRequest: GetApplicationsForUserRequest,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<Array<EnrichedApplicationDTO>>>;
-  public getApplicationsForUser(
+  public getUserApplications(
     GetApplicationsForUserRequest: GetApplicationsForUserRequest,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<Array<EnrichedApplicationDTO>>>;
-  public getApplicationsForUser(
+  public getUserApplications(
     GetApplicationsForUserRequest: GetApplicationsForUserRequest,
     useNon: boolean = false,
     observe: any = 'body',
@@ -1115,13 +1440,19 @@ export class SubmissionsService {
   ): Observable<any> {
     if (GetApplicationsForUserRequest === null || GetApplicationsForUserRequest === undefined) {
       throw new Error(
-        'Required parameter GetApplicationsForUserRequest was null or undefined when calling getApplicationsForUser.',
+        'Required parameter GetApplicationsForUserRequest was null or undefined when calling getUserApplications.',
       );
     }
 
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1162,7 +1493,7 @@ export class SubmissionsService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/api/v1/applications`;
+    let requestUrl = `${this.configuration.basePath}/api/v1/applications/user`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -1230,6 +1561,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1339,6 +1676,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1451,6 +1794,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1511,6 +1860,125 @@ export class SubmissionsService {
   }
 
   /**
+   * Reset validation process
+   * Retries the validation for application\&#39;s unassured items. Optionally pass the IDs of form item data to do this for
+   * @param applicationId
+   * @param itemDataIds
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public resetValidation(
+    applicationId: string,
+    itemDataIds?: Array<string>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<any>;
+  public resetValidation(
+    applicationId: string,
+    itemDataIds?: Array<string>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<HttpResponse<any>>;
+  public resetValidation(
+    applicationId: string,
+    itemDataIds?: Array<string>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<HttpEvent<any>>;
+  public resetValidation(
+    applicationId: string,
+    itemDataIds?: Array<string>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<any> {
+    if (applicationId === null || applicationId === undefined) {
+      throw new Error(
+        'Required parameter applicationId was null or undefined when calling resetValidation.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (itemDataIds) {
+      itemDataIds.forEach((element) => {
+        localVarQueryParameters = this.addToHttpParams(
+          localVarQueryParameters,
+          <any>element,
+          'itemDataIds',
+        );
+      });
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = [];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/applications/${this.configuration.encodeParam({ name: 'applicationId', value: applicationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/reset-validation`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<any>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Submit an application
    * Creates a new application using the form item data filled out by the user
    * @param SubmittedDataDTO
@@ -1555,6 +2023,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1669,6 +2143,12 @@ export class SubmissionsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1719,6 +2199,116 @@ export class SubmissionsService {
       requestUrl = helperUrl.toString();
     }
     return this.httpClient.patch<ApplicationResultDTO>(requestUrl, FormItemDataDTO, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Validates the application data before submission
+   * Takes the filled form data and performs validation for all of the items, returning the errors
+   * @param ApplicationFormDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public validateApplicationData(
+    ApplicationFormDTO: ApplicationFormDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<ApplicationResultDTO>;
+  public validateApplicationData(
+    ApplicationFormDTO: ApplicationFormDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<ApplicationResultDTO>>;
+  public validateApplicationData(
+    ApplicationFormDTO: ApplicationFormDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<ApplicationResultDTO>>;
+  public validateApplicationData(
+    ApplicationFormDTO: ApplicationFormDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (ApplicationFormDTO === null || ApplicationFormDTO === undefined) {
+      throw new Error(
+        'Required parameter ApplicationFormDTO was null or undefined when calling validateApplicationData.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/applications/validate`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<ApplicationResultDTO>(requestUrl, ApplicationFormDTO, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,

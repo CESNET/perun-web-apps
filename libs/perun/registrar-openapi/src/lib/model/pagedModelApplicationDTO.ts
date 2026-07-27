@@ -8,11 +8,9 @@
  * Do not edit the class manually.
  */
 import { ApplicationDTO } from './applicationDTO';
-import { ValidationError } from './validationError';
+import { PageMetadata } from './pageMetadata';
 
-export interface ApplicationResultDTO {
-  formSpecificationId: string;
-  application?: ApplicationDTO;
-  errors?: Array<ValidationError>;
-  error?: string;
+export interface PagedModelApplicationDTO {
+  content?: Array<ApplicationDTO>;
+  page?: PageMetadata;
 }

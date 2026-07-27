@@ -10,6 +10,7 @@ export interface PageQuery {
   offset?: number;
   order?: 'ASCENDING' | 'DESCENDING';
   sortColumn?: string;
+  sortColumnOriginal?: string; // without uppercasing
   searchString?: string;
 }
 
@@ -128,6 +129,7 @@ export class DynamicDataSource<T> implements DataSource<T> {
         return of({
           order: sort.direction === 'asc' ? 'ASCENDING' : 'DESCENDING',
           sortColumn: sort.active.toUpperCase(),
+          sortColumnOriginal: sort.active,
           pageSize: page.pageSize,
           offset: page.pageIndex * page.pageSize,
           searchString: filter,

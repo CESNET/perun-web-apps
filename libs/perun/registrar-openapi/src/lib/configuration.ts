@@ -102,6 +102,15 @@ export class Configuration {
     this.encodeParam = encodeParam ?? ((param) => this.defaultEncodeParam(param));
     this.credentials = credentials ?? {};
 
+    // init default basicAuth credential
+    if (!this.credentials['basicAuth']) {
+      this.credentials['basicAuth'] = () => {
+        return this.username || this.password
+          ? btoa(this.username + ':' + this.password)
+          : undefined;
+      };
+    }
+
     // init default bearerAuth credential
     if (!this.credentials['bearerAuth']) {
       this.credentials['bearerAuth'] = () => {

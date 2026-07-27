@@ -9,7 +9,7 @@
  */
 
 export interface ItemValidatorDTO {
-  type?: ItemValidatorDTO.TypeEnum;
+  type: ItemValidatorDTO.TypeEnum;
   options?: { [key: string]: string };
 }
 export namespace ItemValidatorDTO {

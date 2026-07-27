@@ -14,7 +14,7 @@ export interface FormSpecificationPatchRequest {
   autoFormTypes?: Array<FormSpecificationPatchRequest.AutoFormTypesEnum>;
   formTransitions?: Array<FormTransitionDTO>;
   formModules?: Array<AssignedFormModuleDTO>;
-  namespace?: string;
+  namespace?: string | null;
 }
 export namespace FormSpecificationPatchRequest {
   export const AutoFormTypesEnum = {

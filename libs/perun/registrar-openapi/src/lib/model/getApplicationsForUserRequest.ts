@@ -10,6 +10,9 @@
 import { IdmObject } from './idmObject';
 
 export interface GetApplicationsForUserRequest {
+  userId?: string | null;
+  identityIssuer?: string | null;
+  identityIdentifier?: string | null;
   idmObjects?: Array<IdmObject>;
   states?: Array<GetApplicationsForUserRequest.StatesEnum>;
 }
@@ -20,7 +23,7 @@ export namespace GetApplicationsForUserRequest {
     VERIFIED: 'VERIFIED',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED',
-    CHANGES_REQUESTED: 'CHANGES_REQUESTED',
+    ERROR: 'ERROR',
   } as const;
   export type StatesEnum = (typeof StatesEnum)[keyof typeof StatesEnum];
 }

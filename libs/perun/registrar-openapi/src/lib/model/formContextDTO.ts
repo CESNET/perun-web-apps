@@ -8,10 +8,25 @@
  * Do not edit the class manually.
  */
 import { ApplicationDTO } from './applicationDTO';
+import { FormSpecificationDTO } from './formSpecificationDTO';
 import { EnrichedApplicationFormDTO } from './enrichedApplicationFormDTO';
 
 export interface FormContextDTO {
-  prefilledData?: EnrichedApplicationFormDTO;
-  openApplications?: Array<ApplicationDTO>;
+  formSpecification?: FormSpecificationDTO;
+  prefilledData: EnrichedApplicationFormDTO;
+  openApplications: Array<ApplicationDTO>;
+  idmError?: FormContextDTO.IdmErrorEnum;
   oldRegUrl?: string;
+}
+export namespace FormContextDTO {
+  export const IdmErrorEnum = {
+    LIFECYCLE_UNALTERABLE: 'LIFECYCLE_UNALTERABLE',
+    OUTSIDE_EXT_PERIOD: 'OUTSIDE_EXT_PERIOD',
+    INSUFFICIENT_LOA: 'INSUFFICIENT_LOA',
+    NO_LOA: 'NO_LOA',
+    NEVER_EXPIRE: 'NEVER_EXPIRE',
+    NOT_MEMBER: 'NOT_MEMBER',
+    UNKNOWN: 'UNKNOWN',
+  } as const;
+  export type IdmErrorEnum = (typeof IdmErrorEnum)[keyof typeof IdmErrorEnum];
 }

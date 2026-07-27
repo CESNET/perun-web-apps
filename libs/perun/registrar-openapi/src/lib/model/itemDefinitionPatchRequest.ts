@@ -14,9 +14,9 @@ export interface ItemDefinitionPatchRequest {
   displayName?: string;
   updatable?: boolean;
   required?: boolean;
-  defaultValue?: string;
+  defaultValue?: string | null;
   prefillStrategyIds?: Array<string>;
-  destinationId?: string;
+  destinationId?: string | null;
   formTypes?: Array<ItemDefinitionPatchRequest.FormTypesEnum>;
   texts?: { [key: string]: ItemTexts };
   hidden?: ItemDefinitionPatchRequest.HiddenEnum;

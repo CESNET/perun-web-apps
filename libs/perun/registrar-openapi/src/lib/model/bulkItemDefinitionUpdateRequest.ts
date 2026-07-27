@@ -11,5 +11,5 @@ import { ItemDefinitionPatchRequest } from './itemDefinitionPatchRequest';
 
 export interface BulkItemDefinitionUpdateRequest {
   itemDefinitionId: string;
-  patchRequest?: ItemDefinitionPatchRequest;
+  patchRequest: ItemDefinitionPatchRequest;
 }

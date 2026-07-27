@@ -10,7 +10,7 @@
 import { TargetStateConfig } from './targetStateConfig';
 
 export interface FormTransitionDTO {
-  id?: string;
+  id: string;
   sourceFormSpecificationId: string;
   targetFormSpecificationId: string;
   sourceFormStates: Array<TargetStateConfig>;

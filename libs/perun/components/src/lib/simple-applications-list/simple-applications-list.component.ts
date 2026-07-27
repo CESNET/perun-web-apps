@@ -26,11 +26,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  Application,
   ApplicationFormItemData,
   AttributeDefinition,
   Group,
   Member,
   User,
+  Vo,
 } from '@perun-web-apps/perun/openapi';
 import {
   ApplicationWithStringId,
@@ -41,6 +43,7 @@ import {
   getExportDataForColumn,
   getExportDataForColumnNewReg,
   getSortDataColumnNewReg,
+  mapToAppWithId,
   TABLE_ITEMS_COUNT_OPTIONS,
 } from '@perun-web-apps/perun/utils';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -56,6 +59,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableWrapperComponent } from '@perun-web-apps/perun/table-utils';
 import { ApplicationTypeIconComponent } from '../application-type-icon/application-type-icon.component';
 import { TableConfigService } from '@perun-web-apps/config/table-config';
+import { DynamicDataSource, isDynamicDataSource, PageQuery } from '@perun-web-apps/perun/models';
+import { PagedModelEnrichedApplicationDTO } from '@perun-web-apps/perun/registrar-openapi';
 
 @Component({
   imports: [
@@ -90,7 +95,8 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @Input() fedColumnsFriendly: string[] = [];
   @Input() disableRouting = false;
-  @Input() group: Group;
+  @Input() groupMap: Map<number, Group>;
+  @Input() vo: Vo;
   @Input() member: Member;
   @Input() user: User;
   @Input() fedAttrs: AttributeDefinition[] = [];
@@ -101,9 +107,12 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
   @Input() cacheSubject: BehaviorSubject<boolean>;
   @Input() resetPagination: BehaviorSubject<boolean>;
 
+  @Output() queryChanged = new EventEmitter<PageQuery>();
   @Output() downloadAll = new EventEmitter<{ format: string; length: number }>();
   parsedColumns: string[] = [];
-  dataSource: MatTableDataSource<ApplicationWithStringId>;
+  dataSource:
+    | MatTableDataSource<ApplicationWithStringId>
+    | DynamicDataSource<ApplicationWithStringId>;
   fedColumnsDisplay = [];
 
   // contains all selected applications across all pages
@@ -111,6 +120,7 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [];
   unfilteredColumns = this.displayedColumns;
   tableId = 'perun-web-apps-simple-applications-list';
+  length: number;
 
   constructor(
     private authResolver: GuiAuthResolver,
@@ -120,12 +130,24 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
     private destroyRef: DestroyRef,
   ) {}
 
-  @Input() set applications(applications: ApplicationWithStringId[]) {
+  @Input() set applications(
+    applications: ApplicationWithStringId[] | PagedModelEnrichedApplicationDTO,
+  ) {
     // Initialize data source with first applications object passed
     if (!this.dataSource) {
       this.dataSourceInit(applications);
-    } else {
+    }
+    // Set up data correctly on each change
+    const paginated = this.isPaginated(applications);
+    if (isDynamicDataSource(this.dataSource) && paginated) {
+      this.dataSource.data = applications.content.map((app) =>
+        mapToAppWithId(app, this.vo, this.groupMap),
+      );
+      this.dataSource.count = applications.page.totalElements;
+      this.length = applications.page.totalElements;
+    } else if (!isDynamicDataSource(this.dataSource) && !paginated) {
       this.dataSource.data = applications;
+      this.length = applications.length;
     }
   }
 
@@ -207,6 +229,12 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
     );
   }
 
+  isPaginated(
+    data: Application[] | PagedModelEnrichedApplicationDTO,
+  ): data is PagedModelEnrichedApplicationDTO {
+    return 'content' in data;
+  }
+
   exportAllData(format: string): void {
     downloadApplicationsData(
       getDataForExport(this.dataSource.filteredData, this.displayedColumns, getExportDataForColumn),
@@ -242,30 +270,40 @@ export class SimpleApplicationsListComponent implements OnInit, OnChanges {
     }
   }
 
-  private dataSourceInit(applications: ApplicationWithStringId[]): void {
+  private dataSourceInit(
+    applications: ApplicationWithStringId[] | PagedModelEnrichedApplicationDTO,
+  ): void {
+    const paginated = this.isPaginated(applications);
+
     // Create client-side data source only
-    this.dataSource = new MatTableDataSource(applications);
+    this.dataSource = paginated
+      ? new DynamicDataSource(
+          applications.content.map((app) => mapToAppWithId(app, this.vo, this.groupMap)),
+          applications.page.totalElements,
+          this.sort,
+          this.child.paginator,
+        )
+      : new MatTableDataSource(applications);
 
     // Initialize client-side data source
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.child.paginator;
-    this.dataSource.filterPredicate = (data: ApplicationWithStringId, filter: string): boolean =>
-      customDataSourceFilterPredicate(
-        data as unknown as ApplicationWithStringId,
-        filter,
-        this.displayedColumns,
-        getExportDataForColumnNewReg,
-        true,
-      );
-    this.dataSource.sortData = (
-      data: ApplicationWithStringId[],
-      sort: MatSort,
-    ): ApplicationWithStringId[] =>
-      customDataSourceSort(
-        data as unknown as ApplicationWithStringId[],
-        sort,
-        getSortDataColumnNewReg,
-      ) as unknown as ApplicationWithStringId[];
+    if (isDynamicDataSource(this.dataSource)) {
+      this.dataSource.pageQuery$.subscribe((query) => this.queryChanged.emit(query));
+    } else {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.child.paginator;
+      this.dataSource.filterPredicate = (data: ApplicationWithStringId, filter: string): boolean =>
+        customDataSourceFilterPredicate(
+          data,
+          filter,
+          this.displayedColumns,
+          getExportDataForColumnNewReg,
+          true,
+        );
+      this.dataSource.sortData = (
+        data: ApplicationWithStringId[],
+        sort: MatSort,
+      ): ApplicationWithStringId[] => customDataSourceSort(data, sort, getSortDataColumnNewReg);
+    }
   }
 
   private watchForIdColumnChanges(): void {
