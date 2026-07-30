@@ -140,6 +140,14 @@ export class GroupsPageComponent implements OnInit {
       adminGroups.forEach((group) => {
         this.vosIds.push(group.voId);
       });
+
+      if (this.vosIds.length === 0) {
+        if (--remainingGroupSources === 0) {
+          this.addToLists(true);
+        }
+        return;
+      }
+
       this.vosManager.getVosByIds(this.vosIds).subscribe((vos) => {
         const adminVos = vos;
 
