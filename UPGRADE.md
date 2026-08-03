@@ -1,5 +1,20 @@
 Upgrade notes
 
+## [20.14.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.13.0...v20.14.0) (2026-08-03)
+
+
+### Features
+
+* **admin:** changes requested to application ([4cdefb2](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4cdefb2ba3ec65b123de0c2e828390f3b7de88f0))
+* **profile:** add trademark symbol to ORCID branding ([c546448](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c54644881f7b87691efa956a58db51c210fec608))
+
+
+### Bug Fixes
+
+* **admin:** export attribute missing properties ([061f52b](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/061f52b8986a4f83645501702b03ec13b7c7041c))
+* avoid empty Authorization header in requests ([3442bd0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3442bd0671f9887f41dd0272cfcca6b4571fb79d))
+* **profile:** fix profile groups page loading for users who are not group admins ([e74035f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/e74035fe2c782db9fc31c87fa5b56e9e4b9e920f))
+
 ## [20.13.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.12.0...v20.13.0) (2026-07-14)
 
 
