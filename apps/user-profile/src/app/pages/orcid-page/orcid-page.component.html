@@ -10,11 +10,14 @@
 
       <button
         mat-flat-button
-        class="my-0 ms-1"
-        color="accent"
+        class="orcid-button"
         (click)="addOrcidIdentity()"
         [disabled]="loading">
-        {{'ORCID.CONNECT' | customTranslate | translate}}
+        <mat-icon svgIcon="perun-orcid-green" class="orcid-icon"></mat-icon>
+
+        <span>
+          {{ 'ORCID.CONNECT' | customTranslate | translate }}
+        </span>
       </button>
     } @else {
       <perun-web-apps-alert class="mb-3" alert_type="info">

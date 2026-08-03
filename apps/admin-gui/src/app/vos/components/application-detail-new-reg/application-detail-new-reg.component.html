@@ -38,6 +38,13 @@
         {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
       </button>
     }
+    @if (
+      (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && rejectAuth
+    ) {
+      <button (click)="requestChanges()" class="me-2" mat-stroked-button>
+        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REQUEST_CHANGES' | translate}}
+      </button>
+    }
     @if (resendAuth) {
       <button (click)="resendNotification()" class="me-2" mat-stroked-button>
         <i class="material-icons"> mail_outline </i>

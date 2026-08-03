@@ -1,3 +1,52 @@
 a {
   cursor: pointer;
 }
+.orcid-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 20px;
+  height: 42px;
+
+  border-radius: 4px;
+
+  background: #ffffff;
+  color: #4c4c4c;
+
+  border: 1px solid #d5d5d5;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #f7f7f7;
+    border-color: #bdbdbd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  }
+
+  &:active:not(:disabled) {
+    background: #efefef;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.orcid-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}

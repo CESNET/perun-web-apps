@@ -67,6 +67,7 @@ notification types and values are an arrays of allowed tags. The available tags 
   - `MAIL_VALIDATION`: An array of tags available for validate mail user notification.
   - `APP_APPROVED_USER`: An array of tags available for approved application user notification.
   - `APP_REJECTED_USER`: An array of tags available for rejected application user notification.
+  - `APP_CHANGES_REQUESTED`: An array of tags available for changes requested to application user notification.
   - `APP_ERROR_VO_ADMIN`: An array of tags available for application error admin notification.
   - `USER_INVITE`: An array of tags available for invite user notification.
   - `USER_PRE_APPROVED_INVITE`: An array of tags available for preapproved invite user notification.

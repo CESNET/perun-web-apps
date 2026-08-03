@@ -34,6 +34,7 @@ import {
 import { ApplicationRejectNewRegDialogComponent } from '../../../shared/components/dialogs/application-reject-new-reg-dialog/application-reject-new-reg-dialog.component';
 import { GetLabelNewRegPipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationReSendNotificationNewRegDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-new-reg-dialog/application-re-send-notification-new-reg-dialog.component';
+import { ApplicationChangesRequestedDialogComponent } from '../../../shared/components/dialogs/application-changes-requested-dialog/application-changes-requested-dialog.component';
 @Component({
   imports: [
     CommonModule,
@@ -229,8 +230,25 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     const dialogRef = this.dialog.open(ApplicationRejectNewRegDialogComponent, config);
 
     dialogRef.afterClosed().subscribe((application: ApplicationDetailDTO) => {
-      this.application = application.application;
-      this.latestDecision = application.decisions[0];
+      if (application) {
+        this.application = application.application;
+        this.latestDecision = application.decisions[0];
+      }
+    });
+  }
+
+  requestChanges(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = { applicationId: this.application.id, theme: this.dialogTheme };
+
+    const dialogRef = this.dialog.open(ApplicationChangesRequestedDialogComponent, config);
+
+    dialogRef.afterClosed().subscribe((application: ApplicationDetailDTO) => {
+      if (application) {
+        this.application = application.application;
+        this.latestDecision = application.decisions[0];
+      }
     });
   }
 
