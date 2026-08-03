@@ -120,7 +120,7 @@ export class SendMessageDialogComponent {
     text = text.concat('Perun instance: ' + instance + '\n');
     text = text.concat(
       'Sended from new Consolidator Gui, version: ',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@nx/enforce-module-boundaries
       require('../../../../../../package.json').version as string,
     );
     return text.split('\n').join('\n '); //add space after each new line
