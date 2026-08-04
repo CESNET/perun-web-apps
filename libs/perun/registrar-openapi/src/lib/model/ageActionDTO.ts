@@ -8,8 +8,7 @@
  * Do not edit the class manually.
  */
 
-export interface FormModuleDTO {
-  name: string;
-  description?: string;
-  requiredOptions: Array<string>;
+export interface AgeActionDTO {
+  actionName: string;
+  triggerAgeSeconds: number;
 }

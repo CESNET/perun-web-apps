@@ -12,6 +12,8 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/ageActionDTO.ts
+model/ageActionRecordDTO.ts
 model/applicationDTO.ts
 model/applicationDetailDTO.ts
 model/applicationFormDTO.ts
@@ -36,6 +38,7 @@ model/formSpecificationDTO.ts
 model/formSpecificationPatchRequest.ts
 model/formTransitionDTO.ts
 model/formTypeConfig.ts
+model/getApplicationsForCallerRequest.ts
 model/getApplicationsForObjectsRequest.ts
 model/getApplicationsForUserRequest.ts
 model/htmlParsingResult.ts
@@ -48,6 +51,9 @@ model/itemTexts.ts
 model/itemValidatorDTO.ts
 model/itemWithDefinitionDTO.ts
 model/models.ts
+model/pageMetadata.ts
+model/pagedModelApplicationDTO.ts
+model/pagedModelEnrichedApplicationDTO.ts
 model/prefillStrategyEntryDTO.ts
 model/registrationRequest.ts
 model/requirement.ts

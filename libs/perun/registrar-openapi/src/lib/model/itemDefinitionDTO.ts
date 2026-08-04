@@ -11,15 +11,15 @@ import { ItemTexts } from './itemTexts';
 import { ItemValidatorDTO } from './itemValidatorDTO';
 
 export interface ItemDefinitionDTO {
-  id?: string;
-  formSpecificationId?: string;
+  id?: string | null;
+  formSpecificationId?: string | null;
   displayName: string;
   type: ItemDefinitionDTO.TypeEnum;
   updatable: boolean;
   required: boolean;
-  defaultValue?: string;
-  prefillStrategyIds?: Array<string>;
-  destinationId?: string;
+  defaultValue?: string | null;
+  prefillStrategyIds?: Array<string> | null;
+  destinationId?: string | null;
   formTypes: Array<ItemDefinitionDTO.FormTypesEnum>;
   texts: { [key: string]: ItemTexts };
   hidden: ItemDefinitionDTO.HiddenEnum;

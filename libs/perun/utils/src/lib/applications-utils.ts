@@ -1,11 +1,14 @@
 import {
   Application,
   ApplicationsOrderColumn,
+  Group,
   RichApplication,
+  Vo,
 } from '@perun-web-apps/perun/openapi';
 import { downloadData, parseFullName } from './perun-utils';
 import { formatDate } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { EnrichedApplicationDTO } from '@perun-web-apps/perun/registrar-openapi';
 
 export function dateToString(date: Date): string {
   // in case end date hasn't been picked yet in the date picker, show all until today
@@ -188,6 +191,53 @@ export function getExportDataForColumnNewReg(
       return getFedValue(data.fedInfo, column);
   }
 }
+
+export function mapToAppWithId(
+  app: EnrichedApplicationDTO,
+  vo: Vo,
+  idToGroupMap: Map<number, Group>,
+): ApplicationWithStringId {
+  const ourApp: ApplicationWithStringId = {
+    uuid: app.application.id,
+    vo: vo,
+    group: null,
+    type: app.application.type.formType === 'INITIAL' ? 'INITIAL' : 'EXTENSION',
+    extSourceName: app.submission.identityIssuer,
+    createdBy: app.submission.submitterName,
+    createdAt: app.submission.timestamp,
+    modifiedAt: app.submission.timestamp,
+    modifiedBy: app.submission.submitterName,
+    user: null,
+    fedInfo: Object.entries(app.submission.identityAttributes)
+      .map(([key, value]) => `${key}:${value}`)
+      .join(','),
+  };
+  if (app.form.idmObject.idmObjectType === 'GROUP') {
+    ourApp.group = idToGroupMap.get(Number(app.form.idmObject.objectId));
+    ourApp.vo = { id: ourApp.group.voId, beanName: 'Vo' };
+  }
+  const lastDecision = app.decisions?.[app.decisions.length - 1];
+  if (lastDecision) {
+    ourApp.modifiedAt = lastDecision.timestamp;
+    ourApp.modifiedBy = lastDecision.approverName;
+  }
+  switch (app.application.state) {
+    case 'APPROVED':
+      ourApp.state = 'APPROVED';
+      break;
+    case 'REJECTED':
+      ourApp.state = 'REJECTED';
+      break;
+    case 'VERIFIED':
+      ourApp.state = 'VERIFIED';
+      break;
+    case 'SUBMITTED':
+      ourApp.state = 'NEW';
+      break;
+  }
+  return ourApp;
+}
+
 export function downloadApplicationsData<T>(
   data: T[],
   translate: TranslateService,

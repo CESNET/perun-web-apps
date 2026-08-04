@@ -15,8 +15,8 @@ import { FormItemDataDTO } from './formItemDataDTO';
 
 export interface EnrichedFormItemDataDTO {
   formItemData: FormItemDataDTO;
-  formItem?: FormItemDTO;
-  itemDefinition?: ItemDefinitionDTO;
-  destination?: DestinationDTO;
-  prefillStrategyEntries?: Array<PrefillStrategyEntryDTO>;
+  formItem: FormItemDTO;
+  itemDefinition: ItemDefinitionDTO;
+  destination: DestinationDTO;
+  prefillStrategyEntries: Array<PrefillStrategyEntryDTO>;
 }
