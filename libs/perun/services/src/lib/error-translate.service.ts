@@ -19,6 +19,7 @@ export class ErrorTranslateService {
       case 'LoginNotExists':
         return 'loginNotExistsError';
       case 'PasswordStrengthFailed':
+      case 'PasswordStrength':
         return 'passwordStrengthFailedError';
       case 'PasswordOperationTimeout':
         return 'passwordOperationTimeoutError';
