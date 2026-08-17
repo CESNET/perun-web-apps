@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '@perun-web-apps/perun/services';
 import { AuthenticationLocalAccountComponent } from '../authentication-local-account/authentication-local-account.component';
+import { AuthenticationSambaPasswordComponent } from '../authentication-samba-password/authentication-samba-password.component';
 
 @Component({
   imports: [
@@ -11,6 +12,7 @@ import { AuthenticationLocalAccountComponent } from '../authentication-local-acc
     CustomTranslatePipe,
     TranslateModule,
     AuthenticationLocalAccountComponent,
+    AuthenticationSambaPasswordComponent,
   ],
   standalone: true,
   selector: 'perun-web-apps-authentication-account-activation',
@@ -19,11 +21,13 @@ import { AuthenticationLocalAccountComponent } from '../authentication-local-acc
 })
 export class AuthenticationAccountActivationComponent implements OnInit {
   displayLocalAccount: boolean;
+  displaySambaPassword: boolean;
 
   constructor(private storeService: StoreService) {}
 
   ngOnInit(): void {
     const displayedTabs = this.storeService.getProperty('displayed_tabs');
     this.displayLocalAccount = displayedTabs.includes('local_acc');
+    this.displaySambaPassword = displayedTabs.includes('samba');
   }
 }

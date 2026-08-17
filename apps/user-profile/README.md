@@ -12,7 +12,7 @@ Items marked with (#) are likely relevant.
 
 - (*)`displayed_tabs`: array of strings, contains all the tabs that are accessible on this instance in the order, they will be listed in side menu
 
-  - `"profile"`, `"identities"`, `"services"`, `"groups"`, `"vos"`, `"privacy"`, `"consents"`, `"authentication"`, `"settings"`, `"data_quotas"`, `"ssh_keys"`, `"mfa"`, `"opt_out"`, `"alt_passwords"`, `"pref_shells"`, `"pref_group_names"`, `"password_reset"`, `"external"`, `"local_acc"`, `"anti_phishing"`, `"accountActivation"`
+  - `"profile"`, `"identities"`, `"services"`, `"groups"`, `"vos"`, `"privacy"`, `"consents"`, `"authentication"`, `"settings"`, `"data_quotas"`, `"ssh_keys"`, `"mfa"`, `"opt_out"`, `"samba"`, `"alt_passwords"`, `"pref_shells"`, `"pref_group_names"`, `"password_reset"`, `"external"`, `"local_acc"`, `"anti_phishing"`, `"accountActivation"`
 
 - (#)`header_label_<language_shortcut>`: represents the name of app, located right next to the logo, usually represents the name of the app or additional text to the logo, if not filled default texts are used
 

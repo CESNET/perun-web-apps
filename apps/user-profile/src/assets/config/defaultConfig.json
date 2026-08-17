@@ -117,6 +117,7 @@
     "ssh_keys",
     "mfa",
     "opt_out",
+    "samba",
     "alt_passwords",
     "pref_shells",
     "pref_group_names",
