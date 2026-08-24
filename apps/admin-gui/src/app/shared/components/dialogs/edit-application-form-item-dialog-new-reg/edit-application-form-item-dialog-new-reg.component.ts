@@ -90,6 +90,8 @@ export interface EditApplicationFormItemDialogNewRegComponentData {
   styleUrls: ['./edit-application-form-item-dialog-new-reg.component.scss'],
 })
 export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
+  LOGIN_PREFIX = 'urn:perun:user:attribute-def:def:login-namespace:';
+
   applicationFormItem: ItemWithDefinitionDTO;
   sourceAttributes: AttributeDefinition[];
   destinationAttributes: AttributeDefinition[];
@@ -205,8 +207,8 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       (pref) => pref.type === 'IDENTITY_ATTRIBUTE',
     );
     this.identitySource = this.identitySourceOriginal?.sourceAttribute ?? '';
-    this.idmSourceOriginal = this.applicationFormItem.prefillStrategyEntries.find(
-      (pref) => pref.type === 'IDM_ATTRIBUTE',
+    this.idmSourceOriginal = this.applicationFormItem.prefillStrategyEntries.find((pref) =>
+      ['IDENTITY_ATTRIBUTE', 'LOGIN_ATTRIBUTE'].includes(pref.type),
     );
     this.idmSource = this.idmSourceOriginal?.sourceAttribute;
     this.attributesManager.getAllAttributeDefinitions().subscribe({
@@ -326,12 +328,25 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
 
     if (this.itemDestination !== this.itemDestinationOriginal) {
       if (this.itemDestination && this.itemDestination !== '') {
-        this.applicationFormItem.destination = {
-          id: null,
-          formSpecificationId: this.data.formSpecificationId,
-          accessLevel: 'FORM_SPECIFIC',
-          urn: this.itemDestination,
-        };
+        if (
+          this.isApplicationFormItemOfType(['LOGIN', 'PASSWORD']) &&
+          this.itemDestination.startsWith(this.LOGIN_PREFIX)
+        ) {
+          // login attr special behavior
+          this.applicationFormItem.destination = {
+            id: null,
+            formSpecificationId: null,
+            accessLevel: 'ADMIN_ONLY',
+            urn: this.itemDestination,
+          };
+        } else {
+          this.applicationFormItem.destination = {
+            id: null,
+            formSpecificationId: this.data.formSpecificationId,
+            accessLevel: 'FORM_SPECIFIC',
+            urn: this.itemDestination,
+          };
+        }
       } else {
         this.applicationFormItem.destination = null;
       }
@@ -429,13 +444,28 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       if (attribute.value === '') {
         this.idmPrefillStrategy = null;
       } else {
-        this.idmPrefillStrategy = {
-          id: null,
-          type: 'IDM_ATTRIBUTE',
-          formSpecificationId: this.data.formSpecificationId,
-          accessLevel: 'FORM_SPECIFIC',
-          sourceAttribute: attribute.value,
-        };
+        if (
+          this.isApplicationFormItemOfType(['LOGIN', 'PASSWORD']) &&
+          attribute.value.startsWith(this.LOGIN_PREFIX)
+        ) {
+          // special handling for login attrs
+          this.idmPrefillStrategy = {
+            id: null,
+            type: 'LOGIN_ATTRIBUTE',
+            formSpecificationId: null,
+            accessLevel: 'ADMIN_ONLY',
+            sourceAttribute: attribute.value,
+            options: { namespace: attribute.value.split(':').pop() },
+          };
+        } else {
+          this.idmPrefillStrategy = {
+            id: null,
+            type: 'IDM_ATTRIBUTE',
+            formSpecificationId: this.data.formSpecificationId,
+            accessLevel: 'FORM_SPECIFIC',
+            sourceAttribute: attribute.value,
+          };
+        }
       }
     } else {
       this.idmPrefillStrategy = this.idmSourceOriginal;
