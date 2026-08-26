@@ -1656,52 +1656,48 @@ export class AuthzResolverService {
 
   /**
    * Returns all new Registrar roles for the user derived from roles in Perun.
-   * @param userId id of User
+   * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getRegistrarUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<{ [key: string]: Set<IdmObject> }>;
   public getRegistrarUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<{ [key: string]: Set<IdmObject> }>>;
   public getRegistrarUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<{ [key: string]: Set<IdmObject> }>>;
   public getRegistrarUserRoles(
-    userId: number,
+    user: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (userId === null || userId === undefined) {
+    if (user === null || user === undefined) {
       throw new Error(
-        'Required parameter userId was null or undefined when calling getRegistrarUserRoles.',
+        'Required parameter user was null or undefined when calling getRegistrarUserRoles.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (userId !== undefined && userId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>userId,
-        'userId',
-      );
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'userId');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -1888,20 +1884,20 @@ export class AuthzResolverService {
 
   /**
    * Returns map of role names with map of corresponding complementary objects (perun beans) together with list of authorized groups where user is member.
-   * @param userId id of User
+   * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getRoleComplementaryObjectsWithAuthorizedGroups(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<{ [key: string]: { [key: string]: { [key: string]: Array<Group> } } }>;
   public getRoleComplementaryObjectsWithAuthorizedGroups(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -1910,32 +1906,28 @@ export class AuthzResolverService {
     HttpResponse<{ [key: string]: { [key: string]: { [key: string]: Array<Group> } } }>
   >;
   public getRoleComplementaryObjectsWithAuthorizedGroups(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<{ [key: string]: { [key: string]: { [key: string]: Array<Group> } } }>>;
   public getRoleComplementaryObjectsWithAuthorizedGroups(
-    userId: number,
+    user: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (userId === null || userId === undefined) {
+    if (user === null || user === undefined) {
       throw new Error(
-        'Required parameter userId was null or undefined when calling getRoleComplementaryObjectsWithAuthorizedGroups.',
+        'Required parameter user was null or undefined when calling getRoleComplementaryObjectsWithAuthorizedGroups.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (userId !== undefined && userId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>userId,
-        'userId',
-      );
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'userId');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -2003,52 +1995,48 @@ export class AuthzResolverService {
 
   /**
    * Returns all roles accessible to the principal except for those obtained from membership in authorized groups as an AuthzRoles object for a given user.
-   * @param userId id of User
+   * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getUserDirectRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<{ [key: string]: { [key: string]: Array<number> } }>;
   public getUserDirectRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserDirectRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserDirectRoles(
-    userId: number,
+    user: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (userId === null || userId === undefined) {
+    if (user === null || user === undefined) {
       throw new Error(
-        'Required parameter userId was null or undefined when calling getUserDirectRoles.',
+        'Required parameter user was null or undefined when calling getUserDirectRoles.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (userId !== undefined && userId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>userId,
-        'userId',
-      );
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'userId');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -2221,50 +2209,46 @@ export class AuthzResolverService {
 
   /**
    * Returns all roles accessible to the principal as an AuthzRoles object for a given user.
-   * @param userId id of User
+   * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<{ [key: string]: { [key: string]: Array<number> } }>;
   public getUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserRoles(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserRoles(
-    userId: number,
+    user: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (userId === null || userId === undefined) {
-      throw new Error('Required parameter userId was null or undefined when calling getUserRoles.');
+    if (user === null || user === undefined) {
+      throw new Error('Required parameter user was null or undefined when calling getUserRoles.');
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (userId !== undefined && userId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>userId,
-        'userId',
-      );
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'userId');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -2330,52 +2314,48 @@ export class AuthzResolverService {
 
   /**
    * Returns roles resulting from membership in authorized groups as an AuthzRoles object for a given user.
-   * @param userId id of User
+   * @param user id of User
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getUserRolesObtainedFromAuthorizedGroupMemberships(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<{ [key: string]: { [key: string]: Array<number> } }>;
   public getUserRolesObtainedFromAuthorizedGroupMemberships(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserRolesObtainedFromAuthorizedGroupMemberships(
-    userId: number,
+    user: number,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<{ [key: string]: { [key: string]: Array<number> } }>>;
   public getUserRolesObtainedFromAuthorizedGroupMemberships(
-    userId: number,
+    user: number,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (userId === null || userId === undefined) {
+    if (user === null || user === undefined) {
       throw new Error(
-        'Required parameter userId was null or undefined when calling getUserRolesObtainedFromAuthorizedGroupMemberships.',
+        'Required parameter user was null or undefined when calling getUserRolesObtainedFromAuthorizedGroupMemberships.',
       );
     }
 
     let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (userId !== undefined && userId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>userId,
-        'userId',
-      );
+    if (user !== undefined && user !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>user, 'userId');
     }
 
     let localVarHeaders = this.defaultHeaders;
