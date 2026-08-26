@@ -5,7 +5,6 @@ export * from './applicationDetailDTO';
 export * from './applicationFormDTO';
 export * from './applicationResultDTO';
 export * from './assignedFormModuleDTO';
-export * from './availableModule';
 export * from './bulkItemDefinitionUpdateRequest';
 export * from './consolidateUserDTO';
 export * from './decisionDTO';

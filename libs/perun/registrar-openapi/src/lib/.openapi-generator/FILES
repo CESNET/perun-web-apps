@@ -19,7 +19,6 @@ model/applicationDetailDTO.ts
 model/applicationFormDTO.ts
 model/applicationResultDTO.ts
 model/assignedFormModuleDTO.ts
-model/availableModule.ts
 model/bulkItemDefinitionUpdateRequest.ts
 model/consolidateUserDTO.ts
 model/decisionDTO.ts

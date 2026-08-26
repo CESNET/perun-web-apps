@@ -13,6 +13,6 @@ import { SubmissionDTO } from './submissionDTO';
 export interface SubmissionResultDTO {
   messages?: Array<string>;
   redirectUrl?: string;
-  submission: SubmissionDTO;
+  submission?: SubmissionDTO;
   applicationResults?: Array<ApplicationResultDTO>;
 }
