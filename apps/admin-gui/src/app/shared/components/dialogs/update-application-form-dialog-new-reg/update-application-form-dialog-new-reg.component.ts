@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import { FormSpecificationDTO, FormsService } from '@perun-web-apps/perun/registrar-openapi';
 import AutoApprovedTypesEnum = FormSpecificationDTO.AutoApprovedTypesEnum;
@@ -48,7 +48,6 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
   loading = false;
   theme: string;
   autoRegistrationEnabled: boolean;
-  namespaceCtrl: FormControl<string> = new FormControl('');
 
   constructor(
     private dialogRef: MatDialogRef<UpdateApplicationFormDialogNewRegComponent>,
@@ -66,7 +65,6 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
       ? 'auto'
       : 'manual';
     this.entity = this.data.entity;
-    this.namespaceCtrl.setValue(this.data.applicationForm.namespace);
     this.autoRegistrationEnabled = this.data.autoRegistrationEnabled;
   }
 
@@ -83,7 +81,6 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
     this.formsService
       .updateForm(this.applicationForm.id, {
         autoFormTypes: this.applicationForm.autoApprovedTypes,
-        namespace: this.namespaceCtrl.getRawValue(),
       })
       .subscribe(
         (updatedForm) => {
