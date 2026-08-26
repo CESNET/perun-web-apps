@@ -123,12 +123,13 @@ export class GroupInvitationDetailComponent implements OnInit {
                             });
                         }
                         // sender might not be a VO member anymore, no need to throw an error though
-                        this.apiService.dontHandleErrorForNext();
                         this.membersService
-                          .getMemberByUser(resultVo.id, resultSender.id)
+                          .getMemberByUserIfExists(resultVo.id, resultSender.id)
                           .subscribe({
                             next: (resultMember) => {
-                              this.senderIdInVo = resultMember.id;
+                              if (resultMember !== null) {
+                                this.senderIdInVo = resultMember.id;
+                              }
                               this.loading = false;
                             },
                             error: () => (this.loading = false),
