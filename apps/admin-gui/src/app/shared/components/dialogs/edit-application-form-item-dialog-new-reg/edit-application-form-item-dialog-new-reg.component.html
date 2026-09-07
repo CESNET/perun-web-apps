@@ -46,7 +46,7 @@
           <!--          </section>-->
           @if (
             isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'VERIFIED_EMAIL', 'PASSWORD', 'TEXTAREA',
-              'TIMEZONE', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+              'TIMEZONE', 'CHECKBOX', 'RADIO', 'SELECTION_CUSTOM', 'SELECTIONBOX', 'DATE_PICKER', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
           ) {
             <div>
               <section class="mt-4">
@@ -129,7 +129,7 @@
             </div>
           }
           @if (
-            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'PASSWORD', 'TEXTAREA', 'CHECKBOX', 'RADIO', 'COMBOBOX', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+            isApplicationFormItemOfType(['TEXTFIELD', 'LOGIN', 'PASSWORD', 'TEXTAREA', 'CHECKBOX', 'RADIO', 'SELECTION_CUSTOM', 'SELECTIONBOX', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
           ) {
             <div>
               <section class="mt-4">
@@ -228,7 +228,7 @@
             }
             @if (
               isApplicationFormItemOfType(['TEXTFIELD', 'VERIFIED_EMAIL', 'LOGIN', 'PASSWORD', 'RADIO', 'TEXTAREA',
-                        'COMBOBOX', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+                        'SELECTION_CUSTOM', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'DATE_PICKER', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
             ) {
               <div>
                 @if (!isApplicationFormItemOfType(['CHECKBOX'])) {
@@ -292,11 +292,13 @@
                 </mat-form-field>
               </div>
             }
-            @if (isApplicationFormItemOfType(['RADIO', 'COMBOBOX', 'CHECKBOX', 'SELECTIONBOX'])) {
+            @if (
+              isApplicationFormItemOfType(['RADIO', 'SELECTION_CUSTOM', 'CHECKBOX', 'SELECTIONBOX'])
+            ) {
               <div class="mt-4">
                 <h6>Options</h6>
                 <perun-web-apps-alert alert_type="info">
-                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.OPTIONS_DESCRIPTION' | translate}}
+                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.NEW_REG_OPTIONS_DESCRIPTION' | translate}}
                 </perun-web-apps-alert>
                 <div class="d-flex mt-2 mb-2">
                   <button (click)="sortOptionsAZ(lang)" class="ms-auto me-2" mat-stroked-button>

@@ -11,4 +11,5 @@
 export interface AgeActionDTO {
   actionName: string;
   triggerAgeSeconds: number;
+  options?: { [key: string]: any };
 }

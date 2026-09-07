@@ -1980,7 +1980,7 @@ export class SubmissionsService {
 
   /**
    * Submit an application
-   * Creates a new application using the form item data filled out by the user
+   * Creates a new application using the form item data filled out by the user. Submitted application forms are expected in the same order as they were returned by &#x60;loadForm&#x60;.
    * @param SubmittedDataDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

@@ -21,6 +21,8 @@ export namespace ItemValidatorDTO {
     SELECTION_MULTI: 'SELECTION_MULTI',
     RESERVED_LOGIN: 'RESERVED_LOGIN',
     PASSWORD: 'PASSWORD',
+    TIMEZONE: 'TIMEZONE',
+    DATE: 'DATE',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }

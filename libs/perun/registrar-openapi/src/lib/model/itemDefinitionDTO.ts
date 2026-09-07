@@ -40,6 +40,11 @@ export namespace ItemDefinitionDTO {
     VERIFIED_EMAIL: 'VERIFIED_EMAIL',
     HTML_COMMENT: 'HTML_COMMENT',
     TEXTFIELD: 'TEXTFIELD',
+    TIMEZONE: 'TIMEZONE',
+    TEXTAREA: 'TEXTAREA',
+    RADIO: 'RADIO',
+    MAP_INPUT_BOX: 'MAP_INPUT_BOX',
+    LIST_INPUT_BOX: 'LIST_INPUT_BOX',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
   export const FormTypesEnum = {

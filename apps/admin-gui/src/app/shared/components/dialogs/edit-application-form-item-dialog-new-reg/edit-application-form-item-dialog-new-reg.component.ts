@@ -130,6 +130,11 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     'TEXTFIELD',
     'CHECKBOX',
     'SELECTIONBOX',
+    'SELECTION_CUSTOM',
+    'RADIO',
+    'DATE_PICKER',
+    'TEXTAREA',
+    'TIMEZONE',
   ];
   typesWithDisabled: ItemDefinitionDTO.TypeEnum[] = [
     'LOGIN',
@@ -138,6 +143,12 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     'TEXTFIELD',
     'CHECKBOX',
     'SELECTIONBOX',
+    'TEXTAREA',
+    'SELECTION_CUSTOM',
+    'RADIO',
+    'DATE_PICKER',
+    'MAP_INPUT_BOX',
+    'LIST_INPUT_BOX',
   ];
 
   hiddenDependencyItem: ApplicationFormItem = null;
@@ -153,6 +164,12 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     'VERIFIED_EMAIL',
     'CHECKBOX',
     'SELECTIONBOX',
+    'TEXTAREA',
+    'SELECTION_CUSTOM',
+    'RADIO',
+    'DATE_PICKER',
+    'MAP_INPUT_BOX',
+    'LIST_INPUT_BOX',
   ];
 
   constructor(

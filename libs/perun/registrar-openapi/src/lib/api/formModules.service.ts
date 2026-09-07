@@ -211,6 +211,8 @@ export class FormModulesService {
   }
 
   /**
+   * Get available modules
+   * Get all modules that can be assigned to forms, along with their description and options
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
