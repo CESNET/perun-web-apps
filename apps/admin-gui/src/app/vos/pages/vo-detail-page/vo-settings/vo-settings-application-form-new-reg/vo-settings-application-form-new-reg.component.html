@@ -12,6 +12,10 @@
   @if (!loadingHeader) {
     <div class="d-flex w-75">
       <div>
+        <div class="fw-bold">
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
+          {{moduleNames.join(", ")}}
+        </div>
         <div>
           <span
             class="fw-bold"

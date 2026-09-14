@@ -18,6 +18,8 @@ model/applicationDTO.ts
 model/applicationDetailDTO.ts
 model/applicationFormDTO.ts
 model/applicationResultDTO.ts
+model/approvalFailure.ts
+model/approveResultDTO.ts
 model/assignedFormModuleDTO.ts
 model/bulkItemDefinitionUpdateRequest.ts
 model/consolidateUserDTO.ts

@@ -8,10 +8,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
-import { FormSpecificationDTO, FormsService } from '@perun-web-apps/perun/registrar-openapi';
+import {
+  FormModuleDTO,
+  FormModulesService,
+  FormSpecificationDTO,
+  FormsService,
+} from '@perun-web-apps/perun/registrar-openapi';
 import AutoApprovedTypesEnum = FormSpecificationDTO.AutoApprovedTypesEnum;
+import { MatTooltip } from '@angular/material/tooltip';
 
 export interface UpdateApplicationFormDialogNewRegData {
   entity: string;
@@ -33,6 +39,7 @@ export interface UpdateApplicationFormDialogNewRegData {
     LoadingDialogComponent,
     TranslateModule,
     LoaderDirective,
+    MatTooltip,
   ],
   standalone: true,
   selector: 'app-update-application-form-dialog',
@@ -45,17 +52,28 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
   initialState: string;
   extensionState: string;
   embeddedState: string;
-  loading = false;
+  loading = true;
   theme: string;
   autoRegistrationEnabled: boolean;
+  availableModules: FormModuleDTO[] = [];
+
+  readonly modulesForm = new FormGroup({
+    fields: new FormArray<FormControl<string | null>>([]),
+  });
 
   constructor(
     private dialogRef: MatDialogRef<UpdateApplicationFormDialogNewRegComponent>,
     @Inject(MAT_DIALOG_DATA) private data: UpdateApplicationFormDialogNewRegData,
     private formsService: FormsService,
+    private moduleService: FormModulesService,
   ) {}
 
+  get fields(): FormArray<FormControl<string | null>> {
+    return this.modulesForm.controls.fields;
+  }
+
   ngOnInit(): void {
+    this.loading = true;
     this.theme = this.data.theme;
     this.applicationForm = this.data.applicationForm;
     this.initialState = this.applicationForm.autoApprovedTypes.includes('INITIAL')
@@ -66,10 +84,39 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
       : 'manual';
     this.entity = this.data.entity;
     this.autoRegistrationEnabled = this.data.autoRegistrationEnabled;
+    this.applicationForm.modules.forEach((module) => {
+      this.fields.push(new FormControl<string | null>(module.moduleName, Validators.required));
+    });
+    this.moduleService.getAvailableModules().subscribe((modules) => {
+      this.availableModules = modules;
+      this.loading = false;
+    });
   }
 
   onCancel(): void {
     this.dialogRef.close();
+  }
+
+  addField(): void {
+    this.fields.push(new FormControl<string | null>(null, Validators.required));
+  }
+
+  removeField(index: number): void {
+    this.fields.removeAt(index);
+  }
+
+  getAvailableOptions(index: number): FormModuleDTO[] {
+    const selectedModules = new Set(
+      this.fields.controls
+        .map((control) => control.value)
+        .filter((value): value is string => value !== null),
+    );
+
+    const currentValue = this.fields.at(index).value;
+
+    return this.availableModules.filter(
+      (option) => option.name === currentValue || !selectedModules.has(option.name),
+    );
   }
 
   submit(): void {
@@ -81,6 +128,9 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
     this.formsService
       .updateForm(this.applicationForm.id, {
         autoFormTypes: this.applicationForm.autoApprovedTypes,
+        formModules: this.modulesForm.value.fields.map((moduleName) => {
+          return { formSpecificationId: this.applicationForm.id, moduleName: moduleName };
+        }),
       })
       .subscribe(
         (updatedForm) => {

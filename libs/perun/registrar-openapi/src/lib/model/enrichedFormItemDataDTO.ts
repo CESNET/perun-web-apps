@@ -18,5 +18,6 @@ export interface EnrichedFormItemDataDTO {
   formItem: FormItemDTO;
   itemDefinition: ItemDefinitionDTO;
   destination: DestinationDTO;
+  generated?: boolean;
   prefillStrategyEntries: Array<PrefillStrategyEntryDTO>;
 }

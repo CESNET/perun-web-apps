@@ -54,11 +54,15 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
     protected router: Router,
   ) {}
 
+  get moduleNames(): string[] {
+    return this.formSpecification.modules.map((module) => module.moduleName);
+  }
   // Abstract getters for entity-specific values
   protected abstract get entityId(): string;
   protected abstract get entityType(): 'VO' | 'GROUP';
   protected abstract get updatePolicy(): string;
   protected abstract get theme(): string;
+
   ngOnInit(): void {
     this.loadingHeader = true;
     this.loadingTable = true;
