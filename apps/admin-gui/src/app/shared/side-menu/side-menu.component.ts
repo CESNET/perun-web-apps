@@ -4,10 +4,15 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { SideMenuService } from '../../core/services/common/side-menu.service';
 import { AppComponent } from '../../app.component';
 import { SideMenuItemService } from './side-menu-item.service';
-import { GuiAuthResolver, OtherApplicationsService } from '@perun-web-apps/perun/services';
+import {
+  GuiAuthResolver,
+  OtherApplicationsService,
+  StoreService,
+} from '@perun-web-apps/perun/services';
 import { rollInOut } from '@perun-web-apps/perun/animations';
 import { AppType, ExpandableSectionId } from '@perun-web-apps/perun/models';
 import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
+import { hasOnlyNoRightsRoles } from '@perun-web-apps/perun/utils';
 
 @Component({
   imports: [CommonModule, SideMenuItemComponent],
@@ -22,6 +27,7 @@ export class SideMenuComponent implements OnInit {
 
   accessItems: SideMenuItem[] = [];
   facilityItems: SideMenuItem[] = [];
+  hasOnlyNoRightsRoles = false;
   adminItems: SideMenuItem[] = [];
   homeItems: SideMenuItem[] = [];
   serviceIdentitiesItems: SideMenuItem[] = [];
@@ -40,6 +46,7 @@ export class SideMenuComponent implements OnInit {
     private sideMenuItemService: SideMenuItemService,
     private otherAppService: OtherApplicationsService,
     public authResolver: GuiAuthResolver,
+    private store: StoreService,
   ) {}
 
   private static areSameItems(item1: SideMenuItem, item2: SideMenuItem): boolean {
@@ -91,8 +98,11 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const allUserRoles = Object.keys(this.store.getPerunPrincipal()?.roles ?? {});
+    this.hasOnlyNoRightsRoles = hasOnlyNoRightsRoles(allUserRoles);
     this.mobileView = window.innerWidth <= AppComponent.minWidth;
-    if (this.mobileView) {
+
+    if (this.hasOnlyNoRightsRoles || this.mobileView) {
       void this.sideNav.close();
     } else {
       void this.sideNav.open();
