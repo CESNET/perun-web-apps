@@ -13,7 +13,12 @@
         class="orcid-button"
         (click)="addOrcidIdentity()"
         [disabled]="loading">
-        <mat-icon svgIcon="perun-orcid-green" class="orcid-icon"></mat-icon>
+        <img
+          matButtonIcon
+          src="assets/img/PerunWebImages/orcid_green.svg"
+          class="orcid-icon"
+          alt=""
+          aria-hidden="true" />
 
         <span>
           {{ 'ORCID.CONNECT' | customTranslate | translate }}
