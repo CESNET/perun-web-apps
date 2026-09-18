@@ -802,7 +802,8 @@
         "MODIFIED_NAME_REGISTRAR": "Automatically approved",
         "CHECK_MEMBER_ACTIVATION": "After approving the application, please wait a few minutes and check that the member has been successfully validated",
         "VO_MEMBER_STATUS": "Organization status",
-        "GROUP_MEMBER_STATUS": "Group status"
+        "GROUP_MEMBER_STATUS": "Group status",
+        "APPROVE_ANYWAY_FORCE_ERROR": "There have been hard approval failures detected. Reopen the dialog for more information."
       }
     },
     "STATISTICS": {
@@ -1562,7 +1563,15 @@
       "TEXT": "This application should not be approved for the following reason:",
       "APPROVE_ANYWAY": "You may override this restriction – just click 'Approve anyway'.",
       "NOT_ELIGIBLE": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for CESNET services.",
-      "NOT_ELIGIBLE_EINFRACZ": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for e‑INFRA CZ services."
+      "NOT_ELIGIBLE_EINFRACZ": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for e-INFRA CZ services.",
+      "NOT_ELIGIBLE_METACENTRUM": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for CESNET services.",
+      "NOT_ELIGIBLE_DU_APPROVAL": "The applicant's account does not contain a valid academic affiliation, so the user is not eligible for CESNET services. They must log in using a verified academic identity (at least once a year) in order to access CESNET services.",
+      "CEITEC_MUNI_IDP_ONLY": "The application cannot be approved automatically. The user did not log in using MUNI IdP. Please double-check the user's identity before manual/force approval.",
+      "IT4I_COLLISION_APPROVED": "The user's account from this application collides with an existing account in IT4Innovations and must be resolved manually.",
+      "BONA_FIDE_GROUP_ONLY": "This module can only be used for registration into a group, so the application cannot be approved on this form.",
+      "BONA_FIDE_NO_ATTESTATION": "The application cannot be approved because the group does not have an attestation value set.",
+      "MERGE_CONFLICT": "The application shares a birth number with an existing user account. Only approve if you are certain they belong to the same person.",
+      "UNMET_PREREQUISITE": "The application has unmet prerequisites and cannot be approved until they are fulfilled."
     },
     "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
       "TITLE": "Change applications view preferences",
@@ -1580,6 +1589,7 @@
     "UPDATE_APPLICATION_FORM": {
       "TITLE": "Change application form settings",
       "MODULE_NAME": "Module name",
+      "MODULES": "Form modules",
       "NAMESPACE": "Namespace",
       "INITIAL": "Initial",
       "EXTENSION": "Extension",

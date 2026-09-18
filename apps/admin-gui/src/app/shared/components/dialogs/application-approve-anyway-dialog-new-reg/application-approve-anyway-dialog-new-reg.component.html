@@ -1,0 +1,35 @@
+<ng-template #spinner>
+  <perun-web-apps-loading-dialog></perun-web-apps-loading-dialog>
+</ng-template>
+<div class="{{theme}}" *perunWebAppsLoader="loading; indicator: spinner">
+  <h1 mat-dialog-title>{{'DIALOGS.APP_APPROVE_ANYWAY.TITLE' | translate}}</h1>
+  <div mat-dialog-content>
+    <div>
+      {{'DIALOGS.APP_APPROVE_ANYWAY.TEXT' | translate}}
+    </div>
+    @for (err of failures; track err) {
+      <perun-web-apps-alert alert_type="warn">
+        <div>
+          {{
+            ('DIALOGS.APP_APPROVE_ANYWAY.' + err.reason) | translate
+          }}
+        </div>
+      </perun-web-apps-alert>
+    }
+    @if (allSoft) {
+      <div>
+        {{'DIALOGS.APP_APPROVE_ANYWAY.APPROVE_ANYWAY' | translate}}
+      </div>
+    }
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button class="ms-auto" (click)="onCancel()">
+      {{'DIALOGS.APP_APPROVE_ANYWAY.CANCEL' | translate}}
+    </button>
+    @if (allSoft) {
+      <button mat-flat-button class="ms-2" color="accent" (click)="onSubmit()">
+        {{'DIALOGS.APP_APPROVE_ANYWAY.SUBMIT' | translate}}
+      </button>
+    }
+  </div>
+</div>

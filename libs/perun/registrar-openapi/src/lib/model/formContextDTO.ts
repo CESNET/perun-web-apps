@@ -15,18 +15,24 @@ export interface FormContextDTO {
   formSpecification?: FormSpecificationDTO;
   prefilledData: EnrichedApplicationFormDTO;
   openApplications: Array<ApplicationDTO>;
-  idmError?: FormContextDTO.IdmErrorEnum;
+  submissionErrors?: Array<FormContextDTO.SubmissionErrorsEnum>;
   oldRegUrl?: string;
 }
 export namespace FormContextDTO {
-  export const IdmErrorEnum = {
+  export const SubmissionErrorsEnum = {
     LIFECYCLE_UNALTERABLE: 'LIFECYCLE_UNALTERABLE',
     OUTSIDE_EXT_PERIOD: 'OUTSIDE_EXT_PERIOD',
     INSUFFICIENT_LOA: 'INSUFFICIENT_LOA',
     NO_LOA: 'NO_LOA',
     NEVER_EXPIRE: 'NEVER_EXPIRE',
     NOT_MEMBER: 'NOT_MEMBER',
+    NOT_ELIGIBLE_EINFRAIDP: 'NOT_ELIGIBLE_EINFRAIDP',
+    NOT_ELIGIBLE_EINFRA_EXTENSION: 'NOT_ELIGIBLE_EINFRA_EXTENSION',
+    NOT_ELIGIBLE_DU: 'NOT_ELIGIBLE_DU',
+    NOT_ELIGIBLE_BONA_FIDE: 'NOT_ELIGIBLE_BONA_FIDE',
+    IT4I_COLLISION: 'IT4I_COLLISION',
     UNKNOWN: 'UNKNOWN',
   } as const;
-  export type IdmErrorEnum = (typeof IdmErrorEnum)[keyof typeof IdmErrorEnum];
+  export type SubmissionErrorsEnum =
+    (typeof SubmissionErrorsEnum)[keyof typeof SubmissionErrorsEnum];
 }

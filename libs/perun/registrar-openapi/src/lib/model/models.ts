@@ -4,6 +4,8 @@ export * from './applicationDTO';
 export * from './applicationDetailDTO';
 export * from './applicationFormDTO';
 export * from './applicationResultDTO';
+export * from './approvalFailure';
+export * from './approveResultDTO';
 export * from './assignedFormModuleDTO';
 export * from './bulkItemDefinitionUpdateRequest';
 export * from './consolidateUserDTO';

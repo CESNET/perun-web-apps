@@ -26,6 +26,7 @@ import { ApplicationStatePipe } from '@perun-web-apps/perun/pipes';
 import {
   ApplicationDetailDTO,
   ApplicationDTO,
+  ApproveResultDTO,
   DecisionDTO,
   EnrichedFormItemDataDTO,
   SubmissionDTO,
@@ -35,6 +36,7 @@ import { ApplicationRejectNewRegDialogComponent } from '../../../shared/componen
 import { GetLabelNewRegPipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationReSendNotificationNewRegDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-new-reg-dialog/application-re-send-notification-new-reg-dialog.component';
 import { ApplicationChangesRequestedDialogComponent } from '../../../shared/components/dialogs/application-changes-requested-dialog/application-changes-requested-dialog.component';
+import { ApplicationApproveAnywayDialogNewRegComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog-new-reg/application-approve-anyway-dialog-new-reg.component';
 @Component({
   imports: [
     CommonModule,
@@ -256,14 +258,47 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     this.loading = true;
     this.submissionsService.approveApplication(this.application.id).subscribe({
       next: (application) => {
-        this.translate
-          .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_MESSAGE')
-          .subscribe((successMessage: string) => {
-            this.notificator.showSuccess(successMessage);
+        if (application.failures.length > 0) {
+          const config = getDefaultDialogConfig();
+          config.width = '600px';
+          config.data = {
+            failures: application.failures,
+            theme: this.dialogTheme,
+            applicationId: this.application.id,
+          };
+          const dialogRef = this.dialog.open(ApplicationApproveAnywayDialogNewRegComponent, config);
+          dialogRef.afterClosed().subscribe((result: ApproveResultDTO) => {
+            if (result === null) {
+              this.loading = false;
+              return;
+            }
+            if (result.failures.length > 0) {
+              this.translate
+                .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_ANYWAY_FORCE_ERROR')
+                .subscribe((errorMessage: string) => {
+                  this.notificator.showError(errorMessage);
+                });
+            } else {
+              this.translate
+                .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_MESSAGE')
+                .subscribe((successMessage: string) => {
+                  this.notificator.showSuccess(successMessage);
+                });
+              this.application = result.applicationDetail.application;
+              this.latestDecision = result.applicationDetail.decisions[0];
+            }
+            this.loading = false;
           });
-        this.application = application.application;
-        this.latestDecision = application.decisions[0];
-        this.loading = false;
+        } else {
+          this.translate
+            .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE_MESSAGE')
+            .subscribe((successMessage: string) => {
+              this.notificator.showSuccess(successMessage);
+            });
+          this.application = application.applicationDetail.application;
+          this.latestDecision = application.applicationDetail.decisions[0];
+          this.loading = false;
+        }
       },
       error: () => (this.loading = false),
     });
