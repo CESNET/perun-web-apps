@@ -6,6 +6,10 @@ a {
   font-size: 0.8rem;
 }
 
+.footer-copyright {
+  transform: translateX(var(--footer-copyright-offset, 0));
+}
+
 .row-height {
   height: 25px !important;
 }
