@@ -18,6 +18,7 @@ import { catchError, forkJoin, Observable, of, switchMap, tap } from 'rxjs';
 import { AddApplicationFormItemDialogNewRegComponent } from '../dialogs/add-application-form-item-dialog-new-reg/add-application-form-item-dialog-new-reg.component';
 import { EditApplicationFormItemDialogNewRegComponent } from '../dialogs/edit-application-form-item-dialog-new-reg/edit-application-form-item-dialog-new-reg.component';
 import { UpdateApplicationFormDialogNewRegComponent } from '../dialogs/update-application-form-dialog-new-reg/update-application-form-dialog-new-reg.component';
+import { ApplicationFormCopyItemsDialogNewRegComponent } from '../dialogs/application-form-copy-items-dialog-new-reg/application-form-copy-items-dialog-new-reg.component';
 
 @Directive()
 export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
@@ -103,6 +104,21 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
             this.changeItems();
           }
         });
+      }
+    });
+  }
+
+  copy(): void {
+    const config = getDefaultDialogConfig();
+    config.width = '500px';
+    config.data = { formSpecificationId: this.formSpecification.id, theme: 'vo-theme' };
+
+    const dialog = this.dialog.open(ApplicationFormCopyItemsDialogNewRegComponent, config);
+    dialog.afterClosed().subscribe((copyFrom) => {
+      if (copyFrom) {
+        this.loadingHeader = true;
+        this.loadingTable = true;
+        this.loadForm();
       }
     });
   }

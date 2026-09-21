@@ -14,5 +14,23 @@ export interface ApplicationResultDTO {
   formSpecificationId: string;
   application?: ApplicationDTO;
   errors?: Array<ValidationError>;
+  submissionErrors?: Array<ApplicationResultDTO.SubmissionErrorsEnum>;
   error?: string;
+}
+export namespace ApplicationResultDTO {
+  export const SubmissionErrorsEnum = {
+    LIFECYCLE_UNALTERABLE: 'LIFECYCLE_UNALTERABLE',
+    OUTSIDE_EXT_PERIOD: 'OUTSIDE_EXT_PERIOD',
+    INSUFFICIENT_LOA: 'INSUFFICIENT_LOA',
+    NO_LOA: 'NO_LOA',
+    NEVER_EXPIRE: 'NEVER_EXPIRE',
+    NOT_MEMBER: 'NOT_MEMBER',
+    NOT_ELIGIBLE_EINFRAIDP: 'NOT_ELIGIBLE_EINFRAIDP',
+    NOT_ELIGIBLE_EINFRA_EXTENSION: 'NOT_ELIGIBLE_EINFRA_EXTENSION',
+    NOT_ELIGIBLE_DU: 'NOT_ELIGIBLE_DU',
+    IT4I_COLLISION: 'IT4I_COLLISION',
+    UNKNOWN: 'UNKNOWN',
+  } as const;
+  export type SubmissionErrorsEnum =
+    (typeof SubmissionErrorsEnum)[keyof typeof SubmissionErrorsEnum];
 }
