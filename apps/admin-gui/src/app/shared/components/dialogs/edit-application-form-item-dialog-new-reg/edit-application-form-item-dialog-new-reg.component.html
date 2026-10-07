@@ -26,6 +26,15 @@
               matInput
               readonly />
           </mat-form-field>
+          @if (applicationFormItem.itemDefinition.type === 'SUBMIT_BUTTON') {
+            <div class="mb-3">
+              <mat-checkbox
+                [(ngModel)]="applicationFormItem.itemDefinition.configuration.autoSubmit"
+                data-cy="item-auto-submit">
+                {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.AUTO_SUBMIT' | translate}}
+              </mat-checkbox>
+            </div>
+          }
           <!--          <section class="mt-4">-->
           <!--            <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISPLAY_ON_APPLICATION' | translate}}</h6>-->
           <!--            <mat-checkbox-->
@@ -311,7 +320,7 @@
                   </button>
                 </div>
                 <div class="d-flex flex-column justify-content-center">
-                  @for (option of options[lang]; track option) {
+                  @for (option of options; track option) {
                     <div class="mb-2">
                       <div class="d-flex flex-row justify-content-center align-items-center">
                         <mat-form-field class="mx-4" subscriptSizing="dynamic">
@@ -319,7 +328,7 @@
                             >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label
                           >
                           <input
-                            [(ngModel)]="option[0]"
+                            [(ngModel)]="option.value"
                             [ngModelOptions]="{standalone: true}"
                             matInput />
                         </mat-form-field>
@@ -327,8 +336,8 @@
                           <mat-label
                             >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
                           >
-                          <input [formControl]="option[1]" matInput />
-                          @if (option[1].pending) {
+                          <input [formControl]="option.labelControls[lang]" matInput />
+                          @if (option.labelControls[lang].pending) {
                             <mat-spinner
                               matSuffix
                               [diameter]="18"
@@ -336,7 +345,7 @@
                           }
                         </mat-form-field>
                         <button
-                          (click)="removeOption(option, lang)"
+                          (click)="removeOption(option)"
                           color="warn"
                           mat-icon-button
                           matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
@@ -344,10 +353,10 @@
                         </button>
                       </div>
                       <div>
-                        @if (option[1].invalid) {
+                        @if (option.labelControls[lang].invalid) {
                           <mat-error
                             class="ms-5 mt-1"
-                            >{{option[1].errors?.invalidHtmlContent}}</mat-error
+                            >{{option.labelControls[lang].errors?.invalidHtmlContent}}</mat-error
                           >
                         }
                       </div>
@@ -355,7 +364,7 @@
                   }
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button (click)="addOption(lang)" class="me-2" color="accent" mat-flat-button>
+                  <button (click)="addOption()" class="me-2" color="accent" mat-flat-button>
                     {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ADD_OPTION' | translate}}
                   </button>
                 </div>

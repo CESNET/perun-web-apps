@@ -9,8 +9,8 @@
  */
 
 export interface VoAppRejectedDTO {
-  userId?: string;
   identityIdentifier?: string;
   identityIssuer?: string;
+  userId?: string;
   voId: string;
 }

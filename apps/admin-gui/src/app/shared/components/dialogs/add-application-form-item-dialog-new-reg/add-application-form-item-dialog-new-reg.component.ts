@@ -1,3 +1,4 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +11,6 @@ import { StoreService } from '@perun-web-apps/perun/services';
 import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   FormItemDTO,
-  FormsService,
   ItemDefinitionDTO,
   ItemWithDefinitionDTO,
 } from '@perun-web-apps/perun/registrar-openapi';
@@ -28,6 +28,7 @@ export interface AddApplicationFormItemDialogNewRegComponentData {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatCheckboxModule,
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
@@ -63,6 +64,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     'LIST_INPUT_BOX',
   ];
   nameCtrl: UntypedFormControl;
+  autoSubmit = false;
   loading = false;
 
   constructor(
@@ -70,7 +72,6 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: AddApplicationFormItemDialogNewRegComponentData,
     private translateService: TranslateService,
     private store: StoreService,
-    private formsService: FormsService,
   ) {}
 
   ngOnInit(): void {
@@ -96,36 +97,17 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
   }
 
   submit(): void {
+    if (this.nameCtrl.invalid) {
+      return;
+    }
+
     this.loading = true;
 
     const newApplicationItem: FormItemDTO = {} as FormItemDTO;
     newApplicationItem.id = this.data.fakeId;
     newApplicationItem.name = this.nameCtrl.value as string;
 
-    const newItemDefinition: ItemDefinitionDTO = {} as ItemDefinitionDTO;
-    newItemDefinition.id = null;
-    newItemDefinition.type = this.selectedWidget;
-    newItemDefinition.scope = 'FORM_SPECIFIC';
-    newItemDefinition.formSpecificationId = this.data.formSpecificationId;
-    newItemDefinition.displayName = this.nameCtrl.value as string;
-    newItemDefinition.texts = {};
-    newItemDefinition.updatable = true;
-    newItemDefinition.required = false;
-    newItemDefinition.hidden = 'NEVER';
-    newItemDefinition.disabled = 'NEVER';
-    newItemDefinition.formTypes = ['INITIAL', 'EXTENSION'];
-
-    for (const lang of this.languages) {
-      newItemDefinition.texts[lang] = {
-        error: '',
-        help: '',
-        label: '',
-        options: {
-          option1: 'Option 1',
-        },
-      };
-    }
-    newItemDefinition.validators = [];
+    const newItemDefinition = this.createItemDefinition();
     const newEnrichedItem = {
       formItemDTO: newApplicationItem,
       itemDefinition: newItemDefinition,
@@ -138,5 +120,53 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
       }
     }
     this.dialogRef.close([this.data.applicationFormItems, newEnrichedItem]);
+  }
+
+  private createItemDefinition(): ItemWithDefinitionDTO['itemDefinition'] {
+    const common: Omit<ItemDefinitionDTO, 'type'> = {
+      id: null,
+      scope: 'FORM_SPECIFIC',
+      formSpecificationId: this.data.formSpecificationId,
+      displayName: this.nameCtrl.value as string,
+      texts: {},
+      updatable: true,
+      required: false,
+      hidden: 'NEVER',
+      disabled: 'NEVER',
+      formTypes: ['INITIAL', 'EXTENSION'],
+      validators: [],
+    };
+    for (const lang of this.languages) {
+      common.texts[lang] = { error: '', help: '', label: '' };
+    }
+    const type = this.selectedWidget;
+    switch (type) {
+      case 'CHECKBOX':
+      case 'RADIO':
+      case 'SELECTIONBOX':
+      case 'SELECTION_CUSTOM': {
+        const labels: { [lang: string]: string } = {};
+        for (const lang of this.languages) labels[lang] = 'Option 1';
+        return { ...common, type, configuration: { options: [{ value: 'option1', labels }] } };
+      }
+      case 'SUBMIT_BUTTON':
+        return { ...common, type, configuration: { autoSubmit: this.autoSubmit } };
+      case 'LOGIN':
+      case 'PASSWORD':
+      case 'HEADING':
+      case 'HTML_COMMENT':
+      case 'TEXTFIELD':
+      case 'VERIFIED_EMAIL':
+      case 'DATE_PICKER':
+      case 'TIMEZONE':
+      case 'TEXTAREA':
+      case 'MAP_INPUT_BOX':
+      case 'LIST_INPUT_BOX':
+        return { ...common, type };
+      default: {
+        const unsupportedType: never = type;
+        throw new Error(`Unsupported item type: ${String(unsupportedType)}`);
+      }
+    }
   }
 }

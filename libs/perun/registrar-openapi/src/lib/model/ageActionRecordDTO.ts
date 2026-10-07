@@ -13,11 +13,16 @@
  */
 export interface AgeActionRecordDTO {
   /**
-   * Identifying name of the action
-   */
-  actionName?: string;
-  /**
    * Action description
    */
   actionDescription?: string;
+  type?: AgeActionRecordDTO.TypeEnum;
+}
+export namespace AgeActionRecordDTO {
+  export const TypeEnum = {
+    REJECT_IGNORED: 'REJECT_IGNORED',
+    REJECT_VERIFICATION_PENDING: 'REJECT_VERIFICATION_PENDING',
+    PERUN_REJECT_EXPIRED_APPLICATION: 'PERUN_REJECT_EXPIRED_APPLICATION',
+  } as const;
+  export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }

@@ -10,14 +10,6 @@
 
 export interface ErrorResponse {
   /**
-   * timestamp of error
-   */
-  timestamp?: string;
-  /**
-   * HTTP status code
-   */
-  status?: number;
-  /**
    * error name
    */
   error?: string;
@@ -29,4 +21,12 @@ export interface ErrorResponse {
    * URL path
    */
   path?: string;
+  /**
+   * HTTP status code
+   */
+  status?: number;
+  /**
+   * timestamp of error
+   */
+  timestamp?: string;
 }

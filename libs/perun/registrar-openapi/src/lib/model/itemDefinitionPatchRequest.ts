@@ -8,22 +8,34 @@
  * Do not edit the class manually.
  */
 import { ItemTexts } from './itemTexts';
-import { ItemValidatorDTO } from './itemValidatorDTO';
+import { ItemConfiguration } from './itemConfiguration';
+import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsInner';
 
 export interface ItemDefinitionPatchRequest {
-  displayName?: string;
-  updatable?: boolean;
-  required?: boolean;
+  /**
+   * Configuration selected by item type
+   */
+  configuration?: ItemConfiguration;
   defaultValue?: string | null;
-  prefillStrategyIds?: Array<string>;
   destinationId?: string | null;
-  formTypes?: Array<ItemDefinitionPatchRequest.FormTypesEnum>;
-  texts?: { [key: string]: ItemTexts };
-  hidden?: ItemDefinitionPatchRequest.HiddenEnum;
   disabled?: ItemDefinitionPatchRequest.DisabledEnum;
-  validators?: Array<ItemValidatorDTO>;
+  displayName?: string;
+  formTypes?: Array<ItemDefinitionPatchRequest.FormTypesEnum>;
+  hidden?: ItemDefinitionPatchRequest.HiddenEnum;
+  prefillStrategyIds?: Array<string>;
+  required?: boolean;
+  texts?: { [key: string]: ItemTexts };
+  updatable?: boolean;
+  validators?: Array<ItemDefinitionDTOValidatorsInner>;
 }
 export namespace ItemDefinitionPatchRequest {
+  export const DisabledEnum = {
+    NEVER: 'NEVER',
+    ALWAYS: 'ALWAYS',
+    IF_PREFILLED: 'IF_PREFILLED',
+    IF_EMPTY: 'IF_EMPTY',
+  } as const;
+  export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
   export const FormTypesEnum = {
     INITIAL: 'INITIAL',
     EXTENSION: 'EXTENSION',
@@ -38,11 +50,4 @@ export namespace ItemDefinitionPatchRequest {
     IF_EMPTY: 'IF_EMPTY',
   } as const;
   export type HiddenEnum = (typeof HiddenEnum)[keyof typeof HiddenEnum];
-  export const DisabledEnum = {
-    NEVER: 'NEVER',
-    ALWAYS: 'ALWAYS',
-    IF_PREFILLED: 'IF_PREFILLED',
-    IF_EMPTY: 'IF_EMPTY',
-  } as const;
-  export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
 }

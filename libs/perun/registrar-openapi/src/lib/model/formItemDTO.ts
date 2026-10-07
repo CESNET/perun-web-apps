@@ -9,9 +9,9 @@
  */
 
 export interface FormItemDTO {
-  id: string;
-  name: string;
-  hiddenDependencyItemId?: string | null;
   disabledDependencyItemId?: string | null;
+  hiddenDependencyItemId?: string | null;
+  id: string;
   itemDefinitionId: string;
+  name: string;
 }

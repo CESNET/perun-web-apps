@@ -479,7 +479,8 @@
           "TIMEZONE": "Selection box with predefined values of UTC timezones.",
           "LIST_INPUT_BOX": "Item is used to show list values",
           "MAP_INPUT_BOX": "Item is used to show key - value pairs",
-          "DATE_PICKER": "Item is used to select a date"
+          "DATE_PICKER": "Item is used to select a date",
+          "SELECTIONBOX": "Simple selection box with defined custom values that user can choose."
         },
         "NEW_REG_TRANSLATIONS": {
           "INITIAL": "Initial",
@@ -1628,6 +1629,12 @@
       "NO_SUBMIT_BUTTON": "You can create a submit button manually and then try to copy the form again."
     },
     "APPLICATION_FORM_ADD_ITEM": {
+      "AUTO_SUBMIT": "Submit automatically",
+      "LOGIN_ATTRIBUTE": "Login attribute",
+      "LOADING_LOGIN_ATTRIBUTES": "Loading login attributes…",
+      "NO_LOGIN_ATTRIBUTES": "No login attributes are available.",
+      "LOGIN_ATTRIBUTES_ERROR": "Could not load login attributes.",
+      "RETRY": "Retry",
       "TITLE": "Add form item",
       "CREATE": "Create",
       "CANCEL": "Cancel",
@@ -1639,6 +1646,7 @@
       "FILL_NAME": "Length of the name has to be between 1 to 128 characters"
     },
     "APPLICATION_FORM_EDIT_ITEM": {
+      "AUTO_SUBMIT": "Submit automatically",
       "TITLE": "Edit form item",
       "SHORT_NAME": "Short name",
       "SHORT_NAME_DESCRIPTION": "Internal item identification (used as a fallback when you forgot to set \"Label\" for some language).",
