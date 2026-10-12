@@ -9,15 +9,16 @@
  */
 import { IdmAttributePrefillStrategyEntryDTO } from './idmAttributePrefillStrategyEntryDTO';
 import { LoginPrefillConfigurationDTO } from './loginPrefillConfigurationDTO';
+import { IdmObject } from './idmObject';
 import { ApplicationPrefillStrategyEntryDTO } from './applicationPrefillStrategyEntryDTO';
 import { IdentityAttributePrefillStrategyEntryDTO } from './identityAttributePrefillStrategyEntryDTO';
 import { LoginPrefillStrategyEntryDTO } from './loginPrefillStrategyEntryDTO';
 
 /**
- * @type GetPrefillStrategiesForForm200ResponseInner
+ * @type CreateObjectSpecificPrefillStrategyRequest
  * @export
  */
-export type GetPrefillStrategiesForForm200ResponseInner =
+export type CreateObjectSpecificPrefillStrategyRequest =
   | ApplicationPrefillStrategyEntryDTO
   | IdentityAttributePrefillStrategyEntryDTO
   | IdmAttributePrefillStrategyEntryDTO

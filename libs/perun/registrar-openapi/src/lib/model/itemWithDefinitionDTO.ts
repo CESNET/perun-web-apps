@@ -8,13 +8,13 @@
  * Do not edit the class manually.
  */
 import { DestinationDTO } from './destinationDTO';
-import { GetGlobalItemDefinitions200ResponseInner } from './getGlobalItemDefinitions200ResponseInner';
-import { GetGlobalPrefillStrategies200ResponseInner } from './getGlobalPrefillStrategies200ResponseInner';
+import { CreateObjectSpecificItemDefinitionRequest } from './createObjectSpecificItemDefinitionRequest';
 import { FormItemDTO } from './formItemDTO';
+import { CreateObjectSpecificPrefillStrategyRequest } from './createObjectSpecificPrefillStrategyRequest';
 
 export interface ItemWithDefinitionDTO {
   destination: DestinationDTO;
   formItemDTO: FormItemDTO;
-  itemDefinition: GetGlobalItemDefinitions200ResponseInner;
-  prefillStrategyEntries: Array<GetGlobalPrefillStrategies200ResponseInner>;
+  itemDefinition: CreateObjectSpecificItemDefinitionRequest;
+  prefillStrategyEntries: Array<CreateObjectSpecificPrefillStrategyRequest>;
 }

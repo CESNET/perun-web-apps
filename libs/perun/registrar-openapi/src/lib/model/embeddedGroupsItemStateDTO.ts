@@ -7,8 +7,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { EmbeddedGroupOptionStateDTO } from './embeddedGroupOptionStateDTO';
 
-export interface JsonNullableUUID {
-  present?: boolean;
-  undefined?: boolean;
+export interface EmbeddedGroupsItemStateDTO {
+  itemId: string;
+  options: Array<EmbeddedGroupOptionStateDTO>;
 }

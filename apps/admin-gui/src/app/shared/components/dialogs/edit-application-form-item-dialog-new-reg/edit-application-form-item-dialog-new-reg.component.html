@@ -129,7 +129,10 @@
                         <mat-label
                           >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.FEDERATION_ATTRIBUTE_VALUE' | translate}}</mat-label
                         >
-                        <input [(ngModel)]="identitySource" matInput />
+                        <input
+                          [(ngModel)]="identitySource"
+                          (change)="changeFederationAttributeValue()"
+                          matInput />
                       </mat-form-field>
                     </div>
                   }
@@ -237,10 +240,10 @@
             }
             @if (
               isApplicationFormItemOfType(['TEXTFIELD', 'VERIFIED_EMAIL', 'LOGIN', 'PASSWORD', 'RADIO', 'TEXTAREA',
-                        'SELECTION_CUSTOM', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'DATE_PICKER', 'EMBEDDED_GROUP_APPLICATION', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
+                        'SELECTION_CUSTOM', 'CHECKBOX', 'TIMEZONE', 'SELECTIONBOX', 'DATE_PICKER', 'EMBEDDED_GROUP_APPLICATION', 'EMBEDDED_GROUPS', 'LIST_INPUT_BOX', 'MAP_INPUT_BOX'])
             ) {
               <div>
-                @if (!isApplicationFormItemOfType(['CHECKBOX'])) {
+                @if (!isApplicationFormItemOfType(['CHECKBOX', 'EMBEDDED_GROUPS'])) {
                   <mat-form-field subscriptSizing="dynamic" class="w-100">
                     <mat-label
                       >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
@@ -251,7 +254,7 @@
                     >
                   </mat-form-field>
                 }
-                @if (isApplicationFormItemOfType(['CHECKBOX'])) {
+                @if (isApplicationFormItemOfType(['CHECKBOX', 'EMBEDDED_GROUPS'])) {
                   <div>
                     <mat-form-field subscriptSizing="dynamic" class="w-100">
                       <mat-label
@@ -302,73 +305,79 @@
               </div>
             }
             @if (
-              isApplicationFormItemOfType(['RADIO', 'SELECTION_CUSTOM', 'CHECKBOX', 'SELECTIONBOX'])
+              isApplicationFormItemOfType(['RADIO', 'SELECTION_CUSTOM', 'CHECKBOX', 'SELECTIONBOX', 'EMBEDDED_GROUPS'])
             ) {
-              <div class="mt-4">
-                <h6>Options</h6>
+              @if (data.isEmbedded) {
                 <perun-web-apps-alert alert_type="info">
-                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.NEW_REG_OPTIONS_DESCRIPTION' | translate}}
+                  {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.EMBEDDED_OPTIONS_DESCRIPTION' | translate}}
                 </perun-web-apps-alert>
-                <div class="d-flex mt-2 mb-2">
-                  <button (click)="sortOptionsAZ(lang)" class="ms-auto me-2" mat-stroked-button>
-                    <i class="material-icons">arrow_downward</i>
-                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_AZ' | translate}}
-                  </button>
-                  <button (click)="sortOptionsZA(lang)" class="me-auto" mat-stroked-button>
-                    <i class="material-icons">arrow_upward</i>
-                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_ZA' | translate}}
-                  </button>
-                </div>
-                <div class="d-flex flex-column justify-content-center">
-                  @for (option of options; track option) {
-                    <div class="mb-2">
-                      <div class="d-flex flex-row justify-content-center align-items-center">
-                        <mat-form-field class="mx-4" subscriptSizing="dynamic">
-                          <mat-label
-                            >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label
-                          >
-                          <input
-                            [(ngModel)]="option.value"
-                            [ngModelOptions]="{standalone: true}"
-                            matInput />
-                        </mat-form-field>
-                        <mat-form-field subscriptSizing="dynamic">
-                          <mat-label
-                            >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
-                          >
-                          <input [formControl]="option.labelControls[lang]" matInput />
-                          @if (option.labelControls[lang].pending) {
-                            <mat-spinner
-                              matSuffix
-                              [diameter]="18"
-                              class="input-spinner"></mat-spinner>
+              } @else {
+                <div class="mt-4">
+                  <h6>Options</h6>
+                  <perun-web-apps-alert alert_type="info">
+                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.NEW_REG_OPTIONS_DESCRIPTION' | translate}}
+                  </perun-web-apps-alert>
+                  <div class="d-flex mt-2 mb-2">
+                    <button (click)="sortOptionsAZ(lang)" class="ms-auto me-2" mat-stroked-button>
+                      <i class="material-icons">arrow_downward</i>
+                      {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_AZ' | translate}}
+                    </button>
+                    <button (click)="sortOptionsZA(lang)" class="me-auto" mat-stroked-button>
+                      <i class="material-icons">arrow_upward</i>
+                      {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.SORT_BY_LABEL_ZA' | translate}}
+                    </button>
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    @for (option of options; track option) {
+                      <div class="mb-2">
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                          <mat-form-field class="mx-4" subscriptSizing="dynamic">
+                            <mat-label
+                              >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.VALUE' | translate}}</mat-label
+                            >
+                            <input
+                              [(ngModel)]="option.value"
+                              [ngModelOptions]="{standalone: true}"
+                              matInput />
+                          </mat-form-field>
+                          <mat-form-field subscriptSizing="dynamic">
+                            <mat-label
+                              >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LABEL' | translate}}</mat-label
+                            >
+                            <input [formControl]="option.labelControls[lang]" matInput />
+                            @if (option.labelControls[lang].pending) {
+                              <mat-spinner
+                                matSuffix
+                                [diameter]="18"
+                                class="input-spinner"></mat-spinner>
+                            }
+                          </mat-form-field>
+                          <button
+                            (click)="removeOption(option)"
+                            color="warn"
+                            mat-icon-button
+                            matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
+                            <mat-icon>remove_circle</mat-icon>
+                          </button>
+                        </div>
+                        <div>
+                          @if (option.labelControls[lang].invalid) {
+                            <mat-error
+                              class="ms-5 mt-1"
+                              >{{option.labelControls[lang].errors?.invalidHtmlContent}}</mat-error
+                            >
                           }
-                        </mat-form-field>
-                        <button
-                          (click)="removeOption(option)"
-                          color="warn"
-                          mat-icon-button
-                          matTooltip="{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.REMOVE_OPTION' | translate}}">
-                          <mat-icon>remove_circle</mat-icon>
-                        </button>
+                        </div>
                       </div>
-                      <div>
-                        @if (option.labelControls[lang].invalid) {
-                          <mat-error
-                            class="ms-5 mt-1"
-                            >{{option.labelControls[lang].errors?.invalidHtmlContent}}</mat-error
-                          >
-                        }
-                      </div>
-                    </div>
-                  }
+                    }
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button (click)="addOption()" class="me-2" color="accent" mat-flat-button>
+                      {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ADD_OPTION' | translate}}
+                    </button>
+                  </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <button (click)="addOption()" class="me-2" color="accent" mat-flat-button>
-                    {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.ADD_OPTION' | translate}}
-                  </button>
-                </div>
-              </div>
+              }
             }
           </mat-tab>
         }
@@ -379,7 +388,8 @@
         {{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.CANCEL_BUTTON' | translate}}
       </button>
       <div
-        [matTooltipDisabled]="!applicationFormItem.itemDefinition.required ||
+        [matTooltipDisabled]="data.isEmbedded ||
+          !applicationFormItem.itemDefinition.required ||
           idmSource !== '' ||
           identitySource !== '' ||
           (applicationFormItem.itemDefinition.disabled !== 'ALWAYS' && applicationFormItem.itemDefinition.hidden !== 'ALWAYS')"

@@ -13,6 +13,7 @@ import { DateValidatorDTO } from './dateValidatorDTO';
 import { ReservedLoginValidatorDTO } from './reservedLoginValidatorDTO';
 import { SelectionMultiValidatorDTO } from './selectionMultiValidatorDTO';
 import { RequiredValidatorDTO } from './requiredValidatorDTO';
+import { EmbeddedGroupsValidatorDTO } from './embeddedGroupsValidatorDTO';
 import { PasswordValidatorDTO } from './passwordValidatorDTO';
 import { MailValidatorDTO } from './mailValidatorDTO';
 import { SelectionSingleValidatorConfigurationDTO } from './selectionSingleValidatorConfigurationDTO';
@@ -24,6 +25,7 @@ import { SelectionSingleValidatorConfigurationDTO } from './selectionSingleValid
 export type ItemDefinitionDTOValidatorsInner =
   | CustomRegexValidatorDTO
   | DateValidatorDTO
+  | EmbeddedGroupsValidatorDTO
   | MailValidatorDTO
   | PasswordValidatorDTO
   | RequiredValidatorDTO

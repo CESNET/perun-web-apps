@@ -17,11 +17,10 @@ import {
   RegistrarManagerService,
 } from '@perun-web-apps/perun/openapi';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
-import { FormTypeConfig } from '@perun-web-apps/perun/registrar-openapi';
 
 export interface DialogData {
   applicationId: string;
-  appType: FormTypeConfig.FormTypeEnum;
+  appType: string;
   theme: string;
   voId: number;
   groupId: number;

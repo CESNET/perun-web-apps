@@ -22,11 +22,11 @@
             >{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
           >:
           <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
-          {{formSpecification.autoApprovedTypes.includes('INITIAL') ?
+          {{initForm.autoApprove ?
             ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
           ,
           <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
-          {{formSpecification.autoApprovedTypes.includes('EXTENSION') ?
+          {{extForm.autoApprove ?
             ('VO_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('VO_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
           @if (editAuth) {
             <button (click)="settings()" class="ms-3 action-button" mat-stroked-button>
@@ -85,10 +85,10 @@
       </button>
     }
 
-    <!--    <button (click)="preview()" mat-stroked-button>-->
-    <!--      <i class="material-icons">search</i>-->
-    <!--      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}-->
-    <!--    </button>-->
+    <button (click)="preview()" mat-stroked-button>
+      <i class="material-icons">search</i>
+      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}
+    </button>
 
     <!--    <button-->
     <!--      *ngIf="editAuth"-->
@@ -136,10 +136,11 @@
       [newFormItems]="newFormItemIds"
       (applicationFormItemsChange)="changeItems()"
       (applicationFormItemsDeleted)="removeChanged($event)"
-      [formSpecification]="formSpecification"
+      [formSpecification]="selectedForm"
       [applicationFormItems]="formItems"
       [displayedColumns]="displayedColumns"
       [refreshApplicationForm]="refreshApplicationForm"
+      [embeddedGroupsItemSaved]="embeddedGroupsItemSaved"
       [theme]="'vo-theme'">
     </app-application-form-list-new-reg>
   </div>

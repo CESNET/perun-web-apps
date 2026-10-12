@@ -13,13 +13,22 @@ import {
   FormItemDTO,
   ItemDefinitionDTO,
   ItemWithDefinitionDTO,
+  Option,
 } from '@perun-web-apps/perun/registrar-openapi';
+import {
+  EMBEDDED_OPTION_PLACEHOLDER_LABEL,
+  EMBEDDED_OPTION_PLACEHOLDER_VALUE,
+} from '../../../../shared/embedded-groups';
 
 export interface AddApplicationFormItemDialogNewRegComponentData {
   applicationFormItems: ItemWithDefinitionDTO[];
   formSpecificationId: string;
   fakeId: string;
+  embeddedItemExists: boolean;
 }
+
+/** Pseudo widget type: stored as an EMBEDDED_GROUPS item + the EmbeddedGroups form module. */
+export const EMBEDDED_WIDGET = 'EMBEDDED_GROUP_APPLICATION';
 
 @Component({
   imports: [
@@ -44,8 +53,9 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
 
   items: string[] = [];
   selectedItem: string;
-  selectedWidget: ItemDefinitionDTO.TypeEnum = 'HEADING';
-  widgets: ItemDefinitionDTO.TypeEnum[] = [
+  selectedWidget: ItemDefinitionDTO.TypeEnum | typeof EMBEDDED_WIDGET = 'HEADING';
+  readonly embeddedWidget = EMBEDDED_WIDGET;
+  widgets: (ItemDefinitionDTO.TypeEnum | typeof EMBEDDED_WIDGET)[] = [
     'HEADING',
     'HTML_COMMENT',
     'TEXTFIELD',
@@ -62,10 +72,14 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     'DATE_PICKER',
     'MAP_INPUT_BOX',
     'LIST_INPUT_BOX',
+    EMBEDDED_WIDGET,
   ];
   nameCtrl: UntypedFormControl;
   autoSubmit = false;
   loading = false;
+
+  /** Item types whose options live in the item configuration. */
+  readonly choiceWidgets: string[] = ['SELECTIONBOX', 'CHECKBOX', 'SELECTION_CUSTOM', 'RADIO'];
 
   constructor(
     private dialogRef: MatDialogRef<AddApplicationFormItemDialogNewRegComponent>,
@@ -73,6 +87,20 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     private translateService: TranslateService,
     private store: StoreService,
   ) {}
+
+  /** i18n key of the widget's select label; the embedded entry reuses the legacy item's text. */
+  typeLabelKey(widget: string): string {
+    return widget === EMBEDDED_WIDGET
+      ? 'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.EMBEDDED_GROUPS'
+      : 'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + widget;
+  }
+
+  /** i18n key of the widget's description hint; the embedded entry reuses the legacy item's text. */
+  descriptionKey(widget: string): string {
+    return widget === EMBEDDED_WIDGET
+      ? 'VO_DETAIL.SETTINGS.APPLICATION_FORM.WIDGET_DESCRIPTION.EMBEDDED_GROUP_APPLICATION'
+      : 'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_WIDGET_DESCRIPTION.' + widget;
+  }
 
   ngOnInit(): void {
     this.translateService
@@ -102,6 +130,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     }
 
     this.loading = true;
+    const isEmbedded = this.selectedWidget === EMBEDDED_WIDGET;
 
     const newApplicationItem: FormItemDTO = {} as FormItemDTO;
     newApplicationItem.id = this.data.fakeId;
@@ -119,7 +148,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
         this.data.applicationFormItems.splice(i, 0, newEnrichedItem);
       }
     }
-    this.dialogRef.close([this.data.applicationFormItems, newEnrichedItem]);
+    this.dialogRef.close([this.data.applicationFormItems, newEnrichedItem, isEmbedded]);
   }
 
   private createItemDefinition(): ItemWithDefinitionDTO['itemDefinition'] {
@@ -133,7 +162,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
       required: false,
       hidden: 'NEVER',
       disabled: 'NEVER',
-      formTypes: ['INITIAL', 'EXTENSION'],
+      flowIds: ['INITIAL', 'EXTENSION'],
       validators: [],
     };
     for (const lang of this.languages) {
@@ -148,6 +177,26 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
         const labels: { [lang: string]: string } = {};
         for (const lang of this.languages) labels[lang] = 'Option 1';
         return { ...common, type, configuration: { options: [{ value: 'option1', labels }] } };
+      }
+      // EMBEDDED_GROUPS is part of the TypeEnum union (handled here for exhaustiveness);
+      // the picker itself only ever selects the EMBEDDED_WIDGET pseudo type
+      case 'EMBEDDED_GROUPS':
+      case EMBEDDED_WIDGET: {
+        // the pseudo widget is stored as a real EMBEDDED_GROUPS item; EMBEDDED_GROUPS items
+        // need at least one target (server-side validation), so a newly added item keeps the
+        // placeholder until groups are configured on the manage-embedded-groups page
+        const placeholder: Option = {
+          value: EMBEDDED_OPTION_PLACEHOLDER_VALUE,
+          labels: { en: EMBEDDED_OPTION_PLACEHOLDER_LABEL },
+        };
+        return {
+          ...common,
+          type: 'EMBEDDED_GROUPS',
+          // the server rejects embedded groups items as updatable (their value is produced
+          // by the module on approval, never entered by the user)
+          updatable: false,
+          configuration: { targets: [placeholder] },
+        };
       }
       case 'SUBMIT_BUTTON':
         return { ...common, type, configuration: { autoSubmit: this.autoSubmit } };

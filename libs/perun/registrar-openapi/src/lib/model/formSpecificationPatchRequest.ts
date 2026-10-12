@@ -11,16 +11,7 @@ import { FormTransitionDTO } from './formTransitionDTO';
 import { AssignedFormModuleDTO } from './assignedFormModuleDTO';
 
 export interface FormSpecificationPatchRequest {
-  autoFormTypes?: Array<FormSpecificationPatchRequest.AutoFormTypesEnum>;
+  autoApprove?: boolean;
   formModules?: Array<AssignedFormModuleDTO>;
   formTransitions?: Array<FormTransitionDTO>;
-}
-export namespace FormSpecificationPatchRequest {
-  export const AutoFormTypesEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-    CANCELLATION: 'CANCELLATION',
-    UPDATE: 'UPDATE',
-  } as const;
-  export type AutoFormTypesEnum = (typeof AutoFormTypesEnum)[keyof typeof AutoFormTypesEnum];
 }

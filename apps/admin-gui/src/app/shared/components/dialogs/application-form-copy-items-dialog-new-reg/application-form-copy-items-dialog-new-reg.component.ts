@@ -6,21 +6,22 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { Group, GroupsManagerService, Vo, VosManagerService } from '@perun-web-apps/perun/openapi';
 import {
-  ApiRequestConfigurationService,
   NotificatorService,
   PerunTranslateService,
+  SKIP_ERROR_NOTIFICATION,
 } from '@perun-web-apps/perun/services';
 import { RPCError } from '@perun-web-apps/perun/models';
 import { compareFnName } from '@perun-web-apps/perun/utils';
 import { GroupSearchSelectComponent } from '@perun-web-apps/perun/components';
 import { VoSearchSelectComponent } from '@perun-web-apps/perun/components';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
-import { FormsService } from '@perun-web-apps/perun/registrar-openapi';
-import { switchMap } from 'rxjs/operators';
-import { finalize } from 'rxjs';
+import { FormsService, IdmObject } from '@perun-web-apps/perun/registrar-openapi';
+import { HttpContext } from '@angular/common/http';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { EMPTY, finalize, from } from 'rxjs';
 
 export interface ApplicationFormCopyItemsDialogNewRegData {
-  formSpecificationId: string;
+  idmObject: IdmObject;
   theme: string;
 }
 
@@ -60,7 +61,6 @@ export class ApplicationFormCopyItemsDialogNewRegComponent implements OnInit {
     private translateService: PerunTranslateService,
     private formsService: FormsService,
     private notificatorService: NotificatorService,
-    private apiRequest: ApiRequestConfigurationService,
     private cd: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: ApplicationFormCopyItemsDialogNewRegData,
   ) {
@@ -117,8 +117,8 @@ export class ApplicationFormCopyItemsDialogNewRegComponent implements OnInit {
   }
 
   submit(): void {
-    this.apiRequest.dontHandleErrorForNext();
     this.loading = true;
+    const context = new HttpContext().set(SKIP_ERROR_NOTIFICATION, true);
     let idmObjectType: 'VO' | 'GROUP';
     let idmObjectId: string;
     // checking if the dialog is for group or Vo
@@ -129,25 +129,51 @@ export class ApplicationFormCopyItemsDialogNewRegComponent implements OnInit {
       idmObjectType = 'GROUP';
       idmObjectId = this.selectedGroup.id.toString();
     }
-    this.formsService
-      .getFormByObject(idmObjectType, idmObjectId)
+    const types = ['INITIAL', 'EXTENSION'];
+
+    from(types)
       .pipe(
-        switchMap((form) =>
-          this.formsService.copyItems(form.id, this.data.formSpecificationId, false),
+        mergeMap((type) =>
+          this.formsService
+            .getFormByObjectAndFlow(idmObjectType, idmObjectId, type, false, 'body', false, {
+              context,
+            })
+            .pipe(
+              mergeMap((fromForm) =>
+                this.formsService.createFormFromTemplate(
+                  fromForm.id,
+                  this.data.idmObject.idmObjectType,
+                  this.data.idmObject.objectId,
+                  false,
+                  false,
+                  'body',
+                  false,
+                  { context },
+                ),
+              ),
+              tap(() => {
+                this.notificatorService.showSuccess(`${type}: ${this.successMessage}`);
+              }),
+              catchError((error: RPCError) => {
+                if (error.status === 404) {
+                  this.notificatorService.showError(`${type}: ${this.noFormMessage}`);
+                } else {
+                  this.notificatorService.showError(
+                    `${type}: ${error.message ?? 'An unexpected error occurred.'}`,
+                  );
+                }
+
+                // Complete this flow without affecting the other.
+                return EMPTY;
+              }),
+            ),
         ),
-        finalize(() => (this.loading = false)),
-      )
-      .subscribe({
-        next: () => {
-          this.notificatorService.showSuccess(this.successMessage);
+        finalize(() => {
+          this.loading = false;
           this.dialogRef.close(true);
-        },
-        error: (error: RPCError) => {
-          if (error.status === 404) {
-            this.notificatorService.showError(this.noFormMessage);
-          }
-        },
-      });
+        }),
+      )
+      .subscribe();
   }
 
   voSelected(vo: Vo): void {

@@ -29,11 +29,14 @@ import {
   ApproveResultDTO,
   DecisionDTO,
   EnrichedFormItemDataDTO,
+  FormSpecificationDTO,
+  FormsService,
   SubmissionDTO,
   SubmissionsService,
 } from '@perun-web-apps/perun/registrar-openapi';
 import { ApplicationRejectNewRegDialogComponent } from '../../../shared/components/dialogs/application-reject-new-reg-dialog/application-reject-new-reg-dialog.component';
 import { GetLabelNewRegPipe } from '@perun-web-apps/perun/pipes';
+import { GetItemValueNewRegPipe } from '@perun-web-apps/perun/pipes';
 import { ApplicationReSendNotificationNewRegDialogComponent } from '../../../shared/components/dialogs/application-re-send-notification-new-reg-dialog/application-re-send-notification-new-reg-dialog.component';
 import { ApplicationChangesRequestedDialogComponent } from '../../../shared/components/dialogs/application-changes-requested-dialog/application-changes-requested-dialog.component';
 import { ApplicationApproveAnywayDialogNewRegComponent } from '../../../shared/components/dialogs/application-approve-anyway-dialog-new-reg/application-approve-anyway-dialog-new-reg.component';
@@ -53,6 +56,7 @@ import { ApplicationApproveAnywayDialogNewRegComponent } from '../../../shared/c
     ModifiedNamePipe,
     ApplicationStatePipe,
     GetLabelNewRegPipe,
+    GetItemValueNewRegPipe,
   ],
   standalone: true,
   selector: 'app-application-detail-new-reg',
@@ -65,10 +69,13 @@ export class ApplicationDetailNewRegComponent implements OnInit {
   application: ApplicationDTO;
   latestDecision: DecisionDTO;
   submission: SubmissionDTO;
+  formSpecification: FormSpecificationDTO;
   userData: EnrichedFormItemDataDTO[] = [];
   userMail: string;
   displayedColumns: string[] = ['label', 'value'];
   dataSource: MatTableDataSource<EnrichedFormItemDataDTO>;
+  // embedded form id -> name + id of the form's IdM object (for EMBEDDED_GROUPS values)
+  embeddedTargets: Record<string, { name?: string; objectId: string }> = {};
   loading = true;
   dialogTheme: string;
   verifyAuth: boolean;
@@ -88,6 +95,7 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     private router: Router,
     private authResolver: GuiAuthResolver,
     private submissionsService: SubmissionsService,
+    private formsService: FormsService,
     private vosService: VosManagerService,
     private groupsService: GroupsManagerService,
   ) {}
@@ -106,10 +114,30 @@ export class ApplicationDetailNewRegComponent implements OnInit {
         const applicationId = String(params['applicationId']);
         this.submissionsService.getApplication(applicationId).subscribe((application) => {
           this.application = application.application;
+          this.formSpecification = application.formSpecification;
           this.userData = application.formItemData;
           this.latestDecision = application.decisions[0];
           this.submission = application.submission;
           this.dataSource = new MatTableDataSource<EnrichedFormItemDataDTO>(this.userData);
+          // EMBEDDED_GROUPS values are embedded form UUIDs - fetch the target forms so the
+          // value column can show the group names instead of the unreadable form ids
+          if (this.userData.some((item) => item.itemDefinition?.type === 'EMBEDDED_GROUPS')) {
+            this.formsService.getEmbeddedTargetForms(this.formSpecification.id).subscribe({
+              next: (targets) => {
+                const embeddedTargets: Record<string, { name?: string; objectId: string }> = {};
+                targets.forEach((form) => {
+                  const object = form.idmObject;
+                  if (form.id && object) {
+                    embeddedTargets[form.id] = { name: object.name, objectId: object.objectId };
+                  }
+                });
+                this.embeddedTargets = embeddedTargets;
+              },
+              error: (error) => {
+                console.error('Failed to load embedded target forms', error);
+              },
+            });
+          }
           if (application.formSpecification.idmObject.idmObjectType === 'VO') {
             this.vosService
               .getVoById(Number(application.formSpecification.idmObject.objectId))
@@ -183,7 +211,7 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     config.data = {
       applicationId: this.application.id,
       theme: this.dialogTheme,
-      appType: this.application.type.formType,
+      appType: this.formSpecification.flowId,
       voId: this.vo.id,
       groupId: this.group?.id,
       userId: Number(this.application.idmUserId),

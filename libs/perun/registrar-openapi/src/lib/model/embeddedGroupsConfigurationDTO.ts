@@ -7,8 +7,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Option } from './option';
 
-export interface JsonNullableString {
-  present?: boolean;
-  undefined?: boolean;
+export interface EmbeddedGroupsConfigurationDTO {
+  targets: Array<Option>;
 }

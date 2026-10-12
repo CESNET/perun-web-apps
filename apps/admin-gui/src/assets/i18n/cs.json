@@ -1,8 +1,5 @@
 {
   "DIALOGS": {
-    "APPLICATION_FORM_EDIT_ITEM": {
-      "AUTO_SUBMIT": "Odeslat automaticky"
-    },
     "APPLICATION_FORM_ADD_ITEM": {
       "AUTO_SUBMIT": "Odeslat automaticky",
       "LOGIN_ATTRIBUTE": "Atribut přihlašovacího jména",
@@ -14,6 +11,10 @@
     "NOTIFICATIONS_ADD_EDIT_MAIL": {
       "DEFAULT_PRE_APPROVED_MAIL_TEXT": "Prosím, klikněte na následující odkaz a vyplňte formulář pro přijetí pozvánky do skupiny {groupName}:\n{preapprovedInvitationLink}\nPlatnost tohoto odkazu vyprší {expirationDate}.\n\nV případě dotazů kontaktujte {senderName}. Na tento email neodpovídejte.",
       "DEFAULT_PRE_APPROVED_MAIL_SUBJECT": "{senderName} vás pozval/a do skupiny {groupName}"
+    },
+    "APPLICATION_FORM_EDIT_ITEM": {
+      "AUTO_SUBMIT": "Odeslat automaticky",
+      "EMBEDDED_OPTIONS_DESCRIPTION": "Skupiny pro tuto položku se zde needitují. K přidání nebo odebrání vestavěných skupin použijte tlačítko Spravovat skupiny."
     }
   }
 }

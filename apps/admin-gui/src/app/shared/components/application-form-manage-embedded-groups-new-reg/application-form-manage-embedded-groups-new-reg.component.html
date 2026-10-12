@@ -1,0 +1,11 @@
+<app-application-form-manage-groups
+  [loading]="loading"
+  [groups]="groups"
+  [selected]="selected"
+  [addAuth]="addAuth"
+  [removeAuth$]="removeAuth$"
+  [manageEmbeddedGroupsItemSaved]="manageEmbeddedItemSaved"
+  (refreshEvent)="load()"
+  (addEvent)="openAddDialog()"
+  (removeEvent)="removeSelected()">
+</app-application-form-manage-groups>

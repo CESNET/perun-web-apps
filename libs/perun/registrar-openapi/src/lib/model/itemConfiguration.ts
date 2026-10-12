@@ -10,6 +10,7 @@
 import { NamespaceConfigurationDTO } from './namespaceConfigurationDTO';
 import { Option } from './option';
 import { SubmitButtonConfigurationDTO } from './submitButtonConfigurationDTO';
+import { EmbeddedGroupsConfigurationDTO } from './embeddedGroupsConfigurationDTO';
 import { OptionsConfigurationDTO } from './optionsConfigurationDTO';
 
 /**
@@ -17,6 +18,7 @@ import { OptionsConfigurationDTO } from './optionsConfigurationDTO';
  * @export
  */
 export type ItemConfiguration =
+  | EmbeddedGroupsConfigurationDTO
   | NamespaceConfigurationDTO
   | OptionsConfigurationDTO
   | SubmitButtonConfigurationDTO;
