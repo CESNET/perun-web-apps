@@ -164,6 +164,7 @@ export class GroupDetailPageComponent extends destroyDetailMixin() implements On
             richGroup: richGroupAuth
               ? this.groupService.getRichGroupByIdWithAttributesByNames(group.id, this.attrNames)
               : of(group),
+            group: of(group),
           });
         }),
       )
@@ -173,7 +174,10 @@ export class GroupDetailPageComponent extends destroyDetailMixin() implements On
           this.parentGroup = additionalEntities.parentGroup;
           this.group = additionalEntities.richGroup;
 
-          this.entityStorageService.setEntityAndPathParam(this.group, EntityPathParam.Group);
+          this.entityStorageService.setEntityAndPathParam(
+            additionalEntities.group,
+            EntityPathParam.Group,
+          );
           addRecentlyVisited('groups', this.group);
           addRecentlyVisitedObject(this.group, this.vo.name);
 
