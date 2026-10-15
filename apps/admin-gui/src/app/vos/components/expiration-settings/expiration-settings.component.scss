@@ -42,3 +42,22 @@
   position: relative;
   bottom: 0.5rem;
 }
+
+.settings-header-help {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.period-radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.range-error {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #d32f2f;
+}

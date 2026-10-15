@@ -11,6 +11,15 @@
       </mat-slide-toggle>
     </div>
 
+    <p class="settings-header-help">
+      {{
+        (expirationAttribute.entity === 'vo'
+          ? 'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_MEMBERSHIP_EXPIRE_VO'
+          : 'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_MEMBERSHIP_EXPIRE_GROUP')
+          | translate
+      }}
+    </p>
+
     <div [@openClose]="mainToggle.checked ? 'open' : 'closed'">
       <app-settings-toggle-item
         ngDefaultControl
@@ -21,13 +30,56 @@
         [tooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_EXPIRE' | translate"
         tooltipClass="expiration-help-tooltip">
         <div class="ms-1">
-          <mat-radio-group [(ngModel)]="currentConfiguration.periodType">
-            <mat-radio-button #staticPeriod class="me-3" color="primary" value="static">
-              {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_STATIC' | translate}}
-            </mat-radio-button>
-            <mat-radio-button #dynamicPeriod color="primary" value="dynamic">
-              {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_DYNAMIC' | translate}}
-            </mat-radio-button>
+          <mat-radio-group
+            class="period-radio-group"
+            [(ngModel)]="currentConfiguration.periodType"
+            (change)="onPeriodTypeChange($event)">
+            <div class="d-flex align-items-center">
+              <mat-radio-button #staticPeriod class="period-radio" color="primary" value="static">
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_STATIC_LABEL' | translate}}
+              </mat-radio-button>
+              <button
+                type="button"
+                mat-icon-button
+                class="help-tooltip-trigger"
+                [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_STATIC_LABEL' | translate"
+                [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_PERIOD_STATIC' | translate"
+                matTooltipClass="expiration-help-tooltip">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
+            <div class="d-flex align-items-center">
+              <mat-radio-button #dynamicPeriod class="period-radio" color="primary" value="dynamic">
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_DYNAMIC_LABEL' | translate}}
+              </mat-radio-button>
+              <button
+                type="button"
+                mat-icon-button
+                class="help-tooltip-trigger"
+                [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_DYNAMIC_LABEL' | translate"
+                [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_PERIOD_DYNAMIC' | translate"
+                matTooltipClass="expiration-help-tooltip">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
+            <div class="d-flex align-items-center">
+              <mat-radio-button
+                #inactivityPeriod
+                class="period-radio"
+                color="primary"
+                value="inactivity">
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_INACTIVITY_LABEL' | translate}}
+              </mat-radio-button>
+              <button
+                type="button"
+                mat-icon-button
+                class="help-tooltip-trigger"
+                [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_TYPE_INACTIVITY_LABEL' | translate"
+                [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_PERIOD_INACTIVITY' | translate"
+                matTooltipClass="expiration-help-tooltip">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
           </mat-radio-group>
           @if (staticPeriod.checked) {
             <div class="form-container">
@@ -59,16 +111,103 @@
                   >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.AMOUNT_TYPE' | translate}}</mat-label
                 >
                 <mat-select [(ngModel)]="currentConfiguration.periodDynamicUnit">
-                  @for (option of amountOptions; track option) {
+                  @for (option of amountOptionsWithoutDays; track option) {
                     <mat-option [value]="option.value">{{option.text}}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
             </div>
           }
+          @if (inactivityPeriod.checked) {
+            <div class="d-flex align-items-center">
+              {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.INACTIVITY_PERIOD_LABEL' | translate}}
+              <button
+                type="button"
+                mat-icon-button
+                class="help-tooltip-trigger"
+                [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.INACTIVITY_PERIOD_LABEL' | translate"
+                [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_INACTIVITY_PERIOD' | translate"
+                matTooltipClass="expiration-help-tooltip">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
+            <div class="d-flex flex-row">
+              <mat-form-field class="me-2 amount-field">
+                <mat-label
+                  >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.AMOUNT_VALUE' | translate}}</mat-label
+                >
+                <input
+                  [(ngModel)]="currentConfiguration.periodInactivity"
+                  matInput
+                  pattern="{{dynamicAmountPattern}}" />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label
+                  >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.AMOUNT_TYPE' | translate}}</mat-label
+                >
+                <mat-select [(ngModel)]="currentConfiguration.periodInactivityUnit">
+                  @for (option of amountOptionsWithoutDays; track option) {
+                    <mat-option [value]="option.value">{{option.text}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            @if (isInactivityPeriodOutOfRange()) {
+              <div class="range-error">
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_MAX_VALUE_HINT' | translate}}
+              </div>
+            }
+            <div class="d-flex align-items-center mt-2">
+              {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.REVIEW_PERIOD_LABEL' | translate}}
+              <button
+                type="button"
+                mat-icon-button
+                class="help-tooltip-trigger"
+                [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.REVIEW_PERIOD_LABEL' | translate"
+                [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_REVIEW_PERIOD' | translate"
+                matTooltipClass="expiration-help-tooltip">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
+            <div class="d-flex flex-row">
+              <mat-form-field class="me-2 amount-field">
+                <mat-label
+                  >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.AMOUNT_VALUE' | translate}}</mat-label
+                >
+                <input
+                  [(ngModel)]="currentConfiguration.activityCap"
+                  matInput
+                  pattern="{{dynamicAmountPattern}}" />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label
+                  >{{'VO_MANAGEMENT.SETTINGS.EXPIRATION.AMOUNT_TYPE' | translate}}</mat-label
+                >
+                <mat-select [(ngModel)]="currentConfiguration.activityCapUnit">
+                  @for (option of amountOptionsWithoutDays; track option) {
+                    <mat-option [value]="option.value">{{option.text}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            @if (isReviewPeriodOutOfRange()) {
+              <div class="range-error">
+                {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERIOD_MAX_VALUE_HINT' | translate}}
+              </div>
+            }
+          }
         </div>
-        <div>
+        <div class="d-flex align-items-center mt-3">
           {{'VO_MANAGEMENT.SETTINGS.EXPIRATION.GRACE_PERIOD_LABEL' | translate}}
+          <button
+            type="button"
+            mat-icon-button
+            class="help-tooltip-trigger"
+            [attr.aria-label]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.GRACE_PERIOD_LABEL' | translate"
+            [matTooltip]="'VO_MANAGEMENT.SETTINGS.EXPIRATION.HELP_GRACE_PERIOD' | translate"
+            matTooltipClass="expiration-help-tooltip">
+            <mat-icon>info_outline</mat-icon>
+          </button>
         </div>
         <div class="d-flex flex-row">
           <mat-form-field class="me-2 amount-field">
