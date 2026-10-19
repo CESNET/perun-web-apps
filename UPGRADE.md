@@ -1,5 +1,40 @@
 Upgrade notes
 
+## [20.15.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.14.0...v20.15.0) (2026-10-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* need to modify configuration as samba tab no
+longer exists
+
+(cherry picked from commit 6fa14521aa4ec95c8bbc2594aafb85e5ab3282bf)
+
+### Features
+
+* add support for new form items in new registrar ([a0ad746](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a0ad746813634e43463de7a8dd4f81344e501ef8))
+* **admin:** improve experience for users without roles ([adebe23](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/adebe230bf9c2387c0c995c5b061429ab9d4e217))
+* **admin:** new registrar application pagination ([3c4f5cc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/3c4f5cc7ebecdeffe1cd7dbca8e8520a9ea814ed))
+* **admin:** replace getMemberByUser with nullable variant ([c25d8aa](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/c25d8aaaf5c8a12d85e0b2f81c5bd01e9dd7011f))
+* new Registrar approve anyway + modules ([4595030](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/459503061b3472d8205b806c0e16121c9bc56124))
+* new Registrar copy form ([b5e6ba6](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/b5e6ba60139f02a3c7982f8d1ed4daef88381f26))
+* new registrar namespace rework ([a3d0780](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a3d078062c17d0fc9992947ffd259ac4a1904d76))
+
+
+### Bug Fixes
+
+* add missing exception to the password error translate switch ([a5b135a](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/a5b135ad1081f4843ff705c9f199236d29d9168e))
+* **deps:** bump angular versions ([4e7d2cc](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/4e7d2ccfb35a949ba8e093bfd158a1bd4564a858))
+* **lib:** adjust footer copyright text ([8440697](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/844069771ed36cf746072c9c73f9f15179884805))
+* **npm:** update Node.js types to pass pipeline tests ([28c4341](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/28c4341a8db759202fdad55a606f1c57ad99ba0c))
+* **profile:** center ORCID icon in connect button ([5c039d3](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/5c039d3bb472443e5bcf568a84f88cc37c01a378))
+* warning banner not showing on the login screen ([603354f](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/603354f39d8eb2d1f8e901d255139c2bf512e8ec))
+
+
+### Others
+
+* remove support for samba password ([8ebafb5](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/8ebafb52aa734a51b503f3b513a1d8103b35a340))
+
 ## [20.14.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.13.0...v20.14.0) (2026-08-03)
 
 
