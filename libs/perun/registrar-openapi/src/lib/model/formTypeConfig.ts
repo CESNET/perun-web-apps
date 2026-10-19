@@ -10,7 +10,7 @@
 
 export interface FormTypeConfig {
   formType: FormTypeConfig.FormTypeEnum;
-  attributeName?: string;
+  attributeName?: string | null;
 }
 export namespace FormTypeConfig {
   export const FormTypeEnum = {

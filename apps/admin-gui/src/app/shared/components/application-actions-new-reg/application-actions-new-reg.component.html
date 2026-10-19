@@ -83,15 +83,19 @@
 </ng-template>
 <div class="position-relative table-min-height">
   <perun-web-apps-simple-applications-list
-    *perunWebAppsLoader="loading; indicator: spinner"
-    [loading]="loading"
+    *perunWebAppsLoader="loading$ | async; indicator: spinner"
+    [loading]="loading$ | async"
     [displayColumns]="currentColumns"
     [fedColumnsFriendly]="showAllDetails ? [] : configuredFedColumns"
     [fedAttrs]="fedAttrs"
-    [applications]="applications"
+    [applications]="applicationsPage$ | async"
     [filter]="filterValue"
     [selection]="selected"
     (downloadAll)="downloadAll($event)"
-    [group]="group">
+    [groupMap]="idToGroupMap"
+    (queryChanged)="nextPage.next($event)"
+    [cacheSubject]="cacheSubject"
+    [resetPagination]="resetPagination"
+    [vo]="vo">
   </perun-web-apps-simple-applications-list>
 </div>

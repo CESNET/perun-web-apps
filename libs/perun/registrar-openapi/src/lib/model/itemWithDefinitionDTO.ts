@@ -13,8 +13,8 @@ import { ItemDefinitionDTO } from './itemDefinitionDTO';
 import { FormItemDTO } from './formItemDTO';
 
 export interface ItemWithDefinitionDTO {
-  formItemDTO?: FormItemDTO;
-  itemDefinition?: ItemDefinitionDTO;
-  destination?: DestinationDTO;
-  prefillStrategyEntries?: Array<PrefillStrategyEntryDTO>;
+  formItemDTO: FormItemDTO;
+  itemDefinition: ItemDefinitionDTO;
+  destination: DestinationDTO;
+  prefillStrategyEntries: Array<PrefillStrategyEntryDTO>;
 }

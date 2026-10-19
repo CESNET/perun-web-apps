@@ -10,13 +10,13 @@
 import { FormTypeConfig } from './formTypeConfig';
 
 export interface ApplicationDTO {
-  id?: string;
-  idmUserId?: string;
-  state?: ApplicationDTO.StateEnum;
+  id: string;
+  idmUserId: string;
+  state: ApplicationDTO.StateEnum;
   redirectUrl?: string;
-  submissionId?: string;
-  formSpecificationId?: string;
-  type?: FormTypeConfig;
+  submissionId: string;
+  formSpecificationId: string;
+  type: FormTypeConfig;
 }
 export namespace ApplicationDTO {
   export const StateEnum = {
@@ -25,7 +25,7 @@ export namespace ApplicationDTO {
     VERIFIED: 'VERIFIED',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED',
-    CHANGES_REQUESTED: 'CHANGES_REQUESTED',
+    ERROR: 'ERROR',
   } as const;
   export type StateEnum = (typeof StateEnum)[keyof typeof StateEnum];
 }

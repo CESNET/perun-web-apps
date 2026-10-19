@@ -26,6 +26,7 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from
 import { Urns } from '@perun-web-apps/perun/urns';
 import { UrlMatchResult, UrlSegment } from '@angular/router';
 
+export const noRightsRoles = new Set<string>(['SELF', 'MEMBERSHIP', 'SPONSORSHIP']);
 export const TABLE_ITEMS_COUNT_OPTIONS = [5, 10, 25, 100, 1000];
 export const EXTSOURCE_IDP = 'cz.metacentrum.perun.core.impl.ExtSourceIdp';
 
@@ -928,4 +929,11 @@ export function spaceNameValidator(): ValidatorFn {
 
 export function getElementFromSingleArray(options: Array<string>): string | null {
   return options.length === 1 ? options[0] : null;
+}
+
+/**
+ * Checks whether the user has only roles that provide no additional rights.
+ */
+export function hasOnlyNoRightsRoles(roles: string[]): boolean {
+  return roles.every((role) => noRightsRoles.has(role));
 }

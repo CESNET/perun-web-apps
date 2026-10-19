@@ -23,7 +23,9 @@ import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
 
 // @ts-ignore
-import { AvailableModule } from '../model/availableModule';
+import { AgeActionDTO } from '../model/ageActionDTO';
+// @ts-ignore
+import { AgeActionRecordDTO } from '../model/ageActionRecordDTO';
 // @ts-ignore
 import { BulkItemDefinitionUpdateRequest } from '../model/bulkItemDefinitionUpdateRequest';
 // @ts-ignore
@@ -163,6 +165,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -214,6 +222,260 @@ export class FormsService {
     }
     return this.httpClient.post<ItemDefinitionDTO>(requestUrl, BulkItemDefinitionUpdateRequest, {
       context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Copy form items to another form
+   * Copies items from one form to another, making sure the resulting form is valid. Global item definitions are reused; form-specific ones are copied (or updated when a matching definition already exists on the target form). Optionally overwrites all of target forms items.
+   * @param fromFormId
+   * @param toFormId
+   * @param overwrite
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public copyItems(
+    fromFormId: string,
+    toFormId: string,
+    overwrite?: boolean,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<FormSpecificationDTO>;
+  public copyItems(
+    fromFormId: string,
+    toFormId: string,
+    overwrite?: boolean,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<FormSpecificationDTO>>;
+  public copyItems(
+    fromFormId: string,
+    toFormId: string,
+    overwrite?: boolean,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<FormSpecificationDTO>>;
+  public copyItems(
+    fromFormId: string,
+    toFormId: string,
+    overwrite?: boolean,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (fromFormId === null || fromFormId === undefined) {
+      throw new Error(
+        'Required parameter fromFormId was null or undefined when calling copyItems.',
+      );
+    }
+    if (toFormId === null || toFormId === undefined) {
+      throw new Error('Required parameter toFormId was null or undefined when calling copyItems.');
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (toFormId !== undefined && toFormId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>toFormId,
+        'toFormId',
+      );
+    }
+    if (overwrite !== undefined && overwrite !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>overwrite,
+        'overwrite',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'fromFormId', value: fromFormId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/copy-items`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<FormSpecificationDTO>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Copy form transitions to another form
+   * Copies form transitions from one form to another; the source of the copied transitions is remapped to the target form.
+   * @param fromFormId
+   * @param toFormId
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public copyTransitions(
+    fromFormId: string,
+    toFormId: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<FormSpecificationDTO>;
+  public copyTransitions(
+    fromFormId: string,
+    toFormId: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<FormSpecificationDTO>>;
+  public copyTransitions(
+    fromFormId: string,
+    toFormId: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<FormSpecificationDTO>>;
+  public copyTransitions(
+    fromFormId: string,
+    toFormId: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (fromFormId === null || fromFormId === undefined) {
+      throw new Error(
+        'Required parameter fromFormId was null or undefined when calling copyTransitions.',
+      );
+    }
+    if (toFormId === null || toFormId === undefined) {
+      throw new Error(
+        'Required parameter toFormId was null or undefined when calling copyTransitions.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (toFormId !== undefined && toFormId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>toFormId,
+        'toFormId',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'fromFormId', value: fromFormId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/copy-transitions`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<FormSpecificationDTO>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -277,6 +539,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -405,6 +673,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -438,6 +712,164 @@ export class FormsService {
     }
 
     let requestUrl = `${this.configuration.basePath}/api/v1/forms/create`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<FormSpecificationDTO>(requestUrl, null, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Create a new form specification from a template
+   * Create a new form specification for the supplied IDM object by copying the entire configuration of a template form: items, age actions, form modules and auto-approved types. Form transitions are copied only when requested.
+   * @param templateId
+   * @param objectType
+   * @param objectId
+   * @param copyTransitions
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createFormFromTemplate(
+    templateId: string,
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    copyTransitions?: boolean,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<FormSpecificationDTO>;
+  public createFormFromTemplate(
+    templateId: string,
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    copyTransitions?: boolean,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<FormSpecificationDTO>>;
+  public createFormFromTemplate(
+    templateId: string,
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    copyTransitions?: boolean,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<FormSpecificationDTO>>;
+  public createFormFromTemplate(
+    templateId: string,
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    copyTransitions?: boolean,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (templateId === null || templateId === undefined) {
+      throw new Error(
+        'Required parameter templateId was null or undefined when calling createFormFromTemplate.',
+      );
+    }
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createFormFromTemplate.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createFormFromTemplate.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (templateId !== undefined && templateId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>templateId,
+        'templateId',
+      );
+    }
+    if (objectType !== undefined && objectType !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>objectType,
+        'objectType',
+      );
+    }
+    if (objectId !== undefined && objectId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>objectId,
+        'objectId',
+      );
+    }
+    if (copyTransitions !== undefined && copyTransitions !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>copyTransitions,
+        'copyTransitions',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/create-from-template`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -502,6 +934,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -606,6 +1044,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -710,6 +1154,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -824,6 +1274,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -928,6 +1384,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1042,6 +1504,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1146,6 +1614,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1260,6 +1734,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1374,6 +1854,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1488,6 +1974,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1584,6 +2076,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1680,6 +2178,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1776,6 +2280,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1872,6 +2382,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -1978,6 +2494,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2084,6 +2606,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2136,31 +2664,31 @@ export class FormsService {
   }
 
   /**
-   * Get available modules
-   * Get all modules that can be assigned to forms, along with their description and options
+   * Get all age actions
+   * Retrieves all available age actions.
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getAvailableModules1(
+  public getAgeActions(
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<AvailableModule>>;
-  public getAvailableModules1(
+  ): Observable<Array<AgeActionRecordDTO>>;
+  public getAgeActions(
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<AvailableModule>>>;
-  public getAvailableModules1(
+  ): Observable<HttpResponse<Array<AgeActionRecordDTO>>>;
+  public getAgeActions(
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<AvailableModule>>>;
-  public getAvailableModules1(
+  ): Observable<HttpEvent<Array<AgeActionRecordDTO>>>;
+  public getAgeActions(
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -2169,6 +2697,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2201,7 +2735,7 @@ export class FormsService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/api/v1/forms/module`;
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/ageActions`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -2210,7 +2744,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<AvailableModule>>(requestUrl, {
+    return this.httpClient.get<Array<AgeActionRecordDTO>>(requestUrl, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -2279,6 +2813,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2407,6 +2947,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2504,6 +3050,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2634,6 +3186,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2720,6 +3278,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2805,6 +3369,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2890,6 +3460,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -2975,6 +3551,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3085,6 +3667,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3196,6 +3784,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3327,6 +3921,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3458,6 +4058,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3589,6 +4195,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3633,6 +4245,126 @@ export class FormsService {
     return this.httpClient.get<boolean>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Set age actions
+   * Sets the age actions of the specified form. If the form already had age actions, the existing ones that are missing in this call are removed.
+   * @param formSpecificationId
+   * @param AgeActionDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public updateAgeActions(
+    formSpecificationId: string,
+    AgeActionDTO: Array<AgeActionDTO>,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<FormSpecificationDTO>;
+  public updateAgeActions(
+    formSpecificationId: string,
+    AgeActionDTO: Array<AgeActionDTO>,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<FormSpecificationDTO>>;
+  public updateAgeActions(
+    formSpecificationId: string,
+    AgeActionDTO: Array<AgeActionDTO>,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<FormSpecificationDTO>>;
+  public updateAgeActions(
+    formSpecificationId: string,
+    AgeActionDTO: Array<AgeActionDTO>,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (formSpecificationId === null || formSpecificationId === undefined) {
+      throw new Error(
+        'Required parameter formSpecificationId was null or undefined when calling updateAgeActions.',
+      );
+    }
+    if (AgeActionDTO === null || AgeActionDTO === undefined) {
+      throw new Error(
+        'Required parameter AgeActionDTO was null or undefined when calling updateAgeActions.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'formSpecificationId', value: formSpecificationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/ageActions`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.put<FormSpecificationDTO>(requestUrl, AgeActionDTO, {
+      context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -3696,6 +4428,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3810,6 +4548,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -3924,6 +4668,12 @@ export class FormsService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {

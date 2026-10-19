@@ -152,6 +152,12 @@ export class FormModulesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -205,6 +211,8 @@ export class FormModulesService {
   }
 
   /**
+   * Get available modules
+   * Get all modules that can be assigned to forms, along with their description and options
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -236,6 +244,12 @@ export class FormModulesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -330,6 +344,12 @@ export class FormModulesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {

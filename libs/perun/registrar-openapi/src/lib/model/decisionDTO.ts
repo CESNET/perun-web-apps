@@ -9,13 +9,13 @@
  */
 
 export interface DecisionDTO {
-  id?: string;
-  applicationId?: string;
-  approverId?: string;
-  approverName?: string;
+  id: string;
+  applicationId: string;
+  approverId: string;
+  approverName: string;
   message?: string;
-  timestamp?: string;
-  type?: DecisionDTO.TypeEnum;
+  timestamp: string;
+  type: DecisionDTO.TypeEnum;
 }
 export namespace DecisionDTO {
   export const TypeEnum = {
@@ -23,6 +23,7 @@ export namespace DecisionDTO {
     REJECTED: 'REJECTED',
     CHANGES_REQUESTED: 'CHANGES_REQUESTED',
     FORCE_VERIFIED: 'FORCE_VERIFIED',
+    AUTO_APPROVE_ERROR: 'AUTO_APPROVE_ERROR',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }

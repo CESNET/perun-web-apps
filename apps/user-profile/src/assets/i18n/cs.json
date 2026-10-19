@@ -203,15 +203,6 @@
     "EXPIRATION": "Expirace členství",
     "EXTEND": "Prodloužit členství"
   },
-  "SAMBA_PASSWORD": {
-    "TITLE": "Heslo pro službu SAMBA",
-    "INPUT_PLACEHOLDER": "Zadejte nové heslo",
-    "SET_PASSWORD": "Nastavit heslo",
-    "SUCCESS_MESSAGE": "Heslo pro službu SAMBA bylo nastaveno",
-    "PASSWORD_VALIDATION": "Heslo musí obsahovat alespoň 3 ze 4 skupin znaků: malá písmena, velká písmena, číslice, speciální znaky",
-    "SHOW_PWD_TOOLTIP": "Ukázat heslo",
-    "HIDE_PWD_TOOLTIP": "Schovat heslo"
-  },
   "PREFERRED_UNIX_GROUP_NAMES": {
     "TITLE": "Preferovaná jména Unixových skupin",
     "NEW_BUTTON": "Přidat preferované jméno skupiny",
@@ -256,7 +247,6 @@
     "MFA_INFO": "Spravovat moje prostředky vícefázového ověření (MFA)",
     "SAVE_TEXT_SUCCESS": "Bezpečnostní text byl změněn.",
     "REMOVE_TEXT_SUCCESS": "Bezpečnostní text byl odebrán.",
-    "SAMBA_PASSWORD": "Heslo pro službu SAMBA",
     "LOCAL_ACCOUNT": "Lokální účet",
     "ANTI_PHISHING": "Anti-phishingová ochrana",
     "ACCOUNT_ACTIVATION": "Aktivace účtu",
@@ -362,8 +352,6 @@
   },
   "ALERTS": {
     "NO_SSH_KEYS": "Nemáte žádné SSH klíče",
-    "NO_SAMBA": "Dosud nemáte heslo pro službu SAMBA.",
-    "SAMBA_EXISTS": "Heslo pro službu SAMBA již máte nastaveno. Můžete je změnit zadáním nového hesla.",
     "NO_PREFERRED_UNIX_GROUPS": "Nemáte nastaveny žádná preferovaná jména Unixových skupin pro tento jmenný prostor",
     "NO_ALT_PASSWORDS": "Nemáte žádná alternativní hesla"
   },

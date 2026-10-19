@@ -9,9 +9,9 @@
  */
 
 export interface DestinationDTO {
-  id?: string;
-  urn: string;
-  formSpecificationId?: string;
+  id?: string | null;
+  urn?: string;
+  formSpecificationId?: string | null;
   accessLevel: DestinationDTO.AccessLevelEnum;
 }
 export namespace DestinationDTO {

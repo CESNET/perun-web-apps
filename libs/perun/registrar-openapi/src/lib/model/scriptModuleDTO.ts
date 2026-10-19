@@ -9,6 +9,6 @@
  */
 
 export interface ScriptModuleDTO {
-  name?: string;
-  script?: string;
+  name: string;
+  script: string;
 }

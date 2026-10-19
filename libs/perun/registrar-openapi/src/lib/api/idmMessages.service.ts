@@ -25,6 +25,10 @@ import { Observable } from 'rxjs';
 // @ts-ignore
 import { ConsolidateUserDTO } from '../model/consolidateUserDTO';
 // @ts-ignore
+import { EnrichedApplicationDTO } from '../model/enrichedApplicationDTO';
+// @ts-ignore
+import { GetApplicationsForUserRequest } from '../model/getApplicationsForUserRequest';
+// @ts-ignore
 import { IdmMemberDTO } from '../model/idmMemberDTO';
 // @ts-ignore
 import { IdmObject } from '../model/idmObject';
@@ -149,6 +153,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -262,6 +272,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -304,6 +320,367 @@ export class IdmMessagesService {
       requestUrl = helperUrl.toString();
     }
     return this.httpClient.get<Array<string>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * @param idmObjectType
+   * @param objectId
+   * @param name
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public doesVoHaveExtensionForm(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<boolean>;
+  public doesVoHaveExtensionForm(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<boolean>>;
+  public doesVoHaveExtensionForm(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<boolean>>;
+  public doesVoHaveExtensionForm(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (idmObjectType === null || idmObjectType === undefined) {
+      throw new Error(
+        'Required parameter idmObjectType was null or undefined when calling doesVoHaveExtensionForm.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling doesVoHaveExtensionForm.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (idmObjectType !== undefined && idmObjectType !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idmObjectType,
+        'idmObjectType',
+      );
+    }
+    if (objectId !== undefined && objectId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>objectId,
+        'objectId',
+      );
+    }
+    if (name !== undefined && name !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>name, 'name');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/idm/vo-extension`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<boolean>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Get all applications for user
+   * Returns all applications for given objects of the user in given states, if states param is nor present, applications in all states are returned. If idmObjects are not listed, all applications of that user are returned
+   * @param GetApplicationsForUserRequest
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getApplicationsForUser(
+    GetApplicationsForUserRequest: GetApplicationsForUserRequest,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<EnrichedApplicationDTO>>;
+  public getApplicationsForUser(
+    GetApplicationsForUserRequest: GetApplicationsForUserRequest,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<EnrichedApplicationDTO>>>;
+  public getApplicationsForUser(
+    GetApplicationsForUserRequest: GetApplicationsForUserRequest,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<EnrichedApplicationDTO>>>;
+  public getApplicationsForUser(
+    GetApplicationsForUserRequest: GetApplicationsForUserRequest,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (GetApplicationsForUserRequest === null || GetApplicationsForUserRequest === undefined) {
+      throw new Error(
+        'Required parameter GetApplicationsForUserRequest was null or undefined when calling getApplicationsForUser.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/idm/user-applications`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<Array<EnrichedApplicationDTO>>(
+      requestUrl,
+      GetApplicationsForUserRequest,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
+  }
+
+  /**
+   * Get value of item data.
+   * Get the value of form item data.
+   * @param formItemDataId
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getItemData(
+    formItemDataId: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'text/plain'; context?: HttpContext },
+  ): Observable<string>;
+  public getItemData(
+    formItemDataId: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'text/plain'; context?: HttpContext },
+  ): Observable<HttpResponse<string>>;
+  public getItemData(
+    formItemDataId: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'text/plain'; context?: HttpContext },
+  ): Observable<HttpEvent<string>>;
+  public getItemData(
+    formItemDataId: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'text/plain'; context?: HttpContext },
+  ): Observable<any> {
+    if (formItemDataId === null || formItemDataId === undefined) {
+      throw new Error(
+        'Required parameter formItemDataId was null or undefined when calling getItemData.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (formItemDataId !== undefined && formItemDataId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>formItemDataId,
+        'formItemDataId',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['text/plain'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/idm/item-data`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<string>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -391,6 +768,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -444,6 +827,114 @@ export class IdmMessagesService {
   }
 
   /**
+   * Mark application\&#39;s mail item as verified
+   * Mark application\&#39;s mail item as verified
+   * @param body
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public mailValidated(
+    body: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<any>;
+  public mailValidated(
+    body: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<HttpResponse<any>>;
+  public mailValidated(
+    body: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<HttpEvent<any>>;
+  public mailValidated(
+    body: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: undefined; context?: HttpContext },
+  ): Observable<any> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling mailValidated.');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = [];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/idm/mail-validated`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<any>(requestUrl, body, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Process IDM member deletion
    * Rejects all applications registered to that user id in the specified IDM object
    * @param IdmMemberDTO
@@ -488,6 +979,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -592,6 +1089,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -696,6 +1199,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {
@@ -800,6 +1309,12 @@ export class IdmMessagesService {
     let localVarHeaders = this.defaultHeaders;
 
     let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
     // authentication (bearerAuth) required
     localVarCredential = this.configuration.lookupCredential('bearerAuth');
     if (localVarCredential) {

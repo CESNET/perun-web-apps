@@ -54,6 +54,13 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     'SUBMIT_BUTTON',
     'LOGIN',
     'PASSWORD',
+    'TIMEZONE',
+    'TEXTAREA',
+    'SELECTION_CUSTOM',
+    'RADIO',
+    'DATE_PICKER',
+    'MAP_INPUT_BOX',
+    'LIST_INPUT_BOX',
   ];
   nameCtrl: UntypedFormControl;
   loading = false;

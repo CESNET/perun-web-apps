@@ -47,6 +47,11 @@
                 {{'USER_DETAIL.DASHBOARD.NO_ASSIGNED_ROLES' | translate}}
               </div>
             </div>
+            <div class="text-center mt-2">
+              <button (click)="redirectToProfile()" color="accent" class="ms-auto" mat-flat-button>
+                {{'USER_DETAIL.DASHBOARD.REDIRECT_BUTTON' | translate}}
+              </button>
+            </div>
           </div>
         }
         @if (!hasOnlyNoRightsRoles) {

@@ -27,6 +27,7 @@ import {
   ApplicationWithStringId,
   downloadApplicationsData,
   getDataForExport,
+  mapToAppWithId,
 } from '@perun-web-apps/perun/utils';
 import { getExportDataForColumn } from '@perun-web-apps/perun/utils';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
@@ -117,40 +118,19 @@ export class MemberApplicationsNewRegComponent implements OnInit {
 
         forkJoin({
           oldApps: this.registrarService.getApplicationsForMember(this.member.id),
-          newApps: this.submissionsService.getApplicationsForUser({ idmObjects: objectsToGet }),
+          newApps: this.submissionsService.getUserApplications({
+            userId: String(this.member.userId),
+            idmObjects: objectsToGet,
+          }),
         }).subscribe({
           next: ({ oldApps, newApps }) => {
             const mappedOldApps: ApplicationWithStringId[] = oldApps.map((app) => ({
               ...app,
               uuid: '',
             }));
-            const mappedNewApps: ApplicationWithStringId[] = [];
-            newApps.forEach((app) => {
-              const ourApp: ApplicationWithStringId = {
-                uuid: app.application.id,
-                vo: this.vo,
-                type: app.application.type.formType === 'INITIAL' ? 'INITIAL' : 'EXTENSION',
-                extSourceName: app.submission.identityIssuer,
-                createdBy: app.submission.submitterName,
-                createdAt: app.submission.timestamp,
-                modifiedAt: app.submission.timestamp,
-                modifiedBy: app.submission.submitterName,
-                state: this.getState(app.application),
-                user: null,
-                fedInfo: Object.entries(app.submission.identityAttributes)
-                  .map(([key, value]) => `${key}:${value}`)
-                  .join(','),
-              };
-              if (app.form.idmObject.idmObjectType === 'GROUP') {
-                ourApp.group = this.idToGroupMap.get(Number(app.form.idmObject.objectId));
-              }
-              const lastDecision = app.decisions?.[app.decisions.length - 1];
-              if (lastDecision) {
-                ourApp.modifiedAt = lastDecision.timestamp;
-                ourApp.modifiedBy = lastDecision.approverName;
-              }
-              mappedNewApps.push(ourApp);
-            });
+            const mappedNewApps = newApps.map((app) =>
+              mapToAppWithId(app, this.vo, this.idToGroupMap),
+            );
             this.applications = [...mappedOldApps, ...mappedNewApps];
             this.loading = false;
           },

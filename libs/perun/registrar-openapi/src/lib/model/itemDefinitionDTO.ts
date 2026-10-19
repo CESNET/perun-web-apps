@@ -11,15 +11,15 @@ import { ItemTexts } from './itemTexts';
 import { ItemValidatorDTO } from './itemValidatorDTO';
 
 export interface ItemDefinitionDTO {
-  id?: string;
-  formSpecificationId?: string;
+  id?: string | null;
+  formSpecificationId?: string | null;
   displayName: string;
   type: ItemDefinitionDTO.TypeEnum;
   updatable: boolean;
   required: boolean;
-  defaultValue?: string;
-  prefillStrategyIds?: Array<string>;
-  destinationId?: string;
+  defaultValue?: string | null;
+  prefillStrategyIds?: Array<string> | null;
+  destinationId?: string | null;
   formTypes: Array<ItemDefinitionDTO.FormTypesEnum>;
   texts: { [key: string]: ItemTexts };
   hidden: ItemDefinitionDTO.HiddenEnum;
@@ -40,6 +40,11 @@ export namespace ItemDefinitionDTO {
     VERIFIED_EMAIL: 'VERIFIED_EMAIL',
     HTML_COMMENT: 'HTML_COMMENT',
     TEXTFIELD: 'TEXTFIELD',
+    TIMEZONE: 'TIMEZONE',
+    TEXTAREA: 'TEXTAREA',
+    RADIO: 'RADIO',
+    MAP_INPUT_BOX: 'MAP_INPUT_BOX',
+    LIST_INPUT_BOX: 'LIST_INPUT_BOX',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
   export const FormTypesEnum = {

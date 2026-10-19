@@ -10,8 +10,8 @@
 import { IdmObject } from './idmObject';
 
 export interface GetApplicationsForObjectsRequest {
-  idmObjects?: Array<IdmObject>;
-  states?: Array<GetApplicationsForObjectsRequest.StatesEnum>;
+  states: Array<GetApplicationsForObjectsRequest.StatesEnum>;
+  idmObjects: Array<IdmObject>;
 }
 export namespace GetApplicationsForObjectsRequest {
   export const StatesEnum = {
@@ -20,7 +20,7 @@ export namespace GetApplicationsForObjectsRequest {
     VERIFIED: 'VERIFIED',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED',
-    CHANGES_REQUESTED: 'CHANGES_REQUESTED',
+    ERROR: 'ERROR',
   } as const;
   export type StatesEnum = (typeof StatesEnum)[keyof typeof StatesEnum];
 }

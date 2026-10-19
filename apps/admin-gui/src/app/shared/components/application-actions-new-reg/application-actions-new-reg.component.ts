@@ -11,9 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, forkJoin, of, switchMap } from 'rxjs';
+import { BehaviorSubject, forkJoin, merge, Observable, of, switchMap } from 'rxjs';
 import {
-  Application,
   AppState,
   Attribute,
   AttributeDefinition,
@@ -24,15 +23,14 @@ import {
 } from '@perun-web-apps/perun/openapi';
 import { FormControl } from '@angular/forms';
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ApplicationsBulkOperationDialogComponent } from '../dialogs/applications-bulk-operation-dialog/applications-bulk-operation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import {
   ApplicationWithStringId,
   downloadApplicationsData,
   getDataForExport,
-  getDefaultDialogConfig,
+  mapToAppWithId,
 } from '@perun-web-apps/perun/utils';
-import { RPCError } from '@perun-web-apps/perun/models';
+import { PageQuery, RPCError } from '@perun-web-apps/perun/models';
 import { SelectionModel } from '@angular/cdk/collections';
 import { getExportDataForColumn } from '@perun-web-apps/perun/utils';
 import { DateRangeComponent } from '@perun-web-apps/perun/components';
@@ -40,10 +38,11 @@ import { LoadingTableComponent } from '@perun-web-apps/ui/loaders';
 import { LoaderDirective } from '@perun-web-apps/perun/directives';
 import {
   ApplicationDTO,
-  EnrichedApplicationDTO,
   IdmObject,
+  PagedModelEnrichedApplicationDTO,
   SubmissionsService,
 } from '@perun-web-apps/perun/registrar-openapi';
+import { map, startWith, tap } from 'rxjs/operators';
 
 export interface AppAction {
   approve: boolean;
@@ -108,7 +107,7 @@ export class ApplicationActionsNewRegComponent implements OnInit {
     resend: false,
   };
 
-  currentStates: AppState[] = ['NEW', 'VERIFIED'];
+  currentStates: ApplicationDTO.StateEnum[] = ['SUBMITTED', 'VERIFIED'];
 
   filterValue = '';
 
@@ -146,8 +145,34 @@ export class ApplicationActionsNewRegComponent implements OnInit {
   currentColumns: string[] = [];
   configuredColumns: string[] = [];
   configuredFedColumns: string[] = [];
-  idToGroupMap = new Map<number, Group>();
+  idToGroupMap: Map<number, Group> = new Map<number, Group>();
 
+  currentIdmObjects: IdmObject[] = [];
+
+  nextPage = new BehaviorSubject<PageQuery>({});
+  applicationsPage$: Observable<PagedModelEnrichedApplicationDTO> = this.nextPage.pipe(
+    switchMap((pageQuery) =>
+      this.submissionsService.getApplicationsForObjects(
+        {
+          states: this.currentStates,
+          idmObjects: this.currentIdmObjects,
+        },
+        Math.floor(pageQuery.offset / pageQuery.pageSize),
+        pageQuery.pageSize,
+        [pageQuery.sortColumnOriginal + ',' + (pageQuery.order === 'ASCENDING' ? 'asc' : 'desc')],
+      ),
+    ),
+    tap((page) => {
+      const helper: ApplicationWithStringId[] = [];
+      for (const app of page.content) {
+        helper.push(mapToAppWithId(app, this.vo, this.idToGroupMap));
+      }
+      this.applications = helper;
+      this.selected.clear();
+      setTimeout(() => this.loadingSubject$.next(false), 200);
+    }),
+    startWith({ content: [], page: { size: 0, number: 0, totalElements: 0, totalPages: 0 } }),
+  );
   applications: ApplicationWithStringId[] = [];
 
   selected: SelectionModel<ApplicationWithStringId> = new SelectionModel<ApplicationWithStringId>(
@@ -159,13 +184,10 @@ export class ApplicationActionsNewRegComponent implements OnInit {
   loadingSubject$ = new BehaviorSubject(false);
   cacheSubject = new BehaviorSubject(true);
   resetPagination = new BehaviorSubject(false);
-  loading = true;
-
-  callMap = new Map([
-    ['APPROVE', '/registrarManager/approveApplications'],
-    ['REJECT', '/registrarManager/rejectApplications'],
-    ['DELETE', '/registrarManager/deleteApplications'],
-  ]);
+  loading$: Observable<boolean> = merge(
+    this.loadingSubject$,
+    this.nextPage.pipe(map((): boolean => true)),
+  );
 
   constructor(
     private submissionsService: SubmissionsService,
@@ -192,7 +214,6 @@ export class ApplicationActionsNewRegComponent implements OnInit {
 
   ngOnInit(): void {
     this.showGroupApps = !!this.group;
-    this.loading = true;
 
     this.refreshTable();
 
@@ -203,15 +224,14 @@ export class ApplicationActionsNewRegComponent implements OnInit {
   }
 
   refreshTable(): void {
-    this.loading = true;
+    this.currentIdmObjects = [];
 
     // Build base IDM objects
-    const idmObjects: IdmObject[] = [];
     if (this.group) {
       this.idToGroupMap.set(this.group.id, this.group);
-      idmObjects.push({ idmObjectType: 'GROUP', objectId: this.group.id.toString() });
+      this.currentIdmObjects.push({ idmObjectType: 'GROUP', objectId: this.group.id.toString() });
     } else {
-      idmObjects.push({ idmObjectType: 'VO', objectId: this.vo.id.toString() });
+      this.currentIdmObjects.push({ idmObjectType: 'VO', objectId: this.vo.id.toString() });
     }
 
     // Conditionally create observables for additional groups
@@ -229,79 +249,28 @@ export class ApplicationActionsNewRegComponent implements OnInit {
       subgroups: subgroups$,
     })
       .pipe(
-        switchMap(({ groups, subgroups }) => {
+        tap(({ groups, subgroups }) => {
           // Add group IDs to idmObjects
           groups.forEach((group: Group) => {
             this.idToGroupMap.set(group.id, group);
-            idmObjects.push({ idmObjectType: 'GROUP', objectId: group.id.toString() });
+            this.currentIdmObjects.push({ idmObjectType: 'GROUP', objectId: group.id.toString() });
           });
 
           // Add subgroup IDs to idmObjects
           subgroups.forEach((subgroup: Group) => {
             this.idToGroupMap.set(subgroup.id, subgroup);
-            idmObjects.push({ idmObjectType: 'GROUP', objectId: subgroup.id.toString() });
-          });
-
-          // Call API with complete idmObjects
-          return this.submissionsService.getApplicationsForObjects({
-            idmObjects: idmObjects,
-            states: this.currentStates.map((state) => (state === 'NEW' ? 'SUBMITTED' : state)),
+            this.currentIdmObjects.push({
+              idmObjectType: 'GROUP',
+              objectId: subgroup.id.toString(),
+            });
           });
         }),
       )
-      .subscribe({
-        next: (enrichedApps: EnrichedApplicationDTO[]) => {
-          const helper: ApplicationWithStringId[] = [];
-          for (const app of enrichedApps) {
-            const ourApp: ApplicationWithStringId = {
-              uuid: app.application.id,
-              vo: this.vo,
-              group: this.group,
-              type: app.application.type.formType === 'INITIAL' ? 'INITIAL' : 'EXTENSION',
-              extSourceName: app.submission.identityIssuer,
-              createdBy: app.submission.submitterName,
-              createdAt: app.submission.timestamp,
-              modifiedAt: app.submission.timestamp,
-              modifiedBy: app.submission.submitterName,
-              user: null,
-              fedInfo: Object.entries(app.submission.identityAttributes)
-                .map(([key, value]) => `${key}:${value}`)
-                .join(','),
-            };
-            if (app.form.idmObject.idmObjectType === 'GROUP') {
-              ourApp.group = this.idToGroupMap.get(Number(app.form.idmObject.objectId));
-            }
-            const lastDecision = app.decisions?.[app.decisions.length - 1];
-            if (lastDecision) {
-              ourApp.modifiedAt = lastDecision.timestamp;
-              ourApp.modifiedBy = lastDecision.approverName;
-            }
-            switch (app.application.state) {
-              case 'APPROVED':
-                ourApp.state = 'APPROVED';
-                break;
-              case 'REJECTED':
-                ourApp.state = 'REJECTED';
-                break;
-              case 'VERIFIED':
-                ourApp.state = 'VERIFIED';
-                break;
-              case 'SUBMITTED':
-                ourApp.state = 'NEW';
-                break;
-            }
-            helper.push(ourApp);
-          }
-          this.applications = helper;
-          this.loading = false;
-        },
-        error: () => {
-          this.loading = false;
-        },
+      .subscribe(() => {
+        this.resetPagination.next(true);
+        this.cacheSubject.next(true);
+        this.nextPage.next(this.nextPage.value);
       });
-
-    this.resetPagination.next(true);
-    this.cacheSubject.next(true);
   }
 
   applyFilter(filterValue: string): void {
@@ -309,156 +278,10 @@ export class ApplicationActionsNewRegComponent implements OnInit {
     this.refreshTable();
   }
 
-  // onApprove(): void {
-  //   const dialogRef = this.openDialog(
-  //     'VO_DETAIL.APPLICATION.DIALOG.APPROVE.TITLE',
-  //     'VO_DETAIL.APPLICATION.DIALOG.APPROVE.DESCRIPTION',
-  //     'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE',
-  //     'APPROVE',
-  //     this.selected.selected,
-  //     this.currentColumns,
-  //   );
-  //   dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-  //     if (confirmed) {
-  //       this.loadingSubject$.next(true);
-  //       this.registrarService
-  //         .approveApplications(this.selected.selected.map((app) => app.id))
-  //         .subscribe({
-  //           next: (approveApplicationsResult: [ApplicationOperationResult]) => {
-  //             if (approveApplicationsResult.some((result) => result.error !== null)) {
-  //               this.errorsInBulkOperation(
-  //                 approveApplicationsResult,
-  //                 this.selected.selected,
-  //                 'APPROVE',
-  //               );
-  //             } else {
-  //               this.notificator.showInstantSuccess(
-  //                 'VO_DETAIL.APPLICATION.SUCCESS.APPROVE_NOTIFICATION',
-  //               );
-  //             }
-  //             this.refreshTable();
-  //           },
-  //           error: (error: RPCError) => {
-  //             this.notificator.showRPCError(error);
-  //             this.refreshTable();
-  //           },
-  //         });
-  //     }
-  //   });
-  // }
-
-  // onReject(): void {
-  //   const dialogRef = this.openDialog(
-  //     'VO_DETAIL.APPLICATION.DIALOG.REJECT.TITLE',
-  //     'VO_DETAIL.APPLICATION.DIALOG.REJECT.DESCRIPTION',
-  //     'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT',
-  //     'REJECT',
-  //     this.selected.selected,
-  //     this.currentColumns,
-  //   );
-  //   dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-  //     if (confirmed) {
-  //       this.loadingSubject$.next(true);
-  //       this.registrarService
-  //         .rejectApplications(this.selected.selected.map((app) => app.id))
-  //         .subscribe({
-  //           next: (rejectApplicationsResult: [ApplicationOperationResult]) => {
-  //             if (rejectApplicationsResult.some((result) => result.error !== null)) {
-  //               this.errorsInBulkOperation(
-  //                 rejectApplicationsResult,
-  //                 this.selected.selected,
-  //                 'REJECT',
-  //               );
-  //             } else {
-  //               this.notificator.showInstantSuccess(
-  //                 'VO_DETAIL.APPLICATION.SUCCESS.REJECT_NOTIFICATION',
-  //               );
-  //             }
-  //             this.refreshTable();
-  //           },
-  //           error: (error: RPCError) => {
-  //             this.notificator.showRPCError(error);
-  //             this.refreshTable();
-  //           },
-  //         });
-  //     }
-  //   });
-  // }
-
-  // onDelete(): void {
-  //   const dialogRef = this.openDialog(
-  //     'VO_DETAIL.APPLICATION.DIALOG.DELETE.TITLE',
-  //     'VO_DETAIL.APPLICATION.DIALOG.DELETE.DESCRIPTION',
-  //     'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE',
-  //     'DELETE',
-  //     this.selected.selected,
-  //     this.currentColumns,
-  //   );
-  //   dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-  //     if (confirmed) {
-  //       this.loadingSubject$.next(true);
-  //       this.registrarService
-  //         .deleteApplications(this.selected.selected.map((app) => app.id))
-  //         .subscribe({
-  //           next: (deleteApplicationsResult: [ApplicationOperationResult]) => {
-  //             if (deleteApplicationsResult.some((result) => result.error !== null)) {
-  //               this.errorsInBulkOperation(
-  //                 deleteApplicationsResult,
-  //                 this.selected.selected,
-  //                 'DELETE',
-  //               );
-  //             } else {
-  //               this.notificator.showInstantSuccess(
-  //                 'VO_DETAIL.APPLICATION.SUCCESS.DELETE_NOTIFICATION',
-  //               );
-  //             }
-  //             this.refreshTable();
-  //           },
-  //           error: (error: RPCError) => {
-  //             this.notificator.showRPCError(error);
-  //             this.refreshTable();
-  //           },
-  //         });
-  //     }
-  //   });
-  // }
-
-  // onResend(): void {
-  //   const dialogRef = this.openDialog(
-  //     'VO_DETAIL.APPLICATION.DIALOG.RESEND.TITLE',
-  //     'VO_DETAIL.APPLICATION.DIALOG.RESEND.DESCRIPTION',
-  //     'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION',
-  //     'RESEND',
-  //     this.selected.selected,
-  //     this.currentColumns,
-  //   );
-  //   dialogRef.afterClosed().subscribe((resendForm: { type: MailType; reason: string }) => {
-  //     if (resendForm) {
-  //       this.loadingSubject$.next(true);
-  //       this.registrarService
-  //         .sendMessages({
-  //           ids: this.selected.selected.map((app) => app.id),
-  //           mailType: resendForm.type,
-  //           reason: resendForm.reason,
-  //         })
-  //         .subscribe({
-  //           next: () => {
-  //             this.notificator.showInstantSuccess('VO_DETAIL.APPLICATION.SUCCESS.RESEND');
-  //             this.refreshTable();
-  //           },
-  //           error: () => {
-  //             this.loadingSubject$.next(false);
-  //           },
-  //         });
-  //     }
-  //   });
-  // }
-
-  statesChanged(states: AppState[]): void {
-    this.currentStates = states;
-    if (states === null) {
-      this.currentStates = ['NEW', 'VERIFIED', 'APPROVED', 'REJECTED'];
-    }
+  statesChanged(states: AppState[] | null): void {
+    this.currentStates = states
+      ? states.map((state) => this.convertState(state))
+      : ['SUBMITTED', 'VERIFIED', 'APPROVED', 'REJECTED'];
     this.refreshTable();
   }
 
@@ -496,52 +319,29 @@ export class ApplicationActionsNewRegComponent implements OnInit {
   }
 
   downloadAll(a: { format: string; length: number }): void {
-    downloadApplicationsData(
-      getDataForExport(this.applications, this.currentColumns, getExportDataForColumn),
-      this.translate,
-      a.format,
-    );
+    this.submissionsService
+      .getApplicationsForObjects(
+        {
+          states: this.currentStates,
+          idmObjects: this.currentIdmObjects,
+        },
+        0,
+        a.length,
+      )
+      .subscribe({
+        next: (paginated) => {
+          downloadApplicationsData(
+            getDataForExport(
+              paginated.content.map((app) => mapToAppWithId(app, this.vo, this.idToGroupMap)),
+              this.currentColumns,
+              getExportDataForColumn,
+            ),
+            this.translate,
+            a.format,
+          );
+        },
+      });
   }
-
-  // private errorsInBulkOperation(
-  //   bulkOperationsResult: [ApplicationOperationResult],
-  //   selectedApplications: Application[],
-  //   operation: string,
-  // ): void {
-  //   const resultsMap = new Map<number, PerunException>();
-  //   bulkOperationsResult.forEach((res) => {
-  //     resultsMap.set(res.applicationId, res.error);
-  //   });
-  //   const appErrorPairs: [Application, PerunException][] = selectedApplications.map((app) => [
-  //     app,
-  //     this.addCallToException(resultsMap.get(app.id), this.callMap.get(operation)),
-  //   ]);
-  //   const groupAppIncluded = selectedApplications.some((app) => app.group !== null);
-  //   const config = getDefaultDialogConfig();
-  //   config.width = '1300px';
-  //   config.data = {
-  //     theme: this.theme,
-  //     action: operation,
-  //     applicationsResults: appErrorPairs,
-  //     displayedColumns: groupAppIncluded
-  //       ? this.bulkOperationFailureGroupColumns
-  //       : this.bulkOperationFailureColumns,
-  //   };
-  //   this.notificator.showInstantError(
-  //     'VO_DETAIL.APPLICATION.ERROR.' + operation + '_NOTIFICATION',
-  //     null,
-  //     '',
-  //     'VO_DETAIL.APPLICATION.SHOW',
-  //     () => {
-  //       const dialogRef = this.dialog.open(ApplicationsBulkOperationFailureDialogComponent, config);
-  //       dialogRef.afterClosed().subscribe((success) => {
-  //         if (success) {
-  //           this.refreshTable();
-  //         }
-  //       });
-  //     },
-  //   );
-  // }
 
   // Adds a call property to the PerunException so it can be used in the bug report FIXME better way?
   private addCallToException(exception: PerunException, call: string): RPCError {
@@ -619,39 +419,6 @@ export class ApplicationActionsNewRegComponent implements OnInit {
       'VO_DETAIL.APPLICATION.COLUMN_SETTINGS_NEW_REG',
     );
   }
-
-  private openDialog(
-    title: string,
-    description: string,
-    confirmButtonLabel: string,
-    selectedAction: 'APPROVE' | 'REJECT' | 'DELETE' | 'RESEND',
-    applications: Application[],
-    columns: string[],
-  ): MatDialogRef<ApplicationsBulkOperationDialogComponent> {
-    const columnsToDisplay = columns.filter(
-      (column) => column !== 'checkbox' && column !== 'state',
-    );
-
-    const config = getDefaultDialogConfig();
-    config.width = '1300px';
-    config.data = {
-      theme: this.theme,
-      title: title,
-      description: description,
-      confirmButtonLabel: confirmButtonLabel,
-      action: selectedAction,
-      selectedApplications: applications,
-      displayedColumns: columnsToDisplay,
-      allowGroupMailType: !!this.group,
-      fedColumnsFriendly: this.configuredFedColumns,
-      fedAttrs: this.fedAttrs,
-      voId: this.vo?.id,
-      groupId: this.group?.id,
-    };
-
-    return this.dialog.open(ApplicationsBulkOperationDialogComponent, config);
-  }
-
   private setColumns(): string[] {
     let columns: string[] = this.prependColumns;
     if (this.showGroupApps) {

@@ -9,7 +9,7 @@
  */
 
 export interface AvailableModule {
-  name?: string;
-  description?: string;
+  name: string;
+  description: string;
   options?: Array<string>;
 }

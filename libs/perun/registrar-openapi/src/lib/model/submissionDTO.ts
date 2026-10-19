@@ -9,12 +9,11 @@
  */
 
 export interface SubmissionDTO {
-  id?: string;
-  timestamp?: string;
-  submitterId?: string;
-  submitterName?: string;
-  identityIdentifier?: string;
-  identityIssuer?: string;
-  identityAttributes?: { [key: string]: string };
-  anonymousToken?: string;
+  id: string;
+  timestamp: string;
+  submitterId: string;
+  submitterName: string;
+  identityIdentifier: string;
+  identityIssuer: string;
+  identityAttributes: { [key: string]: string };
 }

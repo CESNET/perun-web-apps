@@ -13,8 +13,8 @@
     <div class="d-flex w-75">
       <div>
         <div class="fw-bold">
-          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NAMESPACE' | translate}}:
-          {{formSpecification.namespace}}
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MODULE_NAMES' | translate}}:
+          {{moduleNames.join(", ")}}
         </div>
         <div>
           <span
@@ -74,6 +74,15 @@
           {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.SAVE_BUTTON' | translate}}
         </button>
       </span>
+    }
+
+    @if (editAuth) {
+      <button (click)="copy()" class="me-2 action-button" mat-stroked-button>
+        <i class="material-icons align-middle">file_copy</i>
+        <span class="align-middle">
+          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.COPY_VO_BUTTON' | translate}}
+        </span>
+      </button>
     }
 
     <!--    <button (click)="preview()" mat-stroked-button>-->

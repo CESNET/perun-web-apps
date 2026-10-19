@@ -15,12 +15,13 @@ import {
 import { SideMenuService } from '../../../../core/services/common/side-menu.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
+import { getDefaultDialogConfig, hasOnlyNoRightsRoles } from '@perun-web-apps/perun/utils';
 import { MailChangeFailedDialogComponent } from '@perun-web-apps/perun/dialogs';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFullNamePipe } from '@perun-web-apps/perun/pipes';
 import { DashboardRecentlyViewedButtonFieldComponent } from './dashboard-recently-viewed-button-field/dashboard-recently-viewed-button-field.component';
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
+import { AppType } from '@perun-web-apps/perun/models';
 
 @Component({
   imports: [
@@ -51,7 +52,6 @@ export class UserDashboardComponent implements OnInit {
   rightSettingOpened = false;
   recentlyViewedShow = true;
   rolesToHide: string[] = [];
-  noRightsRoles = new Set<string>(['SELF', 'MEMBERSHIP', 'SPONSORSHIP']);
   allowedRoles = [
     'VOADMIN',
     'GROUPADMIN',
@@ -79,7 +79,7 @@ export class UserDashboardComponent implements OnInit {
     public translateService: TranslateService,
     private dialog: MatDialog,
     private apiRequestConfiguration: ApiRequestConfigurationService,
-    private otherApplicationService: OtherApplicationsService,
+    private otherAppService: OtherApplicationsService,
   ) {
     translateService
       .get('USER_DETAIL.DASHBOARD.MAIL_CHANGE_SUCCESS')
@@ -93,7 +93,7 @@ export class UserDashboardComponent implements OnInit {
     this.user = this.storeService.getPerunPrincipal()?.user;
     this.roles = this.storeService.getPerunPrincipal()?.roles ?? {};
     const allUserRoles = Object.keys(this.roles);
-    this.hasOnlyNoRightsRoles = allUserRoles.every((role) => this.noRightsRoles.has(role));
+    this.hasOnlyNoRightsRoles = hasOnlyNoRightsRoles(allUserRoles);
     if (this.storeService.getProperty('enable_sponsorships')) {
       this.allowedRoles.push('SPONSOR');
     }
@@ -125,6 +125,9 @@ export class UserDashboardComponent implements OnInit {
 
   isRoleShowed(roleName: string): boolean {
     return !this.rolesToHide.includes(roleName);
+  }
+  redirectToProfile(): void {
+    window.open(this.otherAppService.getUrlForOtherApplication(AppType.Profile), '_blank');
   }
 
   private validatePreferredMailChange(): void {

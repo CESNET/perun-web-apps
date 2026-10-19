@@ -11,6 +11,6 @@ import { FormItemDTO } from './formItemDTO';
 import { FormTypeConfig } from './formTypeConfig';
 
 export interface FormItemsForTypeDTO {
-  formItems?: Array<FormItemDTO>;
-  formTypeConfig?: FormTypeConfig;
+  formItems: Array<FormItemDTO>;
+  formTypeConfig: FormTypeConfig;
 }

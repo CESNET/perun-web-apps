@@ -9,11 +9,11 @@
  */
 
 export interface PrefillStrategyEntryDTO {
-  id?: string;
+  id?: string | null;
   type: PrefillStrategyEntryDTO.TypeEnum;
   options?: { [key: string]: string };
-  sourceAttribute?: string;
-  formSpecificationId?: string;
+  sourceAttribute?: string | null;
+  formSpecificationId?: string | null;
   accessLevel: PrefillStrategyEntryDTO.AccessLevelEnum;
 }
 export namespace PrefillStrategyEntryDTO {

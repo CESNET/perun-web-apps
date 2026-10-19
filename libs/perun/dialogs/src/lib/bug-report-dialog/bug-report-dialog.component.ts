@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 /* eslint-disable
    @typescript-eslint/no-explicit-any,
    @typescript-eslint/no-unsafe-member-access,
+   @nx/enforce-module-boundaries,
    @typescript-eslint/no-unsafe-call*/
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
