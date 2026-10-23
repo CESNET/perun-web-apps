@@ -73,7 +73,7 @@
       </button>
     }
 
-    <mat-form-field class="me-2 fix-select">
+    <mat-form-field class="me-2">
       <mat-label>{{'VO_DETAIL.MEMBERS.FILTER_STATUS' | translate}}</mat-label>
       <mat-select (closed)="changeStatuses()" [formControl]="statuses" multiple>
         <mat-select-trigger>
@@ -88,7 +88,7 @@
     <perun-web-apps-debounce-filter
       (filter)="onSearchByString($event)"
       [placeholder]="'VO_DETAIL.MEMBERS.SEARCH_DESCRIPTION'"
-      class="mt-2 search-field">
+      class="search-field">
     </perun-web-apps-debounce-filter>
   </div>
   <ng-template #spinner>
