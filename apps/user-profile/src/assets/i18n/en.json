@@ -276,6 +276,7 @@
       "PENDING_MAILS_END": ". Check your inbox and complete validation by clicking on link in received e-mail.",
       "EMAIL_ERROR": "Input valid email",
       "NO_LINKED_ACCOUNTS": "No email with required level of assurance and other value than is already set found.",
+      "NO_LINKED_ACCOUNTS_NO_VERIFIED_EMAILS": "No email with required level of assurance and other value than is already set found, and no verified emails are available.",
       "NOTE": "Note: Custom email must be verified. This may take several minutes."
     },
     "CHANGE_NAME": {

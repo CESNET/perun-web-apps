@@ -272,6 +272,7 @@
       "PENDING_MAILS_END": ". Podívejte se do své mailové schránky a dokončete validaci kliknutím na link v emailu.",
       "EMAIL_ERROR": "Zadejte validní email",
       "NO_LINKED_ACCOUNTS": "Nebyl nalezen e-mail s požadovanou úrovní záruky a jinou hodnotou, než je nastavena.",
+      "NO_LINKED_ACCOUNTS_NO_VERIFIED_EMAILS": "Nebyl nalezen e-mail s požadovanou úrovní záruky a jinou hodnotou, než je nastavena, ani žádný ověřený e-mail.",
       "NOTE": "Upozornění: Ručně zadaný email musí být ověřený. To může trvat několik minut."
     },
     "CHANGE_NAME": {

@@ -277,6 +277,7 @@ export class ProfilePageComponent implements OnInit {
       customEmailRequiresVerification:
         this.personalDataChangeConfig.customEmailRequiresVerification,
       currentEmail: this.email,
+      verifiedEmailsAttribute: this.personalDataChangeConfig.verifiedEmailsAttribute,
     };
 
     const dialogRef = this.dialog.open(ChangeEmailDialogComponent, config);
