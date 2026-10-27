@@ -10,8 +10,8 @@
 
 export interface ItemTexts {
   locale?: string;
-  label?: string;
+  label?: string | null;
   options?: string | null;
-  help?: string;
-  errorMessage?: string;
+  help?: string | null;
+  errorMessage?: string | null;
 }

@@ -9,7 +9,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { AttributesManagerService, UsersManagerService } from '@perun-web-apps/perun/openapi';
+import {
+  Attribute,
+  AttributesManagerService,
+  UsersManagerService,
+} from '@perun-web-apps/perun/openapi';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AuthService, NotificatorService } from '@perun-web-apps/perun/services';
 import { Urns } from '@perun-web-apps/perun/urns';
@@ -18,6 +22,7 @@ import {
   EXTSOURCE_IDP,
   getElementFromSingleArray,
 } from '@perun-web-apps/perun/utils';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { AlertComponent } from '@perun-web-apps/ui/alerts';
 
 export interface ChangeEmailDialogData {
@@ -26,6 +31,7 @@ export interface ChangeEmailDialogData {
   enableCustomEmail: boolean;
   customEmailRequiresVerification: boolean;
   currentEmail: string;
+  verifiedEmailsAttribute?: string;
 }
 
 @Component({
@@ -50,6 +56,7 @@ export interface ChangeEmailDialogData {
 })
 export class ChangeEmailDialogComponent implements OnInit {
   uesEmails: string[] = [];
+  verifiedEmails: string[] = [];
   selectedEmail: string;
   successMessage: string;
   pendingMails: string[] = [];
@@ -90,53 +97,17 @@ export class ChangeEmailDialogComponent implements OnInit {
       Validators.required,
       Validators.pattern(emailRegexString),
     ]);
-    this.usersManagerService
-      .getPendingPreferredEmailChanges(this.data.userId)
-      .subscribe((mails) => {
-        this.pendingMails = mails.filter((el, i, a) => i === a.indexOf(el));
-        let result = '';
-        this.pendingMails.forEach(
-          (mail) => (result += `${mail === this.pendingMails[0] ? '' : ', '}${mail}`),
-        );
-        this.pendingEmailsMessage =
-          this.pendingEmailsMessageStart + result + this.pendingEmailsMessageEnd;
-        if (this.data.enableLinkedEmail) {
-          this.usersManagerService
-            .getRichUserExtSources(this.data.userId)
-            .subscribe((userExtSources) => {
-              const uesWithLoa = userExtSources.filter(
-                (ues) =>
-                  ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
-              );
-              let completed = 0;
-              uesWithLoa.forEach((ues) => {
-                this.attributesManagerService
-                  .getUserExtSourceAttributeByName(ues.userExtSource.id, Urns.UES_DEF_MAIL)
-                  .subscribe((mailAttr) => {
-                    if (
-                      mailAttr?.value &&
-                      mailAttr.value !== this.data.currentEmail &&
-                      !this.uesEmails.includes(mailAttr.value as string)
-                    ) {
-                      this.uesEmails.push(mailAttr.value as string);
-                    }
-                    completed++;
-                    this.selectedEmail = getElementFromSingleArray(
-                      this.uesEmails.concat(
-                        this.data.enableCustomEmail ? [this.CUSTOM_OPTION] : [],
-                      ),
-                    );
-                    this.loading = completed !== uesWithLoa.length;
-                  });
-              });
-            });
-        } else {
-          this.selectedEmail = getElementFromSingleArray(
-            this.data.enableCustomEmail ? [this.CUSTOM_OPTION] : [],
-          );
-          this.loading = false;
-        }
-      });
+    forkJoin({
+      pendingMails: this.usersManagerService.getPendingPreferredEmailChanges(this.data.userId),
+      verifiedEmails: this.getVerifiedEmails(),
+      linkedEmails: this.getLinkedEmails(),
+    }).subscribe(({ pendingMails, verifiedEmails, linkedEmails }) => {
+      this.setPendingMails(pendingMails);
+      this.verifiedEmails = verifiedEmails;
+      this.uesEmails = linkedEmails.filter((email) => !verifiedEmails.includes(email));
+      this.selectedEmail = getElementFromSingleArray(this.getSelectableEmails());
+      this.loading = false;
+    });
   }
 
   onCancel(): void {
@@ -172,6 +143,19 @@ export class ChangeEmailDialogComponent implements OnInit {
             this.loading = false;
           },
         });
+    } else if (this.verifiedEmails.includes(this.selectedEmail)) {
+      this.usersManagerService
+        .changeEmailFromAttribute(this.data.userId, this.selectedEmail)
+        .subscribe({
+          next: () => {
+            this.notificator.showSuccess(this.successMessage);
+            this.loading = false;
+            this.dialogRef.close(true);
+          },
+          error: () => {
+            this.loading = false;
+          },
+        });
     } else {
       this.usersManagerService.changeEmail(this.data.userId, this.selectedEmail).subscribe({
         next: () => {
@@ -184,5 +168,68 @@ export class ChangeEmailDialogComponent implements OnInit {
         },
       });
     }
+  }
+
+  private setPendingMails(mails: string[]): void {
+    this.pendingMails = mails.filter((el, i, a) => i === a.indexOf(el));
+    this.pendingEmailsMessage =
+      this.pendingEmailsMessageStart + this.pendingMails.join(', ') + this.pendingEmailsMessageEnd;
+  }
+
+  private getVerifiedEmails(): Observable<string[]> {
+    if (!this.data.verifiedEmailsAttribute) {
+      return of<string[]>([]);
+    }
+    return this.attributesManagerService
+      .getUserAttributeByName(
+        this.data.userId,
+        `urn:perun:user:attribute-def:def:${this.data.verifiedEmailsAttribute}`,
+      )
+      .pipe(
+        map((attribute) =>
+          ((attribute?.value as string[]) ?? []).filter(
+            (email) => email !== this.data.currentEmail,
+          ),
+        ),
+        catchError(() => of<string[]>([])),
+      );
+  }
+
+  private getLinkedEmails(): Observable<string[]> {
+    if (!this.data.enableLinkedEmail) {
+      return of<string[]>([]);
+    }
+    return this.usersManagerService.getRichUserExtSources(this.data.userId).pipe(
+      switchMap((userExtSources): Observable<Attribute[]> => {
+        const uesWithLoa = userExtSources.filter(
+          (ues) => ues.userExtSource.loa > 0 && ues.userExtSource.extSource.type === EXTSOURCE_IDP,
+        );
+        if (uesWithLoa.length === 0) {
+          return of<Attribute[]>([]);
+        }
+        return forkJoin(
+          uesWithLoa.map((ues) =>
+            this.attributesManagerService.getUserExtSourceAttributeByName(
+              ues.userExtSource.id,
+              Urns.UES_DEF_MAIL,
+            ),
+          ),
+        );
+      }),
+      map((mailAttrs) =>
+        mailAttrs
+          .map((mailAttr) => mailAttr?.value as string)
+          .filter(
+            (email, i, emails) =>
+              email && email !== this.data.currentEmail && emails.indexOf(email) === i,
+          ),
+      ),
+    );
+  }
+
+  private getSelectableEmails(): string[] {
+    return this.verifiedEmails
+      .concat(this.uesEmails)
+      .concat(this.data.enableCustomEmail ? [this.CUSTOM_OPTION] : []);
   }
 }

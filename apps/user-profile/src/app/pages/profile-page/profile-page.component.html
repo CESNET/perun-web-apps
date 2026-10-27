@@ -46,7 +46,9 @@
                   <div class="d-flex align-items-center">
                     <a class="center-self" href="mailto:{{email}}">{{email}}</a>
                     @if (
-                      personalDataChangeConfig.enableLinkedEmail || personalDataChangeConfig.enableCustomEmail
+                      personalDataChangeConfig.enableLinkedEmail ||
+                      personalDataChangeConfig.enableCustomEmail ||
+                      personalDataChangeConfig.verifiedEmailsAttribute
                     ) {
                       <button
                         (click)="changeEmail()"
