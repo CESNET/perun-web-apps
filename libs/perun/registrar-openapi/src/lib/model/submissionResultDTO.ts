@@ -11,8 +11,8 @@ import { ApplicationResultDTO } from './applicationResultDTO';
 import { SubmissionDTO } from './submissionDTO';
 
 export interface SubmissionResultDTO {
+  applicationResults?: Array<ApplicationResultDTO>;
   messages?: Array<string>;
   redirectUrl?: string;
   submission?: SubmissionDTO;
-  applicationResults?: Array<ApplicationResultDTO>;
 }

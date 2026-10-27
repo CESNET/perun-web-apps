@@ -440,6 +440,9 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
         patchObject.disabled = item.itemDefinition.disabled;
         patchObject.validators = item.itemDefinition.validators;
         patchObject.formTypes = item.itemDefinition.formTypes;
+        if ('configuration' in item.itemDefinition) {
+          patchObject.configuration = item.itemDefinition.configuration;
+        }
         if (item.itemDefinition.defaultValue) {
           patchObject.defaultValue = item.itemDefinition.defaultValue;
         }

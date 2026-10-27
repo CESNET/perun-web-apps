@@ -9,7 +9,7 @@
  */
 
 export interface ValidationError {
-  itemId?: string;
   code?: string;
   details?: { [key: string]: string };
+  itemId?: string;
 }

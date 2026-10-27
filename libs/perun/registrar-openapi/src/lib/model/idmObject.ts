@@ -10,8 +10,8 @@
 
 export interface IdmObject {
   idmObjectType: IdmObject.IdmObjectTypeEnum;
-  objectId: string;
   name?: string;
+  objectId: string;
 }
 export namespace IdmObject {
   export const IdmObjectTypeEnum = {

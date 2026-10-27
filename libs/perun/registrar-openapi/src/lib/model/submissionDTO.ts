@@ -10,10 +10,10 @@
 
 export interface SubmissionDTO {
   id: string;
-  timestamp: string;
-  submitterId: string;
-  submitterName: string;
+  identityAttributes: { [key: string]: string };
   identityIdentifier: string;
   identityIssuer: string;
-  identityAttributes: { [key: string]: string };
+  submitterId: string;
+  submitterName: string;
+  timestamp: string;
 }

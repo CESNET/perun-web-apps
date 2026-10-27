@@ -10,7 +10,6 @@
 
 export interface ItemValidatorDTO {
   type: ItemValidatorDTO.TypeEnum;
-  options?: { [key: string]: string };
 }
 export namespace ItemValidatorDTO {
   export const TypeEnum = {
@@ -21,7 +20,6 @@ export namespace ItemValidatorDTO {
     SELECTION_MULTI: 'SELECTION_MULTI',
     RESERVED_LOGIN: 'RESERVED_LOGIN',
     PASSWORD: 'PASSWORD',
-    TIMEZONE: 'TIMEZONE',
     DATE: 'DATE',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];

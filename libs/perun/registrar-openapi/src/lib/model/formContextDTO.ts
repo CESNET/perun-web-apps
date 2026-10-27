@@ -13,10 +13,10 @@ import { EnrichedApplicationFormDTO } from './enrichedApplicationFormDTO';
 
 export interface FormContextDTO {
   formSpecification?: FormSpecificationDTO;
-  prefilledData: EnrichedApplicationFormDTO;
-  openApplications: Array<ApplicationDTO>;
-  submissionErrors?: Array<FormContextDTO.SubmissionErrorsEnum>;
   oldRegUrl?: string;
+  openApplications: Array<ApplicationDTO>;
+  prefilledData: EnrichedApplicationFormDTO;
+  submissionErrors?: Array<FormContextDTO.SubmissionErrorsEnum>;
 }
 export namespace FormContextDTO {
   export const SubmissionErrorsEnum = {

@@ -287,16 +287,17 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
   }
 
   getLocalizedOptions(applicationFormItem: ItemWithDefinitionDTO): string[] {
-    if (applicationFormItem.itemDefinition.texts[this.translate.getDefaultLang()]) {
-      const options =
-        applicationFormItem.itemDefinition.texts[this.translate.getDefaultLang()].options;
-      if (options !== null) {
-        const labels: string[] = [];
-        for (const key in options) {
-          labels.push(options[key]);
-        }
-        return labels;
-      }
+    const definition = applicationFormItem.itemDefinition;
+    if (
+      definition.type === 'CHECKBOX' ||
+      definition.type === 'RADIO' ||
+      definition.type === 'SELECTIONBOX' ||
+      definition.type === 'SELECTION_CUSTOM'
+    ) {
+      const language = this.translate.getDefaultLang();
+      return (definition.configuration.options ?? []).map(
+        (option) => option.labels?.[language] ?? option.value ?? '',
+      );
     }
     return [];
   }

@@ -9,9 +9,9 @@
  */
 
 export interface ApprovalFailure {
-  reason?: ApprovalFailure.ReasonEnum;
-  message?: string;
   affiliation?: string;
+  message?: string;
+  reason?: ApprovalFailure.ReasonEnum;
   soft?: boolean;
 }
 export namespace ApprovalFailure {

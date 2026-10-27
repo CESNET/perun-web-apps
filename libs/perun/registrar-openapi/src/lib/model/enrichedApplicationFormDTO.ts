@@ -11,7 +11,7 @@ import { EnrichedFormItemDataDTO } from './enrichedFormItemDataDTO';
 import { FormTypeConfig } from './formTypeConfig';
 
 export interface EnrichedApplicationFormDTO {
-  formSpecificationId: string;
   formItemData: Array<EnrichedFormItemDataDTO>;
+  formSpecificationId: string;
   typeConfig: FormTypeConfig;
 }

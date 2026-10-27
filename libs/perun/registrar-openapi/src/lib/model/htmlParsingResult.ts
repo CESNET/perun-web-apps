@@ -9,10 +9,10 @@
  */
 
 export interface HtmlParsingResult {
-  escapedTags?: Array<string>;
   escapedAttributes?: Array<string>;
-  escapedStyles?: Array<string>;
-  escapedLinks?: Array<string>;
-  valid?: boolean;
   escapedHTML?: string;
+  escapedLinks?: Array<string>;
+  escapedStyles?: Array<string>;
+  escapedTags?: Array<string>;
+  valid?: boolean;
 }

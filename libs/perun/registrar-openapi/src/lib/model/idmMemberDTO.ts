@@ -10,6 +10,6 @@
 import { IdmObject } from './idmObject';
 
 export interface IdmMemberDTO {
-  userId: string;
   idmObject: IdmObject;
+  userId: string;
 }

@@ -9,12 +9,12 @@
  */
 
 export interface FormItemDataDTO {
-  id?: string;
   formItemId: string;
-  value?: string;
+  id?: string;
   prefilledValue?: string;
-  valueAssured?: boolean;
+  snapshotDestinationUrn?: string;
   snapshotDisplayName?: string;
   snapshotItemType?: string;
-  snapshotDestinationUrn?: string;
+  value?: string;
+  valueAssured?: boolean;
 }
