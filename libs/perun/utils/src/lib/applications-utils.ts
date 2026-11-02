@@ -2,6 +2,7 @@ import {
   Application,
   ApplicationsOrderColumn,
   AppType,
+  AppState,
   Group,
   RichApplication,
   Vo,
@@ -237,6 +238,9 @@ export function mapToAppWithId(
     case 'SUBMITTED':
       ourApp.state = 'NEW';
       break;
+    case 'ERROR':
+      ourApp.state = 'ERROR' as unknown as AppState;
+      break;
   }
   return ourApp;
 }
@@ -251,16 +255,7 @@ export function downloadApplicationsData<T>(
     case 'csv': {
       const replacer = (key, value): string => {
         if (key === 'state') {
-          switch (value) {
-            case 'APPROVED':
-              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.APPROVED'));
-            case 'REJECTED':
-              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.REJECTED'));
-            case 'NEW':
-              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.NEW'));
-            case 'VERIFIED':
-              return String(translate.instant('VO_DETAIL.APPLICATION.EXPORT.VERIFIED'));
-          }
+          return String(translate.instant(`VO_DETAIL.APPLICATION.EXPORT.${value}`));
         }
         return value === null ? '' : (value as string);
       };

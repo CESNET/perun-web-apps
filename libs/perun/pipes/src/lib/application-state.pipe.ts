@@ -25,6 +25,12 @@ export class ApplicationStatePipe implements PipeTransform {
         });
         break;
       }
+      case 'ERROR': {
+        this.translate.get('VO_DETAIL.APPLICATION.STATE.ERROR').subscribe((response: string) => {
+          this.returnData = `<i class="material-icons red">report</i>${response}`;
+        });
+        break;
+      }
       case 'NEW': {
         this.translate.get('VO_DETAIL.APPLICATION.STATE.NEW').subscribe((response: string) => {
           this.returnData = `<i class="material-icons orange">contact_mail</i> ${response}`;

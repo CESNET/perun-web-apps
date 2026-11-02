@@ -281,7 +281,7 @@ export class ApplicationActionsNewRegComponent implements OnInit {
   statesChanged(states: AppState[] | null): void {
     this.currentStates = states
       ? states.map((state) => this.convertState(state))
-      : ['SUBMITTED', 'VERIFIED', 'APPROVED', 'REJECTED'];
+      : ['SUBMITTED', 'VERIFIED', 'APPROVED', 'REJECTED', 'ERROR'];
     this.refreshTable();
   }
 
