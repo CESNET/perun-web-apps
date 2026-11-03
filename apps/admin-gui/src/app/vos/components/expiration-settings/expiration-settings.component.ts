@@ -21,7 +21,6 @@ import {
 import { openClose } from '@perun-web-apps/perun/animations';
 import { Attribute } from '@perun-web-apps/perun/openapi';
 import { SettingsToggleItemComponent } from '../../../shared/components/settings-toggle-item/settings-toggle-item.component';
-
 export class ExpirationAttrValue {
   lifecycleEnabled?: 'true' | 'false';
   period?: string;
@@ -94,7 +93,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   currentConfiguration: ExpirationConfiguration;
   loas = [0, 1, 2];
   datePattern = '^(3[01]|[12][0-9]|0?[1-9])\\.(1[012]|0?[1-9])\\.$';
-  dynamicAmountPattern = '^[1-9]+$';
+  dynamicAmountPattern = '^[1-9][0-9]*$';
   // TODO translation
   amountOptions = [
     {
@@ -135,6 +134,10 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   areChangesMade(): boolean {
     const currentValue = this.parseAttributeValueFromConfig(this.currentConfiguration);
     const initValue = this.parseAttributeValueFromConfig(this.initialConfiguration);
+
+    if (!this.validateExpirationRules()) {
+      return false;
+    }
 
     if (initValue === null) {
       return currentValue !== null;
@@ -254,6 +257,26 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     }
 
     return config;
+  }
+
+  onPeriodEnabledChange(value: boolean): void {
+    this.currentConfiguration.periodEnabled = value;
+    this.currentConfiguration.gracePeriodEnabled = this.currentConfiguration.periodEnabled;
+  }
+  getSaveTooltip(): string {
+    if (!this.expirationAttribute.writable) {
+      return 'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERMISSION_DENIED_HINT';
+    }
+
+    if (!this.validateExpirationRules()) {
+      return 'VO_MANAGEMENT.SETTINGS.EXPIRATION.REQUIRED_FIELD_HINT';
+    }
+
+    if (!this.areChangesMade()) {
+      return 'VO_MANAGEMENT.SETTINGS.EXPIRATION.NO_CHANGES_HINT';
+    }
+
+    return '';
   }
 
   private setPeriodValues(
@@ -406,7 +429,11 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
   }
 
   private parseSpecialLoaPeriod(config: ExpirationConfiguration): string {
-    if (!config.specialLoaPeriodEnabled || !config.specialLoa) {
+    if (
+      !config.specialLoaPeriodEnabled ||
+      config.specialLoa === null ||
+      config.specialLoa === undefined
+    ) {
       return null;
     }
 
@@ -476,5 +503,63 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     }
 
     return value;
+  }
+
+  private validateExpirationRules(): boolean {
+    const cfg = this.currentConfiguration;
+
+    if (cfg.periodEnabled) {
+      const hasStaticPeriod = cfg.periodType === 'static' && !!cfg.periodStatic;
+
+      const hasDynamicPeriod =
+        cfg.periodType === 'dynamic' && !!cfg.periodDynamic && !!cfg.periodDynamicUnit;
+
+      if (!hasStaticPeriod && !hasDynamicPeriod) {
+        return false;
+      }
+
+      if (!cfg.gracePeriod || !cfg.gracePeriodUnit) {
+        return false;
+      }
+    }
+
+    if (cfg.removeAfterEnabled) {
+      if (!cfg.removeAfter || !cfg.removeAfterUnit) {
+        return false;
+      }
+    }
+
+    if (cfg.archiveAfterEnabled) {
+      if (!cfg.archiveAfter || !cfg.archiveAfterUnit) {
+        return false;
+      }
+    }
+
+    if (cfg.specialLoaPeriodEnabled) {
+      if (cfg.specialLoa === null || cfg.specialLoa === undefined || !cfg.specialLoaPeriodType) {
+        return false;
+      }
+
+      if (cfg.specialLoaPeriodType === 'static' && !cfg.specialLoaPeriodStatic) {
+        return false;
+      }
+
+      if (
+        cfg.specialLoaPeriodType === 'dynamic' &&
+        (!cfg.specialLoaPeriodDynamic || !cfg.specialLoaPeriodDynamicUnit)
+      ) {
+        return false;
+      }
+    }
+
+    if (cfg.doNotAllowLoasEnabled && cfg.doNotAllowLoas.length === 0) {
+      return false;
+    }
+
+    if (cfg.doNotExtendLoasEnabled && cfg.doNotExtendLoas.length === 0) {
+      return false;
+    }
+
+    return true;
   }
 }
