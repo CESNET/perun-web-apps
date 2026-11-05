@@ -19,21 +19,24 @@ import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsI
 import { HeadingDTO } from './headingDTO';
 import { PasswordDTO } from './passwordDTO';
 import { CheckboxDTO } from './checkboxDTO';
+import { IdmObject } from './idmObject';
 import { SubmitButtonDTO } from './submitButtonDTO';
 import { RadioDTO } from './radioDTO';
 import { DatePickerDTO } from './datePickerDTO';
 import { MapInputBoxDTO } from './mapInputBoxDTO';
 import { ListInputBoxDTO } from './listInputBoxDTO';
 import { LoginDTO } from './loginDTO';
+import { EmbeddedGroupsDTO } from './embeddedGroupsDTO';
 import { VerifiedEmailDTO } from './verifiedEmailDTO';
 
 /**
- * @type GetGlobalItemDefinitions200ResponseInner
+ * @type CreateObjectSpecificItemDefinitionRequest
  * @export
  */
-export type GetGlobalItemDefinitions200ResponseInner =
+export type CreateObjectSpecificItemDefinitionRequest =
   | CheckboxDTO
   | DatePickerDTO
+  | EmbeddedGroupsDTO
   | HeadingDTO
   | HtmlCommentDTO
   | ListInputBoxDTO

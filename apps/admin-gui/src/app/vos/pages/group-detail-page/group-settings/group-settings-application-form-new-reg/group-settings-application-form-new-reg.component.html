@@ -23,22 +23,25 @@
               >{{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.APPLICATION_TYPE' | translate}}</span
             >:
             <mat-icon class="align-middle" matTooltip="Initial">arrow_right_alt</mat-icon>
-            {{formSpecification.autoApprovedTypes.includes('INITIAL') ?
+            {{initForm.autoApprove ?
               ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
             ,
-            <span [ngClass]="autoRegistrationEnabled ? '' : 'me-2'">
+            <span [ngClass]="embeddedForm ? '' : 'me-2'">
               <mat-icon class="align-middle" matTooltip="Extension">restore</mat-icon>
-              {{formSpecification.autoApprovedTypes.includes('EXTENSION') ?
+              {{extForm.autoApprove ?
                 ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}
             </span>
-            <!--            @if (autoRegistrationEnabled) {-->
-            <!--              <span class="me-2">-->
-            <!--                ,-->
-            <!--                <mat-icon class="align-middle" matTooltip="Embedded">nat</mat-icon>-->
-            <!--                {{applicationForm.automaticApprovalEmbedded ?-->
-            <!--                  ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC'| translate) : ('GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL'| translate)}}-->
-            <!--              </span>-->
-            <!--            }-->
+            @if (embeddedForm) {
+              <span class="me-2">
+                ,
+                <mat-icon class="align-middle" matTooltip="Embedded">nat</mat-icon>
+                @if (embeddedForm.autoApprove) {
+                  {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.AUTOMATIC' | translate}}
+                } @else {
+                  {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.MANUAL' | translate}}
+                }
+              </span>
+            }
             @if (editAuth) {
               <button (click)="settings()" class="ms-2 action-button" mat-stroked-button>
                 <i class="material-icons align-middle">edit</i>
@@ -96,10 +99,10 @@
           </span>
         </button>
       }
-      <!--      <button (click)="preview()" mat-stroked-button>-->
-      <!--        <i class="material-icons">search</i>-->
-      <!--        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}-->
-      <!--      </button>-->
+      <button (click)="preview()" mat-stroked-button>
+        <i class="material-icons">search</i>
+        {{'GROUP_DETAIL.SETTINGS.APPLICATION_FORM.PREVIEW_BUTTON' | translate}}
+      </button>
       <!--    <button-->
       <!--      *ngIf="editAuth"-->
       <!--      (click)="clear()"-->
@@ -144,10 +147,11 @@
         [newFormItems]="newFormItemIds"
         (applicationFormItemsChange)="changeItems()"
         (applicationFormItemsDeleted)="removeChanged($event)"
-        [formSpecification]="formSpecification"
+        [formSpecification]="selectedForm"
         [applicationFormItems]="formItems"
-        [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview']"
+        [displayedColumns]="editAuth ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups', 'edit', 'delete'] : ['shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups']"
         [refreshApplicationForm]="refreshApplicationForm"
+        [embeddedGroupsItemSaved]="embeddedGroupsItemSaved"
         [theme]="'group-theme'">
       </app-application-form-list-new-reg>
     </div>

@@ -8,10 +8,8 @@
  * Do not edit the class manually.
  */
 import { FormItemDataDTO } from './formItemDataDTO';
-import { FormTypeConfig } from './formTypeConfig';
 
 export interface ApplicationFormDTO {
   formItemData: Array<FormItemDataDTO>;
   formSpecificationId: string;
-  typeConfig: FormTypeConfig;
 }

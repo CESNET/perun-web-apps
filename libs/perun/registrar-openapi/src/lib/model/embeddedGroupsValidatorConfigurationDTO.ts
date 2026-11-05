@@ -8,8 +8,6 @@
  * Do not edit the class manually.
  */
 
-export interface AvailableModule {
-  name: string;
-  description: string;
-  options?: Array<string>;
+export interface EmbeddedGroupsValidatorConfigurationDTO {
+  allowedFormIds: Array<string>;
 }

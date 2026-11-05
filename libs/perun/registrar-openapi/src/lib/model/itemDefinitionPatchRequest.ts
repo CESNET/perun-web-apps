@@ -20,7 +20,7 @@ export interface ItemDefinitionPatchRequest {
   destinationId?: string | null;
   disabled?: ItemDefinitionPatchRequest.DisabledEnum;
   displayName?: string;
-  formTypes?: Array<ItemDefinitionPatchRequest.FormTypesEnum>;
+  flowIds?: Array<string>;
   hidden?: ItemDefinitionPatchRequest.HiddenEnum;
   prefillStrategyIds?: Array<string>;
   required?: boolean;
@@ -36,13 +36,6 @@ export namespace ItemDefinitionPatchRequest {
     IF_EMPTY: 'IF_EMPTY',
   } as const;
   export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
-  export const FormTypesEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-    CANCELLATION: 'CANCELLATION',
-    UPDATE: 'UPDATE',
-  } as const;
-  export type FormTypesEnum = (typeof FormTypesEnum)[keyof typeof FormTypesEnum];
   export const HiddenEnum = {
     NEVER: 'NEVER',
     ALWAYS: 'ALWAYS',

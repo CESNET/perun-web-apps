@@ -8,9 +8,10 @@
  * Do not edit the class manually.
  */
 import { PrefillStrategyEntryDTO } from './prefillStrategyEntryDTO';
+import { IdmObject } from './idmObject';
 
 export interface ApplicationPrefillStrategyEntryDTO extends PrefillStrategyEntryDTO {
-  sourceAttribute?: string | null;
+  fromItem: string;
   type: ApplicationPrefillStrategyEntryDTO.TypeEnum;
 }
 export namespace ApplicationPrefillStrategyEntryDTO {

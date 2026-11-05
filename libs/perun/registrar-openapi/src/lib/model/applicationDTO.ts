@@ -7,7 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FormTypeConfig } from './formTypeConfig';
 
 export interface ApplicationDTO {
   formSpecificationId: string;
@@ -16,7 +15,6 @@ export interface ApplicationDTO {
   redirectUrl?: string;
   state: ApplicationDTO.StateEnum;
   submissionId: string;
-  type: FormTypeConfig;
 }
 export namespace ApplicationDTO {
   export const StateEnum = {

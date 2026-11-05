@@ -11,13 +11,15 @@
     <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INPUT_WIDGET' | translate}}:</mat-label>
     <mat-select [(ngModel)]="selectedWidget" disableOptionCentering>
       @for (widget of widgets; track widget) {
-        <mat-option [value]="widget">
-          {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + widget | translate}}
-        </mat-option>
+        @if (widget !== embeddedWidget || !data.embeddedItemExists) {
+          <mat-option [value]="widget">
+            {{typeLabelKey(widget) | translate}}
+          </mat-option>
+        }
       }
     </mat-select>
     <mat-hint>
-      {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_WIDGET_DESCRIPTION.'+selectedWidget | translate}}
+      {{descriptionKey(selectedWidget) | translate}}
     </mat-hint>
   </mat-form-field>
   @if (selectedWidget === 'SUBMIT_BUTTON') {

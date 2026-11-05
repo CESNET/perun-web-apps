@@ -76,6 +76,7 @@ export * from './lib/app-mail-sending-disabled.pipe';
 export * from './lib/app-type-mail-type-match.pipe';
 export * from './lib/get-label.pipe';
 export * from './lib/get-label-new-reg.pipe';
+export * from './lib/get-item-value-new-reg.pipe';
 export * from './lib/modified-name.pipe';
 export * from './lib/selected-sponsor.pipe';
 export * from './lib/mail-notification-tooltip.pipe';

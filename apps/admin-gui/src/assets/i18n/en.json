@@ -483,8 +483,9 @@
           "SELECTION_CUSTOM": "Single value selection with opt. custom value",
           "RADIO": "Radio (single selection)",
           "DATE_PICKER": "Date selection",
-          "MAP_INPUT_BOX":  "Key - value input field",
-          "LIST_INPUT_BOX": "List input field"
+          "MAP_INPUT_BOX": "Key - value input field",
+          "LIST_INPUT_BOX": "List input field",
+          "EMBEDDED_GROUPS": "Groups for embedded applications"
         },
         "NEW_REG_WIDGET_DESCRIPTION": {
           "HEADING": "Item is used to display customizable heading of the form. Can have any HTML content.",
@@ -505,6 +506,7 @@
           "LIST_INPUT_BOX": "Item is used to show list values",
           "MAP_INPUT_BOX": "Item is used to show key - value pairs",
           "DATE_PICKER": "Item is used to select a date",
+          "EMBEDDED_GROUP_APPLICATION": "Checkbox of organization groups to which the application is automatically submitted (embedded group applications).",
           "SELECTIONBOX": "Simple selection box with defined custom values that user can choose."
         },
         "NEW_REG_TRANSLATIONS": {
@@ -793,7 +795,6 @@
         "NEW": "WAITING FOR MAIL VERIFICATION",
         "VERIFIED": "SUBMITTED"
       },
-
       "APPLICATION_DETAIL": {
         "TITLE": "Application detail",
         "APPROVE": "Approve",
@@ -905,14 +906,14 @@
         "STATUS": "Status",
         "LANGUAGE": "Language",
         "EXPIRATION_DATE": "Expiration date",
-        "REDIRECT_URL":"Redirect URL",
-        "SENT_BY":"Sent by",
+        "REDIRECT_URL": "Redirect URL",
+        "SENT_BY": "Sent by",
         "EXTEND_EXPIRATION_DATE": "Extend expiration",
         "REVOKE": "Revoke",
         "RESEND": "Resend",
         "DATE": "Date",
         "TOKEN": "Token",
-        "REVOKED_BY":"Revoked by",
+        "REVOKED_BY": "Revoked by",
         "LAST_MODIFIED_BY": "Last modified by",
         "APPLICATION": "Application",
         "RECEIVER": {
@@ -1490,7 +1491,6 @@
       "COPY": "Copy",
       "SUCCESS": "Members were successfully copied.",
       "ERROR": "There was an error copying members, the operation was cancelled and none of the members were copied."
-
     },
     "ADD_GROUPS": {
       "TITLE": "Add group",
@@ -1599,7 +1599,7 @@
       "MERGE_CONFLICT": "The application shares a birth number with an existing user account. Only approve if you are certain they belong to the same person.",
       "UNMET_PREREQUISITE": "The application has unmet prerequisites and cannot be approved until they are fulfilled."
     },
-    "APPLICATIONS_LIST_COLUMNS_CHANGE":  {
+    "APPLICATIONS_LIST_COLUMNS_CHANGE": {
       "TITLE": "Change applications view preferences",
       "DESCRIPTION": "Search for column name",
       "FILTER_COLUMNS": "Displayed columns",
@@ -1744,7 +1744,8 @@
         "LINKS": "'{{links}}' links contain invalid protocol (allowed: https, mailto).",
         "CHECKBOX": "Input contains unsafe elements. Remove them and try again. Only <a> elements with 'href' and 'target' attributes are allowed",
         "WARNING": "HTML will be autocompleted/changed during the sanitization so the result will be different than the input HTML."
-      }
+      },
+      "EMBEDDED_OPTIONS_DESCRIPTION": "The groups for this item are not edited here. Use the Manage groups button to add or remove embedded groups."
     },
     "APPLICATION_FORM_DELETE_MAIL": {
       "TITLE": "Confirm delete action",
@@ -1890,7 +1891,7 @@
       "TAG_HINT": "Click to add tag",
       "MISSING_TAGS_ERROR": "Mail text must contain tags {preapprovedInvitationLink} and {expirationDate}",
       "MISSING_TAGS_TOOLTIP": "Mail text does not contain all required tags",
-      "DEFAULT_PRE_APPROVED_MAIL_TEXT":  "Please click on the following link to fill out a preapproved application and join group {groupName}:\n{preapprovedInvitationLink}\nThis link will expire on {expirationDate}.\n\nIf you have any questions or concerns, contact {senderName} directly. Do not reply to this email.",
+      "DEFAULT_PRE_APPROVED_MAIL_TEXT": "Please click on the following link to fill out a preapproved application and join group {groupName}:\n{preapprovedInvitationLink}\nThis link will expire on {expirationDate}.\n\nIf you have any questions or concerns, contact {senderName} directly. Do not reply to this email.",
       "DEFAULT_PRE_APPROVED_MAIL_SUBJECT": "{senderName} invited you to join group {groupName}"
     },
     "NOTIFICATIONS_COPY_MAILS": {
@@ -2721,7 +2722,7 @@
       "TITLE": "Add ban",
       "ADD": "Add",
       "UPDATE": "Update",
-      "FILTER" : "Search by name",
+      "FILTER": "Search by name",
       "SUCCESS_MEMBER": "Member was successfully banned",
       "SUCCESS_USER": "User was successfully banned",
       "CANCEL": "Cancel",
@@ -3431,7 +3432,7 @@
           "NO_FACILITY_FOUND": "No matching facility found"
         },
         "GLOBAL_SEARCH": {
-          "PLACEHOLDER_SLASH":  "Press '/' to search Perun",
+          "PLACEHOLDER_SLASH": "Press '/' to search Perun",
           "PLACEHOLDER": "Search Perun",
           "NO_MATCHES": "Your search did not match any entities.",
           "TRY_DIFFERENT": "Try using a different search string.",

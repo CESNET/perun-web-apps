@@ -21,12 +21,11 @@ import { DeleteApplicationFormItemDialogComponent } from '../../../shared/compon
 import { NotificatorService, PerunTranslateService } from '@perun-web-apps/perun/services';
 import { ApplicationFormItem } from '@perun-web-apps/perun/openapi';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AttributeValueListComponent,
   AttributeValueMapComponent,
 } from '@perun-web-apps/perun/components';
-import { ApplicationFormItemTypePipe } from '../../../shared/pipes/application-form-item-type.pipe';
 import { MultiWordDataCyPipe } from '@perun-web-apps/perun/pipes';
 import { SanitizeHtmlPipe } from '@perun-web-apps/perun/pipes';
 import {
@@ -50,7 +49,6 @@ import { EditApplicationFormItemDialogNewRegComponent } from '../../../shared/co
     AttributeValueMapComponent,
     CdkDrag,
     AttributeValueListComponent,
-    ApplicationFormItemTypePipe,
     MultiWordDataCyPipe,
     SanitizeHtmlPipe,
   ],
@@ -67,8 +65,6 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
   @Input()
   newFormItems: string[] = [];
   @Input()
-  embeddedGroupsItemSaved = false;
-  @Input()
   theme: string;
   @Input()
   displayedColumns: string[] = [
@@ -78,6 +74,7 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
     'disabled',
     'hidden',
     'preview',
+    'managegroups',
     'edit',
     'delete',
   ];
@@ -85,6 +82,8 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
   refreshApplicationForm;
   @Input()
   loading: boolean;
+  @Input()
+  embeddedGroupsItemSaved = false;
   @Output()
   applicationFormItemsChange = new EventEmitter<ApplicationFormItem[]>();
   @Output()
@@ -111,6 +110,7 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private notificator: NotificatorService,
     private router: Router,
+    private route: ActivatedRoute,
     private translate: PerunTranslateService,
   ) {}
 
@@ -149,6 +149,14 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
     if (this.refreshApplicationForm) {
       this.itemsChanged = [];
     }
+  }
+
+  /** The row is an embedded groups (EMBEDDED_GROUPS) item: saved or just added, pending a save. */
+  isEmbedded(applicationFormItem: ItemWithDefinitionDTO): boolean {
+    return applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUPS';
+  }
+  openManagingGroups(): void {
+    void this.router.navigate(['manageGroups'], { relativeTo: this.route });
   }
 
   disabledHiddenDependency(
@@ -224,6 +232,9 @@ export class ApplicationFormListNewRegComponent implements OnInit, OnChanges {
     config.data = {
       isGroup: this.formSpecification.idmObject.idmObjectType === 'GROUP',
       applicationFormItem: applicationFormItem,
+      // embedded groups items keep their targets (embedded form UUIDs) managed on the
+      // manage-embedded-groups page, not in the edit dialog
+      isEmbedded: applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUPS',
       theme: this.theme,
       allItems: this.applicationFormItems,
     };

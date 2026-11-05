@@ -38,7 +38,7 @@
               {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.TYPE' | translate}}
             </th>
             <td *matCellDef="let applicationFormItem" mat-cell>
-              {{applicationFormItem.itemDefinition.type | applicationFormItemType : true}}
+              {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + applicationFormItem.itemDefinition.type | translate}}
             </td>
           </ng-container>
           <ng-container matColumnDef="disabled">
@@ -251,7 +251,7 @@
                   </button>
                 </div>
               }
-              @if (applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUP_APPLICATION') {
+              @if (applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUPS') {
                 <div>
                   <form>
                     <input type="checkbox" /> example group1 <br />
@@ -274,6 +274,28 @@
                   </perun-web-apps-attribute-value-map>
                 </div>
               }
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="managegroups">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let applicationFormItem" mat-cell>
+              <span
+                class="d-inline-block"
+                matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS_DISABLED' | translate}}"
+                [matTooltipDisabled]="embeddedGroupsItemSaved">
+                @if (
+                  isEmbedded(applicationFormItem) &&
+                    !forDelete.has(applicationFormItem.formItemDTO.id)
+                ) {
+                  <button
+                    (click)="openManagingGroups()"
+                    [disabled]="!embeddedGroupsItemSaved"
+                    mat-icon-button
+                    matTooltip="{{'VO_DETAIL.SETTINGS.APPLICATION_FORM.MANAGE_GROUPS' | translate}}">
+                    <mat-icon>supervised_user_circle</mat-icon>
+                  </button>
+                }
+              </span>
             </td>
           </ng-container>
           <ng-container matColumnDef="edit">

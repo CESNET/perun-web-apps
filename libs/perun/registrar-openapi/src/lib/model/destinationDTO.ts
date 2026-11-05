@@ -7,11 +7,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { IdmObject } from './idmObject';
 
 export interface DestinationDTO {
   accessLevel: DestinationDTO.AccessLevelEnum;
   formSpecificationId?: string | null;
   id?: string | null;
+  idmObject?: IdmObject;
   urn?: string;
 }
 export namespace DestinationDTO {
@@ -19,6 +21,7 @@ export namespace DestinationDTO {
     GLOBAL: 'GLOBAL',
     FORM_SPECIFIC: 'FORM_SPECIFIC',
     ADMIN_ONLY: 'ADMIN_ONLY',
+    OBJECT_SPECIFIC: 'OBJECT_SPECIFIC',
   } as const;
   export type AccessLevelEnum = (typeof AccessLevelEnum)[keyof typeof AccessLevelEnum];
 }

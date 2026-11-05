@@ -7,14 +7,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TargetStateConfig } from './targetStateConfig';
 
 export interface FormTransitionDTO {
-  id: string;
   sourceFormSpecificationId: string;
-  sourceFormStates: Array<TargetStateConfig>;
   targetFormSpecificationId: string;
-  targetFormState: TargetStateConfig;
   type: FormTransitionDTO.TypeEnum;
 }
 export namespace FormTransitionDTO {

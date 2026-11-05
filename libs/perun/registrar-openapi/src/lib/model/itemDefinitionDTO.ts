@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { ItemTexts } from './itemTexts';
+import { IdmObject } from './idmObject';
 import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsInner';
 
 export interface ItemDefinitionDTO {
@@ -15,10 +16,11 @@ export interface ItemDefinitionDTO {
   destinationId?: string | null;
   disabled: ItemDefinitionDTO.DisabledEnum;
   displayName: string;
+  flowIds: Array<string>;
   formSpecificationId?: string | null;
-  formTypes: Array<ItemDefinitionDTO.FormTypesEnum>;
   hidden: ItemDefinitionDTO.HiddenEnum;
   id?: string | null;
+  idmObject?: IdmObject;
   prefillStrategyIds?: Array<string> | null;
   required: boolean;
   scope: ItemDefinitionDTO.ScopeEnum;
@@ -35,13 +37,6 @@ export namespace ItemDefinitionDTO {
     IF_EMPTY: 'IF_EMPTY',
   } as const;
   export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
-  export const FormTypesEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-    CANCELLATION: 'CANCELLATION',
-    UPDATE: 'UPDATE',
-  } as const;
-  export type FormTypesEnum = (typeof FormTypesEnum)[keyof typeof FormTypesEnum];
   export const HiddenEnum = {
     NEVER: 'NEVER',
     ALWAYS: 'ALWAYS',
@@ -53,6 +48,7 @@ export namespace ItemDefinitionDTO {
     GLOBAL: 'GLOBAL',
     GLOBAL_REQUIRED: 'GLOBAL_REQUIRED',
     FORM_SPECIFIC: 'FORM_SPECIFIC',
+    OBJECT_SPECIFIC: 'OBJECT_SPECIFIC',
   } as const;
   export type ScopeEnum = (typeof ScopeEnum)[keyof typeof ScopeEnum];
   export const TypeEnum = {
@@ -60,6 +56,7 @@ export namespace ItemDefinitionDTO {
     SELECTION_CUSTOM: 'SELECTION_CUSTOM',
     SELECTIONBOX: 'SELECTIONBOX',
     CHECKBOX: 'CHECKBOX',
+    EMBEDDED_GROUPS: 'EMBEDDED_GROUPS',
     SUBMIT_BUTTON: 'SUBMIT_BUTTON',
     DATE_PICKER: 'DATE_PICKER',
     LOGIN: 'LOGIN',

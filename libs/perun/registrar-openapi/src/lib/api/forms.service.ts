@@ -31,21 +31,27 @@ import { BulkItemDefinitionUpdateRequest } from '../model/bulkItemDefinitionUpda
 // @ts-ignore
 import { CheckboxDTO } from '../model/checkboxDTO';
 // @ts-ignore
+import { CreateObjectSpecificItemDefinitionRequest } from '../model/createObjectSpecificItemDefinitionRequest';
+// @ts-ignore
+import { CreateObjectSpecificPrefillStrategyRequest } from '../model/createObjectSpecificPrefillStrategyRequest';
+// @ts-ignore
 import { DatePickerDTO } from '../model/datePickerDTO';
 // @ts-ignore
 import { DestinationDTO } from '../model/destinationDTO';
+// @ts-ignore
+import { EmbeddedGroupsDTO } from '../model/embeddedGroupsDTO';
+// @ts-ignore
+import { EmbeddedGroupsItemStateDTO } from '../model/embeddedGroupsItemStateDTO';
 // @ts-ignore
 import { ErrorResponse } from '../model/errorResponse';
 // @ts-ignore
 import { FormItemsForTypeDTO } from '../model/formItemsForTypeDTO';
 // @ts-ignore
+import { FormSpecificationCreateRequest } from '../model/formSpecificationCreateRequest';
+// @ts-ignore
 import { FormSpecificationDTO } from '../model/formSpecificationDTO';
 // @ts-ignore
 import { FormSpecificationPatchRequest } from '../model/formSpecificationPatchRequest';
-// @ts-ignore
-import { GetGlobalItemDefinitions200ResponseInner } from '../model/getGlobalItemDefinitions200ResponseInner';
-// @ts-ignore
-import { GetGlobalPrefillStrategies200ResponseInner } from '../model/getGlobalPrefillStrategies200ResponseInner';
 // @ts-ignore
 import { HeadingDTO } from '../model/headingDTO';
 // @ts-ignore
@@ -70,6 +76,8 @@ import { LoginPrefillStrategyEntryDTO } from '../model/loginPrefillStrategyEntry
 import { MapInputBoxDTO } from '../model/mapInputBoxDTO';
 // @ts-ignore
 import { PasswordDTO } from '../model/passwordDTO';
+// @ts-ignore
+import { PrefillStrategyEntryDTO } from '../model/prefillStrategyEntryDTO';
 // @ts-ignore
 import { RadioDTO } from '../model/radioDTO';
 // @ts-ignore
@@ -649,66 +657,42 @@ export class FormsService {
   /**
    * Create a new form specification
    * Create a new form specification for the supplied IDM object
-   * @param objectType
-   * @param objectId
+   * @param FormSpecificationCreateRequest
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createForm(
-    objectType: 'VO' | 'GROUP',
-    objectId: string,
+    FormSpecificationCreateRequest: FormSpecificationCreateRequest,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<FormSpecificationDTO>;
   public createForm(
-    objectType: 'VO' | 'GROUP',
-    objectId: string,
+    FormSpecificationCreateRequest: FormSpecificationCreateRequest,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<FormSpecificationDTO>>;
   public createForm(
-    objectType: 'VO' | 'GROUP',
-    objectId: string,
+    FormSpecificationCreateRequest: FormSpecificationCreateRequest,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<FormSpecificationDTO>>;
   public createForm(
-    objectType: 'VO' | 'GROUP',
-    objectId: string,
+    FormSpecificationCreateRequest: FormSpecificationCreateRequest,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (objectType === null || objectType === undefined) {
+    if (FormSpecificationCreateRequest === null || FormSpecificationCreateRequest === undefined) {
       throw new Error(
-        'Required parameter objectType was null or undefined when calling createForm.',
-      );
-    }
-    if (objectId === null || objectId === undefined) {
-      throw new Error('Required parameter objectId was null or undefined when calling createForm.');
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (objectType !== undefined && objectType !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>objectType,
-        'objectType',
-      );
-    }
-    if (objectId !== undefined && objectId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>objectId,
-        'objectId',
+        'Required parameter FormSpecificationCreateRequest was null or undefined when calling createForm.',
       );
     }
 
@@ -742,6 +726,14 @@ export class FormsService {
       localVarHttpContext = new HttpContext();
     }
 
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
     let responseType_: 'text' | 'json' | 'blob' = 'json';
     if (localVarHttpHeaderAcceptSelected) {
       if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -762,9 +754,8 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<FormSpecificationDTO>(requestUrl, null, {
+    return this.httpClient.post<FormSpecificationDTO>(requestUrl, FormSpecificationCreateRequest, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -774,8 +765,8 @@ export class FormsService {
   }
 
   /**
-   * Create a new form specification from a template
-   * Create a new form specification for the supplied IDM object by copying the entire configuration of a template form: items, age actions, form modules and auto-approved types. Form transitions are copied only when requested.
+   * Copy a form\&#39;s configuration to another object
+   * Copy the entire configuration of a template form (items, age actions, form modules and the auto-approve setting) to the supplied IDM object. Form transitions are copied only when requested. If the object already has a form with the template\&#39;s flow, that form is reused as the copy target: its items, age actions, non-flow modules and auto-approve setting are replaced by the template\&#39;s configuration, while its flow and flow options are kept (flow modules are immutable). Otherwise a new form is created for the object, including the default prerequisite forms and transitions.
    * @param templateId
    * @param objectType
    * @param objectId
@@ -1044,15 +1035,16 @@ export class FormsService {
   /**
    * Create a new global item definition
    * Create a new global item definition
-   * @param CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
+   * @param CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createGlobalItemDefinition(
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1071,11 +1063,12 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
+  ): Observable<CreateObjectSpecificItemDefinitionRequest>;
   public createGlobalItemDefinition(
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1094,11 +1087,12 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificItemDefinitionRequest>>;
   public createGlobalItemDefinition(
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1117,11 +1111,12 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificItemDefinitionRequest>>;
   public createGlobalItemDefinition(
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1142,13 +1137,13 @@ export class FormsService {
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
     if (
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
         null ||
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
         undefined
     ) {
       throw new Error(
-        'Required parameter CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createGlobalItemDefinition.',
+        'Required parameter CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createGlobalItemDefinition.',
       );
     }
 
@@ -1210,9 +1205,9 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalItemDefinitions200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificItemDefinitionRequest>(
       requestUrl,
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
       {
         context: localVarHttpContext,
         responseType: <any>responseType_,
@@ -1242,7 +1237,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
+  ): Observable<CreateObjectSpecificPrefillStrategyRequest>;
   public createGlobalPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1253,7 +1248,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificPrefillStrategyRequest>>;
   public createGlobalPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1264,7 +1259,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificPrefillStrategyRequest>>;
   public createGlobalPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1345,7 +1340,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificPrefillStrategyRequest>(
       requestUrl,
       ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
       {
@@ -1363,16 +1358,17 @@ export class FormsService {
    * Create a new item definition for form
    * Create a new item definition to be used for this form\&#39;s items
    * @param formSpecificationId
-   * @param CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
+   * @param CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1391,12 +1387,13 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
+  ): Observable<CreateObjectSpecificItemDefinitionRequest>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1415,12 +1412,13 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificItemDefinitionRequest>>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1439,12 +1437,13 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificItemDefinitionRequest>>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
       | CheckboxDTO
       | DatePickerDTO
+      | EmbeddedGroupsDTO
       | HeadingDTO
       | HtmlCommentDTO
       | ListInputBoxDTO
@@ -1470,13 +1469,13 @@ export class FormsService {
       );
     }
     if (
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
         null ||
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
         undefined
     ) {
       throw new Error(
-        'Required parameter CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createItemDefinitionForForm.',
+        'Required parameter CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createItemDefinitionForForm.',
       );
     }
 
@@ -1538,9 +1537,501 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalItemDefinitions200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificItemDefinitionRequest>(
       requestUrl,
-      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
+  }
+
+  /**
+   * Create an object-specific destination
+   * Create a new destination scoped to the specified IDM object. Object-specific destinations are available to all forms belonging to that object.
+   * @param objectType
+   * @param objectId
+   * @param DestinationDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<DestinationDTO>;
+  public createObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<DestinationDTO>>;
+  public createObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<DestinationDTO>>;
+  public createObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createObjectSpecificDestination.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createObjectSpecificDestination.',
+      );
+    }
+    if (DestinationDTO === null || DestinationDTO === undefined) {
+      throw new Error(
+        'Required parameter DestinationDTO was null or undefined when calling createObjectSpecificDestination.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/destination`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<DestinationDTO>(requestUrl, DestinationDTO, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Create an object-specific item definition
+   * Create a new item definition scoped to the specified IDM object. Object-specific item definitions are available to all forms belonging to that object.
+   * @param objectType
+   * @param objectId
+   * @param CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createObjectSpecificItemDefinition(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | EmbeddedGroupsDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<ItemDefinitionDTO>;
+  public createObjectSpecificItemDefinition(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | EmbeddedGroupsDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<ItemDefinitionDTO>>;
+  public createObjectSpecificItemDefinition(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | EmbeddedGroupsDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<ItemDefinitionDTO>>;
+  public createObjectSpecificItemDefinition(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | EmbeddedGroupsDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createObjectSpecificItemDefinition.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createObjectSpecificItemDefinition.',
+      );
+    }
+    if (
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        null ||
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        undefined
+    ) {
+      throw new Error(
+        'Required parameter CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createObjectSpecificItemDefinition.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/item-definition`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<ItemDefinitionDTO>(
+      requestUrl,
+      CheckboxDTO___DatePickerDTO___EmbeddedGroupsDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
+  }
+
+  /**
+   * Create an object-specific prefill strategy
+   * Create a new prefill strategy scoped to the specified IDM object. Object-specific prefill strategies are available to all forms belonging to that object.
+   * @param objectType
+   * @param objectId
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<PrefillStrategyEntryDTO>;
+  public createObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  public createObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  public createObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createObjectSpecificPrefillStrategy.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createObjectSpecificPrefillStrategy.',
+      );
+    }
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
+      throw new Error(
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createObjectSpecificPrefillStrategy.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/prefill-strategy`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<PrefillStrategyEntryDTO>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
       {
         context: localVarHttpContext,
         responseType: <any>responseType_,
@@ -1783,6 +2274,291 @@ export class FormsService {
   }
 
   /**
+   * Create or get an object-specific destination
+   * Create a new object-specific destination or retrieve an existing one with the same URN
+   * @param objectType
+   * @param objectId
+   * @param DestinationDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createOrGetObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<DestinationDTO>;
+  public createOrGetObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<DestinationDTO>>;
+  public createOrGetObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<DestinationDTO>>;
+  public createOrGetObjectSpecificDestination(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    DestinationDTO: DestinationDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createOrGetObjectSpecificDestination.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createOrGetObjectSpecificDestination.',
+      );
+    }
+    if (DestinationDTO === null || DestinationDTO === undefined) {
+      throw new Error(
+        'Required parameter DestinationDTO was null or undefined when calling createOrGetObjectSpecificDestination.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/destination/create-or-get`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<DestinationDTO>(requestUrl, DestinationDTO, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Create or get an object-specific prefill strategy
+   * Create a new object-specific prefill strategy or retrieve an existing one with the same source attribute
+   * @param objectType
+   * @param objectId
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createOrGetObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<CreateObjectSpecificPrefillStrategyRequest>;
+  public createOrGetObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<CreateObjectSpecificPrefillStrategyRequest>>;
+  public createOrGetObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<CreateObjectSpecificPrefillStrategyRequest>>;
+  public createOrGetObjectSpecificPrefillStrategy(
+    objectType: 'VO' | 'GROUP',
+    objectId: string,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (objectType === null || objectType === undefined) {
+      throw new Error(
+        'Required parameter objectType was null or undefined when calling createOrGetObjectSpecificPrefillStrategy.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling createOrGetObjectSpecificPrefillStrategy.',
+      );
+    }
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
+      throw new Error(
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createOrGetObjectSpecificPrefillStrategy.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json'];
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/prefill-strategy/create-or-get`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.post<CreateObjectSpecificPrefillStrategyRequest>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
+  }
+
+  /**
    * Create or get prefill strategy
    * Create a new prefill strategy or retrieve an existing one with such urn and scope
    * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
@@ -1800,7 +2576,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
+  ): Observable<CreateObjectSpecificPrefillStrategyRequest>;
   public createOrGetPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1811,7 +2587,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificPrefillStrategyRequest>>;
   public createOrGetPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1822,7 +2598,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificPrefillStrategyRequest>>;
   public createOrGetPrefillStrategy(
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
       | ApplicationPrefillStrategyEntryDTO
@@ -1903,7 +2679,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificPrefillStrategyRequest>(
       requestUrl,
       ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
       {
@@ -1937,7 +2713,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
+  ): Observable<CreateObjectSpecificPrefillStrategyRequest>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -1949,7 +2725,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificPrefillStrategyRequest>>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -1961,7 +2737,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificPrefillStrategyRequest>>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -2048,7 +2824,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificPrefillStrategyRequest>(
       requestUrl,
       ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
       {
@@ -2082,7 +2858,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
+  ): Observable<CreateObjectSpecificPrefillStrategyRequest>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -2094,7 +2870,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificPrefillStrategyRequest>>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -2106,7 +2882,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificPrefillStrategyRequest>>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
     ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
@@ -2193,7 +2969,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+    return this.httpClient.post<CreateObjectSpecificPrefillStrategyRequest>(
       requestUrl,
       ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
       {
@@ -3160,19 +3936,219 @@ export class FormsService {
   }
 
   /**
+   * Get per-user state of the form\&#39;s embedded groups
+   * Retrieves the rendering state of the form\&#39;s EMBEDDED_GROUPS items for the current user: for each configured target option the target form, its IdM object, its flow, the option labels, whether the user is a member of the group, and whether the target form\&#39;s flow can currently be submitted by the user (the same check that runs when the child application is created)
+   * @param formSpecificationId
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getEmbeddedGroupsState(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<EmbeddedGroupsItemStateDTO>>;
+  public getEmbeddedGroupsState(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<EmbeddedGroupsItemStateDTO>>>;
+  public getEmbeddedGroupsState(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<EmbeddedGroupsItemStateDTO>>>;
+  public getEmbeddedGroupsState(
+    formSpecificationId: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (formSpecificationId === null || formSpecificationId === undefined) {
+      throw new Error(
+        'Required parameter formSpecificationId was null or undefined when calling getEmbeddedGroupsState.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'formSpecificationId', value: formSpecificationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/embedded-groups/state`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<EmbeddedGroupsItemStateDTO>>(requestUrl, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Get forms available as embedded group targets
+   * Retrieves the embedded-flow group forms which can be configured as embedded groups on the given parent form: for a VO form these are the embedded forms of all groups of the form\&#39;s VO, for a group form the embedded forms of its descendant subgroups
+   * @param formSpecificationId
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getEmbeddedTargetForms(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<FormSpecificationDTO>>;
+  public getEmbeddedTargetForms(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<FormSpecificationDTO>>>;
+  public getEmbeddedTargetForms(
+    formSpecificationId: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<FormSpecificationDTO>>>;
+  public getEmbeddedTargetForms(
+    formSpecificationId: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (formSpecificationId === null || formSpecificationId === undefined) {
+      throw new Error(
+        'Required parameter formSpecificationId was null or undefined when calling getEmbeddedTargetForms.',
+      );
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/${this.configuration.encodeParam({ name: 'formSpecificationId', value: formSpecificationId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: 'uuid' })}/embedded-targets`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<FormSpecificationDTO>>(requestUrl, {
+      context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
    * Get items with related objects for form
    *  Gets all items for form along with their definitions, destinations and prefill strategies
    * @param formSpecificationId
-   * @param formType
-   * @param attributeName
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public getEnrichedItems(
     formSpecificationId: string,
-    formType: 'INITIAL' | 'EXTENSION' | 'CANCELLATION' | 'UPDATE',
-    attributeName?: string,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -3180,8 +4156,6 @@ export class FormsService {
   ): Observable<Array<ItemWithDefinitionDTO>>;
   public getEnrichedItems(
     formSpecificationId: string,
-    formType: 'INITIAL' | 'EXTENSION' | 'CANCELLATION' | 'UPDATE',
-    attributeName?: string,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -3189,8 +4163,6 @@ export class FormsService {
   ): Observable<HttpResponse<Array<ItemWithDefinitionDTO>>>;
   public getEnrichedItems(
     formSpecificationId: string,
-    formType: 'INITIAL' | 'EXTENSION' | 'CANCELLATION' | 'UPDATE',
-    attributeName?: string,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -3198,8 +4170,6 @@ export class FormsService {
   ): Observable<HttpEvent<Array<ItemWithDefinitionDTO>>>;
   public getEnrichedItems(
     formSpecificationId: string,
-    formType: 'INITIAL' | 'EXTENSION' | 'CANCELLATION' | 'UPDATE',
-    attributeName?: string,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -3208,27 +4178,6 @@ export class FormsService {
     if (formSpecificationId === null || formSpecificationId === undefined) {
       throw new Error(
         'Required parameter formSpecificationId was null or undefined when calling getEnrichedItems.',
-      );
-    }
-    if (formType === null || formType === undefined) {
-      throw new Error(
-        'Required parameter formType was null or undefined when calling getEnrichedItems.',
-      );
-    }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (formType !== undefined && formType !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>formType,
-        'formType',
-      );
-    }
-    if (attributeName !== undefined && attributeName !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>attributeName,
-        'attributeName',
       );
     }
 
@@ -3284,7 +4233,6 @@ export class FormsService {
     }
     return this.httpClient.get<Array<ItemWithDefinitionDTO>>(requestUrl, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -3396,79 +4344,65 @@ export class FormsService {
   }
 
   /**
-   * Get form by IDM object
-   * Retrieves form specification for the specified IDM object
-   * @param idmObjectType
+   * Get form by IDM object and flow
+   * Retrieves the form specification for the specified IDM object and flow ID
+   * @param objectType
    * @param objectId
-   * @param name
+   * @param flowId
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getFormByObject(
-    idmObjectType: 'VO' | 'GROUP',
+  public getFormByObjectAndFlow(
+    objectType: 'VO' | 'GROUP',
     objectId: string,
-    name?: string,
+    flowId: string,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<FormSpecificationDTO>;
-  public getFormByObject(
-    idmObjectType: 'VO' | 'GROUP',
+  public getFormByObjectAndFlow(
+    objectType: 'VO' | 'GROUP',
     objectId: string,
-    name?: string,
+    flowId: string,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpResponse<FormSpecificationDTO>>;
-  public getFormByObject(
-    idmObjectType: 'VO' | 'GROUP',
+  public getFormByObjectAndFlow(
+    objectType: 'VO' | 'GROUP',
     objectId: string,
-    name?: string,
+    flowId: string,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<HttpEvent<FormSpecificationDTO>>;
-  public getFormByObject(
-    idmObjectType: 'VO' | 'GROUP',
+  public getFormByObjectAndFlow(
+    objectType: 'VO' | 'GROUP',
     objectId: string,
-    name?: string,
+    flowId: string,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (idmObjectType === null || idmObjectType === undefined) {
+    if (objectType === null || objectType === undefined) {
       throw new Error(
-        'Required parameter idmObjectType was null or undefined when calling getFormByObject.',
+        'Required parameter objectType was null or undefined when calling getFormByObjectAndFlow.',
       );
     }
     if (objectId === null || objectId === undefined) {
       throw new Error(
-        'Required parameter objectId was null or undefined when calling getFormByObject.',
+        'Required parameter objectId was null or undefined when calling getFormByObjectAndFlow.',
       );
     }
-
-    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
-    if (idmObjectType !== undefined && idmObjectType !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>idmObjectType,
-        'idmObjectType',
+    if (flowId === null || flowId === undefined) {
+      throw new Error(
+        'Required parameter flowId was null or undefined when calling getFormByObjectAndFlow.',
       );
-    }
-    if (objectId !== undefined && objectId !== null) {
-      localVarQueryParameters = this.addToHttpParams(
-        localVarQueryParameters,
-        <any>objectId,
-        'objectId',
-      );
-    }
-    if (name !== undefined && name !== null) {
-      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>name, 'name');
     }
 
     let localVarHeaders = this.defaultHeaders;
@@ -3512,7 +4446,7 @@ export class FormsService {
       }
     }
 
-    let requestUrl = `${this.configuration.basePath}/api/v1/forms/by-object`;
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/idm-objects/${this.configuration.encodeParam({ name: 'objectType', value: objectType, in: 'path', style: 'simple', explode: false, dataType: "'VO' | 'GROUP'", dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'objectId', value: objectId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}/${this.configuration.encodeParam({ name: 'flowId', value: flowId, in: 'path', style: 'simple', explode: false, dataType: 'string', dataFormat: undefined })}`;
     if (useNon) {
       // replace the authentication part of url with 'non' authentication
       let helperUrl = new URL(requestUrl);
@@ -3523,7 +4457,6 @@ export class FormsService {
     }
     return this.httpClient.get<FormSpecificationDTO>(requestUrl, {
       context: localVarHttpContext,
-      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -3615,6 +4548,143 @@ export class FormsService {
     }
     return this.httpClient.get<Array<FormSpecificationDTO>>(requestUrl, {
       context: localVarHttpContext,
+      responseType: <any>responseType_,
+      withCredentials: this.configuration.withCredentials,
+      headers: localVarHeaders,
+      observe: observe,
+      reportProgress: reportProgress,
+    });
+  }
+
+  /**
+   * Get forms by IDM object
+   * Retrieves form specifications for the specified IDM object
+   * @param idmObjectType
+   * @param objectId
+   * @param name
+   * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getFormsByObject(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<Array<FormSpecificationDTO>>;
+  public getFormsByObject(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpResponse<Array<FormSpecificationDTO>>>;
+  public getFormsByObject(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<HttpEvent<Array<FormSpecificationDTO>>>;
+  public getFormsByObject(
+    idmObjectType: 'VO' | 'GROUP',
+    objectId: string,
+    name?: string,
+    useNon: boolean = false,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
+  ): Observable<any> {
+    if (idmObjectType === null || idmObjectType === undefined) {
+      throw new Error(
+        'Required parameter idmObjectType was null or undefined when calling getFormsByObject.',
+      );
+    }
+    if (objectId === null || objectId === undefined) {
+      throw new Error(
+        'Required parameter objectId was null or undefined when calling getFormsByObject.',
+      );
+    }
+
+    let localVarQueryParameters = new HttpParams({ encoder: this.encoder });
+    if (idmObjectType !== undefined && idmObjectType !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>idmObjectType,
+        'idmObjectType',
+      );
+    }
+    if (objectId !== undefined && objectId !== null) {
+      localVarQueryParameters = this.addToHttpParams(
+        localVarQueryParameters,
+        <any>objectId,
+        'objectId',
+      );
+    }
+    if (name !== undefined && name !== null) {
+      localVarQueryParameters = this.addToHttpParams(localVarQueryParameters, <any>name, 'name');
+    }
+
+    let localVarHeaders = this.defaultHeaders;
+
+    let localVarCredential: string | undefined;
+    // authentication (basicAuth) required
+    localVarCredential = this.configuration.lookupCredential('basicAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + localVarCredential);
+    }
+
+    // authentication (bearerAuth) required
+    localVarCredential = this.configuration.lookupCredential('bearerAuth');
+    if (localVarCredential) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+    }
+
+    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+    if (localVarHttpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json'];
+      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    }
+    if (localVarHttpHeaderAcceptSelected !== undefined) {
+      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+    }
+
+    let localVarHttpContext: HttpContext | undefined = options && options.context;
+    if (localVarHttpContext === undefined) {
+      localVarHttpContext = new HttpContext();
+    }
+
+    let responseType_: 'text' | 'json' | 'blob' = 'json';
+    if (localVarHttpHeaderAcceptSelected) {
+      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+        responseType_ = 'text';
+      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+        responseType_ = 'json';
+      } else {
+        responseType_ = 'blob';
+      }
+    }
+
+    let requestUrl = `${this.configuration.basePath}/api/v1/forms/by-object`;
+    if (useNon) {
+      // replace the authentication part of url with 'non' authentication
+      let helperUrl = new URL(requestUrl);
+      let path = helperUrl.pathname.split('/');
+      path[1] = 'non';
+      helperUrl.pathname = path.join('/');
+      requestUrl = helperUrl.toString();
+    }
+    return this.httpClient.get<Array<FormSpecificationDTO>>(requestUrl, {
+      context: localVarHttpContext,
+      params: localVarQueryParameters,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
       headers: localVarHeaders,
@@ -3726,19 +4796,19 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<Array<CreateObjectSpecificItemDefinitionRequest>>;
   public getGlobalItemDefinitions(
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<GetGlobalItemDefinitions200ResponseInner>>>;
+  ): Observable<HttpResponse<Array<CreateObjectSpecificItemDefinitionRequest>>>;
   public getGlobalItemDefinitions(
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<GetGlobalItemDefinitions200ResponseInner>>>;
+  ): Observable<HttpEvent<Array<CreateObjectSpecificItemDefinitionRequest>>>;
   public getGlobalItemDefinitions(
     useNon: boolean = false,
     observe: any = 'body',
@@ -3795,7 +4865,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<GetGlobalItemDefinitions200ResponseInner>>(requestUrl, {
+    return this.httpClient.get<Array<CreateObjectSpecificItemDefinitionRequest>>(requestUrl, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -3817,19 +4887,19 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<Array<CreateObjectSpecificPrefillStrategyRequest>>;
   public getGlobalPrefillStrategies(
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
+  ): Observable<HttpResponse<Array<CreateObjectSpecificPrefillStrategyRequest>>>;
   public getGlobalPrefillStrategies(
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
+  ): Observable<HttpEvent<Array<CreateObjectSpecificPrefillStrategyRequest>>>;
   public getGlobalPrefillStrategies(
     useNon: boolean = false,
     observe: any = 'body',
@@ -3886,7 +4956,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<GetGlobalPrefillStrategies200ResponseInner>>(requestUrl, {
+    return this.httpClient.get<Array<CreateObjectSpecificPrefillStrategyRequest>>(requestUrl, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -3912,7 +4982,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<Array<CreateObjectSpecificItemDefinitionRequest>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3920,7 +4990,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<GetGlobalItemDefinitions200ResponseInner>>>;
+  ): Observable<HttpResponse<Array<CreateObjectSpecificItemDefinitionRequest>>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3928,7 +4998,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<GetGlobalItemDefinitions200ResponseInner>>>;
+  ): Observable<HttpEvent<Array<CreateObjectSpecificItemDefinitionRequest>>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -4002,7 +5072,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<GetGlobalItemDefinitions200ResponseInner>>(requestUrl, {
+    return this.httpClient.get<Array<CreateObjectSpecificItemDefinitionRequest>>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -4029,7 +5099,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<GetGlobalPrefillStrategies200ResponseInner>>;
+  ): Observable<Array<CreateObjectSpecificPrefillStrategyRequest>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -4037,7 +5107,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
+  ): Observable<HttpResponse<Array<CreateObjectSpecificPrefillStrategyRequest>>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -4045,7 +5115,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
+  ): Observable<HttpEvent<Array<CreateObjectSpecificPrefillStrategyRequest>>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -4119,7 +5189,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<GetGlobalPrefillStrategies200ResponseInner>>(requestUrl, {
+    return this.httpClient.get<Array<CreateObjectSpecificPrefillStrategyRequest>>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -4792,7 +5862,7 @@ export class FormsService {
    */
   public updateFormItems(
     formSpecificationId: string,
-    FormItemsForTypeDTO: Array<FormItemsForTypeDTO>,
+    FormItemsForTypeDTO: FormItemsForTypeDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -4800,7 +5870,7 @@ export class FormsService {
   ): Observable<FormSpecificationDTO>;
   public updateFormItems(
     formSpecificationId: string,
-    FormItemsForTypeDTO: Array<FormItemsForTypeDTO>,
+    FormItemsForTypeDTO: FormItemsForTypeDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -4808,7 +5878,7 @@ export class FormsService {
   ): Observable<HttpResponse<FormSpecificationDTO>>;
   public updateFormItems(
     formSpecificationId: string,
-    FormItemsForTypeDTO: Array<FormItemsForTypeDTO>,
+    FormItemsForTypeDTO: FormItemsForTypeDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -4816,7 +5886,7 @@ export class FormsService {
   ): Observable<HttpEvent<FormSpecificationDTO>>;
   public updateFormItems(
     formSpecificationId: string,
-    FormItemsForTypeDTO: Array<FormItemsForTypeDTO>,
+    FormItemsForTypeDTO: FormItemsForTypeDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -4917,7 +5987,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
+  ): Observable<CreateObjectSpecificItemDefinitionRequest>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -4925,7 +5995,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpResponse<CreateObjectSpecificItemDefinitionRequest>>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -4933,7 +6003,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
+  ): Observable<HttpEvent<CreateObjectSpecificItemDefinitionRequest>>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -5011,7 +6081,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.patch<GetGlobalItemDefinitions200ResponseInner>(
+    return this.httpClient.patch<CreateObjectSpecificItemDefinitionRequest>(
       requestUrl,
       ItemDefinitionPatchRequest,
       {

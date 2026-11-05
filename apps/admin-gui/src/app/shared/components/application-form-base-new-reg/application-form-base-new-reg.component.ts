@@ -1,31 +1,44 @@
 import { Directive, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { NotificatorService } from '@perun-web-apps/perun/services';
+import {
+  ApiRequestConfigurationService,
+  NotificatorService,
+  SKIP_ERROR_NOTIFICATION,
+} from '@perun-web-apps/perun/services';
 import { TranslateService } from '@ngx-translate/core';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { RPCError } from '@perun-web-apps/perun/models';
+import { ApplicationFormItem } from '@perun-web-apps/perun/openapi';
 import {
   BulkItemDefinitionUpdateRequest,
   FormSpecificationDTO,
   FormsService,
-  FormTypeConfig,
   ItemDefinitionDTO,
   ItemDefinitionPatchRequest,
   ItemWithDefinitionDTO,
+  Option,
 } from '@perun-web-apps/perun/registrar-openapi';
-import { catchError, forkJoin, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, forkJoin, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { AddApplicationFormItemDialogNewRegComponent } from '../dialogs/add-application-form-item-dialog-new-reg/add-application-form-item-dialog-new-reg.component';
 import { EditApplicationFormItemDialogNewRegComponent } from '../dialogs/edit-application-form-item-dialog-new-reg/edit-application-form-item-dialog-new-reg.component';
-import { UpdateApplicationFormDialogNewRegComponent } from '../dialogs/update-application-form-dialog-new-reg/update-application-form-dialog-new-reg.component';
+import {
+  UpdateApplicationFormDialogNewRegComponent,
+  UpdateApplicationFormsResult,
+} from '../dialogs/update-application-form-dialog-new-reg/update-application-form-dialog-new-reg.component';
 import { ApplicationFormCopyItemsDialogNewRegComponent } from '../dialogs/application-form-copy-items-dialog-new-reg/application-form-copy-items-dialog-new-reg.component';
+import { HttpContext } from '@angular/common/http';
 
 @Directive()
 export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
   loadingHeader = false;
   loadingTable = false;
-  formSpecification: FormSpecificationDTO;
-  selectedType: FormTypeConfig = { formType: 'INITIAL' };
+  selectedForm: FormSpecificationDTO;
+  initForm: FormSpecificationDTO;
+  extForm: FormSpecificationDTO;
+  // the object's own EMBEDDED_INITIAL flow form (GROUP only); its autoApprove is the embedded auto-approval
+  embeddedForm: FormSpecificationDTO | null = null;
+  selectedType = 'INITIAL';
   showExtension = false;
   formItems: ItemWithDefinitionDTO[] = [];
   toRemoveFormItemIds: string[] = [];
@@ -34,6 +47,14 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
   missingSubmitButton = false;
   editAuth = false;
   refreshApplicationForm = false;
+  embeddedGroupsItemSaved = false;
+
+  flowModuleNames = [
+    'InitialMembership',
+    'UpdateAttribute',
+    'CancellationMembership',
+    'ExtensionMembership',
+  ];
 
   // Preserved as protected public API for templates
   inputItem: ItemDefinitionDTO.TypeEnum[] = [
@@ -51,12 +72,15 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
     protected formsService: FormsService,
     protected dialog: MatDialog,
     protected notificator: NotificatorService,
+    protected apiRequest: ApiRequestConfigurationService,
     protected translate: TranslateService,
     protected router: Router,
   ) {}
 
   get moduleNames(): string[] {
-    return this.formSpecification.modules.map((module) => module.moduleName);
+    return this.initForm.modules
+      .filter((module) => !this.flowModuleNames.includes(module.moduleName))
+      .map((module) => module.moduleName);
   }
   // Abstract getters for entity-specific values
   protected abstract get entityId(): string;
@@ -79,39 +103,44 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
     config.data = {
       applicationFormItems: this.formItems,
       fakeId: fakeId,
-      formSpecificationId: this.formSpecification.id,
+      formSpecificationId: this.selectedForm.id,
+      embeddedItemExists: this.hasEmbeddedItem(),
     };
 
     const dialog = this.dialog.open(AddApplicationFormItemDialogNewRegComponent, config);
-    dialog.afterClosed().subscribe((success: ItemWithDefinitionDTO[]) => {
-      if (success) {
-        this.formItems = Object.assign([], success[0]);
+    dialog
+      .afterClosed()
+      .subscribe((success: [ItemWithDefinitionDTO[], ItemWithDefinitionDTO, boolean]) => {
+        if (success) {
+          const isEmbedded = !!success[2];
+          this.formItems = Object.assign([], success[0]);
 
-        config = getDefaultDialogConfig();
-        config.width = '600px';
-        config.height = '600px';
-        config.data = {
-          applicationFormItem: success[1],
-          theme: this.theme,
-          allItems: this.formItems,
-          formSpecificationId: this.formSpecification.id,
-        };
+          config = getDefaultDialogConfig();
+          config.width = '600px';
+          config.height = '600px';
+          config.data = {
+            applicationFormItem: success[1],
+            theme: this.theme,
+            allItems: this.formItems,
+            formSpecificationId: this.selectedForm.id,
+            isEmbedded,
+          };
 
-        const editDialog = this.dialog.open(EditApplicationFormItemDialogNewRegComponent, config);
-        editDialog.afterClosed().subscribe((updatedItem: ItemWithDefinitionDTO) => {
-          if (updatedItem) {
-            Object.assign(success[1], updatedItem);
-            this.changeItems();
-          }
-        });
-      }
-    });
+          const editDialog = this.dialog.open(EditApplicationFormItemDialogNewRegComponent, config);
+          editDialog.afterClosed().subscribe((updatedItem: ItemWithDefinitionDTO) => {
+            if (updatedItem) {
+              Object.assign(success[1], updatedItem);
+              this.changeItems();
+            }
+          });
+        }
+      });
   }
 
   copy(): void {
     const config = getDefaultDialogConfig();
     config.width = '500px';
-    config.data = { formSpecificationId: this.formSpecification.id, theme: 'vo-theme' };
+    config.data = { idmObject: this.initForm.idmObject, theme: 'vo-theme' };
 
     const dialog = this.dialog.open(ApplicationFormCopyItemsDialogNewRegComponent, config);
     dialog.afterClosed().subscribe((copyFrom) => {
@@ -125,29 +154,36 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
 
   settings(): void {
     const config = getDefaultDialogConfig();
+
     config.width = '400px';
     config.data = {
       entity: this.entityType.toLowerCase(),
-      applicationForm: this.formSpecification,
+      initForm: this.initForm,
+      extForm: this.extForm,
+      embeddedForm: this.embeddedForm,
       theme: this.theme,
     };
 
     const dialog = this.dialog.open(UpdateApplicationFormDialogNewRegComponent, config);
-    dialog.afterClosed().subscribe((newForm: FormSpecificationDTO) => {
-      if (newForm) {
+
+    dialog.afterClosed().subscribe((result: UpdateApplicationFormsResult | undefined) => {
+      if (result) {
         this.translate
           .get('VO_DETAIL.SETTINGS.APPLICATION_FORM.CHANGE_SETTINGS_SUCCESS')
           .subscribe((successMessage: string) => {
             this.notificator.showSuccess(successMessage);
           });
-        this.formSpecification = newForm;
+
+        this.initForm = result.initForm;
+        this.extForm = result.extForm;
+        this.embeddedForm = result.embeddedForm;
       }
     });
   }
 
   preview(): void {
     void this.router.navigate(this.getPreviewRoute(), {
-      queryParams: { applicationFormItems: JSON.stringify(this.formItems) },
+      queryParams: { applicationFormItems: JSON.stringify(this.toLegacyPreviewItems()) },
       queryParamsHandling: 'merge',
     });
   }
@@ -185,27 +221,21 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
     const definitionDeletionCalls = itemsToDelete
       .filter((item) => !!item.itemDefinition?.id)
       .map((item) =>
-        this.formsService.deleteItemDefinitionForForm(
-          this.formSpecification.id,
-          item.itemDefinition.id,
-        ),
+        this.formsService.deleteItemDefinitionForForm(this.selectedForm.id, item.itemDefinition.id),
       );
 
     const otherDeletionCalls: Observable<unknown>[] = [];
     itemsToDelete.forEach((item) => {
       if (item.destination?.id && item.destination.accessLevel === 'FORM_SPECIFIC') {
         otherDeletionCalls.push(
-          this.formsService.deleteDestinationForForm(
-            this.formSpecification.id,
-            item.destination.id,
-          ),
+          this.formsService.deleteDestinationForForm(this.selectedForm.id, item.destination.id),
         );
       }
       if (item.prefillStrategyEntries) {
         item.prefillStrategyEntries.forEach((prefill) => {
           if (prefill?.id && prefill.accessLevel === 'FORM_SPECIFIC') {
             otherDeletionCalls.push(
-              this.formsService.deletePrefillStrategyForForm(this.formSpecification.id, prefill.id),
+              this.formsService.deletePrefillStrategyForForm(this.selectedForm.id, prefill.id),
             );
           }
         });
@@ -237,40 +267,78 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
     this.loadingTable = true;
     this.refreshApplicationForm = true;
     this.newFormItemIds = [];
-    this.formsService
-      .getEnrichedItems(
-        this.formSpecification.id,
-        this.selectedType.formType,
-        this.selectedType.attributeName,
-      )
-      .subscribe((formItems) => {
-        this.formItems = formItems;
-        this.itemsChanged = false;
-        this.checkAuth(); // Call the specific implementation
-        this.refreshApplicationForm = false;
-        this.loadingTable = false;
-      });
+    this.formsService.getEnrichedItems(this.selectedForm.id).subscribe((formItems) => {
+      this.formItems = formItems;
+      this.embeddedGroupsItemSaved = formItems.some(
+        (item) => item.itemDefinition.type === 'EMBEDDED_GROUPS',
+      );
+      this.itemsChanged = false;
+      this.checkAuth(); // Call the specific implementation
+      this.refreshApplicationForm = false;
+      this.loadingTable = false;
+    });
   }
 
   changeFormType(): void {
-    if (this.selectedType.formType === 'INITIAL') {
+    if (this.selectedType === 'INITIAL') {
       this.toggleFormType('EXTENSION');
     } else {
       this.toggleFormType('INITIAL');
     }
   }
 
-  toggleFormType(type: FormTypeConfig.FormTypeEnum): void {
+  toggleFormType(type: string): void {
     this.showExtension = type === 'EXTENSION';
-    this.selectedType = { formType: type, attributeName: null };
+    this.selectedType = type;
     this.loadingTable = true;
-    this.formsService
-      .getEnrichedItems(this.formSpecification.id, this.selectedType.formType, null)
-      .subscribe((formItems) => {
-        this.formItems = formItems;
-        this.loadingTable = false;
-        this.itemsChanged = false;
-      });
+    this.loadForm();
+  }
+
+  /** True when this form has an embedded groups (EMBEDDED_GROUPS) item. */
+  hasEmbeddedItem(): boolean {
+    return this.formItems.some((item) => item.itemDefinition.type === 'EMBEDDED_GROUPS');
+  }
+
+  /**
+   * The preview page renders the legacy ApplicationFormItem shape (with legacy item type names),
+   * so new Registrar items are mapped onto it; the preview stays identical to the old one.
+   */
+  private toLegacyPreviewItems(): ApplicationFormItem[] {
+    const legacyTypes: Record<string, string> = {
+      EMBEDDED_GROUPS: 'EMBEDDED_GROUP_APPLICATION',
+      SELECTION_CUSTOM: 'COMBOBOX',
+      LOGIN: 'USERNAME',
+      VERIFIED_EMAIL: 'VALIDATED_EMAIL',
+    };
+    return this.formItems.map((item) => {
+      const definition = item.itemDefinition;
+      const options =
+        (definition as unknown as { configuration?: { options?: Option[] } }).configuration
+          ?.options ?? [];
+      const i18n: { [key: string]: { label?: string; help?: string; options?: string } } = {};
+      for (const lang of Object.keys(definition.texts ?? {})) {
+        i18n[lang] = {
+          label: definition.texts[lang]?.label,
+          help: definition.texts[lang]?.help,
+          options: options
+            .map((option) => `${option.value}#${option.labels?.[lang] ?? ''}`)
+            .join('|'),
+        };
+      }
+      return {
+        id: item.formItemDTO.id as unknown as number,
+        shortname: item.formItemDTO.name,
+        type: (legacyTypes[definition.type] ?? definition.type) as ApplicationFormItem['type'],
+        required: definition.required,
+        applicationTypes: definition.flowIds as ApplicationFormItem['applicationTypes'],
+        hidden: definition.hidden as ApplicationFormItem['hidden'],
+        disabled: definition.disabled as ApplicationFormItem['disabled'],
+        hiddenDependencyItemId: null,
+        disabledDependencyItemId: null,
+        forDelete: this.toRemoveFormItemIds.includes(item.formItemDTO.id),
+        i18n,
+      } as ApplicationFormItem;
+    });
   }
 
   private processCreationsAndUpdates(): void {
@@ -283,7 +351,7 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
         if (item.destination.accessLevel === 'FORM_SPECIFIC') {
           creationCalls.push(
             this.formsService
-              .createOrGetDestinationForForm(this.formSpecification.id, item.destination)
+              .createOrGetDestinationForForm(this.selectedForm.id, item.destination)
               .pipe(
                 catchError(() => of(null)),
                 tap((destination) => {
@@ -316,18 +384,18 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
             if (prefill.accessLevel === 'FORM_SPECIFIC') {
               creationCalls.push(
                 this.formsService
-                  .createOrGetPrefillStrategyForForm(this.formSpecification.id, prefill)
+                  .createOrGetPrefillStrategyForForm(this.selectedForm.id, prefill)
                   .pipe(
                     catchError(() => of(null)),
                     tap((prefillStrategy) => {
                       if (prefillStrategy) {
                         Object.assign(prefill, prefillStrategy);
-                        if (!item.itemDefinition.prefillStrategyIds) {
-                          item.itemDefinition.prefillStrategyIds = [];
-                        }
-                        if (!item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)) {
-                          item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
-                        }
+                        // rebuild the id list from the entries (in entry order: IDM first,
+                        // then identity) so the canonical order never drifts, whichever
+                        // entry was just created
+                        item.itemDefinition.prefillStrategyIds = item.prefillStrategyEntries
+                          .map((entry) => entry.id)
+                          .filter((id): id is string => id != null);
                       }
                     }),
                   ),
@@ -339,12 +407,12 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
                   tap((prefillStrategy) => {
                     if (prefillStrategy) {
                       Object.assign(prefill, prefillStrategy);
-                      if (!item.itemDefinition.prefillStrategyIds) {
-                        item.itemDefinition.prefillStrategyIds = [];
-                      }
-                      if (!item.itemDefinition.prefillStrategyIds.includes(prefillStrategy.id)) {
-                        item.itemDefinition.prefillStrategyIds.push(prefillStrategy.id);
-                      }
+                      // rebuild the id list from the entries (in entry order: IDM first,
+                      // then identity) so the canonical order never drifts, whichever
+                      // entry was just created
+                      item.itemDefinition.prefillStrategyIds = item.prefillStrategyEntries
+                        .map((entry) => entry.id)
+                        .filter((id): id is string => id != null);
                     }
                   }),
                 ),
@@ -358,7 +426,7 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
       if (item.itemDefinition.id === null) {
         itemDefCreationCalls.push(
           this.formsService
-            .createItemDefinitionForForm(this.formSpecification.id, item.itemDefinition)
+            .createItemDefinitionForForm(this.selectedForm.id, item.itemDefinition)
             .pipe(
               tap((itemDefinition) => {
                 if (itemDefinition) {
@@ -393,27 +461,34 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
   }
 
   private loadForm(): void {
-    this.formsService
-      .getFormByObject(this.entityType, this.entityId)
+    forkJoin({
+      initForm: this.getOrCreateForm('INITIAL'),
+      extForm: this.getOrCreateForm('EXTENSION'),
+    })
       .pipe(
-        catchError((err: RPCError) => {
-          if (err.status === 404) {
-            return this.formsService.createForm(this.entityType, this.entityId);
-          }
-          throw err;
+        tap(({ initForm, extForm }) => {
+          this.initForm = initForm;
+          this.extForm = extForm;
+          this.selectedForm = this.selectedType === 'INITIAL' ? initForm : extForm;
         }),
-        switchMap((formSpecification) => {
-          this.formSpecification = formSpecification;
-          return this.formsService.getEnrichedItems(
-            formSpecification.id,
-            this.selectedType.formType,
-            this.selectedType.attributeName,
-          );
-        }),
+        switchMap(() =>
+          forkJoin({
+            items: this.formsService.getEnrichedItems(this.selectedForm.id),
+            // groups also own an EMBEDDED_INITIAL flow form (fetched like the other flows); VOs do not
+            embeddedForm:
+              this.entityType === 'GROUP'
+                ? this.getOrCreateForm('EMBEDDED_INITIAL')
+                : of(null as FormSpecificationDTO | null),
+          }),
+        ),
       )
       .subscribe({
-        next: (formItems) => {
-          this.formItems = formItems;
+        next: ({ items, embeddedForm }) => {
+          this.formItems = items;
+          this.embeddedGroupsItemSaved = items.some(
+            (item) => item.itemDefinition.type === 'EMBEDDED_GROUPS',
+          );
+          this.embeddedForm = embeddedForm;
           this.loadingHeader = false;
           this.loadingTable = false;
         },
@@ -424,6 +499,30 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
         },
       });
   }
+
+  private getOrCreateForm(
+    type: 'INITIAL' | 'EXTENSION' | 'EMBEDDED_INITIAL',
+  ): Observable<FormSpecificationDTO> {
+    const context = new HttpContext().set(SKIP_ERROR_NOTIFICATION, true);
+    return this.formsService
+      .getFormByObjectAndFlow(this.entityType, this.entityId, type, false, 'body', false, {
+        context,
+      })
+      .pipe(
+        catchError((err: RPCError) => {
+          if (err.status === 404) {
+            return this.formsService.createForm({
+              flowId: type,
+              idmObjectType: this.entityType,
+              objectId: this.entityId,
+            });
+          }
+
+          return throwError(() => err);
+        }),
+      );
+  }
+
   private executeUpdates(): void {
     const definitionUpdates = this.formItems
       .map((item) => {
@@ -439,7 +538,7 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
         patchObject.hidden = item.itemDefinition.hidden;
         patchObject.disabled = item.itemDefinition.disabled;
         patchObject.validators = item.itemDefinition.validators;
-        patchObject.formTypes = item.itemDefinition.formTypes;
+        patchObject.flowIds = item.itemDefinition.flowIds;
         if ('configuration' in item.itemDefinition) {
           patchObject.configuration = item.itemDefinition.configuration;
         }
@@ -456,22 +555,12 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
       })
       .filter((update): update is BulkItemDefinitionUpdateRequest => update !== null);
 
-    const typeconfig = this.formSpecification.items.find(
-      (prr) => prr.formTypeConfig.formType === this.selectedType.formType,
-    );
-    if (typeconfig) {
-      typeconfig.formItems = this.formItems.map((enriched) => enriched.formItemDTO);
-    } else {
-      this.formSpecification.items.push({
-        formTypeConfig: { formType: this.selectedType.formType },
-        formItems: this.formItems.map((enriched) => enriched.formItemDTO),
-      });
-    }
-
     this.formsService.bulkUpdateItemDefinitions(definitionUpdates).subscribe({
       next: () => {
         this.formsService
-          .updateFormItems(this.formSpecification.id, this.formSpecification.items)
+          .updateFormItems(this.selectedForm.id, {
+            formItems: this.formItems.map((item) => item.formItemDTO),
+          })
           .subscribe({
             next: () => {
               this.translate
@@ -487,7 +576,6 @@ export abstract class ApplicationFormBaseNewRegComponent implements OnInit {
       error: () => (this.loadingTable = false),
     });
   }
-
   protected abstract getPreviewRoute(): unknown[];
   protected abstract checkAuth(): void; // Each component implements its own auth check
 }

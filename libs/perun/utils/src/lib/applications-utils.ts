@@ -1,6 +1,7 @@
 import {
   Application,
   ApplicationsOrderColumn,
+  AppType,
   Group,
   RichApplication,
   Vo,
@@ -9,6 +10,8 @@ import { downloadData, parseFullName } from './perun-utils';
 import { formatDate } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { EnrichedApplicationDTO } from '@perun-web-apps/perun/registrar-openapi';
+
+const flowToType = { EMBEDDED_INITIAL: 'EMBEDDED', INITIAL: 'INITIAL', EXTENSION: 'EXTENSION' };
 
 export function dateToString(date: Date): string {
   // in case end date hasn't been picked yet in the date picker, show all until today
@@ -201,7 +204,7 @@ export function mapToAppWithId(
     uuid: app.application.id,
     vo: vo,
     group: null,
-    type: app.application.type.formType === 'INITIAL' ? 'INITIAL' : 'EXTENSION',
+    type: flowToType[app.form.flowId] as AppType,
     extSourceName: app.submission.identityIssuer,
     createdBy: app.submission.submitterName,
     createdAt: app.submission.timestamp,

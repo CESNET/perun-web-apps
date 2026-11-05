@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NewRegistrarSwitchComponent } from '../new-registrar-switch/new-registrar-switch.component';
 import { VoSettingsManageEmbeddedGroupsComponent } from '../../../../vos/pages/vo-detail-page/vo-settings/vo-settings-manage-embedded-groups/vo-settings-manage-embedded-groups.component';
 import { GroupSettingsManageEmbeddedGroupsComponent } from '../../../../vos/pages/group-detail-page/group-settings/group-settings-manage-embedded-groups/group-settings-manage-embedded-groups.component';
+import { ApplicationFormManageEmbeddedGroupsNewRegComponent } from '../../application-form-manage-embedded-groups-new-reg/application-form-manage-embedded-groups-new-reg.component';
 
 @Component({
   selector: 'app-application-form-embedded-groups-switch',
@@ -15,4 +16,6 @@ export class ApplicationFormEmbeddedGroupsSwitchComponent {
     VoSettingsManageEmbeddedGroupsComponent;
   protected readonly GroupSettingsManageEmbeddedGroupsComponent =
     GroupSettingsManageEmbeddedGroupsComponent;
+  protected readonly ApplicationFormManageEmbeddedGroupsNewRegComponent =
+    ApplicationFormManageEmbeddedGroupsNewRegComponent;
 }

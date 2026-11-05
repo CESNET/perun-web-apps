@@ -8,8 +8,6 @@
  * Do not edit the class manually.
  */
 
-export interface SortObject {
-  empty?: boolean;
-  sorted?: boolean;
-  unsorted?: boolean;
+export interface ModuleConfigurationDTO {
+  type?: string;
 }

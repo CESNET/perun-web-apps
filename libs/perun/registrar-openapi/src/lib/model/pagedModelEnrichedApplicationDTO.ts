@@ -11,6 +11,6 @@ import { PageMetadata } from './pageMetadata';
 import { EnrichedApplicationDTO } from './enrichedApplicationDTO';
 
 export interface PagedModelEnrichedApplicationDTO {
-  content?: Array<EnrichedApplicationDTO>;
-  page?: PageMetadata;
+  content: Array<EnrichedApplicationDTO>;
+  page: PageMetadata;
 }

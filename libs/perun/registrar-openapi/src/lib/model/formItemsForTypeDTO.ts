@@ -8,9 +8,7 @@
  * Do not edit the class manually.
  */
 import { FormItemDTO } from './formItemDTO';
-import { FormTypeConfig } from './formTypeConfig';
 
 export interface FormItemsForTypeDTO {
   formItems: Array<FormItemDTO>;
-  formTypeConfig: FormTypeConfig;
 }

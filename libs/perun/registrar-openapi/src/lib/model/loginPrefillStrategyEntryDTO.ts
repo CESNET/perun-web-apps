@@ -9,6 +9,7 @@
  */
 import { PrefillStrategyEntryDTO } from './prefillStrategyEntryDTO';
 import { LoginPrefillConfigurationDTO } from './loginPrefillConfigurationDTO';
+import { IdmObject } from './idmObject';
 
 export interface LoginPrefillStrategyEntryDTO extends PrefillStrategyEntryDTO {
   configuration: LoginPrefillConfigurationDTO;

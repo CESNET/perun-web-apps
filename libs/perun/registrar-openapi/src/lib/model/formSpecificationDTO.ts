@@ -8,27 +8,18 @@
  * Do not edit the class manually.
  */
 import { IdmObject } from './idmObject';
-import { FormItemsForTypeDTO } from './formItemsForTypeDTO';
 import { FormTransitionDTO } from './formTransitionDTO';
 import { AssignedFormModuleDTO } from './assignedFormModuleDTO';
 import { UpdateAgeActionsRequestInner } from './updateAgeActionsRequestInner';
+import { FormItemDTO } from './formItemDTO';
 
 export interface FormSpecificationDTO {
   ageActions?: Array<UpdateAgeActionsRequestInner>;
-  autoApprovedTypes: Array<FormSpecificationDTO.AutoApprovedTypesEnum>;
+  autoApprove: boolean;
+  flowId?: string;
   id: string;
   idmObject: IdmObject;
-  items: Array<FormItemsForTypeDTO>;
+  items: Array<FormItemDTO>;
   modules: Array<AssignedFormModuleDTO>;
   transitions: Array<FormTransitionDTO>;
-}
-export namespace FormSpecificationDTO {
-  export const AutoApprovedTypesEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-    CANCELLATION: 'CANCELLATION',
-    UPDATE: 'UPDATE',
-  } as const;
-  export type AutoApprovedTypesEnum =
-    (typeof AutoApprovedTypesEnum)[keyof typeof AutoApprovedTypesEnum];
 }

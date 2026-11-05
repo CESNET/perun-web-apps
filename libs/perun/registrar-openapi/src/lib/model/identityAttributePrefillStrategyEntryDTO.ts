@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { PrefillStrategyEntryDTO } from './prefillStrategyEntryDTO';
+import { IdmObject } from './idmObject';
 
 export interface IdentityAttributePrefillStrategyEntryDTO extends PrefillStrategyEntryDTO {
   sourceAttribute: string;

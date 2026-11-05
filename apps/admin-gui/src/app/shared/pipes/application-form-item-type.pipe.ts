@@ -11,12 +11,7 @@ export class ApplicationFormItemTypePipe implements PipeTransform {
 
   constructor(private translateService: TranslateService) {}
 
-  transform(value: Type, newReg = false): string {
-    if (newReg) {
-      return this.translateService.instant(
-        'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_TYPES.' + value,
-      ) as string;
-    }
+  transform(value: Type): string {
     this.translateService
       .get('VO_DETAIL.SETTINGS.APPLICATION_FORM.TYPES.' + value)
       .subscribe((text: string) => {

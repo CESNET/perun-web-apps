@@ -8,9 +8,9 @@
  * Do not edit the class manually.
  */
 import { DestinationDTO } from './destinationDTO';
-import { GetGlobalItemDefinitions200ResponseInner } from './getGlobalItemDefinitions200ResponseInner';
-import { GetGlobalPrefillStrategies200ResponseInner } from './getGlobalPrefillStrategies200ResponseInner';
+import { CreateObjectSpecificItemDefinitionRequest } from './createObjectSpecificItemDefinitionRequest';
 import { FormItemDTO } from './formItemDTO';
+import { CreateObjectSpecificPrefillStrategyRequest } from './createObjectSpecificPrefillStrategyRequest';
 import { FormItemDataDTO } from './formItemDataDTO';
 
 export interface EnrichedFormItemDataDTO {
@@ -18,6 +18,6 @@ export interface EnrichedFormItemDataDTO {
   formItem: FormItemDTO;
   formItemData: FormItemDataDTO;
   generated?: boolean;
-  itemDefinition: GetGlobalItemDefinitions200ResponseInner;
-  prefillStrategyEntries: Array<GetGlobalPrefillStrategies200ResponseInner>;
+  itemDefinition: CreateObjectSpecificItemDefinitionRequest;
+  prefillStrategyEntries: Array<CreateObjectSpecificPrefillStrategyRequest>;
 }

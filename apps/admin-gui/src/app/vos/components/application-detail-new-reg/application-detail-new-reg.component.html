@@ -78,16 +78,22 @@
     <div>
       <span class="fw-bold">{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.TYPE' | translate}}</span
       >:
-      @if (this.application.type.formType === 'INITIAL') {
+      @if (this.formSpecification.flowId === 'INITIAL') {
         <span>
           <mat-icon class="align-bottom">arrow_right_alt</mat-icon>
           Initial
         </span>
       }
-      @if (application.type.formType === 'EXTENSION') {
+      @if (this.formSpecification.flowId === 'EXTENSION') {
         <span>
           <mat-icon class="align-bottom">restore</mat-icon>
           Extension
+        </span>
+      }
+      @if (this.formSpecification.flowId.includes('EMBEDDED')) {
+        <span>
+          <mat-icon class="align-bottom">nat</mat-icon>
+          Embedded
         </span>
       }
     </div>
@@ -196,10 +202,10 @@
             <th *matHeaderCellDef mat-header-cell></th>
             <td *matCellDef="let userData" class="word-break-all" mat-cell>
               <div class="d-flex align-items-center">
-                {{userData.formItemData.value}}
+                {{userData | getItemValueNewReg: embeddedTargets}}
                 @if (
                   (application.state === 'SUBMITTED' || application.state === 'VERIFIED') &&
-                                                      userData.itemDefinition?.type !== 'EMBEDDED_GROUP_APPLICATION'
+                                                      userData.itemDefinition?.type !== 'EMBEDDED_GROUPS'
                 ) {
                   <button
                     aria-label="Edit Application data"

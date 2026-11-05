@@ -56,7 +56,6 @@ export class GroupSettingsApplicationFormNewRegComponent extends ApplicationForm
   noApplicationForm = false;
   createEmptyForm = false;
   autoRegistrationEnabled: boolean;
-  embeddedGroupsItemSaved = false;
   group: Group;
 
   constructor(
@@ -64,13 +63,13 @@ export class GroupSettingsApplicationFormNewRegComponent extends ApplicationForm
     dialog: MatDialog,
     notificator: NotificatorService,
     translate: TranslateService,
-    private apiRequest: ApiRequestConfigurationService,
+    apiRequest: ApiRequestConfigurationService,
     router: Router,
     private guiAuthResolver: GuiAuthResolver,
     private attributesManager: AttributesManagerService,
     private entityStorageService: EntityStorageService,
   ) {
-    super(formsService, dialog, notificator, translate, router);
+    super(formsService, dialog, notificator, apiRequest, translate, router);
   }
 
   protected get entityId(): string {

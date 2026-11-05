@@ -9,6 +9,7 @@ import { Component, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
+  ApiRequestConfigurationService,
   EntityStorageService,
   GuiAuthResolver,
   NotificatorService,
@@ -56,11 +57,12 @@ export class VoSettingsApplicationFormNewRegComponent extends ApplicationFormBas
     dialog: MatDialog,
     notificator: NotificatorService,
     translate: TranslateService,
+    apiRequest: ApiRequestConfigurationService,
     router: Router,
     private authResolver: GuiAuthResolver, // Note: kept original name
     private entityStorageService: EntityStorageService,
   ) {
-    super(formsService, dialog, notificator, translate, router);
+    super(formsService, dialog, notificator, apiRequest, translate, router);
   }
 
   protected get entityId(): string {
@@ -88,8 +90,18 @@ export class VoSettingsApplicationFormNewRegComponent extends ApplicationFormBas
     );
     // Original logic preserved exactly
     this.displayedColumns = this.editAuth
-      ? ['drag', 'shortname', 'type', 'disabled', 'hidden', 'preview', 'edit', 'delete']
-      : ['shortname', 'type', 'disabled', 'hidden', 'preview'];
+      ? [
+          'drag',
+          'shortname',
+          'type',
+          'disabled',
+          'hidden',
+          'preview',
+          'managegroups',
+          'edit',
+          'delete',
+        ]
+      : ['shortname', 'type', 'disabled', 'hidden', 'preview', 'managegroups'];
   }
 
   protected getPreviewRoute(): unknown[] {

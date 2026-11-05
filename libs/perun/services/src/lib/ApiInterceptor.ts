@@ -13,7 +13,10 @@ import { HttpResponseError, RPCError } from '@perun-web-apps/perun/models';
 import { AuthService } from './auth.service';
 import { StoreService } from './store.service';
 import { NotificatorService } from './notificator.service';
-import { ApiRequestConfigurationService } from './api-request-configuration.service';
+import {
+  ApiRequestConfigurationService,
+  SKIP_ERROR_NOTIFICATION,
+} from './api-request-configuration.service';
 import { getDefaultDialogConfig } from '@perun-web-apps/perun/utils';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SessionExpirationDialogComponent } from '@perun-web-apps/perun/session-expiration';
@@ -119,7 +122,8 @@ export class ApiInterceptor implements HttpInterceptor {
 
   private handleRequest<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
     // Also handle errors globally, if not disabled
-    const shouldHandleError = this.apiRequestConfiguration.shouldHandleError();
+    const shouldHandleError =
+      this.apiRequestConfiguration.shouldHandleError() && !req.context.get(SKIP_ERROR_NOTIFICATION);
 
     const shouldReloadPrincipal =
       req.method === 'POST' && this.isNotConsolidatorOrLinker() && this.isCallToPerunApi(req.url);

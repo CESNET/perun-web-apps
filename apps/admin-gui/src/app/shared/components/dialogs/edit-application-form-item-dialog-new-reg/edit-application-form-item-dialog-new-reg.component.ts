@@ -43,15 +43,13 @@ import { ApplicationFormItemDisabledPipe } from '../../../pipes/application-form
 import { ApplicationFormItemHiddenPipe } from '../../../pipes/application-form-item-hidden.pipe';
 import { DisableSubmitOnAppItemEditPipe } from '@perun-web-apps/perun/pipes';
 import {
-  FormTypeConfig,
   ItemDefinitionDTO,
   ItemWithDefinitionDTO,
-  IdentityAttributePrefillStrategyEntryDTO,
-  IdmAttributePrefillStrategyEntryDTO,
-  LoginPrefillStrategyEntryDTO,
   Option,
 } from '@perun-web-apps/perun/registrar-openapi';
-import FormTypeEnum = FormTypeConfig.FormTypeEnum;
+
+/** A prefill strategy entry as carried on a form item (the per-type union). */
+type PrefillEntry = ItemWithDefinitionDTO['prefillStrategyEntries'][number];
 
 interface EditableOption {
   value: string;
@@ -65,6 +63,9 @@ export interface EditApplicationFormItemDialogNewRegComponentData {
   formSpecificationId: string;
   applicationFormItem: ItemWithDefinitionDTO;
   allItems: ItemWithDefinitionDTO[];
+  // embedded groups item: options (embedded form UUIDs) are managed on the
+  // manage-embedded-groups page, not in this dialog
+  isEmbedded?: boolean;
 }
 
 @Component({
@@ -107,12 +108,12 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
   itemDestination: string = '';
   itemDestinationOriginal: string = '';
   idmSource: string = '';
-  idmSourceOriginal: IdmAttributePrefillStrategyEntryDTO | LoginPrefillStrategyEntryDTO;
+  idmSourceOriginal: Extract<PrefillEntry, { sourceAttribute?: string }> | undefined;
   identitySource: string = '';
-  identitySourceOriginal: IdentityAttributePrefillStrategyEntryDTO;
+  identitySourceOriginal: Extract<PrefillEntry, { sourceAttribute: string }> | undefined;
   validatorRegex: string = '';
-  identityPrefillStrategy: IdentityAttributePrefillStrategyEntryDTO;
-  idmPrefillStrategy: IdmAttributePrefillStrategyEntryDTO | LoginPrefillStrategyEntryDTO;
+  identityPrefillStrategy: PrefillEntry;
+  idmPrefillStrategy: PrefillEntry;
   federationAttributeDN = '';
   itemType = ItemType;
   options: EditableOption[] = [];
@@ -222,7 +223,9 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     this.theme = this.data.theme;
     this.possibleDependencyItems = this.getPossibleDepItems();
     this.applicationFormItem = structuredClone(this.data.applicationFormItem);
-    this.getOptions();
+    if (!this.data.isEmbedded) {
+      this.getOptions();
+    }
     this.prepareFormControls();
 
     this.loading = true;
@@ -230,13 +233,20 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       this.applicationFormItem.itemDefinition.validators?.find((val) => val.type === 'REGEX')
         ?.configuration.regex ?? '';
     this.identitySourceOriginal = this.applicationFormItem.prefillStrategyEntries.find(
-      (pref) => pref.type === 'IDENTITY_ATTRIBUTE',
+      (pref): pref is Extract<PrefillEntry, { sourceAttribute: string }> =>
+        pref.type === 'IDENTITY_ATTRIBUTE',
     );
     this.identitySource = this.identitySourceOriginal?.sourceAttribute ?? '';
     this.idmSourceOriginal = this.applicationFormItem.prefillStrategyEntries.find(
-      (pref) => pref.type === 'IDM_ATTRIBUTE' || pref.type === 'LOGIN_ATTRIBUTE',
+      (pref): pref is Extract<PrefillEntry, { sourceAttribute?: string }> =>
+        pref.type === 'IDM_ATTRIBUTE' || pref.type === 'LOGIN_ATTRIBUTE',
     );
     this.idmSource = this.idmSourceOriginal?.sourceAttribute;
+    // both strategy fields must carry the current entries from the start: a slot the user
+    // never touches keeps its field undefined otherwise and its prefill is silently
+    // dropped on save ("setting one attribute unsets the other")
+    this.identityPrefillStrategy = this.identitySourceOriginal;
+    this.idmPrefillStrategy = this.idmSourceOriginal;
     this.attributesManager.getAllAttributeDefinitions().subscribe({
       next: (attributeDefinitions) => {
         const filteredAttributes = this.filterAttributesForWidget(attributeDefinitions);
@@ -315,7 +325,8 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       if (
         this.applicationFormItem.itemDefinition.type === 'HTML_COMMENT' ||
         this.applicationFormItem.itemDefinition.type === 'HEADING' ||
-        this.applicationFormItem.itemDefinition.type === 'CHECKBOX'
+        this.applicationFormItem.itemDefinition.type === 'CHECKBOX' ||
+        this.applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUPS'
       ) {
         this.applicationFormItem.itemDefinition.texts[lang].label = this.inputFormGroup.get(
           `${lang}-html-label`,
@@ -332,6 +343,9 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
         `${lang}-plain-help`,
       ).value;
     }
+    // the option editors are merged into the item configuration by saveOptions() (values
+    // shared across languages, labels collected per language); EMBEDDED_GROUPS items keep
+    // their targets untouched, as saveOptions() only handles choice item types
     this.saveOptions();
     const definition = this.applicationFormItem.itemDefinition;
     definition.validators = (definition.validators ?? []).filter((val) => val.type !== 'REGEX');
@@ -366,20 +380,24 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     }
 
     this.applicationFormItem.prefillStrategyEntries = [];
-    if (this.identityPrefillStrategy) {
-      this.applicationFormItem.prefillStrategyEntries.push(this.identityPrefillStrategy);
-    }
     if (this.idmPrefillStrategy) {
       this.applicationFormItem.prefillStrategyEntries.push(this.idmPrefillStrategy);
     }
+    if (this.identityPrefillStrategy) {
+      this.applicationFormItem.prefillStrategyEntries.push(this.identityPrefillStrategy);
+    }
+    // keep the definition's strategy id list in sync with the entries, in entry order
+    // (IDM first, then identity — the prefill resolver applies strategies in list order
+    // and the first one yielding a value wins); replacing or clearing an entry drops its
+    // old strategy id, entries pending creation (id null) get their id rebuilt by the
+    // form's createOrGet step
+    this.applicationFormItem.itemDefinition.prefillStrategyIds =
+      this.applicationFormItem.prefillStrategyEntries
+        .map((entry) => entry.id)
+        .filter((id): id is string => id != null);
 
     this.dialogRef.close(this.applicationFormItem);
   }
-
-  onChangingType(type: FormTypeEnum): void {
-    this.applicationFormItem.itemDefinition.formTypes.push(type);
-  }
-
   addOption(): void {
     this.options.push(this.createEditableOption({ value: '', labels: {} }));
   }
@@ -421,6 +439,21 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       }
     } else {
       this.identityPrefillStrategy = this.identitySourceOriginal;
+    }
+    this.cd.detectChanges();
+  }
+
+  changeFederationAttributeValue(): void {
+    if (this.identitySource === this.identitySourceOriginal?.sourceAttribute) {
+      this.identityPrefillStrategy = this.identitySourceOriginal;
+    } else {
+      this.identityPrefillStrategy = {
+        id: null,
+        type: 'IDENTITY_ATTRIBUTE',
+        formSpecificationId: this.data.formSpecificationId,
+        accessLevel: 'FORM_SPECIFIC',
+        sourceAttribute: this.identitySource,
+      };
     }
     this.cd.detectChanges();
   }
@@ -480,7 +513,10 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
         );
         formGroupFields[`${lang}-html-label`].markAsTouched();
       }
-      if (this.applicationFormItem.itemDefinition.type === 'CHECKBOX') {
+      if (
+        this.applicationFormItem.itemDefinition.type === 'CHECKBOX' ||
+        this.applicationFormItem.itemDefinition.type === 'EMBEDDED_GROUPS'
+      ) {
         formGroupFields[`${lang}-html-label`] = new FormControl(
           this.applicationFormItem.itemDefinition.texts[lang]?.label,
           [],

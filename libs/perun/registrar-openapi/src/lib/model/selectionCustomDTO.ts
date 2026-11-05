@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { ItemTexts } from './itemTexts';
+import { IdmObject } from './idmObject';
 import { ItemDefinitionDTO } from './itemDefinitionDTO';
 import { OptionsConfigurationDTO } from './optionsConfigurationDTO';
 import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsInner';
