@@ -1,8 +1,10 @@
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +26,7 @@ import { SettingsToggleItemComponent } from '../../../shared/components/settings
 export class ExpirationAttrValue {
   lifecycleEnabled?: 'true' | 'false';
   period?: string;
+  activityCap?: string;
   doNotExtendLoa?: string;
   doNotAllowLoa?: string;
   gracePeriod?: string;
@@ -35,10 +38,14 @@ export class ExpirationAttrValue {
 export interface ExpirationConfiguration {
   enabled: boolean;
   periodEnabled: boolean;
-  periodType: 'static' | 'dynamic';
+  periodType: 'static' | 'dynamic' | 'inactivity';
   periodStatic: string;
   periodDynamic: string;
   periodDynamicUnit: 'y' | 'd' | 'm';
+  periodInactivity: string;
+  periodInactivityUnit: 'y' | 'm';
+  activityCap: string;
+  activityCapUnit: 'y' | 'm';
   doNotAllowLoasEnabled: boolean;
   doNotAllowLoas: number[];
   doNotExtendLoasEnabled: boolean;
@@ -76,6 +83,8 @@ export interface ExpirationConfiguration {
     ReactiveFormsModule,
     TranslateModule,
     MatTooltip,
+    MatIcon,
+    MatIconButton,
     SettingsToggleItemComponent,
   ],
   standalone: true,
@@ -85,6 +94,9 @@ export interface ExpirationConfiguration {
   animations: [openClose],
 })
 export class ExpirationSettingsComponent implements OnInit, OnChanges {
+  // 5 years in months - maximum allowed value of the inactivity period and the mandatory review period
+  static readonly MAX_PERIOD_MONTHS = 60;
+
   @Input()
   expirationAttribute: Attribute;
   @Output()
@@ -100,6 +112,17 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       value: 'd',
       text: 'Days',
     },
+    {
+      value: 'm',
+      text: 'Months',
+    },
+    {
+      value: 'y',
+      text: 'Years',
+    },
+  ];
+  // months and years only - used for the expiration period and the activity-based settings
+  amountOptionsWithoutDays = [
     {
       value: 'm',
       text: 'Months',
@@ -150,6 +173,7 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     return (
       currentValue.lifecycleEnabled !== initValue.lifecycleEnabled ||
       currentValue.period !== initValue.period ||
+      currentValue.activityCap !== initValue.activityCap ||
       currentValue.gracePeriod !== initValue.gracePeriod ||
       currentValue.removeAfter !== initValue.removeAfter ||
       currentValue.archiveAfter !== initValue.archiveAfter ||
@@ -174,6 +198,8 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
         return this.parseDynamicPeriod(config);
       case 'static':
         return this.parseStaticPeriod(config);
+      case 'inactivity':
+        return this.parseInactivityPeriod(config);
       default:
       // TODO show error
     }
@@ -190,6 +216,10 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       periodStatic: '',
       periodDynamic: '',
       periodDynamicUnit: 'm',
+      periodInactivity: '',
+      periodInactivityUnit: 'm',
+      activityCap: '',
+      activityCapUnit: 'm',
       doNotAllowLoas: [],
       doNotAllowLoasEnabled: false,
       doNotExtendLoas: [],
@@ -232,6 +262,10 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       config = this.setPeriodValues(value, config);
     }
 
+    if (value.activityCap !== undefined && value.activityCap.length > 0) {
+      config = this.setActivityCapValues(value, config);
+    }
+
     if (value.doNotAllowLoa !== undefined && value.doNotAllowLoa.length > 0) {
       config = this.setDoNotAllowLoasValues(value, config);
     }
@@ -263,6 +297,13 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     this.currentConfiguration.periodEnabled = value;
     this.currentConfiguration.gracePeriodEnabled = this.currentConfiguration.periodEnabled;
   }
+  onPeriodTypeChange(event: MatRadioChange): void {
+    // prefill the recommended default for the mandatory review period when the inactivity model is selected
+    if (event.value === 'inactivity' && !this.currentConfiguration.activityCap) {
+      this.currentConfiguration.activityCap = '5';
+      this.currentConfiguration.activityCapUnit = 'y';
+    }
+  }
   getSaveTooltip(): string {
     if (!this.expirationAttribute.writable) {
       return 'VO_MANAGEMENT.SETTINGS.EXPIRATION.PERMISSION_DENIED_HINT';
@@ -279,6 +320,37 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     return '';
   }
 
+  // converts the amount + unit pair to months, returns null when the value is not filled in
+  getPeriodMonths(
+    value: string | null | undefined,
+    unit: string | null | undefined,
+  ): number | null {
+    if (value === null || value === undefined || value.length === 0 || !unit) {
+      return null;
+    }
+    const amount = parseInt(value, 10);
+    if (isNaN(amount) || amount < 1) {
+      return null;
+    }
+    return unit === 'y' ? amount * 12 : amount;
+  }
+
+  isInactivityPeriodOutOfRange(): boolean {
+    const months = this.getPeriodMonths(
+      this.currentConfiguration.periodInactivity,
+      this.currentConfiguration.periodInactivityUnit,
+    );
+    return months !== null && months > ExpirationSettingsComponent.MAX_PERIOD_MONTHS;
+  }
+
+  isReviewPeriodOutOfRange(): boolean {
+    const months = this.getPeriodMonths(
+      this.currentConfiguration.activityCap,
+      this.currentConfiguration.activityCapUnit,
+    );
+    return months !== null && months > ExpirationSettingsComponent.MAX_PERIOD_MONTHS;
+  }
+
   private setPeriodValues(
     value: ExpirationAttrValue,
     config: ExpirationConfiguration,
@@ -290,11 +362,27 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       const unit = value.period.charAt(value.period.length - 1);
       config.periodDynamic = value.period.substring(1, value.period.length - 1);
       config.periodDynamicUnit = unit as 'm' | 'd' | 'y';
+    } else if (value.period.startsWith('~')) {
+      config.periodType = 'inactivity';
+
+      const unit = value.period.charAt(value.period.length - 1);
+      config.periodInactivity = value.period.substring(1, value.period.length - 1);
+      config.periodInactivityUnit = unit as 'm' | 'y';
     } else {
       config.periodType = 'static';
 
       config.periodStatic = value.period;
     }
+    return config;
+  }
+
+  private setActivityCapValues(
+    value: ExpirationAttrValue,
+    config: ExpirationConfiguration,
+  ): ExpirationConfiguration {
+    const capValue = value.activityCap;
+    config.activityCap = capValue.substring(0, capValue.length - 1);
+    config.activityCapUnit = capValue.charAt(capValue.length - 1) as 'm' | 'y';
     return config;
   }
 
@@ -379,6 +467,18 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
 
   private parseDynamicPeriod(config: ExpirationConfiguration): string {
     return '+' + config.periodDynamic + config.periodDynamicUnit;
+  }
+
+  private parseInactivityPeriod(config: ExpirationConfiguration): string {
+    return '~' + config.periodInactivity + config.periodInactivityUnit;
+  }
+
+  private parseActivityCap(config: ExpirationConfiguration): string {
+    const value = config.activityCap;
+    if (value === null || value === undefined || value.length === 0 || !config.activityCapUnit) {
+      return null;
+    }
+    return value + config.activityCapUnit;
   }
 
   private parseStaticPeriod(config: ExpirationConfiguration): string {
@@ -476,11 +576,16 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
     const gracePeriod = this.parseDynamicCustomPeriod(config, 'gracePeriod');
     const removeAfter = this.parseDynamicCustomPeriod(config, 'removeAfter');
     const archiveAfter = this.parseDynamicCustomPeriod(config, 'archiveAfter');
+    const activityCap = this.parseActivityCap(config);
 
     const specialLoaPeriod = this.parseSpecialLoaPeriod(config);
 
     if (period !== null) {
       value.period = period;
+    }
+
+    if (activityCap !== null) {
+      value.activityCap = activityCap;
     }
 
     if (dontExtendLoad !== null) {
@@ -514,8 +619,33 @@ export class ExpirationSettingsComponent implements OnInit, OnChanges {
       const hasDynamicPeriod =
         cfg.periodType === 'dynamic' && !!cfg.periodDynamic && !!cfg.periodDynamicUnit;
 
-      if (!hasStaticPeriod && !hasDynamicPeriod) {
+      const inactivityPeriodMonths = this.getPeriodMonths(
+        cfg.periodInactivity,
+        cfg.periodInactivityUnit,
+      );
+
+      const hasInactivityPeriod =
+        cfg.periodType === 'inactivity' &&
+        inactivityPeriodMonths !== null &&
+        inactivityPeriodMonths <= ExpirationSettingsComponent.MAX_PERIOD_MONTHS;
+
+      if (!hasStaticPeriod && !hasDynamicPeriod && !hasInactivityPeriod) {
         return false;
+      }
+
+      // the mandatory review period is optional, but when filled in it has to be valid
+      const hasReviewPeriodValue =
+        cfg.activityCap !== null && cfg.activityCap !== undefined && cfg.activityCap.length > 0;
+
+      if (hasReviewPeriodValue) {
+        const reviewPeriodMonths = this.getPeriodMonths(cfg.activityCap, cfg.activityCapUnit);
+
+        if (
+          reviewPeriodMonths === null ||
+          reviewPeriodMonths > ExpirationSettingsComponent.MAX_PERIOD_MONTHS
+        ) {
+          return false;
+        }
       }
 
       if (!cfg.gracePeriod || !cfg.gracePeriodUnit) {
