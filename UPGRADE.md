@@ -1,5 +1,20 @@
 Upgrade notes
 
+## [20.16.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.15.0...v20.16.0) (2026-11-11)
+
+
+### Features
+
+* adjust admin gui frontend to comply with config changes in registrar ([d5995dd](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d5995dd21b3211940cb530538c4ac995fb711413))
+* **admin:** redesign membership expiration settings ([f046119](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/f046119daa212e4a02b0cf11d42f95f01a9e5d01))
+* **profile:** allow preferred mail change from attribute ([316ea74](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/316ea748b43f4e63deccd574b5d10dd205b73af8))
+
+
+### Bug Fixes
+
+* **admin:** align group member filters with action buttons ([d5671af](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/d5671af733b2d1f55c5c57fe78b85e73b79d4589))
+* **admin:** use plain group in manager role requests ([614adb0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/commit/614adb0133f9c87109cdf3fd29b32fec3cf2bd13))
+
 ## [20.15.0](https://gitlab.ics.muni.cz/perun/perun-idm/perun-web-apps/compare/v20.14.0...v20.15.0) (2026-10-19)
 
 
