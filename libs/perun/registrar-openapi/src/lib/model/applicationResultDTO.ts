@@ -11,11 +11,11 @@ import { ApplicationDTO } from './applicationDTO';
 import { ValidationError } from './validationError';
 
 export interface ApplicationResultDTO {
-  formSpecificationId: string;
   application?: ApplicationDTO;
-  errors?: Array<ValidationError>;
-  submissionErrors?: Array<ApplicationResultDTO.SubmissionErrorsEnum>;
   error?: string;
+  errors?: Array<ValidationError>;
+  formSpecificationId: string;
+  submissionErrors?: Array<ApplicationResultDTO.SubmissionErrorsEnum>;
 }
 export namespace ApplicationResultDTO {
   export const SubmissionErrorsEnum = {
@@ -28,6 +28,7 @@ export namespace ApplicationResultDTO {
     NOT_ELIGIBLE_EINFRAIDP: 'NOT_ELIGIBLE_EINFRAIDP',
     NOT_ELIGIBLE_EINFRA_EXTENSION: 'NOT_ELIGIBLE_EINFRA_EXTENSION',
     NOT_ELIGIBLE_DU: 'NOT_ELIGIBLE_DU',
+    NOT_ELIGIBLE_BONA_FIDE: 'NOT_ELIGIBLE_BONA_FIDE',
     IT4I_COLLISION: 'IT4I_COLLISION',
     UNKNOWN: 'UNKNOWN',
   } as const;

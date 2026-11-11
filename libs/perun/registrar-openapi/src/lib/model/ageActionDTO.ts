@@ -9,7 +9,14 @@
  */
 
 export interface AgeActionDTO {
-  actionName: string;
   triggerAgeSeconds: number;
-  options?: { [key: string]: any };
+  type: AgeActionDTO.TypeEnum;
+}
+export namespace AgeActionDTO {
+  export const TypeEnum = {
+    REJECT_IGNORED: 'REJECT_IGNORED',
+    REJECT_VERIFICATION_PENDING: 'REJECT_VERIFICATION_PENDING',
+    PERUN_REJECT_EXPIRED_APPLICATION: 'PERUN_REJECT_EXPIRED_APPLICATION',
+  } as const;
+  export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }

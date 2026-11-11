@@ -11,7 +11,7 @@ import { FormContextDTO } from './formContextDTO';
 import { Identity } from './identity';
 
 export interface SubmissionContextEnrichedDTO {
-  redirectUrl?: string;
   formContexts?: Array<FormContextDTO>;
+  redirectUrl?: string;
   similarIdentities?: Array<Identity>;
 }

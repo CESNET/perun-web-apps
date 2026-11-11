@@ -21,4 +21,8 @@ export interface PersonalDataChangeConfig {
   enableLinkedEmail: boolean;
   enableCustomEmail: boolean;
   customEmailRequiresVerification: boolean;
+  /**
+   * friendly name of user attribute with emails not requiring verification; empty if the functionality is off
+   */
+  verifiedEmailsAttribute?: string;
 }

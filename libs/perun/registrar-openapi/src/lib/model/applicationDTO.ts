@@ -10,12 +10,12 @@
 import { FormTypeConfig } from './formTypeConfig';
 
 export interface ApplicationDTO {
+  formSpecificationId: string;
   id: string;
   idmUserId: string;
-  state: ApplicationDTO.StateEnum;
   redirectUrl?: string;
+  state: ApplicationDTO.StateEnum;
   submissionId: string;
-  formSpecificationId: string;
   type: FormTypeConfig;
 }
 export namespace ApplicationDTO {

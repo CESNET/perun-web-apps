@@ -20,6 +20,13 @@
       {{'VO_DETAIL.SETTINGS.APPLICATION_FORM.NEW_REG_WIDGET_DESCRIPTION.'+selectedWidget | translate}}
     </mat-hint>
   </mat-form-field>
+  @if (selectedWidget === 'SUBMIT_BUTTON') {
+    <div class="mb-3">
+      <mat-checkbox [(ngModel)]="autoSubmit" data-cy="item-auto-submit">
+        {{'DIALOGS.APPLICATION_FORM_ADD_ITEM.AUTO_SUBMIT' | translate}}
+      </mat-checkbox>
+    </div>
+  }
   <mat-form-field>
     <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INSERT_AFTER' | translate}}:</mat-label>
     <mat-select [(ngModel)]="selectedItem" disableOptionCentering>

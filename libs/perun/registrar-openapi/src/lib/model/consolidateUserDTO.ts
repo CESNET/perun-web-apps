@@ -9,7 +9,7 @@
  */
 
 export interface ConsolidateUserDTO {
-  userId: string;
-  identityIssuer: string;
   identityIdentifier: string;
+  identityIssuer: string;
+  userId: string;
 }

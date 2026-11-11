@@ -956,6 +956,21 @@ td.mat-mdc-cell {
   word-wrap: break-word !important;
 }
 
+.expiration-help-tooltip {
+  --mat-tooltip-container-color: #ffffff;
+  --mat-tooltip-supporting-text-color: #212121;
+
+  .mat-mdc-tooltip-surface {
+    padding: 8px 12px;
+    max-width: 300px;
+    white-space: pre-line;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+  }
+}
+
 /*************************************
 **************** Tab *****************
 *************************************/

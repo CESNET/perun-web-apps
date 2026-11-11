@@ -9,8 +9,8 @@
  */
 
 export interface PageMetadata {
-  size?: number;
   number?: number;
+  size?: number;
   totalElements?: number;
   totalPages?: number;
 }

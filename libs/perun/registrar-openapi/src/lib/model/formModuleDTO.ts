@@ -9,7 +9,7 @@
  */
 
 export interface FormModuleDTO {
-  name: string;
+  configurationSchema: any | null;
   description?: string;
-  requiredOptions: Array<string>;
+  name: string;
 }

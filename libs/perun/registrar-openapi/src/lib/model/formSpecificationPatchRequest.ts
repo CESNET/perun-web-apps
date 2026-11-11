@@ -12,8 +12,8 @@ import { AssignedFormModuleDTO } from './assignedFormModuleDTO';
 
 export interface FormSpecificationPatchRequest {
   autoFormTypes?: Array<FormSpecificationPatchRequest.AutoFormTypesEnum>;
-  formTransitions?: Array<FormTransitionDTO>;
   formModules?: Array<AssignedFormModuleDTO>;
+  formTransitions?: Array<FormTransitionDTO>;
 }
 export namespace FormSpecificationPatchRequest {
   export const AutoFormTypesEnum = {

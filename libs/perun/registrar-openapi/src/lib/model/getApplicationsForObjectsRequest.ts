@@ -10,8 +10,8 @@
 import { IdmObject } from './idmObject';
 
 export interface GetApplicationsForObjectsRequest {
-  states: Array<GetApplicationsForObjectsRequest.StatesEnum>;
   idmObjects: Array<IdmObject>;
+  states: Array<GetApplicationsForObjectsRequest.StatesEnum>;
 }
 export namespace GetApplicationsForObjectsRequest {
   export const StatesEnum = {

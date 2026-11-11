@@ -129,7 +129,14 @@ export class UpdateApplicationFormDialogNewRegComponent implements OnInit {
       .updateForm(this.applicationForm.id, {
         autoFormTypes: this.applicationForm.autoApprovedTypes,
         formModules: this.modulesForm.value.fields.map((moduleName) => {
-          return { formSpecificationId: this.applicationForm.id, moduleName: moduleName };
+          const configuration: unknown = this.applicationForm.modules.find(
+            (module) => module.moduleName === moduleName,
+          )?.configuration;
+          return {
+            formSpecificationId: this.applicationForm.id,
+            moduleName,
+            configuration: configuration ?? {},
+          };
         }),
       })
       .subscribe(

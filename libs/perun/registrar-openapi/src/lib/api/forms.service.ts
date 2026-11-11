@@ -23,11 +23,15 @@ import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
 
 // @ts-ignore
-import { AgeActionDTO } from '../model/ageActionDTO';
-// @ts-ignore
 import { AgeActionRecordDTO } from '../model/ageActionRecordDTO';
 // @ts-ignore
+import { ApplicationPrefillStrategyEntryDTO } from '../model/applicationPrefillStrategyEntryDTO';
+// @ts-ignore
 import { BulkItemDefinitionUpdateRequest } from '../model/bulkItemDefinitionUpdateRequest';
+// @ts-ignore
+import { CheckboxDTO } from '../model/checkboxDTO';
+// @ts-ignore
+import { DatePickerDTO } from '../model/datePickerDTO';
 // @ts-ignore
 import { DestinationDTO } from '../model/destinationDTO';
 // @ts-ignore
@@ -39,13 +43,51 @@ import { FormSpecificationDTO } from '../model/formSpecificationDTO';
 // @ts-ignore
 import { FormSpecificationPatchRequest } from '../model/formSpecificationPatchRequest';
 // @ts-ignore
+import { GetGlobalItemDefinitions200ResponseInner } from '../model/getGlobalItemDefinitions200ResponseInner';
+// @ts-ignore
+import { GetGlobalPrefillStrategies200ResponseInner } from '../model/getGlobalPrefillStrategies200ResponseInner';
+// @ts-ignore
+import { HeadingDTO } from '../model/headingDTO';
+// @ts-ignore
+import { HtmlCommentDTO } from '../model/htmlCommentDTO';
+// @ts-ignore
+import { IdentityAttributePrefillStrategyEntryDTO } from '../model/identityAttributePrefillStrategyEntryDTO';
+// @ts-ignore
+import { IdmAttributePrefillStrategyEntryDTO } from '../model/idmAttributePrefillStrategyEntryDTO';
+// @ts-ignore
 import { ItemDefinitionDTO } from '../model/itemDefinitionDTO';
 // @ts-ignore
 import { ItemDefinitionPatchRequest } from '../model/itemDefinitionPatchRequest';
 // @ts-ignore
 import { ItemWithDefinitionDTO } from '../model/itemWithDefinitionDTO';
 // @ts-ignore
-import { PrefillStrategyEntryDTO } from '../model/prefillStrategyEntryDTO';
+import { ListInputBoxDTO } from '../model/listInputBoxDTO';
+// @ts-ignore
+import { LoginDTO } from '../model/loginDTO';
+// @ts-ignore
+import { LoginPrefillStrategyEntryDTO } from '../model/loginPrefillStrategyEntryDTO';
+// @ts-ignore
+import { MapInputBoxDTO } from '../model/mapInputBoxDTO';
+// @ts-ignore
+import { PasswordDTO } from '../model/passwordDTO';
+// @ts-ignore
+import { RadioDTO } from '../model/radioDTO';
+// @ts-ignore
+import { SelectionCustomDTO } from '../model/selectionCustomDTO';
+// @ts-ignore
+import { SelectionboxDTO } from '../model/selectionboxDTO';
+// @ts-ignore
+import { SubmitButtonDTO } from '../model/submitButtonDTO';
+// @ts-ignore
+import { TextareaDTO } from '../model/textareaDTO';
+// @ts-ignore
+import { TextfieldDTO } from '../model/textfieldDTO';
+// @ts-ignore
+import { TimezoneDTO } from '../model/timezoneDTO';
+// @ts-ignore
+import { UpdateAgeActionsRequestInner } from '../model/updateAgeActionsRequestInner';
+// @ts-ignore
+import { VerifiedEmailDTO } from '../model/verifiedEmailDTO';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
@@ -364,7 +406,7 @@ export class FormsService {
 
   /**
    * Copy form transitions to another form
-   * Copies form transitions from one form to another; the source of the copied transitions is remapped to the target form.
+   * Copies form transitions from one form to another; the source of the copied transitions is remapped to the target form. If there is an existing transition to some form on the target form, do not copy transition to that form.
    * @param fromFormId
    * @param toFormId
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
@@ -1002,42 +1044,111 @@ export class FormsService {
   /**
    * Create a new global item definition
    * Create a new global item definition
-   * @param ItemDefinitionDTO
+   * @param CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createGlobalItemDefinition(
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<ItemDefinitionDTO>;
+  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
   public createGlobalItemDefinition(
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<ItemDefinitionDTO>>;
+  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
   public createGlobalItemDefinition(
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<ItemDefinitionDTO>>;
+  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
   public createGlobalItemDefinition(
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (ItemDefinitionDTO === null || ItemDefinitionDTO === undefined) {
+    if (
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        null ||
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter ItemDefinitionDTO was null or undefined when calling createGlobalItemDefinition.',
+        'Required parameter CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createGlobalItemDefinition.',
       );
     }
 
@@ -1099,55 +1210,80 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<ItemDefinitionDTO>(requestUrl, ItemDefinitionDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalItemDefinitions200ResponseInner>(
+      requestUrl,
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
    * Create a new global prefill strategy
    * Create a new global prefill strategy
-   * @param PrefillStrategyEntryDTO
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createGlobalPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<PrefillStrategyEntryDTO>;
+  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
   public createGlobalPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
   public createGlobalPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
   public createGlobalPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (PrefillStrategyEntryDTO === null || PrefillStrategyEntryDTO === undefined) {
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter PrefillStrategyEntryDTO was null or undefined when calling createGlobalPrefillStrategy.',
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createGlobalPrefillStrategy.',
       );
     }
 
@@ -1209,52 +1345,120 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<PrefillStrategyEntryDTO>(requestUrl, PrefillStrategyEntryDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
    * Create a new item definition for form
    * Create a new item definition to be used for this form\&#39;s items
    * @param formSpecificationId
-   * @param ItemDefinitionDTO
+   * @param CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<ItemDefinitionDTO>;
+  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<ItemDefinitionDTO>>;
+  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<ItemDefinitionDTO>>;
+  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
   public createItemDefinitionForForm(
     formSpecificationId: string,
-    ItemDefinitionDTO: ItemDefinitionDTO,
+    CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO:
+      | CheckboxDTO
+      | DatePickerDTO
+      | HeadingDTO
+      | HtmlCommentDTO
+      | ListInputBoxDTO
+      | LoginDTO
+      | MapInputBoxDTO
+      | PasswordDTO
+      | RadioDTO
+      | SelectionCustomDTO
+      | SelectionboxDTO
+      | SubmitButtonDTO
+      | TextareaDTO
+      | TextfieldDTO
+      | TimezoneDTO
+      | VerifiedEmailDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1265,9 +1469,14 @@ export class FormsService {
         'Required parameter formSpecificationId was null or undefined when calling createItemDefinitionForForm.',
       );
     }
-    if (ItemDefinitionDTO === null || ItemDefinitionDTO === undefined) {
+    if (
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        null ||
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter ItemDefinitionDTO was null or undefined when calling createItemDefinitionForForm.',
+        'Required parameter CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO was null or undefined when calling createItemDefinitionForForm.',
       );
     }
 
@@ -1329,14 +1538,18 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<ItemDefinitionDTO>(requestUrl, ItemDefinitionDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalItemDefinitions200ResponseInner>(
+      requestUrl,
+      CheckboxDTO___DatePickerDTO___HeadingDTO___HtmlCommentDTO___ListInputBoxDTO___LoginDTO___MapInputBoxDTO___PasswordDTO___RadioDTO___SelectionCustomDTO___SelectionboxDTO___SubmitButtonDTO___TextareaDTO___TextfieldDTO___TimezoneDTO___VerifiedEmailDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
@@ -1572,42 +1785,63 @@ export class FormsService {
   /**
    * Create or get prefill strategy
    * Create a new prefill strategy or retrieve an existing one with such urn and scope
-   * @param PrefillStrategyEntryDTO
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createOrGetPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<PrefillStrategyEntryDTO>;
+  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
   public createOrGetPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
   public createOrGetPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
   public createOrGetPrefillStrategy(
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
   ): Observable<any> {
-    if (PrefillStrategyEntryDTO === null || PrefillStrategyEntryDTO === undefined) {
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter PrefillStrategyEntryDTO was null or undefined when calling createOrGetPrefillStrategy.',
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createOrGetPrefillStrategy.',
       );
     }
 
@@ -1669,52 +1903,72 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<PrefillStrategyEntryDTO>(requestUrl, PrefillStrategyEntryDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
    * Create or get form-specific prefill strategy
    * Create a new form-specific prefill strategy or retrieve an existing one with such urn
    * @param formSpecificationId
-   * @param PrefillStrategyEntryDTO
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<PrefillStrategyEntryDTO>;
+  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
   public createOrGetPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1725,9 +1979,14 @@ export class FormsService {
         'Required parameter formSpecificationId was null or undefined when calling createOrGetPrefillStrategyForForm.',
       );
     }
-    if (PrefillStrategyEntryDTO === null || PrefillStrategyEntryDTO === undefined) {
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter PrefillStrategyEntryDTO was null or undefined when calling createOrGetPrefillStrategyForForm.',
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createOrGetPrefillStrategyForForm.',
       );
     }
 
@@ -1789,52 +2048,72 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<PrefillStrategyEntryDTO>(requestUrl, PrefillStrategyEntryDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
    * Create a form-specific prefill strategy
    * Allow new prefill strategy to be used in this form\&#39;s item definitions
    * @param formSpecificationId
-   * @param PrefillStrategyEntryDTO
+   * @param ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<PrefillStrategyEntryDTO>;
+  ): Observable<GetGlobalPrefillStrategies200ResponseInner>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpResponse<GetGlobalPrefillStrategies200ResponseInner>>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<PrefillStrategyEntryDTO>>;
+  ): Observable<HttpEvent<GetGlobalPrefillStrategies200ResponseInner>>;
   public createPrefillStrategyForForm(
     formSpecificationId: string,
-    PrefillStrategyEntryDTO: PrefillStrategyEntryDTO,
+    ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO:
+      | ApplicationPrefillStrategyEntryDTO
+      | IdentityAttributePrefillStrategyEntryDTO
+      | IdmAttributePrefillStrategyEntryDTO
+      | LoginPrefillStrategyEntryDTO,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -1845,9 +2124,14 @@ export class FormsService {
         'Required parameter formSpecificationId was null or undefined when calling createPrefillStrategyForForm.',
       );
     }
-    if (PrefillStrategyEntryDTO === null || PrefillStrategyEntryDTO === undefined) {
+    if (
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        null ||
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO ===
+        undefined
+    ) {
       throw new Error(
-        'Required parameter PrefillStrategyEntryDTO was null or undefined when calling createPrefillStrategyForForm.',
+        'Required parameter ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO was null or undefined when calling createPrefillStrategyForForm.',
       );
     }
 
@@ -1909,14 +2193,18 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.post<PrefillStrategyEntryDTO>(requestUrl, PrefillStrategyEntryDTO, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.post<GetGlobalPrefillStrategies200ResponseInner>(
+      requestUrl,
+      ApplicationPrefillStrategyEntryDTO___IdentityAttributePrefillStrategyEntryDTO___IdmAttributePrefillStrategyEntryDTO___LoginPrefillStrategyEntryDTO,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 
   /**
@@ -3438,19 +3726,19 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<ItemDefinitionDTO>>;
+  ): Observable<Array<GetGlobalItemDefinitions200ResponseInner>>;
   public getGlobalItemDefinitions(
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<ItemDefinitionDTO>>>;
+  ): Observable<HttpResponse<Array<GetGlobalItemDefinitions200ResponseInner>>>;
   public getGlobalItemDefinitions(
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<ItemDefinitionDTO>>>;
+  ): Observable<HttpEvent<Array<GetGlobalItemDefinitions200ResponseInner>>>;
   public getGlobalItemDefinitions(
     useNon: boolean = false,
     observe: any = 'body',
@@ -3507,7 +3795,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<ItemDefinitionDTO>>(requestUrl, {
+    return this.httpClient.get<Array<GetGlobalItemDefinitions200ResponseInner>>(requestUrl, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -3529,19 +3817,19 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<PrefillStrategyEntryDTO>>;
+  ): Observable<Array<GetGlobalPrefillStrategies200ResponseInner>>;
   public getGlobalPrefillStrategies(
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<PrefillStrategyEntryDTO>>>;
+  ): Observable<HttpResponse<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
   public getGlobalPrefillStrategies(
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<PrefillStrategyEntryDTO>>>;
+  ): Observable<HttpEvent<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
   public getGlobalPrefillStrategies(
     useNon: boolean = false,
     observe: any = 'body',
@@ -3598,7 +3886,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<PrefillStrategyEntryDTO>>(requestUrl, {
+    return this.httpClient.get<Array<GetGlobalPrefillStrategies200ResponseInner>>(requestUrl, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -3624,7 +3912,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<ItemDefinitionDTO>>;
+  ): Observable<Array<GetGlobalItemDefinitions200ResponseInner>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3632,7 +3920,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<ItemDefinitionDTO>>>;
+  ): Observable<HttpResponse<Array<GetGlobalItemDefinitions200ResponseInner>>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3640,7 +3928,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<ItemDefinitionDTO>>>;
+  ): Observable<HttpEvent<Array<GetGlobalItemDefinitions200ResponseInner>>>;
   public getItemDefinitionsForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3714,7 +4002,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<ItemDefinitionDTO>>(requestUrl, {
+    return this.httpClient.get<Array<GetGlobalItemDefinitions200ResponseInner>>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -3741,7 +4029,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<Array<PrefillStrategyEntryDTO>>;
+  ): Observable<Array<GetGlobalPrefillStrategies200ResponseInner>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3749,7 +4037,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<Array<PrefillStrategyEntryDTO>>>;
+  ): Observable<HttpResponse<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3757,7 +4045,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<Array<PrefillStrategyEntryDTO>>>;
+  ): Observable<HttpEvent<Array<GetGlobalPrefillStrategies200ResponseInner>>>;
   public getPrefillStrategiesForForm(
     formSpecificationId: string,
     onlyFormSpecific?: boolean,
@@ -3831,7 +4119,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.get<Array<PrefillStrategyEntryDTO>>(requestUrl, {
+    return this.httpClient.get<Array<GetGlobalPrefillStrategies200ResponseInner>>(requestUrl, {
       context: localVarHttpContext,
       params: localVarQueryParameters,
       responseType: <any>responseType_,
@@ -4257,14 +4545,14 @@ export class FormsService {
    * Set age actions
    * Sets the age actions of the specified form. If the form already had age actions, the existing ones that are missing in this call are removed.
    * @param formSpecificationId
-   * @param AgeActionDTO
+   * @param UpdateAgeActionsRequestInner
    * @param useNon if set to true sends the request to the backend server as 'non' instead of the usual (oauth, krb...).
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public updateAgeActions(
     formSpecificationId: string,
-    AgeActionDTO: Array<AgeActionDTO>,
+    UpdateAgeActionsRequestInner: Array<UpdateAgeActionsRequestInner>,
     useNon?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
@@ -4272,7 +4560,7 @@ export class FormsService {
   ): Observable<FormSpecificationDTO>;
   public updateAgeActions(
     formSpecificationId: string,
-    AgeActionDTO: Array<AgeActionDTO>,
+    UpdateAgeActionsRequestInner: Array<UpdateAgeActionsRequestInner>,
     useNon?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
@@ -4280,7 +4568,7 @@ export class FormsService {
   ): Observable<HttpResponse<FormSpecificationDTO>>;
   public updateAgeActions(
     formSpecificationId: string,
-    AgeActionDTO: Array<AgeActionDTO>,
+    UpdateAgeActionsRequestInner: Array<UpdateAgeActionsRequestInner>,
     useNon?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
@@ -4288,7 +4576,7 @@ export class FormsService {
   ): Observable<HttpEvent<FormSpecificationDTO>>;
   public updateAgeActions(
     formSpecificationId: string,
-    AgeActionDTO: Array<AgeActionDTO>,
+    UpdateAgeActionsRequestInner: Array<UpdateAgeActionsRequestInner>,
     useNon: boolean = false,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -4299,9 +4587,9 @@ export class FormsService {
         'Required parameter formSpecificationId was null or undefined when calling updateAgeActions.',
       );
     }
-    if (AgeActionDTO === null || AgeActionDTO === undefined) {
+    if (UpdateAgeActionsRequestInner === null || UpdateAgeActionsRequestInner === undefined) {
       throw new Error(
-        'Required parameter AgeActionDTO was null or undefined when calling updateAgeActions.',
+        'Required parameter UpdateAgeActionsRequestInner was null or undefined when calling updateAgeActions.',
       );
     }
 
@@ -4363,7 +4651,7 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.put<FormSpecificationDTO>(requestUrl, AgeActionDTO, {
+    return this.httpClient.put<FormSpecificationDTO>(requestUrl, UpdateAgeActionsRequestInner, {
       context: localVarHttpContext,
       responseType: <any>responseType_,
       withCredentials: this.configuration.withCredentials,
@@ -4629,7 +4917,7 @@ export class FormsService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<ItemDefinitionDTO>;
+  ): Observable<GetGlobalItemDefinitions200ResponseInner>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -4637,7 +4925,7 @@ export class FormsService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpResponse<ItemDefinitionDTO>>;
+  ): Observable<HttpResponse<GetGlobalItemDefinitions200ResponseInner>>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -4645,7 +4933,7 @@ export class FormsService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json'; context?: HttpContext },
-  ): Observable<HttpEvent<ItemDefinitionDTO>>;
+  ): Observable<HttpEvent<GetGlobalItemDefinitions200ResponseInner>>;
   public updateItemDefinition(
     itemDefinitionId: string,
     ItemDefinitionPatchRequest: ItemDefinitionPatchRequest,
@@ -4723,13 +5011,17 @@ export class FormsService {
       helperUrl.pathname = path.join('/');
       requestUrl = helperUrl.toString();
     }
-    return this.httpClient.patch<ItemDefinitionDTO>(requestUrl, ItemDefinitionPatchRequest, {
-      context: localVarHttpContext,
-      responseType: <any>responseType_,
-      withCredentials: this.configuration.withCredentials,
-      headers: localVarHeaders,
-      observe: observe,
-      reportProgress: reportProgress,
-    });
+    return this.httpClient.patch<GetGlobalItemDefinitions200ResponseInner>(
+      requestUrl,
+      ItemDefinitionPatchRequest,
+      {
+        context: localVarHttpContext,
+        responseType: <any>responseType_,
+        withCredentials: this.configuration.withCredentials,
+        headers: localVarHeaders,
+        observe: observe,
+        reportProgress: reportProgress,
+      },
+    );
   }
 }

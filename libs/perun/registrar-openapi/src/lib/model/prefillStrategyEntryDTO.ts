@@ -9,14 +9,18 @@
  */
 
 export interface PrefillStrategyEntryDTO {
+  accessLevel: PrefillStrategyEntryDTO.AccessLevelEnum;
+  formSpecificationId?: string | null;
   id?: string | null;
   type: PrefillStrategyEntryDTO.TypeEnum;
-  options?: { [key: string]: string };
-  sourceAttribute?: string | null;
-  formSpecificationId?: string | null;
-  accessLevel: PrefillStrategyEntryDTO.AccessLevelEnum;
 }
 export namespace PrefillStrategyEntryDTO {
+  export const AccessLevelEnum = {
+    GLOBAL: 'GLOBAL',
+    FORM_SPECIFIC: 'FORM_SPECIFIC',
+    ADMIN_ONLY: 'ADMIN_ONLY',
+  } as const;
+  export type AccessLevelEnum = (typeof AccessLevelEnum)[keyof typeof AccessLevelEnum];
   export const TypeEnum = {
     IDENTITY_ATTRIBUTE: 'IDENTITY_ATTRIBUTE',
     IDM_ATTRIBUTE: 'IDM_ATTRIBUTE',
@@ -24,10 +28,4 @@ export namespace PrefillStrategyEntryDTO {
     APPLICATION: 'APPLICATION',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
-  export const AccessLevelEnum = {
-    GLOBAL: 'GLOBAL',
-    FORM_SPECIFIC: 'FORM_SPECIFIC',
-    ADMIN_ONLY: 'ADMIN_ONLY',
-  } as const;
-  export type AccessLevelEnum = (typeof AccessLevelEnum)[keyof typeof AccessLevelEnum];
 }

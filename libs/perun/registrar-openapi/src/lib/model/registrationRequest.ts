@@ -10,6 +10,6 @@
 import { Requirement } from './requirement';
 
 export interface RegistrationRequest {
-  requirements?: Array<Requirement>;
   redirectUrl?: string;
+  requirements?: Array<Requirement>;
 }

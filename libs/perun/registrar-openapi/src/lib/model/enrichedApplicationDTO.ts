@@ -14,7 +14,7 @@ import { SubmissionDTO } from './submissionDTO';
 
 export interface EnrichedApplicationDTO {
   application: ApplicationDTO;
-  submission: SubmissionDTO;
-  form: FormSpecificationDTO;
   decisions: Array<DecisionDTO>;
+  form: FormSpecificationDTO;
+  submission: SubmissionDTO;
 }

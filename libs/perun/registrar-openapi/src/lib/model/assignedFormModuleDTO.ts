@@ -9,7 +9,7 @@
  */
 
 export interface AssignedFormModuleDTO {
-  moduleName: string;
+  configuration: any | null;
   formSpecificationId: string;
-  options?: { [key: string]: string };
+  moduleName: string;
 }

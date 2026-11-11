@@ -8,19 +8,19 @@
  * Do not edit the class manually.
  */
 import { IdmObject } from './idmObject';
-import { AgeActionDTO } from './ageActionDTO';
 import { FormItemsForTypeDTO } from './formItemsForTypeDTO';
 import { FormTransitionDTO } from './formTransitionDTO';
 import { AssignedFormModuleDTO } from './assignedFormModuleDTO';
+import { UpdateAgeActionsRequestInner } from './updateAgeActionsRequestInner';
 
 export interface FormSpecificationDTO {
+  ageActions?: Array<UpdateAgeActionsRequestInner>;
+  autoApprovedTypes: Array<FormSpecificationDTO.AutoApprovedTypesEnum>;
   id: string;
   idmObject: IdmObject;
   items: Array<FormItemsForTypeDTO>;
-  autoApprovedTypes: Array<FormSpecificationDTO.AutoApprovedTypesEnum>;
-  transitions: Array<FormTransitionDTO>;
   modules: Array<AssignedFormModuleDTO>;
-  ageActions?: Array<AgeActionDTO>;
+  transitions: Array<FormTransitionDTO>;
 }
 export namespace FormSpecificationDTO {
   export const AutoApprovedTypesEnum = {

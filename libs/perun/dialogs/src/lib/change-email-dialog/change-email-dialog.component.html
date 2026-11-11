@@ -9,6 +9,15 @@
         <perun-web-apps-alert alert_type="warn">{{pendingEmailsMessage}}</perun-web-apps-alert>
       }
       <mat-radio-group [(ngModel)]="selectedEmail">
+        @if (verifiedEmails.length) {
+          <div class="d-flex flex-column">
+            @for (email of verifiedEmails; track email) {
+              <mat-radio-button class="me-3" color="primary" value="{{email}}">
+                {{email}}
+              </mat-radio-button>
+            }
+          </div>
+        }
         @if (data.enableLinkedEmail) {
           <div class="d-flex flex-column">
             @for (uesName of uesEmails; track uesName) {
@@ -19,9 +28,15 @@
           </div>
         }
         @if (data.enableLinkedEmail && uesEmails.length === 0) {
-          <perun-web-apps-alert alert_type="info">
-            {{'DIALOGS.CHANGE_EMAIL.NO_LINKED_ACCOUNTS' | translate}}
-          </perun-web-apps-alert>
+          @if (!data.verifiedEmailsAttribute) {
+            <perun-web-apps-alert alert_type="info">
+              {{'DIALOGS.CHANGE_EMAIL.NO_LINKED_ACCOUNTS' | translate}}
+            </perun-web-apps-alert>
+          } @else if (verifiedEmails.length === 0) {
+            <perun-web-apps-alert alert_type="info">
+              {{'DIALOGS.CHANGE_EMAIL.NO_LINKED_ACCOUNTS_NO_VERIFIED_EMAILS' | translate}}
+            </perun-web-apps-alert>
+          }
         }
         @if (data.enableCustomEmail) {
           <mat-radio-button color="primary" class="d-flex flex-wraps" value="{{CUSTOM_OPTION}}">

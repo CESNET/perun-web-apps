@@ -9,8 +9,8 @@
  */
 
 export interface FormTypeConfig {
-  formType: FormTypeConfig.FormTypeEnum;
   attributeName?: string | null;
+  formType: FormTypeConfig.FormTypeEnum;
 }
 export namespace FormTypeConfig {
   export const FormTypeEnum = {

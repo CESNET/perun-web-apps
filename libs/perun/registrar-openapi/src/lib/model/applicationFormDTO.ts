@@ -11,7 +11,7 @@ import { FormItemDataDTO } from './formItemDataDTO';
 import { FormTypeConfig } from './formTypeConfig';
 
 export interface ApplicationFormDTO {
-  formSpecificationId: string;
   formItemData: Array<FormItemDataDTO>;
+  formSpecificationId: string;
   typeConfig: FormTypeConfig;
 }

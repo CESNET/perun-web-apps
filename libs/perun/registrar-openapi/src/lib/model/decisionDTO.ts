@@ -9,10 +9,10 @@
  */
 
 export interface DecisionDTO {
-  id: string;
   applicationId: string;
   approverId: string;
   approverName: string;
+  id: string;
   message?: string;
   timestamp: string;
   type: DecisionDTO.TypeEnum;

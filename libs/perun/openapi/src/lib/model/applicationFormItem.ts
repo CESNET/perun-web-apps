@@ -20,7 +20,7 @@ export interface ApplicationFormItem {
   federationAttribute?: string | null;
   perunSourceAttribute?: string | null;
   perunDestinationAttribute?: string | null;
-  regex?: string;
+  regex?: string | null;
   applicationTypes?: Array<AppType>;
   ordnum?: number;
   i18n?: { [key: string]: ItemTexts };

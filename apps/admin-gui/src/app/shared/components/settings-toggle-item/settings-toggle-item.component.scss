@@ -1,0 +1,39 @@
+.setting-item-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.block {
+  margin-right: 0.5rem;
+}
+
+.setting-item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.setting-item-label .setting-item {
+  padding-top: 0 !important;
+  width: auto;
+}
+
+.help-tooltip-trigger.mat-mdc-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  color: #616161;
+  vertical-align: middle;
+}
+
+.help-tooltip-trigger .mat-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  font-size: 24px;
+  line-height: 24px;
+}

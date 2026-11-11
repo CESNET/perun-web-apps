@@ -9,8 +9,7 @@
  */
 
 export interface ItemTexts {
-  label?: string;
-  help?: string;
   error?: string;
-  options?: { [key: string]: string };
+  help?: string;
+  label?: string;
 }

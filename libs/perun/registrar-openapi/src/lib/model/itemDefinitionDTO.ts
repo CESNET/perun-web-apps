@@ -8,26 +8,53 @@
  * Do not edit the class manually.
  */
 import { ItemTexts } from './itemTexts';
-import { ItemValidatorDTO } from './itemValidatorDTO';
+import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsInner';
 
 export interface ItemDefinitionDTO {
-  id?: string | null;
-  formSpecificationId?: string | null;
+  defaultValue?: string | null;
+  destinationId?: string | null;
+  disabled: ItemDefinitionDTO.DisabledEnum;
   displayName: string;
+  formSpecificationId?: string | null;
+  formTypes: Array<ItemDefinitionDTO.FormTypesEnum>;
+  hidden: ItemDefinitionDTO.HiddenEnum;
+  id?: string | null;
+  prefillStrategyIds?: Array<string> | null;
+  required: boolean;
+  scope: ItemDefinitionDTO.ScopeEnum;
+  texts: { [key: string]: ItemTexts };
   type: ItemDefinitionDTO.TypeEnum;
   updatable: boolean;
-  required: boolean;
-  defaultValue?: string | null;
-  prefillStrategyIds?: Array<string> | null;
-  destinationId?: string | null;
-  formTypes: Array<ItemDefinitionDTO.FormTypesEnum>;
-  texts: { [key: string]: ItemTexts };
-  hidden: ItemDefinitionDTO.HiddenEnum;
-  disabled: ItemDefinitionDTO.DisabledEnum;
-  scope: ItemDefinitionDTO.ScopeEnum;
-  validators?: Array<ItemValidatorDTO>;
+  validators?: Array<ItemDefinitionDTOValidatorsInner>;
 }
 export namespace ItemDefinitionDTO {
+  export const DisabledEnum = {
+    NEVER: 'NEVER',
+    ALWAYS: 'ALWAYS',
+    IF_PREFILLED: 'IF_PREFILLED',
+    IF_EMPTY: 'IF_EMPTY',
+  } as const;
+  export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
+  export const FormTypesEnum = {
+    INITIAL: 'INITIAL',
+    EXTENSION: 'EXTENSION',
+    CANCELLATION: 'CANCELLATION',
+    UPDATE: 'UPDATE',
+  } as const;
+  export type FormTypesEnum = (typeof FormTypesEnum)[keyof typeof FormTypesEnum];
+  export const HiddenEnum = {
+    NEVER: 'NEVER',
+    ALWAYS: 'ALWAYS',
+    IF_PREFILLED: 'IF_PREFILLED',
+    IF_EMPTY: 'IF_EMPTY',
+  } as const;
+  export type HiddenEnum = (typeof HiddenEnum)[keyof typeof HiddenEnum];
+  export const ScopeEnum = {
+    GLOBAL: 'GLOBAL',
+    GLOBAL_REQUIRED: 'GLOBAL_REQUIRED',
+    FORM_SPECIFIC: 'FORM_SPECIFIC',
+  } as const;
+  export type ScopeEnum = (typeof ScopeEnum)[keyof typeof ScopeEnum];
   export const TypeEnum = {
     HEADING: 'HEADING',
     SELECTION_CUSTOM: 'SELECTION_CUSTOM',
@@ -47,31 +74,4 @@ export namespace ItemDefinitionDTO {
     LIST_INPUT_BOX: 'LIST_INPUT_BOX',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
-  export const FormTypesEnum = {
-    INITIAL: 'INITIAL',
-    EXTENSION: 'EXTENSION',
-    CANCELLATION: 'CANCELLATION',
-    UPDATE: 'UPDATE',
-  } as const;
-  export type FormTypesEnum = (typeof FormTypesEnum)[keyof typeof FormTypesEnum];
-  export const HiddenEnum = {
-    NEVER: 'NEVER',
-    ALWAYS: 'ALWAYS',
-    IF_PREFILLED: 'IF_PREFILLED',
-    IF_EMPTY: 'IF_EMPTY',
-  } as const;
-  export type HiddenEnum = (typeof HiddenEnum)[keyof typeof HiddenEnum];
-  export const DisabledEnum = {
-    NEVER: 'NEVER',
-    ALWAYS: 'ALWAYS',
-    IF_PREFILLED: 'IF_PREFILLED',
-    IF_EMPTY: 'IF_EMPTY',
-  } as const;
-  export type DisabledEnum = (typeof DisabledEnum)[keyof typeof DisabledEnum];
-  export const ScopeEnum = {
-    GLOBAL: 'GLOBAL',
-    GLOBAL_REQUIRED: 'GLOBAL_REQUIRED',
-    FORM_SPECIFIC: 'FORM_SPECIFIC',
-  } as const;
-  export type ScopeEnum = (typeof ScopeEnum)[keyof typeof ScopeEnum];
 }

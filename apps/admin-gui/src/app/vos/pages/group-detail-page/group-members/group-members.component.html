@@ -143,7 +143,7 @@
       </button>
     }
   </span>
-  <mat-form-field class="me-2 fix-select">
+  <mat-form-field class="me-2">
     <mat-label>{{'GROUP_DETAIL.MEMBERS.FILTER_STATUS' | translate}}</mat-label>
     <mat-select (closed)="changeVoStatuses()" [formControl]="statuses" multiple>
       <mat-select-trigger>
@@ -154,7 +154,7 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="me-2 fix-select">
+  <mat-form-field class="me-2">
     <mat-label>{{'GROUP_DETAIL.MEMBERS.FILTER_GROUP_STATUS' | translate}}</mat-label>
     <mat-select (closed)="changeGroupStatuses()" [formControl]="groupStatuses" multiple>
       <mat-select-trigger>
@@ -169,7 +169,7 @@
   <perun-web-apps-debounce-filter
     (filter)="onSearchByString($event)"
     [placeholder]="'GROUP_DETAIL.MEMBERS.SEARCH_DESCRIPTION'"
-    class="mt-2 search-field">
+    class="search-field">
   </perun-web-apps-debounce-filter>
 </div>
 <ng-template #spinner>

@@ -8,16 +8,16 @@
  * Do not edit the class manually.
  */
 import { DestinationDTO } from './destinationDTO';
-import { PrefillStrategyEntryDTO } from './prefillStrategyEntryDTO';
-import { ItemDefinitionDTO } from './itemDefinitionDTO';
+import { GetGlobalItemDefinitions200ResponseInner } from './getGlobalItemDefinitions200ResponseInner';
+import { GetGlobalPrefillStrategies200ResponseInner } from './getGlobalPrefillStrategies200ResponseInner';
 import { FormItemDTO } from './formItemDTO';
 import { FormItemDataDTO } from './formItemDataDTO';
 
 export interface EnrichedFormItemDataDTO {
-  formItemData: FormItemDataDTO;
-  formItem: FormItemDTO;
-  itemDefinition: ItemDefinitionDTO;
   destination: DestinationDTO;
+  formItem: FormItemDTO;
+  formItemData: FormItemDataDTO;
   generated?: boolean;
-  prefillStrategyEntries: Array<PrefillStrategyEntryDTO>;
+  itemDefinition: GetGlobalItemDefinitions200ResponseInner;
+  prefillStrategyEntries: Array<GetGlobalPrefillStrategies200ResponseInner>;
 }

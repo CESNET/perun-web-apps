@@ -10,8 +10,8 @@
 import { ExtSource } from './extSource';
 
 export interface Identity {
-  name?: string;
-  organization?: string;
   email?: string;
   extSources?: Array<ExtSource>;
+  name?: string;
+  organization?: string;
 }

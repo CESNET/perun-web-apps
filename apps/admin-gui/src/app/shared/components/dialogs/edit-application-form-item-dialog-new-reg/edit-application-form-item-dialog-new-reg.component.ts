@@ -46,9 +46,18 @@ import {
   FormTypeConfig,
   ItemDefinitionDTO,
   ItemWithDefinitionDTO,
-  PrefillStrategyEntryDTO,
+  IdentityAttributePrefillStrategyEntryDTO,
+  IdmAttributePrefillStrategyEntryDTO,
+  LoginPrefillStrategyEntryDTO,
+  Option,
 } from '@perun-web-apps/perun/registrar-openapi';
 import FormTypeEnum = FormTypeConfig.FormTypeEnum;
+
+interface EditableOption {
+  value: string;
+  labels: Record<string, string>;
+  labelControls: Record<string, FormControl<string>>;
+}
 
 export interface EditApplicationFormItemDialogNewRegComponentData {
   theme: string;
@@ -98,15 +107,15 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
   itemDestination: string = '';
   itemDestinationOriginal: string = '';
   idmSource: string = '';
-  idmSourceOriginal: PrefillStrategyEntryDTO;
+  idmSourceOriginal: IdmAttributePrefillStrategyEntryDTO | LoginPrefillStrategyEntryDTO;
   identitySource: string = '';
-  identitySourceOriginal: PrefillStrategyEntryDTO;
+  identitySourceOriginal: IdentityAttributePrefillStrategyEntryDTO;
   validatorRegex: string = '';
-  identityPrefillStrategy: PrefillStrategyEntryDTO;
-  idmPrefillStrategy: PrefillStrategyEntryDTO;
+  identityPrefillStrategy: IdentityAttributePrefillStrategyEntryDTO;
+  idmPrefillStrategy: IdmAttributePrefillStrategyEntryDTO | LoginPrefillStrategyEntryDTO;
   federationAttributeDN = '';
   itemType = ItemType;
-  options: { [key: string]: [string, FormControl<string>][] };
+  options: EditableOption[] = [];
   theme: string;
   loading = true;
   hiddenValues: ItemDefinitionDTO.HiddenEnum[] = ['NEVER', 'ALWAYS', 'IF_EMPTY', 'IF_PREFILLED'];
@@ -217,15 +226,15 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     this.prepareFormControls();
 
     this.loading = true;
-    this.validatorRegex = this.applicationFormItem.itemDefinition.validators.find(
-      (val) => val.type === 'REGEX',
-    )?.options['regex'];
+    this.validatorRegex =
+      this.applicationFormItem.itemDefinition.validators?.find((val) => val.type === 'REGEX')
+        ?.configuration.regex ?? '';
     this.identitySourceOriginal = this.applicationFormItem.prefillStrategyEntries.find(
       (pref) => pref.type === 'IDENTITY_ATTRIBUTE',
     );
     this.identitySource = this.identitySourceOriginal?.sourceAttribute ?? '';
-    this.idmSourceOriginal = this.applicationFormItem.prefillStrategyEntries.find((pref) =>
-      ['IDENTITY_ATTRIBUTE', 'LOGIN_ATTRIBUTE'].includes(pref.type),
+    this.idmSourceOriginal = this.applicationFormItem.prefillStrategyEntries.find(
+      (pref) => pref.type === 'IDM_ATTRIBUTE' || pref.type === 'LOGIN_ATTRIBUTE',
     );
     this.idmSource = this.idmSourceOriginal?.sourceAttribute;
     this.attributesManager.getAllAttributeDefinitions().subscribe({
@@ -322,25 +331,12 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       this.applicationFormItem.itemDefinition.texts[lang].help = this.inputFormGroup.get(
         `${lang}-plain-help`,
       ).value;
-
-      this.applicationFormItem.itemDefinition.texts[lang].options = {};
-      if (this.options[lang] ?? false) {
-        for (const item of this.options[lang]) {
-          if (item[0] !== '' && item[1].value !== '') {
-            this.applicationFormItem.itemDefinition.texts[lang].options[item[0]] = item[1].value;
-          }
-        }
-      }
     }
-
-    // set validator if exists
-    if (this.validatorRegex && this.validatorRegex !== '') {
-      this.applicationFormItem.itemDefinition.validators = [
-        {
-          type: 'REGEX',
-          options: { regex: this.validatorRegex },
-        },
-      ];
+    this.saveOptions();
+    const definition = this.applicationFormItem.itemDefinition;
+    definition.validators = (definition.validators ?? []).filter((val) => val.type !== 'REGEX');
+    if (this.validatorRegex) {
+      definition.validators.push({ type: 'REGEX', configuration: { regex: this.validatorRegex } });
     }
 
     if (this.itemDestination !== this.itemDestinationOriginal) {
@@ -384,52 +380,25 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     this.applicationFormItem.itemDefinition.formTypes.push(type);
   }
 
-  addOption(lang: string): void {
-    const control = new FormControl<string>('', [], [this.escapeService.checkboxValidator(true)]);
-    control.markAsTouched();
-    this.optionsFormArray.push(control);
-    this.options[lang].push(['', control]);
+  addOption(): void {
+    this.options.push(this.createEditableOption({ value: '', labels: {} }));
   }
 
-  removeOption(option: [string, FormControl<string>], lang: string): void {
-    this.options[lang] = this.options[lang].filter(
-      (opt) => !(opt[0] === option[0] && opt[1].value === option[1].value),
-    );
-
-    // update form array
-    let controls: FormControl<string>[] = [];
-    for (const language of this.languages) {
-      controls = controls.concat(this.options[language].map((opt) => opt[1]));
+  removeOption(option: EditableOption): void {
+    this.options = this.options.filter((existing) => existing !== option);
+    const controls: FormControl<string>[] = [];
+    for (const existing of this.options) {
+      controls.push(...Object.values(existing.labelControls));
     }
     this.optionsFormArray = new FormArray<FormControl<string>>(controls);
   }
 
   sortOptionsAZ(lang: string): void {
-    this.options[lang] = this.options[lang].sort((n1, n2) => {
-      if (n1[1].value > n2[1].value) {
-        return 1;
-      }
-
-      if (n1[1].value < n2[1].value) {
-        return -1;
-      }
-
-      return 0;
-    });
+    this.sortOptions(lang, 1);
   }
 
   sortOptionsZA(lang: string): void {
-    this.options[lang] = this.options[lang].sort((n1, n2) => {
-      if (n1[1].value > n2[1].value) {
-        return -1;
-      }
-
-      if (n1[1].value < n2[1].value) {
-        return 1;
-      }
-
-      return 0;
-    });
+    this.sortOptions(lang, -1);
   }
 
   isApplicationFormItemOfType(types: string[]): boolean {
@@ -472,7 +441,7 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
             formSpecificationId: null,
             accessLevel: 'ADMIN_ONLY',
             sourceAttribute: attribute.value,
-            options: { namespace: attribute.value.split(':').pop() },
+            configuration: { namespace: attribute.value.split(':').pop() },
           };
         } else {
           this.idmPrefillStrategy = {
@@ -488,6 +457,14 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
       this.idmPrefillStrategy = this.idmSourceOriginal;
     }
     this.cd.detectChanges();
+  }
+
+  private sortOptions(lang: string, direction: number): void {
+    this.options.sort((first, second) => {
+      const firstLabel = first.labelControls[lang].value ?? '';
+      const secondLabel = second.labelControls[lang].value ?? '';
+      return direction * (firstLabel > secondLabel ? 1 : firstLabel < secondLabel ? -1 : 0);
+    });
   }
 
   private prepareFormControls(): void {
@@ -574,27 +551,59 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     return this.idToUuid.get(id);
   }
 
-  private getOptions(): void {
-    this.options = {};
-    for (const lang of this.languages) {
-      this.options[lang] = [];
-      if (!this.applicationFormItem.itemDefinition.texts[lang]) {
-        this.applicationFormItem.itemDefinition.texts[lang] = {};
-      }
-      if (this.applicationFormItem.itemDefinition.texts[lang].options) {
-        for (const item of Object.keys(
-          this.applicationFormItem.itemDefinition.texts[lang].options,
-        )) {
-          const control = new FormControl<string>(
-            this.applicationFormItem.itemDefinition.texts[lang].options[item],
-            [],
-            [this.escapeService.checkboxValidator(true)],
-          );
-          control.markAsTouched();
-          this.optionsFormArray.push(control);
-          this.options[lang].push([item, control]);
+  private saveOptions(): void {
+    const definition = this.applicationFormItem.itemDefinition;
+    if (
+      definition.type !== 'CHECKBOX' &&
+      definition.type !== 'RADIO' &&
+      definition.type !== 'SELECTIONBOX' &&
+      definition.type !== 'SELECTION_CUSTOM'
+    )
+      return;
+    definition.configuration.options = this.options
+      .filter((option) => option.value.trim() !== '')
+      .map((option) => {
+        const labels = { ...option.labels };
+        for (const [lang, control] of Object.entries(option.labelControls)) {
+          if (control.value) {
+            labels[lang] = control.value;
+          } else {
+            delete labels[lang];
+          }
         }
-      }
+        return { value: option.value, labels };
+      })
+      .filter((option) => Object.keys(option.labels).length > 0);
+  }
+
+  private getOptions(): void {
+    this.options = [];
+    this.optionsFormArray.clear();
+    const definition = this.applicationFormItem.itemDefinition;
+    if (
+      definition.type === 'CHECKBOX' ||
+      definition.type === 'RADIO' ||
+      definition.type === 'SELECTIONBOX' ||
+      definition.type === 'SELECTION_CUSTOM'
+    ) {
+      this.options = (definition.configuration.options ?? []).map((option) =>
+        this.createEditableOption(option),
+      );
     }
+  }
+
+  private createEditableOption(option: Option): EditableOption {
+    const labelControls: Record<string, FormControl<string>> = {};
+    for (const lang of this.languages) {
+      const control = new FormControl<string>(
+        option.labels?.[lang] ?? '',
+        [],
+        [this.escapeService.checkboxValidator(true)],
+      );
+      control.markAsTouched();
+      this.optionsFormArray.push(control);
+      labelControls[lang] = control;
+    }
+    return { value: option.value ?? '', labels: { ...option.labels }, labelControls };
   }
 }

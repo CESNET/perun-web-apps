@@ -10,11 +10,11 @@
 import { IdmObject } from './idmObject';
 
 export interface GetApplicationsForUserRequest {
-  userId?: string | null;
-  identityIssuer?: string | null;
   identityIdentifier?: string | null;
+  identityIssuer?: string | null;
   idmObjects?: Array<IdmObject>;
   states?: Array<GetApplicationsForUserRequest.StatesEnum>;
+  userId?: string | null;
 }
 export namespace GetApplicationsForUserRequest {
   export const StatesEnum = {

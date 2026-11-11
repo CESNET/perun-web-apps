@@ -12,8 +12,8 @@ import { TargetStateConfig } from './targetStateConfig';
 export interface FormTransitionDTO {
   id: string;
   sourceFormSpecificationId: string;
-  targetFormSpecificationId: string;
   sourceFormStates: Array<TargetStateConfig>;
+  targetFormSpecificationId: string;
   targetFormState: TargetStateConfig;
   type: FormTransitionDTO.TypeEnum;
 }

@@ -9,10 +9,10 @@
  */
 
 export interface DestinationDTO {
+  accessLevel: DestinationDTO.AccessLevelEnum;
+  formSpecificationId?: string | null;
   id?: string | null;
   urn?: string;
-  formSpecificationId?: string | null;
-  accessLevel: DestinationDTO.AccessLevelEnum;
 }
 export namespace DestinationDTO {
   export const AccessLevelEnum = {
