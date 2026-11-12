@@ -6,7 +6,10 @@
       "LOADING_LOGIN_ATTRIBUTES": "Načítání atributů přihlašovacích jmen…",
       "NO_LOGIN_ATTRIBUTES": "Nejsou k dispozici žádné atributy přihlašovacích jmen.",
       "LOGIN_ATTRIBUTES_ERROR": "Atributy přihlašovacích jmen se nepodařilo načíst.",
-      "RETRY": "Zkusit znovu"
+      "RETRY": "Zkusit znovu",
+      "LINKED_LOGIN": "Propojený login",
+      "NO_LINKED_LOGIN": "Nepropojeno",
+      "LINKED_LOGIN_DESCRIPTION": "Volitelný název definice položky LOGIN, jejíž hodnota a namespace se použijí pro toto heslo."
     },
     "NOTIFICATIONS_ADD_EDIT_MAIL": {
       "DEFAULT_PRE_APPROVED_MAIL_TEXT": "Prosím, klikněte na následující odkaz a vyplňte formulář pro přijetí pozvánky do skupiny {groupName}:\n{preapprovedInvitationLink}\nPlatnost tohoto odkazu vyprší {expirationDate}.\n\nV případě dotazů kontaktujte {senderName}. Na tento email neodpovídejte.",
@@ -14,7 +17,10 @@
     },
     "APPLICATION_FORM_EDIT_ITEM": {
       "AUTO_SUBMIT": "Odeslat automaticky",
-      "EMBEDDED_OPTIONS_DESCRIPTION": "Skupiny pro tuto položku se zde needitují. K přidání nebo odebrání vestavěných skupin použijte tlačítko Spravovat skupiny."
+      "EMBEDDED_OPTIONS_DESCRIPTION": "Skupiny pro tuto položku se zde needitují. K přidání nebo odebrání vestavěných skupin použijte tlačítko Spravovat skupiny.",
+      "LINKED_LOGIN": "Propojený login",
+      "NO_LINKED_LOGIN": "Nepropojeno",
+      "LINKED_LOGIN_DESCRIPTION": "Volitelný název definice položky LOGIN, jejíž hodnota a namespace se použijí pro toto heslo."
     }
   }
 }

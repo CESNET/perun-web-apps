@@ -29,6 +29,25 @@
       </mat-checkbox>
     </div>
   }
+  @if (selectedWidget === 'PASSWORD') {
+    <mat-form-field class="mb-3" subscriptSizing="dynamic">
+      <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.LINKED_LOGIN' | translate}}:</mat-label>
+      <mat-select [(ngModel)]="loginItem" data-cy="item-linked-login" disableOptionCentering>
+        <mat-option
+          [value]="null"
+          >{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.NO_LINKED_LOGIN' | translate}}</mat-option
+        >
+        @for (item of loginItems; track item.itemDefinition.displayName) {
+          <mat-option [value]="item.itemDefinition.displayName">
+            {{item.itemDefinition.displayName}}
+          </mat-option>
+        }
+      </mat-select>
+      <mat-hint>
+        {{'DIALOGS.APPLICATION_FORM_ADD_ITEM.LINKED_LOGIN_DESCRIPTION' | translate}}
+      </mat-hint>
+    </mat-form-field>
+  }
   <mat-form-field>
     <mat-label>{{'DIALOGS.APPLICATION_FORM_ADD_ITEM.INSERT_AFTER' | translate}}:</mat-label>
     <mat-select [(ngModel)]="selectedItem" disableOptionCentering>

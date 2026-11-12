@@ -86,6 +86,7 @@ model/optionsConfigurationDTO.ts
 model/pageMetadata.ts
 model/pagedModelApplicationDTO.ts
 model/pagedModelEnrichedApplicationDTO.ts
+model/passwordConfigurationDTO.ts
 model/passwordDTO.ts
 model/passwordValidatorDTO.ts
 model/perunRejectExpiredApplicationActionDTO.ts

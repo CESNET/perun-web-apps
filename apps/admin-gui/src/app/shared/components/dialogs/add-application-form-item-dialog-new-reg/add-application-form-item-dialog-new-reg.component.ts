@@ -76,6 +76,7 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
   ];
   nameCtrl: UntypedFormControl;
   autoSubmit = false;
+  loginItem: string | null = null;
   loading = false;
 
   /** Item types whose options live in the item configuration. */
@@ -87,6 +88,10 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
     private translateService: TranslateService,
     private store: StoreService,
   ) {}
+
+  get loginItems(): ItemWithDefinitionDTO[] {
+    return this.data.applicationFormItems.filter((item) => item.itemDefinition.type === 'LOGIN');
+  }
 
   /** i18n key of the widget's select label; the embedded entry reuses the legacy item's text. */
   typeLabelKey(widget: string): string {
@@ -200,8 +205,9 @@ export class AddApplicationFormItemDialogNewRegComponent implements OnInit {
       }
       case 'SUBMIT_BUTTON':
         return { ...common, type, configuration: { autoSubmit: this.autoSubmit } };
-      case 'LOGIN':
       case 'PASSWORD':
+        return { ...common, type, configuration: { loginItem: this.loginItem } };
+      case 'LOGIN':
       case 'HEADING':
       case 'HTML_COMMENT':
       case 'TEXTFIELD':
