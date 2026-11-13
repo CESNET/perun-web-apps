@@ -12,45 +12,52 @@
 
 @if (!loading) {
   <div>
-    @if (this.application.state === 'SUBMITTED' && verifyAuth) {
-      <button (click)="verifyApplication()" color="accent" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
-      </button>
-    }
-    @if (
-      (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && approveAuth
-    ) {
-      <button (click)="approveApplication()" color="accent" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
-      </button>
-    }
-    @if (
-      (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && rejectAuth
-    ) {
-      <button (click)="rejectApplication()" color="warn" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
-      </button>
-    }
-    @if (
-      (this.application.state === 'REJECTED' || this.application.state === 'SUBMITTED') && deleteAuth
-    ) {
-      <button (click)="deleteApplication()" color="warn" class="me-2" mat-flat-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
-      </button>
-    }
-    @if (
-      (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && rejectAuth
-    ) {
-      <button (click)="requestChanges()" class="me-2" mat-stroked-button>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REQUEST_CHANGES' | translate}}
-      </button>
-    }
-    @if (resendAuth) {
-      <button (click)="resendNotification()" class="me-2" mat-stroked-button>
-        <i class="material-icons"> mail_outline </i>
-        {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
-      </button>
-    }
+    <div class="mb-3">
+      @if (this.application.state === 'SUBMITTED' && verifyAuth) {
+        <button (click)="verifyApplication()" color="accent" class="me-2" mat-flat-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.VERIFY' | translate}}
+        </button>
+      }
+      @if (this.application.state === 'ERROR' && verifyAuth) {
+        <button (click)="resetApplication()" color="accent" class="me-2" mat-flat-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.RESET' | translate}}
+        </button>
+      }
+      @if (
+        (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && approveAuth
+      ) {
+        <button (click)="approveApplication()" color="accent" class="me-2" mat-flat-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVE' | translate}}
+        </button>
+      }
+      @if (
+        (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && rejectAuth
+      ) {
+        <button (click)="rejectApplication()" color="warn" class="me-2" mat-flat-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECT' | translate}}
+        </button>
+      }
+      @if (
+        (this.application.state === 'REJECTED' || this.application.state === 'SUBMITTED') && deleteAuth
+      ) {
+        <button (click)="deleteApplication()" color="warn" class="me-2" mat-flat-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DELETE' | translate}}
+        </button>
+      }
+      @if (
+        (this.application.state === 'VERIFIED' || this.application.state === 'SUBMITTED') && rejectAuth
+      ) {
+        <button (click)="requestChanges()" class="me-2" mat-stroked-button>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REQUEST_CHANGES' | translate}}
+        </button>
+      }
+      @if (resendAuth) {
+        <button (click)="resendNotification()" class="me-2" mat-stroked-button>
+          <i class="material-icons"> mail_outline </i>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.SEND_NOTIFICATION' | translate}}
+        </button>
+      }
+    </div>
     @if (!group) {
       <div>
         <span
@@ -128,6 +135,21 @@
           ><i class="material-icons red align-text-top">clear</i>
           {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.REJECTED_BY' | translate}}:
           {{latestDecision.approverName | modifiedName : latestDecision.approverName}}</mat-card-title
+        >
+        <div>
+          <span
+            class="fw-bold"
+            >{{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.DATE' | translate}}</span
+          >: {{latestDecision.timestamp | date:'d.M.y H:mm:ss'}}
+        </div>
+      </div>
+    }
+    @if (this.application.state === 'ERROR') {
+      <div class="card p-3 mt-2">
+        <mat-card-title
+          ><i class="material-icons red align-text-top">report</i>
+          {{'VO_DETAIL.APPLICATION.APPLICATION_DETAIL.APPROVAL_ERROR' | translate}}:
+          {{latestDecision.message}}</mat-card-title
         >
         <div>
           <span

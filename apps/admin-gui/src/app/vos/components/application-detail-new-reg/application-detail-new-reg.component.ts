@@ -116,7 +116,7 @@ export class ApplicationDetailNewRegComponent implements OnInit {
           this.application = application.application;
           this.formSpecification = application.formSpecification;
           this.userData = application.formItemData;
-          this.latestDecision = application.decisions[0];
+          this.latestDecision = application.decisions[application.decisions.length - 1];
           this.submission = application.submission;
           this.dataSource = new MatTableDataSource<EnrichedFormItemDataDTO>(this.userData);
           // EMBEDDED_GROUPS values are embedded form UUIDs - fetch the target forms so the
@@ -262,7 +262,7 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     dialogRef.afterClosed().subscribe((application: ApplicationDetailDTO) => {
       if (application) {
         this.application = application.application;
-        this.latestDecision = application.decisions[0];
+        this.latestDecision = application.decisions[application.decisions.length - 1];
       }
     });
   }
@@ -277,7 +277,7 @@ export class ApplicationDetailNewRegComponent implements OnInit {
     dialogRef.afterClosed().subscribe((application: ApplicationDetailDTO) => {
       if (application) {
         this.application = application.application;
-        this.latestDecision = application.decisions[0];
+        this.latestDecision = application.decisions[application.decisions.length - 1];
       }
     });
   }
@@ -313,7 +313,8 @@ export class ApplicationDetailNewRegComponent implements OnInit {
                   this.notificator.showSuccess(successMessage);
                 });
               this.application = result.applicationDetail.application;
-              this.latestDecision = result.applicationDetail.decisions[0];
+              this.latestDecision =
+                result.applicationDetail.decisions[result.applicationDetail.decisions.length - 1];
             }
             this.loading = false;
           });
@@ -324,7 +325,10 @@ export class ApplicationDetailNewRegComponent implements OnInit {
               this.notificator.showSuccess(successMessage);
             });
           this.application = application.applicationDetail.application;
-          this.latestDecision = application.applicationDetail.decisions[0];
+          this.latestDecision =
+            application.applicationDetail.decisions[
+              application.applicationDetail.decisions.length - 1
+            ];
           this.loading = false;
         }
       },
@@ -341,7 +345,21 @@ export class ApplicationDetailNewRegComponent implements OnInit {
           this.notificator.showSuccess(successMessage);
         });
       this.application = application.application;
-      this.latestDecision = application.decisions[0];
+      this.latestDecision = application.decisions[application.decisions.length - 1];
+      this.loading = false;
+    });
+  }
+
+  resetApplication(): void {
+    this.loading = true;
+    this.submissionsService.resetErrorState(this.application.id).subscribe((application) => {
+      this.translate
+        .get('VO_DETAIL.APPLICATION.APPLICATION_DETAIL.RESET_MESSAGE')
+        .subscribe((successMessage: string) => {
+          this.notificator.showSuccess(successMessage);
+        });
+      this.application = application.application;
+      this.latestDecision = application.decisions[application.decisions.length - 1];
       this.loading = false;
     });
   }

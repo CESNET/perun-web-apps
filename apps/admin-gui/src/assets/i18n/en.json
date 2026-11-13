@@ -705,6 +705,7 @@
       "STATE": {
         "APPROVED": "Approved",
         "REJECTED": "Rejected",
+        "ERROR": "Approval processing failed",
         "NEW": "Waiting for mail verification",
         "VERIFIED": "Submitted"
       },
@@ -793,7 +794,8 @@
         "APPROVED": "APPROVED",
         "REJECTED": "REJECTED",
         "NEW": "WAITING FOR MAIL VERIFICATION",
-        "VERIFIED": "SUBMITTED"
+        "VERIFIED": "SUBMITTED",
+        "ERROR": "APPROVAL PROCESSING FAILED"
       },
       "APPLICATION_DETAIL": {
         "TITLE": "Application detail",
@@ -815,13 +817,16 @@
         "APPLICATION_IN_VO": "in Organization",
         "APPROVED_BY": "Approved by",
         "REJECTED_BY": "Rejected by",
+        "APPROVAL_ERROR": "The approval process failed due to",
         "DATE": "Date",
         "VERIFY": "Verify",
+        "RESET": "Reset for approval",
         "DELETE_APPLICATION_TITLE": "Delete application",
         "DELETE_APPLICATION_DESCRIPTION": "Application with following Id will be deleted.",
         "DELETE_MESSAGE": "Application was deleted",
         "APPROVE_MESSAGE": "Application was approved",
         "VERIFY_MESSAGE": "Application was verified",
+        "RESET_MESSAGE": "Application was reset to verified",
         "AUTO_APPROVE_FAILURE": "Automatic approval of application failed",
         "EDIT": "Edit",
         "EDIT_DISABLED": "Editing submitted application of user is not available in new Registrar",

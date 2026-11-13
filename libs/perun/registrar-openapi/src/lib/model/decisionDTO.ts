@@ -24,6 +24,8 @@ export namespace DecisionDTO {
     CHANGES_REQUESTED: 'CHANGES_REQUESTED',
     FORCE_VERIFIED: 'FORCE_VERIFIED',
     AUTO_APPROVE_ERROR: 'AUTO_APPROVE_ERROR',
+    APPROVAL_ERROR: 'APPROVAL_ERROR',
+    RESET: 'RESET',
   } as const;
   export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
 }
