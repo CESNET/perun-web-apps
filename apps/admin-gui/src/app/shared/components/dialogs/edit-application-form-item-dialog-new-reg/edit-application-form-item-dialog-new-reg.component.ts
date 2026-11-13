@@ -192,6 +192,10 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     private escapeService: HtmlEscapeService,
   ) {}
 
+  get loginItems(): ItemWithDefinitionDTO[] {
+    return this.data.allItems.filter((item) => item.itemDefinition.type === 'LOGIN');
+  }
+
   ngOnInit(): void {
     this.languages = this.store.getProperty('supported_languages');
     const hiddenDepDTO = this.data.allItems.find(
@@ -223,6 +227,9 @@ export class EditApplicationFormItemDialogNewRegComponent implements OnInit {
     this.theme = this.data.theme;
     this.possibleDependencyItems = this.getPossibleDepItems();
     this.applicationFormItem = structuredClone(this.data.applicationFormItem);
+    if (this.applicationFormItem.itemDefinition.type === 'PASSWORD') {
+      this.applicationFormItem.itemDefinition.configuration ??= { loginItem: null };
+    }
     if (!this.data.isEmbedded) {
       this.getOptions();
     }

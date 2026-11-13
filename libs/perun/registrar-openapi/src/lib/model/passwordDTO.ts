@@ -11,9 +11,11 @@ import { ItemTexts } from './itemTexts';
 import { IdmObject } from './idmObject';
 import { ItemDefinitionDTO } from './itemDefinitionDTO';
 import { ItemDefinitionDTOValidatorsInner } from './itemDefinitionDTOValidatorsInner';
+import { PasswordConfigurationDTO } from './passwordConfigurationDTO';
 
 export interface PasswordDTO extends ItemDefinitionDTO {
   type: PasswordDTO.TypeEnum;
+  configuration: PasswordConfigurationDTO;
 }
 export namespace PasswordDTO {
   export const TypeEnum = {

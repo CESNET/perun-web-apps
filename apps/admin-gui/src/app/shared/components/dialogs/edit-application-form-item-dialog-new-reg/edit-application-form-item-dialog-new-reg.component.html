@@ -35,6 +35,30 @@
               </mat-checkbox>
             </div>
           }
+          @if (applicationFormItem.itemDefinition.type === 'PASSWORD') {
+            <mat-form-field subscriptSizing="dynamic" class="mb-3 w-100">
+              <mat-label
+                >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LINKED_LOGIN' | translate}}:</mat-label
+              >
+              <mat-select
+                [(ngModel)]="applicationFormItem.itemDefinition.configuration.loginItem"
+                data-cy="item-linked-login"
+                disableOptionCentering>
+                <mat-option
+                  [value]="null"
+                  >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.NO_LINKED_LOGIN' | translate}}</mat-option
+                >
+                @for (item of loginItems; track item.itemDefinition.displayName) {
+                  <mat-option [value]="item.itemDefinition.displayName">
+                    {{item.itemDefinition.displayName}}
+                  </mat-option>
+                }
+              </mat-select>
+              <mat-hint
+                >{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.LINKED_LOGIN_DESCRIPTION' | translate}}</mat-hint
+              >
+            </mat-form-field>
+          }
           <!--          <section class="mt-4">-->
           <!--            <h6>{{'DIALOGS.APPLICATION_FORM_EDIT_ITEM.DISPLAY_ON_APPLICATION' | translate}}</h6>-->
           <!--            <mat-checkbox-->
@@ -97,7 +121,9 @@
                     }
                   </div>
                 }
-                @if (destinationAttributes !== undefined) {
+                @if (
+                  destinationAttributes !== undefined && applicationFormItem.itemDefinition.type !== 'PASSWORD'
+                ) {
                   <div class="w-100">
                     <perun-web-apps-selection-item-search-select
                       [attributes]="destinationAttributes"

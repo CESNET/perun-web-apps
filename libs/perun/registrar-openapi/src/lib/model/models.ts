@@ -71,6 +71,7 @@ export * from './optionsConfigurationDTO';
 export * from './pageMetadata';
 export * from './pagedModelApplicationDTO';
 export * from './pagedModelEnrichedApplicationDTO';
+export * from './passwordConfigurationDTO';
 export * from './passwordDTO';
 export * from './passwordValidatorDTO';
 export * from './perunRejectExpiredApplicationActionDTO';

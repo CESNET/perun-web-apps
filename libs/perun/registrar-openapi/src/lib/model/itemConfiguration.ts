@@ -12,6 +12,7 @@ import { Option } from './option';
 import { SubmitButtonConfigurationDTO } from './submitButtonConfigurationDTO';
 import { EmbeddedGroupsConfigurationDTO } from './embeddedGroupsConfigurationDTO';
 import { OptionsConfigurationDTO } from './optionsConfigurationDTO';
+import { PasswordConfigurationDTO } from './passwordConfigurationDTO';
 
 /**
  * @type ItemConfiguration
@@ -21,4 +22,5 @@ export type ItemConfiguration =
   | EmbeddedGroupsConfigurationDTO
   | NamespaceConfigurationDTO
   | OptionsConfigurationDTO
+  | PasswordConfigurationDTO
   | SubmitButtonConfigurationDTO;
